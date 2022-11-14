@@ -4,22 +4,23 @@ library(tidyverse)
 library(rairtable)
 library(RSQLite)
 
-### the api key needs to be set only once, and is saved to the local R environment
-### if it needs to be set again, replace string below accordingly and uncomment
+### the api key needs to be set only once, is saved to the local R environment
+### if it needs to be set again, replace string and un-comment below accordingly
 # set_airtable_api_key("ACTUAL_API_KEY_GOES_HERE", install = TRUE)
 # readRenviron("~/.Renviron")
 # Sys.getenv("AIRTABLE_API_KEY")
 
 ### download data from Airtable 
 base_id <- "appHsoHAemKITZgMF"
-to_download <- c("Amnesties" = "amnesties_table_full", 
-  "Trials" = "trials_table_full", 
-  "Accused" = "accused_table_full",
-  "Truth Commissions" = "tcs_table_full", 
-  "Reparations" = "reparations_table_full", 
-  "Countries" = "countries_table",
-  "Transitions" = "cy_table",
-  "metadata" = "metadata_table")
+to_download <- c(
+  "Amnesties" = "export", 
+  "Trials" = "export", 
+  "Accused" = "export",
+  "Truth Commissions" = "export", 
+  "Reparations" = "export", 
+  "Country-Years" = "cy_table", 
+  "Countries" = "countries_table", 
+  "metadata" = "metadata_table") 
 tjet <- lapply(names(to_download), function(table) {
   airtable(table, base_id, view = to_download[table]) %>%
     read_airtable(id_to_col = TRUE)
@@ -27,7 +28,14 @@ tjet <- lapply(names(to_download), function(table) {
 save(tjet, file = "tjet.RData")
 # load("tjet.RData")
 
+### TO DO
+
 ## have to deal with 
 ## - multi-select fields: either turn into binary in Airtable or transform in R
-## - linked record fields: make sure the needed data is included, as linked record fields downlaod as the record identifiers 
+## - linked record fields: make sure the needed data is included, 
+##   as linked record fields download as the record identifiers 
 
+## variable transformations 
+## - binary variables from checkbox fields
+
+## create and save SQLite DB
