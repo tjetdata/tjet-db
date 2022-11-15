@@ -26,9 +26,6 @@ tjet <- lapply(names(to_download), function(table) {
   airtable(table, base_id, view = to_download[table]) %>%
     read_airtable(id_to_col = TRUE)
 })
-
-lapply(tjet, dim)
-
 rename <- function(names_to_change) {
   str_replace(
     str_replace(
