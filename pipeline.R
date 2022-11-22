@@ -1,5 +1,9 @@
+# devtools::install_github("bergant/airtabler")
+# library(airtabler)
+# library(dplyr)
+
 # remotes::install_github('matthewjrogers/rairtable', ref = 'dev')
-### development versions handles multi-select fields without error
+### development version handles multi-select fields without error
 library(tidyverse)
 library(rairtable)
 library(RSQLite)
@@ -26,7 +30,7 @@ tjet <- lapply(names(to_download), function(table) {
   airtable(table, base_id, view = to_download[table]) %>%
     read_airtable(id_to_col = TRUE)
 })
-rename <- function(names_to_change) {
+rename_labels <- function(names_to_change) {
   str_replace(
     str_replace(
       str_to_lower(
@@ -35,42 +39,66 @@ rename <- function(names_to_change) {
     , fixed(" "), ""
   )
 }
-names(tjet) <- rename(names(to_download))
+names(tjet) <- rename_labels(names(to_download))
 save(tjet, file = "tjet.RData")
 # load("tjet.RData")
 
+
 ### subsetting tables
-new <- tjet$metadata %>% 
-  filter(incl_prod == 1 & incl_data != "decide" & table_name != "Vetting") %>%
-  select(table_name) %>%
-  unlist(use.names = FALSE) %>%
-  unique() %>%
-  rename() %>%
-  lapply(FUN = function(tab_name) {
-    cat(tab_name, ":\n", sep = "")
-    select_vars <- tjet$metadata %>% 
-      mutate(table_name = rename(table_name)) %>% 
-      filter(incl_prod == 1 & incl_data != "decide" & table_name == tab_name) %>% 
+db <- lapply(names(tjet)[-8], function(tab_name) {
+    # cat(tab_name, "\n", sep = "")
+    select_vars <- tjet$metadata %>%
+      mutate(table_name = rename_labels(table_name)) %>%
+      filter(incl_prod == 1 & incl_data != "decide" & table_name == tab_name) %>%
       select(field_name) %>%
       unlist(use.names = FALSE)
-    print(select_vars[!(select_vars %in% names(tjet[[tab_name]]))])
+    # print(select_vars[!(select_vars %in% names(tjet[[tab_name]]))])
+    missing_cols <- select_vars[!(select_vars %in% names(tjet[[tab_name]]))]
     tjet[[tab_name]] %>% 
-      select(all_of(select_vars))
+      ### adding empty fields as NA columns for now
+      mutate(!!!setNames(rep(NA, length(missing_cols)), missing_cols)) %>%
+      select(all_of(select_vars)) %>% 
+      tibble()
   })
-  
+names(db) <- names(tjet)[-8]
+
+### variable transformations of checkboxes and multiselects
+checkbox_to_binary <- function(col) {
+  ifelse(is.na(col), 0, 1)
+}
+make_named_list <- function(lst) {
+  if(!is.null(lst)) 
+    names(lst) <- str_replace_all(lst, fixed(" "), "_")
+  return(lst)
+}
+
+### FROM HERE
+
+tjet$metadata %>%
+  mutate(table_name = rename_labels(table_name)) %>%
+  filter(incl_prod == 1 & incl_data != "decide") %>%
+  filter(field_type == "multipleSelects")
+# select(field_type) %>%
+# table()
+
+db$reparations %>% 
+  select(reparationID, legalBasis) %>% 
+  rowwise() %>%
+  mutate(legalBasis = list(make_named_list(legalBasis))) %>%
+  ungroup() %>%
+  unnest_wider(legalBasis, names_sep = "_", simplify = FALSE) %>%
+  print(n = Inf)
+
 ### TO DO
 
-# in TCs not coming through... why?
-# `grantAmnesty`, `neverOperated`, `yearBeginOperatingUnknown`, and `yearPassedUnknown`
-
 ## have to deal with 
-## - multi-select fields: either turn into binary in Airtable or transform in R
-## - linked record fields: make sure the needed data is included, 
-##   as linked record fields download as the record identifiers 
 ## - variable transformations 
 ##   - binary variables from checkbox fields
+##   - multi-select fields: either turn into binary in Airtable or transform in R
+
+## - linked record fields: make sure the needed data is included, 
+##   as linked record fields download as the record identifiers 
 ## - clean up dataframes so that they can be added to the sqlite db 
-## - then complete below
 
 ## create SQLite DB
 # file.remove("tjet.db")
