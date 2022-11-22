@@ -49,7 +49,8 @@ db <- lapply(names(tjet)[-8], function(tab_name) {
     # cat(tab_name, "\n", sep = "")
     select_vars <- tjet$metadata %>%
       mutate(table_name = rename_labels(table_name)) %>%
-      filter(incl_prod == 1 & incl_data != "decide" & table_name == tab_name) %>%
+      filter(incl_prod == 1 & incl_data != "decide" & 
+             table_name == tab_name) %>%
       select(field_name) %>%
       unlist(use.names = FALSE)
     # print(select_vars[!(select_vars %in% names(tjet[[tab_name]]))])
@@ -68,7 +69,8 @@ checkbox_to_binary <- function(col) {
 }
 make_named_list <- function(lst) {
   if(!is.null(lst)) 
-    names(lst) <- str_replace_all(lst, fixed(" "), "_")
+    names(lst) <- lst %>% 
+      str_replace_all(fixed(" "), "_")
   return(lst)
 }
 
@@ -78,8 +80,6 @@ tjet$metadata %>%
   mutate(table_name = rename_labels(table_name)) %>%
   filter(incl_prod == 1 & incl_data != "decide") %>%
   filter(field_type == "multipleSelects")
-# select(field_type) %>%
-# table()
 
 db$reparations %>% 
   select(reparationID, legalBasis) %>% 
@@ -87,18 +87,16 @@ db$reparations %>%
   mutate(legalBasis = list(make_named_list(legalBasis))) %>%
   ungroup() %>%
   unnest_wider(legalBasis, names_sep = "_", simplify = FALSE) %>%
+  mutate(legalBasis_Domestic_law = ifelse(is.na(legalBasis_Domestic_law), 0, 1)) %>%
   print(n = Inf)
 
 ### TO DO
-
-## have to deal with 
-## - variable transformations 
+## - automate variable transformations for all 
 ##   - binary variables from checkbox fields
-##   - multi-select fields: either turn into binary in Airtable or transform in R
-
-## - linked record fields: make sure the needed data is included, 
-##   as linked record fields download as the record identifiers 
-## - clean up dataframes so that they can be added to the sqlite db 
+##   - multi-select fields into dummies for data downloads 
+##     - come up with naming scheme
+##   - for relational DB for browse, we need a separate table for multiselect options 
+##     - should create this in Airtable 
 
 ## create SQLite DB
 # file.remove("tjet.db")
