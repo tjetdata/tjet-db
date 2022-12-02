@@ -29,47 +29,37 @@ names(to_download) <- to_download <- c(
   "Dyads",
   "select_options",
   "metadata")
-tjet[13] <- lapply(to_download[13], function(table) {
+tjet <- lapply(to_download, function(table) {
   cat(table, "\n") 
   airtable(table, base_id) %>%
     read_airtable(id_to_col = TRUE)
 })
-# rename_labels <- function(names_to_change) {
-#   str_replace(
-#     str_replace(
-#       str_to_lower(
-#         names_to_change
-#       ), fixed("-"), "")
-#     , fixed(" "), ""
-#   )
-# }
-# names(tjet) <- rename_labels(names(to_download))
 save(tjet, file = "tjet.RData")
 # load("tjet.RData")
 
-### subsetting tables
-db <- map(names(tjet)[-length(tjet)], function(tab_name) {
+### prodDB tables
+names(select_tables) <- select_tables <- names(tjet)[-length(tjet)]
+db <- map(select_tables, function(tab_name) {
     # cat(tab_name, "\n", sep = "")
     select_vars <- tjet$metadata %>%
       filter(incl_prod == 1 & table_name == tab_name) %>%
       select(field_name) %>%
       unlist(use.names = FALSE)
+    select_vars <- c("airtable_record_id", select_vars)
     missing_cols <- select_vars[!(select_vars %in% names(tjet[[tab_name]]))]
     tjet[[tab_name]] %>%
-      ### adding empty fields as NA columns for now
+      ### adding empty fields as NA columns for now until they are recoded by RAs
       mutate(!!!setNames(rep(NA, length(missing_cols)), missing_cols)) %>%
       select(all_of(select_vars)) %>%
       tibble()
-  })
-names(db) <- names(tjet)[-length(tjet)]
-# object.size(db)
+})
 
-### checkboxes to binary
+### transforming checkboxes to binary
 checkbox_to_binary <- function(col) {
   ifelse(is.na(col), 0, 1)
 }
-names(tables) <- tables <- names(db)[-length(db)]
-db[tables] <- map(tables, function(tab) {
+names(select_tables) <- select_tables <- names(db)[-length(db)]
+db[select_tables] <- map(select_tables, function(tab) {
   fields <- tjet$metadata %>%
     filter(incl_prod == 1 & 
              incl_data == "checkmark to binary" & 
@@ -81,28 +71,54 @@ db[tables] <- map(tables, function(tab) {
 })
 
 ### multiselects
+## don't need this anymore, now that multiselects are turned into separate tables 
+## but keeping sample code for now
 # make_named_list <- function(lst) {
-#   if(!is.null(lst)) 
-#     names(lst) <- lst %>% 
+#   if(!is.null(lst))
+#     names(lst) <- lst %>%
 #       str_replace_all(fixed(" "), "_")
 #   return(lst)
 # }
+# db$Reparations %>% 
+#   select(reparationID, legalBasis) %>% 
+#   rowwise() %>%
+#   mutate(legalBasis = list(make_named_list(legalBasis))) %>%
+#   ungroup() %>%
+#   unnest_wider(legalBasis, names_sep = "_", simplify = FALSE) %>%
+#   mutate(legalBasis_Domestic_law = ifelse(is.na(legalBasis_Domestic_law), 0, 1)) %>%
+#   print(n = Inf)
 
+map(select_tables, function(tab) {
+  fields <- tjet$metadata %>%
+    filter(incl_prod == 1 & 
+             incl_data == "transform: multiple" & 
+             table_name == tab) %>%
+    select(field_name) %>%
+    unlist(use.names = FALSE)
+  tab <- "Amnesties"
+  
 ### FROM HERE
+  
+  db$select_options %>%
+    filter(enactedHow_set) %>%
+    select(label, pkey, enactedHow_Amnesties) %>%
+    print(n = 15)
+  
+})
 
+## checking transformations to perform
 tjet$metadata %>%
-  filter(incl_prod == 1 & incl_data != "include as is") %>%
+  filter(incl_prod == 1) %>%
   select(-airtable_record_id, -ID, -table_ID, -field_ID, -last_modified, -created, -field_description, -field_options) %>%
   select(field_type, incl_data) %>%
   table()
 
 ### TO DO
-## - automate variable transformations for all 
-##   - binary variables from checkbox fields
-##   - multi-select fields into dummies for data downloads 
-##     - come up with naming scheme
-##   - for relational DB for browse, we need a separate table for multiselect options 
-##     - should create this in Airtable 
+## - for browse, we need separate tables for one-to-many relationships (i.e. multiselect options) 
+## - turn multi-select fields into dummies for data downloads 
+##   - needs a consistent naming scheme
+## - set all PKs and FKs in DB
+##   - any special cosniderations for multipleLookupValues & multipleRecordLinks
 
 ### create SQLite DB
 ## file.remove("tjet.db")
