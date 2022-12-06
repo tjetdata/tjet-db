@@ -5,3 +5,4 @@
 .DS_Store
 TJET.Rproj
 *.RData
+*.db

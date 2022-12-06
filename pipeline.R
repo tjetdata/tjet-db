@@ -41,7 +41,7 @@ pkeys <- c("Amnesties" = "amnestyID",
 ### download data from Airtable 
 
 tjet <- lapply(to_download, function(table) {
-  cat("Downloading ", table, "...\n") 
+  cat("Downloading", table, "\n") 
   airtable(table, base_id) %>%
     read_airtable(id_to_col = TRUE)
 })
@@ -52,11 +52,12 @@ save(tjet, file = "tjet.RData")
 ### prodDB tables
 
 names(select_tables) <- select_tables <- names(tjet)[!names(tjet) %in% c("select_options", "metadata")]
+
 db <- map(select_tables, function(tab_name) {
     select_vars <- tjet$metadata %>%
       filter(incl_prod == 1 & 
-               table_name == tab_name & 
-               incl_data != "transform: multiple") %>%
+               incl_data != "transform: multiple" & ## include these if creating dummies
+               table_name == tab_name) %>%
       select(field_name) %>%
       unlist(use.names = FALSE)
     first <- c(select_vars[str_detect(select_vars, fixed("ID"))], select_vars[str_detect(select_vars, fixed("ccode"))])
@@ -70,6 +71,7 @@ db <- map(select_tables, function(tab_name) {
 })
 
 names(drop_invalids) <- drop_invalids <- c("Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings")
+
 db[drop_invalids] <- map(drop_invalids, function(tab_name) {
   db[[tab_name]] %>% 
     ## will need to change this later to selecting only valids
@@ -124,7 +126,7 @@ crimes <- c("ccode_Crime1", "ccode_Crime2", "ccode_Crime3")
 db[["Trials_Crimes"]] <- map(crimes, function(var) {
   db$Trials %>% 
     select(all_of(c("trialID", var))) %>%
-    rename(ccode_Crime = var) %>%
+    rename(ccode_Crime = all_of(var)) %>%
     drop_na()
 }) %>% 
   bind_rows()
@@ -133,7 +135,7 @@ victims <- c("ccode_Victim1", "ccode_Victim2", "ccode_Victim3")
 db[["Trials_Victims"]] <- map(victims, function(var) {
   db$Trials %>% 
     select(all_of(c("trialID", var))) %>%
-    rename(ccode_Victim = var) %>%
+    rename(ccode_Victim = all_of(var)) %>%
     drop_na()
 }) %>% 
   bind_rows()
@@ -174,6 +176,26 @@ multi_selects <- map(select_tables, function(tab_name) {
   unlist(recursive = FALSE) 
 names(multi_selects) <- str_replace(names(multi_selects), fixed("."), "_")
 db <- c(db, multi_selects)
+
+### dummies from multi-select fields
+## (may not need this if we can get it with SQL queries)
+## sample code, would have to be expanded and generalized
+
+# make_named_list <- function(lst) {
+#   if(!is.null(lst))
+#     names(lst) <- lst %>%
+#       str_replace_all(fixed(" "), "_")
+#   return(lst)
+# }
+# db$Reparations %>%
+#   select(reparationID, legalBasis) %>%
+#   # rowwise() %>%
+#   # mutate(legalBasis = list(make_named_list(legalBasis))) %>%
+#   # ungroup() %>%
+#   unnest_wider(legalBasis, names_sep = "_", simplify = FALSE) %>%
+#   mutate(legalBasis_1 = ifelse(is.na(legalBasis_1), 0, 1),
+#          legalBasis_2 = ifelse(is.na(legalBasis_2), 0, 1),
+#          legalBasis_3 = ifelse(is.na(legalBasis_3), 0, 1))
 
 ### dealing with keys in multipleRecordLinks
 ## the approaches below differ by whether the relationship is one-to-one or one-to-many
@@ -258,48 +280,31 @@ db[["TruthCommissions_Dyads"]] <- db$TruthCommissions %>%
 db[["TruthCommissions"]] <- db$TruthCommissions %>% 
   select(-ucdpConflictID, -ucdpDyadID)
 
+db[["Conflicts"]] <- db$Conflicts %>%
+  rename(ucdpConflictID = "conflict_id")
 
-
-  
-
-### TO DO
-## - check over all tables
-## - turn multi-select fields into dummies for data downloads (needs a consistent naming scheme)
-## - set all PKs and FKs in DB 
-
-
-## don't need this anymore, now that multiselects are turned into separate tables 
-## but keeping sample code for now
-# make_named_list <- function(lst) {
-#   if(!is.null(lst))
-#     names(lst) <- lst %>%
-#       str_replace_all(fixed(" "), "_")
-#   return(lst)
-# }
-# db$Reparations %>% 
-#   select(reparationID, legalBasis) %>% 
-#   rowwise() %>%
-#   mutate(legalBasis = list(make_named_list(legalBasis))) %>%
-#   ungroup() %>%
-#   unnest_wider(legalBasis, names_sep = "_", simplify = FALSE) %>%
-#   mutate(legalBasis_Domestic_law = ifelse(is.na(legalBasis_Domestic_law), 0, 1)) %>%
-#   print(n = Inf)
-
-
+db[["Dyads"]] <- db$Dyads %>%
+  rename(ucdpConflictID = "conflict_id",
+         ucdpDyadID = "dyad_id")
 
 ### create SQLite DB
 ## file.remove("tjet.db")
-# conn <- dbConnect(RSQLite::SQLite(), "tjet.db")
-# lapply(names(tjet)[7:8], function(table_name) {
-#   print(table_name)
-#   dbWriteTable(conn, table_name, tjet[[table_name]])
-# })
-# dbListTables(conn) 
-# dbListFields(conn, "metadata")
-# dbReadTable(conn, "metadata")
-# dim(dbGetQuery(conn, "SELECT * FROM metadata"))
-# 
-# result <- dbSendQuery(conn, "SELECT * FROM metadata")
+conn <- dbConnect(RSQLite::SQLite(), "tjet.db")
+
+## write tables
+map(names(db), function(table_name) {
+  print(table_name)
+  dbWriteTable(conn, table_name, db[[table_name]])
+})
+dbListTables(conn)
+# dbListFields(conn, "Countries")
+# dbReadTable(conn, "Countries")
+# dbGetQuery(conn, "SELECT * FROM Countries")
+# result <- dbSendQuery(conn, "SELECT * FROM Countries")
 # dbFetch(result)
 # dbClearResult(result)
-# dbDisconnect(conn)
+dbDisconnect(conn)
+
+### TO DO
+## - turn multi-select fields into dummies for data downloads (needs a consistent naming scheme)
+## - set all PKs and FKs in DB 
