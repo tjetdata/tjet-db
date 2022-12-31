@@ -1,31 +1,7 @@
-# remotes::install_github('matthewjrogers/rairtable', ref = 'dev')
-### the development version handles multi-select fields without error
 library(tidyverse)
-library(rairtable)
 library(RSQLite)
 
-### the api key needs to be set only once, is saved to the local R environment
-### if it needs to be set again, replace string and un-comment below to run once
-# set_airtable_api_key("ACTUAL_API_KEY_GOES_HERE", install = TRUE)
-# readRenviron("~/.Renviron")
-# Sys.getenv("AIRTABLE_API_KEY")
-
-### setup
-
-base_id <- "appHsoHAemKITZgMF"
-names(to_download) <- to_download <- c("Amnesties",
-                                       "Trials",
-                                       "Accused",
-                                       "TruthCommissions",
-                                       "Reparations",
-                                       "Vettings",
-                                       "CountryYears",
-                                       "Countries",
-                                       "Transitions",
-                                       "Conflicts",
-                                       "Dyads",
-                                       "select_options",
-                                       "metadata")
+load("tjet.RData")
 pkeys <- c("Amnesties" = "amnestyID",
            "Trials" = "trialID",
            "Accused" = "accusedID",
@@ -37,17 +13,6 @@ pkeys <- c("Amnesties" = "amnestyID",
            "Transitions" = "transitionID",
            "Conflicts" = "conflict_id",
            "Dyads" = "dyad_id")
-
-### download data from Airtable 
-
-tjet <- lapply(to_download, function(table) {
-  cat("Downloading", table, "\n") 
-  airtable(table, base_id) %>%
-    read_airtable(id_to_col = TRUE)
-})
-tjet$Accused$trialID <- as.integer(tjet$Accused$trialID)
-save(tjet, file = "tjet.RData")
-# load("tjet.RData")
 
 ### prodDB tables
 
@@ -279,6 +244,8 @@ db[["TruthCommissions_Dyads"]] <- db$TruthCommissions %>%
 
 db[["TruthCommissions"]] <- db$TruthCommissions %>% 
   select(-ucdpConflictID, -ucdpDyadID)
+
+## consistent ID field names
 
 db[["Conflicts"]] <- db$Conflicts %>%
   rename(ucdpConflictID = "conflict_id")
