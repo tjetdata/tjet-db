@@ -1,8 +1,8 @@
 ### create SQLite DB
-load("tjetdb.RData")
+load("../data/tjetdb.RData")
 ## file.remove("tjet.db")
 
-conn <- dbConnect(RSQLite::SQLite(), "tjet.db")
+conn <- dbConnect(RSQLite::SQLite(), "../data/tjet.db")
 
 ## write tables
 map(names(db), function(table_name) {
@@ -19,5 +19,4 @@ dbListTables(conn)
 dbDisconnect(conn)
 
 ### TO DO
-## - turn multi-select fields into dummies for data downloads (needs a consistent naming scheme)
 ## - set all PKs and FKs in DB 
