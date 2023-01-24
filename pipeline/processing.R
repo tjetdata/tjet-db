@@ -1,7 +1,7 @@
 library(tidyverse)
-library(RSQLite)
+library(here)
 
-load("../data/tjet.RData")
+load(here("data/tjet.RData"))
 pkeys <- c(
   "Amnesties" = "amnestyID",
   "Trials" = "trialID",
@@ -286,7 +286,7 @@ db[["Dyads"]] <- db$Dyads %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-save(db, file = "../data/tjetdb.RData")
+save(db, file = here("data/tjetdb.RData"))
 
 ### TO DO
 ## - multi-select fields into dummies for data downloads 
