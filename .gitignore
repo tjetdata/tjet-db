@@ -8,3 +8,7 @@
 *.db
 
 conflicts/original_data/
+app/rsconnect/
+app/data/
+transitions/data/
+transitions/transitions_comparison.csv
