@@ -6,3 +6,5 @@
 *.Rproj
 *.RData
 *.db
+
+conflicts/original_data/

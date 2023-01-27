@@ -1,0 +1,848 @@
+dyad_id,conflict_id,location,gwno_loc,side_b,years,intensity,year_beg_ep,year_end_ep
+723,333,Afghanistan,700,PDPA,1978,War,1978,1978
+724,333,Afghanistan,700,Jam'iyyat-i Islami-yi Afghanistan,1979-1992,Internationalized War,1979,1992
+724,333,Afghanistan,700,Jam'iyyat-i Islami-yi Afghanistan,1996,Conflict,1996,1996
+725,333,Afghanistan,700,Harakat-i Inqilab-i Islami-yi Afghanistan,1980-1988,Internationalized War,1980,1988
+726,333,Afghanistan,700,Hizb-i Islami-yi Afghanistan,1980-1995,Internationalized War,1980,1995
+726,333,Afghanistan,700,Hizb-i Islami-yi Afghanistan,2002-2003,Internationalized Conflict,2002,2003
+726,333,Afghanistan,700,Hizb-i Islami-yi Afghanistan,2006,Conflict,2006,2006
+726,333,Afghanistan,700,Hizb-i Islami-yi Afghanistan,2008-2011,Internationalized Conflict,2008,2011
+726,333,Afghanistan,700,Hizb-i Islami-yi Afghanistan,2013,Internationalized Conflict,2013,2013
+727,333,Afghanistan,700,Hizb-i Islami-yi Afghanistan - Khalis faction,1980-1991,Internationalized War,1980,1991
+728,333,Afghanistan,700,Jabha-yi Nijat-i Milli-yi Afghanistan,1980-1988,Internationalized Conflict,1980,1988
+729,333,Afghanistan,700,Mahaz-i Milli-yi Islami-yi Afghanistan,1980-1989,Internationalized War,1980,1989
+730,333,Afghanistan,700,Ittihad-i Islami Bara-yi Azadi-yi Afghanistan,1981-1988,Internationalized War,1981,1988
+731,333,Afghanistan,700,Harakat-i Islami-yi Afghanistan,1984,Internationalized Conflict,1984,1984
+732,333,Afghanistan,700,Hizb-i Wahdat,1989-1995,Internationalized Conflict,1989,1995
+733,333,Afghanistan,700,Military faction (forces of Shahnawaz Tanay),1990,Conflict,1990,1990
+734,333,Afghanistan,700,Junbish-i Milli-yi Islami,1993-1995,War,1993,1995
+735,333,Afghanistan,700,Taleban,1995-1996,War,1995,1996
+735,333,Afghanistan,700,Taleban,2003-2021,Internationalized War,2003,2021
+736,333,Afghanistan,700,UIFSA,1996-2001,Internationalized War,1996,2001
+14320,13637,Afghanistan,700,IS [territory: Islamic State],2015-2021,Internationalized War,2015,2021
+16210,333,Afghanistan,700,High Council of Afghanistan Islamic Emirate,2020,Internationalized Conflict,2020,2020
+16825,333,Afghanistan,700,NRF,2021,Conflict,2021,2021
+827,386,Algeria,615,Takfir wa'l Hijra,1991,Conflict,1991,1991
+828,386,Algeria,615,AIS,1992-1997,War,1992,1997
+829,386,Algeria,615,GIA,1993-2003,War,1993,2003
+830,386,Algeria,615,AQIM,1999-2018,Internationalized Conflict,1999,2018
+830,386,Algeria,615,AQIM,2020,Conflict,2020,2020
+11984,386,Algeria,615,MUJAO,2012,Conflict,2012,2012
+14847,13721,Algeria,615,IS [territory: Islamic State],2015,Conflict,2015,2015
+713,327,Angola,540,FNLA,1975-1979,Internationalized Conflict,1975,1979
+714,327,Angola,540,UNITA,1975-1995,Internationalized War,1975,1995
+714,327,Angola,540,UNITA,1998-2002,Internationalized War,1998,2002
+831,387,Angola,540,FLEC-R [territory: Cabinda],1991,Conflict,1991,1991
+831,387,Angola,540,FLEC-R [territory: Cabinda],1994,Conflict,1994,1994
+831,387,Angola,540,FLEC-R [territory: Cabinda],1997,Conflict,1997,1997
+831,387,Angola,540,FLEC-R [territory: Cabinda],2002,Conflict,2002,2002
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],1992,Conflict,1992,1992
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],1994-1998,Conflict,1994,1998
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],2002-2004,Conflict,2002,2004
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],2007,Conflict,2007,2007
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],2009,Conflict,2009,2009
+15993,387,Angola,540,FLEC-FAC-TN [territory: Cabinda],2016-2017,Conflict,2016,2017
+15993,387,Angola,540,FLEC-FAC-TN [territory: Cabinda],2019-2020,Conflict,2019,2020
+499,247,Argentina,160,Military faction (forces of Eduardo A. Lonardi Doucet),1955,Conflict,1955,1955
+500,247,Argentina,160,Military faction (forces of Samuel Toranzo Calderón),1955,Conflict,1955,1955
+501,247,Argentina,160,Military faction (colorados),1963,Conflict,1963,1963
+502,247,Argentina,160,ERP,1974-1977,Conflict,1974,1977
+503,247,Argentina,160,Montoneros,1975-1977,Conflict,1975,1977
+833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],1991-1994,Internationalized War,1991,1994
+833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],1997-1998,Internationalized Conflict,1997,1998
+833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2005,Internationalized Conflict,2005,2005
+833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2008,Internationalized Conflict,2008,2008
+833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2012,Internationalized Conflict,2012,2012
+833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2014-2017,Internationalized Conflict,2014,2017
+833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2020-2021,Internationalized War,2020,2021
+844,396,Azerbaijan,373,Military faction (forces of Suret Husseinov),1993,Conflict,1993,1993
+845,396,Azerbaijan,373,OPON Forces,1995,Conflict,1995,1995
+705,322,Bangladesh,771,JSS/SB [territory: Chittagong Hill Tracts],1975-1991,Conflict,1975,1991
+10985,11350,Bangladesh,771,PBCP,2005,Conflict,2005,2005
+11991,11350,Bangladesh,771,PBCP-J,2005-2006,Conflict,2005,2006
+14718,13674,Bangladesh,771,IS [territory: Islamic State],2016-2017,Conflict,2016,2017
+399,200,Bolivia,145,Popular Revolutionary Movement,1946,War,1946,1946
+400,200,Bolivia,145,MNR,1952,Conflict,1952,1952
+401,200,Bolivia,145,ELN,1967,Conflict,1967,1967
+834,389,Bosnia-Herzegovina,346,Serbian irregulars [territory: Serb],1992-1995,Internationalized Conflict,1992,1995
+835,389,Bosnia-Herzegovina,346,Serbian Republic of Bosnia-Herzegovina [territory: Serb],1992-1995,Internationalized War,1992,1995
+846,397,Bosnia-Herzegovina,346,Autonomous Province of Western Bosnia [territory: Bihaca Krajina],1993-1995,Conflict,1993,1995
+847,398,Bosnia-Herzegovina,346,Croatian irregulars [territory: Croat],1993-1994,Internationalized Conflict,1993,1994
+848,398,Bosnia-Herzegovina,346,Croatian Republic of Bosnia-Herzegovina [territory: Croat],1992-1994,Internationalized War,1992,1994
+787,360,Burkina Faso,439,Popular Front,1987,Conflict,1987,1987
+14953,13840,Burkina Faso,439,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019,2021
+15175,360,Burkina Faso,439,JNIM,2018-2021,Internationalized Conflict,2018,2021
+592,287,Burundi,516,Military faction (forces loyal to Gervais Nyangoma),1965,Conflict,1965,1965
+593,287,Burundi,516,Palipehutu,1991-1992,Conflict,1991,1992
+594,287,Burundi,516,CNDD,1994-1998,Conflict,1994,1998
+595,287,Burundi,516,Frolina,1997,Conflict,1997,1997
+596,287,Burundi,516,Palipehutu-FNL,1997-2006,Conflict,1997,2006
+596,287,Burundi,516,Palipehutu-FNL,2008,Conflict,2008,2008
+597,287,Burundi,516,CNDD-FDD,1998-2003,Conflict,1998,2003
+11798,287,Burundi,516,FNL-Ubugabo-Burihabwa,2020,Internationalized Conflict,2020,2020
+14528,287,Burundi,516,Military faction (forces of Godefroid Niyombare),2015,Conflict,2015,2015
+14649,287,Burundi,516,FPB,2015,Conflict,2015,2015
+14842,287,Burundi,516,RED-TABARA,2014-2015,Conflict,2014,2015
+14842,287,Burundi,516,RED-TABARA,2019-2021,Internationalized Conflict,2019,2021
+644,300,Cambodia (Kampuchea),811,KR,1967-1975,Internationalized War,1967,1975
+644,300,Cambodia (Kampuchea),811,KR,1979-1998,Internationalized Conflict,1979,1998
+645,300,Cambodia (Kampuchea),811,KNUFNS,1978-1979,Internationalized War,1978,1979
+646,300,Cambodia (Kampuchea),811,KPNLF,1979-1991,Internationalized Conflict,1979,1991
+647,300,Cambodia (Kampuchea),811,FUNCINPEC,1982-1989,Internationalized Conflict,1982,1989
+647,300,Cambodia (Kampuchea),811,FUNCINPEC,1991,Conflict,1991,1991
+15800,300,Cambodia (Kampuchea),811,Forces of Norodom Ranariddh,1997-1998,Conflict,1997,1998
+15801,300,Cambodia (Kampuchea),811,Military faction (Forces of Hun Sen),1997,Conflict,1997,1997
+779,353,Cameroon,471,UPC,1960-1961,Internationalized War,1960,1961
+780,353,Cameroon,471,Military faction (forces of Ibrahim Saleh),1984,Conflict,1984,1984
+12422,353,Cameroon,471,Jama'atu Ahlis Sunna Lidda'awati wal-Jihad,2015-2017,Internationalized Conflict,2015,2017
+12422,353,Cameroon,471,Jama'atu Ahlis Sunna Lidda'awati wal-Jihad,2020,Conflict,2020,2020
+14666,13638,Cameroon,471,IS [territory: Islamic State],2015-2016,Internationalized Conflict,2015,2016
+14666,13638,Cameroon,471,IS [territory: Islamic State],2019,Internationalized Conflict,2019,2019
+14666,13638,Cameroon,471,IS [territory: Islamic State],2021,Internationalized Conflict,2021,2021
+15895,14129,Cameroon,471,Ambazonia insurgents [territory: Ambazonia],2017-2021,Conflict,2017,2021
+873,416,Central African Republic,482,Military faction (forces of André Kolingba),2001,Internationalized Conflict,2001,2001
+874,416,Central African Republic,482,Forces of Francois Bozize,2002,Conflict,2002,2002
+875,416,Central African Republic,482,Seleka,2006,Internationalized Conflict,2006,2006
+875,416,Central African Republic,482,Seleka,2012-2013,Internationalized Conflict,2012,2013
+876,416,Central African Republic,482,CPJP,2009-2011,Conflict,2009,2011
+12380,416,Central African Republic,482,anti-Balaka,2013-2014,Internationalized Conflict,2013,2014
+12380,416,Central African Republic,482,anti-Balaka,2017-2018,Internationalized Conflict,2017,2018
+12391,15283,Central African Republic,482,FPRC [territory: Logone],2015,Internationalized Conflict,2015,2015
+15593,416,Central African Republic,482,UPC,2018-2021,Internationalized Conflict,2018,2021
+16562,416,Central African Republic,482,CPC,2020-2021,Internationalized Conflict,2020,2021
+598,288,Chad,483,Frolinat,1966-1970,Internationalized Conflict,1966,1970
+599,288,Chad,483,First Liberation Army,1971-1972,Internationalized Conflict,1971,1972
+600,288,Chad,483,Second Liberation Army,1971,Internationalized Conflict,1971,1971
+601,288,Chad,483,FAN,1976-1977,Conflict,1976,1977
+601,288,Chad,483,FAN,1979-1982,Internationalized War,1979,1982
+602,288,Chad,483,FAP,1977-1979,Internationalized War,1977,1979
+603,288,Chad,483,FAT,1982,Conflict,1982,1982
+604,288,Chad,483,GUNT,1983-1984,Internationalized Conflict,1983,1984
+604,288,Chad,483,GUNT,1986,Internationalized Conflict,1986,1986
+605,288,Chad,483,CDR,1987,Internationalized War,1987,1987
+606,288,Chad,483,Islamic Legion,1989-1990,Conflict,1989,1990
+607,288,Chad,483,MOSANAT,1989,Conflict,1989,1989
+608,288,Chad,483,Revolutionary Forces of 1 April,1989,Conflict,1989,1989
+609,288,Chad,483,MPS,1990,War,1990,1990
+610,288,Chad,483,MDD,1991-1993,Conflict,1991,1993
+610,288,Chad,483,MDD,1997,Conflict,1997,1997
+611,288,Chad,483,Military faction (forces of Maldoum Bada Abbas),1991,Conflict,1991,1991
+612,288,Chad,483,CNR,1992-1994,Conflict,1992,1994
+613,288,Chad,483,CSNPD,1992-1994,Conflict,1992,1994
+614,288,Chad,483,FNT,1992-1994,Conflict,1992,1994
+615,288,Chad,483,FARF,1997-1998,Conflict,1997,1998
+616,288,Chad,483,MDJT,1999-2003,Conflict,1999,2003
+617,288,Chad,483,FUCD,2005-2006,Conflict,2005,2006
+618,288,Chad,483,RAFD,2006,Conflict,2006,2006
+619,288,Chad,483,UFDD,2006-2007,Conflict,2006,2007
+620,288,Chad,483,AN,2008,Conflict,2008,2008
+621,288,Chad,483,UFR,2009,Conflict,2009,2009
+622,288,Chad,483,FPRN,2010,Conflict,2010,2010
+14667,13640,Chad,483,IS [territory: Islamic State],2015,Conflict,2015,2015
+14667,13640,Chad,483,IS [territory: Islamic State],2017-2021,Conflict,2017,2021
+15676,288,Chad,483,CCMSR,2018,Conflict,2018,2018
+15676,288,Chad,483,CCMSR,2020,Conflict,2020,2020
+16743,288,Chad,483,FACT,2021,Conflict,2021,2021
+704,321,Chile,155,"Military faction (forces of Augusto Pinochet, Toribio Merino and Leigh Guzman)",1973,Conflict,1973,1973
+403,202,China,710,PLA,1946-1949,War,1946,1949
+421,217,China,710,Taiwanese insurgents [territory: Taiwan],1947,War,1947,1947
+483,236,China,710,Tibet [territory: Tibet],1950,Conflict,1950,1950
+483,236,China,710,Tibet [territory: Tibet],1956,War,1956,1956
+483,236,China,710,Tibet [territory: Tibet],1959,War,1959,1959
+11990,11349,China,710,ETIM [territory: East Turkestan],2008,Conflict,2008,2008
+623,289,Colombia,100,FARC,1964-1968,Conflict,1964,1968
+623,289,Colombia,100,FARC,1971-1972,Conflict,1971,1972
+623,289,Colombia,100,FARC,1974-2015,War,1974,2015
+624,289,Colombia,100,ELN,1966,Conflict,1966,1966
+624,289,Colombia,100,ELN,1969-1970,Conflict,1969,1970
+624,289,Colombia,100,ELN,1973,Conflict,1973,1973
+624,289,Colombia,100,ELN,1984-2006,Conflict,1984,2006
+624,289,Colombia,100,ELN,2008,Conflict,2008,2008
+624,289,Colombia,100,ELN,2010,Conflict,2010,2010
+624,289,Colombia,100,ELN,2013,Conflict,2013,2013
+624,289,Colombia,100,ELN,2015-2016,Conflict,2015,2016
+624,289,Colombia,100,ELN,2018-2019,Conflict,2018,2019
+624,289,Colombia,100,ELN,2021,Conflict,2021,2021
+625,289,Colombia,100,M-19,1978-1979,Conflict,1978,1979
+625,289,Colombia,100,M-19,1981-1986,Conflict,1981,1986
+625,289,Colombia,100,M-19,1988,Conflict,1988,1988
+626,289,Colombia,100,EPL,1984,Conflict,1984,1984
+626,289,Colombia,100,EPL,1987-1990,Conflict,1987,1990
+15488,289,Colombia,100,FARC dissidents,2018-2021,Conflict,2018,2021
+15558,289,Colombia,100,EPL - Megateo,2000,Conflict,2000,2000
+15558,289,Colombia,100,EPL - Megateo,2004,Conflict,2004,2004
+789,362,Comoros,581,Presidential guard,1989,Conflict,1989,1989
+860,407,Comoros,581,MPA/Republic of Anjouan [territory: Anjouan],1997,Conflict,1997,1997
+861,408,Congo,484,Ninjas,1993,Conflict,1993,1993
+861,408,Congo,484,Ninjas,1998,Internationalized Conflict,1998,1998
+862,408,Congo,484,Cobras,1997,Internationalized War,1997,1997
+863,408,Congo,484,Cocoyes,1997-1999,Internationalized Conflict,1997,1999
+864,408,Congo,484,Ntsiloulous,1998-1999,Internationalized War,1998,1999
+864,408,Congo,484,Ntsiloulous,2002,Internationalized Conflict,2002,2002
+864,408,Congo,484,Ntsiloulous,2016,Conflict,2016,2016
+447,225,Costa Rica,94,National Liberation Army,1948,War,1948,1948
+836,390,Croatia,344,Serbian irregulars [territory: Serb],1992,Internationalized Conflict,1992,1992
+837,390,Croatia,344,Serbian Republic of Krajina [territory: Serb],1992-1993,Internationalized War,1992,1993
+837,390,Croatia,344,Serbian Republic of Krajina [territory: Serb],1995,Conflict,1995,1995
+490,242,Cuba,40,M-26-7,1953,Conflict,1953,1953
+490,242,Cuba,40,M-26-7,1956-1958,War,1956,1958
+491,242,Cuba,40,Cuban Revolutionary Council,1961,Internationalized Conflict,1961,1961
+810,379,Djibouti,522,FRUD,1991-1994,Conflict,1991,1994
+811,379,Djibouti,522,FRUD-C,1999,Conflict,1999,1999
+627,290,Dominican Republic,42,Military faction (constitutionalists),1965,Conflict,1965,1965
+551,265,DR Congo (Zaire),490,State of Katanga [territory: Katanga],1961-1962,Conflict,1961,1962
+552,266,DR Congo (Zaire),490,Independent Mining State of South Kasai [territory: South Kasai],1960-1962,Conflict,1960,1962
+581,283,DR Congo (Zaire),490,CNL,1964-1965,War,1964,1965
+582,283,DR Congo (Zaire),490,Military Faction (Forces of Jean Schramme),1967,Conflict,1967,1967
+583,283,DR Congo (Zaire),490,FLNC,1977-1978,Internationalized Conflict,1977,1978
+584,283,DR Congo (Zaire),490,AFDL,1996-1997,Internationalized War,1996,1997
+585,283,DR Congo (Zaire),490,MLC,1998-2000,Internationalized War,1998,2000
+586,283,DR Congo (Zaire),490,RCD,1998-2001,Internationalized War,1998,2001
+588,283,DR Congo (Zaire),490,CNDP,2006-2008,Conflict,2006,2008
+894,429,DR Congo (Zaire),490,BDK [territory: Kongo Kingdom],2007-2008,Conflict,2007,2008
+894,429,DR Congo (Zaire),490,BDK [territory: Kongo Kingdom],2017,Internationalized Conflict,2017,2017
+894,429,DR Congo (Zaire),490,BDK [territory: Kongo Kingdom],2020,Internationalized Conflict,2020,2020
+10509,283,DR Congo (Zaire),490,APCLS,2013-2014,Internationalized Conflict,2013,2014
+10509,283,DR Congo (Zaire),490,APCLS,2020-2021,Internationalized Conflict,2020,2021
+11377,283,DR Congo (Zaire),490,CNPSC,2011-2012,Conflict,2011,2012
+11377,283,DR Congo (Zaire),490,CNPSC,2014,Internationalized Conflict,2014,2014
+11377,283,DR Congo (Zaire),490,CNPSC,2017-2021,Internationalized Conflict,2017,2021
+11982,283,DR Congo (Zaire),490,M23,2012-2013,Internationalized War,2012,2013
+11982,283,DR Congo (Zaire),490,M23,2017,Internationalized Conflict,2017,2017
+11982,283,DR Congo (Zaire),490,M23,2021,Internationalized Conflict,2021,2021
+12009,265,DR Congo (Zaire),490,Kata Katanga [territory: Katanga],2013-2014,Internationalized Conflict,2013,2014
+12009,265,DR Congo (Zaire),490,Kata Katanga [territory: Katanga],2020,Internationalized Conflict,2020,2020
+12463,283,DR Congo (Zaire),490,Forces of Paul Joseph Mukungubila,2013,Conflict,2013,2013
+14808,283,DR Congo (Zaire),490,UPCP,2012,Conflict,2012,2012
+14929,283,DR Congo (Zaire),490,Kamuina Nsapu,2016-2018,War,2016,2018
+15135,283,DR Congo (Zaire),490,MNR,2017,Internationalized Conflict,2017,2017
+15336,283,DR Congo (Zaire),490,UPLC,2018-2019,Internationalized Conflict,2018,2019
+15389,283,DR Congo (Zaire),490,CMC,2018-2021,Internationalized Conflict,2018,2021
+15998,14692,DR Congo (Zaire),490,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019,2021
+16286,283,DR Congo (Zaire),490,RNL,2005,Conflict,2005,2005
+16286,283,DR Congo (Zaire),490,RNL,2016,Conflict,2016,2016
+16286,283,DR Congo (Zaire),490,RNL,2021,Internationalized Conflict,2021,2021
+838,391,Egypt,651,al-Gama'a al-Islamiyya,1993-1998,Conflict,1993,1998
+12487,391,Egypt,651,Ansar Bayt al-Maqdis,2014,Conflict,2014,2014
+14677,13648,Egypt,651,IS [territory: Islamic State],2015-2021,Conflict,2015,2021
+14973,391,Egypt,651,Harakit Sawa'id Misr,2017-2019,Conflict,2017,2019
+15262,391,Egypt,651,Jama'at Ansar al-Islam,2017,Conflict,2017,2017
+694,316,El Salvador,92,Military faction (forces of Benjamin Mejia),1972,Conflict,1972,1972
+695,316,El Salvador,92,ERP,1979,Conflict,1979,1979
+696,316,El Salvador,92,FPL,1979,Conflict,1979,1979
+697,316,El Salvador,92,FMLN,1980-1991,War,1980,1991
+712,326,Eritrea,531,EIJM - AS,1997,Conflict,1997,1997
+712,326,Eritrea,531,EIJM - AS,1999,Conflict,1999,1999
+712,326,Eritrea,531,EIJM - AS,2003,Conflict,2003,2003
+553,267,Ethiopia,530,Military faction (forces of Mengistu Neway),1960,Conflict,1960,1960
+554,267,Ethiopia,530,EPRP,1976-1977,Conflict,1976,1977
+554,267,Ethiopia,530,EPRP,1984-1987,Conflict,1984,1987
+555,267,Ethiopia,530,TPLF,1976,War,1976,1976
+555,267,Ethiopia,530,TPLF,1978-1988,War,1978,1988
+555,267,Ethiopia,530,TPLF,2020-2021,Internationalized War,2020,2021
+556,267,Ethiopia,530,EDU,1977-1978,Conflict,1977,1978
+557,267,Ethiopia,530,EPDM,1983-1985,Conflict,1983,1985
+558,267,Ethiopia,530,EPRDF,1989-1991,War,1989,1991
+559,267,Ethiopia,530,Military faction (forces of Amsha Desta and Merid Negusie),1989,Conflict,1989,1989
+570,275,Ethiopia,530,ELF [territory: Eritrea],1964-1980,Internationalized War,1964,1980
+571,275,Ethiopia,530,EPLF [territory: Eritrea],1973,Conflict,1973,1973
+571,275,Ethiopia,530,EPLF [territory: Eritrea],1975-1991,Internationalized War,1975,1991
+716,329,Ethiopia,530,Ogaden Liberation Front [territory: Ogaden],1964,Conflict,1964,1964
+717,329,Ethiopia,530,WSLF [territory: Ogaden],1976-1983,Internationalized War,1976,1983
+718,329,Ethiopia,530,AIAI [territory: Ogaden],1993,Conflict,1993,1993
+718,329,Ethiopia,530,AIAI [territory: Ogaden],1996,Conflict,1996,1996
+718,329,Ethiopia,530,AIAI [territory: Ogaden],1999,Conflict,1999,1999
+719,329,Ethiopia,530,ONLF [territory: Ogaden],1994,Conflict,1994,1994
+719,329,Ethiopia,530,ONLF [territory: Ogaden],1996,Conflict,1996,1996
+719,329,Ethiopia,530,ONLF [territory: Ogaden],1998-2016,Conflict,1998,2016
+790,363,Ethiopia,530,ALF [territory: Afar],1975-1976,Conflict,1975,1976
+791,363,Ethiopia,530,ARDUF [territory: Afar],1996,Conflict,1996,1996
+869,413,Ethiopia,530,OLF [territory: Oromiya],1977-1978,Conflict,1977,1978
+869,413,Ethiopia,530,OLF [territory: Oromiya],1980-1981,Internationalized War,1980,1981
+869,413,Ethiopia,530,OLF [territory: Oromiya],1983-1992,Conflict,1983,1992
+869,413,Ethiopia,530,OLF [territory: Oromiya],1994-1995,Conflict,1994,1995
+869,413,Ethiopia,530,OLF [territory: Oromiya],1998-2013,Conflict,1998,2013
+869,413,Ethiopia,530,OLF [territory: Oromiya],2015-2016,Conflict,2015,2016
+903,436,Ethiopia,530,"SALF [territory: Arssi, Bale & Sidamo]",1977-1980,Internationalized Conflict,1977,1980
+904,437,Ethiopia,530,SLM [territory: Sidamaland],1981,War,1981,1981
+904,437,Ethiopia,530,SLM [territory: Sidamaland],1983,Conflict,1983,1983
+10006,11447,Ethiopia,530,IGLF [territory: Hararghe],1991,Conflict,1991,1991
+12104,267,Ethiopia,530,Forces of Harar garrison,1991,Conflict,1991,1991
+16023,14935,Ethiopia,530,Military faction (forces of Asaminew Tsige) [territory: Amhara],2019,Conflict,2019,2019
+16240,413,Ethiopia,530,OLA [territory: Oromiya],2019-2021,Conflict,2019,2021
+563,270,France,220,OAS,1961-1962,War,1961,1962
+589,284,Gabon,481,Military faction (forces loyal to Léon M'Ba),1964,Internationalized Conflict,1964,1964
+765,344,Gambia,420,NRC,1981,Internationalized Conflict,1981,1981
+812,380,Georgia,372,National Guard and Mkhedrioni,1991,Conflict,1991,1991
+813,380,Georgia,372,Zviadists,1992-1993,Conflict,1992,1993
+839,392,Georgia,372,Republic of Abkhazia [territory: Abkhazia],1992-1993,War,1992,1993
+840,393,Georgia,372,Republic of South Ossetia [territory: South Ossetia],1992,Conflict,1992,1992
+840,393,Georgia,372,Republic of South Ossetia [territory: South Ossetia],2004,Conflict,2004,2004
+840,393,Georgia,372,Republic of South Ossetia [territory: South Ossetia],2008,Internationalized Conflict,2008,2008
+635,295,Ghana,452,NLC,1966,Conflict,1966,1966
+636,295,Ghana,452,Military faction (forces of Jerry John Rawlings),1981,Conflict,1981,1981
+637,295,Ghana,452,Military faction (forces of Ekow Dennis and Edward Adjei-Ampofo),1983,Conflict,1983,1983
+404,203,Greece,350,DSE,1946-1949,War,1946,1949
+463,233,Guatemala,90,Military faction (Guatemala),1949,Conflict,1949,1949
+464,233,Guatemala,90,Forces of Carlos Castillo Armas,1954,Conflict,1954,1954
+465,233,Guatemala,90,FAR I,1963,Conflict,1963,1963
+465,233,Guatemala,90,FAR I,1965-1974,Conflict,1965,1974
+465,233,Guatemala,90,FAR I,1981,Conflict,1981,1981
+466,233,Guatemala,90,FAR II,1970-1981,Conflict,1970,1981
+467,233,Guatemala,90,EGP,1975-1981,Conflict,1975,1981
+468,233,Guatemala,90,ORPA,1979-1981,Conflict,1979,1981
+469,233,Guatemala,90,URNG,1982-1995,Conflict,1982,1995
+654,307,Guinea,438,RFDG,2000-2001,Conflict,2000,2001
+866,410,Guinea-Bissau,404,"Military Junta for the Consolidation of Democracy, Peace and Justice",1998-1999,Internationalized Conflict,1998,1999
+814,381,Haiti,41,Military faction (forces of Himmler Rebu and Guy Francois),1989,Conflict,1989,1989
+815,381,Haiti,41,Military faction (forces of Raol Cédras),1991,Conflict,1991,1991
+816,381,Haiti,41,FLRN,2004,Conflict,2004,2004
+817,381,Haiti,41,OP Lavalas,2004,Conflict,2004,2004
+12618,11884,Hyderabad,751,CPI,1947-1948,War,1947,1948
+449,227,India,750,CPI,1948-1951,War,1948,1951
+450,227,India,750,CPI-ML,1969-1971,Conflict,1969,1971
+451,227,India,750,PWG,1991-1994,Conflict,1991,1994
+451,227,India,750,PWG,1996-2004,Conflict,1996,2004
+452,227,India,750,MCC,1999-2004,Conflict,1999,2004
+453,227,India,750,CPI-Maoist,2005-2021,Conflict,2005,2021
+507,251,India,750,NNC [territory: Nagaland],1956-1959,Conflict,1956,1959
+507,251,India,750,NNC [territory: Nagaland],1961-1968,Conflict,1961,1968
+508,251,India,750,NSCN-IM [territory: Nagaland],1992-1997,Conflict,1992,1997
+508,251,India,750,NSCN-IM [territory: Nagaland],2000,Conflict,2000,2000
+638,296,India,750,MNF [territory: Mizoram],1966-1968,Conflict,1966,1968
+738,335,India,750,TNV [territory: Tripura],1979-1988,Conflict,1979,1988
+739,335,India,750,ATTF [territory: Tripura],1992,Conflict,1992,1992
+739,335,India,750,ATTF [territory: Tripura],1997,Conflict,1997,1997
+740,335,India,750,NLFT [territory: Tripura],1997,Conflict,1997,1997
+740,335,India,750,NLFT [territory: Tripura],1999-2003,Conflict,1999,2003
+768,347,India,750,PLA [territory: Manipur],1982-1988,Conflict,1982,1988
+768,347,India,750,PLA [territory: Manipur],1995-1996,Conflict,1995,1996
+768,347,India,750,PLA [territory: Manipur],1998,Conflict,1998,1998
+768,347,India,750,PLA [territory: Manipur],2000,Conflict,2000,2000
+768,347,India,750,PLA [territory: Manipur],2004,Conflict,2004,2004
+768,347,India,750,PLA [territory: Manipur],2006,Conflict,2006,2006
+769,347,India,750,UNLF [territory: Manipur],1993-1994,Conflict,1993,1994
+769,347,India,750,UNLF [territory: Manipur],1999-2000,Conflict,1999,2000
+769,347,India,750,UNLF [territory: Manipur],2003-2007,Conflict,2003,2007
+769,347,India,750,UNLF [territory: Manipur],2009,Conflict,2009,2009
+770,347,India,750,KCP [territory: Manipur],2008-2009,Conflict,2008,2009
+771,347,India,750,PREPAK [territory: Manipur],2008-2009,Conflict,2008,2009
+775,351,India,750,Sikh insurgents [territory: Punjab/Khalistan],1983-1993,War,1983,1993
+792,364,India,750,Kashmir insurgents [territory: Kashmir],1990-2021,War,1990,2021
+793,365,India,750,ULFA [territory: Assam],1990,Conflict,1990,1990
+793,365,India,750,ULFA [territory: Assam],1994-2010,Conflict,1994,2010
+884,421,India,750,ABSU [territory: Bodoland],1989-1990,Conflict,1989,1990
+885,421,India,750,NDFB [territory: Bodoland],1994,Conflict,1994,1994
+885,421,India,750,NDFB [territory: Bodoland],1996-1999,Conflict,1996,1999
+885,421,India,750,NDFB [territory: Bodoland],2001-2004,Conflict,2001,2004
+886,421,India,750,NDFB - RD [territory: Bodoland],2009-2010,Conflict,2009,2010
+901,434,India,750,PULF [territory: Islamic State],2008,Conflict,2008,2008
+11299,335,India,750,NLFT-B [territory: Tripura],2004,Conflict,2004,2004
+11932,227,India,750,CPI-ML-J,2000,Conflict,2000,2000
+11971,11342,India,750,GNLA [territory: Garoland],2012,Conflict,2012,2012
+11971,11342,India,750,GNLA [territory: Garoland],2014,Conflict,2014,2014
+14102,421,India,750,NDFB-S [territory: Bodoland],2013-2014,Conflict,2013,2014
+14685,13653,India,750,UNLFW [territory: Western South East Asia],2015-2018,Conflict,2015,2018
+484,237,Indonesia,850,Republic of South Moluccas [territory: South Moluccas],1950,War,1950,1950
+492,243,Indonesia,850,Darul Islam,1953,War,1953,1953
+492,243,Indonesia,850,Darul Islam,1958-1961,Conflict,1958,1961
+493,243,Indonesia,850,Permesta Movement,1958-1961,Conflict,1958,1961
+494,243,Indonesia,850,PRRI,1958-1961,Conflict,1958,1961
+628,291,Indonesia,850,OPM [territory: West Papua],1965,Conflict,1965,1965
+628,291,Indonesia,850,OPM [territory: West Papua],1967-1969,Conflict,1967,1969
+628,291,Indonesia,850,OPM [territory: West Papua],1976-1978,War,1976,1978
+628,291,Indonesia,850,OPM [territory: West Papua],1981,War,1981,1981
+628,291,Indonesia,850,OPM [territory: West Papua],1984,Conflict,1984,1984
+628,291,Indonesia,850,OPM [territory: West Papua],2018,Conflict,2018,2018
+628,291,Indonesia,850,OPM [territory: West Papua],2021,Conflict,2021,2021
+720,330,Indonesia,850,CNRT [territory: East Timor],1975-1988,War,1975,1988
+720,330,Indonesia,850,CNRT [territory: East Timor],1992,Conflict,1992,1992
+720,330,Indonesia,850,CNRT [territory: East Timor],1997-1999,Conflict,1997,1999
+794,366,Indonesia,850,GAM [territory: Aceh],1990-1991,Conflict,1990,1991
+794,366,Indonesia,850,GAM [territory: Aceh],1999-2005,Conflict,1999,2005
+406,205,Iran,630,KDPI [territory: Kurdistan],1946,Internationalized Conflict,1946,1946
+406,205,Iran,630,KDPI [territory: Kurdistan],1966-1968,Conflict,1966,1968
+406,205,Iran,630,KDPI [territory: Kurdistan],1979-1988,War,1979,1988
+406,205,Iran,630,KDPI [territory: Kurdistan],1990,Conflict,1990,1990
+406,205,Iran,630,KDPI [territory: Kurdistan],1993,Conflict,1993,1993
+406,205,Iran,630,KDPI [territory: Kurdistan],1996,Conflict,1996,1996
+406,205,Iran,630,KDPI [territory: Kurdistan],2016,Conflict,2016,2016
+406,205,Iran,630,KDPI [territory: Kurdistan],2018,Conflict,2018,2018
+407,206,Iran,630,Republic of Azerbaijan [territory: Azerbaijan],1946,Internationalized Conflict,1946,1946
+753,338,Iran,630,MEK,1979-1982,War,1979,1982
+753,338,Iran,630,MEK,1986-1988,Conflict,1986,1988
+753,338,Iran,630,MEK,1991,Conflict,1991,1991
+753,338,Iran,630,MEK,1993,Conflict,1993,1993
+753,338,Iran,630,MEK,1997,Conflict,1997,1997
+753,338,Iran,630,MEK,1999-2001,Conflict,1999,2001
+754,338,Iran,630,PJAK,2005-2009,Conflict,2005,2009
+754,338,Iran,630,PJAK,2011,Conflict,2011,2011
+754,338,Iran,630,PJAK,2018,Conflict,2018,2018
+754,338,Iran,630,PJAK,2020-2021,Conflict,2020,2021
+755,338,Iran,630,Jondullah,2006-2010,Conflict,2006,2010
+756,339,Iran,630,APCO [territory: Arabistan],1979-1980,Conflict,1979,1980
+12556,338,Iran,630,Jaish al-Adl,2019,Conflict,2019,2019
+14895,14268,Iran,630,IS [territory: Islamic State],2017,Conflict,2017,2017
+517,259,Iraq,645,Military faction (free Officers Movement),1958,Conflict,1958,1958
+518,259,Iraq,645,Military faction (forces of Abdul Wahab al-Shawaf),1959,Conflict,1959,1959
+519,259,Iraq,645,Military faction (forces of Abd as-Salam Arif),1963,Conflict,1963,1963
+520,259,Iraq,645,NCRC,1963,War,1963,1963
+521,259,Iraq,645,SCIRI,1982-1984,Conflict,1982,1984
+521,259,Iraq,645,SCIRI,1987,Conflict,1987,1987
+521,259,Iraq,645,SCIRI,1991-1996,Conflict,1991,1996
+523,259,Iraq,645,Ansar al-Islam,2004-2007,Internationalized Conflict,2004,2007
+523,259,Iraq,645,Ansar al-Islam,2011,Internationalized Conflict,2011,2011
+524,259,Iraq,645,IS,2004-2021,Internationalized War,2004,2021
+525,259,Iraq,645,RJF,2005-2007,Internationalized Conflict,2005,2007
+564,271,Iraq,645,KDP [territory: Kurdistan],1961-1970,War,1961,1970
+564,271,Iraq,645,KDP [territory: Kurdistan],1973-1975,War,1973,1975
+564,271,Iraq,645,KDP [territory: Kurdistan],1979-1984,Conflict,1979,1984
+564,271,Iraq,645,KDP [territory: Kurdistan],1986-1991,War,1986,1991
+565,271,Iraq,645,PUK [territory: Kurdistan],1976-1978,Conflict,1976,1978
+565,271,Iraq,645,PUK [territory: Kurdistan],1980-1983,Conflict,1980,1983
+565,271,Iraq,645,PUK [territory: Kurdistan],1985-1992,War,1985,1992
+565,271,Iraq,645,PUK [territory: Kurdistan],1995-1996,Conflict,1995,1996
+566,271,Iraq,645,KDP-QM [territory: Kurdistan],1977-1978,Conflict,1977,1978
+13891,259,Iraq,645,al-Mahdi Army,2004,Internationalized War,2004,2004
+13891,259,Iraq,645,al-Mahdi Army,2007-2008,Internationalized Conflict,2007,2008
+470,234,Israel,666,Palestinian insurgents [territory: Palestine],1949-1964,Conflict,1949,1964
+471,234,Israel,666,Non PLO groups [territory: Palestine],1965-1973,Conflict,1965,1973
+472,234,Israel,666,PLO [territory: Palestine],1965-1988,Internationalized War,1965,1988
+473,234,Israel,666,Rejectionist Front [territory: Palestine],1974-1988,Internationalized Conflict,1974,1988
+474,234,Israel,666,PFLP [territory: Palestine],1989,Conflict,1989,1989
+474,234,Israel,666,PFLP [territory: Palestine],2001,Conflict,2001,2001
+475,234,Israel,666,PFLP-GC [territory: Palestine],1989,Conflict,1989,1989
+476,234,Israel,666,Fatah [territory: Palestine],1990-1992,Conflict,1990,1992
+476,234,Israel,666,Fatah [territory: Palestine],2000-2002,Conflict,2000,2002
+476,234,Israel,666,Fatah [territory: Palestine],2005-2007,Conflict,2005,2007
+477,234,Israel,666,Hamas [territory: Palestine],1993-1994,Conflict,1993,1994
+477,234,Israel,666,Hamas [territory: Palestine],2001-2009,Conflict,2001,2009
+477,234,Israel,666,Hamas [territory: Palestine],2011-2012,Conflict,2011,2012
+477,234,Israel,666,Hamas [territory: Palestine],2014,War,2014,2014
+477,234,Israel,666,Hamas [territory: Palestine],2018,Conflict,2018,2018
+477,234,Israel,666,Hamas [territory: Palestine],2021,Conflict,2021,2021
+478,234,Israel,666,PIJ [territory: Palestine],1995,Conflict,1995,1995
+478,234,Israel,666,PIJ [territory: Palestine],2001-2012,Conflict,2001,2012
+478,234,Israel,666,PIJ [territory: Palestine],2014,Conflict,2014,2014
+478,234,Israel,666,PIJ [territory: Palestine],2019,Conflict,2019,2019
+478,234,Israel,666,PIJ [territory: Palestine],2021,Conflict,2021,2021
+479,234,Israel,666,PNA [territory: Palestine],1996,Conflict,1996,1996
+479,234,Israel,666,PNA [territory: Palestine],2000-2002,Conflict,2000,2002
+480,234,Israel,666,AMB [territory: Palestine],2002-2004,Conflict,2002,2004
+481,234,Israel,666,PRC [territory: Palestine],2006,Conflict,2006,2006
+891,426,Israel,666,Hezbollah [territory: Southern Lebanon],1990-1999,Conflict,1990,1999
+891,426,Israel,666,Hezbollah [territory: Southern Lebanon],2006,Conflict,2006,2006
+879,419,Ivory Coast,437,MPCI,2002,Conflict,2002,2002
+880,419,Ivory Coast,437,MPIGO,2002-2003,Conflict,2002,2003
+881,419,Ivory Coast,437,MJP,2003,Conflict,2003,2003
+882,419,Ivory Coast,437,FRCI,2004,Conflict,2004,2004
+882,419,Ivory Coast,437,FRCI,2011,Conflict,2011,2011
+10842,419,Ivory Coast,437,FDSI-CI,2011,Conflict,2011,2011
+14741,13886,Jordan,663,IS [territory: Islamic State],2016,Conflict,2016,2016
+772,348,Kenya,501,Military faction (forces of Hezekiah Ochuka),1982,Conflict,1982,1982
+10589,13646,Kenya,501,Al-Shabaab [territory: Northeastern Province and Coast],2015-2021,Internationalized Conflict,2015,2021
+535,262,Laos,812,Pathet Lao,1959-1961,Internationalized War,1959,1961
+535,262,Laos,812,Pathet Lao,1963-1973,Internationalized War,1963,1973
+536,262,Laos,812,Neutralists,1960,Internationalized Conflict,1960,1960
+537,262,Laos,812,LRM,1989-1990,Conflict,1989,1990
+526,260,Lebanon,660,Independent Nasserite Movement,1958,War,1958,1958
+527,260,Lebanon,660,NSF,1975-1976,War,1975,1976
+527,260,Lebanon,660,NSF,1982-1984,Internationalized War,1982,1984
+528,260,Lebanon,660,LAA,1976,War,1976,1976
+529,260,Lebanon,660,Amal,1983-1984,Internationalized War,1983,1984
+530,260,Lebanon,660,NUF,1985-1986,Conflict,1985,1986
+531,260,Lebanon,660,Lebanese Forces - Hobeika faction,1986,Conflict,1986,1986
+532,260,Lebanon,660,Forces of Michel Aoun,1989-1990,Internationalized Conflict,1989,1990
+533,260,Lebanon,660,Lebanese Forces,1989,Internationalized Conflict,1989,1989
+14244,13675,Lebanon,660,IS [territory: Islamic State],2014-2015,Conflict,2014,2015
+14244,13675,Lebanon,660,IS [territory: Islamic State],2017,Conflict,2017,2017
+867,411,Lesotho,570,Military faction (Lesotho),1998,Internationalized Conflict,1998,1998
+758,341,Liberia,450,Military faction (forces of Samuel Doe),1980,Conflict,1980,1980
+759,341,Liberia,450,NPFL,1989-1990,Conflict,1989,1990
+760,341,Liberia,450,INPFL,1990,Conflict,1990,1990
+761,341,Liberia,450,LURD,2000-2003,War,2000,2003
+762,341,Liberia,450,MODEL,2003,Conflict,2003,2003
+10885,11346,Libya,620,Forces of Muammar Gaddafi,2011,Conflict,2011,2011
+11980,11346,Libya,620,NTC,2011,Internationalized War,2011,2011
+14059,11346,Libya,620,Forces of the House of Representatives,2014-2015,Conflict,2014,2015
+14059,11346,Libya,620,Forces of the House of Representatives,2017,Conflict,2017,2017
+14059,11346,Libya,620,Forces of the House of Representatives,2019-2020,Internationalized War,2019,2020
+14249,11346,Libya,620,Zintan Military Council,2014,Conflict,2014,2014
+14745,13694,Libya,620,IS [territory: Islamic State],2015-2019,Internationalized War,2015,2019
+15225,11346,Libya,620,Forces of Khalifa al-Ghawil,2017,Conflict,2017,2017
+15333,11346,Libya,620,PFLL,2017,Conflict,2017,2017
+15539,11346,Libya,620,ASL,2013,Conflict,2013,2013
+671,310,Madagascar (Malagasy),580,Monima,1971,Conflict,1971,1971
+534,261,Malaysia,820,CPM,1958-1960,Internationalized Conflict,1958,1960
+534,261,Malaysia,820,CPM,1974-1975,Conflict,1974,1975
+534,261,Malaysia,820,CPM,1981,Conflict,1981,1981
+578,280,Malaysia,820,CCO [territory: North Borneo],1963-1966,Internationalized Conflict,1963,1966
+12139,11487,Malaysia,820,Sultanate of Sulu [territory: Sabah],2013,Conflict,2013,2013
+800,372,Mali,432,MPA [territory: Azawad],1990,Conflict,1990,1990
+801,372,Mali,432,FIAA [territory: Azawad],1994,Conflict,1994,1994
+802,372,Mali,432,ATNMC [territory: Azawad],2007-2009,Conflict,2007,2009
+10054,372,Mali,432,FPLA [territory: Azawad],1991,Conflict,1991,1991
+11985,372,Mali,432,CMA [territory: Azawad],2012,Conflict,2012,2012
+11985,372,Mali,432,CMA [territory: Azawad],2014-2015,Internationalized Conflict,2014,2015
+11986,11347,Mali,432,Ansar Dine,2012-2013,Internationalized Conflict,2012,2013
+11986,11347,Mali,432,Ansar Dine,2015-2016,Internationalized Conflict,2015,2016
+11987,11347,Mali,432,Military faction (Red Berets),2012,Conflict,2012,2012
+12571,11347,Mali,432,MUJAO,2013,Internationalized Conflict,2013,2013
+12575,11347,Mali,432,AQIM,2009,Conflict,2009,2009
+12575,11347,Mali,432,AQIM,2013-2017,Internationalized Conflict,2013,2017
+12578,11347,Mali,432,Signed-in-Blood Battalion,2013,Internationalized Conflict,2013,2013
+12582,11347,Mali,432,al-Murabitun,2014,Internationalized Conflict,2014,2014
+14610,13611,Mali,432,FLM [territory: Macina Empire],2015,Conflict,2015,2015
+15108,11347,Mali,432,JNIM,2017-2021,Internationalized Conflict,2017,2021
+15259,14113,Mali,432,IS [territory: Islamic State],2017-2021,Internationalized Conflict,2017,2021
+893,428,Mauritania,435,POLISARIO [territory: Sahrawi Arab Democratic Republic (Western Sahara)],1975-1978,Conflict,1975,1978
+909,442,Mauritania,435,AQIM,2010,Internationalized Conflict,2010,2010
+850,400,Mexico,70,EZLN,1994,Conflict,1994,1994
+851,400,Mexico,70,EPR,1996,Conflict,1996,1996
+841,394,Moldova,359,PMR [territory: Dniestr],1992,Conflict,1992,1992
+672,311,Morocco,600,Military faction (forces of Mohamed Madbouh),1971,Conflict,1971,1971
+721,331,Morocco,600,POLISARIO [territory: Sahrawi Arab Democratic Republic (Western Sahara)],1975-1989,Internationalized War,1975,1989
+722,332,Mozambique,541,Renamo,1977-1992,Internationalized War,1977,1992
+722,332,Mozambique,541,Renamo,2013-2014,Conflict,2013,2014
+722,332,Mozambique,541,Renamo,2016,Conflict,2016,2016
+15516,332,Mozambique,541,Ansar al-Sunnah,2018-2019,Conflict,2018,2019
+16022,14845,Mozambique,541,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019,2021
+427,221,Myanmar (Burma),775,KNUP [territory: Karen],1949-1975,War,1949,1975
+428,221,Myanmar (Burma),775,KNU [territory: Karen],1966-1992,War,1966,1992
+428,221,Myanmar (Burma),775,KNU [territory: Karen],1994-1995,Conflict,1994,1995
+428,221,Myanmar (Burma),775,KNU [territory: Karen],1997-1998,Conflict,1997,1998
+428,221,Myanmar (Burma),775,KNU [territory: Karen],2000-2011,Conflict,2000,2011
+428,221,Myanmar (Burma),775,KNU [territory: Karen],2021,Conflict,2021,2021
+429,221,Myanmar (Burma),775,God's Army [territory: Karen],2000,Conflict,2000,2000
+430,221,Myanmar (Burma),775,DKBA 5 [territory: Karen],2010-2011,Conflict,2010,2011
+430,221,Myanmar (Burma),775,DKBA 5 [territory: Karen],2013,Conflict,2013,2013
+431,222,Myanmar (Burma),775,CPB,1948-1988,War,1948,1988
+432,222,Myanmar (Burma),775,CPB-RF,1948-1950,Conflict,1948,1950
+432,222,Myanmar (Burma),775,CPB-RF,1970,Conflict,1970,1970
+433,222,Myanmar (Burma),775,"PVO - ""White Band"" faction",1948-1953,War,1948,1953
+434,222,Myanmar (Burma),775,ABSDF,1990-1992,Conflict,1990,1992
+434,222,Myanmar (Burma),775,ABSDF,1994,Conflict,1994,1994
+435,223,Myanmar (Burma),775,APLP [territory: Arakan],1948-1957,Conflict,1948,1957
+436,223,Myanmar (Burma),775,Mujahid Party [territory: Arakan],1948-1961,Conflict,1948,1961
+437,223,Myanmar (Burma),775,ANLP [territory: Arakan],1964-1972,Conflict,1964,1972
+438,223,Myanmar (Burma),775,CPA [territory: Arakan],1964-1973,Conflict,1964,1973
+439,223,Myanmar (Burma),775,RPF [territory: Arakan],1973-1978,Conflict,1973,1978
+440,223,Myanmar (Burma),775,ALP [territory: Arakan],1977,Conflict,1977,1977
+442,223,Myanmar (Burma),775,RSO [territory: Arakan],1991,Conflict,1991,1991
+442,223,Myanmar (Burma),775,RSO [territory: Arakan],1994,Conflict,1994,1994
+443,224,Myanmar (Burma),775,MFL-MUF [territory: Mon],1949-1951,Conflict,1949,1951
+444,224,Myanmar (Burma),775,MPF [territory: Mon],1952-1958,Conflict,1952,1958
+445,224,Myanmar (Burma),775,NMSP [territory: Mon],1959-1963,Conflict,1959,1963
+445,224,Myanmar (Burma),775,NMSP [territory: Mon],1990,Conflict,1990,1990
+446,224,Myanmar (Burma),775,BMA [territory: Mon],1996,Conflict,1996,1996
+460,231,Myanmar (Burma),775,PNDF [territory: Kachin],1949-1950,Conflict,1949,1950
+461,231,Myanmar (Burma),775,KIO [territory: Kachin],1961-1992,War,1961,1992
+461,231,Myanmar (Burma),775,KIO [territory: Kachin],2011-2019,Conflict,2011,2019
+461,231,Myanmar (Burma),775,KIO [territory: Kachin],2021,Conflict,2021,2021
+511,253,Myanmar (Burma),775,KNPP [territory: Karenni],1957,Conflict,1957,1957
+511,253,Myanmar (Burma),775,KNPP [territory: Karenni],1987,Conflict,1987,1987
+511,253,Myanmar (Burma),775,KNPP [territory: Karenni],1992,Conflict,1992,1992
+511,253,Myanmar (Burma),775,KNPP [territory: Karenni],1996,Conflict,1996,1996
+511,253,Myanmar (Burma),775,KNPP [territory: Karenni],2005,Conflict,2005,2005
+511,253,Myanmar (Burma),775,KNPP [territory: Karenni],2021,Conflict,2021,2021
+541,264,Myanmar (Burma),775,NSH [territory: Shan],1959,Conflict,1959,1959
+542,264,Myanmar (Burma),775,SSIA [territory: Shan],1960-1961,Conflict,1960,1961
+543,264,Myanmar (Burma),775,SNUF [territory: Shan],1962-1963,Conflict,1962,1963
+544,264,Myanmar (Burma),775,SSA [territory: Shan],1964-1970,War,1964,1970
+544,264,Myanmar (Burma),775,SSA [territory: Shan],1972-1973,Conflict,1972,1973
+545,264,Myanmar (Burma),775,SSNLO [territory: Shan],1969-1970,War,1969,1970
+546,264,Myanmar (Burma),775,SURA [territory: Shan],1969-1970,Conflict,1969,1970
+546,264,Myanmar (Burma),775,SURA [territory: Shan],1976-1983,Conflict,1976,1983
+547,264,Myanmar (Burma),775,SSRA [territory: Shan],1976,Conflict,1976,1976
+548,264,Myanmar (Burma),775,TRC [territory: Shan],1984,Conflict,1984,1984
+549,264,Myanmar (Burma),775,MTA [territory: Shan],1985-1988,Conflict,1985,1988
+549,264,Myanmar (Burma),775,MTA [territory: Shan],1993-1995,Conflict,1993,1995
+550,264,Myanmar (Burma),775,RCSS [territory: Shan],1996-2002,Conflict,1996,2002
+550,264,Myanmar (Burma),775,RCSS [territory: Shan],2005-2011,Conflict,2005,2011
+550,264,Myanmar (Burma),775,RCSS [territory: Shan],2013,Conflict,2013,2013
+887,422,Myanmar (Burma),775,UWSA [territory: Wa],1997,Conflict,1997,1997
+906,439,Myanmar (Burma),775,MNDAA [territory: Kokang],2009,Conflict,2009,2009
+906,439,Myanmar (Burma),775,MNDAA [territory: Kokang],2014-2015,Conflict,2014,2015
+906,439,Myanmar (Burma),775,MNDAA [territory: Kokang],2017,Conflict,2017,2017
+906,439,Myanmar (Burma),775,MNDAA [territory: Kokang],2021,Conflict,2021,2021
+907,440,Myanmar (Burma),775,LNUP [territory: Lahu],1973-1982,Conflict,1973,1982
+11018,11475,Myanmar (Burma),775,NSCN-K [territory: Nagaland],1991,Conflict,1991,1991
+11018,11475,Myanmar (Burma),775,NSCN-K [territory: Nagaland],1995,Conflict,1995,1995
+11018,11475,Myanmar (Burma),775,NSCN-K [territory: Nagaland],2000-2001,Conflict,2000,2001
+11018,11475,Myanmar (Burma),775,NSCN-K [territory: Nagaland],2005-2007,Conflict,2005,2007
+11387,223,Myanmar (Burma),775,ULA [territory: Arakan],2018-2020,Conflict,2018,2020
+11972,264,Myanmar (Burma),775,SSPP [territory: Shan],2011,Conflict,2011,2011
+11972,264,Myanmar (Burma),775,SSPP [territory: Shan],2013,Conflict,2013,2013
+11972,264,Myanmar (Burma),775,SSPP [territory: Shan],2015,Conflict,2015,2015
+14273,222,Myanmar (Burma),775,PSLF,2013-2015,Conflict,2013,2015
+14273,222,Myanmar (Burma),775,PSLF,2017-2019,Conflict,2017,2019
+15069,223,Myanmar (Burma),775,ARSA [territory: Arakan],2016-2017,Conflict,2016,2017
+16759,222,Myanmar (Burma),775,NUG,2021,Conflict,2021,2021
+561,269,Nepal,790,NC,1960-1962,Conflict,1960,1962
+562,269,Nepal,790,CPN-M,1996-2006,War,1996,2006
+741,336,Nicaragua,93,FSLN,1977-1979,War,1977,1979
+742,336,Nicaragua,93,Contras,1982-1990,War,1982,1990
+803,373,Niger,436,CRA [territory: Air and Azawad],1994,Conflict,1994,1994
+859,406,Niger,436,FDR [territory: Eastern Niger],1995,Conflict,1995,1995
+895,430,Niger,436,FLAA,1991-1992,Conflict,1991,1992
+896,430,Niger,436,UFRA,1997,Conflict,1997,1997
+897,430,Niger,436,MNJ,2007-2008,Conflict,2007,2008
+14668,13639,Niger,436,IS [territory: Islamic State],2015-2021,Internationalized Conflict,2015,2021
+15174,430,Niger,436,JNIM,2021,Internationalized Conflict,2021,2021
+639,297,Nigeria,475,Military faction (forces of Patrick Nzeogwu),1966,Conflict,1966,1966
+640,297,Nigeria,475,Jama'atu Ahlis Sunna Lidda'awati wal-Jihad,2009,Conflict,2009,2009
+640,297,Nigeria,475,Jama'atu Ahlis Sunna Lidda'awati wal-Jihad,2011-2021,Internationalized War,2011,2021
+650,303,Nigeria,475,Republic of Biafra [territory: Biafra],1967-1970,War,1967,1970
+889,424,Nigeria,475,Ahlul Sunnah Jamaa [territory: Northern Nigeria],2004,Conflict,2004,2004
+890,425,Nigeria,475,NDPVF [territory: Niger Delta],2004,Conflict,2004,2004
+14636,303,Nigeria,475,IPOB [territory: Biafra],2021,Conflict,2021,2021
+14669,13641,Nigeria,475,IS [territory: Islamic State],2015-2021,Internationalized War,2015,2021
+877,417,North Macedonia,343,UCK,2001,Conflict,2001,2001
+516,258,Oman,698,State of Oman/Free Oman [territory: Oman],1957,Internationalized Conflict,1957,1957
+698,317,Oman,698,PFLO,1969-1975,Internationalized Conflict,1969,1975
+673,312,Pakistan,770,Mukti Bahini [territory: East Pakistan],1971,War,1971,1971
+708,325,Pakistan,770,BLF [territory: Balochistan],1974-1977,War,1974,1977
+708,325,Pakistan,770,BLF [territory: Balochistan],2012,Conflict,2012,2012
+708,325,Pakistan,770,BLF [territory: Balochistan],2015,Conflict,2015,2015
+709,325,Pakistan,770,BLA [territory: Balochistan],2004,Conflict,2004,2004
+709,325,Pakistan,770,BLA [territory: Balochistan],2006-2009,Conflict,2006,2009
+709,325,Pakistan,770,BLA [territory: Balochistan],2011-2016,Conflict,2011,2016
+710,325,Pakistan,770,Baloch Ittehad [territory: Balochistan],2006,Conflict,2006,2006
+711,325,Pakistan,770,BRA [territory: Balochistan],2008-2009,Conflict,2008,2009
+711,325,Pakistan,770,BRA [territory: Balochistan],2012,Conflict,2012,2012
+711,325,Pakistan,770,BRA [territory: Balochistan],2014-2015,Conflict,2014,2015
+855,404,Pakistan,770,MQM,1990,Conflict,1990,1990
+855,404,Pakistan,770,MQM,1994-1996,Conflict,1994,1996
+857,404,Pakistan,770,TTP,2007-2021,Internationalized War,2007,2021
+10961,404,Pakistan,770,IMU,2014,Conflict,2014,2014
+11336,404,Pakistan,770,Lashkar-e-Islam,2009-2010,Conflict,2009,2010
+11336,404,Pakistan,770,Lashkar-e-Islam,2012-2014,Conflict,2012,2014
+11497,404,Pakistan,770,TTP - TA,2012,Conflict,2012,2012
+11521,325,Pakistan,770,UBA [territory: Balochistan],2016,Conflict,2016,2016
+14227,404,Pakistan,770,Jamaat-ul-Ahrar,2014,Conflict,2014,2014
+14319,13936,Pakistan,770,IS [territory: Islamic State],2016-2019,Conflict,2016,2019
+14319,13936,Pakistan,770,IS [territory: Islamic State],2021,Conflict,2021,2021
+16177,325,Pakistan,770,BRAS [territory: Balochistan],2019-2021,Conflict,2019,2021
+795,367,Panama,95,Military faction (forces of Moisés Giroldi),1989,Conflict,1989,1989
+797,369,Papua New Guinea,910,BRA [territory: Bougainville],1990,Conflict,1990,1990
+797,369,Papua New Guinea,910,BRA [territory: Bougainville],1992-1996,Conflict,1992,1996
+424,220,Paraguay,150,"Opposition coalition (Febreristas, Liberals and Communists)",1947,War,1947,1947
+425,220,Paraguay,150,Military faction (forces of Alfredo Stroessner),1954,Conflict,1954,1954
+426,220,Paraguay,150,Military faction (forces of Andres Rodriguez),1989,Conflict,1989,1989
+629,292,Peru,135,ELN,1965,Conflict,1965,1965
+630,292,Peru,135,MIR,1965,Conflict,1965,1965
+631,292,Peru,135,Sendero Luminoso,1982-1999,War,1982,1999
+631,292,Peru,135,Sendero Luminoso,2007-2010,Conflict,2007,2010
+632,292,Peru,135,MRTA,1989-1993,Conflict,1989,1993
+410,209,Philippines,840,Huk,1946-1954,War,1946,1954
+411,209,Philippines,840,CPP,1969-1995,War,1969,1995
+411,209,Philippines,840,CPP,1997,Conflict,1997,1997
+411,209,Philippines,840,CPP,1999-2021,Conflict,1999,2021
+412,209,Philippines,840,"Military faction (forces of Honasan, Abenina & Zumel)",1987,Conflict,1987,1987
+412,209,Philippines,840,"Military faction (forces of Honasan, Abenina & Zumel)",1989-1990,Conflict,1989,1990
+655,308,Philippines,840,MIM [territory: Mindanao],1970-1971,Conflict,1970,1971
+656,308,Philippines,840,MNLF [territory: Mindanao],1972-1990,War,1972,1990
+656,308,Philippines,840,MNLF [territory: Mindanao],1993,Conflict,1993,1993
+657,308,Philippines,840,MILF [territory: Mindanao],1990,Conflict,1990,1990
+657,308,Philippines,840,MILF [territory: Mindanao],1994,Conflict,1994,1994
+657,308,Philippines,840,MILF [territory: Mindanao],1996-2005,War,1996,2005
+657,308,Philippines,840,MILF [territory: Mindanao],2007-2009,Conflict,2007,2009
+657,308,Philippines,840,MILF [territory: Mindanao],2011,Conflict,2011,2011
+657,308,Philippines,840,MILF [territory: Mindanao],2015,Conflict,2015,2015
+658,308,Philippines,840,ASG [territory: Mindanao],1993-1998,Conflict,1993,1998
+658,308,Philippines,840,ASG [territory: Mindanao],2000-2007,Conflict,2000,2007
+658,308,Philippines,840,ASG [territory: Mindanao],2009-2020,Internationalized Conflict,2009,2020
+659,308,Philippines,840,MNLF - NM [territory: Mindanao],2001,Conflict,2001,2001
+659,308,Philippines,840,MNLF - NM [territory: Mindanao],2005,Conflict,2005,2005
+659,308,Philippines,840,MNLF - NM [territory: Mindanao],2013,Conflict,2013,2013
+660,308,Philippines,840,MNLF - HM [territory: Mindanao],2007,Conflict,2007,2007
+11246,308,Philippines,840,BIFM [territory: Mindanao],2012-2016,Conflict,2012,2016
+14913,308,Philippines,840,Maute group [territory: Mindanao],2016,Conflict,2016,2016
+15473,14275,Philippines,840,IS [territory: Islamic State],2016-2021,War,2016,2021
+15474,308,Philippines,840,al-Harakat al-Islamiyah [territory: Mindanao],2016,Conflict,2016,2016
+15475,308,Philippines,840,BIFM-K [territory: Mindanao],2018,Conflict,2018,2018
+798,370,Romania,360,NSF,1989,Conflict,1989,1989
+14471,370,Romania,360,Military faction (forces of Nicolae Ceausescu),1989,Conflict,1989,1989
+413,210,Russia (Soviet Union),365,Forest Brothers [territory: Estonia],1946-1948,Conflict,1946,1948
+414,211,Russia (Soviet Union),365,LNPA [territory: Latvia],1946,Conflict,1946,1946
+415,211,Russia (Soviet Union),365,LTS(p)A [territory: Latvia],1946,Conflict,1946,1946
+416,212,Russia (Soviet Union),365,BDPS [territory: Lithuania],1946-1948,War,1946,1948
+417,213,Russia (Soviet Union),365,UPA [territory: Ukraine],1946-1950,War,1946,1950
+807,376,Russia (Soviet Union),365,Republic of Armenia [territory: Nagorno-Karabakh],1990-1991,Conflict,1990,1991
+808,377,Russia (Soviet Union),365,APF [territory: Azerbaijan],1990,Conflict,1990,1990
+849,399,Russia (Soviet Union),365,Parliamentary Forces,1993,Conflict,1993,1993
+852,401,Russia (Soviet Union),365,Chechen Republic of Ichkeria [territory: Chechnya],1994-1996,War,1994,1996
+852,401,Russia (Soviet Union),365,Chechen Republic of Ichkeria [territory: Chechnya],1999-2007,War,1999,2007
+870,414,Russia (Soviet Union),365,Wahhabi movement of the Buinaksk district [territory: Dagestan],1999,Conflict,1999,1999
+899,432,Russia (Soviet Union),365,Forces of the Caucasus Emirate [territory: Caucasus Emirate],2007-2015,Conflict,2007,2015
+14619,13588,Russia (Soviet Union),365,IS [territory: Islamic State],2015-2020,Conflict,2015,2020
+804,374,Rwanda,517,FPR,1990-1994,Internationalized War,1990,1994
+805,374,Rwanda,517,ALiR,1996-2000,War,1996,2000
+12102,374,Rwanda,517,FDLR,2001-2002,War,2001,2002
+12102,374,Rwanda,517,FDLR,2009-2012,Internationalized War,2009,2012
+12102,374,Rwanda,517,FDLR,2016,Internationalized Conflict,2016,2016
+12102,374,Rwanda,517,FDLR,2019-2020,Internationalized Conflict,2019,2020
+15547,374,Rwanda,517,FDLR-RUD,2019-2020,Internationalized Conflict,2019,2020
+16081,374,Rwanda,517,CNRD,2019-2020,Internationalized Conflict,2019,2020
+757,340,Saudi Arabia,670,JSM,1979,Conflict,1979,1979
+806,375,Senegal,433,MFDC [territory: Casamance],1990,Conflict,1990,1990
+806,375,Senegal,433,MFDC [territory: Casamance],1992-1993,Conflict,1992,1993
+806,375,Senegal,433,MFDC [territory: Casamance],1995,Conflict,1995,1995
+806,375,Senegal,433,MFDC [territory: Casamance],1997-1998,Conflict,1997,1998
+806,375,Senegal,433,MFDC [territory: Casamance],2000-2001,Conflict,2000,2001
+806,375,Senegal,433,MFDC [territory: Casamance],2003,Conflict,2003,2003
+806,375,Senegal,433,MFDC [territory: Casamance],2011,Conflict,2011,2011
+824,384,Serbia (Yugoslavia),345,Republic of Slovenia [territory: Slovenia],1991,Conflict,1991,1991
+825,385,Serbia (Yugoslavia),345,Croatian irregulars [territory: Croatia],1991,Conflict,1991,1991
+826,385,Serbia (Yugoslavia),345,Republic of Croatia [territory: Croatia],1991-1992,War,1991,1992
+868,412,Serbia (Yugoslavia),345,UCK [territory: Kosovo],1998-1999,Internationalized War,1998,1999
+818,382,Sierra Leone,451,RUF,1991-2001,Internationalized War,1991,2001
+819,382,Sierra Leone,451,AFRC,1997-1999,Internationalized War,1997,1999
+820,382,Sierra Leone,451,Kamajors,1997-1998,Internationalized Conflict,1997,1998
+821,382,Sierra Leone,451,WSB,2000,Internationalized Conflict,2000,2000
+743,337,Somalia,520,SSDF,1982-1984,Conflict,1982,1984
+744,337,Somalia,520,SNM,1983-1984,Conflict,1983,1984
+744,337,Somalia,520,SNM,1986-1991,War,1986,1991
+745,337,Somalia,520,SPM,1989-1991,Conflict,1989,1991
+746,337,Somalia,520,USC/SSA,1990-1991,War,1990,1991
+747,337,Somalia,520,USC/SNA,1991-1996,War,1991,1996
+748,337,Somalia,520,SRRC,2001-2002,Conflict,2001,2002
+749,337,Somalia,520,ARS/UIC,2006-2008,Internationalized War,2006,2008
+750,337,Somalia,520,Al-Shabaab,2008-2021,Internationalized War,2008,2021
+752,337,Somalia,520,Hizbul Islam,2009-2010,Internationalized Conflict,2009,2010
+11545,14074,Somalia,520,Republic of Somaliland [territory: Somaliland],2018,Conflict,2018,2018
+15077,14197,Somalia,520,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019,2021
+641,298,South Africa,560,SWAPO [territory: Namibia],1966-1988,War,1966,1988
+766,345,South Africa,560,ANC,1981-1983,Conflict,1981,1983
+766,345,South Africa,560,ANC,1985-1988,Conflict,1985,1988
+11805,11345,South Sudan,626,SSDM/A - Cobra Faction,2013,Conflict,2013,2013
+11978,11345,South Sudan,626,SSDM/A,2011,Conflict,2011,2011
+11979,11345,South Sudan,626,SSLM/A,2011-2012,Conflict,2011,2012
+12413,11345,South Sudan,626,SPLM/A - IO,2013-2018,Internationalized War,2013,2018
+15195,11345,South Sudan,626,NAS,2019-2021,Conflict,2019,2021
+17033,11345,South Sudan,626,SPLM/A - IO - Kitgwang faction,2021,Conflict,2021,2021
+505,249,South Vietnam,817,FNL [territory: South Vietnam],1955-1964,Internationalized War,1955,1964
+786,359,South Yemen,680,YSP - AFI,1986,War,1986,1986
+763,342,Spain,230,ETA [territory: Basque],1978-1982,Conflict,1978,1982
+763,342,Spain,230,ETA [territory: Basque],1985-1987,Conflict,1985,1987
+763,342,Spain,230,ETA [territory: Basque],1991,Conflict,1991,1991
+674,313,Sri Lanka,780,JVP,1971,War,1971,1971
+674,313,Sri Lanka,780,JVP,1989-1990,Conflict,1989,1990
+776,352,Sri Lanka,780,LTTE [territory: Eelam],1984-2001,War,1984,2001
+776,352,Sri Lanka,780,LTTE [territory: Eelam],2003,Conflict,2003,2003
+776,352,Sri Lanka,780,LTTE [territory: Eelam],2005-2009,War,2005,2009
+777,352,Sri Lanka,780,TELO [territory: Eelam],1984-1985,Conflict,1984,1985
+778,352,Sri Lanka,780,EPRLF [territory: Eelam],1985,Conflict,1985,1985
+778,352,Sri Lanka,780,EPRLF [territory: Eelam],1989,Conflict,1989,1989
+580,282,Sudan,625,SSLM [territory: Southern Sudan],1963-1972,War,1963,1972
+661,309,Sudan,625,Sudanese Communist Party,1971,Conflict,1971,1971
+662,309,Sudan,625,National Front,1976,Conflict,1976,1976
+663,309,Sudan,625,SPLM/A,1983-2004,War,1983,2004
+664,309,Sudan,625,NDA,1996-2001,Conflict,1996,2001
+665,309,Sudan,625,JEM,2003-2004,Internationalized Conflict,2003,2004
+665,309,Sudan,625,JEM,2007-2011,Conflict,2007,2011
+666,309,Sudan,625,SLM/A,2003-2006,Internationalized War,2003,2006
+666,309,Sudan,625,SLM/A,2008-2011,Conflict,2008,2011
+666,309,Sudan,625,SLM/A,2017-2018,Conflict,2017,2018
+666,309,Sudan,625,SLM/A,2020-2021,Conflict,2020,2021
+667,309,Sudan,625,NRF,2006,Conflict,2006,2006
+668,309,Sudan,625,SLM/A - MM,2006,Conflict,2006,2006
+669,309,Sudan,625,SLFA,2007-2008,Conflict,2007,2008
+670,309,Sudan,625,SSDM/A,2010-2011,Conflict,2010,2011
+11975,309,Sudan,625,SPLM/A-North,2011,Internationalized Conflict,2011,2011
+11975,309,Sudan,625,SPLM/A-North,2015-2016,Conflict,2015,2016
+11976,309,Sudan,625,SSLM/A,2011,Conflict,2011,2011
+11977,11344,Sudan,625,Republic of South Sudan [territory: Abyei],2011,Conflict,2011,2011
+11988,309,Sudan,625,SRF,2011-2017,War,2011,2017
+14134,309,Sudan,625,SARC,2014,Conflict,2014,2014
+14134,309,Sudan,625,SARC,2017,Conflict,2017,2017
+14150,309,Sudan,625,Darfur Joint Resistance Forces,2014-2015,Conflict,2014,2015
+784,357,Suriname,115,SLA,1987,Conflict,1987,1987
+642,299,Syria,652,Military faction (forces loyal to Nureddin Atassi and Youssef Zeayen),1966,Conflict,1966,1966
+643,299,Syria,652,Muslim Brotherhood,1979-1982,War,1979,1982
+11973,299,Syria,652,Syrian insurgents,2011-2021,Internationalized War,2011,2021
+13821,13042,Syria,652,PYD [territory: Rojava Kurdistan],2012-2015,Conflict,2012,2015
+14620,13604,Syria,652,IS [territory: Islamic State],2013-2021,Internationalized War,2013,2021
+14784,13809,Syria,652,SDF [territory: Rojava Kurdistan],2016,Conflict,2016,2016
+14784,13809,Syria,652,SDF [territory: Rojava Kurdistan],2018,Conflict,2018,2018
+842,395,Tajikistan,702,UTO,1992-1996,Internationalized War,1992,1996
+842,395,Tajikistan,702,UTO,1998,Conflict,1998,1998
+843,395,Tajikistan,702,Forces of Khudoberdiyev,1997-1998,Conflict,1997,1998
+908,395,Tajikistan,702,IMU,2010-2011,Conflict,2010,2011
+12298,395,Tajikistan,702,PFT,1992,Internationalized Conflict,1992,1992
+12300,395,Tajikistan,702,Forces of Mullo Abdullo,2000,Conflict,2000,2000
+12300,395,Tajikistan,702,Forces of Mullo Abdullo,2010,Conflict,2010,2010
+16474,15183,Tanzania,510,IS [territory: Islamic State],2020,Conflict,2020,2020
+487,240,Thailand,800,Military faction (navy),1951,Conflict,1951,1951
+488,240,Thailand,800,CPT,1974-1982,Conflict,1974,1982
+888,423,Thailand,800,Patani insurgents [territory: Patani],2003-2021,Conflict,2003,2021
+785,358,Togo,461,MTD,1986,Conflict,1986,1986
+809,378,Trinidad and Tobago,52,Jamaat al-Muslimeen,1990,Conflict,1990,1990
+764,343,Tunisia,616,Résistance Armée Tunisienne,1980,Conflict,1980,1980
+10882,343,Tunisia,616,AQIM,2013-2015,Conflict,2013,2015
+14744,343,Tunisia,616,JAK-T,2015,Conflict,2015,2015
+14747,14333,Tunisia,616,IS [territory: Islamic State],2016,Conflict,2016,2016
+781,354,Turkey,640,PKK [territory: Kurdistan],1984-2013,War,1984,2013
+781,354,Turkey,640,PKK [territory: Kurdistan],2015-2021,War,2015,2021
+822,383,Turkey,640,DHKP-C,1991-1993,Conflict,1991,1993
+823,383,Turkey,640,MKP,2005,Conflict,2005,2005
+10516,383,Turkey,640,TAK,2016,Conflict,2016,2016
+14701,13902,Turkey,640,IS [territory: Islamic State],2015-2017,War,2015,2017
+15065,383,Turkey,640,Yurtta Sulh Konseyi,2016,Conflict,2016,2016
+16900,383,Turkey,640,TKP-ML,2000,Conflict,2000,2000
+675,314,Uganda,500,Military faction (forces of Idi Amin),1971,Conflict,1971,1971
+676,314,Uganda,500,Kikosi Maalum,1972,Conflict,1972,1972
+676,314,Uganda,500,Kikosi Maalum,1979,Internationalized Conflict,1979,1979
+677,314,Uganda,500,Military faction (forces of Charles Arube),1974,Conflict,1974,1974
+678,314,Uganda,500,Fronasa,1979,Internationalized Conflict,1979,1979
+679,314,Uganda,500,UNLF,1979,Internationalized Conflict,1979,1979
+680,314,Uganda,500,FUNA,1980-1981,Internationalized Conflict,1980,1981
+681,314,Uganda,500,NRA,1981-1986,Internationalized War,1981,1986
+682,314,Uganda,500,UNRF,1981-1983,Internationalized Conflict,1981,1983
+683,314,Uganda,500,UFM,1982,Conflict,1982,1982
+684,314,Uganda,500,HSM,1986-1987,War,1986,1987
+685,314,Uganda,500,UPDA,1986-1987,Conflict,1986,1987
+686,314,Uganda,500,UPA,1987-1992,Conflict,1987,1992
+687,314,Uganda,500,Lord's Army,1988,Conflict,1988,1988
+688,314,Uganda,500,LRA,1988-1991,War,1988,1991
+688,314,Uganda,500,LRA,1994-1998,Conflict,1994,1998
+688,314,Uganda,500,LRA,2000-2006,Internationalized War,2000,2006
+688,314,Uganda,500,LRA,2008-2011,Internationalized Conflict,2008,2011
+688,314,Uganda,500,LRA,2013-2014,Internationalized Conflict,2013,2014
+689,314,Uganda,500,ADF,1996-2002,Conflict,1996,2002
+689,314,Uganda,500,ADF,2007,Conflict,2007,2007
+689,314,Uganda,500,ADF,2010-2011,Internationalized Conflict,2010,2011
+689,314,Uganda,500,ADF,2013-2019,Internationalized Conflict,2013,2019
+690,314,Uganda,500,WNBF,1996,Conflict,1996,1996
+691,314,Uganda,500,UNRF II,1997,Conflict,1997,1997
+14085,13219,Ukraine,369,Maidan,2014,Conflict,2014,2014
+14124,13246,Ukraine,369,DPR [territory: Donetsk],2014,Internationalized War,2014,2014
+14184,13247,Ukraine,369,LPR [territory: Lugansk],2014,Internationalized War,2014,2014
+14210,13306,Ukraine,369,United Armed Forces of Novorossiya [territory: Novorossiya],2014-2015,Internationalized War,2014,2015
+15100,13306,Ukraine,369,DPR [territory: Novorossiya],2015-2021,Internationalized Conflict,2015,2021
+15101,13306,Ukraine,369,LPR [territory: Novorossiya],2015-2021,Internationalized Conflict,2015,2021
+692,315,United Kingdom,200,PIRA [territory: Northern Ireland],1971-1991,Conflict,1971,1991
+693,315,United Kingdom,200,RIRA [territory: Northern Ireland],1998,Conflict,1998,1998
+878,418,United States of America,2,al-Qaida,2001-2017,Internationalized War,2001,2017
+878,418,United States of America,2,al-Qaida,2019,Internationalized Conflict,2019,2019
+702,319,Uruguay,165,MLN/Tupamaros,1972,Conflict,1972,1972
+871,415,Uzbekistan,704,IMU,1999-2000,Internationalized Conflict,1999,2000
+872,415,Uzbekistan,704,JIG,2004,Conflict,2004,2004
+573,277,Venezuela,101,Military faction (navy),1962,Conflict,1962,1962
+574,277,Venezuela,101,Bandera Roja,1982,Conflict,1982,1982
+575,277,Venezuela,101,Military faction (forces of Hugo Chávez),1992,Conflict,1992,1992
+456,230,Yemen (North Yemen),678,Opposition coalition,1948,War,1948,1948
+457,230,Yemen (North Yemen),678,Royalists,1962-1970,Internationalized War,1962,1970
+458,230,Yemen (North Yemen),678,NDF,1979-1982,Conflict,1979,1982
+459,230,Yemen (North Yemen),678,AQAP,2009-2018,Internationalized War,2009,2018
+853,402,Yemen (North Yemen),678,Democratic Republic of Yemen [territory: South Yemen],1994,War,1994,1994
+10855,230,Yemen (North Yemen),678,Ansarallah,2014-2015,Conflict,2014,2015
+14595,230,Yemen (North Yemen),678,Forces of Hadi,2015-2021,Internationalized War,2015,2021
+14609,13645,Yemen (North Yemen),678,IS [territory: Islamic State],2015,Conflict,2015,2015
+14609,13645,Yemen (North Yemen),678,IS [territory: Islamic State],2017,Conflict,2017,2017
+14609,13645,Yemen (North Yemen),678,IS [territory: Islamic State],2020,Conflict,2020,2020
+15298,230,Yemen (North Yemen),678,GPC,2017,Conflict,2017,2017
+699,318,Zimbabwe (Rhodesia),552,ZAPU,1967-1968,Conflict,1967,1968
+699,318,Zimbabwe (Rhodesia),552,ZAPU,1973-1974,Conflict,1973,1974
+700,318,Zimbabwe (Rhodesia),552,ZANU,1973-1976,Internationalized War,1973,1976
+701,318,Zimbabwe (Rhodesia),552,PF,1976-1979,War,1976,1979
