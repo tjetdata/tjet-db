@@ -9,7 +9,6 @@ pkeys <- c(
   "TruthCommissions" = "truthcommissionID",
   "Reparations" = "reparationID",
   "Vettings" = "vettingID",
-  "CountryYears" = "countryyearID",
   "Countries" = "ccode",
   "Transitions" = "transitionID",
   "Conflicts" = "conflict_id",
@@ -188,13 +187,13 @@ db <- c(db, multi_selects)
 ## the approaches below differ by whether the relationship is one-to-one or one-to-many
 ## should simplify the code below with one function
 
-db[["CountryYears"]] <- db$CountryYears %>%
-  unnest_longer(transitionID) %>%
-  rename(airtable_record_id = "transitionID") %>%
-  left_join(tjet$Transitions %>% 
-              select(airtable_record_id, transitionID),
-            by = "airtable_record_id") %>%
-  select(-airtable_record_id)
+# db[["CountryYears"]] <- db$CountryYears %>%
+#   unnest_longer(transitionID) %>%
+#   rename(airtable_record_id = "transitionID") %>%
+#   left_join(tjet$Transitions %>% 
+#               select(airtable_record_id, transitionID),
+#             by = "airtable_record_id") %>%
+#   select(-airtable_record_id)
 
 db[["Reparations"]] <- db$Reparations %>%
   unnest_longer(ucdpConflictID) %>%
