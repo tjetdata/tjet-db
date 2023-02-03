@@ -40,6 +40,11 @@ other <- read_excel(here("transitions/data/p5v2018.xls")) %>%
   mutate(country = if_else(is.na(country), country_bmr, country)) %>% 
   select(-country_bmr) %>% 
   mutate(country = if_else(country == "Bosnia", "Bosnia and Herzegovina", country), 
+         country = if_else(country == "Antigua", "Antigua & Barbuda", country), 
+         country = if_else(country == "Liechstenstein", "Liechtenstein", country), 
+         country = if_else(country == "Micronesia, Fed.", "Micronesia", country),
+         country = if_else(country == "Samoa (Western)", "Samoa", country), 
+         country = if_else(country == "St. Vincent & Gren.", "St. Vincent", country), 
          country = if_else(country == "Myanmar (Burma)", "Burma/Myanmar", country),
          country = if_else(country == "Congo Brazzaville", "Republic of the Congo", country),
          country = if_else(country == "Congo Kinshasa", "Democratic Republic of the Congo", country),
@@ -167,7 +172,7 @@ df <- df %>%
   mutate(trans_p5_yr = case_when( (polity_p5 == -88 & polity2_p5 > 0 & polity2_p5 > polity2_lag ) |  
                                   (polity_p5 == -88 & polity2_nxt > 0 & polity2_nxt > polity2_lag ) |
                                   (polity_p5 - polity_lag >= 3 & polity_vdem > 0) ~ year), 
-         trans_bmr_yr = case_when(bmr_trans_vdem == 1 ~ year),
+         trans_bmr_yr = case_when(dem_trans_bmr == 1 ~ year),
          trans_gwf_yr = case_when(reg_fail_gwf == 1 & reg_next_gwf == "democracy" ~ year)) 
 
 df <- df %>% 
@@ -340,14 +345,24 @@ ifit <- read_csv(here("transitions/data/Freeman.csv")) %>%
          tr_new_ifit = trans_new,
          tr_descr_ifit = tr_descr)
 
-full_join(v6, df, by = c("country" = "country_name", "year" = "year")) %>% 
-  # mutate(check = case_when(tjet_dtrid %in% c(3, 11, 60) ~ "check")) %>% 
+prev <- read_csv(here("transitions/transitions_with_notes.csv"),
+                 col_types = list(note_GD = col_character())) %>% 
+  select(country, year, NEW, note_Timo, note_GD, tjet_dtrid) %>% 
+  rename(trans_year = NEW,
+         tjet_dtrid_prev = tjet_dtrid)
+
+v6 %>% 
   rename(polity2_gd = polity2,
+         demo_duration_gd = demo_duration, 
          bmr_demo_gd = bmr_demo,
          bmr_trans_gd = bmr_trans,
          bmr_dur_gd = bmr_duration,
-         coup_gd = coup) %>%
-  filter(year > 1969 & year < 2021) %>%
+         coup_gd = coup,
+         v2x_polyarchy_vdem_gd = v2x_polyarchy_vdem, 
+         v2x_libdem_vdem_gd = v2x_libdem_vdem) %>% 
+  full_join(df, by = c("country" = "country_name", "year" = "year")) %>% 
+  # mutate(check = case_when(tjet_dtrid %in% c(3, 11, 60) ~ "check")) %>% 
+  # filter(year > 1969 & year < 2021) %>%
   mutate(ccode = if_else(is.na(ccode) & !is.na(ccode_vdem), ccode_vdem, ccode),
          p5_yr = case_when(year == trans_p5_yr ~ year), 
          bmr_yr = case_when(year == trans_bmr_yr ~ year), 
@@ -360,22 +375,41 @@ full_join(v6, df, by = c("country" = "country_name", "year" = "year")) %>%
   full_join(ifit, by = c("country" = "country", "year" = "tr_year") ) %>% 
   mutate(ifit_yr = case_when(!is.na(tr_descr_ifit) ~ year)) %>% 
   arrange(country, year) %>% 
-  select(country, ccode, country_id, year, 
-         tjet_dtrid, p5_yr, trans_p5, bmr_yr, trans_bmr, 
-         ert_yr, trans_ert, row_yr, trans_row, gwf_yr, trans_gwf, ifit_yr,
+  full_join(prev, by = c("country" = "country", "year" = "year")) %>% 
+  select(country, year, trans_year, note_Timo, note_GD, 
+         tjet_dtrid,  
+         p5_yr, trans_p5, 
+         bmr_yr, trans_bmr, 
+         ert_yr, trans_ert, 
+         row_yr, trans_row, 
+         gwf_yr, trans_gwf, ifit_yr,
          polity_p5, polity_vdem, polity2_p5, polity2_vdem, polity2_gd, 
-         dem_bmr, bmr_dem_vdem, bmr_demo_gd, dem_trans_bmr, bmr_trans_vdem, bmr_trans_gd, bmr_dur_gd,
-         v2x_regime_amb, v2x_regime_vdem,
+         change_p5, regtrans_p5, demo_duration_gd, 
+         dem_bmr, dem_omit_bmr, bmr_dem_vdem, bmr_demo_gd, dem_trans_bmr, bmr_trans_vdem, bmr_trans_gd, bmr_dur_gd,
+         v2x_regime_amb, v2x_regime_vdem, v2x_polyarchy, 
          dem_ep_start_year, dem_ep_end_year, dem_founding_elec, dem_ep_outcome, 
          aut_ep_start_year, aut_ep_end_year, aut_founding_elec, aut_ep_outcome, 
-         v2x_polyarchy_vdem, v2x_libdem_vdem, v2x_polyarchy, 
+         # v2x_polyarchy_vdem_gd, v2x_libdem_vdem_gd, 
          coup_gd, coup_pt_vdem, coups_pipe_vdem, 
          regime_gwf, reg_next_gwf, reg_prior_gwf, reg_fail_gwf,
-         tr_num_ifit, tr_dem_ifit, tr_confl_ifit, tr_new_ifit, tr_descr_ifit) %>% 
+         tr_num_ifit, tr_dem_ifit, tr_confl_ifit, tr_new_ifit, tr_descr_ifit, 
+         gwf_country, ccode, country_id, ccode_p5bmr, ccode_vdem) %>% 
   rename(vdem_id = country_id) %>% 
-  write_csv(here("transitions/transitions_comparison.csv"), na = "") # %>% write_xlsx("../../Transitions/transitions_comparison_timo.xlsx")
+  unique() %>%
+  # filter(v2x_regime_vdem !=	v2x_regime_ert) 
+  write_csv(here("transitions/transitions_new.csv"), na = "") # %>% write_xlsx("../../Transitions/transitions_comparison_timo.xlsx")
 
 ### need to clean up below
+# Czech Republic
+# Czechoslovakia
+# Palestine/WB
+# Palestine/Gaza
+# Somaliland
+# Zanzibar
+# indicators for source data
+# make sure to only use existing country years
+
+
 
 # read_csv("~/Desktop/new.csv") %>% 
 #   select(country, year, NEW_Timo, note_Timo, tjet_dtrid) %>% 
