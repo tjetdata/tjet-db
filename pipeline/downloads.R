@@ -46,5 +46,4 @@ tjet <- lapply(to_download, function(table) {
   airtable(table, base_id) %>%
     read_airtable(id_to_col = TRUE)
 })
-tjet$Accused$trialID <- as.integer(tjet$Accused$trialID)
 save(tjet, file = here("data/tjet.RData"))

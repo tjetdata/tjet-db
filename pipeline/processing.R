@@ -15,6 +15,20 @@ pkeys <- c(
   "Dyads" = "dyad_id"
 )
 
+### check metadata table for non-existing fields
+
+names(tables) <- tables <- names(pkeys)
+map(tables, function(tab) {
+  exclude <- c("Amnesties", "Vetting", "Dyads", "Conflicts", 
+               "ENDOFFORM", "NEW DATA FROM HERE", "invalidExplain")
+  meta <- tjet$metadata %>% 
+    filter(table_name == tab) %>% 
+    select(field_name) %>%
+    unlist(use.names = FALSE)
+  meta <- meta[!meta %in% exclude] 
+  meta[!meta %in% names(tjet[[tab]])]
+})
+
 ### prodDB tables
 
 names(select_tables) <-
@@ -76,6 +90,8 @@ db[select_tables] <- map(select_tables, function(tab_name) {
 })
 
 ### dealing with multipleLookupValues (& multipleRecordLinks)
+
+# tjet$Accused$trialID <- as.integer(tjet$Accused$trialID)
 
 names(select_tables) <- select_tables <- tjet$metadata %>%
   filter(
