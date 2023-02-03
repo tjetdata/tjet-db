@@ -20,24 +20,15 @@ names(to_download) <- to_download <- c(
   "TruthCommissions",
   "Reparations",
   "Vettings",
+  "Experts",
+  "NGOs",
+  "Legal",
   "Countries",
   "Transitions",
   "Conflicts",
   "Dyads",
   "select_options",
   "metadata"
-)
-pkeys <- c(
-  "Amnesties" = "amnestyID",
-  "Trials" = "trialID",
-  "Accused" = "accusedID",
-  "TruthCommissions" = "truthcommissionID",
-  "Reparations" = "reparationID",
-  "Vettings" = "vettingID",
-  "Countries" = "ccode",
-  "Transitions" = "transitionID",
-  "Conflicts" = "conflict_id",
-  "Dyads" = "dyad_id"
 )
 
 ### download data from Airtable
