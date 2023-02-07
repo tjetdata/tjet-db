@@ -19,8 +19,7 @@ pkeys <- c(
 
 names(tables) <- tables <- names(pkeys)
 map(tables, function(tab) {
-  exclude <- c("Amnesties", "Vetting", "Dyads", "Conflicts", 
-               "ENDOFFORM", "NEW DATA FROM HERE", "invalidExplain")
+  exclude <- c("Amnesties", "Vetting", "Dyads", "Conflicts", "invalidExplain")
   meta <- tjet$metadata %>% 
     filter(table_name == tab) %>% 
     select(field_name) %>%
@@ -90,8 +89,6 @@ db[select_tables] <- map(select_tables, function(tab_name) {
 })
 
 ### dealing with multipleLookupValues (& multipleRecordLinks)
-
-# tjet$Accused$trialID <- as.integer(tjet$Accused$trialID)
 
 names(select_tables) <- select_tables <- tjet$metadata %>%
   filter(
@@ -264,6 +261,17 @@ db[["Vettings"]] <- db$Vettings %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
+
+### at the moment the trial-accused link is one-to-many, but in theory, I could become many-to-many
+# range(unlist(map(db$Accused$trialID, length)))
+
+db[["Accused"]] <- db$Accused %>%
+  unnest_longer(trialID) %>%
+  rename(airtable_record_id = "trialID") %>%
+  left_join(tjet$Trials %>% 
+              select(airtable_record_id, trialID),
+            by = "airtable_record_id") %>%
+  select(-airtable_record_id) 
 
 ## truth commissions have one-to-many links
 
