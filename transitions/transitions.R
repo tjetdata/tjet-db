@@ -7,6 +7,9 @@ library(tidyverse)
 library(readxl)
 library(writexl)
 library(here)
+library(googlesheets4)
+library(googledrive)
+
 
 # read_excel("../transitions2020_v5.xlsx") %>% 
 #   mutate(vdem_id = if_else(country == "Cote d'Ivoire", 64, vdem_id)) %>% 
@@ -423,3 +426,16 @@ v6 %>%
 #   select(country, new_start, tjet_start, actual_new, tjet_dtrid, note) %>%
 #   unique() %>%
 #   write_csv("~/Desktop/comparison.csv", na = "")
+
+
+transitions <- drive_get("transitions") %>% 
+  read_sheet(sheet = "transitions_new") 
+transitions %>%
+  filter(!is.na(trans_year) | !is.na(flag) | !is.na(note)) %>%
+  mutate(trans = case_when(year == trans_year ~ 1, 
+                           year != trans_year ~ 0,
+                           is.na(trans_year) ~ 0), 
+         flag = ifelse(is.na(flag), 0, flag)) %>% 
+  select(country, trans, flag, trans_year, p5_year, bmr_year, ert_year, note, tjet_dtrid, year) %>% 
+  # filter(trans == 1 & trans_year > 1969) %>% print(n = Inf)
+  write_csv("~/Desktop/for_Airtable.csv", na = "")
