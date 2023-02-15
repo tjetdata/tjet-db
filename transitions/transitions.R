@@ -435,7 +435,11 @@ transitions %>%
   mutate(trans = case_when(year == trans_year ~ 1, 
                            year != trans_year ~ 0,
                            is.na(trans_year) ~ 0), 
-         flag = ifelse(is.na(flag), 0, flag)) %>% 
+         flag = ifelse(is.na(flag), 0, flag), 
+         country = str_replace(country, "Democratic Republic of the Congo", "Congo (Brazzaville)"),
+         country = str_replace(country, "Republic of the Congo", "DR Congo"),
+         country = str_replace(country, "German Democratic Republic", "German Democratic Republic (East)")) %>%
+  filter(country != "Zanzibar") %>%
   select(country, trans, flag, trans_year, p5_year, bmr_year, ert_year, note, tjet_dtrid, year) %>% 
   # filter(trans == 1 & trans_year > 1969) %>% print(n = Inf)
   write_csv("~/Desktop/for_Airtable.csv", na = "")
