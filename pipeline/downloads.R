@@ -11,27 +11,13 @@ library(here)
 # readRenviron("~/.Renviron")
 # Sys.getenv("AIRTABLE_API_KEY")
 
-### setup
+### download data from Airtable
 base_id <- "appHsoHAemKITZgMF"
 names(to_download) <- to_download <- c(
-  "Amnesties",
-  "Trials",
-  "Accused",
-  "TruthCommissions",
-  "Reparations",
-  "Vettings",
-  "Experts",
-  "NGOs",
-  "Legal",
-  "Countries",
-  "Transitions",
-  "Conflicts",
-  "Dyads",
-  "select_options",
-  "metadata"
-)
-
-### download data from Airtable
+  "Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings",
+  "Experts", "NGOs", "Legal",
+  "Countries", "Transitions", "Conflicts", "Dyads",
+  "select_options", "metadata")
 tjet <- lapply(to_download, function(table) {
   cat("Downloading", table, "\n")
   airtable(table, base_id) %>%

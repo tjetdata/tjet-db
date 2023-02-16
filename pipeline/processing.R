@@ -12,11 +12,9 @@ pkeys <- c(
   "Countries" = "ccode",
   "Transitions" = "transitionID",
   "Conflicts" = "conflict_id",
-  "Dyads" = "dyad_id"
-)
+  "Dyads" = "dyad_id")
 
 ### check metadata table for non-existing fields
-
 names(tables) <- tables <- names(pkeys)
 map(tables, function(tab) {
   exclude <- c("Amnesties", "Vetting", "Dyads", "Conflicts", "invalidExplain")
@@ -57,12 +55,7 @@ db <- map(select_tables, function(tab_name) {
 
 names(drop_invalids) <-
   drop_invalids <- 
-  c("Amnesties",
-    "Trials",
-    "Accused",
-    "TruthCommissions",
-    "Reparations",
-    "Vettings")
+  c("Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings")
 
 db[drop_invalids] <- map(drop_invalids, function(tab_name) {
   db[[tab_name]] %>%
@@ -309,8 +302,30 @@ db[["Dyads"]] <- db$Dyads %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-save(db, file = here("data/tjetdb.RData"))
+## cleaning up transitions table; this will change once the transitions data are fully cleaned up
+
+db[["Transitions"]] <- db$Transitions %>%
+  filter(trans == 1) %>% 
+  mutate(p5 = case_when(is.na(p5_year) ~ 0, 
+                        year_begin < p5_year ~ 0,
+                        year_begin >= p5_year ~ 1),
+         bmr = case_when(is.na(bmr_year) ~ 0, 
+                         year_begin < bmr_year ~ 0,
+                         year_begin >= bmr_year ~ 1),
+         ert = case_when(is.na(ert_year) ~ 0, 
+                         year_begin < ert_year ~ 0,
+                         year_begin >= ert_year ~ 1), 
+         nsupport = p5 + bmr + ert,) %>% 
+  rowwise() %>% 
+  mutate(sources = str_flatten(c(
+           case_when(!is.na(p5_year) ~ paste("Polity5 (", p5_year, ")", sep = "")),
+           case_when(!is.na(bmr_year) ~ paste("BMR (", bmr_year, ")", sep = "")),
+           case_when(!is.na(ert_year) ~ paste("VDem (", ert_year, ")", sep = ""))),
+           collapse = " & ", na.rm = TRUE)) %>% 
+  select(transitionID, ccode, year_begin, nsupport, sources) 
 
 ### TO DO
 ## - multi-select fields into dummies for data downloads 
 ##   - needs a consistent naming scheme
+
+save(db, file = here("data/tjetdb.RData"))
