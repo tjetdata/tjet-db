@@ -53,6 +53,8 @@ db <- map(select_tables, function(tab_name) {
     select(all_of(select_vars))
 })
 
+dim_orig <- map_vec(db, nrow)
+
 names(drop_invalids) <-
   drop_invalids <- 
   c("Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings")
@@ -62,6 +64,9 @@ db[drop_invalids] <- map(drop_invalids, function(tab_name) {
     ## will need to change this later to selecting only valids
     filter(invalid != 1 | is.na(invalid)) # %>% select(-invalid)
 })
+
+dim_drop <- map_vec(db, nrow)
+cbind(dim_orig, dim_drop)
 
 ### transforming checkboxes to binary
 
@@ -169,6 +174,9 @@ names(multi_selects) <-
   str_replace(names(multi_selects), fixed("."), "_")
 db <- c(db, multi_selects)
 
+dim_now <- map_vec(db[names(dim_orig)] , nrow)
+cbind(dim_orig, dim_drop, dim_now)
+
 ### dummies from multi-select fields
 ## (may not need this if we can get it with SQL queries)
 ## sample code, would have to be expanded and generalized
@@ -202,7 +210,7 @@ db <- c(db, multi_selects)
 #   select(-airtable_record_id)
 
 db[["Reparations"]] <- db$Reparations %>%
-  unnest_longer(ucdpConflictID) %>%
+  unnest_longer(ucdpConflictID, keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet$Conflicts %>% 
               select(airtable_record_id, conflict_id),
@@ -211,7 +219,7 @@ db[["Reparations"]] <- db$Reparations %>%
   rename(ucdpConflictID = "conflict_id")
 
 db[["Trials"]] <- db$Trials %>%
-  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID"))) %>%
+  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet$Conflicts %>% 
               select(airtable_record_id, conflict_id),
@@ -226,7 +234,7 @@ db[["Trials"]] <- db$Trials %>%
          ucdpDyadID = "dyad_id")
 
 db[["Amnesties"]] <- db$Amnesties %>%
-  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID"))) %>%
+  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet$Conflicts %>% 
               select(airtable_record_id, conflict_id),
@@ -241,7 +249,7 @@ db[["Amnesties"]] <- db$Amnesties %>%
          ucdpDyadID = "dyad_id")
 
 db[["Vettings"]] <- db$Vettings %>%
-  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID"))) %>%
+  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet$Conflicts %>% 
               select(airtable_record_id, conflict_id),
@@ -327,5 +335,8 @@ db[["Transitions"]] <- db$Transitions %>%
 ### TO DO
 ## - multi-select fields into dummies for data downloads 
 ##   - needs a consistent naming scheme
+
+dim_now <- map_vec(db[names(dim_orig)] , nrow)
+cbind(dim_orig, dim_drop, dim_now)
 
 save(db, file = here("data/tjetdb.RData"))

@@ -11,7 +11,6 @@ library(here)
 # readRenviron("~/.Renviron")
 # Sys.getenv("AIRTABLE_API_KEY")
 
-### download data from Airtable
 base_id <- "appHsoHAemKITZgMF"
 names(to_download) <- to_download <- c(
   "Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings",
