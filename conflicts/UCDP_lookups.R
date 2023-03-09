@@ -8,10 +8,13 @@ read_csv(here("conflicts/original_data/ucdp-prio-acd-221.csv")) %>%
   filter(type_of_conflict > 2) %>% 
   group_by(conflict_id) %>%
   mutate(year_beg = min(year),
-         year_end = max(year)) %>%
+         year_end = max(year),
+         ep_end_date = if_else(is.na(ep_end_date) & year == 2021 & ep_end == 0, as_date("2022-01-01"), ep_end_date),
+         date_end = max(ep_end_date, na.rm = TRUE)) %>%
   ungroup() %>%
-  select(conflict_id, location, year_beg, start_date, year_end, 
-         # start_date2, ep_end_date, ep_end, 
+  mutate(date_end = if_else(date_end == as_date("2022-01-01"), NA, date_end)) %>%
+  select(conflict_id, location, year_beg, start_date, year_end, date_end, 
+         # start_date2, ep_end_date, ep_end,
          # type_of_conflict, intensity_level, cumulative_intensity,
          # side_a, side_a_id, side_a_2nd, side_b, side_b_id, side_b_2nd, 
          incompatibility, territory_name) %>% 
@@ -19,7 +22,9 @@ read_csv(here("conflicts/original_data/ucdp-prio-acd-221.csv")) %>%
   unique() %>% 
   write_csv(here("conflicts/confl.csv"), na = "")
 
-read_csv(here("conflicts/original_data/ucdp-dyadic-221.csv")) %>%
+# problems(read_csv(here("conflicts/original_data/ucdp-dyadic-221.csv")))
+## not using these columns
+read_csv(here("conflicts/original_data/ucdp-dyadic-221.csv")) %>% 
   filter(type_of_conflict > 2) %>%
   group_by(dyad_id) %>%
   mutate(year_beg = min(year),
@@ -72,27 +77,35 @@ read_csv(here("conflicts/original_data/ucdp-prio-acd-221.csv")) %>%
   unique() # %>% write_csv(here("conflicts/location-year.csv"), na = "")
   
 ### dyad spells for conflict tables on country pages  
-
+# problems(read_csv(here("conflicts/original_data/ucdp-dyadic-221.csv")))
+# read_csv(here("conflicts/original_data/ucdp-dyadic-221.csv"))[c(5, 19)]
+## not using these columns
 read_csv(here("conflicts/original_data/ucdp-dyadic-221.csv")) %>%
   filter(type_of_conflict > 2) %>%
-  mutate(year_beg_ep = year(start_date2)) %>%
-  group_by(dyad_id, year_beg_ep) %>%
-  mutate(year_end_ep = max(year),
+  mutate(ep_start_year = year(start_date2)) %>%
+  group_by(dyad_id, ep_start_year) %>%
+  mutate(ep_end_year = max(year),
          intensity_level = max(intensity_level),
          type_of_conflict = max(type_of_conflict)) %>%
   ungroup() %>%
-  mutate(years = if_else(year_beg_ep == year_end_ep, as.character(year_beg_ep), 
-                         paste(year_beg_ep, year_end_ep, sep = "-")),
+  mutate(ep_years = if_else(ep_start_year == ep_end_year, as.character(ep_start_year), 
+                         paste(ep_start_year, ep_end_year, sep = "-")),
          intensity = case_when(intensity_level == 1 ~ "Conflict",
                                intensity_level == 2 ~ "War"),
          intensity = if_else(type_of_conflict == 4, 
                              paste("Internationalized", intensity, sep = " "), intensity), 
          side_b = if_else(is.na(territory_name), side_b, 
                           paste(side_b, " [territory: ", territory_name, "]", sep = "") )) %>% 
-  arrange(location, dyad_id, year_beg_ep) %>% 
+  arrange(location, dyad_id, ep_start_year) %>% 
   select(dyad_id, conflict_id, location, gwno_loc, side_b, # side_a, side_a_2nd, side_b_2nd, 
-         years, intensity, year_beg_ep, year_end_ep) %>% 
+         ep_years, intensity, start_date2, ep_start_year, ep_end_year) %>% 
+  rename(ep_start_date = start_date2) %>% 
   unique() %>% 
+  left_join(read_csv(here("conflicts/confl.csv")) %>% 
+              select(conflict_id, start_date, date_end) %>% 
+              rename(confl_start = start_date, 
+                     confl_end = date_end), 
+            by = "conflict_id") %>% 
   # rename("Armed Opposition" = "side_b", 
   #        "Government supported by" = "side_a_2nd", 
   #        "internationalized" = "side_b_2nd") %>% 
