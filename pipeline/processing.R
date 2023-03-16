@@ -13,94 +13,159 @@ pkeys <- c(
   "Transitions" = "transitionID",
   "Conflicts" = "conflict_id",
   "Dyads" = "dyad_id")
+exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal")
 
 ### check metadata table for non-existing fields
-map(names(to_download), function(base) {
-  cat("Base:", base, "\n\n")
-  names(tables) <- tables <- to_download[[base]][!to_download[[base]] %in% 
-                        c("metadata", "select_options", "Experts", "NGOs", "Legal")]
+cat("These are fields listed in 'metadata' that are missing in the Airtable download.")
+map(names(to_download), function(basename) {
+  cat("Base:", basename, "\n\n")
+  names(tables) <- tables <- to_download[[basename]][!to_download[[basename]] %in% exclude]
   map(tables, function(tab) {
-    meta <- tjet[[base]]$metadata %>%
+    meta <- tjet[[basename]]$metadata %>%
       filter(table_name == tab) %>%
       select(field_name) %>%
       unlist(use.names = FALSE)
-    meta[!meta %in% names(tjet[[base]][[tab]])]
+    meta[!meta %in% names(tjet[[basename]][[tab]])]
   }) %>% 
     print()
   return()
 })
 
-### FIX FROM HERE 
-
 ### prodDB tables
 
-names(select_tables) <-
-  select_tables <-
-  names(tjet)[!names(tjet) %in% c("select_options", "metadata", 
-                                  "Experts", "NGOs", "Legal",
-                                  "Countries_pros", 
-                                  "Conflicts_pros", "Dyads_pros" )]
-
-db <- map(select_tables, function(tab_name) {
-  select_vars <- tjet$metadata %>%
-    filter(incl_prod == 1 &
-             incl_data != "transform: multiple" &
-             ## include these if creating dummies
-             table_name == tab_name) %>%
-    select(field_name) %>%
-    unlist(use.names = FALSE)
-  first <-
-    c(select_vars[str_detect(select_vars, fixed("ID"))], select_vars[str_detect(select_vars, fixed("ccode"))])
-  select_vars <-
-    c(select_vars[select_vars %in% first], select_vars[!select_vars %in% first])
-  missing_cols <-
-    select_vars[!(select_vars %in% names(tjet[[tab_name]]))]
-  tjet[[tab_name]] %>%
-    tibble() %>%
-    ### adding empty fields as NA columns for now until they are recoded by RAs
-    mutate(!!!setNames(rep(NA, length(missing_cols)), missing_cols)) %>%
-    select(all_of(select_vars))
+db <- map(names(to_download), function(basename) {
+  names(select_tables) <- select_tables <- to_download[[basename]][!to_download[[basename]] %in% exclude]
+  map(select_tables, function(tab_name) {
+    select_vars <- tjet[[basename]]$metadata %>%
+      filter(incl_prod == 1 &
+               incl_data != "transform: multiple" &
+               ## include these if creating dummies
+               table_name == tab_name) %>%
+      select(field_name) %>%
+      unlist(use.names = FALSE)
+    first <-
+      c(select_vars[str_detect(select_vars, fixed("ID"))], select_vars[str_detect(select_vars, fixed("ccode"))])
+    select_vars <-
+      c(select_vars[select_vars %in% first], select_vars[!select_vars %in% first])
+    missing_cols <-
+      select_vars[!(select_vars %in% names(tjet[[basename]][[tab_name]]))]
+    tjet[[basename]][[tab_name]] %>%
+      tibble() %>%
+      ### adding empty fields as NA columns for now until they are recoded by RAs
+      mutate(!!!setNames(rep(NA, length(missing_cols)), missing_cols)) %>%
+      select(all_of(select_vars))
+  })
+})
+names(db) <- names(to_download)
+dim_orig <- map(db, function(dat) {
+  map_vec(dat, nrow)
 })
 
-dim_orig <- map_vec(db, nrow)
-
-names(drop_invalids) <-
-  drop_invalids <- 
-  c("Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings")
-
-db[drop_invalids] <- map(drop_invalids, function(tab_name) {
-  db[[tab_name]] %>%
-    ## will need to change this later to selecting only valids
-    filter(invalid != 1 | is.na(invalid)) # %>% select(-invalid)
+drop_invalids <- c("Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings")
+db <- map(names(to_download), function(basename) {
+  drop_invalids <- drop_invalids[drop_invalids %in% names(db[[basename]])]
+  base <- db[[basename]]
+  base[drop_invalids] <- map(drop_invalids, function(tab_name) {
+    base[[tab_name]] %>%
+      ## will need to change this later to selecting only valids
+      filter(invalid != 1 | is.na(invalid)) # %>% select(-invalid)
+    
+  })
+  return(base)
 })
+names(db) <- names(to_download)
 
-dim_drop <- map_vec(db, nrow)
-cbind(dim_orig, dim_drop)
+dim_drop <- map(db, function(dat) {
+  map_vec(dat, nrow)
+})
+cbind(orig = dim_orig[[1]], drop = dim_drop[[1]])
+cbind(orig = dim_orig[[2]], drop = dim_drop[[2]])
 
 ### transforming checkboxes to binary
 
 checkbox_to_binary <- function(col) {
   ifelse(is.na(col), 0, 1)
 }
-
-### FIX FROM HERE
-
-db[select_tables] <- map(select_tables[6], function(tab_name) {
-  # tab_name = "Countries"
-  fields <- tjet$metadata %>%
-    filter(table_name == tab_name &
-             incl_prod == 1 &
-             incl_data == "transform: checkmark to binary") %>%
-    select(field_name) %>%
-    unlist(use.names = FALSE)
-  db[[tab_name]][, fields] <-
-    map(db[[tab_name]][, fields], checkbox_to_binary)
-  return(db[[tab_name]])
+db <- map(names(to_download), function(basename) {
+  names(select) <- select <- to_download[[basename]][!to_download[[basename]] %in% exclude]
+  # db[[basename]][select] <- 
+    map(select, function(tab_name) {
+    fields <- tjet[[basename]]$metadata %>%
+      filter(table_name == tab_name &
+               incl_prod == 1 &
+               incl_data == "transform: checkmark to binary") %>%
+      select(field_name) %>%
+      unlist(use.names = FALSE)
+    db[[basename]][[tab_name]][, fields] <-
+      map(db[[basename]][[tab_name]][, fields], checkbox_to_binary)
+    return(db[[basename]][[tab_name]])
+  })
 })
+names(db) <- names(to_download)
 
 ### dealing with multipleLookupValues (& multipleRecordLinks)
+str(db, 2)
+db <- map(names(to_download), function(basename) {
+  names(select) <- select <- tjet[[basename]]$metadata %>%
+    filter(
+      incl_prod == 1 &
+        incl_data == "include as key" &
+        table_name != "select_options" &
+        field_type == "multipleLookupValues"
+    ) %>%
+    select(table_name) %>%
+    unlist(use.names = FALSE) %>%
+    unique()
+  base <- db[[basename]]
+  base[select] <- map(select, function(tab_name) {
+    fields <- tjet[[basename]]$metadata %>%
+      filter(
+        table_name == tab_name &
+          incl_prod == 1 &
+          incl_data == "include as key" &
+          field_type == "multipleLookupValues"
+      ) %>%
+      select(field_name) %>%
+      unlist(use.names = FALSE)
+    db[[basename]][[tab_name]] %>%
+      unnest_wider(all_of(fields), names_sep = "", simplify = TRUE) %>%
+      rename_with(.cols = all_of(paste(fields, "1", sep = "")), .fn = ~ fields)
+  })
+  return(base)
+})
+names(db) <- names(to_download)
 
-names(select_tables) <- select_tables <- tjet$metadata %>%
+### ccodes for Crimes and Victims
+
+crimes <- c("ccode_Crime1", "ccode_Crime2", "ccode_Crime3")
+victims <- c("ccode_Victim1", "ccode_Victim2", "ccode_Victim3")
+
+db[["Prosecutions"]][["Trials_Crimes"]] <- map(crimes, function(var) {
+  db[["Prosecutions"]]$Trials %>%
+    select(all_of(c("trialID", var))) %>%
+    rename(ccode_Crime = all_of(var)) %>%
+    drop_na()
+}) %>%
+  bind_rows()
+
+db[["Prosecutions"]][["Trials_Victims"]] <- map(victims, function(var) {
+  db[["Prosecutions"]]$Trials %>%
+    select(all_of(c("trialID", var))) %>%
+    rename(ccode_Victim = all_of(var)) %>%
+    drop_na()
+}) %>%
+  bind_rows()
+
+db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+  select(!all_of(c(crimes, victims)))
+
+### multiselect fields
+
+db[["MegaBase"]][["labels"]] <- tjet[["MegaBase"]]$select_options %>%
+  select(labelID, label) %>%
+  tibble()
+
+multi_selects <- tjet[["MegaBase"]]$metadata %>%
   filter(
     incl_prod == 1 &
       incl_data == "include as key" &
@@ -109,85 +174,42 @@ names(select_tables) <- select_tables <- tjet$metadata %>%
   ) %>%
   select(table_name) %>%
   unlist(use.names = FALSE) %>%
-  unique()
-
-db[select_tables] <- map(select_tables, function(tab_name) {
-  fields <- tjet$metadata %>%
-    filter(
-      table_name == tab_name &
-        incl_prod == 1 &
-        incl_data == "include as key" &
-        field_type == "multipleLookupValues"
-    ) %>%
-    select(field_name) %>%
-    unlist(use.names = FALSE)
-  db[[tab_name]] %>%
-    unnest_wider(all_of(fields), names_sep = "", simplify = TRUE) %>%
-    rename_with(.cols = all_of(paste(fields, "1", sep = "")), .fn = ~ fields)
-})
-
-### ccodes for Crimes and Victims
-
-crimes <- c("ccode_Crime1", "ccode_Crime2", "ccode_Crime3")
-db[["Trials_Crimes"]] <- map(crimes, function(var) {
-  db$Trials %>%
-    select(all_of(c("trialID", var))) %>%
-    rename(ccode_Crime = all_of(var)) %>%
-    drop_na()
-}) %>%
-  bind_rows()
-
-victims <- c("ccode_Victim1", "ccode_Victim2", "ccode_Victim3")
-db[["Trials_Victims"]] <- map(victims, function(var) {
-  db$Trials %>%
-    select(all_of(c("trialID", var))) %>%
-    rename(ccode_Victim = all_of(var)) %>%
-    drop_na()
-}) %>%
-  bind_rows()
-
-db[["Trials"]] <- db[["Trials"]] %>%
-  select(!all_of(c(crimes, victims)))
-
-### multiselect fields
-
-db[["labels"]] <- tjet$select_options %>%
-  select(labelID, label) %>%
-  tibble()
-
-multi_selects <- map(select_tables, function(tab_name) {
-  # cat(tab_name)
-  # tab_name = "Amnesties"
-  names(fields) <- fields <- tjet$metadata %>%
-    filter(incl_prod == 1 &
-             incl_data == "transform: multiple" &
-             table_name == tab_name) %>%
-    select(field_name) %>%
-    unlist(use.names = FALSE)
-  map(fields, function(field) {
-    # field = "whatCrimes"
-    to_filter_on <- paste(field, "set", sep = "_")
-    to_select <- paste(field, tab_name, sep = "_")
-    tjet$select_options %>%
-      filter(.data[[to_filter_on]] == 1) %>%
-      select(all_of(c("labelID", to_select))) %>%
-      unnest_longer(all_of(to_select)) %>%
-      left_join(tjet[[tab_name]] %>%
-                  select(all_of(c(
-                    "airtable_record_id", pkeys[[tab_name]]
-                  ))),
-                by = setNames("airtable_record_id", to_select)) %>%
-      select(all_of(c("labelID", pkeys[[tab_name]]))) %>%
-      drop_na()
-  })
-}) %>%
+  unique() %>%
+  map(function(tab_name) {
+    # cat(tab_name)
+    # tab_name = "Amnesties"
+    names(fields) <- fields <- tjet[["MegaBase"]]$metadata %>%
+      filter(incl_prod == 1 &
+               incl_data == "transform: multiple" &
+               table_name == tab_name) %>%
+      select(field_name) %>%
+      unlist(use.names = FALSE)
+    map(fields, function(field) {
+      # field = "whatCrimes"
+      to_filter_on <- paste(field, "set", sep = "_")
+      to_select <- paste(field, tab_name, sep = "_")
+      tjet[["MegaBase"]]$select_options %>%
+        filter(.data[[to_filter_on]] == 1) %>%
+        select(all_of(c("labelID", to_select))) %>%
+        unnest_longer(all_of(to_select)) %>%
+        left_join(tjet[["MegaBase"]][[tab_name]] %>%
+                    select(all_of(c(
+                      "airtable_record_id", pkeys[[tab_name]]
+                    ))),
+                  by = setNames("airtable_record_id", to_select)) %>%
+        select(all_of(c("labelID", pkeys[[tab_name]]))) %>%
+        drop_na()
+    })
+  }) %>%
   unlist(recursive = FALSE)
-names(multi_selects) <-
-  str_replace(names(multi_selects), fixed("."), "_")
-db <- c(db, multi_selects)
+# names(multi_selects) <- str_replace(names(multi_selects), fixed("."), "_")
+db[["MegaBase"]] <- c(db[["MegaBase"]], multi_selects)
 
-dim_now <- map_vec(db[names(dim_orig)] , nrow)
-cbind(dim_orig, dim_drop, dim_now)
+dim_now <- map(db, function(dat) {
+  map_vec(dat, nrow)
+})
+cbind(orig = dim_orig[[1]], drop = dim_drop[[1]], now = dim_now[[1]][names(dim_orig[[1]])])
+cbind(orig = dim_orig[[2]], drop = dim_drop[[2]], now = dim_now[[2]][names(dim_orig[[2]])])
 
 ### dummies from multi-select fields
 ## (may not need this if we can get it with SQL queries)
@@ -221,110 +243,119 @@ cbind(dim_orig, dim_drop, dim_now)
 #             by = "airtable_record_id") %>%
 #   select(-airtable_record_id)
 
-db[["Reparations"]] <- db$Reparations %>%
+db[["MegaBase"]][["Reparations"]] <- db[["MegaBase"]]$Reparations %>%
   unnest_longer(ucdpConflictID, keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
-  left_join(tjet$Conflicts %>% 
+  left_join(tjet[["MegaBase"]]$Conflicts %>% 
               select(airtable_record_id, conflict_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "conflict_id")
 
-db[["Trials"]] <- db$Trials %>%
+db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]]$Trials %>%
   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
-  left_join(tjet$Conflicts %>% 
+  left_join(tjet[["Prosecutions"]]$Conflicts %>% 
               select(airtable_record_id, conflict_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(airtable_record_id = "ucdpDyadID") %>%
-  left_join(tjet$Dyads %>% 
+  left_join(tjet[["Prosecutions"]]$Dyads %>% 
               select(airtable_record_id, dyad_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-db[["Amnesties"]] <- db$Amnesties %>%
+db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]]$Amnesties %>%
   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
-  left_join(tjet$Conflicts %>% 
+  left_join(tjet[["MegaBase"]]$Conflicts %>% 
               select(airtable_record_id, conflict_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(airtable_record_id = "ucdpDyadID") %>%
-  left_join(tjet$Dyads %>% 
+  left_join(tjet[["MegaBase"]]$Dyads %>% 
               select(airtable_record_id, dyad_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-db[["Vettings"]] <- db$Vettings %>%
+db[["MegaBase"]][["Vettings"]] <- db[["MegaBase"]]$Vettings %>%
   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
-  left_join(tjet$Conflicts %>% 
+  left_join(tjet[["MegaBase"]]$Conflicts %>% 
               select(airtable_record_id, conflict_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(airtable_record_id = "ucdpDyadID") %>%
-  left_join(tjet$Dyads %>% 
+  left_join(tjet[["MegaBase"]]$Dyads %>% 
               select(airtable_record_id, dyad_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-### at the moment the trial-accused link is one-to-many, but in theory, I could become many-to-many
+### at the moment the trial-accused link is one-to-many, 
+### but in theory, I could become many-to-many, 
+### though there is no current plan to do so
 # range(unlist(map(db$Accused$trialID, length)))
 
-db[["Accused"]] <- db$Accused %>%
+db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]]$Accused %>%
   unnest_longer(trialID) %>%
   rename(airtable_record_id = "trialID") %>%
-  left_join(tjet$Trials %>% 
+  left_join(tjet[["Prosecutions"]]$Trials %>% 
               select(airtable_record_id, trialID),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) 
 
 ## truth commissions have one-to-many links
 
-db[["TruthCommissions_Conflicts"]] <- db$TruthCommissions %>%
+db[["MegaBase"]][["TruthCommissions_Conflicts"]] <- db[["MegaBase"]]$TruthCommissions %>%
   select(truthcommissionID, ucdpConflictID) %>%
   unnest_longer(ucdpConflictID) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
-  left_join(tjet$Conflicts %>%
+  left_join(tjet[["MegaBase"]]$Conflicts %>%
               select(airtable_record_id, conflict_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "conflict_id") %>%
   drop_na()
 
-db[["TruthCommissions_Dyads"]] <- db$TruthCommissions %>%
+db[["MegaBase"]][["TruthCommissions_Dyads"]] <- db[["MegaBase"]]$TruthCommissions %>%
   select(truthcommissionID, ucdpDyadID) %>%
   unnest_longer(ucdpDyadID) %>%
   rename(airtable_record_id = "ucdpDyadID") %>%
-  left_join(tjet$Dyads %>%
+  left_join(tjet[["MegaBase"]]$Dyads %>%
               select(airtable_record_id, dyad_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "dyad_id") %>%
   drop_na()
 
-db[["TruthCommissions"]] <- db$TruthCommissions %>%
+db[["MegaBase"]][["TruthCommissions"]] <- db[["MegaBase"]]$TruthCommissions %>%
   select(-ucdpConflictID,-ucdpDyadID)
 
 ## consistent ID field names
 
-db[["Conflicts"]] <- db$Conflicts %>%
+db[["MegaBase"]][["Conflicts"]] <- db[["MegaBase"]]$Conflicts %>%
   rename(ucdpConflictID = "conflict_id")
 
-db[["Dyads"]] <- db$Dyads %>%
+db[["MegaBase"]][["Dyads"]] <- db[["MegaBase"]]$Dyads %>%
+  rename(ucdpConflictID = "conflict_id",
+         ucdpDyadID = "dyad_id")
+
+db[["Prosecutions"]][["Conflicts"]] <- db[["Prosecutions"]]$Conflicts %>%
+  rename(ucdpConflictID = "conflict_id")
+
+db[["Prosecutions"]][["Dyads"]] <- db[["Prosecutions"]]$Dyads %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
 ## cleaning up transitions table; this will change once the transitions data are fully cleaned up
 
-db[["Transitions"]] <- db$Transitions %>%
+db[["MegaBase"]][["Transitions"]] <- db[["MegaBase"]]$Transitions %>%
   filter(trans == 1) %>% 
   mutate(p5 = case_when(is.na(p5_year) ~ 0, 
                         year_begin < p5_year ~ 0,
@@ -342,13 +373,26 @@ db[["Transitions"]] <- db$Transitions %>%
            case_when(!is.na(bmr_year) ~ paste("BMR (", bmr_year, ")", sep = "")),
            case_when(!is.na(ert_year) ~ paste("VDem (", ert_year, ")", sep = ""))),
            collapse = " & ", na.rm = TRUE)) %>% 
-  select(transitionID, ccode, year_begin, nsupport, sources) 
+  select(transitionID, ccode, year_begin, nsupport, sources) %>% 
+  ungroup()
 
 ### TO DO
 ## - multi-select fields into dummies for data downloads 
 ##   - needs a consistent naming scheme
 
-dim_now <- map_vec(db[names(dim_orig)] , nrow)
-cbind(dim_orig, dim_drop, dim_now)
+dim_last <- map(db, function(dat) {
+  map_vec(dat, nrow)
+})
+cbind(orig = dim_orig[[1]], 
+      drop = dim_drop[[1]], 
+      now = dim_now[[1]][names(dim_orig[[1]])],
+      last = dim_last[[1]][names(dim_orig[[1]])])
+cbind(orig = dim_orig[[2]], 
+      drop = dim_drop[[2]], 
+      now = dim_now[[2]][names(dim_orig[[2]])],
+      last = dim_last[[2]][names(dim_orig[[2]])])
+
+db <- c(db[["Prosecutions"]][c("Trials", "Accused", "CourtLevels", "Trials_Crimes", "Trials_Victims")], 
+        db[["MegaBase"]])
 
 save(db, file = here("data/tjetdb.RData"))
