@@ -15,22 +15,31 @@ pkeys <- c(
   "Dyads" = "dyad_id")
 
 ### check metadata table for non-existing fields
-names(tables) <- tables <- names(pkeys)
-map(tables, function(tab) {
-  exclude <- c("Amnesties", "Vetting", "Dyads", "Conflicts", "invalidExplain")
-  meta <- tjet$metadata %>% 
-    filter(table_name == tab) %>% 
-    select(field_name) %>%
-    unlist(use.names = FALSE)
-  meta <- meta[!meta %in% exclude] 
-  meta[!meta %in% names(tjet[[tab]])]
+map(names(to_download), function(base) {
+  cat("Base:", base, "\n\n")
+  names(tables) <- tables <- to_download[[base]][!to_download[[base]] %in% 
+                        c("metadata", "select_options", "Experts", "NGOs", "Legal")]
+  map(tables, function(tab) {
+    meta <- tjet[[base]]$metadata %>%
+      filter(table_name == tab) %>%
+      select(field_name) %>%
+      unlist(use.names = FALSE)
+    meta[!meta %in% names(tjet[[base]][[tab]])]
+  }) %>% 
+    print()
+  return()
 })
+
+### FIX FROM HERE 
 
 ### prodDB tables
 
 names(select_tables) <-
   select_tables <-
-  names(tjet)[!names(tjet) %in% c("select_options", "metadata")]
+  names(tjet)[!names(tjet) %in% c("select_options", "metadata", 
+                                  "Experts", "NGOs", "Legal",
+                                  "Countries_pros", 
+                                  "Conflicts_pros", "Dyads_pros" )]
 
 db <- map(select_tables, function(tab_name) {
   select_vars <- tjet$metadata %>%
@@ -74,7 +83,10 @@ checkbox_to_binary <- function(col) {
   ifelse(is.na(col), 0, 1)
 }
 
-db[select_tables] <- map(select_tables, function(tab_name) {
+### FIX FROM HERE
+
+db[select_tables] <- map(select_tables[6], function(tab_name) {
+  # tab_name = "Countries"
   fields <- tjet$metadata %>%
     filter(table_name == tab_name &
              incl_prod == 1 &

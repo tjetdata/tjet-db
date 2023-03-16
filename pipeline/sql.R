@@ -1,3 +1,6 @@
+library(tidyverse)
+library(RSQLite)
+library(here)
 ### create SQLite DB
 load("../data/tjetdb.RData")
 ## file.remove("tjet.db")

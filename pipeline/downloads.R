@@ -2,7 +2,6 @@
 ### the development version handles multi-select fields without error
 library(tidyverse)
 library(rairtable)
-library(RSQLite)
 library(here)
 
 ### the api key needs to be set only once, is saved to the local R environment
@@ -11,15 +10,28 @@ library(here)
 # readRenviron("~/.Renviron")
 # Sys.getenv("AIRTABLE_API_KEY")
 
-base_id <- "appHsoHAemKITZgMF"
-names(to_download) <- to_download <- c(
-  "Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings",
-  "Experts", "NGOs", "Legal",
-  "Countries", "Transitions", "Conflicts", "Dyads",
-  "select_options", "metadata")
-tjet <- lapply(to_download, function(table) {
-  cat("Downloading", table, "\n")
-  airtable(table, base_id) %>%
-    read_airtable(id_to_col = TRUE)
-})
-save(tjet, file = here("data/tjet.RData"))
+to_download <- 
+  list(
+    "appHsoHAemKITZgMF" = c(
+      "Amnesties", "TruthCommissions", "Reparations", "Vettings",
+      "Experts", "NGOs", "Legal", "Transitions", 
+      "Countries", "Conflicts", "Dyads", "select_options", "metadata"),
+    "appF8HAH7SN7C09cU" = c("Trials", "Accused", "CourtLevels", 
+                            "Countries", "Conflicts", "Dyads", "metadata")
+  )
+
+### still need to ensure that the countries and conflicts tables are synced between the two bases
+
+tjet <- map(names(to_download), function(base_id) {
+  cat("base ID:", base_id, "\n")
+  names(tab) <- tab <- to_download[[base_id]] 
+  lapply(tab, function(df) {
+    cat("Downloading", df, "\n")
+    airtable(df, base_id) %>%
+      read_airtable(id_to_col = TRUE)
+  })
+}) 
+# names(tjet) <- names(to_download)
+names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
+
+save(tjet, to_download, file = here("data/tjet.RData"))
