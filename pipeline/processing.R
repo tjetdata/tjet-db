@@ -165,7 +165,7 @@ db[["MegaBase"]][["labels"]] <- tjet[["MegaBase"]]$select_options %>%
   select(labelID, label) %>%
   tibble()
 
-multi_selects <- tjet[["MegaBase"]]$metadata %>%
+names(select) <- select <- tjet[["MegaBase"]]$metadata %>%
   filter(
     incl_prod == 1 &
       incl_data == "include as key" &
@@ -174,35 +174,36 @@ multi_selects <- tjet[["MegaBase"]]$metadata %>%
   ) %>%
   select(table_name) %>%
   unlist(use.names = FALSE) %>%
-  unique() %>%
-  map(function(tab_name) {
-    # cat(tab_name)
-    # tab_name = "Amnesties"
-    names(fields) <- fields <- tjet[["MegaBase"]]$metadata %>%
-      filter(incl_prod == 1 &
-               incl_data == "transform: multiple" &
-               table_name == tab_name) %>%
-      select(field_name) %>%
-      unlist(use.names = FALSE)
-    map(fields, function(field) {
-      # field = "whatCrimes"
-      to_filter_on <- paste(field, "set", sep = "_")
-      to_select <- paste(field, tab_name, sep = "_")
-      tjet[["MegaBase"]]$select_options %>%
-        filter(.data[[to_filter_on]] == 1) %>%
-        select(all_of(c("labelID", to_select))) %>%
-        unnest_longer(all_of(to_select)) %>%
-        left_join(tjet[["MegaBase"]][[tab_name]] %>%
-                    select(all_of(c(
-                      "airtable_record_id", pkeys[[tab_name]]
-                    ))),
-                  by = setNames("airtable_record_id", to_select)) %>%
-        select(all_of(c("labelID", pkeys[[tab_name]]))) %>%
-        drop_na()
-    })
-  }) %>%
+  unique()
+
+multi_selects <- map(select, function(tab_name) {
+  # cat(tab_name)
+  # tab_name = "Amnesties"
+  names(fields) <- fields <- tjet[["MegaBase"]]$metadata %>%
+    filter(incl_prod == 1 &
+             incl_data == "transform: multiple" &
+             table_name == tab_name) %>%
+    select(field_name) %>%
+    unlist(use.names = FALSE)
+  map(fields, function(field) {
+    # field = "whatCrimes"
+    to_filter_on <- paste(field, "set", sep = "_")
+    to_select <- paste(field, tab_name, sep = "_")
+    tjet[["MegaBase"]]$select_options %>%
+      filter(.data[[to_filter_on]] == 1) %>%
+      select(all_of(c("labelID", to_select))) %>%
+      unnest_longer(all_of(to_select)) %>%
+      left_join(tjet[["MegaBase"]][[tab_name]] %>%
+                  select(all_of(c(
+                    "airtable_record_id", pkeys[[tab_name]]
+                  ))),
+                by = setNames("airtable_record_id", to_select)) %>%
+      select(all_of(c("labelID", pkeys[[tab_name]]))) %>%
+      drop_na()
+  })
+}) %>%
   unlist(recursive = FALSE)
-# names(multi_selects) <- str_replace(names(multi_selects), fixed("."), "_")
+names(multi_selects) <- str_replace(names(multi_selects), fixed("."), "_")
 db[["MegaBase"]] <- c(db[["MegaBase"]], multi_selects)
 
 dim_now <- map(db, function(dat) {
