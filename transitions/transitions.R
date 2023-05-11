@@ -10,12 +10,6 @@ library(here)
 library(googlesheets4)
 library(googledrive)
 
-
-# read_excel("../transitions2020_v5.xlsx") %>% 
-#   mutate(vdem_id = if_else(country == "Cote d'Ivoire", 64, vdem_id)) %>% 
-#   ### missing South Vietnam, in VDem Republic of Vietnam (ID 35)   
-#   mutate(vdem_id = if_else(country == "Germany" & is.na(vdem_id), 77, vdem_id)) %>% 
-#   filter(!(country == "Germany" & year == 1990 & ccode == 260))
 v6 <- read_excel(here("transitions/data/transitions2020_v6.xlsx")) %>%
   select(country, year, ccode, vdem_id, tjet_dtrid, isq_dtrid, tjrc_dtrid, 
          tjrc_ttype, tjrc_rupture, tjrc_negotiated, tjrc_newstate,
@@ -90,9 +84,10 @@ other <- read_excel(here("transitions/data/p5v2018.xls")) %>%
 
 # other %>% group_by(country, year) %>% filter(n() > 1) %>% arrange(country, year) %>% print(n = Inf)
 
-df <- vdem %>% 
+df <- vdem %>%
   tibble() %>% 
   filter(year > 1948) %>% 
+  mutate(country_name = str_replace(country_name, "Czechia", "Czech Republic")) %>% 
   select(country_id, COWcode, country_name, year, 
          v2x_regime, v2x_regime_amb, e_boix_regime, e_democracy_trans, 
          e_p_polity, e_polity2, e_pt_coup, e_coups) %>% 
@@ -113,9 +108,9 @@ df <- vdem %>%
                                         '8' = "Liberal democracy lower bound", 
                                         '9' = "Liberal Democracy"),
          e_pt_coup = recode_factor(e_pt_coup, 
-                                    '0' = "No coup attempt occurred", 
-                                    '1' = "Unssuccessful coup attempt occurred", 
-                                    '2' = "Successful coup attempt occurred") ) %>%
+                                   '0' = "No coup attempt occurred", 
+                                   '1' = "Unssuccessful coup attempt occurred", 
+                                   '2' = "Successful coup attempt occurred") ) %>%
   rename(ccode_vdem = COWcode,
          v2x_regime_vdem = v2x_regime,
          bmr_dem_vdem = e_boix_regime,
@@ -141,7 +136,8 @@ df <- vdem %>%
               # %>% select(cowcode, gwf_country),
               # by = c("country_name" = "gwf_country")) %>% unique() %>% filter(COWcode != cowcode)
               by = c("ccode_vdem" = "ccode_gwf", "year" = "year")) %>%
-  full_join(other, by = c("country_name" = "country", "year" = "year"))
+  full_join(other, by = c("country_name" = "country", "year" = "year")) %>%
+  filter(!(country_name == "Czech Republic" & year == 1993 & gwf_country == "Czech Republic"))
 
 ### checking data in VDem against original data: should use original because there are few discrepancies
 # df %>%
@@ -159,7 +155,7 @@ df <- vdem %>%
 #   print(n = Inf)
 ### original BMR data also includes a lot of micro states not in VDem 
 
-df <- df %>%
+df <- df %>% 
   left_join(df %>%
               select(country_name, year, polity_p5, polity2_p5) %>%
               mutate(year = year + 1) %>% 
@@ -197,6 +193,7 @@ df <- df %>%
 
 ert <- episodes %>% 
   filter(year > 1948) %>% 
+  mutate(country_name = str_replace(country_name, "Czechia", "Czech Republic")) %>% 
   select(country_id, country_name, year, v2x_regime, reg_type, 
          reg_start_year, reg_end_year, v2x_polyarchy, reg_trans, 
          dem_founding_elec, aut_founding_elec, row_regch_event, 
@@ -398,48 +395,24 @@ v6 %>%
          tr_num_ifit, tr_dem_ifit, tr_confl_ifit, tr_new_ifit, tr_descr_ifit, 
          gwf_country, ccode, country_id, ccode_p5bmr, ccode_vdem) %>% 
   rename(vdem_id = country_id) %>% 
-  unique() %>%
   # filter(v2x_regime_vdem !=	v2x_regime_ert) 
-  write_csv(here("transitions/transitions_new.csv"), na = "") # %>% write_xlsx("../../Transitions/transitions_comparison_timo.xlsx")
+  unique() # %>% write_csv(here("transitions/transitions_new.csv"), na = "")
 
-### need to clean up below
-# Czech Republic
-# Czechoslovakia
-# Palestine/WB
-# Palestine/Gaza
-# Somaliland
-# Zanzibar
-# indicators for source data
-# make sure to only use existing country years
+### we did some manual cleaning up of the transitions coding on a google sheet
 
+transitions <- drive_get("TJET_transitions") %>% 
+  read_sheet(sheet = "transitions_new") %>% 
+  write_csv(here("transitions/transitions_new_revised.csv"), na = "")
 
-
-# read_csv("~/Desktop/new.csv") %>% 
-#   select(country, year, NEW_Timo, note_Timo, tjet_dtrid) %>% 
-#   group_by(country, tjet_dtrid) %>%
-#   mutate(tjet_start = case_when(!is.na(tjet_dtrid) ~  min(year)),
-#          actual_new = str_split_i(note_Timo, "\\(|\\)", i = 2)) %>%
-#   ungroup() %>%
-#   filter(!is.na(NEW_Timo) | !is.na(note_Timo) | year == tjet_start) %>%
-#   rename("new_start" = "NEW_Timo",
-#          "note" = "note_Timo") %>%
-#   select(country, new_start, tjet_start, actual_new, tjet_dtrid, note) %>%
-#   unique() %>%
-#   write_csv("~/Desktop/comparison.csv", na = "")
-
-
-transitions <- drive_get("transitions") %>% 
-  read_sheet(sheet = "transitions_new") 
 transitions %>%
-  filter(!is.na(trans_year) | !is.na(flag) | !is.na(note)) %>%
+  filter(year < 2021) %>%
+  filter(!is.na(trans_year) | !is.na(trans_note)) %>%
   mutate(trans = case_when(year == trans_year ~ 1, 
                            year != trans_year ~ 0,
                            is.na(trans_year) ~ 0), 
-         flag = ifelse(is.na(flag), 0, flag), 
          country = str_replace(country, "Democratic Republic of the Congo", "Congo (Brazzaville)"),
          country = str_replace(country, "Republic of the Congo", "DR Congo"),
-         country = str_replace(country, "German Democratic Republic", "German Democratic Republic (East)")) %>%
+         country = str_replace(country, "German Democratic Republic", "German Democratic Republic (East)") ) %>%
   filter(country != "Zanzibar") %>%
-  select(country, trans, flag, trans_year, p5_year, bmr_year, ert_year, note, tjet_dtrid, year) %>% 
-  # filter(trans == 1 & trans_year > 1969) %>% print(n = Inf)
+  select(country, trans, trans_year, p5_year, bmr_year, ert_year, trans_note, tjet_dtrid, year) %>% 
   write_csv("~/Desktop/for_Airtable.csv", na = "")
