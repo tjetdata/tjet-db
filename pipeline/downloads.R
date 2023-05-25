@@ -14,10 +14,12 @@ to_download <-
   list(
     "appHsoHAemKITZgMF" = c(
       "Amnesties", "TruthCommissions", "Reparations", "Vettings",
-      "Experts", "NGOs", "Legal", "Transitions", 
+      "Experts", "NGOs", "Legal", "Transitions", "ConflictDyadSpells",
+      "Mallinder", "Rozic", "challenges", "comparison",
       "Countries", "Conflicts", "Dyads", "select_options", "metadata"),
     "appF8HAH7SN7C09cU" = c("Trials", "Accused", "CourtLevels", 
-                            "Countries", "Conflicts", "Dyads", "metadata")
+                            "Countries", "Transitions", "ConflictDyadSpells",
+                            "Conflicts", "Dyads", "metadata")
   )
 
 ### still need to ensure that the countries and conflicts tables are synced between the two bases

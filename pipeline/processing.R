@@ -6,6 +6,7 @@ pkeys <- c(
   "Amnesties" = "amnestyID",
   "Trials" = "trialID",
   "Accused" = "accusedID",
+  "CourtLevels" = "CLID", 
   "TruthCommissions" = "truthcommissionID",
   "Reparations" = "reparationID",
   "Vettings" = "vettingID",
@@ -13,7 +14,9 @@ pkeys <- c(
   "Transitions" = "transitionID",
   "Conflicts" = "conflict_id",
   "Dyads" = "dyad_id")
-exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal")
+exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
+             "ConflictDyadSpells", "Mallinder", "Rozic", 
+             "challenges", "comparison")
 
 ### check metadata table for non-existing fields
 cat("These are fields listed in 'metadata' that are missing in the Airtable download.")
@@ -178,7 +181,7 @@ names(select) <- select <- tjet[["MegaBase"]]$metadata %>%
 
 multi_selects <- map(select, function(tab_name) {
   # cat(tab_name)
-  # tab_name = "Amnesties"
+  # tab_name = "Vettings"
   names(fields) <- fields <- tjet[["MegaBase"]]$metadata %>%
     filter(incl_prod == 1 &
              incl_data == "transform: multiple" &
@@ -186,7 +189,8 @@ multi_selects <- map(select, function(tab_name) {
     select(field_name) %>%
     unlist(use.names = FALSE)
   map(fields, function(field) {
-    # field = "whatCrimes"
+    # cat(field)
+    # field = "other"
     to_filter_on <- paste(field, "set", sep = "_")
     to_select <- paste(field, tab_name, sep = "_")
     tjet[["MegaBase"]]$select_options %>%
@@ -283,6 +287,8 @@ db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]]$Amnesties %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
+### check here why one observation was added to Amnesties
+
 db[["MegaBase"]][["Vettings"]] <- db[["MegaBase"]]$Vettings %>%
   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
@@ -359,14 +365,14 @@ db[["Prosecutions"]][["Dyads"]] <- db[["Prosecutions"]]$Dyads %>%
 db[["MegaBase"]][["Transitions"]] <- db[["MegaBase"]]$Transitions %>%
   filter(trans == 1) %>% 
   mutate(p5 = case_when(is.na(p5_year) ~ 0, 
-                        year_begin < p5_year ~ 0,
-                        year_begin >= p5_year ~ 1),
+                        trans_year_begin < p5_year ~ 0,
+                        trans_year_begin >= p5_year ~ 1),
          bmr = case_when(is.na(bmr_year) ~ 0, 
-                         year_begin < bmr_year ~ 0,
-                         year_begin >= bmr_year ~ 1),
+                         trans_year_begin < bmr_year ~ 0,
+                         trans_year_begin >= bmr_year ~ 1),
          ert = case_when(is.na(ert_year) ~ 0, 
-                         year_begin < ert_year ~ 0,
-                         year_begin >= ert_year ~ 1), 
+                         trans_year_begin < ert_year ~ 0,
+                         trans_year_begin >= ert_year ~ 1), 
          nsupport = p5 + bmr + ert,) %>% 
   rowwise() %>% 
   mutate(sources = str_flatten(c(
@@ -374,7 +380,7 @@ db[["MegaBase"]][["Transitions"]] <- db[["MegaBase"]]$Transitions %>%
            case_when(!is.na(bmr_year) ~ paste("BMR (", bmr_year, ")", sep = "")),
            case_when(!is.na(ert_year) ~ paste("VDem (", ert_year, ")", sep = ""))),
            collapse = " & ", na.rm = TRUE)) %>% 
-  select(transitionID, ccode, year_begin, nsupport, sources) %>% 
+  select(transitionID, ccode, trans_year_begin, nsupport, sources) %>% 
   ungroup()
 
 ### TO DO
