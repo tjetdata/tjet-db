@@ -164,11 +164,11 @@ db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
 
 ### multiselect fields
 
-db[["MegaBase"]][["labels"]] <- tjet[["MegaBase"]]$select_options %>%
+db[["MegaBase"]][["labels"]] <- tjet[["MegaBase"]][["select_options"]] %>%
   select(labelID, label) %>%
   tibble()
 
-names(select) <- select <- tjet[["MegaBase"]]$metadata %>%
+names(select) <- select <- tjet[["MegaBase"]][["metadata"]] %>%
   filter(
     incl_prod == 1 &
       incl_data == "include as key" &
@@ -182,7 +182,7 @@ names(select) <- select <- tjet[["MegaBase"]]$metadata %>%
 multi_selects <- map(select, function(tab_name) {
   # cat(tab_name)
   # tab_name = "Vettings"
-  names(fields) <- fields <- tjet[["MegaBase"]]$metadata %>%
+  names(fields) <- fields <- tjet[["MegaBase"]][["metadata"]] %>%
     filter(incl_prod == 1 &
              incl_data == "transform: multiple" &
              table_name == tab_name) %>%
@@ -240,15 +240,7 @@ cbind(orig = dim_orig[[2]], drop = dim_drop[[2]], now = dim_now[[2]][names(dim_o
 ## the approaches below differ by whether the relationship is one-to-one or one-to-many
 ## should simplify the code below with one function
 
-# db[["CountryYears"]] <- db$CountryYears %>%
-#   unnest_longer(transitionID) %>%
-#   rename(airtable_record_id = "transitionID") %>%
-#   left_join(tjet$Transitions %>% 
-#               select(airtable_record_id, transitionID),
-#             by = "airtable_record_id") %>%
-#   select(-airtable_record_id)
-
-db[["MegaBase"]][["Reparations"]] <- db[["MegaBase"]]$Reparations %>%
+db[["MegaBase"]][["Reparations"]] <- db[["MegaBase"]][["Reparations"]] %>%
   unnest_longer(ucdpConflictID, keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet[["MegaBase"]]$Conflicts %>% 
@@ -257,7 +249,7 @@ db[["MegaBase"]][["Reparations"]] <- db[["MegaBase"]]$Reparations %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "conflict_id")
 
-db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]]$Trials %>%
+db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet[["Prosecutions"]]$Conflicts %>% 
@@ -272,7 +264,7 @@ db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]]$Trials %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]]$Amnesties %>%
+db[["MegaBase"]][["Vettings"]] <- db[["MegaBase"]][["Vettings"]] %>%
   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet[["MegaBase"]]$Conflicts %>% 
@@ -287,29 +279,28 @@ db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]]$Amnesties %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-### check here why one observation was added to Amnesties
-
-db[["MegaBase"]][["Vettings"]] <- db[["MegaBase"]]$Vettings %>%
-  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
-  rename(airtable_record_id = "ucdpConflictID") %>%
-  left_join(tjet[["MegaBase"]]$Conflicts %>% 
-              select(airtable_record_id, conflict_id),
-            by = "airtable_record_id") %>%
-  select(-airtable_record_id) %>%
-  rename(airtable_record_id = "ucdpDyadID") %>%
-  left_join(tjet[["MegaBase"]]$Dyads %>% 
-              select(airtable_record_id, dyad_id),
-            by = "airtable_record_id") %>%
-  select(-airtable_record_id) %>%
-  rename(ucdpConflictID = "conflict_id",
-         ucdpDyadID = "dyad_id")
+### this created an additional observation because relationship is actually one-to-many, so now doing this properly further below
+# db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]]$Amnesties %>%
+#   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
+#   rename(airtable_record_id = "ucdpConflictID") %>%
+#   left_join(tjet[["MegaBase"]]$Conflicts %>% 
+#               select(airtable_record_id, conflict_id),
+#             by = "airtable_record_id") %>%
+#   select(-airtable_record_id) %>%
+#   rename(airtable_record_id = "ucdpDyadID") %>%
+#   left_join(tjet[["MegaBase"]]$Dyads %>% 
+#               select(airtable_record_id, dyad_id),
+#             by = "airtable_record_id") %>%
+#   select(-airtable_record_id) %>%
+#   rename(ucdpConflictID = "conflict_id",
+#          ucdpDyadID = "dyad_id")
 
 ### at the moment the trial-accused link is one-to-many, 
 ### but in theory, I could become many-to-many, 
 ### though there is no current plan to do so
 # range(unlist(map(db$Accused$trialID, length)))
 
-db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]]$Accused %>%
+db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
   unnest_longer(trialID) %>%
   rename(airtable_record_id = "trialID") %>%
   left_join(tjet[["Prosecutions"]]$Trials %>% 
@@ -317,9 +308,9 @@ db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]]$Accused %>%
             by = "airtable_record_id") %>%
   select(-airtable_record_id) 
 
-## truth commissions have one-to-many links
+## truth commissions and amnesties have one-to-many links
 
-db[["MegaBase"]][["TruthCommissions_Conflicts"]] <- db[["MegaBase"]]$TruthCommissions %>%
+db[["MegaBase"]][["TruthCommissions_Conflicts"]] <- db[["MegaBase"]][["TruthCommissions"]] %>%
   select(truthcommissionID, ucdpConflictID) %>%
   unnest_longer(ucdpConflictID) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
@@ -330,7 +321,7 @@ db[["MegaBase"]][["TruthCommissions_Conflicts"]] <- db[["MegaBase"]]$TruthCommis
   rename(ucdpConflictID = "conflict_id") %>%
   drop_na()
 
-db[["MegaBase"]][["TruthCommissions_Dyads"]] <- db[["MegaBase"]]$TruthCommissions %>%
+db[["MegaBase"]][["TruthCommissions_Dyads"]] <- db[["MegaBase"]][["TruthCommissions"]] %>%
   select(truthcommissionID, ucdpDyadID) %>%
   unnest_longer(ucdpDyadID) %>%
   rename(airtable_record_id = "ucdpDyadID") %>%
@@ -341,24 +332,55 @@ db[["MegaBase"]][["TruthCommissions_Dyads"]] <- db[["MegaBase"]]$TruthCommission
   rename(ucdpConflictID = "dyad_id") %>%
   drop_na()
 
-db[["MegaBase"]][["TruthCommissions"]] <- db[["MegaBase"]]$TruthCommissions %>%
+db[["MegaBase"]][["TruthCommissions"]] <- db[["MegaBase"]][["TruthCommissions"]] %>%
+  select(-ucdpConflictID,-ucdpDyadID)
+
+db[["MegaBase"]][["Amnesties_Conflicts"]] <- db[["MegaBase"]][["Amnesties"]] %>%
+  select(amnestyID, ucdpConflictID) %>%
+  unnest_longer(ucdpConflictID) %>%
+  rename(airtable_record_id = "ucdpConflictID") %>%
+  left_join(tjet[["MegaBase"]]$Conflicts %>%
+              select(airtable_record_id, conflict_id),
+            by = "airtable_record_id") %>%
+  select(-airtable_record_id) %>%
+  rename(ucdpConflictID = "conflict_id") %>%
+  drop_na()
+
+db[["MegaBase"]][["Amnesties_Dyads"]] <- db[["MegaBase"]][["Amnesties"]] %>%
+  select(amnestyID, ucdpDyadID) %>%
+  unnest_longer(ucdpDyadID) %>%
+  rename(airtable_record_id = "ucdpDyadID") %>%
+  left_join(tjet[["MegaBase"]]$Dyads %>%
+              select(airtable_record_id, dyad_id),
+            by = "airtable_record_id") %>%
+  select(-airtable_record_id) %>%
+  rename(ucdpConflictID = "dyad_id") %>%
+  drop_na()
+
+db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>%
   select(-ucdpConflictID,-ucdpDyadID)
 
 ## consistent ID field names
 
-db[["MegaBase"]][["Conflicts"]] <- db[["MegaBase"]]$Conflicts %>%
+db[["MegaBase"]][["Conflicts"]] <- db[["MegaBase"]][["Conflicts"]] %>%
   rename(ucdpConflictID = "conflict_id")
 
-db[["MegaBase"]][["Dyads"]] <- db[["MegaBase"]]$Dyads %>%
+db[["MegaBase"]][["Dyads"]] <- db[["MegaBase"]][["Dyads"]] %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-db[["Prosecutions"]][["Conflicts"]] <- db[["Prosecutions"]]$Conflicts %>%
+db[["Prosecutions"]][["Conflicts"]] <- db[["Prosecutions"]][["Conflicts"]] %>%
   rename(ucdpConflictID = "conflict_id")
 
-db[["Prosecutions"]][["Dyads"]] <- db[["Prosecutions"]]$Dyads %>%
+db[["Prosecutions"]][["Dyads"]] <- db[["Prosecutions"]][["Dyads"]] %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
+
+## other multi-select fields (lookup fields as list columns of length one)
+
+db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>% 
+  # select(accusedID, lastVerdictYear, lastVerdict, lastSentencingTime, lastSentencingArrangement) %>%
+  unnest_longer(all_of(c("lastVerdictYear", "lastVerdict", "lastSentencingTime", "lastSentencingArrangement")), keep_empty = TRUE)
 
 ## cleaning up transitions table; this will change once the transitions data are fully cleaned up
 
@@ -382,6 +404,30 @@ db[["MegaBase"]][["Transitions"]] <- db[["MegaBase"]]$Transitions %>%
            collapse = " & ", na.rm = TRUE)) %>% 
   select(transitionID, ccode, trans_year_begin, nsupport, sources) %>% 
   ungroup()
+
+### need to also filter non-HRs policies; check again amnesties, TCs, reparations, vettings
+
+db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>% 
+  filter(generalOrSpecific == "event" & (IntraConfl == 1 | humanRights == 1 | HRs_charges > 0) )
+
+db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>% 
+  filter(trialID %in% db[["Prosecutions"]][["Trials"]]$trialID)
+
+# crime_labels <- db[["MegaBase"]][["Amnesties_whatCrimes"]] %>%
+#   select(labelID) %>%
+#   distinct() %>%
+#   unlist(use.names = FALSE)
+# db[["MegaBase"]][["labels"]] %>%
+#   filter(labelID %in% crime_labels)
+# rm(crime_labels)
+keep_amnesties <- db[["MegaBase"]][["Amnesties_whatCrimes"]] %>% 
+  filter(labelID %in% c(60, 88, 9, 143, 132) ) %>%
+  select(amnestyID) %>% 
+  distinct() %>% 
+  unlist(use.names = FALSE)
+db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>% 
+  filter(amnestyID %in% keep_amnesties)
+rm(keep_amnesties)
 
 ### TO DO
 ## - multi-select fields into dummies for data downloads 
