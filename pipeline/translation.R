@@ -1,5 +1,5 @@
-library(keyring)
-library(deeplr)
+require(keyring)
+require(deeplr)
 
 ### use this for setting the authorization key locally
 ### needs to be done only once for each new key

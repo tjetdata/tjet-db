@@ -1,8 +1,8 @@
 # remotes::install_github('matthewjrogers/rairtable', ref = 'dev')
 ### the development version handles multi-select fields without error
-library(tidyverse)
-library(rairtable)
-library(here)
+require(tidyverse)
+require(rairtable)
+require(here)
 
 ### the api key needs to be set only once, is saved to the local R environment
 ### if it needs to be set again, replace string and un-comment below to run once

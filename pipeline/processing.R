@@ -1,5 +1,5 @@
-library(tidyverse)
-library(here)
+require(tidyverse)
+require(here)
 
 load(here("data/tjet.RData"))
 pkeys <- c(
@@ -448,4 +448,4 @@ cbind(orig = dim_orig[[2]],
 db <- c(db[["Prosecutions"]][c("Trials", "Accused", "CourtLevels", "Trials_Crimes", "Trials_Victims")], 
         db[["MegaBase"]])
 
-save(db, file = here("data/tjetdb.RData"))
+save(db, file = here("data", "tjetdb.RData"))

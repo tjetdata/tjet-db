@@ -1,7 +1,7 @@
-library(tidyverse)
-library(here)
+require(tidyverse)
+require(here)
 
-load(here("data/tjetdb.RData"))
+load(here("data", "tjetdb.RData"), verbose = TRUE)
 
 countrylist <- db$Countries %>% 
   mutate(beg = as.integer(str_sub(begin_date, 1, 4)), 
@@ -18,7 +18,7 @@ countrylist <- db$Countries %>%
          end = ifelse(country == "German Federal Republic (West)", 1989, end),
          end = ifelse(country == "Yemen Arab Republic (North)", 1989, end),
          region_sub_un = ifelse(is.na(intregion), subregion, intregion) ) %>% 
-  select(country, ccode, ccode_case, ccode_ksg, beg, end, region, region_sub_un, region_wb) %>% 
+  select(country, ccode, ccode_case, ccode_ksg, beg, end, region, region_sub_un, region_wb, focus) %>% 
   arrange(country)
 
 translist <- read_csv("transitions/transitions_new_revised.csv") %>%
@@ -167,7 +167,7 @@ domestic <- trials %>%
          "trials_domestic_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
 
-df <- map(countrylist$country , function(ctry) {
+db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   beg <- countrylist %>%
     filter(country == ctry) %>%
     select(beg) %>%
@@ -181,13 +181,14 @@ df <- map(countrylist$country , function(ctry) {
 }) %>%
   do.call(rbind, .) %>%
   full_join(countrylist, by = "country") %>%
+  mutate(cyID = paste(ccode, year, sep = "-")) %>%
   full_join(translist, by = c("country", "ccode", "year") ) %>% 
   full_join(confllist, by = c("ccode_ksg" = "gwno_loc", "year" = "year") ) %>% 
   mutate(conflict = ifelse(is.na(conflict), 0, 1)) %>%
   group_by(ccode_case) %>%
   mutate(conflict = max(conflict) ) %>%
   ungroup() %>% 
-  select(country, year, ccode, ccode_case, ccode_ksg, region, 
+  select(cyID, country, year, ccode, ccode_case, ccode_ksg, region, 
          regime, reg_democ, reg_autoc, reg_trans, conflict) %>% 
   filter(year >= 1970) %>% 
   left_join(amnesties, by = c("ccode_case", "year") ) %>%  
@@ -204,5 +205,6 @@ df <- map(countrylist$country , function(ctry) {
          trials_domestic_SGBV = ifelse(is.na(trials_domestic_SGBV), 0, 1)) %>% 
   left_join(other, by = c("ccode_case", "year") ) %>% 
   mutate(trials_other = ifelse(is.na(trials_other), 0, 1),
-         trials_other_SGBV = ifelse(is.na(trials_other_SGBV), 0, 1) ) %>% # write_csv("~/Desktop/temp.csv") 
-  print(n = 20)
+         trials_other_SGBV = ifelse(is.na(trials_other_SGBV), 0, 1) ) # %>% write_csv("~/Desktop/temp.csv") 
+
+save(db, file = here("data", "tjetdb.RData"))
