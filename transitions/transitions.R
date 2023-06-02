@@ -399,9 +399,14 @@ v6 %>%
   unique() # %>% write_csv(here("transitions/transitions_new.csv"), na = "")
 
 ### we did some manual cleaning up of the transitions coding on a google sheet
+### including moving data from S&M to Serbia 
 
 transitions <- drive_get("TJET_transitions") %>% 
   read_sheet(sheet = "transitions_new") %>% 
+  mutate(country = str_replace(country, "Democratic Republic of the Congo", "Congo (Brazzaville)"),
+         country = str_replace(country, "Republic of the Congo", "DR Congo"),
+         country = str_replace(country, "German Democratic Republic", "German Democratic Republic (East)") ) %>% 
+  filter(!country %in% c("Hong Kong", "Palestine/Gaza", "Palestine/West Bank", "Somaliland", "Zanzibar") ) %>%
   write_csv(here("transitions/transitions_new_revised.csv"), na = "")
 
 transitions %>%
@@ -409,10 +414,6 @@ transitions %>%
   filter(!is.na(trans_year) | !is.na(trans_note)) %>%
   mutate(trans = case_when(year == trans_year ~ 1, 
                            year != trans_year ~ 0,
-                           is.na(trans_year) ~ 0), 
-         country = str_replace(country, "Democratic Republic of the Congo", "Congo (Brazzaville)"),
-         country = str_replace(country, "Republic of the Congo", "DR Congo"),
-         country = str_replace(country, "German Democratic Republic", "German Democratic Republic (East)") ) %>%
-  filter(country != "Zanzibar") %>%
+                           is.na(trans_year) ~ 0) ) %>%
   select(country, trans, trans_year, p5_year, bmr_year, ert_year, trans_note, tjet_dtrid, year) %>% 
   write_csv("~/Desktop/for_Airtable.csv", na = "")
