@@ -19,6 +19,7 @@ countrylist <- db$Countries %>%
          end = ifelse(country == "Yemen Arab Republic (North)", 1989, end),
          region_sub_un = ifelse(is.na(intregion), subregion, intregion) ) %>% 
   select(country, ccode, ccode_case, ccode_ksg, beg, end, region, region_sub_un, region_wb, focus) %>% 
+  rename("tjet_focus" = "focus") %>% 
   arrange(country)
 
 translist <- read_csv("transitions/transitions_new_revised.csv") %>%
@@ -188,23 +189,28 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   group_by(ccode_case) %>%
   mutate(conflict = max(conflict) ) %>%
   ungroup() %>% 
-  select(cyID, country, year, ccode, ccode_case, ccode_ksg, region, 
+  select(cyID, country, year, ccode, ccode_case, ccode_ksg, tjet_focus, region, 
          regime, reg_democ, reg_autoc, reg_trans, conflict) %>% 
   filter(year >= 1970) %>% 
   left_join(amnesties, by = c("ccode_case", "year") ) %>%  
-  mutate(amnesties = ifelse(is.na(amnesties), 0, 1),
-         amnesties_SGBV = ifelse(is.na(amnesties_SGBV), 0, 1)) %>% 
+  mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties),
+         amnesties_SGBV = ifelse(is.na(amnesties_SGBV), 0, amnesties_SGBV)) %>% 
   left_join(reparations, by = c("ccode_case", "year") ) %>%  
-  mutate(reparations = ifelse(is.na(reparations), 0, 1),
-         reparations_SGBV = ifelse(is.na(reparations_SGBV), 0, 1)) %>% 
+  mutate(reparations = ifelse(is.na(reparations), 0, reparations),
+         reparations_SGBV = ifelse(is.na(reparations_SGBV), 0, reparations_SGBV)) %>% 
   left_join(tcs, by = c("ccode_case", "year") ) %>% 
-  mutate(tcs = ifelse(is.na(tcs), 0, 1),
-         tcs_SGBV = ifelse(is.na(tcs_SGBV), 0, 1)) %>% 
+  mutate(tcs = ifelse(is.na(tcs), 0, tcs),
+         tcs_SGBV = ifelse(is.na(tcs_SGBV), 0, tcs_SGBV)) %>% 
   left_join(domestic, by = c("ccode_case", "year") ) %>% 
-  mutate(trials_domestic = ifelse(is.na(trials_domestic), 0, 1),
-         trials_domestic_SGBV = ifelse(is.na(trials_domestic_SGBV), 0, 1)) %>% 
+  mutate(trials_domestic = ifelse(is.na(trials_domestic), 0, trials_domestic),
+         trials_domestic_SGBV = ifelse(is.na(trials_domestic_SGBV), 0, trials_domestic_SGBV)) %>% 
   left_join(other, by = c("ccode_case", "year") ) %>% 
-  mutate(trials_other = ifelse(is.na(trials_other), 0, 1),
-         trials_other_SGBV = ifelse(is.na(trials_other_SGBV), 0, 1) ) # %>% write_csv("~/Desktop/temp.csv") 
+  mutate(trials_other = ifelse(is.na(trials_other), 0, trials_other),
+         trials_other_SGBV = ifelse(is.na(trials_other_SGBV), 0, trials_other_SGBV) ) # %>% write_csv("~/Desktop/temp.csv") 
+
+db$Countries <- countrylist  %>% 
+  mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
+
+db$dictionary <- read_csv(here("pipeline", "dictionary.csv"))         
 
 save(db, file = here("data", "tjetdb.RData"))
