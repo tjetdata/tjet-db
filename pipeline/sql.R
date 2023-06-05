@@ -10,32 +10,37 @@ require(keyring)
 
 load(here("data", "tjetdb.RData"), verbose = TRUE)
 
+names(db)
+db$dictionary # %>% print(n = Inf)
 
-## file.remove("tjet.db")
-
-# conn <- dbConnect(RSQLite::SQLite(), "../data/tjet.db")
 conn <- dbConnect(RMariaDB::MariaDB(),
                   host = "159.203.34.223",
                   dbname = "fckdtuwsqu", 
                   user = "fckdtuwsqu", 
                   password = key_get("TJETdb"))
 
+dbWriteTable(conn, "Dictionary", db[["dictionary"]])
+dbWriteTable(conn, "Countries", db[["Countries"]], overwrite = TRUE)
+dbWriteTable(conn, "CountryYears", db[["CountryYears"]], overwrite = TRUE)
 
+dbReadTable(conn, "CountryYears")
 
+dbDisconnect(conn)
 
-## write tables
-map(names(db), function(table_name) {
-  print(table_name)
-  dbWriteTable(conn, table_name, db[[table_name]])
-})
-dbListTables(conn)
+### SQL functions
+# dbListTables(conn)
 # dbListFields(conn, "Countries")
 # dbReadTable(conn, "CountryYears")
 # dbGetQuery(conn, "SELECT * FROM Countries")
 # result <- dbSendQuery(conn, "SELECT * FROM Countries")
 # dbFetch(result)
 # dbClearResult(result)
-dbDisconnect(conn)
+
+### write all tables
+# map(names(db), function(table_name) {
+#   print(table_name)
+#   dbWriteTable(conn, table_name, db[[table_name]])
+# })
 
 ### TO DO
 ## - set all PKs and FKs in DB 

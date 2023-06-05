@@ -1,5 +1,9 @@
 library(here)
 library(tidyverse)
+conflicted::conflict_prefer("filter", "dplyr")
+conflicted::conflict_prefer("lag", "dplyr")
+conflicted::conflict_prefer("select", "dplyr")
+conflicted::conflict_prefer("fixed", "stringr")
 
 source(here("pipeline", "downloads.R"))
 source(here("pipeline", "processing.R"))
