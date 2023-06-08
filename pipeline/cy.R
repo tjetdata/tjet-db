@@ -185,12 +185,13 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   mutate(cyID = paste(ccode, year, sep = "-")) %>%
   full_join(translist, by = c("country", "ccode", "year") ) %>% 
   full_join(confllist, by = c("ccode_ksg" = "gwno_loc", "year" = "year") ) %>% 
-  mutate(conflict = ifelse(is.na(conflict), 0, 1)) %>%
+  mutate(conflict = ifelse(is.na(conflict), 0, 1), 
+         conflict_active = conflict) %>%
   group_by(ccode_case) %>%
   mutate(conflict = max(conflict) ) %>%
   ungroup() %>% 
   select(cyID, country, year, ccode, ccode_case, ccode_ksg, tjet_focus, region, 
-         regime, reg_democ, reg_autoc, reg_trans, conflict) %>% 
+         regime, reg_democ, reg_autoc, reg_trans, conflict, transition, conflict_active) %>% 
   filter(year >= 1970) %>% 
   left_join(amnesties, by = c("ccode_case", "year") ) %>%  
   mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties),
@@ -214,3 +215,5 @@ db$Countries <- countrylist  %>%
 db$dictionary <- read_csv(here("pipeline", "dictionary.csv"))         
 
 save(db, file = here("data", "tjetdb.RData"))
+
+rm(countrylist, translist, confllist, amnesties, reparations, tcs, trials, domestic, other) 

@@ -32,8 +32,6 @@ tjet <- map(names(to_download), function(base_id) {
     airtable(df, base_id) %>%
       read_airtable(id_to_col = TRUE)
   })
-}) 
-# names(tjet) <- names(to_download)
+})
 names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
-
 save(tjet, to_download, file = here("data/tjet.RData"))

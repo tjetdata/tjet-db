@@ -380,8 +380,18 @@ db[["Prosecutions"]][["Dyads"]] <- db[["Prosecutions"]][["Dyads"]] %>%
 
 db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>% 
   # select(accusedID, lastVerdictYear, lastVerdict, lastSentencingTime, lastSentencingArrangement) %>%
-  unnest_longer(all_of(c("lastVerdictYear", "lastVerdict", "lastSentencingTime", "lastSentencingArrangement")), keep_empty = TRUE)
+  unnest_longer(all_of(c("lastGuiltyYear", "lastVerdictYear", "lastVerdict", "lastSentencingTime", "lastSentencingArrangement")), keep_empty = TRUE)
 
+# db$Prosecutions$Trials %>% 
+#   select(lastVerdict, lastSentencingTime) %>% 
+#   mutate(new = paste0(lastVerdict) )  
+
+## fixing missing Trials endYear
+
+db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>% 
+  mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2023, yearEnd), 
+         yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd)) 
+  
 ## cleaning up transitions table; this will change once the transitions data are fully cleaned up
 
 db[["MegaBase"]][["Transitions"]] <- db[["MegaBase"]]$Transitions %>%
@@ -429,6 +439,9 @@ db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>%
   filter(amnestyID %in% keep_amnesties)
 rm(keep_amnesties)
 
+# db$Prosecutions$Trials %>% 
+#   select(lastVerdict, lastSentencingTime) 
+
 ### TO DO
 ## - multi-select fields into dummies for data downloads 
 ##   - needs a consistent naming scheme
@@ -449,3 +462,5 @@ db <- c(db[["Prosecutions"]][c("Trials", "Accused", "CourtLevels", "Trials_Crime
         db[["MegaBase"]])
 
 save(db, file = here("data", "tjetdb.RData"))
+
+rm(select, checkbox_to_binary, dim_drop, dim_last, dim_now, dim_orig, crimes, victims, multi_selects) 
