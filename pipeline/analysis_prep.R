@@ -48,26 +48,30 @@ icc <- db[["Accused"]] %>%
 trial_counts <- db[["Trials"]] %>% 
   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
   select(ccode_Accused, yearStart, HRs, fitsPostAutocraticTJ, fitsConflictTJ) %>%
+  mutate(fitsBoth = ifelse(fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0)) %>%
   arrange(ccode_Accused, yearStart) %>% 
   group_by(ccode_Accused, yearStart) %>% 
   mutate(trials_HRs = sum(HRs) , 
-         trials_PostAutocratic = sum(fitsPostAutocraticTJ) , 
-         trials_Conflict = sum(fitsConflictTJ) ) %>% 
-  select(ccode_Accused, yearStart, trials_HRs, trials_PostAutocratic, trials_Conflict) %>% 
+         trials_PostAutocratic = sum(fitsPostAutocraticTJ), 
+         trials_Conflict = sum(fitsConflictTJ), 
+         trials_unionFits = sum(fitsBoth) ) %>% 
+  select(ccode_Accused, yearStart, trials_HRs, trials_PostAutocratic, trials_Conflict, trials_unionFits) %>% 
   distinct() %>% 
   rename(ccode = ccode_Accused, 
          year = yearStart)
 conviction_counts <- db[["Trials"]] %>% 
   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
   select(ccode_Accused, firstConvictionYear_min, HRs, fitsPostAutocraticTJ, fitsConflictTJ) %>%
-  mutate(firstConvictionYear_min = as.integer(firstConvictionYear_min)) %>%
+  mutate(fitsBoth = ifelse(fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0),
+         firstConvictionYear_min = as.integer(firstConvictionYear_min)) %>%
   filter(!is.na(firstConvictionYear_min) ) %>% 
   arrange(ccode_Accused, firstConvictionYear_min) %>% 
   group_by(ccode_Accused, firstConvictionYear_min) %>% 
   mutate(convictions_HRs = sum(HRs) , 
          convictions_PostAutocratic = sum(fitsPostAutocraticTJ) , 
-         convictions_Conflict = sum(fitsConflictTJ) ) %>% 
-  select(ccode_Accused, firstConvictionYear_min, convictions_HRs, convictions_PostAutocratic, convictions_Conflict) %>% 
+         convictions_Conflict = sum(fitsConflictTJ), 
+         convictions_unionFits = sum(fitsBoth) ) %>% 
+  select(ccode_Accused, firstConvictionYear_min, convictions_HRs, convictions_PostAutocratic, convictions_Conflict, convictions_unionFits) %>% 
   distinct() %>% 
   rename(ccode = ccode_Accused, 
          year = firstConvictionYear_min)
@@ -175,8 +179,10 @@ df <- read_csv("data/tjet_covariates.csv") %>%
          confl_cum_convictions_Conflict = ifelse(sample_confl == 0, 0, confl_cum_convictions_Conflict)) %>% 
   ungroup() %>% 
   group_by(ccode_case, sample_combi) %>% 
-  mutate(combi_cum_trials_fits = cumsum(trials_Conflict + trials_PostAutocratic), 
-         combi_cum_trials_fits = ifelse(sample_combi == 0, 0, combi_cum_trials_fits)) %>% 
+  mutate(combi_cum_trials_fits = cumsum(trials_unionFits), 
+         combi_cum_trials_fits = ifelse(sample_combi == 0, 0, combi_cum_trials_fits),
+         combi_cum_convictions_fits = cumsum(convictions_unionFits), 
+         combi_cum_convictions_fits = ifelse(sample_combi == 0, 0, combi_cum_convictions_fits)) %>% 
   ungroup()
 
 # legacy of violence [DONE]
@@ -185,25 +191,24 @@ df <- read_csv("data/tjet_covariates.csv") %>%
 # - global conflict trials [DONE]
 # - sample_trans transitional trials [DONE]
 # - sample_confl conflict trials [DONE]
-# - combined sample combined trials [DONE] 
+# - combined sample combined trials (transitional or conflict) [DONE] 
 # cumulative convictions
 # - global HRs trials [DONE]
 # - global conflict trials [DONE]
 # - sample_trans transitional trials [DONE]
 # - sample_confl conflict trials [DONE]
-# - combined sample combined trials [DONE] 
+# - combined sample combined trials (transitional or conflict) [DONE] 
     
 lags <- df %>%
   select(-cyID, -country, -ccode_case, -ccode_ksg, -region, -subreg_un, -intermediate_reg_un, -region_un, -tjet_focus) %>%
   mutate(year = year + 1) %>%
   rename_with(~ paste0("lag_", .x))
 
-df %>% 
-  select(conflicts_osv) %>% table() 
-
 df %>%
   left_join(lags, by = c("ccode_cow" = "lag_ccode_cow", "year" = "lag_year") ) %>% 
   write_csv("/Users/otthoms/Dropbox/TJLab/TimoDataWork/Harvard_figures/tjet_analyses.csv") %>% 
   write_csv("/Users/otthoms/Dropbox/TJLab/TimoDataWork/Harvard_figures/tjet_analyses_GD.csv", na = "")
+
+save(db, file = "/Users/otthoms/Dropbox/TJLab/TimoDataWork/Harvard_figures/tjetdb.RData")
 
 rm(lags, trial_counts, conviction_counts, icc)
