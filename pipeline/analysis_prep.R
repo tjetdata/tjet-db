@@ -3,17 +3,6 @@ require(here)
 
 load(here("data", "tjetdb.RData"), verbose = TRUE)
 
-# db[["CountryYears"]] %>% 
-#   write_csv(here("data", "tjet_cy.csv"))
-# db[["Amnesties"]] %>% 
-#   write_csv(here("data", "tjet_amnesties.csv")) 
-# db[["TruthCommissions"]] %>% 
-#   write_csv(here("data", "tjet_tcs.csv")) 
-# db[["Reparations"]] %>% 
-#   write_csv(here("data", "tjet_reparations.csv")) 
-# db[["Trials"]] %>% 
-#   write_csv(here("data", "tjet_trials.csv")) 
-
 icc <- db[["Accused"]] %>% 
   select(accusedID, trialID, ICC_referral, ICC_prelim_exam, ICC_investigation, 
          ICC_arrest_warrant, ICC_arrestAppear, ICC_atLarge, 
@@ -48,14 +37,16 @@ icc <- db[["Accused"]] %>%
 trial_counts <- db[["Trials"]] %>% 
   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
   select(ccode_Accused, yearStart, HRs, fitsPostAutocraticTJ, fitsConflictTJ) %>%
-  mutate(fitsBoth = ifelse(fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0)) %>%
+  mutate(fitsBoth = ifelse(fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0),
+         HRsConfl = ifelse(HRs + fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0)) %>%
   arrange(ccode_Accused, yearStart) %>% 
   group_by(ccode_Accused, yearStart) %>% 
   mutate(trials_HRs = sum(HRs) , 
          trials_PostAutocratic = sum(fitsPostAutocraticTJ), 
          trials_Conflict = sum(fitsConflictTJ), 
+         trials_HRsConfl = sum(HRsConfl), 
          trials_unionFits = sum(fitsBoth) ) %>% 
-  select(ccode_Accused, yearStart, trials_HRs, trials_PostAutocratic, trials_Conflict, trials_unionFits) %>% 
+  select(ccode_Accused, yearStart, trials_HRs, trials_PostAutocratic, trials_Conflict, trials_HRsConfl, trials_unionFits) %>% 
   distinct() %>% 
   rename(ccode = ccode_Accused, 
          year = yearStart)
@@ -78,7 +69,14 @@ conviction_counts <- db[["Trials"]] %>%
 
 ### merging 
 
-df <- read_csv("data/tjet_covariates.csv") %>% 
+read_csv("data/tjet_covariates.csv") %>% 
+  select(-v2x_egaldem, -v2x_egaldem_sd, -v2x_egal, -v2x_egal_sd,
+         -v2juhcind_mean, -v2juncind_mean,
+         -v2exbribe_mean, -v2exbribe, -v2exbribe_sd,
+         -v2exembez_mean, -v2exembez, -v2exembez_sd, 
+         -v2excrptps_mean, -v2excrptps, -v2excrptps_sd, 
+         -v2exthftps_mean, -v2exthftps, - v2exthftps_sd, 
+         -v2lgcrrpt_mean, -v2jucorrdc_mean, -v2mecorrpt_mean) %>% 
   filter(!(country == "Andorra" & year < 1993)) %>%
   filter(!(country == "Brunei" & year < 1984)) %>%
   filter(!(country == "Kiribati" & year < 1997)) %>%
@@ -94,7 +92,7 @@ df <- read_csv("data/tjet_covariates.csv") %>%
          ccode_cow = ifelse(year == 1990 & country == "West Germany", 255, ccode_cow) ) %>%
   full_join(db[["CountryYears"]] %>% rename(country_cy = country),
     by = c("ccode_cow" = "ccode", "year" = "year")) %>% 
-  select(-country_cy, -ccode_gw) %>% 
+  select(-cyID, -country_cy, -ccode_gw, -region, -tjet_focus) %>% 
   left_join(read_csv("data/tjet_ICC_new_fromGD.csv") %>% 
               select(-country, -new, -ICC_atLarge),
             by = c("ccode_cow" = "ccode") ) %>% 
@@ -183,32 +181,17 @@ df <- read_csv("data/tjet_covariates.csv") %>%
          combi_cum_trials_fits = ifelse(sample_combi == 0, 0, combi_cum_trials_fits),
          combi_cum_convictions_fits = cumsum(convictions_unionFits), 
          combi_cum_convictions_fits = ifelse(sample_combi == 0, 0, combi_cum_convictions_fits)) %>% 
-  ungroup()
+  ungroup() %>% 
+  write_csv("~/Dropbox/TJLab/TimoDataWork/Harvard_slides/data/tjet_analyses_GD.csv", na = "") %>%
+  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_analyses.csv", na = "")
 
-# legacy of violence [DONE]
-# cumulative trials
-# - global HRs trials [DONE]
-# - global conflict trials [DONE]
-# - sample_trans transitional trials [DONE]
-# - sample_confl conflict trials [DONE]
-# - combined sample combined trials (transitional or conflict) [DONE] 
-# cumulative convictions
-# - global HRs trials [DONE]
-# - global conflict trials [DONE]
-# - sample_trans transitional trials [DONE]
-# - sample_confl conflict trials [DONE]
-# - combined sample combined trials (transitional or conflict) [DONE] 
-    
-lags <- df %>%
-  select(-cyID, -country, -ccode_case, -ccode_ksg, -region, -subreg_un, -intermediate_reg_un, -region_un, -tjet_focus) %>%
-  mutate(year = year + 1) %>%
-  rename_with(~ paste0("lag_", .x))
+db[["Amnesties"]] %>%
+  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_amnesties.csv", na = "")
+db[["TruthCommissions"]] %>%
+  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_tcs.csv", na = "")
+db[["Reparations"]] %>%
+  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_reparations.csv", na = "")
+db[["Trials"]] %>%
+  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_trials.csv", na = "")
 
-df %>%
-  left_join(lags, by = c("ccode_cow" = "lag_ccode_cow", "year" = "lag_year") ) %>% 
-  write_csv("/Users/otthoms/Dropbox/TJLab/TimoDataWork/Harvard_figures/tjet_analyses.csv") %>% 
-  write_csv("/Users/otthoms/Dropbox/TJLab/TimoDataWork/Harvard_figures/tjet_analyses_GD.csv", na = "")
-
-save(db, file = "/Users/otthoms/Dropbox/TJLab/TimoDataWork/Harvard_figures/tjetdb.RData")
-
-rm(lags, trial_counts, conviction_counts, icc)
+rm(trial_counts, conviction_counts, icc)

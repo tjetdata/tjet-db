@@ -71,7 +71,7 @@ db <- map(names(to_download), function(basename) {
   base[drop_invalids] <- map(drop_invalids, function(tab_name) {
     base[[tab_name]] %>%
       ## will need to change this later to selecting only valids
-      filter(invalid != 1 | is.na(invalid)) # %>% select(-invalid)
+      filter(invalid != 1) # %>% select(-invalid)
     
   })
   return(base)
@@ -379,8 +379,10 @@ db[["Prosecutions"]][["Dyads"]] <- db[["Prosecutions"]][["Dyads"]] %>%
 ## other multi-select fields (lookup fields as list columns of length one)
 
 db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>% 
-  # select(accusedID, lastVerdictYear, lastVerdict, lastSentencingTime, lastSentencingArrangement) %>%
   unnest_longer(all_of(c("lastGuiltyYear", "lastVerdictYear", "lastVerdict", "lastSentencingTime", "lastSentencingArrangement")), keep_empty = TRUE)
+
+db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+  unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE)
 
 # db$Prosecutions$Trials %>% 
 #   select(lastVerdict, lastSentencingTime) %>% 
