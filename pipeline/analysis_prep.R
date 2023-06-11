@@ -182,7 +182,6 @@ read_csv("data/tjet_covariates.csv") %>%
          combi_cum_convictions_fits = cumsum(convictions_unionFits), 
          combi_cum_convictions_fits = ifelse(sample_combi == 0, 0, combi_cum_convictions_fits)) %>% 
   ungroup() %>% 
-  write_csv("~/Dropbox/TJLab/TimoDataWork/Harvard_slides/data/tjet_analyses_GD.csv", na = "") %>%
   write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_analyses.csv", na = "")
 
 db[["Amnesties"]] %>%
@@ -193,5 +192,9 @@ db[["Reparations"]] %>%
   write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_reparations.csv", na = "")
 db[["Trials"]] %>%
   write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_trials.csv", na = "")
+db[["Accused"]] %>%
+  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_accused.csv", na = "")
+db[["Vettings"]] %>%
+  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_vettings.csv", na = "")
 
 rm(trial_counts, conviction_counts, icc)
