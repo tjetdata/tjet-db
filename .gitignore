@@ -2,13 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+
 .DS_Store
-*.Rproj
+
 *.RData
 *.db
-
-conflicts/original_data/
-app/rsconnect/
-app/data/
-transitions/data/
-transitions/transitions_comparison.csv

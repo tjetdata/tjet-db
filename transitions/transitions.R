@@ -10,7 +10,7 @@ library(here)
 library(googlesheets4)
 library(googledrive)
 
-v6 <- read_excel(here("transitions/data/transitions2020_v6.xlsx")) %>%
+v6 <- read_excel(here("transitions/original_data/transitions2020_v6.xlsx")) %>%
   select(country, year, ccode, vdem_id, tjet_dtrid, isq_dtrid, tjrc_dtrid, 
          tjrc_ttype, tjrc_rupture, tjrc_negotiated, tjrc_newstate,
          polity2, demo_duration, bmr_demo, bmr_trans, bmr_duration, coup,
@@ -18,14 +18,14 @@ v6 <- read_excel(here("transitions/data/transitions2020_v6.xlsx")) %>%
   rename(v2x_polyarchy_vdem = v2x_polyarchy, 
          v2x_libdem_vdem = v2x_libdem)
 
-other <- read_excel(here("transitions/data/p5v2018.xls")) %>% 
+other <- read_excel(here("transitions/original_data/p5v2018.xls")) %>% 
   filter(year > 1948) %>% 
   select(country, ccode, year, polity, polity2, change, regtrans) %>%
   rename(polity_p5 = polity,
          polity2_p5 = polity2,
          change_p5 = change,
          regtrans_p5 = regtrans) %>% 
-  full_join(read_csv(here("transitions/data/democracy-v3.0.csv")) %>% 
+  full_join(read_csv(here("transitions/original_data/democracy-v3.0.csv")) %>% 
               filter(year > 1948) %>% 
               select(country, ccode, year, democracy, democracy_trans, democracy_omitteddata) %>%
               mutate(country = str_to_title(country)) %>% 
@@ -120,7 +120,7 @@ df <- vdem %>%
          coups_pipe_vdem = e_coups, 
          coup_pt_vdem = e_pt_coup) %>% 
   # select(country_id, COWcode, country_name) %>%
-  full_join(read_delim(here("transitions/data/GWF_AllPoliticalRegimes.txt")) %>%
+  full_join(read_delim(here("transitions/original_data/GWF_AllPoliticalRegimes.txt")) %>%
               filter(year > 1948) %>% 
               mutate(gwf_regimetype = if_else(is.na(gwf_regimetype), gwf_nonautocracy, gwf_regimetype)) %>% 
               select(cowcode, year, gwf_country, gwf_regimetype, gwf_next, gwf_prior, gwf_fail) %>% 
@@ -321,7 +321,7 @@ df <- df %>%
 #   filter(is.na(vdem_id) | is.na(ccode) | vdem_id != country_id) %>%
 #   print(n = Inf)
 
-ifit <- read_csv(here("transitions/data/Freeman.csv")) %>%
+ifit <- read_csv(here("transitions/original_data/Freeman.csv")) %>%
   mutate(tr_year = as.integer(str_split_i(description, "(?<=\\d{4}):", i = 1)),
          tr_descr = str_split_i(description, "(?<=\\d{4}):", i = 2),
          tr_descr = str_squish(tr_descr),
