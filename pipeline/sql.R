@@ -10,36 +10,49 @@ require(keyring)
 
 load(here("data", "tjetdb.RData"), verbose = TRUE)
 
-names(db)
-db$dictionary # %>% print(n = Inf)
+# names(db)
+# db$dictionary # %>% print(n = Inf)
 
-conn <- dbConnect(RMariaDB::MariaDB(),
-                  host = "159.203.34.223",
-                  dbname = "fckdtuwsqu", 
-                  user = "fckdtuwsqu", 
-                  password = key_get("TJETdb"))
+# con <- dbConnect(RMariaDB::MariaDB(),
+#                   host = "159.203.34.223",
+#                   dbname = "fckdtuwsqu", 
+#                   user = "fckdtuwsqu", 
+#                   password = key_get("TJETdb"))
 
-dbWriteTable(conn, "Dictionary", db[["dictionary"]])
-dbWriteTable(conn, "Countries", db[["Countries"]], overwrite = TRUE)
-dbWriteTable(conn, "CountryYears", db[["CountryYears"]], overwrite = TRUE)
+con <- dbConnect(odbc::odbc(), Driver="mysql", 
+                  Server = "159.203.34.223", Port = "3306", 
+                  UID = "fckdtuwsqu", 
+                  PWD = rstudioapi::askForPassword("Database password:"), 
+                  Database = "fckdtuwsqu", timeout = 10)
 
-dbReadTable(conn, "CountryYears")
+dbWriteTable(con, "Dictionary", db[["dictionary"]], overwrite = TRUE)
+dbWriteTable(con, "Countries", db[["Countries"]], overwrite = TRUE)
+dbWriteTable(con, "CountryYears", db[["CountryYears"]], overwrite = TRUE)
 
-dbDisconnect(conn)
+dbWriteTable(con, "Trials", db[["Trials"]], overwrite = TRUE)
+dbWriteTable(con, "Accused", db[["Accused"]], overwrite = TRUE)
+dbWriteTable(con, "Amnesties", db[["Amnesties"]], overwrite = TRUE)
+dbWriteTable(con, "TruthCommissions", db[["TruthCommissions"]], overwrite = TRUE)
+dbWriteTable(con, "Reparations", db[["Reparations"]], overwrite = TRUE)
+
+### there are other tables to add
+
+dbReadTable(con, "Trials")
+dbDisconnect(con)
 
 ### SQL functions
-# dbListTables(conn)
-# dbListFields(conn, "Countries")
-# dbReadTable(conn, "CountryYears")
-# dbGetQuery(conn, "SELECT * FROM Countries")
-# result <- dbSendQuery(conn, "SELECT * FROM Countries")
+# dbListTables(con)
+# dbListFields(con, "Countries")
+# dbReadTable(con, "CountryYears")
+# dbGetQuery(con, "SELECT * FROM Countries")
+# result <- dbSendQuery(con, "SELECT * FROM Countries")
 # dbFetch(result)
 # dbClearResult(result)
 
 ### write all tables
 # map(names(db), function(table_name) {
 #   print(table_name)
-#   dbWriteTable(conn, table_name, db[[table_name]])
+#   dbWriteTable(con, table_name, db[[table_name]])
 # })
 
 ### TO DO
