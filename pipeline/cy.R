@@ -212,7 +212,9 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 db$Countries <- countrylist  %>% 
   mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
 
-db$dictionary <- read_csv(here("pipeline", "dictionary.csv"))         
+db$dictionary <- read_csv(here("pipeline", "dictionary.csv"))
+
+db$ConflictDyads <- read_csv(here("conflicts", "confl_dyads.csv"))
 
 save(db, file = here("data", "tjetdb.RData"))
 

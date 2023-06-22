@@ -9,14 +9,12 @@ require(keyring)
 #                  username = "fckdtuwsqu")
 
 load(here("data", "tjetdb.RData"), verbose = TRUE)
-
 # names(db)
-# db$dictionary # %>% print(n = Inf)
 
 # con <- dbConnect(RMariaDB::MariaDB(),
 #                   host = "159.203.34.223",
-#                   dbname = "fckdtuwsqu", 
-#                   user = "fckdtuwsqu", 
+#                   dbname = "fckdtuwsqu",
+#                   user = "fckdtuwsqu",
 #                   password = key_get("TJETdb"))
 
 con <- dbConnect(odbc::odbc(), Driver="mysql", 
@@ -28,6 +26,7 @@ con <- dbConnect(odbc::odbc(), Driver="mysql",
 dbWriteTable(con, "Dictionary", db[["dictionary"]], overwrite = TRUE)
 dbWriteTable(con, "Countries", db[["Countries"]], overwrite = TRUE)
 dbWriteTable(con, "CountryYears", db[["CountryYears"]], overwrite = TRUE)
+dbWriteTable(con, "ConflictDyads", db[["ConflictDyads"]], overwrite = TRUE)
 
 dbWriteTable(con, "Trials", db[["Trials"]], overwrite = TRUE)
 dbWriteTable(con, "Accused", db[["Accused"]], overwrite = TRUE)
@@ -37,7 +36,7 @@ dbWriteTable(con, "Reparations", db[["Reparations"]], overwrite = TRUE)
 
 ### there are other tables to add
 
-dbReadTable(con, "Trials")
+dbReadTable(con, "ConflictDyads")
 dbDisconnect(con)
 
 ### SQL functions
