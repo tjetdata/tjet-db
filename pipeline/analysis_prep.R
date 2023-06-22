@@ -182,19 +182,19 @@ read_csv("data/tjet_covariates.csv") %>%
          combi_cum_convictions_fits = cumsum(convictions_unionFits), 
          combi_cum_convictions_fits = ifelse(sample_combi == 0, 0, combi_cum_convictions_fits)) %>% 
   ungroup() %>% 
-  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_analyses.csv", na = "")
+  write_csv("data/analysis/tjet_analyses.csv", na = "")
 
 db[["Amnesties"]] %>%
-  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_amnesties.csv", na = "")
+  write_csv("data/analysis/tjet_amnesties.csv", na = "")
 db[["TruthCommissions"]] %>%
-  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_tcs.csv", na = "")
+  write_csv("data/analysis/tjet_tcs.csv", na = "")
 db[["Reparations"]] %>%
-  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_reparations.csv", na = "")
+  write_csv("data/analysis/tjet_reparations.csv", na = "")
 db[["Trials"]] %>%
-  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_trials.csv", na = "")
+  write_csv("data/analysis/tjet_trials.csv", na = "")
 db[["Accused"]] %>%
-  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_accused.csv", na = "")
+  write_csv("data/analysis/tjet_accused.csv", na = "")
 db[["Vettings"]] %>%
-  write_csv("~/Documents/GitHub/TJET_Harvard_slides/data/tjet_vettings.csv", na = "")
+  write_csv("data/analysis/tjet_vettings.csv", na = "")
 
 rm(trial_counts, conviction_counts, icc)

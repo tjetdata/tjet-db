@@ -6,7 +6,7 @@ require(here)
 
 ### the api key needs to be set only once, is saved to the local R environment
 ### if it needs to be set again, replace string and un-comment below to run once
-# set_airtable_api_key("ACTUAL_API_KEY_GOES_HERE", install = TRUE)
+# set_airtable_api_key("ACTUAL_AIRTABLE_API_PAT_GOES_HERE", install = TRUE)
 # readRenviron("~/.Renviron")
 # Sys.getenv("AIRTABLE_API_KEY")
 
@@ -15,14 +15,17 @@ to_download <-
     "appHsoHAemKITZgMF" = c(
       "Amnesties", "TruthCommissions", "Reparations", "Vettings",
       "Experts", "NGOs", "Legal", "Transitions", "ConflictDyadSpells",
-      "Mallinder", "Rozic", "challenges", "comparison",
-      "Countries", "Conflicts", "Dyads", "select_options", "metadata"),
+      "amnesties_challenges", "Mallinder", "Rozic", # "ICDB", 
+      "BalkanInsight_comparison", "vetting_comparison", 
+      "Countries", "Conflicts", "Dyads", "UCDPcountries",
+      "select_options", "metadata", "TJETmembers"),
     "appF8HAH7SN7C09cU" = c("Trials", "Accused", "CourtLevels", 
-                            "Countries", "Transitions", "ConflictDyadSpells",
+                            "Countries", "Transitions", # "ConflictDyadSpells",
                             "Conflicts", "Dyads", "metadata")
   )
 
 ### still need to ensure that the countries and conflicts tables are synced between the two bases
+### actually this may become a non-issue shortly
 
 tjet <- map(names(to_download), function(base_id) {
   cat("base ID:", base_id, "\n")
@@ -34,4 +37,4 @@ tjet <- map(names(to_download), function(base_id) {
   })
 })
 names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
-save(tjet, to_download, file = here("data/tjet.RData"))
+save(tjet, to_download, file = here("data", "tjet.RData"))
