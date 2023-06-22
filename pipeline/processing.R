@@ -14,9 +14,11 @@ pkeys <- c(
   "Transitions" = "transitionID",
   "Conflicts" = "conflict_id",
   "Dyads" = "dyad_id")
+
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
-             "ConflictDyadSpells", "Mallinder", "Rozic", 
-             "challenges", "comparison")
+             "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
+             "amnesties_challenges", "vetting_comparison", 
+             "BalkanInsight_comparison", "TJETmembers")
 
 ### check metadata table for non-existing fields
 cat("These are fields listed in 'metadata' that are missing in the Airtable download.")
@@ -144,7 +146,7 @@ crimes <- c("ccode_Crime1", "ccode_Crime2", "ccode_Crime3")
 victims <- c("ccode_Victim1", "ccode_Victim2", "ccode_Victim3")
 
 db[["Prosecutions"]][["Trials_Crimes"]] <- map(crimes, function(var) {
-  db[["Prosecutions"]]$Trials %>%
+  db[["Prosecutions"]][["Trials"]] %>%
     select(all_of(c("trialID", var))) %>%
     rename(ccode_Crime = all_of(var)) %>%
     drop_na()
@@ -301,12 +303,20 @@ db[["MegaBase"]][["Vettings"]] <- db[["MegaBase"]][["Vettings"]] %>%
 # range(unlist(map(db$Accused$trialID, length)))
 
 db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
-  unnest_longer(trialID) %>%
+  unnest_longer(trialID, keep_empty = TRUE) %>%
   rename(airtable_record_id = "trialID") %>%
-  left_join(tjet[["Prosecutions"]]$Trials %>% 
+  left_join(tjet[["Prosecutions"]][["Trials"]] %>% 
               select(airtable_record_id, trialID),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) 
+
+db[["Prosecutions"]][["CourtLevels"]] <- db[["Prosecutions"]][["CourtLevels"]] %>%
+  unnest_longer(accusedID, keep_empty = TRUE) %>%
+  rename(airtable_record_id = "accusedID") %>%
+  left_join(tjet[["Prosecutions"]][["Accused"]] %>% 
+              select(airtable_record_id, accusedID),
+            by = "airtable_record_id") %>%
+  select(-airtable_record_id)
 
 ## truth commissions and amnesties have one-to-many links
 
@@ -384,9 +394,29 @@ db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
 db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
   unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE)
 
-# db$Prosecutions$Trials %>% 
-#   select(lastVerdict, lastSentencingTime) %>% 
-#   mutate(new = paste0(lastVerdict) )  
+## other multi-select fields (lookup fields as list columns of length greater than one)
+
+db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+  mutate(membership = str_c(membership, sep =", "),
+         membership = str_replace(membership, fixed("NA, "), ""),
+         membership = str_replace(membership, fixed("NA"), ""),
+         membership = str_replace(membership, fixed("c(\""), ""),
+         membership = str_replace_all(membership, fixed("\")"), ""), 
+         membership = str_replace_all(membership, fixed("\""), ""),
+         membership = str_replace_all(membership, fixed("character(0)"), "")) 
+
+db[["Prosecutions"]][["Trials_lastVerdict"]] <- db[["Prosecutions"]][["Trials"]] %>%
+  select(trialID, lastVerdict) %>% 
+  unnest_longer(lastVerdict, keep_empty = TRUE) %>% 
+  filter(!is.na(lastVerdict)) 
+
+db[["Prosecutions"]][["Trials_lastSentencingTime"]] <- db[["Prosecutions"]][["Trials"]] %>%
+  select(trialID, lastSentencingTime) %>% 
+  unnest_longer(lastSentencingTime, keep_empty = TRUE) %>% 
+  filter(!is.na(lastSentencingTime)) 
+
+db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+  select(-lastVerdict, -lastSentencingTime)
 
 ## fixing missing Trials endYear
 
@@ -442,7 +472,7 @@ db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>%
 rm(keep_amnesties)
 
 # db$Prosecutions$Trials %>% 
-#   select(lastVerdict, lastSentencingTime) 
+#   select(membership, lastVerdict, lastSentencingTime) 
 
 ### TO DO
 ## - multi-select fields into dummies for data downloads 
@@ -460,7 +490,9 @@ cbind(orig = dim_orig[[2]],
       now = dim_now[[2]][names(dim_orig[[2]])],
       last = dim_last[[2]][names(dim_orig[[2]])])
 
-db <- c(db[["Prosecutions"]][c("Trials", "Accused", "CourtLevels", "Trials_Crimes", "Trials_Victims")], 
+db <- c(db[["Prosecutions"]][c("Trials", "Accused", "CourtLevels", 
+                               "Trials_Crimes", "Trials_Victims", 
+                               "Trials_lastVerdict", "Trials_lastSentencingTime")], 
         db[["MegaBase"]])
 
 save(db, file = here("data", "tjetdb.RData"))
