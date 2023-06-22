@@ -18,7 +18,7 @@ countrylist <- db$Countries %>%
          end = ifelse(country == "German Federal Republic (West)", 1989, end),
          end = ifelse(country == "Yemen Arab Republic (North)", 1989, end),
          region_sub_un = ifelse(is.na(intregion), subregion, intregion) ) %>% 
-  select(country, ccode, ccode_case, ccode_ksg, beg, end, region, region_sub_un, region_wb, focus) %>% 
+  select(country, ccode, ccode_case, ccode_ksg, beg, end, region, region_sub_un, region_wb, focus, factsheet) %>% 
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
 
