@@ -7,7 +7,6 @@ conflicted::conflict_prefer("fixed", "stringr")
 
 source(here("pipeline", "downloads.R"))
 source(here("pipeline", "processing.R"))
-source(here("pipeline", "cy.R"))
 # source(here("pipeline", "translation.R"))
 source(here("pipeline", "sql.R"))
 source(here("pipeline", "analysis_prep.R"))
