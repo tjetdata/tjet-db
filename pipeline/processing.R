@@ -736,7 +736,6 @@ attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
 
 # str(db, 1)
-
 save(db, file = here("data", "tjetdb.RData"))
 
 rm(countrylist, translist, confllist, amnesties, reparations, tcs, trials, domestic, other) 
