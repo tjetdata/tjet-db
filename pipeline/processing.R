@@ -471,9 +471,6 @@ db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>%
   filter(amnestyID %in% keep_amnesties)
 rm(keep_amnesties)
 
-# db$Prosecutions$Trials %>% 
-#   select(membership, lastVerdict, lastSentencingTime) 
-
 ### TO DO
 ## - multi-select fields into dummies for data downloads 
 ##   - needs a consistent naming scheme

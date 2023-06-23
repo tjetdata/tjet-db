@@ -12,10 +12,10 @@ load(here("data", "tjetdb.RData"), verbose = TRUE)
 # names(db)
 
 # con <- dbConnect(RMariaDB::MariaDB(),
-#                   host = "159.203.34.223",
-#                   dbname = "fckdtuwsqu",
-#                   user = "fckdtuwsqu",
-#                   password = key_get("TJETdb"))
+#                  host = "159.203.34.223",
+#                  dbname = "fckdtuwsqu",
+#                  user = "fckdtuwsqu",
+#                  password = key_get("TJETdb"))
 
 con <- dbConnect(odbc::odbc(), Driver="mysql", 
                   Server = "159.203.34.223", Port = "3306", 

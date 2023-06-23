@@ -17,8 +17,18 @@ countrylist <- db$Countries %>%
          end = ifelse(country == "Serbia & Montenegro", 2005, end),
          end = ifelse(country == "German Federal Republic (West)", 1989, end),
          end = ifelse(country == "Yemen Arab Republic (North)", 1989, end),
-         region_sub_un = ifelse(is.na(intregion), subregion, intregion) ) %>% 
-  select(country, ccode, ccode_case, ccode_ksg, beg, end, region, region_sub_un, region_wb, focus, factsheet) %>% 
+         region_sub_un = ifelse(is.na(intregion), subregion, intregion),
+         txt_intro = iconv(txt_intro, from = "UTF-8", to ="latin1", sub = "byte"), 
+         txt_regime = iconv(txt_regime, from = "UTF-8", to ="latin1", sub = "byte"), 
+         txt_conflict = iconv(txt_conflict, from = "UTF-8", to ="latin1", sub = "byte"), 
+         txt_TJ = iconv(txt_TJ, from = "UTF-8", to ="latin1", sub = "byte"),
+         txt_intro = str_squish(txt_intro), 
+         txt_regime = str_squish(txt_regime), 
+         txt_conflict = str_squish(txt_conflict), 
+         txt_TJ = str_squish(txt_TJ) ) %>% 
+  select(country, ccode, ccode_case, ccode_ksg, m49, country_id_vdem, 
+         beg, end, micro_ksg, region, region_sub_un, region_wb, 
+         focus, factsheet, txt_intro, txt_regime, txt_conflict, txt_TJ) %>% 
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
 
@@ -209,7 +219,7 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   mutate(trials_other = ifelse(is.na(trials_other), 0, trials_other),
          trials_other_SGBV = ifelse(is.na(trials_other_SGBV), 0, trials_other_SGBV) ) # %>% write_csv("~/Desktop/temp.csv") 
 
-db$Countries <- countrylist  %>% 
+db$Countries <- countrylist %>% 
   mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
 
 db$dictionary <- read_csv(here("pipeline", "dictionary.csv"))
