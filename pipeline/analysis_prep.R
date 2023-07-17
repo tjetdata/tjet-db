@@ -69,8 +69,8 @@ conviction_counts <- db[["Trials"]] %>%
 
 # GD new measures: for foreign & intl trials (separately) 
 # –	count of trials (by countryAccused & startYear)
-# –	count of trials (by countryAccused & ongoing or >= startYear & <=endYear; for every year check those)
-# –	count of convictions (by countryAccused & conviction year or end year or start year) 
+# –	count of trials (by countryAccused & ongoing OR >= startYear & <=endYear; for every year check those)
+# –	count of convictions (by countryAccused & conviction year OR end year OR start year) 
 # –	count of all convictions on scale for prison time (but no death penalty, so 1-7)
 
 db[["Accused"]] %>% 
