@@ -1,10 +1,7 @@
 require(tidyverse)
-require(here)
 
-load(here("data", "tjet.RData"), verbose = TRUE)
-
-# names(tjet$MegaBase)
-# names(tjet$Prosecutions)
+load(here::here("data", "tjet.RData"), verbose = TRUE)
+map(tjet, names)
 
 pkeys <- c(
   "Amnesties" = "amnestyID",
@@ -476,7 +473,7 @@ db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>%
   filter(amnestyID %in% keep_amnesties)
 rm(keep_amnesties)
 
-### TO DO
+### TO DO?
 ## - multi-select fields into dummies for data downloads 
 ##   - needs a consistent naming scheme
 
@@ -721,14 +718,14 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 db$Countries <- countrylist %>% 
   mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
 
-db$dictionary <- read_csv(here("pipeline", "dictionary.csv")) %>%
+db$dictionary <- read_csv(here::here("pipeline", "dictionary.csv")) %>%
   tibble()
 
 attr(db$dictionary, "spec") <- NULL
 attr(db$dictionary, "problems") <- NULL
 # attributes(db$dictionary) 
 
-db$ConflictDyads <- read_csv(here("conflicts", "confl_dyads.csv")) %>%
+db$ConflictDyads <- read_csv(here::here("conflicts", "confl_dyads.csv")) %>%
   tibble()
 
 attr(db$ConflictDyads, "spec") <- NULL
@@ -736,6 +733,6 @@ attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
 
 # str(db, 1)
-save(db, file = here("data", "tjetdb.RData"))
+save(db, file = here::here("data", "tjetdb.RData"))
 
 rm(countrylist, translist, confllist, amnesties, reparations, tcs, trials, domestic, other) 

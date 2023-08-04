@@ -2,7 +2,6 @@
 ### the development version handles multi-select fields without error
 require(tidyverse)
 require(rairtable)
-require(here)
 
 ### the api key needs to be set only once, is saved to the local R environment
 ### if it needs to be set again, replace string and un-comment below to run once
@@ -37,4 +36,4 @@ tjet <- map(names(to_download), function(base_id) {
   })
 })
 names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
-save(tjet, to_download, file = here("data", "tjet.RData"))
+save(tjet, to_download, file = here::here("data", "tjet.RData"))

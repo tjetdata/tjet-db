@@ -1,13 +1,11 @@
-require(here)
 require(tidyverse)
 require(RMariaDB)
-require(keyring)
 
 ### use this for setting the authorization key locally
 ### needs to be done only once for each new key
 # keyring::key_set(service = "TJETdb", username = "fckdtuwsqu")
 
-load(here("data", "tjetdb.RData"), verbose = TRUE)
+load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 # str(db, 1)
 
 # con <- dbConnect(odbc::odbc(), Driver="mysql", 
@@ -21,7 +19,7 @@ con <- dbConnect(RMariaDB::MariaDB(),
                  dbname = "fckdtuwsqu",
                  user = "fckdtuwsqu",
                  password = rstudioapi::askForPassword("Database password:"))
-                 # password = key_get("TJETdb"))
+                 # password = keyring::key_get("TJETdb"))
 
 ### write all tables
 map(names(db), function(table_name) {
