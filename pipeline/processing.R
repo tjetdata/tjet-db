@@ -310,7 +310,7 @@ db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
   left_join(tjet[["Prosecutions"]][["Trials"]] %>% 
               select(airtable_record_id, trialID),
             by = "airtable_record_id") %>%
-  select(-airtable_record_id) 
+  select(-airtable_record_id)
 
 db[["Prosecutions"]][["CourtLevels"]] <- db[["Prosecutions"]][["CourtLevels"]] %>%
   unnest_longer(accusedID, keep_empty = TRUE) %>%
@@ -391,10 +391,24 @@ db[["Prosecutions"]][["Dyads"]] <- db[["Prosecutions"]][["Dyads"]] %>%
 ## other multi-select fields (lookup fields as list columns of length one)
 
 db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>% 
-  unnest_longer(all_of(c("lastGuiltyYear", "lastVerdictYear", "lastVerdict", "lastSentencingTime", "lastSentencingArrangement")), keep_empty = TRUE)
+  unnest_longer(all_of(c("lastGuiltyYear", "lastVerdictYear", 
+                         "lastVerdict", "lastSentencingTime", 
+                         "lastSentencingArrangement")), keep_empty = TRUE) %>% 
+  # filter(!(accusedID == 18133 & lastVerdict == "Guilty Overturned & Acquittal")) %>% # a temporary fixß
+  distinct()
+
+## need to figure out a better way to deal with the multi-select field 
+## because this created duplicates 
+# db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+#   unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE )
+# db[["Prosecutions"]][["Trials"]] %>% 
+#   group_by(trialID) %>%
+#   mutate(n = n()) %>%
+#   filter(n > 1) %>% select(trialID, oppositionType)
 
 db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
-  unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE)
+  # unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE )
+  mutate(oppositionType = str_c())
 
 ## other multi-select fields (lookup fields as list columns of length greater than one)
 
