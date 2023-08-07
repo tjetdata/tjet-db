@@ -2,13 +2,33 @@ require(tidyverse)
 
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 
-icc <- db[["Accused"]] %>% 
+## FROM HERE > 
+
+# icc <-
+db[["Accused"]] %>% 
   select(accusedID, trialID, ICC_referral, ICC_prelim_exam, ICC_investigation, 
          ICC_arrest_warrant, ICC_arrestAppear, ICC_atLarge, 
-         ICC_confirm_charges, ICC_proceedings, ICC_withdrawnDismissed) %>% 
+         ICC_confirm_charges, ICC_proceedings, ICC_withdrawnDismissed) %>%
+  distinct() %>% 
   left_join(db[["Trials"]] %>% 
-              select(trialID, ccode_Accused, yearStart, legalSystem), 
-            by = c("trialID")) %>% 
+              select(trialID, ccode_Accused, yearStart, legalSystem) %>%
+              distinct(), 
+            by = c("trialID")) 
+  
+  %>% 
+  group_by(trialID) %>% 
+  mutate(n_trialID = n()) %>%
+  ungroup() %>% 
+  group_by(accusedID) %>% 
+  mutate(n_accusedID = n()) %>% 
+  filter(n_trialID > 4)
+
+
+db[["Accused"]][307, ]
+
+db[["Trials"]][4786:4788, c("trialID", "ccode_Accused", "caseDescription", "yearStart", "legalSystem")]
+
+%>% 
   filter(legalSystem == "ICC") %>% 
   left_join(db[["Countries"]] %>% 
               select(country, ccode) , 
