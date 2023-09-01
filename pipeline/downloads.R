@@ -5,22 +5,21 @@ require(rairtable)
 
 ### the api key needs to be set only once, is saved to the local R environment
 ### if it needs to be set again, replace string and un-comment below to run once
-# set_airtable_api_key("ACTUAL_AIRTABLE_API_PAT_GOES_HERE", install = TRUE)
+# set_airtable_api_key("MY_KEY_HERE", install = TRUE)
 # readRenviron("~/.Renviron")
 # Sys.getenv("AIRTABLE_API_KEY")
 
 to_download <- 
   list(
     "appHsoHAemKITZgMF" = c(
-      "Amnesties", "TruthCommissions", "Reparations", "Vettings",
-      "Experts", "NGOs", "Legal", "Transitions", "ConflictDyadSpells",
-      "amnesties_challenges", "Mallinder", "Rozic", # "ICDB", 
-      "BalkanInsight_comparison", "vetting_comparison", 
-      "Countries", "Conflicts", "Dyads", "UCDPcountries",
-      "select_options", "metadata", "TJETmembers"),
-    "appF8HAH7SN7C09cU" = c("Trials", "Accused", "CourtLevels", 
-                            "Countries", "Transitions", # "ConflictDyadSpells",
-                            "Conflicts", "Dyads", "metadata")
+      "Amnesties", "Reparations", "TruthCommissions", "Vettings",
+      "Countries", "Transitions", "ConflictDyadSpells", "Conflicts", "Dyads", 
+      "select_options", "metadata", "UCDPcountries", "TJETmembers", 
+      "Experts", "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges", 
+      "VettingComparison", "BIcomparison", "Investigations"),
+    "appF8HAH7SN7C09cU" = c(
+      "Trials", "Accused", "CourtLevels", # "ConflictDyadSpells",
+      "Countries", "Transitions", "Conflicts", "Dyads", "metadata")
   )
 
 ### still need to ensure that the countries and conflicts tables are synced between the two bases
