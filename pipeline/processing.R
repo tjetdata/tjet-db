@@ -18,9 +18,17 @@ pkeys <- c(
 
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
              "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
-             "challenges", "comparison", 
-             "amnesties_challenges", "vetting_comparison", 
-             "BalkanInsight_comparison", "TJETmembers")
+             "Challenges", "comparison", "VettingComparison", "ICDB", 
+             "BIcomparison", "TJETmembers", "Investigations")
+
+# tibble(tjet$MegaBase$Countries)
+# tibble(tjet$Prosecutions$Countries)
+# tibble(tjet$MegaBase$Transitions)
+# tibble(tjet$Prosecutions$Transitions)
+# tibble(tjet$MegaBase$Conflicts)
+# tibble(tjet$Prosecutions$Conflicts)
+# tibble(tjet$MegaBase$Dyads)
+# tibble(tjet$Prosecutions$Dyads)
 
 ### check metadata table for non-existing fields
 cat("These are fields listed in 'metadata' that are missing in the Airtable download.")
@@ -401,14 +409,23 @@ db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
 ## because this created duplicates 
 # db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
 #   unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE )
-# db[["Prosecutions"]][["Trials"]] %>% 
+# db[["Prosecutions"]][["Trials"]] %>%
+#   unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE ) %>%
 #   group_by(trialID) %>%
 #   mutate(n = n()) %>%
 #   filter(n > 1) %>% select(trialID, oppositionType)
-
-db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
-  # unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE )
-  mutate(oppositionType = str_c())
+# db[["Prosecutions"]][["Trials"]] %>% 
+#   select(trialID, oppositionType) %>% 
+#   rowwise() %>% 
+#   mutate(n = length(oppositionType), 
+#          check = sum(is.na(oppositionType)), 
+#          new = list(oppositionType[!is.na(oppositionType)]) ) %>% 
+#   filter(n > 1) %>% 
+#   unnest_longer(all_of(c("new")), keep_empty = TRUE ) %>% 
+#   print(n = Inf )
+# db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+#   rowwise() %>%
+#   mutate(oppositionType = ifelse(length(oppositionType) > 0, str_c(), ""))
 
 ## other multi-select fields (lookup fields as list columns of length greater than one)
 
@@ -488,8 +505,8 @@ db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>%
 rm(keep_amnesties)
 
 ### TO DO?
-## - multi-select fields into dummies for data downloads 
-##   - needs a consistent naming scheme
+## - multi-select fields into dummies for data downloads?  
+##   - would need a consistent naming scheme
 
 dim_last <- map(db, function(dat) {
   map_vec(dat, nrow)
