@@ -13,7 +13,6 @@ load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 #                   UID = "fckdtuwsqu", 
 #                   PWD = rstudioapi::askForPassword("Database password:"), 
 #                   Database = "fckdtuwsqu", timeout = 10)
-
 con <- dbConnect(RMariaDB::MariaDB(),
                  host = "159.203.34.223",
                  dbname = "fckdtuwsqu",
@@ -30,9 +29,10 @@ map(names(db), function(table_name) {
 ### there are other tables to add
 dbListTables(con)
 dbReadTable(con, "ConflictDyads")
+dbReadTable(con, "fr_Countries")
 dbDisconnect(con)
 
-### SQL functions
+### other SQL functions
 # dbListFields(con, "Countries")
 # dbReadTable(con, "CountryYears")
 # dbGetQuery(con, "SELECT * FROM Countries")

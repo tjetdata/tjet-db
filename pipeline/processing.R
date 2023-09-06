@@ -504,6 +504,16 @@ db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>%
   filter(amnestyID %in% keep_amnesties)
 rm(keep_amnesties)
 
+# db[["MegaBase"]][["Reparations"]] %>% 
+#   filter(harmsChildRecruitment == 1 | harmsTorture == 1 | 
+#            harmsSexualViolence == 1 | harmsMurder == 1 | 
+#            harmsDisappearance == 1 | harmsMurder == 1 | 
+#            harmsDisplacement == 1 | harmsDetention == 1)
+
+# db[["MegaBase"]][["TruthCommissions"]] %>% 
+#   filter(torture == 1 | SGBV == 1 | forcedDisplacement == 1 | torture == 1 | 
+#            disappearance == 1 | focusedPast == 1 | investigatePatternAbuse == 1)
+  
 ### TO DO?
 ## - multi-select fields into dummies for data downloads?  
 ##   - would need a consistent naming scheme
@@ -670,40 +680,45 @@ tcs <- db$TruthCommissions %>%
          "tcs_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
 
-trials <- db$Trials %>% 
+trials <- db$Trials %>%
   rename(ccode = "ccode_Accused") %>% 
   left_join(countrylist %>% select(ccode, ccode_case) %>% distinct(), 
             by = "ccode") %>% 
-  arrange(ccode_case, yearStart) %>%  
-  mutate(domestic = ifelse(str_detect(trialType, "domestic"), 1, 0), 
+  arrange(ccode_case, yearStart) %>%
+  mutate(# domestic = ifelse(str_detect(trialType, "domestic"), 1, 0), 
          SGBV = ifelse(rape_Accused == 1 | sexualViolence_Accused == 1 | otherSGBV_Accused == 1, 1, 0) ) %>% 
-  select(ccode_case, yearStart, domestic, SGBV) 
-
-other <- trials %>% 
-  filter(domestic == 0) %>% 
-  select(ccode_case, yearStart, SGBV) %>%
-  group_by(ccode_case, yearStart) %>%
-  mutate(trials_other = n(),
-         SGBV = max(SGBV)) %>%
-  ungroup() %>%
-  select(ccode_case, yearStart, trials_other, SGBV) %>% 
-  distinct() %>%
-  rename("year" = "yearStart",
-         "trials_other_SGBV" = "SGBV") %>% 
-  filter(year >= 1970 & year <= 2020)
+  select(ccode_case, trialType, yearStart, SGBV) %>% 
+  filter(yearStart >= 1970 & yearStart <= 2020)
 
 domestic <- trials %>% 
-  filter(domestic == 1) %>% 
-  select(ccode_case, yearStart, SGBV) %>%
+  filter(trialType %in% c("domestic", "don't know")) %>% 
   group_by(ccode_case, yearStart) %>%
   mutate(trials_domestic = n(),
-         SGBV = max(SGBV)) %>%
+         trials_domestic_SGBV = max(SGBV)) %>%
   ungroup() %>%
-  select(ccode_case, yearStart, trials_domestic, SGBV) %>% 
-  distinct() %>%
-  rename("year" = "yearStart",
-         "trials_domestic_SGBV" = "SGBV") %>% 
-  filter(year >= 1970 & year <= 2020)
+  select(ccode_case, yearStart, trials_domestic, trials_domestic_SGBV) %>%
+  rename("year" = "yearStart") %>% 
+  distinct() 
+
+foreign <- trials %>% 
+  filter(trialType == "foreign") %>% 
+  group_by(ccode_case, yearStart) %>%
+  mutate(trials_foreign = n(),
+         trials_foreign_SGBV = max(SGBV)) %>%
+  ungroup() %>%
+  select(ccode_case, yearStart, trials_foreign, trials_foreign_SGBV) %>%
+  rename("year" = "yearStart") %>% 
+  distinct() 
+
+intl <- trials %>% 
+  filter(trialType %in% c("international", "international (hybrid)")) %>% 
+  group_by(ccode_case, yearStart) %>%
+  mutate(trials_intl = n(),
+         trials_intl_SGBV = max(SGBV)) %>%
+  ungroup() %>%
+  select(ccode_case, yearStart, trials_intl, trials_intl_SGBV) %>%
+  rename("year" = "yearStart") %>% 
+  distinct() 
 
 db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   beg <- countrylist %>%
@@ -742,9 +757,15 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   left_join(domestic, by = c("ccode_case", "year") ) %>% 
   mutate(trials_domestic = ifelse(is.na(trials_domestic), 0, trials_domestic),
          trials_domestic_SGBV = ifelse(is.na(trials_domestic_SGBV), 0, trials_domestic_SGBV)) %>% 
-  left_join(other, by = c("ccode_case", "year") ) %>% 
-  mutate(trials_other = ifelse(is.na(trials_other), 0, trials_other),
-         trials_other_SGBV = ifelse(is.na(trials_other_SGBV), 0, trials_other_SGBV) ) # %>% write_csv("~/Desktop/temp.csv") 
+  left_join(intl, by = c("ccode_case", "year") ) %>% 
+  mutate(trials_intl = ifelse(is.na(trials_intl), 0, trials_intl),
+         trials_intl_SGBV = ifelse(is.na(trials_intl_SGBV), 0, trials_intl_SGBV)) %>% 
+  left_join(foreign, by = c("ccode_case", "year") ) %>% 
+  mutate(trials_foreign = ifelse(is.na(trials_foreign), 0, trials_foreign),
+         trials_foreign_SGBV = ifelse(is.na(trials_foreign_SGBV), 0, trials_foreign_SGBV))
+
+db[["CountryYears"]] %>%
+  select(country, year, trials_domestic, trials_intl, trials_foreign) %>% summary
 
 db$Countries <- countrylist %>% 
   mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
@@ -766,4 +787,4 @@ attr(db$ConflictDyads, "problems") <- NULL
 # str(db, 1)
 save(db, file = here::here("data", "tjetdb.RData"))
 
-rm(countrylist, translist, confllist, amnesties, reparations, tcs, trials, domestic, other) 
+rm(countrylist, translist, confllist, amnesties, reparations, tcs, trials, domestic, intl, foreign) 
