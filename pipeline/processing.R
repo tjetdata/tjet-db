@@ -680,6 +680,20 @@ tcs <- db$TruthCommissions %>%
          "tcs_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
 
+vettings <- db$Vettings %>%
+  left_join(countrylist %>% select(ccode, ccode_case) %>% distinct(), 
+            by = "ccode") %>% 
+  # select(vettingID, alterationOf, ccode_case, yearStart, yearEnd, policyName) %>% 
+  filter(is.na(alterationOf)) %>% 
+  arrange(ccode_case, yearStart) %>%  
+  group_by(ccode_case, yearStart) %>%  
+  mutate(vettings = n()) %>% 
+  ungroup() %>% 
+  select(ccode_case, yearStart, vettings) %>% 
+  distinct() %>%
+  rename("year" = "yearStart") %>% 
+  filter(year >= 1970 & year <= 2020)
+
 trials <- db$Trials %>%
   rename(ccode = "ccode_Accused") %>% 
   left_join(countrylist %>% select(ccode, ccode_case) %>% distinct(), 
@@ -753,7 +767,9 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
          reparations_SGBV = ifelse(is.na(reparations_SGBV), 0, reparations_SGBV)) %>% 
   left_join(tcs, by = c("ccode_case", "year") ) %>% 
   mutate(tcs = ifelse(is.na(tcs), 0, tcs),
-         tcs_SGBV = ifelse(is.na(tcs_SGBV), 0, tcs_SGBV)) %>% 
+         tcs_SGBV = ifelse(is.na(tcs_SGBV), 0, tcs_SGBV)) %>%
+  left_join(vettings, by = c("ccode_case", "year") ) %>% 
+  mutate(vettings = ifelse(is.na(vettings), 0, vettings)) %>%
   left_join(domestic, by = c("ccode_case", "year") ) %>% 
   mutate(trials_domestic = ifelse(is.na(trials_domestic), 0, trials_domestic),
          trials_domestic_SGBV = ifelse(is.na(trials_domestic_SGBV), 0, trials_domestic_SGBV)) %>% 
@@ -764,8 +780,8 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   mutate(trials_foreign = ifelse(is.na(trials_foreign), 0, trials_foreign),
          trials_foreign_SGBV = ifelse(is.na(trials_foreign_SGBV), 0, trials_foreign_SGBV))
 
-db[["CountryYears"]] %>%
-  select(country, year, trials_domestic, trials_intl, trials_foreign) %>% summary
+# db[["CountryYears"]] %>%
+#   select(country, year, trials_domestic, trials_intl, trials_foreign) %>% summary
 
 db$Countries <- countrylist %>% 
   mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
@@ -787,4 +803,4 @@ attr(db$ConflictDyads, "problems") <- NULL
 # str(db, 1)
 save(db, file = here::here("data", "tjetdb.RData"))
 
-rm(countrylist, translist, confllist, amnesties, reparations, tcs, trials, domestic, intl, foreign) 
+rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, trials, domestic, intl, foreign) 
