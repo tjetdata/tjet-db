@@ -1,3 +1,4 @@
+### packages
 require(tidyverse)
 require(RMariaDB)
 
@@ -5,40 +6,48 @@ require(RMariaDB)
 ### needs to be done only once for each new key
 # keyring::key_set(service = "TJETdb", username = "fckdtuwsqu")
 
+### loading the tables to write to the database
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
+### for checking the loaded data
 # str(db, 1)
 
-# con <- dbConnect(odbc::odbc(), Driver="mysql", 
-#                   Server = "159.203.34.223", Port = "3306", 
-#                   UID = "fckdtuwsqu", 
-#                   PWD = rstudioapi::askForPassword("Database password:"), 
-#                   Database = "fckdtuwsqu", timeout = 10)
+### two different ways of establishing the same database connection
+### (note that cloudways requires the local IP address to be added)
 con <- dbConnect(RMariaDB::MariaDB(),
                  host = "159.203.34.223",
                  dbname = "fckdtuwsqu",
                  user = "fckdtuwsqu",
                  # password = rstudioapi::askForPassword("Database password:"))
                  password = keyring::key_get("TJETdb"))
+# con <- dbConnect(odbc::odbc(), Driver="mysql", 
+#                   Server = "159.203.34.223", Port = "3306", 
+#                   UID = "fckdtuwsqu", 
+#                   PWD = rstudioapi::askForPassword("Database password:"), 
+#                   Database = "fckdtuwsqu", timeout = 10)
 
-### write all tables
+### write all tables to the database (this overwrites existing tables)
 map(names(db), function(table_name) {
   print(table_name)
-  dbWriteTable(con, table_name, db[[table_name]], overwrite = TRUE)
+  dbWriteTable(conn = con, 
+               name = table_name, 
+               value = db[[table_name]], 
+               overwrite = TRUE)
 })
 
-### there are other tables to add
+### list of all tables in database
 dbListTables(con)
+### reading specific table
 dbReadTable(con, "ConflictDyads")
-dbReadTable(con, "fr_Countries")
+### when done always disconnect
 dbDisconnect(con)
 
-### other SQL functions
+### other useful SQL functions
 # dbListFields(con, "Countries")
-# dbReadTable(con, "CountryYears")
 # dbGetQuery(con, "SELECT * FROM Countries")
 # result <- dbSendQuery(con, "SELECT * FROM Countries")
 # dbFetch(result)
 # dbClearResult(result)
 
-### TO DO
-## - set all PKs and FKs in DB 
+### the script just writes the tables to the database 
+### but does not set the PKs and FKs 
+### for the production database this is not necessary because it is read-only

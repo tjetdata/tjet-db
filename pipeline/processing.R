@@ -1,8 +1,11 @@
+### packages
 require(tidyverse)
 
+### load check the raw data 
 load(here::here("data", "tjet.RData"), verbose = TRUE)
 map(tjet, names)
 
+### ID column names
 pkeys <- c(
   "Amnesties" = "amnestyID",
   "Trials" = "trialID",
@@ -16,21 +19,17 @@ pkeys <- c(
   "Conflicts" = "conflict_id",
   "Dyads" = "dyad_id")
 
+### note that both bases have Countries, Transitions, Conflicts and Dyads tables
+### but these should be the same
+
+### exlcude these tables from production database
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
              "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
              "Challenges", "comparison", "VettingComparison", "ICDB", 
              "BIcomparison", "TJETmembers", "Investigations")
 
-# tibble(tjet$MegaBase$Countries)
-# tibble(tjet$Prosecutions$Countries)
-# tibble(tjet$MegaBase$Transitions)
-# tibble(tjet$Prosecutions$Transitions)
-# tibble(tjet$MegaBase$Conflicts)
-# tibble(tjet$Prosecutions$Conflicts)
-# tibble(tjet$MegaBase$Dyads)
-# tibble(tjet$Prosecutions$Dyads)
-
 ### check metadata table for non-existing fields
+### can use this to determine which fields can be deleted from devDB
 cat("These are fields listed in 'metadata' that are missing in the Airtable download.")
 map(names(to_download), function(basename) {
   cat("Base:", basename, "\n\n")
@@ -48,6 +47,11 @@ map(names(to_download), function(basename) {
 
 ### prodDB tables
 
+
+
+
+
+
 db <- map(names(to_download), function(basename) {
   names(select_tables) <- select_tables <- to_download[[basename]][!to_download[[basename]] %in% exclude]
   map(select_tables, function(tab_name) {
@@ -59,9 +63,11 @@ db <- map(names(to_download), function(basename) {
       select(field_name) %>%
       unlist(use.names = FALSE)
     first <-
-      c(select_vars[str_detect(select_vars, fixed("ID"))], select_vars[str_detect(select_vars, fixed("ccode"))])
+      c(select_vars[str_detect(select_vars, fixed("ID"))], 
+        select_vars[str_detect(select_vars, fixed("ccode"))])
     select_vars <-
-      c(select_vars[select_vars %in% first], select_vars[!select_vars %in% first])
+      c(select_vars[select_vars %in% first], 
+        select_vars[!select_vars %in% first])
     missing_cols <-
       select_vars[!(select_vars %in% names(tjet[[basename]][[tab_name]]))]
     tjet[[basename]][[tab_name]] %>%
