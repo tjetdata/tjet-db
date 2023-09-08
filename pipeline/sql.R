@@ -17,8 +17,8 @@ con <- dbConnect(RMariaDB::MariaDB(),
                  host = "159.203.34.223",
                  dbname = "fckdtuwsqu",
                  user = "fckdtuwsqu",
-                 password = rstudioapi::askForPassword("Database password:"))
-                 # password = keyring::key_get("TJETdb"))
+                 # password = rstudioapi::askForPassword("Database password:"))
+                 password = keyring::key_get("TJETdb"))
 
 ### write all tables
 map(names(db), function(table_name) {
