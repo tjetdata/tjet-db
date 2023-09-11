@@ -2,9 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-
 .DS_Store
 
 data/analysis/
 *.RData
-*.db
