@@ -8,8 +8,10 @@ require(keyring)
 
 ### sample code for using the Deepl API
 ### no longer needed but useful as reference
-# txt <- c("This sentence was brought to you from English to French back to English.", 
-#          "Transitional justice consists of polices to deal with past human rights abuses.")
+# txt <- c("This sentence was brought to you from 
+#          English to French back to English.",
+#          "Transitional justice consists of polices 
+#          to deal with past human rights abuses.")
 # translated <- toFrench2(text = txt, 
 #                         source_lang = "EN",
 #                         auth_key = key_get("DeepL"))
@@ -40,7 +42,8 @@ if(go_ahead) {
     mutate(country = ifelse(is.na(country), NA, translate(country)), 
            txt_intro = ifelse(is.na(txt_intro), NA, translate(txt_intro)), 
            txt_regime = ifelse(is.na(txt_regime), NA, translate(txt_regime)), 
-           txt_conflict = ifelse(is.na(txt_conflict), NA, translate(txt_conflict)), 
+           txt_conflict = ifelse(is.na(txt_conflict), 
+                                 NA, translate(txt_conflict)), 
            txt_TJ = ifelse(is.na(txt_TJ), NA, translate(txt_TJ)))
 }
 

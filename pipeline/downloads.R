@@ -4,8 +4,9 @@
 require(tidyverse)
 require(rairtable)
 
-### the api key needs to be set only once, as it is saved to the local environment
-### if it needs to be set again, replace the string and un-comment below to run once
+### the api key needs to be set only once, to save it to the local environment
+### if it needs to be set again, 
+### replace the string and un-comment below to run once
 # set_airtable_api_key("MY_KEY_HERE", install = TRUE)
 # readRenviron("~/.Renviron")
 # Sys.getenv("AIRTABLE_API_KEY")
