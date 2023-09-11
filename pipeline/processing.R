@@ -1,7 +1,7 @@
 ### packages
 require(tidyverse)
 
-### load check the raw data 
+### load the raw data tables
 load(here::here("data", "tjet.RData"), verbose = TRUE)
 map(tjet, names)
 
@@ -22,18 +22,19 @@ pkeys <- c(
 ### note that both bases have Countries, Transitions, Conflicts and Dyads tables
 ### but these should be the same
 
-### exlcude these tables from production database
+### exclude these tables from the production database
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
              "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
              "Challenges", "comparison", "VettingComparison", "ICDB", 
              "BIcomparison", "TJETmembers", "Investigations")
 
 ### check metadata table for non-existing fields
-### can use this to determine which fields can be deleted from devDB
-cat("These are fields listed in 'metadata' that are missing in the Airtable download.")
+### can use this to determine which fields can be deleted from dev DB
+cat("These fields listed in 'metadata'  are missing in the Airtable download.")
 map(names(to_download), function(basename) {
   cat("Base:", basename, "\n\n")
-  names(tables) <- tables <- to_download[[basename]][!to_download[[basename]] %in% exclude]
+  names(tables) <- tables <- 
+    to_download[[basename]][!to_download[[basename]] %in% exclude]
   map(tables, function(tab) {
     meta <- tjet[[basename]]$metadata %>%
       filter(table_name == tab) %>%
@@ -45,57 +46,57 @@ map(names(to_download), function(basename) {
   return()
 })
 
-### prodDB tables
-
-
-
-
-
-
+### create prodDB tables
 db <- map(names(to_download), function(basename) {
-  names(select_tables) <- select_tables <- to_download[[basename]][!to_download[[basename]] %in% exclude]
+  names(select_tables) <- select_tables <- 
+    to_download[[basename]][!to_download[[basename]] %in% exclude]
   map(select_tables, function(tab_name) {
     select_vars <- tjet[[basename]]$metadata %>%
-      filter(incl_prod == 1 &
+      filter(incl_prod == 1 & 
+               ### doing multi-select fields separately
                incl_data != "transform: multiple" &
-               ## include these if creating dummies
+               ### include these later if creating dummies
                table_name == tab_name) %>%
       select(field_name) %>%
       unlist(use.names = FALSE)
+    ### order of fields
     first <-
       c(select_vars[str_detect(select_vars, fixed("ID"))], 
         select_vars[str_detect(select_vars, fixed("ccode"))])
     select_vars <-
       c(select_vars[select_vars %in% first], 
         select_vars[!select_vars %in% first])
+    ### adding empty fields as NA for now until they are properly coded
     missing_cols <-
       select_vars[!(select_vars %in% names(tjet[[basename]][[tab_name]]))]
     tjet[[basename]][[tab_name]] %>%
       tibble() %>%
-      ### adding empty fields as NA columns for now until they are recoded by RAs
       mutate(!!!setNames(rep(NA, length(missing_cols)), missing_cols)) %>%
       select(all_of(select_vars))
   })
 })
 names(db) <- names(to_download)
+### for later checking
 dim_orig <- map(db, function(dat) {
   map_vec(dat, nrow)
 })
 
-drop_invalids <- c("Amnesties", "Trials", "Accused", "TruthCommissions", "Reparations", "Vettings")
+### filtering out invalid records (more removal below)
+drop_invalids <- c("Amnesties", "Trials", "Accused", 
+                   "TruthCommissions", "Reparations", "Vettings")
 db <- map(names(to_download), function(basename) {
   drop_invalids <- drop_invalids[drop_invalids %in% names(db[[basename]])]
   base <- db[[basename]]
   base[drop_invalids] <- map(drop_invalids, function(tab_name) {
     base[[tab_name]] %>%
-      ## will need to change this later to selecting only valids
+      ## should change this later to selecting only valid
       filter(invalid != 1) # %>% select(-invalid)
-    
   })
   return(base)
 })
 names(db) <- names(to_download)
 
+### checking how many records left
 dim_drop <- map(db, function(dat) {
   map_vec(dat, nrow)
 })
@@ -103,14 +104,13 @@ cbind(orig = dim_orig[[1]], drop = dim_drop[[1]])
 cbind(orig = dim_orig[[2]], drop = dim_drop[[2]])
 
 ### transforming checkboxes to binary
-
 checkbox_to_binary <- function(col) {
   ifelse(is.na(col), 0, 1)
 }
 db <- map(names(to_download), function(basename) {
-  names(select) <- select <- to_download[[basename]][!to_download[[basename]] %in% exclude]
-  # db[[basename]][select] <- 
-    map(select, function(tab_name) {
+  names(select) <- select <- 
+    to_download[[basename]][!to_download[[basename]] %in% exclude]
+  map(select, function(tab_name) {
     fields <- tjet[[basename]]$metadata %>%
       filter(table_name == tab_name &
                incl_prod == 1 &
@@ -124,8 +124,8 @@ db <- map(names(to_download), function(basename) {
 })
 names(db) <- names(to_download)
 
-### dealing with multipleLookupValues (& multipleRecordLinks)
-str(db, 2)
+### including fields with multipleLookupValues
+# str(db, 2)
 db <- map(names(to_download), function(basename) {
   names(select) <- select <- tjet[[basename]]$metadata %>%
     filter(
@@ -156,7 +156,7 @@ db <- map(names(to_download), function(basename) {
 })
 names(db) <- names(to_download)
 
-### ccodes for Crimes and Victims
+### ccode tables for Crimes and Victims
 
 crimes <- c("ccode_Crime1", "ccode_Crime2", "ccode_Crime3")
 victims <- c("ccode_Victim1", "ccode_Victim2", "ccode_Victim3")
@@ -177,12 +177,14 @@ db[["Prosecutions"]][["Trials_Victims"]] <- map(victims, function(var) {
 }) %>%
   bind_rows()
 
-db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+db[["Prosecutions"]][["Trials"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>%
   select(!all_of(c(crimes, victims)))
 
-### multiselect fields
+### tables for multiselect fields
 
-db[["MegaBase"]][["labels"]] <- tjet[["MegaBase"]][["select_options"]] %>%
+db[["MegaBase"]][["labels"]] <- 
+  tjet[["MegaBase"]][["select_options"]] %>%
   select(labelID, label) %>%
   tibble()
 
@@ -199,7 +201,6 @@ names(select) <- select <- tjet[["MegaBase"]][["metadata"]] %>%
 
 multi_selects <- map(select, function(tab_name) {
   # cat(tab_name)
-  # tab_name = "Vettings"
   names(fields) <- fields <- tjet[["MegaBase"]][["metadata"]] %>%
     filter(incl_prod == 1 &
              incl_data == "transform: multiple" &
@@ -208,7 +209,6 @@ multi_selects <- map(select, function(tab_name) {
     unlist(use.names = FALSE)
   map(fields, function(field) {
     # cat(field)
-    # field = "other"
     to_filter_on <- paste(field, "set", sep = "_")
     to_select <- paste(field, tab_name, sep = "_")
     tjet[["MegaBase"]]$select_options %>%
@@ -228,16 +228,19 @@ multi_selects <- map(select, function(tab_name) {
 names(multi_selects) <- str_replace(names(multi_selects), fixed("."), "_")
 db[["MegaBase"]] <- c(db[["MegaBase"]], multi_selects)
 
+### checking numbers of records again to ensure integrity
 dim_now <- map(db, function(dat) {
   map_vec(dat, nrow)
 })
-cbind(orig = dim_orig[[1]], drop = dim_drop[[1]], now = dim_now[[1]][names(dim_orig[[1]])])
-cbind(orig = dim_orig[[2]], drop = dim_drop[[2]], now = dim_now[[2]][names(dim_orig[[2]])])
+cbind(orig = dim_orig[[1]], drop = dim_drop[[1]], 
+      now = dim_now[[1]][names(dim_orig[[1]])])
+cbind(orig = dim_orig[[2]], drop = dim_drop[[2]], 
+      now = dim_now[[2]][names(dim_orig[[2]])])
 
-### dummies from multi-select fields
-## (may not need this if we can get it with SQL queries)
-## sample code, would have to be expanded and generalized
-
+### dummies for multi-select fields for data downloads?
+### (may not need this if we can get it with SQL queries)
+### sample code, would have to be expanded and generalized
+### would need a consistent naming scheme
 # make_named_list <- function(lst) {
 #   if(!is.null(lst))
 #     names(lst) <- lst %>%
@@ -254,11 +257,12 @@ cbind(orig = dim_orig[[2]], drop = dim_drop[[2]], now = dim_now[[2]][names(dim_o
 #          legalBasis_2 = ifelse(is.na(legalBasis_2), 0, 1),
 #          legalBasis_3 = ifelse(is.na(legalBasis_3), 0, 1))
 
-### dealing with keys in multipleRecordLinks
-## the approaches below differ by whether the relationship is one-to-one or one-to-many
-## should simplify the code below with one function
+### recoding keys in multipleRecordLinks (from Airtable record IDs)
+### approaches differ by whether the relationship is one-to-one or one-to-many
+### SHOULD simplify code below with functions
 
-db[["MegaBase"]][["Reparations"]] <- db[["MegaBase"]][["Reparations"]] %>%
+db[["MegaBase"]][["Reparations"]] <- 
+  db[["MegaBase"]][["Reparations"]] %>%
   unnest_longer(ucdpConflictID, keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet[["MegaBase"]]$Conflicts %>% 
@@ -267,8 +271,10 @@ db[["MegaBase"]][["Reparations"]] <- db[["MegaBase"]][["Reparations"]] %>%
   select(-airtable_record_id) %>%
   rename(ucdpConflictID = "conflict_id")
 
-db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
-  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
+db[["Prosecutions"]][["Trials"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>%
+  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), 
+                keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet[["Prosecutions"]]$Conflicts %>% 
               select(airtable_record_id, conflict_id),
@@ -282,8 +288,10 @@ db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-db[["MegaBase"]][["Vettings"]] <- db[["MegaBase"]][["Vettings"]] %>%
-  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
+db[["MegaBase"]][["Vettings"]] <- 
+  db[["MegaBase"]][["Vettings"]] %>%
+  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), 
+                keep_empty = TRUE) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
   left_join(tjet[["MegaBase"]]$Conflicts %>% 
               select(airtable_record_id, conflict_id),
@@ -297,28 +305,11 @@ db[["MegaBase"]][["Vettings"]] <- db[["MegaBase"]][["Vettings"]] %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-### this created an additional observation because relationship is actually one-to-many, so now doing this properly further below
-# db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]]$Amnesties %>%
-#   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), keep_empty = TRUE) %>%
-#   rename(airtable_record_id = "ucdpConflictID") %>%
-#   left_join(tjet[["MegaBase"]]$Conflicts %>% 
-#               select(airtable_record_id, conflict_id),
-#             by = "airtable_record_id") %>%
-#   select(-airtable_record_id) %>%
-#   rename(airtable_record_id = "ucdpDyadID") %>%
-#   left_join(tjet[["MegaBase"]]$Dyads %>% 
-#               select(airtable_record_id, dyad_id),
-#             by = "airtable_record_id") %>%
-#   select(-airtable_record_id) %>%
-#   rename(ucdpConflictID = "conflict_id",
-#          ucdpDyadID = "dyad_id")
+### the trial-accused link is one-to-many 
+### (it should be many-to-many but the DB was not built to accomodate this)
 
-### at the moment the trial-accused link is one-to-many, 
-### but in theory, I could become many-to-many, 
-### though there is no current plan to do so
-# range(unlist(map(db$Accused$trialID, length)))
-
-db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
+db[["Prosecutions"]][["Accused"]] <- 
+  db[["Prosecutions"]][["Accused"]] %>%
   unnest_longer(trialID, keep_empty = TRUE) %>%
   rename(airtable_record_id = "trialID") %>%
   left_join(tjet[["Prosecutions"]][["Trials"]] %>% 
@@ -326,7 +317,8 @@ db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
             by = "airtable_record_id") %>%
   select(-airtable_record_id)
 
-db[["Prosecutions"]][["CourtLevels"]] <- db[["Prosecutions"]][["CourtLevels"]] %>%
+db[["Prosecutions"]][["CourtLevels"]] <- 
+  db[["Prosecutions"]][["CourtLevels"]] %>%
   unnest_longer(accusedID, keep_empty = TRUE) %>%
   rename(airtable_record_id = "accusedID") %>%
   left_join(tjet[["Prosecutions"]][["Accused"]] %>% 
@@ -334,9 +326,10 @@ db[["Prosecutions"]][["CourtLevels"]] <- db[["Prosecutions"]][["CourtLevels"]] %
             by = "airtable_record_id") %>%
   select(-airtable_record_id)
 
-## truth commissions and amnesties have one-to-many links
+### truth commissions and amnesties have one-to-many links
 
-db[["MegaBase"]][["TruthCommissions_Conflicts"]] <- db[["MegaBase"]][["TruthCommissions"]] %>%
+db[["MegaBase"]][["TruthCommissions_Conflicts"]] <- 
+  db[["MegaBase"]][["TruthCommissions"]] %>%
   select(truthcommissionID, ucdpConflictID) %>%
   unnest_longer(ucdpConflictID) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
@@ -347,7 +340,8 @@ db[["MegaBase"]][["TruthCommissions_Conflicts"]] <- db[["MegaBase"]][["TruthComm
   rename(ucdpConflictID = "conflict_id") %>%
   drop_na()
 
-db[["MegaBase"]][["TruthCommissions_Dyads"]] <- db[["MegaBase"]][["TruthCommissions"]] %>%
+db[["MegaBase"]][["TruthCommissions_Dyads"]] <- 
+  db[["MegaBase"]][["TruthCommissions"]] %>%
   select(truthcommissionID, ucdpDyadID) %>%
   unnest_longer(ucdpDyadID) %>%
   rename(airtable_record_id = "ucdpDyadID") %>%
@@ -358,10 +352,12 @@ db[["MegaBase"]][["TruthCommissions_Dyads"]] <- db[["MegaBase"]][["TruthCommissi
   rename(ucdpConflictID = "dyad_id") %>%
   drop_na()
 
-db[["MegaBase"]][["TruthCommissions"]] <- db[["MegaBase"]][["TruthCommissions"]] %>%
+db[["MegaBase"]][["TruthCommissions"]] <- 
+  db[["MegaBase"]][["TruthCommissions"]] %>%
   select(-ucdpConflictID,-ucdpDyadID)
 
-db[["MegaBase"]][["Amnesties_Conflicts"]] <- db[["MegaBase"]][["Amnesties"]] %>%
+db[["MegaBase"]][["Amnesties_Conflicts"]] <- 
+  db[["MegaBase"]][["Amnesties"]] %>%
   select(amnestyID, ucdpConflictID) %>%
   unnest_longer(ucdpConflictID) %>%
   rename(airtable_record_id = "ucdpConflictID") %>%
@@ -372,7 +368,8 @@ db[["MegaBase"]][["Amnesties_Conflicts"]] <- db[["MegaBase"]][["Amnesties"]] %>%
   rename(ucdpConflictID = "conflict_id") %>%
   drop_na()
 
-db[["MegaBase"]][["Amnesties_Dyads"]] <- db[["MegaBase"]][["Amnesties"]] %>%
+db[["MegaBase"]][["Amnesties_Dyads"]] <- 
+  db[["MegaBase"]][["Amnesties"]] %>%
   select(amnestyID, ucdpDyadID) %>%
   unnest_longer(ucdpDyadID) %>%
   rename(airtable_record_id = "ucdpDyadID") %>%
@@ -383,36 +380,41 @@ db[["MegaBase"]][["Amnesties_Dyads"]] <- db[["MegaBase"]][["Amnesties"]] %>%
   rename(ucdpConflictID = "dyad_id") %>%
   drop_na()
 
-db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>%
+db[["MegaBase"]][["Amnesties"]] <- 
+  db[["MegaBase"]][["Amnesties"]] %>%
   select(-ucdpConflictID,-ucdpDyadID)
 
-## consistent ID field names
+### using consistent ID field names
 
-db[["MegaBase"]][["Conflicts"]] <- db[["MegaBase"]][["Conflicts"]] %>%
+db[["MegaBase"]][["Conflicts"]] <- 
+  db[["MegaBase"]][["Conflicts"]] %>%
   rename(ucdpConflictID = "conflict_id")
 
-db[["MegaBase"]][["Dyads"]] <- db[["MegaBase"]][["Dyads"]] %>%
+db[["MegaBase"]][["Dyads"]] <- 
+  db[["MegaBase"]][["Dyads"]] %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-db[["Prosecutions"]][["Conflicts"]] <- db[["Prosecutions"]][["Conflicts"]] %>%
+db[["Prosecutions"]][["Conflicts"]] <- 
+  db[["Prosecutions"]][["Conflicts"]] %>%
   rename(ucdpConflictID = "conflict_id")
 
-db[["Prosecutions"]][["Dyads"]] <- db[["Prosecutions"]][["Dyads"]] %>%
+db[["Prosecutions"]][["Dyads"]] <- 
+  db[["Prosecutions"]][["Dyads"]] %>%
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-## other multi-select fields (lookup fields as list columns of length one)
+### other multi-select fields (lookup fields as list columns of length one)
 
-db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>% 
+db[["Prosecutions"]][["Accused"]] <- 
+  db[["Prosecutions"]][["Accused"]] %>% 
   unnest_longer(all_of(c("lastGuiltyYear", "lastVerdictYear", 
                          "lastVerdict", "lastSentencingTime", 
-                         "lastSentencingArrangement")), keep_empty = TRUE) %>% 
-  # filter(!(accusedID == 18133 & lastVerdict == "Guilty Overturned & Acquittal")) %>% # a temporary fixß
-  distinct()
+                         "lastSentencingArrangement")), keep_empty = TRUE)
 
-## need to figure out a better way to deal with the multi-select field 
-## because this created duplicates 
+### need to figure out a better way to deal with the multi-select field 
+### because this now defunct code below created duplicates 
+
 # db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
 #   unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE )
 # db[["Prosecutions"]][["Trials"]] %>%
@@ -433,9 +435,11 @@ db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
 #   rowwise() %>%
 #   mutate(oppositionType = ifelse(length(oppositionType) > 0, str_c(), ""))
 
-## other multi-select fields (lookup fields as list columns of length greater than one)
+### other multi-select fields: 
+### lookup fields as list columns of length greater than one
 
-db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+db[["Prosecutions"]][["Trials"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>%
   mutate(membership = str_c(membership, sep =", "),
          membership = str_replace(membership, fixed("NA, "), ""),
          membership = str_replace(membership, fixed("NA"), ""),
@@ -444,28 +448,31 @@ db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
          membership = str_replace_all(membership, fixed("\""), ""),
          membership = str_replace_all(membership, fixed("character(0)"), "")) 
 
-db[["Prosecutions"]][["Trials_lastVerdict"]] <- db[["Prosecutions"]][["Trials"]] %>%
+db[["Prosecutions"]][["Trials_lastVerdict"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>%
   select(trialID, lastVerdict) %>% 
   unnest_longer(lastVerdict, keep_empty = TRUE) %>% 
   filter(!is.na(lastVerdict)) 
 
-db[["Prosecutions"]][["Trials_lastSentencingTime"]] <- db[["Prosecutions"]][["Trials"]] %>%
+db[["Prosecutions"]][["Trials_lastSentencingTime"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>%
   select(trialID, lastSentencingTime) %>% 
   unnest_longer(lastSentencingTime, keep_empty = TRUE) %>% 
   filter(!is.na(lastSentencingTime)) 
 
-db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
+db[["Prosecutions"]][["Trials"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>%
   select(-lastVerdict, -lastSentencingTime)
 
-## fixing missing Trials endYear
-
-db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>% 
+### fixing missing Trials endYear
+db[["Prosecutions"]][["Trials"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>% 
   mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2023, yearEnd), 
          yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd)) 
   
-## cleaning up transitions table; this will change once the transitions data are fully cleaned up
-
-db[["MegaBase"]][["Transitions"]] <- db[["MegaBase"]]$Transitions %>%
+### formatting transitions table for website 
+db[["MegaBase"]][["Transitions"]] <-
+  db[["MegaBase"]][["Transitions"]] %>%
   filter(trans == 1) %>% 
   mutate(p5 = case_when(is.na(p5_year) ~ 0, 
                         trans_year_begin < p5_year ~ 0,
@@ -476,24 +483,33 @@ db[["MegaBase"]][["Transitions"]] <- db[["MegaBase"]]$Transitions %>%
          ert = case_when(is.na(ert_year) ~ 0, 
                          trans_year_begin < ert_year ~ 0,
                          trans_year_begin >= ert_year ~ 1), 
-         nsupport = p5 + bmr + ert,) %>% 
+         nsupport = p5 + bmr + ert) %>% 
   rowwise() %>% 
   mutate(sources = str_flatten(c(
-           case_when(!is.na(p5_year) ~ paste("Polity5 (", p5_year, ")", sep = "")),
-           case_when(!is.na(bmr_year) ~ paste("BMR (", bmr_year, ")", sep = "")),
-           case_when(!is.na(ert_year) ~ paste("VDem (", ert_year, ")", sep = ""))),
+           case_when(!is.na(p5_year) ~ 
+                       paste("Polity5 (", p5_year, ")", sep = "")),
+           case_when(!is.na(bmr_year) ~ 
+                       paste("BMR (", bmr_year, ")", sep = "")),
+           case_when(!is.na(ert_year) ~ 
+                       paste("VDem (", ert_year, ")", sep = ""))),
            collapse = " & ", na.rm = TRUE)) %>% 
-  select(transitionID, ccode, trans_year_begin, nsupport, sources) %>% 
-  ungroup()
+  ungroup() %>% 
+  select(transitionID, ccode, trans_year_begin, 
+         nsupport, sources, p5_year, ert_year, bmr_year)
 
-### need to also filter non-HRs policies; check again amnesties, TCs, reparations, vettings
+### need to filter out non-HRs policies
+### check again: amnesties, TCs, reparations, vettings
 
-db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>% 
-  filter(generalOrSpecific == "event" & (IntraConfl == 1 | humanRights == 1 | HRs_charges > 0) )
+db[["Prosecutions"]][["Trials"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>% 
+  filter(generalOrSpecific == "event") %>% 
+  filter(IntraConfl == 1 | humanRights == 1 | HRs_charges > 0)
 
-db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>% 
+db[["Prosecutions"]][["Accused"]] <- 
+  db[["Prosecutions"]][["Accused"]] %>% 
   filter(trialID %in% db[["Prosecutions"]][["Trials"]]$trialID)
 
+### checking amnesties
 # crime_labels <- db[["MegaBase"]][["Amnesties_whatCrimes"]] %>%
 #   select(labelID) %>%
 #   distinct() %>%
@@ -501,12 +517,14 @@ db[["Prosecutions"]][["Accused"]] <- db[["Prosecutions"]][["Accused"]] %>%
 # db[["MegaBase"]][["labels"]] %>%
 #   filter(labelID %in% crime_labels)
 # rm(crime_labels)
+
 keep_amnesties <- db[["MegaBase"]][["Amnesties_whatCrimes"]] %>% 
   filter(labelID %in% c(60, 88, 9, 143, 132) ) %>%
   select(amnestyID) %>% 
   distinct() %>% 
   unlist(use.names = FALSE)
-db[["MegaBase"]][["Amnesties"]] <- db[["MegaBase"]][["Amnesties"]] %>% 
+db[["MegaBase"]][["Amnesties"]] <- 
+  db[["MegaBase"]][["Amnesties"]] %>% 
   filter(amnestyID %in% keep_amnesties)
 rm(keep_amnesties)
 
@@ -516,14 +534,13 @@ rm(keep_amnesties)
 #            harmsDisappearance == 1 | harmsMurder == 1 | 
 #            harmsDisplacement == 1 | harmsDetention == 1)
 
-# db[["MegaBase"]][["TruthCommissions"]] %>% 
-#   filter(torture == 1 | SGBV == 1 | forcedDisplacement == 1 | torture == 1 | 
-#            disappearance == 1 | focusedPast == 1 | investigatePatternAbuse == 1)
+# db[["MegaBase"]][["TruthCommissions"]] %>%
+#   filter(torture == 1 | SGBV == 1 | forcedDisplacement == 1 | 
+#            torture == 1 | disappearance == 1 | 
+#            focusedPast == 1 | investigatePatternAbuse == 1)
   
-### TO DO?
-## - multi-select fields into dummies for data downloads?  
-##   - would need a consistent naming scheme
-
+### compare numbers of records again
+### last column is 
 dim_last <- map(db, function(dat) {
   map_vec(dat, nrow)
 })
@@ -536,16 +553,18 @@ cbind(orig = dim_orig[[2]],
       now = dim_now[[2]][names(dim_orig[[2]])],
       last = dim_last[[2]][names(dim_orig[[2]])])
 
+### combining the relevant tables from MegaBase and Prosecutions into one DB 
 db <- c(db[["MegaBase"]], 
         db[["Prosecutions"]][c("Trials", "Accused", "CourtLevels", 
                                "Trials_Crimes", "Trials_Victims", 
                                "Trials_lastVerdict", 
                                "Trials_lastSentencingTime")])
 
-rm(select, checkbox_to_binary, 
-   dim_drop, dim_last, dim_now, dim_orig, 
+### cleaning up workspace environment
+rm(select, checkbox_to_binary, dim_drop, dim_last, dim_now, dim_orig, 
    crimes, victims, multi_selects) 
 
+### creating country list as basis for country-year dataset
 countrylist <- db$Countries %>% 
   mutate(beg = as.integer(str_sub(begin_date, 1, 4)), 
          end = as.integer(str_sub(end_date, 1, 4)), 
@@ -561,10 +580,6 @@ countrylist <- db$Countries %>%
          end = ifelse(country == "German Federal Republic (West)", 1989, end),
          end = ifelse(country == "Yemen Arab Republic (North)", 1989, end),
          region_sub_un = ifelse(is.na(intregion), subregion, intregion),
-         # txt_intro = iconv(txt_intro, from = "UTF-8", to ="latin1", sub = "byte"), 
-         # txt_regime = iconv(txt_regime, from = "UTF-8", to ="latin1", sub = "byte"), 
-         # txt_conflict = iconv(txt_conflict, from = "UTF-8", to ="latin1", sub = "byte"), 
-         # txt_TJ = iconv(txt_TJ, from = "UTF-8", to ="latin1", sub = "byte"),
          txt_intro = str_squish(txt_intro), 
          txt_regime = str_squish(txt_regime), 
          txt_conflict = str_squish(txt_conflict), 
@@ -575,63 +590,68 @@ countrylist <- db$Countries %>%
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
 
+### transitions dataset in country-year format
 translist <- read_csv("transitions/transitions_new_revised.csv") %>%
-  # filter(!is.na(trans_year) & trans_year >= 1960) %>% 
   filter(country != "Serbia & Montenegro") %>% 
-  mutate(
-    # country = ifelse(country == "Democratic Republic of the Congo", "DR Congo", country),
-    # country = ifelse(country == "Eswatini", "Swaziland (Eswatini)", country),
-    # country = ifelse(country == "German Democratic Republic", "German Democratic Republic (East)", country),
-    # country = ifelse(country == "North Yemen", "Yemen Arab Republic (North)", country),
-    # country = ifelse(country == "Republic of the Congo", "Congo (Brazzaville)", country),
-    # country = ifelse(country == "Republic of Vietnam", "Vietnam (Democratic Republic of)", country),
-    # country = ifelse(country == "St. Vincent", "St. Vincent & the Grenadines", country),
-    # country = ifelse(country == "South Yemen", "Yemen People's Republic (South)", country)
-    # ccode = ifelse(country == "Serbia & Montenegro", 345, ccode)
-  ) %>% 
   rename("country_trans" = "country") %>% 
   full_join(countrylist %>% select(country, ccode, beg, end), by = "ccode") %>%
-  # full_join(countrylist %>% select(country, ccode, beg) , by = "country") %>%
   arrange(country, year) %>%
   filter(year >= 1965 & year >= beg & year <= end) %>% 
-  # select(country, ccode, country_trans, beg, end, year, v2x_polyarchy) %>% filter(country != country_trans)  %>% print(n = Inf)
   mutate(transition = ifelse(is.na(trans_year), 0, 1), 
          dem_polity = ifelse(polity_p5 >= 6, 1, 0),
-         dem_vdem = ifelse(str_detect(str_to_lower(v2x_regime_amb), "democracy"), 1, 0)) %>% 
-  select(country, ccode, year, transition, 
-         # p5_year, bmr_year, ert_year, trans_note, v2x_polyarchy,
-         # dem_ep_start_year, dem_ep_end_year, v2x_regime_amb, polity_p5,
-         dem_bmr, dem_polity, dem_vdem) %>% 
+         dem_vdem = ifelse(str_detect(str_to_lower(v2x_regime_amb), 
+                                      "democracy"), 1, 0)) %>% 
+  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem) %>% 
   group_by(ccode) %>% 
   mutate(dem_polity_min = min(dem_polity, na.rm = TRUE),
          dem_polity_max = max(dem_polity, na.rm = TRUE),
-         dem_polity_max = ifelse(is.infinite(dem_polity_max), NA, dem_polity_max),
+         dem_polity_max = ifelse(is.infinite(dem_polity_max), 
+                                 NA, dem_polity_max),
          dem_bmr_min = min(dem_bmr, na.rm = TRUE),
          dem_bmr_max = max(dem_bmr, na.rm = TRUE),
          dem_bmr_max = ifelse(is.infinite(dem_bmr_max), NA, dem_bmr_max),
          dem_vdem_min = min(dem_vdem, na.rm = TRUE),
          dem_vdem_max = max(dem_vdem, na.rm = TRUE),
          dem_vdem_max = ifelse(is.infinite(dem_vdem_max), NA, dem_vdem_max),
-         sources = 3 - (is.na(dem_polity_max) + is.na(dem_bmr_max) + is.na(dem_vdem_max)),
+         sources = 3 - (is.na(dem_polity_max) + 
+                          is.na(dem_bmr_max) + is.na(dem_vdem_max)),
          regime = max(transition, na.rm = TRUE)) %>% 
   ungroup() %>% 
   mutate(context_bmr = case_when(dem_bmr_min == 0 & dem_bmr_max == 0 ~ 0,
                                  dem_bmr_min == 1 & dem_bmr_max == 1 ~ 1),
-         context_polity = case_when(dem_polity_min == 0 & dem_polity_max == 0 ~ 0,
-                                    dem_polity_min == 1 & dem_polity_max == 1 ~ 1),
+         context_polity = case_when(dem_polity_min == 0 & 
+                                      dem_polity_max == 0 ~ 0,
+                                    dem_polity_min == 1 & 
+                                      dem_polity_max == 1 ~ 1),
          context_vdem = case_when(dem_vdem_min == 0 & dem_vdem_max == 0 ~ 0,
                                   dem_vdem_min == 1 & dem_vdem_max == 1 ~ 1),
-         context_dem = rowSums(across(all_of(c("context_bmr", "context_polity", "context_vdem"))), na.rm = TRUE),
+         context_dem = rowSums(across(all_of(c("context_bmr", "context_polity", 
+                                               "context_vdem"))), na.rm = TRUE),
          regime = case_when(regime == 1 ~ "transitional", 
-                            regime == 0 & context_dem == 0 & sources > 0 ~ "autocratic",
-                            regime == 0 & (context_dem == sources | context_dem > 1) ~ "democratic",
+                            regime == 0 & 
+                              context_dem == 0 & sources > 0 ~ "autocratic",
+                            regime == 0 & (context_dem == sources | 
+                                             context_dem > 1) ~ "democratic",
                             country == "India" ~ "democratic"),
          reg_democ = ifelse(regime == "democratic", 1, 0), 
          reg_autoc = ifelse(regime == "autocratic", 1, 0), 
          reg_trans = ifelse(regime == "transitional", 1, 0)
   ) %>% 
-  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, regime, reg_democ, reg_autoc, reg_trans)
+  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, 
+         regime, reg_democ, reg_autoc, reg_trans)
 
+### clean up text fields 
+tabs <- c("Amnesties", "Reparations", "TruthCommissions", 
+          "Vettings", "Trials", "Accused") 
+db[tabs] <- map(tabs, function(tab) {
+  text_fields <- names(db[[tab]])[map(db[[tab]], class) == "character"]
+  db[[tab]][text_fields] <- map(db[[tab]][text_fields], str_squish)
+  return(db[[tab]])
+})
+
+### the next few code blocks could be simplified with functions
+
+### preparing conflicts list for merging into country-year dataset
 confllist <- read_csv("conflicts/confl_dyads.csv") %>% 
   select(location, gwno_loc, ep_start_year, ep_end_year) %>% 
   rowwise() %>% 
@@ -643,6 +663,7 @@ confllist <- read_csv("conflicts/confl_dyads.csv") %>%
   mutate(conflict = 1) %>% 
   filter(year >= 1965 & year <= 2020)
 
+### preparing amnesties list for merging into country-year dataset
 amnesties <- db$Amnesties %>% 
   left_join(countrylist %>% select(ccode, ccode_case) %>% distinct(), 
             by = "ccode") %>% 
@@ -657,11 +678,14 @@ amnesties <- db$Amnesties %>%
          "amnesties_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
 
+### preparing reparations list for merging into country-year dataset
 reparations <- db$Reparations %>%
   left_join(countrylist %>% select(ccode, ccode_case) %>% distinct(), 
             by = "ccode") %>% 
   arrange(ccode_case, yearCreated) %>%  
-  mutate(SGBV = ifelse(harmsSexualViolence == 1 | genderCrimes == "yes" | lgbtqCrimes == "yes", 1, 0) ) %>%    
+  mutate(SGBV = ifelse(harmsSexualViolence == 1 | 
+                         genderCrimes == "yes" | 
+                         lgbtqCrimes == "yes", 1, 0) ) %>%    
   group_by(ccode_case, yearCreated) %>%
   mutate(reparations = n(),
          SGBV = max(SGBV)) %>% 
@@ -672,6 +696,7 @@ reparations <- db$Reparations %>%
          "reparations_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
 
+### preparing TCs list for merging into country-year dataset
 tcs <- db$TruthCommissions %>%
   left_join(countrylist %>% select(ccode, ccode_case) %>% distinct(), 
             by = "ccode") %>% 
@@ -686,10 +711,11 @@ tcs <- db$TruthCommissions %>%
          "tcs_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
 
+### preparing vettings list for merging into country-year dataset
 vettings <- db$Vettings %>%
   left_join(countrylist %>% select(ccode, ccode_case) %>% distinct(), 
             by = "ccode") %>% 
-  # select(vettingID, alterationOf, ccode_case, yearStart, yearEnd, policyName) %>% 
+  # select(vettingID, alterationOf, ccode_case, yearStart, yearEnd) %>% 
   filter(is.na(alterationOf)) %>% 
   arrange(ccode_case, yearStart) %>%  
   group_by(ccode_case, yearStart) %>%  
@@ -700,16 +726,19 @@ vettings <- db$Vettings %>%
   rename("year" = "yearStart") %>% 
   filter(year >= 1970 & year <= 2020)
 
+### preparing trials list for merging into country-year dataset
 trials <- db$Trials %>%
   rename(ccode = "ccode_Accused") %>% 
   left_join(countrylist %>% select(ccode, ccode_case) %>% distinct(), 
             by = "ccode") %>% 
   arrange(ccode_case, yearStart) %>%
-  mutate(# domestic = ifelse(str_detect(trialType, "domestic"), 1, 0), 
-         SGBV = ifelse(rape_Accused == 1 | sexualViolence_Accused == 1 | otherSGBV_Accused == 1, 1, 0) ) %>% 
+  mutate(SGBV = ifelse(rape_Accused == 1 | 
+                         sexualViolence_Accused == 1 | 
+                         otherSGBV_Accused == 1, 1, 0) ) %>% 
   select(ccode_case, trialType, yearStart, SGBV) %>% 
   filter(yearStart >= 1970 & yearStart <= 2020)
 
+### subsetting and coding domestic trials total count measures for website
 domestic <- trials %>% 
   filter(trialType %in% c("domestic", "don't know")) %>% 
   group_by(ccode_case, yearStart) %>%
@@ -720,6 +749,7 @@ domestic <- trials %>%
   rename("year" = "yearStart") %>% 
   distinct() 
 
+### subsetting and coding foreign trials total count measures for website
 foreign <- trials %>% 
   filter(trialType == "foreign") %>% 
   group_by(ccode_case, yearStart) %>%
@@ -730,6 +760,7 @@ foreign <- trials %>%
   rename("year" = "yearStart") %>% 
   distinct() 
 
+### subsetting and coding intl trials total count measures for website
 intl <- trials %>% 
   filter(trialType %in% c("international", "international (hybrid)")) %>% 
   group_by(ccode_case, yearStart) %>%
@@ -740,6 +771,7 @@ intl <- trials %>%
   rename("year" = "yearStart") %>% 
   distinct() 
 
+### creating country-year dataset and merging in mechanisms count measures
 db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   beg <- countrylist %>%
     filter(country == ctry) %>%
@@ -762,51 +794,66 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   group_by(ccode_case) %>%
   mutate(conflict = max(conflict) ) %>%
   ungroup() %>% 
-  select(cyID, country, year, ccode, ccode_case, ccode_ksg, tjet_focus, region, 
-         regime, reg_democ, reg_autoc, reg_trans, conflict, transition, conflict_active) %>% 
+  select(cyID, country, year, ccode, ccode_case, ccode_ksg, 
+         tjet_focus, region, regime, reg_democ, reg_autoc, 
+         reg_trans, conflict, transition, conflict_active) %>% 
   filter(year >= 1970) %>% 
   left_join(amnesties, by = c("ccode_case", "year") ) %>%  
   mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties),
-         amnesties_SGBV = ifelse(is.na(amnesties_SGBV), 0, amnesties_SGBV)) %>% 
+         amnesties_SGBV = ifelse(is.na(amnesties_SGBV), 
+                                 0, amnesties_SGBV)) %>% 
   left_join(reparations, by = c("ccode_case", "year") ) %>%  
-  mutate(reparations = ifelse(is.na(reparations), 0, reparations),
-         reparations_SGBV = ifelse(is.na(reparations_SGBV), 0, reparations_SGBV)) %>% 
+  mutate(reparations = ifelse(is.na(reparations), 
+                              0, reparations),
+         reparations_SGBV = ifelse(is.na(reparations_SGBV), 
+                                   0, reparations_SGBV)) %>% 
   left_join(tcs, by = c("ccode_case", "year") ) %>% 
   mutate(tcs = ifelse(is.na(tcs), 0, tcs),
-         tcs_SGBV = ifelse(is.na(tcs_SGBV), 0, tcs_SGBV)) %>%
+         tcs_SGBV = ifelse(is.na(tcs_SGBV), 
+                           0, tcs_SGBV)) %>%
   left_join(vettings, by = c("ccode_case", "year") ) %>% 
-  mutate(vettings = ifelse(is.na(vettings), 0, vettings)) %>%
+  mutate(vettings = ifelse(is.na(vettings), 
+                           0, vettings)) %>%
   left_join(domestic, by = c("ccode_case", "year") ) %>% 
-  mutate(trials_domestic = ifelse(is.na(trials_domestic), 0, trials_domestic),
-         trials_domestic_SGBV = ifelse(is.na(trials_domestic_SGBV), 0, trials_domestic_SGBV)) %>% 
+  mutate(trials_domestic = ifelse(is.na(trials_domestic), 
+                                  0, trials_domestic),
+         trials_domestic_SGBV = ifelse(is.na(trials_domestic_SGBV), 
+                                       0, trials_domestic_SGBV)) %>% 
   left_join(intl, by = c("ccode_case", "year") ) %>% 
-  mutate(trials_intl = ifelse(is.na(trials_intl), 0, trials_intl),
-         trials_intl_SGBV = ifelse(is.na(trials_intl_SGBV), 0, trials_intl_SGBV)) %>% 
+  mutate(trials_intl = ifelse(is.na(trials_intl), 
+                              0, trials_intl),
+         trials_intl_SGBV = ifelse(is.na(trials_intl_SGBV), 
+                                   0, trials_intl_SGBV)) %>% 
   left_join(foreign, by = c("ccode_case", "year") ) %>% 
-  mutate(trials_foreign = ifelse(is.na(trials_foreign), 0, trials_foreign),
-         trials_foreign_SGBV = ifelse(is.na(trials_foreign_SGBV), 0, trials_foreign_SGBV))
+  mutate(trials_foreign = ifelse(is.na(trials_foreign), 
+                                 0, trials_foreign),
+         trials_foreign_SGBV = ifelse(is.na(trials_foreign_SGBV), 
+                                      0, trials_foreign_SGBV))
 
-# db[["CountryYears"]] %>%
-#   select(country, year, trials_domestic, trials_intl, trials_foreign) %>% summary
-
+### countries table for database
 db$Countries <- countrylist %>% 
   mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
 
+### data definition dictionary
 db$dictionary <- read_csv(here::here("pipeline", "dictionary.csv")) %>%
   tibble()
-
 attr(db$dictionary, "spec") <- NULL
 attr(db$dictionary, "problems") <- NULL
 # attributes(db$dictionary) 
 
+### conflict dyads lookup table for database
 db$ConflictDyads <- read_csv(here::here("conflicts", "confl_dyads.csv")) %>%
   tibble()
-
 attr(db$ConflictDyads, "spec") <- NULL
 attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
 
+### checking data tables
 # str(db, 1)
+
+### saving database
 save(db, file = here::here("data", "tjetdb.RData"))
 
-rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, trials, domestic, intl, foreign) 
+### cleaning up workspace environment
+rm(countrylist, translist, confllist, amnesties, 
+   reparations, tcs, vettings, trials, domestic, intl, foreign) 
