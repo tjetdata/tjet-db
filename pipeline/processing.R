@@ -835,7 +835,7 @@ db$Countries <- countrylist %>%
   mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
 
 ### data definition dictionary
-db$dictionary <- read_csv(here::here("pipeline", "dictionary.csv")) %>%
+db$dictionary <- read_csv(here::here("data", "dictionary.csv")) %>%
   tibble()
 attr(db$dictionary, "spec") <- NULL
 attr(db$dictionary, "problems") <- NULL
