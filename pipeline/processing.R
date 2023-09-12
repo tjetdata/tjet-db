@@ -17,7 +17,9 @@ pkeys <- c(
   "Countries" = "ccode",
   "Transitions" = "transitionID",
   "Conflicts" = "conflict_id",
-  "Dyads" = "dyad_id")
+  "Dyads" = "dyad_id",
+  "ICC" = "ccode_cow", 
+  "Investigations" = "pkey") # ccode_cow-year
 
 ### note that both bases have Countries, Transitions, Conflicts and Dyads tables
 ### but these should be the same
@@ -25,12 +27,12 @@ pkeys <- c(
 ### exclude these tables from the production database
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
              "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
-             "Challenges", "comparison", "VettingComparison", "ICDB", 
-             "BIcomparison", "TJETmembers", "Investigations")
+             "Challenges", "VettingComparison", "ICDB", "BIcomparison", 
+             "TJETmembers", "SurveysMeta")
 
 ### check metadata table for non-existing fields
 ### can use this to determine which fields can be deleted from dev DB
-cat("These fields listed in 'metadata'  are missing in the Airtable download.")
+cat("These fields listed in 'metadata' are missing in the Airtable download.")
 map(names(to_download), function(basename) {
   cat("Base:", basename, "\n\n")
   names(tables) <- tables <- 

@@ -19,7 +19,8 @@ to_download <-
       "Countries", "Transitions", "ConflictDyadSpells", "Conflicts", "Dyads", 
       "select_options", "metadata", "UCDPcountries", "TJETmembers", 
       "Experts", "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges", 
-      "VettingComparison", "BIcomparison", "Investigations"),
+      "VettingComparison", "BIcomparison", "ICC", "Investigations", 
+      "SurveysMeta"),
     "appF8HAH7SN7C09cU" = c(
       "Trials", "Accused", "CourtLevels",
       "Countries", "Transitions", "Conflicts", "Dyads", "metadata")
