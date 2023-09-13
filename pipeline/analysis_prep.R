@@ -6,6 +6,97 @@ load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 
 ### new TJ variables 
 
+guilty_scale <- db[["CourtLevels"]] %>% 
+  mutate(date = as_date(date)) %>%
+  filter(!is.na(accusedID) & guilty == 1) %>% 
+  filter(sentencingArrangement %in% c("Ordinary prison", "Don't Know")) %>% # others: "Special detention", "Suspended sentence"
+  mutate(prison_scale = case_when(sentencingTime == "Less than 1 year" ~ 1, 
+                                  sentencingTime == "1-3 years" ~ 2, 
+                                  sentencingTime == "4-9 years" ~ 3, 
+                                  sentencingTime == "10-19 years" ~ 4, 
+                                  sentencingTime == "20+ years" ~ 5, 
+                                  sentencingTime == "Life Imprisonment" ~ 6) ) %>% 
+  filter(!is.na(prison_scale)) %>%  
+  select(accusedID, date, year, prison_scale) %>%  # CLID, verdict, guilty
+  distinct() %>% 
+  arrange(accusedID, year) %>% 
+  group_by(accusedID, year) %>% 
+  mutate(n = n(), 
+         max_date = max(date, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  filter(is.infinite(max_date) | date == max_date) %>%
+  select(accusedID, year, prison_scale) %>% 
+  group_by(accusedID, year) %>% 
+  mutate(prison_scale = max(prison_scale)) %>%
+  ungroup() %>% 
+  distinct() 
+
+  
+  
+
+
+db[["Accused"]] %>% 
+  filter(stateAgent == 1) %>% 
+  select(accusedID, trialID, highRank,
+         # stateAgent, opposedToGovernment, lastVerdict, lastVerdictYear, 
+         # lastSentencingTime, lastSentencingArrangement, ongoing, 
+         everGuilty, firstGuiltyYear, lastGuilty, lastGuiltyYear) %>% I
+  
+
+
+### FROM HERE> 
+trials <- db[["Trials"]] %>% 
+  filter(HRs_charges > 0 | humanRights == 1 | IntraConfl == 1) %>% 
+  select(trialID, ccode_Accused, trialType, yearStart, yearEnd, ongoing, 
+         fitsPostAutocraticTJ, fitsConflictTJ,
+         anyStateAgent, anyOpposedToGov, anyHighRank, 
+         firstConvictionYear_min, finalConvictionYear_min, lastVerdictYear_max, 
+         conviction, convictionHighRank, finalConviction, finalConvictionHighRank) 
+
+trials_domestic_start <- trials %>% 
+  filter(trialType %in% c("domestic", "don't know")) %>% 
+  select(trialID, ccode_Accused, yearStart) %>% 
+  group_by(ccode_Accused, yearStart) %>% 
+  mutate(trials_yearStart = n()) %>%  
+  ungroup() %>%  
+  select(ccode_Accused, yearStart, trials_yearStart) %>% 
+  distinct() 
+  
+trials_domestic_ongoing <- trials %>% 
+  filter(trialType %in% c("domestic", "don't know")) %>% 
+  rowwise() %>% 
+  mutate(years = list(yearStart:yearEnd)) %>% 
+  ungroup() %>% 
+  select(trialID, ccode_Accused, yearStart, yearEnd, years) 
+  
+  
+
+
+  
+# - for state agents and HRs or Confl trials
+#   - for domestic, foreign & intl trials separately
+#     - from trials
+#       - count of trials (by countryAccused & startYear)
+#.        - merge: trials_domestic_start
+#       - count of ongoing trials by year (by countryAccused & >= startYear & <=endYear)
+#.        - merge: trials_domestic_ongoing
+#       - count of trials with final outcome a conviction by endYear
+#     - from accused
+#       - count of convictions of accused (by countryAccused & conviction year)
+#       - count of high ranking accused in ongoing trials by year 
+#       - count of convictions of high ranking accused by conviction year 
+#       - count of convictions as percentage of all accused on trial per year
+#       - count of all convictions on scale for prison time (but no death penalty, so 1-7)
+#         - to merge: guilty_scale
+#  - then same vars for trials of gender crimes
+#    - trials vars: SGBV, rape_Accused, sexualViolence_Accused, otherSGBV_Accused
+#    - accused vars: SGBV, rape, sexualViolence, otherSGBV, childVictim, LGBTQvictim, maleVictim, RSV
+
+### FROM HERE > 
+
+
+
+
 trial_counts <- db[["Trials"]] %>% 
   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
   select(ccode_Accused, yearStart, HRs, 
@@ -53,13 +144,14 @@ counts <- full_join(trial_counts, conviction_counts,
                     by = c("ccode", "year")) %>% 
   mutate(ccode = ifelse(ccode == 679 & year < 1990, 678, ccode)) # Yemen YAR
 
-# GD new measures: for foreign & intl trials (separately) DELETE
-# –	count of trials (by countryAccused & startYear)
-# –	count of trials (by countryAccused & ongoing OR >= startYear & <=endYear)
-# –	count of convictions (by countryAccused & conviction year OR end year) 
-# –	count of all convictions on scale for prison time (but no death penalty)
 
-### if country-year-dataset repo is made public, could get directly
+
+
+
+
+
+
+### if country-year-dataset repo is made public, could get directly from there
 ### this currently does not work, but here is sample code to do so; if public, 
 ### would have to reset token because had accidentally included here before
 # download.file(
@@ -144,9 +236,11 @@ df <- readRDS(here::here("data", "cy_covariates.rds")) %>%
                                   year >= sample_confl ~ 1)) %>% 
   left_join(counts, by = c("ccode_cow" = "ccode", "year" = "year") ) %>% 
   ## losing Timor Leste prior to 2002 here; these should be incorporated into Indonesia
+  ### filling in NAs
   mutate(across(all_of(c("trials_HRs", "trials_PostAuto", "trials_Conflict", 
                          "convict_HRs", "convict_PostAuto", "convict_Conflict")), 
                 function(x) ifelse(is.na(x), 0, x))) %>% 
+  ### cumulative measures from here
   arrange(ccode_case, year) %>% 
   group_by(ccode_case, isna = is.na(theta_mean_fariss) ) %>% 
   mutate(cum_theta_mean_fariss = ifelse(isna, NA, cummean(theta_mean_fariss)),
