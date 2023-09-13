@@ -6,9 +6,25 @@ load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 
 ### new TJ variables 
 
-guilty_scale <- db[["CourtLevels"]] %>% 
+guilty <- db[["CourtLevels"]] %>% 
   mutate(date = as_date(date)) %>%
   filter(!is.na(accusedID) & guilty == 1) %>% 
+  arrange(accusedID, year) %>% 
+  group_by(accusedID, year) %>% 
+  mutate(max_date = max(date, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  filter(is.infinite(max_date) | date == max_date) %>%
+  select(accusedID, year, sentencingTime, sentencingArrangement) %>%
+  # select(accusedID, date, year, sentencingTime, sentencingArrangement) %>%
+  distinct() %>% 
+  # group_by(accusedID, year) %>%
+  # mutate(n = n()) %>%
+  # ungroup() %>%
+  # filter(n > 1) %>% print(n = Inf)
+  
+### need to deal with duplicate accused-years here first!!!
+
+guilty_scale <- guilty %>% 
   filter(sentencingArrangement %in% c("Ordinary prison", "Don't Know")) %>% # others: "Special detention", "Suspended sentence"
   mutate(prison_scale = case_when(sentencingTime == "Less than 1 year" ~ 1, 
                                   sentencingTime == "1-3 years" ~ 2, 
@@ -17,82 +33,119 @@ guilty_scale <- db[["CourtLevels"]] %>%
                                   sentencingTime == "20+ years" ~ 5, 
                                   sentencingTime == "Life Imprisonment" ~ 6) ) %>% 
   filter(!is.na(prison_scale)) %>%  
-  select(accusedID, date, year, prison_scale) %>%  # CLID, verdict, guilty
-  distinct() %>% 
-  arrange(accusedID, year) %>% 
-  group_by(accusedID, year) %>% 
-  mutate(n = n(), 
-         max_date = max(date, na.rm = TRUE)) %>%
-  ungroup() %>% 
-  filter(is.infinite(max_date) | date == max_date) %>%
+  # select(accusedID, date, year, prison_scale) %>%  # CLID, verdict, guilty
+  # distinct() %>% 
+  # arrange(accusedID, year) %>% 
+  # group_by(accusedID, year) %>% 
+  # mutate(n = n(), 
+  #        max_date = max(date, na.rm = TRUE)) %>%
+  # ungroup() %>% 
+  # filter(is.infinite(max_date) | date == max_date) %>%
   select(accusedID, year, prison_scale) %>% 
   group_by(accusedID, year) %>% 
   mutate(prison_scale = max(prison_scale)) %>%
   ungroup() %>% 
   distinct() 
 
-  
-  
+convictions <- guilty %>%
+  select(accusedID, year) 
 
-
-db[["Accused"]] %>% 
-  filter(stateAgent == 1) %>% 
-  select(accusedID, trialID, highRank,
-         # stateAgent, opposedToGovernment, lastVerdict, lastVerdictYear, 
-         # lastSentencingTime, lastSentencingArrangement, ongoing, 
-         everGuilty, firstGuiltyYear, lastGuilty, lastGuiltyYear) %>% I
-  
-
-
-### FROM HERE> 
 trials <- db[["Trials"]] %>% 
+  mutate(trialType = case_when(
+    trialType %in% c("domestic", "don't know") ~ "domestic",
+    trialType %in% c("international", "international (hybrid)") ~ "international",
+    trialType == "foreign" ~ "foreign")) %>% 
   filter(HRs_charges > 0 | humanRights == 1 | IntraConfl == 1) %>% 
-  select(trialID, ccode_Accused, trialType, yearStart, yearEnd, ongoing, 
+  filter(anyStateAgent == 1) %>% 
+  select(trialID, ccode_Accused, trialType, yearStart, yearEnd, # ongoing, 
          fitsPostAutocraticTJ, fitsConflictTJ,
-         anyStateAgent, anyOpposedToGov, anyHighRank, 
+         anyOpposedToGov, anyHighRank, # anyStateAgent, 
          firstConvictionYear_min, finalConvictionYear_min, lastVerdictYear_max, 
          conviction, convictionHighRank, finalConviction, finalConvictionHighRank) 
 
-trials_domestic_start <- trials %>% 
-  filter(trialType %in% c("domestic", "don't know")) %>% 
-  select(trialID, ccode_Accused, yearStart) %>% 
-  group_by(ccode_Accused, yearStart) %>% 
+trials_start <- trials %>% 
+  group_by(ccode_Accused, trialType, yearStart) %>% 
   mutate(trials_yearStart = n()) %>%  
   ungroup() %>%  
-  select(ccode_Accused, yearStart, trials_yearStart) %>% 
-  distinct() 
-  
-trials_domestic_ongoing <- trials %>% 
-  filter(trialType %in% c("domestic", "don't know")) %>% 
+  select(ccode_Accused, trialType, yearStart, trials_yearStart) %>% 
+  arrange(ccode_Accused, trialType, yearStart) %>% 
+  distinct() %>% 
+  pivot_wider(names_from = trialType, values_from = trials_yearStart) %>% 
+  rename(trials_domestic = "domestic",
+         trials_foreign = "foreign",
+         trials_intl = "international") 
+
+trials_ongoing <- trials %>%
   rowwise() %>% 
-  mutate(years = list(yearStart:yearEnd)) %>% 
+  mutate(year = list(yearStart:yearEnd)) %>% 
   ungroup() %>% 
-  select(trialID, ccode_Accused, yearStart, yearEnd, years) 
+  unnest_longer(year) %>% 
+  select(ccode_Accused, year, trialType, yearStart, yearEnd) %>%
+  arrange(ccode_Accused, trialType, year) %>% 
+  group_by(ccode_Accused, trialType, year) %>% 
+  mutate(trials_ongoing = n()) %>% 
+  ungroup() %>% 
+  select(ccode_Accused, year, trialType, trials_ongoing) %>% 
+  distinct() %>% 
+  pivot_wider(names_from = trialType, values_from = trials_ongoing) %>% 
+  rename(trials_domestic_ongoing = "domestic",
+         trials_foreign_ongoing = "foreign",
+         trials_intl_ongoing = "international") 
+
+trials_convictions <- trials %>%
+  arrange(ccode_Accused, trialType, yearEnd) %>% 
+  group_by(ccode_Accused, trialType, yearEnd) %>% 
+  mutate(convict_final = sum(finalConviction)) %>% 
+  ungroup() %>% 
+  select(ccode_Accused, yearEnd, trialType, convict_final) %>% 
+  distinct() %>% 
+  pivot_wider(names_from = trialType, values_from = convict_final) %>% 
+  rename(convict_final_domestic = "domestic",
+         convict_final_foreign = "foreign",
+         convict_final_intl = "international") 
   
-  
+accused <- trials %>%
+  select(trialID, ccode_Accused, trialType, yearStart, yearEnd) %>% 
+  left_join(db[["Accused"]], by = "trialID") %>% 
+  filter(!is.na(accusedID)) %>%
+  filter(stateAgent == 1) %>%
+  select(ccode_Accused, accusedID, trialID, trialType, yearStart, yearEnd, 
+         # stateAgent, opposedToGovernment, lastVerdict, lastVerdictYear, 
+         # lastSentencingTime, lastSentencingArrangement, ongoing, 
+         highRank, everGuilty, firstGuiltyYear, lastGuilty, lastGuiltyYear) %>% I
 
 
-  
+
+### FROM HERE> 
+
 # - for state agents and HRs or Confl trials
 #   - for domestic, foreign & intl trials separately
 #     - from trials
 #       - count of trials (by countryAccused & startYear)
-#.        - merge: trials_domestic_start
+#         - merge: trials_start
 #       - count of ongoing trials by year (by countryAccused & >= startYear & <=endYear)
-#.        - merge: trials_domestic_ongoing
+#         - merge: trials_ongoing
 #       - count of trials with final outcome a conviction by endYear
-#     - from accused
-#       - count of convictions of accused (by countryAccused & conviction year)
+#         - merge: trials_convictions
+#     - from accused BUT via trials for conditions
 #       - count of high ranking accused in ongoing trials by year 
+
+
+#       - count of convictions of accused (by countryAccused & conviction year)
+#         - do we include all convictions of same accused at all levels? or only first
 #       - count of convictions of high ranking accused by conviction year 
+#         - same as above
 #       - count of convictions as percentage of all accused on trial per year
 #       - count of all convictions on scale for prison time (but no death penalty, so 1-7)
-#         - to merge: guilty_scale
+#         - to merge: guilty_scale via accused
 #  - then same vars for trials of gender crimes
 #    - trials vars: SGBV, rape_Accused, sexualViolence_Accused, otherSGBV_Accused
 #    - accused vars: SGBV, rape, sexualViolence, otherSGBV, childVictim, LGBTQvictim, maleVictim, RSV
 
-### FROM HERE > 
+
+
+
+
 
 
 
@@ -143,13 +196,6 @@ conviction_counts <- db[["Trials"]] %>%
 counts <- full_join(trial_counts, conviction_counts, 
                     by = c("ccode", "year")) %>% 
   mutate(ccode = ifelse(ccode == 679 & year < 1990, 678, ccode)) # Yemen YAR
-
-
-
-
-
-
-
 
 ### if country-year-dataset repo is made public, could get directly from there
 ### this currently does not work, but here is sample code to do so; if public, 
