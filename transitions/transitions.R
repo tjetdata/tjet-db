@@ -18,6 +18,11 @@ v6 <- read_excel(here::here("transitions/original_data",
   rename(v2x_polyarchy_vdem = v2x_polyarchy, 
          v2x_libdem_vdem = v2x_libdem)
 
+### BMR data available at 
+### https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/FENWWR
+### Polity data at 
+### https://www.systemicpeace.org/inscrdata.html
+
 other <- read_excel(here::here("transitions/original_data/p5v2018.xls")) %>% 
   filter(year > 1948) %>% 
   select(country, ccode, year, polity, polity2, change, regtrans) %>%
