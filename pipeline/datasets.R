@@ -121,22 +121,22 @@ accused <- trials %>%
 # - for state agents and HRs or Confl trials
 #   - for domestic, foreign & intl trials separately
 #     - from trials
-#       - count of trials (by countryAccused & startYear)
+#       - ts: count of trials (by countryAccused & startYear)
 #         - merge: trials_start
-#       - count of ongoing trials by year (by countryAccused & >= startYear & <=endYear)
+#       - to: count of ongoing trials by year (by countryAccused & >= startYear & <=endYear)
 #         - merge: trials_ongoing
-#       - count of trials with final outcome a conviction by endYear
+#       - tfc: count of trials with final outcome a conviction by endYear
 #         - merge: trials_convictions
 #     - from accused BUT via trials for conditions
-#       - count of high ranking accused in ongoing trials by year 
+#       - NOT: count of high ranking accused in ongoing trials by year 
 
 
-#       - count of convictions of accused (by countryAccused & conviction year)
+#       - cct: count of convictions of accused (by countryAccused & conviction year)
 #         - do we include all convictions of same accused at all levels? or only first
 #       - count of convictions of high ranking accused by conviction year 
 #         - same as above
-#       - count of convictions as percentage of all accused on trial per year
-#       - count of all convictions on scale for prison time (but no death penalty, so 1-7)
+#       - crt: count of convictions as percentage of all accused on trial per year
+#       - sen: count of all convictions on scale for prison time (but no death penalty, so 1-7)
 #         - to merge: guilty_scale via accused
 #  - then same vars for trials of gender crimes
 #    - trials vars: SGBV, rape_Accused, sexualViolence_Accused, otherSGBV_Accused
