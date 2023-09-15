@@ -9,21 +9,46 @@ library(writexl)
 library(googlesheets4)
 library(googledrive)
 
+### loading Geoff's original transitions coding
 v6 <- read_excel(here::here("transitions/original_data", 
                             "transitions2020_v6.xlsx")) %>%
   select(country, year, ccode, vdem_id, tjet_dtrid, isq_dtrid, tjrc_dtrid, 
-         tjrc_ttype, tjrc_rupture, tjrc_negotiated, tjrc_newstate,
-         polity2, demo_duration, bmr_demo, bmr_trans, bmr_duration, coup,
-         v2x_polyarchy, v2x_libdem) %>%
-  rename(v2x_polyarchy_vdem = v2x_polyarchy, 
-         v2x_libdem_vdem = v2x_libdem)
+         tjrc_ttype, tjrc_rupture, tjrc_negotiated, tjrc_newstate, polity2, 
+         demo_duration, bmr_demo, bmr_trans, bmr_duration, coup, v2x_polyarchy, 
+         v2x_libdem) %>%
+  rename(v2x_polyarchy_vdem_gd = v2x_polyarchy, 
+         v2x_libdem_vdem_gd = v2x_libdem, 
+         polity2_gd = polity2,
+         demo_duration_gd = demo_duration, 
+         bmr_demo_gd = bmr_demo,
+         bmr_trans_gd = bmr_trans,
+         bmr_dur_gd = bmr_duration,
+         coup_gd = coup)
+countries_v6 <- v6 %>%
+  select(country, ccode) %>%
+  distinct()
 
 ### BMR data available at 
 ### https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/FENWWR
+countries_bmr <- read_csv(
+  here::here("transitions/original_data", "democracy-v4.0.csv")) %>%
+  select(country, ccode) %>%
+  mutate(country = str_to_title(country)) %>%
+  distinct()
+
 ### Polity data at 
 ### https://www.systemicpeace.org/inscrdata.html
+countries_p5 <- read_excel(here::here("transitions/original_data", 
+                                      "p5v2018.xls")) %>%
+  select(country, ccode) %>%
+  distinct()
 
-other <- read_excel(here::here("transitions/original_data/p5v2018.xls")) %>% 
+### merging Polity 5 and BMR
+
+full_join(countries_p5, countries_bmr, by = "ccode") %>%
+  filter(country.x != country.y) %>%
+  print(n = Inf)
+other <- read_excel(here::here("transitions/original_data", "p5v2018.xls")) %>% 
   filter(year > 1948) %>% 
   select(country, ccode, year, polity, polity2, change, regtrans) %>%
   rename(polity_p5 = polity,
@@ -31,7 +56,7 @@ other <- read_excel(here::here("transitions/original_data/p5v2018.xls")) %>%
          change_p5 = change,
          regtrans_p5 = regtrans) %>% 
   full_join(read_csv(here::here("transitions/original_data", 
-                                "democracy-v3.0.csv")) %>% 
+                                "democracy-v4.0.csv")) %>% 
               filter(year > 1948) %>% 
               select(country, ccode, year, democracy, 
                      democracy_trans, democracy_omitteddata) %>%
@@ -43,59 +68,58 @@ other <- read_excel(here::here("transitions/original_data/p5v2018.xls")) %>%
             by = c("ccode", "year")) %>%
   mutate(country = if_else(is.na(country), country_bmr, country)) %>% 
   select(-country_bmr) %>% 
-  mutate(country = if_else(country == "Bosnia", 
-                           "Bosnia and Herzegovina", country), 
-         country = if_else(country == "Antigua", "Antigua & Barbuda", country), 
-         country = if_else(country == "Liechstenstein", 
-                           "Liechtenstein", country), 
-         country = if_else(country == "Micronesia, Fed.", 
-                           "Micronesia", country),
-         country = if_else(country == "Samoa (Western)", "Samoa", country), 
-         country = if_else(country == "St. Vincent & Gren.", 
-                           "St. Vincent", country), 
-         country = if_else(country == "Myanmar (Burma)", 
-                           "Burma/Myanmar", country),
-         country = if_else(country == "Congo Brazzaville", 
-                           "Republic of the Congo", country),
-         country = if_else(country == "Congo Kinshasa", 
-                           "Democratic Republic of the Congo", country),
-         country = if_else(country == "Congo-Brazzaville", 
-                           "Republic of the Congo", country),
-         country = if_else(country == "Germany East", 
-                           "German Democratic Republic", country),
-         country = if_else(country == "Korea North", "North Korea", country),
-         country = if_else(country == "Korea South", "South Korea", country),
-         country = if_else(country == "Macedonia", "North Macedonia", country),
-         country = if_else(country == "Sao Tome & Principe", 
-                           "Sao Tome and Principe", country),
-         country = if_else(country == "Slovak Republic", "Slovakia", country),
-         country = if_else(country == "Timor Leste", "Timor-Leste", country),
-         country = if_else(country == "UAE", "United Arab Emirates", country),
-         country = if_else(country == "United States", 
-                           "United States of America", country),
-         country = if_else(country == "Cote D'Ivoire", "Ivory Coast", country),
-         country = if_else(country == "Czechoslovakia", 
-                           "Czech Republic", country),
-         country = if_else(country == "Germany West", "Germany", country),
-         country = if_else(country == "South Vietnam", 
-                           "Republic of Vietnam", country),
-         country = if_else(country == "Yemen South", "South Yemen", country),
-         country = if_else(country == "Swaziland", "Eswatini", country),
-         country = if_else(country == "Yugoslavia", "Serbia", country),
-         country = if_else(country == "Yemen North", "Yemen", country),
-         country = if_else(country == "Sudan-North", "Sudan", country),
-         country = if_else(country == "Sudan, North", "Sudan", country),
-         country = if_else(country == "Vietnam North", "Vietnam", country),
-         country = if_else(country == "USSR", "Russia", country),
-         country = if_else(country == "Gambia", "The Gambia", country)) %>% 
+  mutate(
+    country = if_else(country == "Antigua", "Antigua & Barbuda", country), 
+    country = if_else(country == "Bosnia", "Bosnia and Herzegovina", country), 
+    country = if_else(country == "Central African Rep.", "Central African Republic", country),
+    country = if_else(country == "Congo, Dem. Rep.", "Democratic Republic of the Congo", country),
+    country = if_else(country == "Congo, Rep.", "Republic of the Congo", country),
+    country = if_else(country == "Congo Brazzaville", "Republic of the Congo", country),
+    country = if_else(country == "Congo Kinshasa", "Democratic Republic of the Congo", country),
+    country = if_else(country == "Congo-Brazzaville", "Republic of the Congo", country),
+    country = if_else(country == "Cote D'Ivoire", "Ivory Coast", country),
+    country = if_else(country == "Cote D'ivoire", "Ivory Coast", country),
+    country = if_else(country == "Czechoslovakia", "Czech Republic", country),
+    country = if_else(country == "East Timor", "Timor-Leste", country),
+    country = if_else(country == "Gambia", "The Gambia", country),
+    country = if_else(country == "Germany East", "German Democratic Republic", country),
+    country = if_else(country == "Germany West", "Germany", country),
+    country = if_else(country == "Korea, North", "North Korea", country),
+    country = if_else(country == "Korea, South", "South Korea", country),
+    country = if_else(country == "Korea North", "North Korea", country), 
+    country = if_else(country == "Korea South", "South Korea", country),
+    country = if_else(country == "Liechstenstein", "Liechtenstein", country), 
+    country = if_else(country == "Macedonia", "North Macedonia", country),
+    country = if_else(country == "Micronesia, Fed.", "Micronesia", country),
+    country = if_else(country == "Myanmar (Burma)", "Burma/Myanmar", country),
+    country = if_else(country == "Myanmar", "Burma/Myanmar", country),
+    country = if_else(country == "Samoa (Western)", "Samoa", country), 
+    country = if_else(country == "Sao Tome & Principe", "Sao Tome and Principe", country),
+    country = if_else(country == "Slovak Republic", "Slovakia", country),
+    country = if_else(country == "South Vietnam", "Republic of Vietnam", country),
+    country = if_else(country == "St. Vincent & Gren.", "St. Vincent", country), 
+    country = if_else(country == "Sudan, North", "Sudan", country),
+    country = if_else(country == "Sudan-North", "Sudan", country),
+    country = if_else(country == "Sudan, South", "South Sudan", country),
+    country = if_else(country == "Swaziland", "Eswatini", country),
+    country = if_else(country == "Timor Leste", "Timor-Leste", country),
+    country = if_else(country == "Trinidad & Tobago", "Trinidad and Tobago", country),
+    country = if_else(country == "UAE", "United Arab Emirates", country),
+    country = if_else(country == "United States", "United States of America", country),
+    country = if_else(country == "USSR", "Russia", country),
+    country = if_else(country == "Vietnam North", "Vietnam", country),
+    country = if_else(country == "Yemen North", "Yemen", country),
+    country = if_else(country == "Yemen South", "South Yemen", country),
+    country = if_else(country == "Yugoslavia", "Serbia", country)
+  ) %>% 
   filter(!(ccode == 678 & year == 1990) & 
            !(ccode == 816 & year == 1976) & 
            !(ccode == 530 & year == 1993) & 
            !(ccode == 345 & year == 1991) & 
            !(ccode == 260 & year == 1990) & 
-           !(ccode == 624 & year %in% 2011:2015) & 
+           !(ccode == 624 & year %in% 2011:2018) & 
            !(ccode == 625 & year == 2011) ) %>% 
-  rename(ccode_p5bmr = ccode)
+  rename(ccode_p5bmr = ccode) 
 
 # deleted duplicates in years of transformation: 
 # Yemen     678  1990
@@ -103,14 +127,38 @@ other <- read_excel(here::here("transitions/original_data/p5v2018.xls")) %>%
 # Ethiopia   530  1993
 # Serbia    345  1991
 # Germany   260  1990
-# Sudan     624  2011:2015
+# Sudan     624  2011:2018
 # Sudan     625  2011
 
-# other %>% 
-#   group_by(country, year) %>% 
-#   filter(n() > 1) %>% 
-#   arrange(country, year) %>% 
-#   print(n = Inf)
+other %>%
+  group_by(country, year) %>%
+  filter(n() > 1) %>%
+  arrange(country, year) %>%
+  print(n = Inf)
+countries_other <- other %>%
+  select(country, ccode_p5bmr) %>%
+  distinct()
+
+### merging VDem and GWF
+
+countries_vdem <- vdem %>%
+  select(country_name, COWcode) %>%
+  distinct() %>%
+  filter(!is.na(COWcode))
+
+countries_gwf <- read_delim(here::here("transitions", "original_data",
+                      "GWF_AllPoliticalRegimes.txt")) %>%
+  mutate(cowcode = case_when(
+    cowcode == 255 & year %in% 1950:1990 ~ 260,
+    cowcode == 315 & year == 1993 ~ 316,
+    cowcode == 678 & year >= 1990 ~ 679,
+    TRUE ~ cowcode)) %>%
+  select(cowcode, gwf_country) %>%
+  distinct()
+
+countries_vdem %>%
+  full_join(countries_gwf, by = c("COWcode" = "cowcode")) %>%
+  filter(country_name != gwf_country)
 
 df <- vdem %>%
   tibble() %>% 
@@ -166,29 +214,17 @@ df <- vdem %>%
                      reg_next_gwf = gwf_next, 
                      reg_prior_gwf = gwf_prior, 
                      reg_fail_gwf = gwf_fail), 
-              by = c("ccode_vdem" = "ccode_gwf", "year" = "year")) %>%
+              by = c("ccode_vdem" = "ccode_gwf", "year" = "year"))
+
+### merging VDem, BMR, Polity, etc
+countries_df <- sort(unique(df$country_name))
+countries_df[!countries_df %in% countries_other$country]
+countries_other$country[!countries_other$country %in% countries_df]
+
+df <- df %>%
   full_join(other, by = c("country_name" = "country", "year" = "year")) %>%
   filter(!(country_name == "Czech Republic" & 
              year == 1993 & gwf_country == "Czech Republic"))
-
-### checking data in VDem against original data: 
-### should use original because there are few discrepancies
-# df %>%
-#   select(country_name, year, 
-#          polity_vdem, polity2_vdem, polity_p5, polity2_p5) %>%
-#   filter( (polity_vdem != polity_p5) |
-#           (polity2_vdem != polity2_p5) |
-#           (is.na(polity_vdem) & !is.na(polity_p5)) |
-#           (!is.na(polity_vdem) & is.na(polity_p5)) ) %>%
-#   print(n = Inf)
-# df %>%
-#   select(country_name, year, 
-#          bmr_dem_vdem, bmr_trans_vdem, dem_bmr, dem_trans_bmr) %>%
-#   filter( (bmr_dem_vdem != dem_bmr) |
-#             (bmr_trans_vdem != dem_trans_bmr) |
-#             (!is.na(bmr_dem_vdem) & is.na(dem_bmr)) ) %>%
-#   print(n = Inf)
-### original BMR data also includes a lot of micro states not in VDem 
 
 df <- df %>% 
   left_join(df %>%
@@ -231,7 +267,7 @@ df <- df %>%
   mutate(trans_p5 = case_when(year <= 2018 & !is.na(trans_p5_yr) ~ 
                                 paste(ccode_p5bmr, trans_p5_yr, 
                                       year - trans_p5_yr, sep = "-")),
-         trans_bmr = case_when(year <= 2015 & !is.na(trans_bmr_yr) ~ 
+         trans_bmr = case_when(year <= 2020 & !is.na(trans_bmr_yr) ~ 
                                  paste(ccode_p5bmr, trans_bmr_yr, 
                                        year - trans_bmr_yr, sep = "-")),
          trans_gwf = case_when(year <= 2010 & !is.na(trans_gwf_yr) ~ 
@@ -347,13 +383,15 @@ df <- df %>%
                                 "Czechoslovakia", country_name)) 
 
 ### merge by country names and check carefully
+
 ### initial check 
 # v6 %>%
 #   select(country, ccode, vdem_id) %>%
 #   full_join(df %>% select(country_name, country_id),
 #             by = c("country" = "country_name")) %>%
 #   unique() %>%
-#   filter(is.na(vdem_id) | is.na(ccode) | vdem_id != country_id)
+#   filter(is.na(vdem_id) | is.na(ccode) | vdem_id != country_id) %>%
+#   print(n = Inf)
 
 ifit <- read_csv(here::here("transitions/original_data/Freeman.csv")) %>%
   mutate(tr_year = as.integer(str_split_i(description, "(?<=\\d{4}):", i = 1)),
@@ -363,43 +401,51 @@ ifit <- read_csv(here::here("transitions/original_data/Freeman.csv")) %>%
          country = str_replace(country, fixed("Korea, North"), "North Korea"),
          country = str_replace(country, fixed("Korea, South"), "South Korea"),
          country = str_replace(country, fixed("Lao PDR"), "Laos"),
-         country = str_replace(country, fixed("Macedonia"), 
-                               "North Macedonia"),
-         country = str_replace(country, fixed("Marshall islands"), 
-                               "Marshall Islands"),
+         country = str_replace(country, fixed("Macedonia"), "North Macedonia"),
+         country = str_replace(country, fixed("Marshall islands"), "Marshall Islands"),
          country = str_replace(country, fixed("Saint "), "St. "),
-         country = str_replace(country, fixed("Solomon islands"), 
-                               "Solomon Islands"),
-         country = str_replace(country, fixed("St. Vincent & the Grenadines"), 
-                               "St. Vincent"), 
+         country = str_replace(country, fixed("Solomon islands"), "Solomon Islands"),
+         country = str_replace(country, fixed("St. Vincent & the Grenadines"), "St. Vincent"), 
          country = str_replace(country, fixed("Swaziland"), "Eswatini"),
-         country = str_replace(country, fixed("United States"), 
-                               "United States of America"),
-         country = if_else(country == "Congo", 
-                           "Republic of the Congo", country)) %>% 
+         country = str_replace(country, fixed("United States"), "United States of America"),
+         country = if_else(country == "Congo", "Republic of the Congo", country)) %>% 
   select(-description, -un_entry) %>% 
-  filter(tr_year > 1969 & tr_year < 2021 & !is.na(tr_year)) %>% 
+  filter(!is.na(tr_year)) %>%
+  # filter(tr_year > 1969 & tr_year < 2021 & !is.na(tr_year)) %>% 
   rename(tr_num_ifit = num_trans,
          tr_dem_ifit = trans_dem,
          tr_confl_ifit = trans_confl,
          tr_new_ifit = trans_new,
          tr_descr_ifit = tr_descr)
 
-prev <- read_csv(here::here("transitions/transitions_with_notes.csv"),
-                 col_types = list(note_GD = col_character())) %>% 
-  select(country, year, NEW, note_Timo, note_GD, tjet_dtrid) %>% 
-  rename(trans_year = NEW,
-         tjet_dtrid_prev = tjet_dtrid)
+### loading previous version
+# prev <- drive_get("TJET_transitions") %>% 
+#   read_sheet(sheet = "transitions") %>% 
+#   write_csv(here::here("transitions", "transitions_with_notes.csv"), na = "")
 
-v6 %>% 
-  rename(polity2_gd = polity2,
-         demo_duration_gd = demo_duration, 
-         bmr_demo_gd = bmr_demo,
-         bmr_trans_gd = bmr_trans,
-         bmr_dur_gd = bmr_duration,
-         coup_gd = coup,
-         v2x_polyarchy_vdem_gd = v2x_polyarchy_vdem, 
-         v2x_libdem_vdem_gd = v2x_libdem_vdem) %>% 
+prev <- read_csv(here::here("transitions/transitions_with_notes.csv")) %>% 
+  select(country, year, trans_year, trans_note, tjet_dtrid, 
+         dem_bmr, dem_trans_bmr, 
+         p5_year, trans_p5, bmr_year, trans_bmr, ert_year, trans_ert) %>% 
+  rename(old_trans_year = "trans_year",
+         old_trans_note = "trans_note",
+         old_tjet_dtrid = "tjet_dtrid",
+         old_dem_bmr = "dem_bmr",
+         old_dem_trans_bmr = "dem_trans_bmr",
+         old_p5_year = "p5_year",
+         old_trans_p5 = "trans_p5",
+         old_bmr_year = "bmr_year",
+         old_trans_bmr = "trans_bmr",
+         old_ert_year = "ert_year",
+         old_trans_ert = "trans_ert") %>% I
+
+
+### FROM HERE >
+
+
+### writing revised  file
+
+transitions <- v6 %>%
   full_join(df, by = c("country" = "country_name", "year" = "year")) %>% 
   # mutate(check = case_when(tjet_dtrid %in% c(3, 11, 60) ~ "check")) %>% 
   mutate(ccode = if_else(is.na(ccode) & !is.na(ccode_vdem), ccode_vdem, ccode),
@@ -413,7 +459,15 @@ v6 %>%
          country = str_replace(country, fixed("The Gambia"), "Gambia")) %>% 
   full_join(ifit, by = c("country" = "country", "year" = "tr_year") ) %>% 
   mutate(ifit_yr = case_when(!is.na(tr_descr_ifit) ~ year)) %>% 
-  arrange(country, year) %>% 
+  arrange(country, year) %>% I
+
+
+sort(unique(transitions$country))[!sort(unique(transitions$country)) %in% sort(unique(prev$country))] 
+
+sort(unique(prev$country))[!sort(unique(prev$country)) %in% sort(unique(transitions$country))] 
+
+### FROM HERE >
+
   full_join(prev, by = c("country" = "country", "year" = "year")) %>% 
   select(country, year, trans_year, note_Timo, note_GD, 
          tjet_dtrid,  
@@ -432,24 +486,26 @@ v6 %>%
          tr_num_ifit, tr_dem_ifit, tr_confl_ifit, tr_new_ifit, tr_descr_ifit, 
          gwf_country, ccode, country_id, ccode_p5bmr, ccode_vdem) %>% 
   rename(vdem_id = country_id) %>% 
-  unique()
+  unique() %>% I
+  # write_csv(here::here("transitions", "transitions_new_revised.csv"), na = "")
 
+  
+  filter(!country %in% c("Hong Kong", "Palestine/Gaza", 
+                         "Palestine/West Bank", "Somaliland", "Zanzibar") ) %>% 
+    mutate(country = str_replace(country, 
+                                 "Democratic Republic of the Congo", "DR Congo"),
+           country = str_replace(country, 
+                                 "Republic of the Congo", "Congo (Brazzaville)"),
+           country = str_replace(country, 
+                                 "German Democratic Republic", 
+                                 "German Democratic Republic (East)") )
+  
+  
 ### did some manual cleaning up of the transitions coding on a google sheet
 ### including moving data from S&M to Serbia 
 
-transitions <- drive_get("TJET_transitions") %>% 
-  read_sheet(sheet = "transitions_new") %>% 
-  mutate(country = str_replace(country, 
-                               "Democratic Republic of the Congo", "DR Congo"),
-         country = str_replace(country, 
-                               "Republic of the Congo", "Congo (Brazzaville)"),
-         country = str_replace(country, 
-                               "German Democratic Republic", 
-                               "German Democratic Republic (East)") ) %>% 
-  filter(!country %in% c("Hong Kong", "Palestine/Gaza", "Palestine/West Bank", 
-                         "Somaliland", "Zanzibar") ) %>%
-  write_csv(here::here("transitions/transitions_new_revised.csv"), na = "")
 
+### only need the code below for adding to Airtable
 # transitions %>%
 #   filter(year < 2021) %>%
 #   filter(!is.na(trans_year) | !is.na(trans_note)) %>%

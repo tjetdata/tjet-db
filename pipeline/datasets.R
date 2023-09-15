@@ -129,8 +129,6 @@ accused <- trials %>%
 #         - merge: trials_convictions
 #     - from accused BUT via trials for conditions
 #       - NOT: count of high ranking accused in ongoing trials by year 
-
-
 #       - cct: count of convictions of accused (by countryAccused & conviction year)
 #         - do we include all convictions of same accused at all levels? or only first
 #       - count of convictions of high ranking accused by conviction year 
@@ -141,14 +139,6 @@ accused <- trials %>%
 #  - then same vars for trials of gender crimes
 #    - trials vars: SGBV, rape_Accused, sexualViolence_Accused, otherSGBV_Accused
 #    - accused vars: SGBV, rape, sexualViolence, otherSGBV, childVictim, LGBTQvictim, maleVictim, RSV
-
-
-
-
-
-
-
-
 
 trial_counts <- db[["Trials"]] %>% 
   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
