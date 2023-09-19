@@ -1,3 +1,6 @@
+### if underlying data sources are updated
+### then have to check how transitions coding changes
+
 # install.packages("devtools")
 # devtools::install_github("vdeminstitute/ERT")
 # devtools::install_github("vdeminstitute/vdemdata")
@@ -132,7 +135,7 @@ other <- read_excel(here::here("transitions/original_data", "p5v2018.xls")) %>%
   )
 
 other %>%
-  group_by(country, year) %>%
+  group_by(country, ccode_other, year) %>%
   filter(n() > 1) %>%
   arrange(country, year) %>%
   print(n = Inf)
@@ -160,23 +163,7 @@ countries_gwf <- read_delim(here::here("transitions", "original_data",
 countries_vdem %>%
   full_join(countries_gwf, by = c("COWcode" = "cowcode")) %>%
   filter(country_name != gwf_country)
-
-
-
-
-
-
-
-
-
-
-
-
-
-# filter(!(country %in% c("Estonia") & year < 1991)) %>% 
-#   filter(!(country %in% c("Latvia") & year < 1991)) %>% 
-#   filter(!(country %in% c("Lithuania") & year < 1991)) %>% 
-
+### need to be careful with Czechia
 
 df <- vdem %>%
   tibble() %>% 
@@ -233,6 +220,25 @@ df <- vdem %>%
                      reg_prior_gwf = gwf_prior, 
                      reg_fail_gwf = gwf_fail), 
               by = c("ccode_vdem" = "ccode_gwf", "year" = "year"))
+
+### FROM HERE > 
+
+read_delim(here::here("transitions/original_data", 
+                      "GWF_AllPoliticalRegimes.txt")) %>%
+  filter(year > 1985 & cowcode %in% 315:316)
+
+df %>%
+  group_by(country_id, ccode_vdem, country_name, year) %>%
+  filter(n() > 1) %>%
+  arrange(country_name, year) %>%
+  print(n = Inf)
+
+# filter(!(country %in% c("Estonia") & year < 1991)) %>% 
+#   filter(!(country %in% c("Latvia") & year < 1991)) %>% 
+#   filter(!(country %in% c("Lithuania") & year < 1991)) %>% 
+
+
+
 
 ### merging VDem, BMR, Polity, etc
 countries_df <- sort(unique(df$country_name))
