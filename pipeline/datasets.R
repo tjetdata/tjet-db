@@ -3,8 +3,45 @@ require(tidyverse)
 
 ### reading database
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
+str(db, 1)
 
-### new TJ variables 
+### TCs
+
+db[["TruthCommissions_tcAims"]] %>% # Goals (binaries) 
+  left_join(db[["labels"]], by = "labelID") %>%
+  select(-labelID) 
+
+db[["TruthCommissions"]] %>% 
+  select(truthcommissionID, ccode, 
+         fitsPostAutocraticTJ, fitsConflictTJ, # Nexus/Context
+         authorizedByState, focusedPast, # meets all criteria
+         temporaryBodyReport, investigatePatternAbuse, # meets all criteria
+         beganOperatingDuringIntraConfl, beganOperatingAfterIntraConfl, # Nexus/Context
+         yearBeginOperation, neverOperated, # Operated
+         formallyIndependent, consultedVictims, # formal independence & victim consultation
+         compelTestimony, # Powers - Compel testimony
+         perpetratorPubliclyNamedTestimony, namePerpetrators, perpetratorNamesPublished, # Powers - Name perpetrators
+         supportProsecutions_chk, # Powers - Support prosecutions
+         recommendInstitutionalReforms, # Powers - Recommend reforms
+         allocateReparations, # Powers - Reparations
+         grantAmnesty, # Powers - Amnesty
+         heldPublicHearings, # Testimony
+         testimonies, encourageVictimTestimony, perpetratorTestimony, # Testimony
+         yearCompleteOperation, finalReportIssued, # Report
+         reportPubliclyAvailable, finalReportRecommendations, # Report
+         recommendProsecutions, recommendReparations, # Recommendations
+         reportRecommendInstitutionalReform, vetting, # Recommendations
+         mandatePeriodicMonitoringImplementation) # Monitoring
+
+### trials 
+
+
+
+
+
+
+
+
 
 guilty <- db[["CourtLevels"]] %>% 
   mutate(date = as_date(date)) %>%
@@ -187,6 +224,13 @@ counts <- full_join(trial_counts, conviction_counts,
                     by = c("ccode", "year")) %>% 
   mutate(ccode = ifelse(ccode == 679 & year < 1990, 678, ccode)) # Yemen YAR
 
+
+
+
+
+
+
+
 ### if country-year-dataset repo is made public, could get directly from there
 ### this currently does not work, but here is sample code to do so; if public, 
 ### would have to reset token because had accidentally included here before
@@ -316,11 +360,11 @@ df <- readRDS(here::here("data", "cy_covariates.rds")) %>%
                                              0, combi_cum_convictions_fits)) %>% 
   ungroup()
 
-### if we need to integrate the UBN investigations
+### if we need to integrate the UN investigations
 # db[["Investigations"]] %>% 
 #   select(-pkey)
 
-### finally, created lags and saving the analysis dataset
+### finally, created lags and saving the analyses dataset
 lags <- df %>%
   select(-country, -country_name, -histname, -ccode_cow, -ccode_case, 
          -ccode_ksg, -country_id_vdem, -m49, -isoa3, -iso3c_wb, -cid_who, 
