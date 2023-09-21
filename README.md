@@ -22,3 +22,5 @@ This repository contains the code for processing TJET raw data and assembling da
 
 7. writing data to the production database for the TJET website
     - pipeline/sql.R
+    
+Running the 'pipeline.R' script will carry out all necessary tasks for moving updated TJET data to the website production database. USE WITH CAUTION!

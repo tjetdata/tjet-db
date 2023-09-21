@@ -525,7 +525,8 @@ transitions <- df %>%
 ### OR after a data update, new was checked against old, and trans_year and 
 ### trans_note adjusted (this script does not automatically code these fields)
 
-### only need the code below for adding to Airtable
+### only used the code below for adding to Airtable once
+### subsequent updates were entered manually
 # transitions %>%
 #   filter(year < 2021) %>%
 #   filter(!is.na(trans_year) | !is.na(trans_note)) %>%
