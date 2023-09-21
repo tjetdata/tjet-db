@@ -466,7 +466,7 @@ ifit <- read_csv(here::here("transitions/original_data/Freeman.csv"),
 
 prev <- read_csv(here::here("transitions/transitions_with_notes.csv"), 
                  show_col_types = FALSE) %>% 
-  select(country, year, trans_year, trans_note, p5_year, bmr_year, ert_year)
+  select(country, ccode, year, trans_year, trans_note, p5_year, bmr_year, ert_year)
 
 ### writing revised  file
 
@@ -489,7 +489,8 @@ transitions <- df %>%
   rename(country = country_name) %>% 
   arrange(country, year) %>% 
   # mutate(check = case_when(tjet_dtrid %in% c(3, 11, 60) ~ "check")) %>% 
-  mutate(ccode = if_else(is.na(ccode) & !is.na(ccode_vdem), ccode_vdem, ccode),
+  rename(ccode_old = ccode) %>% 
+  mutate(# ccode = if_else(is.na(ccode) & !is.na(ccode_vdem), ccode_vdem, ccode),
          p5_yr = case_when(year == trans_p5_yr ~ year), 
          bmr_yr = case_when(year == trans_bmr_yr ~ year), 
          ert_yr = case_when(year == trans_ert_yr ~ year), 

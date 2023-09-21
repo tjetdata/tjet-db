@@ -23,6 +23,7 @@ pkeys <- c(
 
 ### note that both bases have Countries, Transitions, Conflicts and Dyads tables
 ### but these should be the same
+### ideally the two bases should be combined and using only one version each
 
 ### exclude these tables from the production database
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
@@ -471,7 +472,7 @@ db[["Prosecutions"]][["Trials"]] <-
   db[["Prosecutions"]][["Trials"]] %>% 
   mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2023, yearEnd), 
          yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd)) 
-  
+
 ### formatting transitions table for website 
 db[["MegaBase"]][["Transitions"]] <-
   db[["MegaBase"]][["Transitions"]] %>%
@@ -592,56 +593,6 @@ countrylist <- db$Countries %>%
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
 
-### transitions dataset in country-year format
-translist <- read_csv("transitions/transitions_new_revised.csv") %>%
-  filter(country != "Serbia & Montenegro") %>% 
-  rename("country_trans" = "country") %>% 
-  full_join(countrylist %>% select(country, ccode, beg, end), by = "ccode") %>%
-  arrange(country, year) %>%
-  filter(year >= 1965 & year >= beg & year <= end) %>% 
-  mutate(transition = ifelse(is.na(trans_year), 0, 1), 
-         dem_polity = ifelse(polity_p5 >= 6, 1, 0),
-         dem_vdem = ifelse(str_detect(str_to_lower(v2x_regime_amb), 
-                                      "democracy"), 1, 0)) %>% 
-  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem) %>% 
-  group_by(ccode) %>% 
-  mutate(dem_polity_min = min(dem_polity, na.rm = TRUE),
-         dem_polity_max = max(dem_polity, na.rm = TRUE),
-         dem_polity_max = ifelse(is.infinite(dem_polity_max), 
-                                 NA, dem_polity_max),
-         dem_bmr_min = min(dem_bmr, na.rm = TRUE),
-         dem_bmr_max = max(dem_bmr, na.rm = TRUE),
-         dem_bmr_max = ifelse(is.infinite(dem_bmr_max), NA, dem_bmr_max),
-         dem_vdem_min = min(dem_vdem, na.rm = TRUE),
-         dem_vdem_max = max(dem_vdem, na.rm = TRUE),
-         dem_vdem_max = ifelse(is.infinite(dem_vdem_max), NA, dem_vdem_max),
-         sources = 3 - (is.na(dem_polity_max) + 
-                          is.na(dem_bmr_max) + is.na(dem_vdem_max)),
-         regime = max(transition, na.rm = TRUE)) %>% 
-  ungroup() %>% 
-  mutate(context_bmr = case_when(dem_bmr_min == 0 & dem_bmr_max == 0 ~ 0,
-                                 dem_bmr_min == 1 & dem_bmr_max == 1 ~ 1),
-         context_polity = case_when(dem_polity_min == 0 & 
-                                      dem_polity_max == 0 ~ 0,
-                                    dem_polity_min == 1 & 
-                                      dem_polity_max == 1 ~ 1),
-         context_vdem = case_when(dem_vdem_min == 0 & dem_vdem_max == 0 ~ 0,
-                                  dem_vdem_min == 1 & dem_vdem_max == 1 ~ 1),
-         context_dem = rowSums(across(all_of(c("context_bmr", "context_polity", 
-                                               "context_vdem"))), na.rm = TRUE),
-         regime = case_when(regime == 1 ~ "transitional", 
-                            regime == 0 & 
-                              context_dem == 0 & sources > 0 ~ "autocratic",
-                            regime == 0 & (context_dem == sources | 
-                                             context_dem > 1) ~ "democratic",
-                            country == "India" ~ "democratic"),
-         reg_democ = ifelse(regime == "democratic", 1, 0), 
-         reg_autoc = ifelse(regime == "autocratic", 1, 0), 
-         reg_trans = ifelse(regime == "transitional", 1, 0)
-  ) %>% 
-  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, 
-         regime, reg_democ, reg_autoc, reg_trans)
-
 ### clean up text fields 
 tabs <- c("Amnesties", "Reparations", "TruthCommissions", 
           "Vettings", "Trials", "Accused") 
@@ -652,18 +603,6 @@ db[tabs] <- map(tabs, function(tab) {
 })
 
 ### the next few code blocks could be simplified with functions
-
-### preparing conflicts list for merging into country-year dataset
-confllist <- read_csv("conflicts/confl_dyads.csv") %>% 
-  select(location, gwno_loc, ep_start_year, ep_end_year) %>% 
-  rowwise() %>% 
-  mutate(year = list(ep_start_year:ep_end_year)) %>% 
-  ungroup() %>% 
-  unnest_longer(year) %>% 
-  select(-ep_start_year, -ep_end_year) %>% 
-  distinct() %>% 
-  mutate(conflict = 1) %>% 
-  filter(year >= 1965 & year <= 2020)
 
 ### preparing amnesties list for merging into country-year dataset
 amnesties <- db$Amnesties %>% 
@@ -773,7 +712,91 @@ intl <- trials %>%
   rename("year" = "yearStart") %>% 
   distinct() 
 
+### preparing conflicts list for merging into country-year dataset
+confllist <- read_csv("conflicts/confl_dyads.csv", 
+                      show_col_types = FALSE) %>% 
+  select(location, gwno_loc, ep_start_year, ep_end_year) %>% 
+  rowwise() %>% 
+  mutate(year = list(ep_start_year:ep_end_year)) %>% 
+  ungroup() %>% 
+  unnest_longer(year) %>% 
+  select(-ep_start_year, -ep_end_year) %>% 
+  distinct() %>% 
+  mutate(conflict = 1) %>% 
+  filter(year >= 1965 & year <= 2020)
+
+### transitions dataset in country-year format
+
+translist <- read_csv("transitions/transitions_new_revised.csv",
+                      show_col_types = FALSE) %>% 
+  mutate(country = ifelse(country == "Eswatini", "Swaziland (Eswatini)", country), 
+         country = ifelse(country == "Republic of Vietnam", "Vietnam (Republic of / South)", country),
+         country = ifelse(country == "St. Vincent", "St. Vincent & the Grenadines", country),
+         country = ifelse(country == "South Yemen", "Yemen People's Republic (South)", country),
+         country = ifelse(country == "North Yemen", "Yemen Arab Republic (North)", country),
+         country = ifelse(country == "Yemen" & year < 1990, "Yemen Arab Republic (North)", country),
+         country = ifelse(country == "Germany" & year < 1990, "German Federal Republic (West)", country),
+         country = ifelse(country == "Russia" & year < 1992, "Soviet Union", country),
+         country = ifelse(country == "Serbia" & year < 1992, "Yugoslavia", country),
+         country = ifelse(country == "Serbia" & year %in% 1992:2005, "Serbia & Montenegro", country)
+  ) %>% 
+  # left_join(countrylist %>% select(country, ccode, beg, end), by = "ccode", keep = FALSE) %>% 
+  # filter(country != country_trans) %>% 
+  # arrange(country_trans, year) %>%
+  # select(country_trans, country, ccode, year, beg, end) %>% print(n = Inf)
+  full_join(countrylist %>% select(country, beg, end), by = "country") %>%
+  arrange(country, year) %>% 
+  filter(year >= beg & year <= end) %>% 
+  mutate(transition = ifelse(is.na(trans_year), 0, 1), 
+         dem_polity = ifelse(polity_p5 >= 6, 1, 0),
+         dem_vdem = ifelse(str_detect(str_to_lower(v2x_regime_amb), 
+                                      "democracy"), 1, 0), 
+         dem_all = rowSums(across(all_of(c("dem_bmr", "dem_polity", 
+                                           "dem_vdem"))), na.rm = TRUE) / 3) %>% 
+  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, dem_all) %>% 
+  group_by(ccode) %>% 
+  mutate(dem_polity_min = min(dem_polity, na.rm = TRUE),
+         dem_polity_max = max(dem_polity, na.rm = TRUE),
+         dem_polity_max = ifelse(is.infinite(dem_polity_max), 
+                                 NA, dem_polity_max),
+         dem_bmr_min = min(dem_bmr, na.rm = TRUE),
+         dem_bmr_max = max(dem_bmr, na.rm = TRUE),
+         dem_bmr_max = ifelse(is.infinite(dem_bmr_max), NA, dem_bmr_max),
+         dem_vdem_min = min(dem_vdem, na.rm = TRUE),
+         dem_vdem_max = max(dem_vdem, na.rm = TRUE),
+         dem_vdem_max = ifelse(is.infinite(dem_vdem_max), NA, dem_vdem_max),
+         sources = 3 - (is.na(dem_polity_max) + 
+                          is.na(dem_bmr_max) + is.na(dem_vdem_max)),
+         regime = max(transition, na.rm = TRUE), 
+         dem_prop = sum(dem_all, na.rm = TRUE) / n()) %>% 
+  ungroup() %>% 
+  mutate(context_bmr = case_when(dem_bmr_min == 0 & dem_bmr_max == 0 ~ 0,
+                                 dem_bmr_min == 1 & dem_bmr_max == 1 ~ 1),
+         context_polity = case_when(dem_polity_min == 0 & 
+                                      dem_polity_max == 0 ~ 0,
+                                    dem_polity_min == 1 & 
+                                      dem_polity_max == 1 ~ 1),
+         context_vdem = case_when(dem_vdem_min == 0 & dem_vdem_max == 0 ~ 0,
+                                  dem_vdem_min == 1 & dem_vdem_max == 1 ~ 1),
+         context_dem = rowSums(across(all_of(c("context_bmr", "context_polity", 
+                                               "context_vdem"))), na.rm = TRUE),
+         regime = case_when(regime == 1 ~ "transitional", 
+                            regime == 0 & 
+                              context_dem == 0 & sources > 0 ~ "autocratic",
+                            regime == 0 & (context_dem == sources | 
+                                             context_dem > 1) ~ "democratic",
+                            regime == 0 & dem_prop > 0.5 ~ "democratic"), 
+         ## India is the only ambiguous case by this algorithm, hence the last 
+         reg_democ = ifelse(regime == "democratic", 1, 0), 
+         reg_autoc = ifelse(regime == "autocratic", 1, 0), 
+         reg_trans = ifelse(regime == "transitional", 1, 0)
+  ) %>% 
+  rename(regime_sample = regime) %>% 
+  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, 
+         regime_sample, reg_democ, reg_autoc, reg_trans)
+
 ### creating country-year dataset and merging in mechanisms count measures
+  
 db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   beg <- countrylist %>%
     filter(country == ctry) %>%
@@ -786,18 +809,18 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   expand_grid(country = ctry, year = beg:end) %>%
     tibble()
 }) %>%
-  do.call(rbind, .) %>%
+  do.call(rbind, .) %>% 
   full_join(countrylist, by = "country") %>%
-  mutate(cyID = paste(ccode, year, sep = "-")) %>%
+  mutate(cyID = paste(ccode, year, sep = "-")) %>% 
   full_join(translist, by = c("country", "ccode", "year") ) %>% 
   full_join(confllist, by = c("ccode_ksg" = "gwno_loc", "year" = "year") ) %>% 
   mutate(conflict = ifelse(is.na(conflict), 0, 1), 
-         conflict_active = conflict) %>%
+         conflict_active = conflict) %>% 
   group_by(ccode_case) %>%
   mutate(conflict = max(conflict) ) %>%
   ungroup() %>% 
   select(cyID, country, year, ccode, ccode_case, ccode_ksg, 
-         tjet_focus, region, regime, reg_democ, reg_autoc, 
+         tjet_focus, region, regime_sample, reg_democ, reg_autoc, 
          reg_trans, conflict, transition, conflict_active) %>% 
   filter(year >= 1970) %>% 
   left_join(amnesties, by = c("ccode_case", "year") ) %>%  
@@ -837,14 +860,16 @@ db$Countries <- countrylist %>%
   mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
 
 ### data definition dictionary
-db$dictionary <- read_csv(here::here("data", "dictionary.csv")) %>%
+db$dictionary <- read_csv(here::here("data", "dictionary.csv"), 
+                          show_col_types = FALSE) %>%
   tibble()
 attr(db$dictionary, "spec") <- NULL
 attr(db$dictionary, "problems") <- NULL
 # attributes(db$dictionary) 
 
 ### conflict dyads lookup table for database
-db$ConflictDyads <- read_csv(here::here("conflicts", "confl_dyads.csv")) %>%
+db$ConflictDyads <- read_csv(here::here("conflicts", "confl_dyads.csv"), 
+                             show_col_types = FALSE) %>%
   tibble()
 attr(db$ConflictDyads, "spec") <- NULL
 attr(db$ConflictDyads, "problems") <- NULL
