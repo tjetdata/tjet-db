@@ -2,8 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
-.DS_Store
+.Renviron
 .env
+.DS_Store
 
 data/analysis/
 *.RData

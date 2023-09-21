@@ -1,12 +1,13 @@
 
 ### loading key packages
+# library(dotenv)
 library(tidyverse)
 conflicted::conflict_prefer("filter", "dplyr")
 conflicted::conflict_prefer("lag", "dplyr")
 conflicted::conflict_prefer("select", "dplyr")
 conflicted::conflict_prefer("fixed", "stringr")
 
-readRenviron(".env")
+# readRenviron(".env")
 
 ### only use the scripts below if you know what you're doing
 ### there is potential for damage to the production database
