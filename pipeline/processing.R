@@ -38,13 +38,14 @@ map(names(to_download), function(basename) {
   cat("Base:", basename, "\n\n")
   names(tables) <- tables <- 
     to_download[[basename]][!to_download[[basename]] %in% exclude]
-  map(tables, function(tab) {
+  result <- map(tables, function(tab) {
     meta <- tjet[[basename]]$metadata %>%
       filter(table_name == tab) %>%
       select(field_name) %>%
       unlist(use.names = FALSE)
-    meta[!meta %in% names(tjet[[basename]][[tab]])]
-  }) %>% 
+    meta[!meta %in% names(tjet[[basename]][[tab]])] 
+  }) 
+  result[map(result, length) > 0] %>% 
     print()
   return()
 })
@@ -443,13 +444,9 @@ db[["Prosecutions"]][["Accused"]] <-
 
 db[["Prosecutions"]][["Trials"]] <- 
   db[["Prosecutions"]][["Trials"]] %>%
-  mutate(membership = str_c(membership, sep =", "),
-         membership = str_replace(membership, fixed("NA, "), ""),
-         membership = str_replace(membership, fixed("NA"), ""),
-         membership = str_replace(membership, fixed("c(\""), ""),
-         membership = str_replace_all(membership, fixed("\")"), ""), 
-         membership = str_replace_all(membership, fixed("\""), ""),
-         membership = str_replace_all(membership, fixed("character(0)"), "")) 
+  rowwise() %>%
+  mutate(new = str_flatten(membership, collapse =", ")) %>% 
+  ungroup()
 
 db[["Prosecutions"]][["Trials_lastVerdict"]] <- 
   db[["Prosecutions"]][["Trials"]] %>%
@@ -740,10 +737,6 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
          country = ifelse(country == "Serbia" & year < 1992, "Yugoslavia", country),
          country = ifelse(country == "Serbia" & year %in% 1992:2005, "Serbia & Montenegro", country)
   ) %>% 
-  # left_join(countrylist %>% select(country, ccode, beg, end), by = "ccode", keep = FALSE) %>% 
-  # filter(country != country_trans) %>% 
-  # arrange(country_trans, year) %>%
-  # select(country_trans, country, ccode, year, beg, end) %>% print(n = Inf)
   full_join(countrylist %>% select(country, beg, end), by = "country") %>%
   arrange(country, year) %>% 
   filter(year >= beg & year <= end) %>% 
@@ -752,19 +745,25 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
          dem_vdem = ifelse(str_detect(str_to_lower(v2x_regime_amb), 
                                       "democracy"), 1, 0), 
          dem_all = rowSums(across(all_of(c("dem_bmr", "dem_polity", 
-                                           "dem_vdem"))), na.rm = TRUE) / 3) %>% 
-  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, dem_all) %>% 
+                                           "dem_vdem"))), na.rm = TRUE)/3) %>% 
+  select(country, ccode, year, transition, 
+         dem_bmr, dem_polity, dem_vdem, dem_all) %>% 
   group_by(ccode) %>% 
-  mutate(dem_polity_min = min(dem_polity, na.rm = TRUE),
-         dem_polity_max = max(dem_polity, na.rm = TRUE),
-         dem_polity_max = ifelse(is.infinite(dem_polity_max), 
-                                 NA, dem_polity_max),
-         dem_bmr_min = min(dem_bmr, na.rm = TRUE),
-         dem_bmr_max = max(dem_bmr, na.rm = TRUE),
-         dem_bmr_max = ifelse(is.infinite(dem_bmr_max), NA, dem_bmr_max),
-         dem_vdem_min = min(dem_vdem, na.rm = TRUE),
-         dem_vdem_max = max(dem_vdem, na.rm = TRUE),
-         dem_vdem_max = ifelse(is.infinite(dem_vdem_max), NA, dem_vdem_max),
+  mutate(finite_check = sum(!is.na(dem_polity)), 
+         dem_polity_min = ifelse(finite_check > 0, 
+                                 min(dem_polity, na.rm = TRUE), NA), 
+         dem_polity_max = ifelse(finite_check > 0, 
+                                 max(dem_polity, na.rm = TRUE), NA), 
+         finite_check = sum(!is.na(dem_bmr)), 
+         dem_bmr_min = ifelse(finite_check > 0, 
+                              min(dem_bmr, na.rm = TRUE), NA), 
+         dem_bmr_max = ifelse(finite_check > 0, 
+                              max(dem_bmr, na.rm = TRUE), NA), 
+         finite_check = sum(!is.na(dem_vdem)), 
+         dem_vdem_min = ifelse(finite_check > 0, 
+                               min(dem_vdem, na.rm = TRUE), NA), 
+         dem_vdem_max = ifelse(finite_check > 0, 
+                               max(dem_vdem, na.rm = TRUE), NA), 
          sources = 3 - (is.na(dem_polity_max) + 
                           is.na(dem_bmr_max) + is.na(dem_vdem_max)),
          regime = max(transition, na.rm = TRUE), 
