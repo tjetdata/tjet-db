@@ -4,8 +4,9 @@ TrialsMeasure <- function(type_opts, nexus_vars, memb_opts, rank_opts,
   
   ## options
   type_trial <- c(int = "international", "for" = "foreign", dom = "domestic")
-  nexus_trial <- c(hrs = "human rights", ctj = "conflict", dtj = "fitPostAutoTJ", 
-                   dcj = "during conflict justice", pcj = "post-conflict justice") 
+  nexus_trial <- c(hrs = "human rights", ctj = "conflict", 
+                   dtj = "fitPostAutoTJ", dcj = "during conflict justice", 
+                   pcj = "post-conflict justice") 
   membership_acc <- c(all = "all perpetrators", sta = "state agent", 
                       opp = "opposition")
   rank_acc <- c(hi = "high rank", lo = "not high rank")
@@ -52,23 +53,31 @@ TrialsMeasure <- function(type_opts, nexus_vars, memb_opts, rank_opts,
                             charges_opts), collapse = "_")
   
   ## CLs data
-  guilty <- db[["CourtLevels"]] %>% 
+  guilty <- db[["CourtLevels"]] %>%
     mutate(date = as_date(date)) %>%
     filter(!is.na(accusedID) & guilty == 1) %>% 
     arrange(accusedID, year) %>% 
     group_by(accusedID, year) %>% 
-    mutate(max_date = max(date, na.rm = TRUE)) %>%
+    # mutate(max_date = max(date, na.rm = TRUE) ) %>%
+    mutate(n = n(), 
+           any_last = max(last), 
+           max_date = ifelse(sum(!is.na(date)) > 0, max(date, na.rm = TRUE), NA ),
+           max_date = as_date(max_date)) %>%
     ungroup() %>% 
-    filter(is.infinite(max_date) | date == max_date) %>%
+    filter(is.infinite(max_date) | is.na(max_date) | date == max_date) %>% 
+    filter(!(n > 1 & any_last != last)) %>% 
+    # select(n, accusedID, any_last, last, year, sentencingTime, sentencingArrangement) %>%
     select(accusedID, year, sentencingTime, sentencingArrangement) %>%
-    # select(accusedID, date, year, sentencingTime, sentencingArrangement) %>%
-    distinct() %>% I
+    distinct() %>% 
+    filter(!(accusedID == 15441 & is.na(sentencingTime)) ) %>% ## temp fix
+    filter(!(accusedID == 17424 & sentencingTime == "4-9 years")) %>% I ## temp fix
     # group_by(accusedID, year) %>%
     # mutate(n = n()) %>%
     # ungroup() %>%
     # filter(n > 1) %>% print(n = Inf)
-    
-  ### need to deal with duplicate accused-years here first!!!
+  
+  convictions <- guilty %>%
+    select(accusedID, year) 
   
   guilty_scale <- guilty %>% 
     filter(sentencingArrangement %in% c("Ordinary prison", "Don't Know")) %>% 
@@ -94,9 +103,6 @@ TrialsMeasure <- function(type_opts, nexus_vars, memb_opts, rank_opts,
     mutate(prison_scale = max(prison_scale)) %>%
     ungroup() %>% 
     distinct() 
-  
-  convictions <- guilty %>%
-    select(accusedID, year) 
 
   ## Accused data
   db[["Accused"]] %>% 
@@ -105,16 +111,20 @@ TrialsMeasure <- function(type_opts, nexus_vars, memb_opts, rank_opts,
   
   ## Trials data
   db[["Trials"]] %>% 
-    select(trialID, ccode_Accused, trialType, humanRights, HRs_charges, 
-           fitsPostAutocraticTJ, fitsConflictTJ, beganDuringIntraConfl, 
-           beganAfterIntraConfl) 
-  
-  ### subsetting trials
-  trials <- db[["Trials"]] %>% 
     mutate(trialType = case_when(
       trialType %in% c("domestic", "don't know") ~ "domestic",
       trialType %in% c("international", "international (hybrid)") ~ "international",
       trialType == "foreign" ~ "foreign")) %>% 
+    select(trialID, ccode_Accused, trialType, humanRights, HRs_charges, 
+           fitsPostAutocraticTJ, fitsConflictTJ, beganDuringIntraConfl, 
+           beganAfterIntraConfl) 
+
+    
+### FROM HERE > 
+
+  
+  ### subsetting trials
+  trials <- db[["Trials"]] %>% 
     filter(HRs_charges > 0 | humanRights == 1 | IntraConfl == 1) %>% 
     filter(anyStateAgent == 1) %>% 
     select(trialID, ccode_Accused, trialType, yearStart, yearEnd, # ongoing, 
