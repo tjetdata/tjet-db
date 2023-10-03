@@ -78,7 +78,6 @@ sample_cy <- c(
 #     Accept = "Accept: application/vnd.github.v3.raw"))
 
 df <- readRDS(here::here("data", "cy_covariates.rds")) %>%
-  # mutate(base = TRUE) %>%
   mutate(ccode_cow = ifelse(is.na(ccode_cow) & country == "Soviet Union", 
                             365, ccode_cow), 
          ccode_cow = ifelse(is.na(ccode_cow) & country == "Serbia", 
@@ -144,17 +143,17 @@ df <- readRDS(here::here("data", "cy_covariates.rds")) %>%
          sample_confl = min(sample_confl, na.rm = TRUE) ) %>% 
   ## warning here that is addressed in next mutate
   ungroup() %>%
-  mutate(pco = ifelse(year > sample_confl & dco == 0, 1, 0), ## pco = "post-conflict"
+  mutate(pco = ifelse(year > sample_confl & dco == 0, 1, 0), ## "post-conflict"
          sample_trans = ifelse(is.infinite(sample_trans), NA, sample_trans),
          sample_trans = case_when(is.na(sample_trans) ~ 0, 
                                   year < sample_trans ~ 0, 
                                   year >= sample_trans ~ 1), 
-         dtr = sample_trans, ## dtr = "democratic transition"
+         dtr = sample_trans, ## "democratic transition"
          sample_confl = ifelse(is.infinite(sample_confl), NA, sample_confl),
          sample_confl = case_when(is.na(sample_confl) ~ 0, 
                                   year < sample_confl ~ 0, 
                                   year >= sample_confl ~ 1), 
-         aco = sample_confl ## aco = "all conflicts"
+         aco = sample_confl ## "all conflicts"
   ) %>% 
   ### the next line was merging in the old counts 
   ### and the remaining code deals with those 
@@ -170,7 +169,8 @@ df <- readRDS(here::here("data", "cy_covariates.rds")) %>%
   mutate(cum_theta_mean_fariss = ifelse(isna, NA, cummean(theta_mean_fariss)),
          sample_combi = ifelse(sample_trans + sample_confl > 0, 1, 0) ) %>%
   ungroup() %>%
-  select(-isna) %>% I
+  select(-isna)
+
   ### old cumulative measures from here
   # group_by(ccode_case) %>% 
   # mutate(cum_trials_HRs = cumsum(trials_HRs), 
@@ -214,6 +214,10 @@ df <- readRDS(here::here("data", "cy_covariates.rds")) %>%
 measures <- c(trs = "trials started", tro = "trials ongoing", 
               tfc = "trials with final convictions", cct = "conviction count", 
               crt = "conviction rate by all accused", sen = "sentence totals")
+
+# df <- df %>%
+#   select(ccode_cow, year)
+# df %>% summary
 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "ctj"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "ctj"), memb_opts = "sta")
@@ -273,87 +277,95 @@ df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "c
 
 ### TCs
 
-### FROM HERE > need to create measures in separate functions and then merge in 
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_all", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "beganOperatingAfterIntraConfl", 
+                crimes_vars = "all", independence_opts = NULL, aims_opts = NULL, 
+                consult_vars = NULL, powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL)
 
-TCmeasure(new_col_name = "tcs_pcj_all", start_year_var = "yearBeginOperation", 
-          nexus_vars = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          independence_opts = NULL, aims_opts = NULL, consult_vars = NULL, 
-          powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL, 
-          recommend_vars = NULL, monitor_vars = NULL)
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_victim_process", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "beganOperatingAfterIntraConfl", 
+                crimes_vars = "all",
+                aims_opts = c("truth for victims", "memorialization", "apology",
+                              "recognition of victims", "reparation"), 
+                independence_opts = NULL, consult_vars = "consultedVictims", 
+                powers_vars = "allocateReparations", 
+                testimony_vars = "encourageVictimTestimony", 
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL)
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_victim_outcome", 
+                start_year_var = "yearCompleteOperation",
+                nexus_vars = "beganOperatingAfterIntraConfl", 
+                crimes_vars = "all",
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = "reportPubliclyAvailable",
+                recommend_vars = "recommendReparations",
+                monitor_vars = "mandatePeriodicMonitoringImplementation") 
 
-TCmeasure(new_col_name = "tcs_pcj_victim_process", 
-          start_year_var = "yearBeginOperation", 
-          nexus = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          aims_opts = c("truth for victims", "memorialization", "apology",
-                        "recognition of victims", "reparation"), 
-          independence_opts = NULL, consult_vars = "consultedVictims", 
-          powers_vars = "allocateReparations", 
-          testimony_vars = "encourageVictimTestimony", 
-          reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL)
-TCmeasure(new_col_name = "tcs_pcj_victim_outcome", 
-          start_year_var = "yearCompleteOperation",
-          nexus = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
-          powers_vars = NULL, testimony_vars = NULL, 
-          reports_vars = "reportPubliclyAvailable",
-          recommend_vars = "recommendReparations",
-          monitor_vars = "mandatePeriodicMonitoringImplementation") 
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_account_process", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "beganOperatingAfterIntraConfl", 
+                crimes_vars = "all",
+                aims_opts = c("accountability", "responsibility",
+                              "prevention of human rights violations"),
+                independence_opts = c("partially independent", 
+                                      "fully independent"), 
+                consult_vars = NULL, 
+                powers_vars = c("compelTestimony", "supportProsecutions", 
+                                "namePerpetrators"),
+                testimony_vars = "perpetratorTestimony",
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_account_outcome", 
+                start_year_var = "yearCompleteOperation",
+                nexus_vars = "beganOperatingAfterIntraConfl", 
+                crimes_vars = "all",
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = "reportPubliclyAvailable",
+                recommend_vars = "recommendProsecutions",
+                monitor_vars = "mandatePeriodicMonitoringImplementation")
 
-TCmeasure(new_col_name = "tcs_pcj_account_process", 
-          start_year_var = "yearBeginOperation", 
-          nexus = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          aims_opts = c("accountability", "responsibility",
-                        "prevention of human rights violations"),
-          independence_opts = c("partially independent", "fully independent"), 
-          consult_vars = NULL, 
-          powers_vars = c("compelTestimony", "supportProsecutions", 
-                          "namePerpetrators"),
-          testimony_vars = "perpetratorTestimony",
-          reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
-TCmeasure(new_col_name = "tcs_pcj_account_outcome", 
-          start_year_var = "yearCompleteOperation",
-          nexus = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
-          powers_vars = NULL, testimony_vars = NULL, 
-          reports_vars = "reportPubliclyAvailable",
-          recommend_vars = "recommendProsecutions",
-          monitor_vars = "mandatePeriodicMonitoringImplementation")
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_peace_process", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "beganOperatingAfterIntraConfl", 
+                crimes_vars = "all",
+                aims_opts = c("reconciliation", "coexistence", "dialogue", 
+                              "non-recurrence"),
+                independence_opts = NULL, consult_vars = NULL,
+                powers_vars = "grantAmnesty",
+                testimony_vars = "heldPublicHearings",
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_peace_outcome", 
+                start_year_var = "yearCompleteOperation",
+                nexus_vars = "beganOperatingAfterIntraConfl", crimes_vars = "all",
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = "reportPubliclyAvailable",
+                recommend_vars = NULL, monitor_vars = NULL)
 
-TCmeasure(new_col_name = "tcs_pcj_peace_process", 
-          start_year_var = "yearBeginOperation", 
-          nexus = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          aims_opts = c("reconciliation", "coexistence", "dialogue", 
-                        "non-recurrence"),
-          independence_opts = NULL, consult_vars = NULL,
-          powers_vars = "grantAmnesty",
-          testimony_vars = "heldPublicHearings",
-          reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
-TCmeasure(new_col_name = "tcs_pcj_peace_outcome", 
-          start_year_var = "yearCompleteOperation",
-          nexus = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
-          powers_vars = NULL, testimony_vars = NULL, 
-          reports_vars = "reportPubliclyAvailable",
-          recommend_vars = NULL, monitor_vars = NULL)
-
-TCmeasure(new_col_name = "tcs_pcj_reform_process", 
-          start_year_var = "yearBeginOperation", 
-          nexus = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          aims_opts = c("historial truth", "institutional reform", 
-                        "addressing corruption"),
-          independence_opts = c("partially independent", "fully independent"), 
-          consult_vars = NULL,
-          powers_vars = "recommendInstitutionalReforms",
-          testimony_vars = "heldPublicHearings",
-          reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
-TCmeasure(new_col_name = "tcs_pcj_reform_outcome", 
-          start_year_var = "yearCompleteOperation",
-          nexus = "beganOperatingAfterIntraConfl", crimes_vars = "all",
-          aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
-          powers_vars = NULL, testimony_vars = NULL, 
-          reports_vars = "reportPubliclyAvailable",
-          recommend_vars = "reportRecommendInstitutionalReform", 
-          monitor_vars = "mandatePeriodicMonitoringImplementation")
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_reform_process", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "beganOperatingAfterIntraConfl", 
+                crimes_vars = "all",
+                aims_opts = c("historial truth", "institutional reform", 
+                              "addressing corruption"),
+                independence_opts = c("partially independent", 
+                                      "fully independent"), 
+                consult_vars = NULL,
+                powers_vars = "recommendInstitutionalReforms",
+                testimony_vars = "heldPublicHearings",
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
+df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_reform_outcome", 
+                start_year_var = "yearCompleteOperation",
+                nexus_vars = "beganOperatingAfterIntraConfl", 
+                crimes_vars = "all",
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = "reportPubliclyAvailable",
+                recommend_vars = "reportRecommendInstitutionalReform", 
+                monitor_vars = "mandatePeriodicMonitoringImplementation")
 
 ### last step, created lags and saving the analyses dataset
 lags <- df %>%
