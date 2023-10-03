@@ -468,7 +468,8 @@ db[["Prosecutions"]][["Trials"]] <-
 db[["Prosecutions"]][["Trials"]] <- 
   db[["Prosecutions"]][["Trials"]] %>% 
   mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2023, yearEnd), 
-         yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd)) 
+         yearEnd = ifelse(is.na(yearEnd) & ongoing == 0 & CLs_final_year > 1970, CLs_final_year, yearEnd), 
+         yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd), ) 
 
 ### formatting transitions table for website 
 db[["MegaBase"]][["Transitions"]] <-
