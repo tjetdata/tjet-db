@@ -2,7 +2,7 @@
 ## include fields (or "all") or options (for independence & aims) 
 ## for indicators to be included; use NULL for those to exclude
 ## there are error checks built into the function
-TCmeasure <- function(new_col_name, start_year_var, nexus_vars, crimes_vars, 
+TCmeasure <- function(cy, new_col_name, start_year_var, nexus_vars, crimes_vars, 
                       independence_opts, aims_opts, consult_vars, powers_vars, 
                       testimony_vars, reports_vars, recommend_vars, monitor_vars
 ){
@@ -120,7 +120,7 @@ TCmeasure <- function(new_col_name, start_year_var, nexus_vars, crimes_vars,
   
   ## subsetting & calc
   
-  db[["TruthCommissions"]] %>% 
+  new <- db[["TruthCommissions"]] %>%
     mutate(all = 1, 
            heldPublicHearings = ifelse(is.na(heldPublicHearings), "Unknown",
                                        heldPublicHearings),
@@ -170,21 +170,28 @@ TCmeasure <- function(new_col_name, start_year_var, nexus_vars, crimes_vars,
            recom = rowSums(across(all_of(recommend_vars))), 
            monit = ifelse(!is.null(monitor_vars) & 
                             if_any(all_of(monitor_vars), ~ . == 1), 1, 0),
-           new = goals + indep + consl + power + 
+           scale = goals + indep + consl + power + 
              testi + repor + recom + monit ) %>%
     rename(year_start = .env$start_year_var) %>%
     filter(!is.na(year_start)) %>%
     arrange(ccode, year_start) %>%
     group_by(ccode, year_start) %>% 
-    summarise(new = max(new, na.rm = TRUE), 
-              n = n()) %>%
+    mutate(scale = max(scale, na.rm = TRUE), 
+              n = n()) %>% 
     ungroup() %>%
     select(ccode, year_start, 
            # goals, indep, consl, power, testi, repor, recom, monit, 
-           new, n) %>%
-    rename_with(.fn = ~ new_col_name, .cols = new) %>%
+           scale, n) %>% 
+    distinct()
+
+  cy %>% 
+    left_join(new, by = c("ccode_cow" = "ccode", "year" = "year_start")) %>% 
+    arrange(ccode_cow, year) %>% 
+    group_by(ccode_cow) %>% 
+    fill(scale, n, .direction = "down") %>% 
+    mutate(scale = ifelse(is.na(scale), 0, scale), 
+           n = ifelse(is.na(n), 0, n)) %>%
+    rename_with(.fn = ~ new_col_name, .cols = scale) %>%
     rename_with(.fn = ~ paste(new_col_name, "n", sep = "_"), .cols = n) %>%
     return()
 }
-### standardize
-### merge into CY & fill in until change

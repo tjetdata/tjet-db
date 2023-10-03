@@ -1,10 +1,12 @@
 TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts, 
                           rank_opts = NULL, charges_opts = NULL, measure) {
+  
   ## options
   type_trial <- c(int = "international", 
                   "for" = "foreign", 
                   dom = "domestic")
   nexus_trial <- c(hrs = "humanRights", 
+                   con = "IntraConfl",
                    ctj = "fitsConflictTJ", 
                    dtj = "fitsPostAutocraticTJ", 
                    dcj = "beganDuringIntraConfl", 
@@ -105,6 +107,7 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
   accused_ended <- db[["CourtLevels"]] %>%
     filter(!is.na(accusedID)) %>%
     select(accusedID, year, date, last_fx, last) %>% 
+    mutate(year = ifelse(accusedID == 17751 & year == 2, 2014, year) ) %>% 
     arrange(accusedID, year) %>% 
     group_by(accusedID) %>% 
     mutate(n = n(), 
@@ -116,20 +119,22 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     rename(year_ended = year)
   
   guilty <- db[["CourtLevels"]] %>%
+    # filter(str_detect(verdict, "Reduced") & year == 2005) %>% # some problenm cases 
     mutate(date = as_date(date)) %>% 
     filter(!is.na(accusedID) & guilty == 1) %>% 
+    filter(!(accusedID == 15441 & is.na(sentencingTime)) ) %>% ## temp fix
+    filter(!(accusedID == 17424 & sentencingTime == "4-9 years")) %>%  ## temp fix
     arrange(accusedID, year, date) %>% 
     group_by(accusedID, year) %>% 
     mutate(n = n(), 
-           any_last = max(last), 
+           any_last = max(last_fx), 
            max_date = ifelse(sum(!is.na(date)) > 0, max(date, na.rm = TRUE), NA ),
            max_date = as_date(max_date)) %>%
+    select(n, accusedID, last_fx, last, any_last, year, date, max_date, 
+           guilty, sentencingTime, sentencingArrangement) %>%
     filter(!(n > 1 & !is.na(max_date) & date != max_date)) %>%
-    filter(!(n > 1 & last != any_last)) %>%
-    filter(!(accusedID == 15441 & is.na(sentencingTime)) ) %>% ## temp fix
-    filter(!(accusedID == 17424 & sentencingTime == "4-9 years")) %>%  ## temp fix
-    # select(n, accusedID, last_fx, last, any_last, year, date, max_date, sentencingTime, sentencingArrangement) %>%
-    select(accusedID, year, last_fx, guilty, sentencingTime, sentencingArrangement) %>%
+    filter(!(n > 1 & last_fx != any_last)) %>%
+    select(accusedID, year, last, last_fx, guilty, sentencingTime, sentencingArrangement) %>%
     distinct() %>% 
     # mutate(n = n()) %>%
     # filter(n > 1) %>% 
@@ -190,7 +195,7 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
         trialType == "foreign" ~ "foreign") ) %>% 
     filter(trialType == type_trial[type_opts]) %>%
     filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) %>% 
-    select(trialID, ccode_Accused, yearStart, yearEnd)
+    select(trialID, ccode_Accused, yearStart, yearEnd, firstConvictionYear_min)
            # ongoing, anyOpposedToGov, anyHighRank, anyStateAgent, 
            # firstConvictionYear_min, finalConvictionYear_min, 
            # lastVerdictYear_max, conviction, convictionHighRank, 
@@ -207,14 +212,14 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     left_join(guilty %>% select(accusedID, year, last_fx, guilty),  
               by = "accusedID") %>%
     select(accusedID, ccode_Accused, yearStart, yearEnd, last_fx, guilty, 
-           year, year_convict_final)
+           year, year_convict_final, firstConvictionYear_min)
 
   ## combining with prison scale; makes unit accused-year
   subset_accused_year_scale <- subset_accused %>%
     left_join(guilty_scale, by = "accusedID") 
-  
+
   ### different measures 
-  
+
   if(measure == "trs") { ## "trials started": count by countryAccused & startYear
     trials_start <- trials %>%
       group_by(ccode_Accused, yearStart) %>% 
@@ -284,12 +289,16 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
   }
   
   if(measure %in% c("cct", "crt")) {
-
+    
     convictions <- subset_accused_convictions %>%
+      filter(!is.na(guilty) | guilty != 1) %>% 
+      mutate(firstConvictionYear_min = as.integer(firstConvictionYear_min)) %>% 
+      filter(!(!is.na(firstConvictionYear_min) & firstConvictionYear_min < yearStart)) %>%  ### temp fix 
+      # select(accusedID, ccode_Accused, yearStart, yearEnd, year, year_convict_final, firstConvictionYear_min) 
       mutate(year = ifelse(is.na(year), year_convict_final, year), 
              year = ifelse(guilty == 1 & is.na(year), yearEnd, year) ) %>% 
+      filter(!year > yearEnd) %>%
       select(accusedID, ccode_Accused, year, guilty) %>% 
-      filter(!is.na(guilty) | guilty != 1) %>% 
       distinct() %>% 
       arrange(ccode_Accused, year) %>% 
       group_by(ccode_Accused, year) %>% 
@@ -313,9 +322,10 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
       accused_ongoing <- subset_accused %>%
         left_join(accused_ended, by = "accusedID") %>%
         mutate(yearEnd = ifelse(!is.na(year_ended) & yearEnd > year_ended,
-                                year_ended, yearEnd) ) %>%
-        select(accusedID, ccode_Accused, yearStart, yearEnd, year_convict_final) %>% 
-        filter(!yearEnd < 1970) %>% 
+                                year_ended, yearEnd) ) %>% 
+        # select(accusedID, ccode_Accused, yearStart, yearEnd, 
+        #        year_convict_final, firstConvictionYear_min) %>% 
+        select(ccode_Accused, yearStart, yearEnd) %>% 
         rowwise() %>% 
         mutate(year = list(yearStart:yearEnd)) %>% 
         ungroup() %>% 
@@ -324,41 +334,15 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
         arrange(ccode_Accused, year) %>% 
         group_by(ccode_Accused, year) %>% 
         reframe(accused_n = n())
-        
-      # cy <- 
-      cy %>% 
+      cy <- cy %>%
         left_join(accused_ongoing, by = c("ccode_cow" = "ccode_Accused", 
                                           "year" = "year")) %>% 
-        mutate(accused_n = ifelse(is.na(accused_n), 0, accused_n), 
-               new = convictions / accused_n
-               ) %>% 
-        select(country, ccode_cow, year, convictions, accused_n, new) %>% 
-        filter(is.nan(new)) 
-
-        # rename_with(.fn = ~ acc_var_name, .cols = accused_n) %>% 
-        # filter(trs_dom_hrs_sta > 0 | acc_dom_hrs_sta > 0) 
-      
-      subset_accused_convictions %>% 
-        filter(ccode_Accused == 703) %>% 
-        print(n = Inf)
-      
-      
-      # country    ccode_cow  year convictions accused_n   new
-      # <chr>          <dbl> <dbl>       <dbl>     <dbl> <dbl>
-      #   1 Haiti             41  2015           1         0   Inf
-      # 2 Venezuela        101  1993           2         0   Inf
-      # 3 Uruguay          165  2019           1         0   Inf
-      # 4 Uruguay          165  2020           1         0   Inf
-      # 5 Belgium          211  2015           3         0   Inf
-      # 6 Bulgaria         355  2009           1         0   Inf
-      # 7 Belarus          370  2002           3         0   Inf
-      # 8 Gambia           420  2017           2         0   Inf
-      # 9 Zimbabwe         552  2019           1         0   Inf
-      # 10 Kyrgyzstan       703  2020           1         0   Inf
-      # 11 Nepal            790  2017           3         0   Inf      
-      
-      
-      
+        mutate(rate = convictions / accused_n, 
+               rate = ifelse(is.na(rate) & convictions == 0, 0, rate), 
+               accused_n = ifelse(is.na(accused_n), 0, accused_n) ) %>% 
+        select(-convictions) %>% 
+        rename_with(.fn = ~ var_name, .cols = rate) %>% 
+        rename_with(.fn = ~ acc_var_name, .cols = accused_n)
     }
 
   }
