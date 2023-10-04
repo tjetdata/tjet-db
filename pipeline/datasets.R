@@ -77,7 +77,15 @@ sample_cy <- c(
 #     Authorization = "Authorization: token INSERT TOKEN HERE",
 #     Accept = "Accept: application/vnd.github.v3.raw"))
 
-df <- readRDS(here::here("data", "cy_covariates.rds")) %>%
+df <- readRDS(here::here("data", "cy_covariates.rds"))
+not <- c("cid_who", "ldc", "lldc", "sids", "income_wb", "region_wb2")
+first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", 
+           "country_id_vdem", "country_name", "histname", "m49", "isoa3", 
+           "iso3c_wb", "region", "subregion", "intregion", "region_wb", 
+           "micro_ksg")
+then <- names(df)[!names(df) %in% c(first, not)]
+df <- df %>% 
+  select(all_of(first), all_of(then)) %>% 
   mutate(ccode_cow = ifelse(is.na(ccode_cow) & country == "Soviet Union", 
                             365, ccode_cow), 
          ccode_cow = ifelse(is.na(ccode_cow) & country == "Serbia", 
@@ -365,19 +373,32 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_reform_outcome",
                 recommend_vars = "reportRecommendInstitutionalReform", 
                 monitor_vars = "mandatePeriodicMonitoringImplementation")
 
+first <- c("country", "country_case", "year", "ccode_cow", "ccode_case", 
+           "ccode_ksg", "country_id_vdem", "country_name", "histname", "m49", 
+           "isoa3", "iso3c_wb", "region", "subregion", "intregion", 
+           "region_wb", "micro_ksg")
+not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", # website
+         "transition", "conflict", "conflict_active") 
+samples <- c("sample_trans", "sample_confl", "sample_combi", 
+             "dtr", "aco", "dco", "pco") # dtr = sample_trans; aco = sample_confl
+then <- names(df)[!names(df) %in% c(first, samples, not)]
+
+df <- df %>% 
+  select(all_of(first), all_of(samples), all_of(then))
+
 ### last step, created lags and saving the analyses dataset
 lags <- df %>%
-  select(-country, -country_name, -histname, -ccode_cow, -ccode_case, 
-         -ccode_ksg, -country_id_vdem, -m49, -isoa3, -iso3c_wb, -cid_who, 
-         -micro_ksg, -region, -subregion, -intregion, -region_wb, 
-         -ldc, -lldc, -sids, -income_wb) %>%
+  select(-country, -ccode_cow, -ccode_case, -ccode_ksg, -country_id_vdem, 
+         -country_name, -histname, -m49, -isoa3, -iso3c_wb, -micro_ksg, 
+         -region, -subregion, -intregion, -region_wb, -sample_trans, 
+         -sample_confl, -sample_combi, -dtr, -aco, -dco, -pco) %>%
   mutate(year = year + 1) %>%
   rename_with(~ paste0("lag_", .x))
 df %>%
   left_join(lags, by = c("country_case" = "lag_country_case", 
                          "year" = "lag_year")) %>% 
   write_csv(here::here("data", "analysis", "tjet_analyses.csv"), na = "")
-rm(trial_counts, conviction_counts, counts)
+# rm(trial_counts, conviction_counts, counts)
 
 ### also saving individual mechanism tables
 db[["Amnesties"]] %>%

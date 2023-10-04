@@ -188,7 +188,8 @@ TCmeasure <- function(cy, new_col_name, start_year_var, nexus_vars, crimes_vars,
     left_join(new, by = c("ccode_cow" = "ccode", "year" = "year_start")) %>% 
     arrange(ccode_cow, year) %>% 
     group_by(ccode_cow) %>% 
-    fill(scale, n, .direction = "down") %>% 
+    fill(scale, n, .direction = "down") %>%
+    ungroup() %>% 
     mutate(scale = ifelse(is.na(scale), 0, scale), 
            n = ifelse(is.na(n), 0, n)) %>%
     rename_with(.fn = ~ new_col_name, .cols = scale) %>%
