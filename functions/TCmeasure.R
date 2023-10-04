@@ -177,7 +177,7 @@ TCmeasure <- function(cy, new_col_name, start_year_var, nexus_vars, crimes_vars,
     arrange(ccode, year_start) %>%
     group_by(ccode, year_start) %>% 
     mutate(scale = max(scale, na.rm = TRUE), 
-              n = n()) %>% 
+           n = n()) %>% 
     ungroup() %>%
     select(ccode, year_start, 
            # goals, indep, consl, power, testi, repor, recom, monit, 

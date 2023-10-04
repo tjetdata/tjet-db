@@ -186,7 +186,7 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     rename(year_convict_final = year)
 
   ## Trials data  
-  trials <- db[["Trials"]] %>%
+  trials <- db[["Trials"]] %>% 
     mutate(
       humanRights = ifelse(HRs_charges > 0 & humanRights == 0, 1, humanRights), 
       trialType = case_when(
