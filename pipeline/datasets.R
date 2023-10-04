@@ -223,6 +223,10 @@ measures <- c(trs = "trials started", tro = "trials ongoing",
               tfc = "trials with final convictions", cct = "conviction count", 
               crt = "conviction rate by all accused", sen = "sentence totals")
 
+## for dev only
+# df <- df %>%
+#   select(country, ccode_cow, year)
+
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
@@ -290,7 +294,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_all",
                 monitor_vars = NULL) %>% 
   select(-tcs_pcj_all) 
 
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_victim_process", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_victim_process", 
                 start_year_var = "yearBeginOperation", 
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all",
                 aims_opts = c("truth for victims", "memorialization", "apology",
@@ -299,7 +303,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_victim_process",
                 powers_vars = "allocateReparations", 
                 testimony_vars = "encourageVictimTestimony", 
                 reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL)
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_victim_outcome", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_victim_outcome", 
                 start_year_var = "yearCompleteOperation",
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all",
                 aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
@@ -308,7 +312,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_victim_outcome",
                 recommend_vars = "recommendReparations",
                 monitor_vars = "mandatePeriodicMonitoringImplementation") 
 
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_account_process", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_account_process", 
                 start_year_var = "yearBeginOperation", 
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all",
                 aims_opts = c("accountability", "responsibility",
@@ -320,7 +324,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_account_process",
                                 "namePerpetrators"),
                 testimony_vars = "perpetratorTestimony",
                 reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_account_outcome", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_account_outcome", 
                 start_year_var = "yearCompleteOperation",
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all",
                 aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
@@ -329,7 +333,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_account_outcome",
                 recommend_vars = "recommendProsecutions",
                 monitor_vars = "mandatePeriodicMonitoringImplementation")
 
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_peace_process", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_peace_process", 
                 start_year_var = "yearBeginOperation", 
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all",
                 aims_opts = c("reconciliation", "coexistence", "dialogue", 
@@ -338,7 +342,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_peace_process",
                 powers_vars = "grantAmnesty",
                 testimony_vars = "heldPublicHearings",
                 reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_peace_outcome", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_peace_outcome", 
                 start_year_var = "yearCompleteOperation",
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all",
                 aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
@@ -346,7 +350,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_peace_outcome",
                 reports_vars = "reportPubliclyAvailable",
                 recommend_vars = NULL, monitor_vars = NULL)
 
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_reform_process", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_reform_process", 
                 start_year_var = "yearBeginOperation", 
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all",
                 aims_opts = c("historial truth", "institutional reform", 
@@ -357,7 +361,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_reform_process",
                 powers_vars = "recommendInstitutionalReforms",
                 testimony_vars = "heldPublicHearings",
                 reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_reform_outcome", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_reform_outcome", 
                 start_year_var = "yearCompleteOperation",
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all",
                 aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
@@ -390,9 +394,11 @@ lags <- df %>%
 df %>%
   left_join(lags, by = c("country_case" = "lag_country_case", 
                          "year" = "lag_year")) %>% 
-  write_csv(here::here("data", "analysis", "tjet_analyses.csv"), na = "")
+  write_csv(here::here("data", "analysis", "tjet_analyses.csv"), na = "") %>% 
+  ### for local GD access
+  write_csv("~/Dropbox/TJLab/TimoDataWork/analyses_dataset/tjet_analyses.csv", na = "")
 # rm(trial_counts, conviction_counts, counts)
-
+  
 ### also saving individual mechanism tables
 db[["Amnesties"]] %>%
   write_csv(here::here("data", "analysis", "tjet_amnesties.csv"), na = "")
