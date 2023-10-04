@@ -206,6 +206,11 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     inner_join(accused, by = "trialID") %>% 
     left_join(final_convictions, by = "accusedID") %>% 
     arrange(accusedID)
+  
+  ## subset trials; unit is trial 
+  subset_trials <- subset_accused %>%
+    select(trialID, ccode_Accused, yearStart, yearEnd) %>% 
+    distinct()
 
   ## combining with guilty verdicts; makes unit accused-year
   subset_accused_convictions <- subset_accused %>%
@@ -221,7 +226,7 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
   ### different measures 
 
   if(measure == "trs") { ## "trials started": count by countryAccused & startYear
-    trials_start <- trials %>%
+    trials_start <- subset_trials %>%
       group_by(ccode_Accused, yearStart) %>% 
       mutate(trials_yearStart = n()) %>%  
       ungroup() %>%  
@@ -241,7 +246,7 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
   }
 
   if(measure == "tro") { ## "trials ongoing": count of ongoing by year (by countryAccused & >= startYear & <=endYear)
-    trials_ongoing <- trials %>%
+    trials_ongoing <- subset_trials %>%
       rowwise() %>% 
       mutate(year = list(yearStart:yearEnd)) %>% 
       ungroup() %>% 
