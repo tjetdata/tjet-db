@@ -285,14 +285,14 @@ df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "c
 
 ### TCs
 
-df <- TCmeasure(cy = df, new_col_name = "tcs_pcj_all", 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_all", 
                 start_year_var = "yearBeginOperation", 
                 nexus_vars = "fitsConflictTJ", crimes_vars = "all", 
                 independence_opts = NULL, aims_opts = NULL, consult_vars = NULL, 
                 powers_vars = NULL, testimony_vars = NULL, 
                 reports_vars = NULL, recommend_vars = NULL, 
                 monitor_vars = NULL) %>% 
-  select(-tcs_pcj_all) 
+  select(-tcs_ctj_all) 
 
 df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_victim_process", 
                 start_year_var = "yearBeginOperation", 
