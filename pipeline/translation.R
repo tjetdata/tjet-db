@@ -36,19 +36,20 @@ translate <- function(col) {
     text = col,
     source_lang = "EN", 
     auth_key = key_get("DeepL"))
+  
 }
 if(go_ahead) {
+  ## do not translate the country field; this is used in the website structure
   db[["fr_Countries"]] <- db[["Countries"]] %>% 
-    mutate(country = ifelse(is.na(country), NA, translate(country)), 
+    rowwise() %>% ### deeplr does not handle NAs well; this seems to be a work-around
+    mutate(# country = ifelse(is.na(country), NA, translate(country)), 
            txt_intro = ifelse(is.na(txt_intro), NA, translate(txt_intro)), 
            txt_regime = ifelse(is.na(txt_regime), NA, translate(txt_regime)), 
            txt_conflict = ifelse(is.na(txt_conflict), 
                                  NA, translate(txt_conflict)), 
-           txt_TJ = ifelse(is.na(txt_TJ), NA, translate(txt_TJ)))
+           txt_TJ = ifelse(is.na(txt_TJ), NA, translate(txt_TJ))) %>%
+    ungroup()
 }
 
 ### saving locally 
 save(db, file = here::here("data", "tjetdb.RData"))
-### saving locally as separate file (not actually needed)
-# sample <- db$fr_Countries
-# save(sample, file = here::here("data", "fr_sample.RData"))

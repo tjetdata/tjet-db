@@ -37,7 +37,7 @@ map(names(db), function(table_name) {
 ### list of all tables in database
 dbListTables(con)
 ### reading specific table
-dbReadTable(con, "ConflictDyads")
+dbReadTable(con, "fr_Countries")
 ### when done always disconnect
 dbDisconnect(con)
 
