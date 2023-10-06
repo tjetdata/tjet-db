@@ -445,7 +445,7 @@ db[["Prosecutions"]][["Accused"]] <-
 db[["Prosecutions"]][["Trials"]] <- 
   db[["Prosecutions"]][["Trials"]] %>%
   rowwise() %>%
-  mutate(new = str_flatten(membership, collapse =", ")) %>% 
+  mutate(membership = str_flatten(membership, collapse =", ")) %>% 
   ungroup()
 
 db[["Prosecutions"]][["Trials_lastVerdict"]] <- 
