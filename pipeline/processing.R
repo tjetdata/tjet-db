@@ -492,7 +492,7 @@ db[["MegaBase"]][["Transitions"]] <-
            case_when(!is.na(bmr_year) ~ 
                        paste("BMR (", bmr_year, ")", sep = "")),
            case_when(!is.na(ert_year) ~ 
-                       paste("VDem (", ert_year, ")", sep = ""))),
+                       paste("VDem-ERT (", ert_year, ")", sep = ""))),
            collapse = " & ", na.rm = TRUE)) %>% 
   ungroup() %>% 
   select(transitionID, ccode, trans_year_begin, 
