@@ -468,7 +468,8 @@ db[["Prosecutions"]][["Trials"]] <-
 db[["Prosecutions"]][["Trials"]] <- 
   db[["Prosecutions"]][["Trials"]] %>% 
   mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2023, yearEnd), 
-         yearEnd = ifelse(is.na(yearEnd) & ongoing == 0 & CLs_final_year > 1970, CLs_final_year, yearEnd), 
+         yearEnd = ifelse(is.na(yearEnd) & ongoing == 0 & CLs_final_year > 1970, 
+                          CLs_final_year, yearEnd), 
          yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd), ) 
 
 ### formatting transitions table for website 
@@ -509,6 +510,10 @@ db[["Prosecutions"]][["Trials"]] <-
 db[["Prosecutions"]][["Accused"]] <- 
   db[["Prosecutions"]][["Accused"]] %>% 
   filter(trialID %in% db[["Prosecutions"]][["Trials"]]$trialID)
+
+db[["Prosecutions"]][["CourtLevels"]] <- 
+  db[["Prosecutions"]][["CourtLevels"]] %>%
+  filter(accusedID %in% db[["Prosecutions"]][["Accused"]]$accusedID)
 
 ### checking amnesties
 # crime_labels <- db[["MegaBase"]][["Amnesties_whatCrimes"]] %>%
@@ -569,14 +574,18 @@ rm(select, checkbox_to_binary, dim_drop, dim_last, dim_now, dim_orig,
 countrylist <- db$Countries %>% 
   mutate(beg = as.integer(str_sub(begin_date, 1, 4)), 
          end = as.integer(str_sub(end_date, 1, 4)), 
-         beg = ifelse(beg <= 1965, 1965, beg),
-         beg = ifelse(country == "Slovenia", 1991, beg),
-         beg = ifelse(country == "Andorra", 1993, beg),
+         beg = ifelse(beg <= 1970, 1970, beg),
+         beg = ifelse(country == "Andorra", 1994, beg), # was 1993
+         beg = ifelse(country == "Antigua & Barbuda", 1982, beg), # was 1981 but not included here
+         beg = ifelse(country == "Brunei", 1985, beg), # was 1984 but not included here
          beg = ifelse(country == "Kiribati", 1997, beg),
-         beg = ifelse(country == "Liechtenstein", 1990, beg),
-         beg = ifelse(country == "Marshall Islands", 1991, beg),
+         beg = ifelse(country == "Liechtenstein", 1991, beg), # was 1990
+         beg = ifelse(country == "Marshall Islands", 1992, beg), # was 1991
          beg = ifelse(country == "Micronesia", 1992, beg),
-         beg = ifelse(country == "Monaco", 1993, beg),
+         beg = ifelse(country == "Monaco", 1994, beg), # was 1993
+         beg = ifelse(country == "Palau", 1995, beg), # was 1994 but not included here
+         beg = ifelse(country == "Slovenia", 1991, beg),
+         beg = ifelse(country == "St. Kitts & Nevis", 1984, beg), # was 1983 but not included here
          end = ifelse(country == "Serbia & Montenegro", 2005, end),
          end = ifelse(country == "German Federal Republic (West)", 1989, end),
          end = ifelse(country == "Yemen Arab Republic (North)", 1989, end),
@@ -591,6 +600,27 @@ countrylist <- db$Countries %>%
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
 
+# countrylist %>%
+#   select(country, beg, end, ccode, ccode_case) %>%
+#   rename("country_case"= "country") %>%
+#   group_by(ccode_case) %>%
+#   mutate(n = n()) %>%
+#   filter(n > 1 & ccode == ccode_case & end < 2020)
+
+countrylist <- countrylist %>%
+  left_join(countrylist %>% 
+              select(country, ccode) %>%
+              filter(!country %in% c("Soviet Union", "Yugoslavia", 
+                                     "Serbia & Montenegro") ) %>%
+              rename("country_case"= "country"),
+          by = c("ccode_case" = "ccode")) %>% 
+  select(country, country_case, ccode, ccode_case, ccode_ksg, m49, 
+         country_id_vdem, beg, end, micro_ksg, region, region_sub_un, region_wb, 
+         tjet_focus, factsheet, txt_intro, txt_regime, txt_conflict, txt_TJ) 
+
+# countrylist %>%
+#   filter(country != country_case) 
+  
 ### clean up text fields 
 tabs <- c("Amnesties", "Reparations", "TruthCommissions", 
           "Vettings", "Trials", "Accused") 
@@ -711,8 +741,7 @@ intl <- trials %>%
   distinct() 
 
 ### preparing conflicts list for merging into country-year dataset
-confllist <- read_csv("conflicts/confl_dyads.csv", 
-                      show_col_types = FALSE) %>% 
+confllist <- read_csv("conflicts/confl_dyads.csv", show_col_types = FALSE) %>% 
   select(location, gwno_loc, ep_start_year, ep_end_year) %>% 
   rowwise() %>% 
   mutate(year = list(ep_start_year:ep_end_year)) %>% 
@@ -721,22 +750,32 @@ confllist <- read_csv("conflicts/confl_dyads.csv",
   select(-ep_start_year, -ep_end_year) %>% 
   distinct() %>% 
   mutate(conflict = 1) %>% 
-  filter(year >= 1965 & year <= 2020)
+  filter(year >= 1970 & year <= 2020)
 
 ### transitions dataset in country-year format
 
 translist <- read_csv("transitions/transitions_new_revised.csv",
                       show_col_types = FALSE) %>% 
-  mutate(country = ifelse(country == "Eswatini", "Swaziland (Eswatini)", country), 
-         country = ifelse(country == "Republic of Vietnam", "Vietnam (Republic of / South)", country),
-         country = ifelse(country == "St. Vincent", "St. Vincent & the Grenadines", country),
-         country = ifelse(country == "South Yemen", "Yemen People's Republic (South)", country),
-         country = ifelse(country == "North Yemen", "Yemen Arab Republic (North)", country),
-         country = ifelse(country == "Yemen" & year < 1990, "Yemen Arab Republic (North)", country),
-         country = ifelse(country == "Germany" & year < 1990, "German Federal Republic (West)", country),
-         country = ifelse(country == "Russia" & year < 1992, "Soviet Union", country),
-         country = ifelse(country == "Serbia" & year < 1992, "Yugoslavia", country),
-         country = ifelse(country == "Serbia" & year %in% 1992:2005, "Serbia & Montenegro", country)
+  mutate(country = ifelse(country == "Eswatini", 
+                          "Swaziland (Eswatini)", country), 
+         country = ifelse(country == "Republic of Vietnam", 
+                          "Vietnam (Republic of / South)", country),
+         country = ifelse(country == "St. Vincent", 
+                          "St. Vincent & the Grenadines", country),
+         country = ifelse(country == "South Yemen", 
+                          "Yemen People's Republic (South)", country),
+         country = ifelse(country == "North Yemen", 
+                          "Yemen Arab Republic (North)", country),
+         country = ifelse(country == "Yemen" & year < 1990, 
+                          "Yemen Arab Republic (North)", country),
+         country = ifelse(country == "Germany" & year < 1990, 
+                          "German Federal Republic (West)", country),
+         country = ifelse(country == "Russia" & year < 1992, 
+                          "Soviet Union", country),
+         country = ifelse(country == "Serbia" & year < 1992, 
+                          "Yugoslavia", country),
+         country = ifelse(country == "Serbia" & year %in% 1992:2005, 
+                          "Serbia & Montenegro", country)
   ) %>% 
   full_join(countrylist %>% select(country, beg, end), by = "country") %>%
   arrange(country, year) %>% 
@@ -819,10 +858,13 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   group_by(ccode_case) %>%
   mutate(conflict = max(conflict) ) %>%
   ungroup() %>% 
-  select(cyID, country, year, ccode, ccode_case, ccode_ksg, 
-         tjet_focus, region, regime_sample, reg_democ, reg_autoc, 
-         reg_trans, conflict, transition, conflict_active) %>% 
-  filter(year >= 1970) %>% 
+  mutate(country_label = ifelse(end < 2020, 
+                                paste(country, " [-", end, "]", sep = ""), 
+                                country)) %>% 
+  select(cyID, country, country_label, country_case, beg, end, year, ccode, 
+         ccode_case, ccode_ksg, tjet_focus, region, regime_sample, reg_democ, 
+         reg_autoc, reg_trans, conflict, transition, conflict_active) %>%
+  # filter(country != country_case)
   left_join(amnesties, by = c("ccode_case", "year") ) %>%  
   mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties),
          amnesties_SGBV = ifelse(is.na(amnesties_SGBV), 
@@ -855,22 +897,26 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
          trials_foreign_SGBV = ifelse(is.na(trials_foreign_SGBV), 
                                       0, trials_foreign_SGBV))
 
+# db[["CountryYears"]] %>% 
+#   select(cyID, country, country_label, country_case,
+#          beg, end, year, ccode, ccode_case, ccode_ksg) %>% 
+#   filter(country != country_label) %>% 
+#   print(n = Inf)
+
 ### countries table for database
 db$Countries <- countrylist %>% 
-  mutate(beg = ifelse(beg <= 1970, 1970, beg)) 
+  mutate(beg = ifelse(beg < 1970, 1970, beg)) 
 
 ### data definition dictionary
 db$dictionary <- read_csv(here::here("data", "dictionary.csv"), 
-                          show_col_types = FALSE) %>%
-  tibble()
+                          show_col_types = FALSE) %>% tibble()
 attr(db$dictionary, "spec") <- NULL
 attr(db$dictionary, "problems") <- NULL
 # attributes(db$dictionary) 
 
 ### conflict dyads lookup table for database
 db$ConflictDyads <- read_csv(here::here("conflicts", "confl_dyads.csv"), 
-                             show_col_types = FALSE) %>%
-  tibble()
+                             show_col_types = FALSE) %>% tibble()
 attr(db$ConflictDyads, "spec") <- NULL
 attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
@@ -882,5 +928,5 @@ attr(db$ConflictDyads, "problems") <- NULL
 save(db, file = here::here("data", "tjetdb.RData"))
 
 ### cleaning up workspace environment
-rm(countrylist, translist, confllist, amnesties, 
-   reparations, tcs, vettings, trials, domestic, intl, foreign) 
+rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, 
+   trials, domestic, intl, foreign) 

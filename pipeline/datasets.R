@@ -5,7 +5,52 @@ require(tidyverse)
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 # str(db, 1)
 
-### helpers 
+### dealing with multi-select fields
+
+tabs <- c("Amnesties" = "amnestyID", 
+          "Reparations" = "reparationID", 
+          "Trials" = "trialID", 
+          "TruthCommissions" = "truthcommissionID", 
+          "Vettings" = "vettingID")
+
+## for dev
+# tabname = "Reparations"
+# multitab = "Reparations_individualReparationsForm"
+
+map(names(tabs), function(tabname) {
+  map(names(db)[str_detect(names(db), paste(tabname, "_", sep = ""))], function(multitab) {
+    if("labelID" %in% names(db[[multitab]])) {
+      db[[multitab]] %>% 
+        left_join(db$labels, by = "labelID") %>% 
+        group_by(across(all_of(tabs[[tabname]]))) %>%
+        mutate(!!str_replace(multitab, paste(tabname, "_", sep = ""), "") := 
+                 str_flatten(label, collapse ="; ")) %>% 
+        select(-labelID, -label)
+      
+    } 
+    
+  })
+  
+})
+
+
+### saving individual mechanism tables
+db[["Amnesties"]] %>% 
+  write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "")
+db[["TruthCommissions"]] %>%
+  write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "")
+db[["Reparations"]] %>%
+  write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "")
+db[["Trials"]] %>% 
+  write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "")
+db[["Accused"]] %>%
+  write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "")
+db[["CourtLevels"]] %>%
+  write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "")
+db[["Vettings"]] %>%
+  write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "")
+
+### helpers for CY measures
 source("functions/TCgoals.R")
 source("functions/TCmeasure.R")
 source("functions/TrialsMeasure.R")
@@ -392,23 +437,17 @@ lags <- df %>%
   mutate(year = year + 1) %>%
   rename_with(~ paste0("lag_", .x))
 df %>%
-  left_join(lags, by = c("country_case" = "lag_country_case", 
-                         "year" = "lag_year")) %>% 
-  write_csv(here::here("data", "analysis", "tjet_analyses.csv"), na = "") %>% 
+  left_join(lags, 
+            by = c("country_case" = "lag_country_case", 
+                   "year" = "lag_year")) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_analyses.csv"), na = "") %>% 
   ### for local GD access
-  write_csv("~/Dropbox/TJLab/TimoDataWork/analyses_dataset/tjet_analyses.csv", na = "")
+  write_csv("~/Dropbox/TJLab/TimoDataWork/analyses_datasets/tjet_analyses.csv", na = "")
 # rm(trial_counts, conviction_counts, counts)
-  
-### also saving individual mechanism tables
-db[["Amnesties"]] %>%
-  write_csv(here::here("data", "analysis", "tjet_amnesties.csv"), na = "")
-db[["TruthCommissions"]] %>%
-  write_csv(here::here("data", "analysis", "tjet_tcs.csv"), na = "")
-db[["Reparations"]] %>%
-  write_csv(here::here("data", "analysis", "tjet_reparations.csv"), na = "")
-db[["Trials"]] %>%
-  write_csv(here::here("data", "analysis", "tjet_trials.csv"), na = "")
-db[["Accused"]] %>%
-  write_csv(here::here("data", "analysis", "tjet_accused.csv"), na = "")
-db[["Vettings"]] %>%
-  write_csv(here::here("data", "analysis", "tjet_vettings.csv"), na = "")
+
+### downloads datasets
+# - include country IDs, transitions and our data
+#   - everything in our filters, but not other outcomes
+# - variables that should not be in public CY downloads file
+#   - regime_sample, reg_democ, reg_autoc, reg_trans, conflict
+#   - these not clear: transition, conflict_active
