@@ -190,8 +190,8 @@ TCmeasure <- function(cy, new_col_name, start_year_var, nexus_vars, crimes_vars,
     group_by(ccode_cow) %>% 
     fill(scale, n, .direction = "down") %>%
     ungroup() %>% 
-    mutate(scale = ifelse(is.na(scale), 0, scale), 
-           n = ifelse(is.na(n), 0, n)) %>%
+    mutate(scale = ifelse(year %in% 1970:2020 & is.na(scale), 0, scale), 
+           n = ifelse(year %in% 1970:2020 & is.na(n), 0, n)) %>%
     rename_with(.fn = ~ new_col_name, .cols = scale) %>%
     rename_with(.fn = ~ paste(new_col_name, "n", sep = "_"), .cols = n) %>%
     return()

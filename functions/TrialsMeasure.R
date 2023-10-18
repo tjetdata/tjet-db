@@ -240,8 +240,9 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     cy <- cy %>% 
       left_join(trials_start, by = c("ccode_cow" = "ccode_Accused", 
                                      "year" = "yearStart")) %>% 
-      mutate(trials_yearStart = ifelse(is.na(trials_yearStart), 
-                                       0, trials_yearStart)) %>% 
+      mutate(trials_yearStart = 
+               ifelse(year %in% 1970:2020 & is.na(trials_yearStart), 
+                      0, trials_yearStart)) %>% 
       rename_with(.fn = ~ var_name, .cols = trials_yearStart)
   }
 
@@ -261,8 +262,9 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     cy <- cy %>%
       left_join(trials_ongoing, by = c("ccode_cow" = "ccode_Accused", 
                                        "year" = "year")) %>% 
-      mutate(trials_ongoing = ifelse(is.na(trials_ongoing), 
-                                       0, trials_ongoing)) %>% 
+      mutate(trials_ongoing = 
+               ifelse(year %in% 1970:2020 & is.na(trials_ongoing), 
+                      0, trials_ongoing)) %>% 
       rename_with(.fn = ~ var_name, .cols = trials_ongoing)
   }
   
@@ -288,13 +290,13 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     cy <- cy %>% 
       left_join(trials_convictions, by = c("ccode_cow" = "ccode_Accused", 
                                            "year" = "yearEnd")) %>% 
-      mutate(count_trial_convict_final = ifelse(is.na(count_trial_convict_final), 
-                                     0, count_trial_convict_final)) %>% 
+      mutate(count_trial_convict_final = ifelse(
+        year %in% 1970:2020 & is.na(count_trial_convict_final), 
+        0, count_trial_convict_final)) %>% 
       rename_with(.fn = ~ var_name, .cols = count_trial_convict_final)
   }
   
   if(measure %in% c("cct", "crt")) {
-    
     convictions <- subset_accused_convictions %>%
       filter(!is.na(guilty) | guilty != 1) %>% 
       mutate(firstConvictionYear_min = as.integer(firstConvictionYear_min)) %>% 
@@ -314,7 +316,8 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     cy <- cy %>% 
       left_join(convictions, by = c("ccode_cow" = "ccode_Accused", 
                                     "year" = "year")) %>% 
-      mutate(convictions = ifelse(is.na(convictions), 0, convictions)) 
+      mutate(convictions = ifelse(year %in% 1970:2020 & is.na(convictions), 
+                                  0, convictions)) 
     
     if(measure == "cct") { ## "conviction count"
       cy <- cy %>%
@@ -344,7 +347,8 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
                                           "year" = "year")) %>% 
         mutate(rate = convictions / accused_n, 
                rate = ifelse(is.na(rate) & convictions == 0, 0, rate), 
-               accused_n = ifelse(is.na(accused_n), 0, accused_n) ) %>% 
+               accused_n = ifelse(year %in% 1970:2020 & is.na(accused_n), 
+                                  0, accused_n) ) %>% 
         select(-convictions) %>% 
         rename_with(.fn = ~ var_name, .cols = rate) %>% 
         rename_with(.fn = ~ acc_var_name, .cols = accused_n)
@@ -366,7 +370,8 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     cy <- cy %>% 
       left_join(sentences, by = c("ccode_cow" = "ccode_Accused", 
                                   "year" = "year_scale")) %>% 
-      mutate(prison_scale = ifelse(is.na(prison_scale), 0, prison_scale)) %>% 
+      mutate(prison_scale = ifelse(year %in% 1970:2020 & is.na(prison_scale), 
+                                   0, prison_scale)) %>% 
       rename_with(.fn = ~ var_name, .cols = prison_scale)
   }
 

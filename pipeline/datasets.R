@@ -35,20 +35,28 @@ map(names(tabs), function(tabname) {
 
 
 ### saving individual mechanism tables
+dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
 db[["Amnesties"]] %>% 
-  write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
 db[["TruthCommissions"]] %>%
-  write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
 db[["Reparations"]] %>%
-  write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_reparations.csv"), na = "")
 db[["Trials"]] %>% 
-  write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_trials.csv"), na = "")
 db[["Accused"]] %>%
-  write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_accused.csv"), na = "")
 db[["CourtLevels"]] %>%
-  write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
 db[["Vettings"]] %>%
-  write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_vettings.csv"), na = "")
 
 ### helpers for CY measures
 source("functions/TCgoals.R")
@@ -142,7 +150,8 @@ df <- df %>%
          ccode_cow = ifelse(year == 1990 & country == "West Germany", 
                             255, ccode_cow)) %>% 
   left_join(db[["CountryYears"]] %>% 
-              select(-cyID, -country, -region, -tjet_focus), 
+              select(-cyID, -country, -country_case, -country_label, 
+                     -ccode_case, -beg, -end, -region, -tjet_focus), 
             by = c("ccode_cow" = "ccode", 
                    "ccode_ksg" = "ccode_ksg", 
                    "year" = "year")) %>% # losing Slovenia 1991 here
@@ -185,13 +194,13 @@ df <- df %>%
                                       year == 1990, 255, ccode)) %>% 
               select(-country), 
             by = c("ccode_cow" = "ccode", "year" = "year") ) %>% 
-  filter(year <= 2020) %>% 
+  # filter(year <= 2020) %>% 
   mutate(sample_trans = ifelse(transition == 1, year, NA),
          sample_confl = ifelse(conflict_active == 1, year, NA), 
          # active_confl = sample_confl,
          dco = ifelse(!is.na(sample_confl) & year == sample_confl, 1, 0) # dco = "during conflict", ### binary, when conflict active
   ) %>% 
-  group_by(ccode_case) %>% 
+  group_by(country_case) %>% 
   mutate(sample_trans = min(sample_trans, na.rm = TRUE), 
          sample_confl = min(sample_confl, na.rm = TRUE) ) %>% 
   ## warning here that is addressed in next mutate
@@ -217,15 +226,15 @@ df <- df %>%
   #                        "convict_HRs", "convict_PostAuto",
   #                        "convict_Conflict")),
   #               function(x) ifelse(is.na(x), 0, x))) %>% 
-  arrange(ccode_case, year) %>%
-  group_by(ccode_case, isna = is.na(theta_mean_fariss) ) %>%
+  arrange(country_case, year) %>%
+  group_by(country_case, isna = is.na(theta_mean_fariss) ) %>%
   mutate(cum_theta_mean_fariss = ifelse(isna, NA, cummean(theta_mean_fariss)),
          sample_combi = ifelse(sample_trans + sample_confl > 0, 1, 0) ) %>%
   ungroup() %>%
   select(-isna)
 
   ### old cumulative measures from here
-  # group_by(ccode_case) %>% 
+  # group_by(country_case) %>% 
   # mutate(cum_trials_HRs = cumsum(trials_HRs), 
   #        cum_trials_PostAuto = cumsum(trials_PostAuto), 
   #        cum_trials_Conflict = cumsum(trials_Conflict),
@@ -233,7 +242,7 @@ df <- df %>%
   #        cum_convict_PostAuto = cumsum(convict_PostAuto), 
   #        cum_convict_Conflict = cumsum(convict_Conflict)) %>% 
   # ungroup() %>%
-  # group_by(ccode_case, sample_trans) %>% 
+  # group_by(country_case, sample_trans) %>% 
   # mutate(trans_cum_trials_PostAuto = cumsum(trials_PostAuto), 
   #        trans_cum_trials_PostAuto = ifelse(sample_trans == 0, 
   #                                           0, trans_cum_trials_PostAuto),
@@ -241,7 +250,7 @@ df <- df %>%
   #        trans_cum_convict_PostAuto = ifelse(sample_trans == 0, 
   #                                            0, trans_cum_convict_PostAuto)) %>% 
   # ungroup() %>% 
-  # group_by(ccode_case, sample_confl) %>% 
+  # group_by(country_case, sample_confl) %>% 
   # mutate(confl_cum_trials_Conflict = cumsum(trials_Conflict), 
   #        confl_cum_trials_Conflict = ifelse(sample_confl == 0, 
   #                                           0, confl_cum_trials_Conflict),
@@ -249,7 +258,7 @@ df <- df %>%
   #        confl_cum_convict_Conflict = ifelse(sample_confl == 0, 
   #                                            0, confl_cum_convict_Conflict)) %>% 
   # ungroup() %>% 
-  # group_by(ccode_case, sample_combi) %>% 
+  # group_by(country_case, sample_combi) %>% 
   # mutate(combi_cum_trials_fits = cumsum(trials_unionFit), 
   #        combi_cum_trials_fits = ifelse(
   #          sample_combi == 0, 0, combi_cum_trials_fits),
@@ -415,7 +424,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_reform_outcome",
                 recommend_vars = "reportRecommendInstitutionalReform", 
                 monitor_vars = "mandatePeriodicMonitoringImplementation")
 
-first <- c("country", "country_case", "year", "ccode_cow", "ccode_case", 
+first <- c("country", "country_case", "year", "ccode_cow", # "ccode_case", 
            "ccode_ksg", "country_id_vdem", "country_name", "histname", "m49", 
            "isoa3", "iso3c_wb", "region", "subregion", "intregion", 
            "region_wb", "micro_ksg")
@@ -430,7 +439,7 @@ df <- df %>%
 
 ### last step, created lags and saving the analyses dataset
 lags <- df %>%
-  select(-country, -ccode_cow, -ccode_case, -ccode_ksg, -country_id_vdem, 
+  select(-country, -ccode_cow, -ccode_ksg, -country_id_vdem, 
          -country_name, -histname, -m49, -isoa3, -iso3c_wb, -micro_ksg, 
          -region, -subregion, -intregion, -region_wb, -sample_trans, 
          -sample_confl, -sample_combi, -dtr, -aco, -dco, -pco) %>%
@@ -440,9 +449,8 @@ df %>%
   left_join(lags, 
             by = c("country_case" = "lag_country_case", 
                    "year" = "lag_year")) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_analyses.csv"), na = "") %>% 
-  ### for local GD access
-  write_csv("~/Dropbox/TJLab/TimoDataWork/analyses_datasets/tjet_analyses.csv", na = "")
+  write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_cy_analyses.csv"), na = "")
 # rm(trial_counts, conviction_counts, counts)
 
 ### downloads datasets
