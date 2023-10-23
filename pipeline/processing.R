@@ -353,7 +353,7 @@ db[["MegaBase"]][["TruthCommissions_Dyads"]] <-
               select(airtable_record_id, dyad_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
-  rename(ucdpConflictID = "dyad_id") %>%
+  rename(ucdpDyadID = "dyad_id") %>%
   drop_na()
 
 db[["MegaBase"]][["TruthCommissions"]] <- 
@@ -381,7 +381,7 @@ db[["MegaBase"]][["Amnesties_Dyads"]] <-
               select(airtable_record_id, dyad_id),
             by = "airtable_record_id") %>%
   select(-airtable_record_id) %>%
-  rename(ucdpConflictID = "dyad_id") %>%
+  rename(ucdpDyadID = "dyad_id") %>%
   drop_na()
 
 db[["MegaBase"]][["Amnesties"]] <- 
