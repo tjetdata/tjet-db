@@ -12,30 +12,51 @@ tabs <- c("Amnesties" = "amnestyID",
           "Trials" = "trialID", 
           "TruthCommissions" = "truthcommissionID", 
           "Vettings" = "vettingID")
-
-## for dev
-# tabname = "Reparations"
-# multitab = "Reparations_individualReparationsForm"
-
-map(names(tabs), function(tabname) {
-  map(names(db)[str_detect(names(db), paste(tabname, "_", sep = ""))], function(multitab) {
+multies <- map(names(tabs), function(tabname) {
+  multitabs <- names(db)[str_detect(names(db), paste(tabname, "_", sep = ""))]
+  temp <- map(multitabs, function(multitab) { 
     if("labelID" %in% names(db[[multitab]])) {
       db[[multitab]] %>% 
         left_join(db$labels, by = "labelID") %>% 
         group_by(across(all_of(tabs[[tabname]]))) %>%
         mutate(!!str_replace(multitab, paste(tabname, "_", sep = ""), "") := 
                  str_flatten(label, collapse ="; ")) %>% 
-        select(-labelID, -label)
-      
-    } 
-    
-  })
-  
-})
+        ungroup() %>% 
+        select(-labelID, -label) %>% 
+        distinct()
+    } else {
+      var <- names(db[[multitab]])[!names(db[[multitab]]) %in% tabs[[tabname]]]
+      db[[multitab]] %>% 
+        group_by(across(all_of(tabs[[tabname]]))) %>% 
+        mutate(across(all_of(var), 
+                      function(x) str_flatten(x, collapse ="; "))) %>%
+        ungroup() %>% 
+        distinct()
+    }
+  }) %>% 
+    reduce(full_join, by = tabs[[tabname]])
+  return(temp)
+}) 
+names(multies) <- names(tabs)
+# str(multies, 2)
 
+db[["Amnesties"]] <- db[["Amnesties"]] %>% 
+  left_join(multies[["Amnesties"]], by = "amnestyID") 
+db[["Reparations"]] <- db[["Reparations"]] %>% 
+  left_join(multies[["Reparations"]], by = "reparationID") 
+db[["Trials"]] <- db[["Trials"]] %>% 
+  left_join(multies[["Trials"]], by = "trialID") 
+db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>% 
+  left_join(multies[["TruthCommissions"]], by = "truthcommissionID") 
+db[["Vettings"]] <- db[["Vettings"]] %>% 
+  left_join(multies[["Vettings"]], by = "vettingID") 
 
 ### saving individual mechanism tables
+
 dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
+db[["codebook"]] %>% 
+  # write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_codebook.csv"), na = "")
 db[["Amnesties"]] %>% 
   write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
@@ -437,7 +458,10 @@ then <- names(df)[!names(df) %in% c(first, samples, not)]
 df <- df %>% 
   select(all_of(first), all_of(samples), all_of(then))
 
+# rm(trial_counts, conviction_counts, counts)
+
 ### last step, created lags and saving the analyses dataset
+
 lags <- df %>%
   select(-country, -ccode_cow, -ccode_ksg, -country_id_vdem, 
          -country_name, -histname, -m49, -isoa3, -iso3c_wb, -micro_ksg, 
@@ -445,17 +469,34 @@ lags <- df %>%
          -sample_confl, -sample_combi, -dtr, -aco, -dco, -pco) %>%
   mutate(year = year + 1) %>%
   rename_with(~ paste0("lag_", .x))
+
 df %>%
   left_join(lags, 
             by = c("country_case" = "lag_country_case", 
                    "year" = "lag_year")) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_cy_analyses.csv"), na = "")
-# rm(trial_counts, conviction_counts, counts)
 
-### downloads datasets
+### downloads datasets 
 # - include country IDs, transitions and our data
-#   - everything in our filters, but not other outcomes
-# - variables that should not be in public CY downloads file
-#   - regime_sample, reg_democ, reg_autoc, reg_trans, conflict
-#   - these not clear: transition, conflict_active
+# - everything in our filters, but not other outcomes
+# - variables that should not be in public CY downloads file?
+#   - regime_sample, reg_democ, reg_autoc, reg_trans, conflict, transition
+
+codebook <- db[["codebook"]] %>% 
+  filter(tables == "tjet_cy_analyses.csv") %>% 
+  filter(colname != "lag_*") %>% 
+  # filter(colname %in% c("sample_trans", "sample_confl", "sample_combi") ) %>% 
+  filter(is.na(source) | 
+           source %in% c("TJET", "COW", "Kristian S. Gleditsch", 
+                         "UN Statistics Division", "World Bank") | 
+           colname %in% c("country_id_vdem", "country_name", "histname") ) %>% 
+  select(colname, definition, source) %>% 
+  left_join(read_csv(here::here("data", "sources.csv")), 
+            by = "source") %>% 
+  write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
+# codebook$colname[!codebook$colname %in% names(df)]
+
+df %>%
+  select(all_of(codebook$colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "")
