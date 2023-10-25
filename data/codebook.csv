@@ -315,6 +315,8 @@ tjet_cy_analyses.csv,cct_for_hrs_con_opp,"count of convictions, by country of ac
 tjet_cy_analyses.csv,acc_for_hrs_con_opp,"count of accused in ongoing trials, by country of accused (foreign trials, human rights & conflict nexus, opposition members)",TJET,
 tjet_cy_analyses.csv,crt_for_hrs_con_opp,"conviction rate, cct/acc (foreign trials, human rights & conflict nexus, opposition members)",TJET,
 tjet_cy_analyses.csv,sen_for_hrs_con_opp,"total sum of sentences scale, by country of accused & conviction year (foreign trials, human rights & conflict nexus, opposition members)",TJET,
+tjet_cy_analyses.csv,trs_dom_dtj_sta,"count of trials beginning, by country of accused & start year (domestic trials, post-autocratic transition nexus, state agents)",TJET,
+tjet_cy_analyses.csv,tro_dom_dtj_sta,"count of trials ongoing, by country of accused (domestic trials, post-autocratic transition nexus, state agents)",TJET,
 tjet_cy_analyses.csv,trs_dom_hrs_sta,"count of trials beginning, by country of accused & start year (domestic trials, human rights nexus, state agents)",TJET,
 tjet_cy_analyses.csv,tro_dom_hrs_sta,"count of trials ongoing, by country of accused (domestic trials, human rights nexus, state agents)",TJET,
 tjet_cy_analyses.csv,tfc_dom_hrs_sta,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, human rights nexus, state agents)",TJET,

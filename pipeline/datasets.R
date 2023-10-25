@@ -337,6 +337,9 @@ df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "h
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
 
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
+
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
@@ -485,8 +488,12 @@ df %>%
 
 codebook <- db[["codebook"]] %>% 
   filter(tables == "tjet_cy_analyses.csv") %>% 
-  filter(colname != "lag_*") %>% 
+  filter(colname != "lag_*")
   # filter(colname %in% c("sample_trans", "sample_confl", "sample_combi") ) %>% 
+names(df)[!names(df) %in% codebook$colname]
+codebook$colname[!codebook$colname %in% names(df)]
+
+codebook %>% 
   filter(is.na(source) | 
            source %in% c("TJET", "COW", "Kristian S. Gleditsch", 
                          "UN Statistics Division", "World Bank") | 
@@ -495,7 +502,6 @@ codebook <- db[["codebook"]] %>%
   left_join(read_csv(here::here("data", "sources.csv")), 
             by = "source") %>% 
   write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
-# codebook$colname[!codebook$colname %in% names(df)]
 
 df %>%
   select(all_of(codebook$colname)) %>% 
