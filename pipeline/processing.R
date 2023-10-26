@@ -29,7 +29,7 @@ pkeys <- c(
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
              "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
              "Challenges", "VettingComparison", "ICDB", "BIcomparison", 
-             "TJETmembers", "SurveysMeta")
+             "TJETmembers", "AdHocHybrid")
 
 ### check metadata table for non-existing fields
 ### can use this to determine which fields can be deleted from dev DB
@@ -921,6 +921,30 @@ attr(db$ConflictDyads, "spec") <- NULL
 attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
 
+db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
+  unnest(country) %>% 
+  rename(airtable_record_id = country) %>% 
+  left_join(tjet[["MegaBase"]][["Countries"]] %>% 
+              select(airtable_record_id, country),
+            by = "airtable_record_id") %>% 
+  mutate(results_tables = results_tables[[1]][["filename"]]) %>% 
+  select(country, date_start, date_end, text_context, text_results, 
+         text_methods, bibtex_key, results_tables) 
+
+filename <- db[["SurveysMeta"]][["results_tables"]]
+surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename), skip = 0)
+last <- names(surveytab)
+last[str_detect(last, "...")] <- NA
+last <- fillr::fill_missing_previous(last)
+last[is.na(last)] <- ""
+middle <- unlist(fillr::fill_missing_previous(surveytab[1, ]), use.names = FALSE)
+middle[is.na(middle)] <- ""
+new_names <- str_trim(paste(surveytab[2, ], last))
+# new_names <- str_replace(new_names, fixed(" (2005)"), "")
+names(surveytab) <- new_names
+db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-c(1:2), ] %>%
+    fill(Section, Question, Responses, .direction = "down")
+  
 ### checking data tables
 # str(db, 1)
 
@@ -928,5 +952,6 @@ attr(db$ConflictDyads, "problems") <- NULL
 save(db, file = here::here("data", "tjetdb.RData"))
 
 ### cleaning up workspace environment
-rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, 
+rm(countrylist, translist, confllist, 
+   amnesties, reparations, tcs, vettings, 
    trials, domestic, intl, foreign) 

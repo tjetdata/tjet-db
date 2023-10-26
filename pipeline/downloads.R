@@ -20,7 +20,7 @@ to_download <-
       "select_options", "metadata", "UCDPcountries", "TJETmembers", 
       "Experts", "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges", 
       "VettingComparison", "BIcomparison", "ICC", "Investigations", 
-      "SurveysMeta"),
+      "AdHocHybrid", "SurveysMeta"),
     "appF8HAH7SN7C09cU" = c(
       "Trials", "Accused", "CourtLevels",
       "Countries", "Transitions", "Conflicts", "Dyads", "metadata")
@@ -44,3 +44,9 @@ tjet <- map(names(to_download), function(base_id) {
 })
 names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
 save(tjet, to_download, file = here::here("data", "tjet.RData"))
+
+fileurl <- tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]][[1]][["url"]]
+filepath <- here::here("data", "downloads", 
+                       tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]][[1]][["filename"]])
+download.file(url = fileurl, 
+              destfile = filepath)
