@@ -936,10 +936,12 @@ surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename), skip =
 last <- names(surveytab)
 last[str_detect(last, "...")] <- NA
 last <- fillr::fill_missing_previous(last)
+last <- str_replace(last, fixed("%"), "")
+last <- str_replace(last, fixed("N"), "_N")
 last[is.na(last)] <- ""
 middle <- unlist(fillr::fill_missing_previous(surveytab[1, ]), use.names = FALSE)
 middle[is.na(middle)] <- ""
-new_names <- str_trim(paste(surveytab[2, ], last))
+new_names <- str_trim(paste(surveytab[2, ], last, sep = ""))
 # new_names <- str_replace(new_names, fixed(" (2005)"), "")
 names(surveytab) <- new_names
 db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-c(1:2), ] %>%
