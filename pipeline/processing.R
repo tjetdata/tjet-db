@@ -921,30 +921,31 @@ attr(db$ConflictDyads, "spec") <- NULL
 attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
 
-db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
+db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>% 
   unnest(country) %>% 
   rename(airtable_record_id = country) %>% 
   left_join(tjet[["MegaBase"]][["Countries"]] %>% 
               select(airtable_record_id, country),
             by = "airtable_record_id") %>% 
   mutate(results_tables = results_tables[[1]][["filename"]]) %>% 
-  select(country, date_start, date_end, text_context, text_results, 
-         text_methods, bibtex_key, results_tables) 
+  select(country, year, date_start, date_end, section_title, text_context, 
+         text_results, text_methods, survey_design, sample_size, 
+         bibtex_key, results_tables)
 
 filename <- db[["SurveysMeta"]][["results_tables"]]
-surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename), skip = 0)
+surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename))
 last <- names(surveytab)
 last[str_detect(last, "...")] <- NA
 last <- fillr::fill_missing_previous(last)
 last <- str_replace(last, fixed("%"), "")
 last <- str_replace(last, fixed("N"), "_N")
 last[is.na(last)] <- ""
-middle <- unlist(fillr::fill_missing_previous(surveytab[1, ]), use.names = FALSE)
-middle[is.na(middle)] <- ""
-new_names <- str_trim(paste(surveytab[2, ], last, sep = ""))
-# new_names <- str_replace(new_names, fixed(" (2005)"), "")
-names(surveytab) <- new_names
-db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-c(1:2), ] %>%
+names(surveytab) <- str_trim(paste(surveytab[2, ], last, sep = ""))
+tooltips <- unlist(fillr::fill_missing_previous(surveytab[1, ]), use.names = FALSE)
+names(tooltips) <- names(surveytab)
+surveytab[1, ] <- as.list(tooltips)
+
+db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-2, ] %>%
     fill(Section, Question, Responses, .direction = "down")
   
 ### checking data tables
