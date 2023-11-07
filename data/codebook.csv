@@ -25,7 +25,7 @@ CountryYears,tcs,count of truth commissions per country and year of creation,TJE
 CountryYears,tcs_SGBV,"binary for whether truth commissions for country-year included any that addressed SGBV (1 = yes, 0 = no) ",TJET,
 CountryYears,vettings,count of vetting policies per country and year of creation,TJET,vetting_polisies
 CountryYears,,[see other fields to replace this],,policies_only_sgbv
-"CountryYears, Countries",tjet_focus,TJET focuse country (i.e. there will be a more detailed country case study) ,TJET,tjet_focus
+"CountryYears, Countries",tjet_focus,TJET focus country (i.e. there will be a more detailed country case study) ,TJET,tjet_focus
 Countries,beg,first year in TJET dataset,,
 Countries,end,last year in TJET dataset,,
 Countries,region_sub_un,United Nations detailed regions identifier; combination of intermediate and sub-region categories,,
