@@ -594,12 +594,12 @@ countrylist <- db$Countries %>%
          txt_regime = str_squish(txt_regime), 
          txt_conflict = str_squish(txt_conflict), 
          txt_TJ = str_squish(txt_TJ) ) %>% 
-  select(country, ccode, ccode_case, ccode_ksg, m49, country_id_vdem, 
-         beg, end, micro_ksg, region, region_sub_un, region_wb, 
+  select(country, country_fr, ccode, ccode_case, ccode_ksg, m49, isoa3, 
+         country_id_vdem, beg, end, micro_ksg, region, region_sub_un, region_wb, 
          focus, factsheet, txt_intro, txt_regime, txt_conflict, txt_TJ) %>% 
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
-
+  
 # countrylist %>%
 #   select(country, beg, end, ccode, ccode_case) %>%
 #   rename("country_case"= "country") %>%
@@ -614,7 +614,7 @@ countrylist <- countrylist %>%
                                      "Serbia & Montenegro") ) %>%
               rename("country_case"= "country"),
           by = c("ccode_case" = "ccode")) %>% 
-  select(country, country_case, ccode, ccode_case, ccode_ksg, m49, 
+  select(country, country_case, country_fr, ccode, ccode_case, ccode_ksg, m49, isoa3, 
          country_id_vdem, beg, end, micro_ksg, region, region_sub_un, region_wb, 
          tjet_focus, factsheet, txt_intro, txt_regime, txt_conflict, txt_TJ) 
 
