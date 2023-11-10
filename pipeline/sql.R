@@ -25,8 +25,17 @@ con <- dbConnect(RMariaDB::MariaDB(),
 #                   PWD = rstudioapi::askForPassword("Database password:"), 
 #                   Database = "fckdtuwsqu", timeout = 10)
 
+tabs <- c("Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook", 
+          "ConflictDyads", "Countries", "CountryYears", "CourtLevels", 
+          "fr_Countries", "labels", "Reparations", 
+          "Reparations_collectiveReparationsEligibility", 
+          "Reparations_individualReparationsEligible", "SurveysMeta", 
+          "Transitions", "Trials", "TruthCommissions", 
+          "Uganda_2005_descriptives", "Vettings", 
+          "Vettings_targetingAffiliation")
+
 ### write all tables to the database (this overwrites existing tables)
-map(names(db), function(table_name) {
+map(tabs, function(table_name) {
   print(table_name)
   dbWriteTable(conn = con, 
                name = table_name, 
