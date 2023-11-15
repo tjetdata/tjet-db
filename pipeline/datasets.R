@@ -5,6 +5,10 @@ require(tidyverse)
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 # str(db, 1)
 
+timestamp <- db[["db_timestamp"]] %>% 
+  mutate(tjet_timestamp = as.character(date(tjet_timestamp))) %>% 
+  unlist(use.names = FALSE)
+
 ### dealing with multi-select fields
 
 tabs <- c("Amnesties" = "amnestyID", 
@@ -55,27 +59,35 @@ db[["Vettings"]] <- db[["Vettings"]] %>%
 
 dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
 db[["codebook"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
   # write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_codebook.csv"), na = "")
 db[["Amnesties"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
 db[["TruthCommissions"]] %>%
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
 db[["Reparations"]] %>%
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_reparations.csv"), na = "")
 db[["Trials"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_trials.csv"), na = "")
 db[["Accused"]] %>%
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_accused.csv"), na = "")
 db[["CourtLevels"]] %>%
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
 db[["Vettings"]] %>%
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_vettings.csv"), na = "")
 
@@ -339,6 +351,10 @@ df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "h
 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
@@ -353,6 +369,13 @@ df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "c
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
@@ -477,6 +500,7 @@ df %>%
   left_join(lags, 
             by = c("country_case" = "lag_country_case", 
                    "year" = "lag_year")) %>% 
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_cy_analyses.csv"), na = "")
 
@@ -501,8 +525,10 @@ codebook %>%
   select(colname, definition, source) %>% 
   left_join(read_csv(here::here("data", "sources.csv")), 
             by = "source") %>% 
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
 
 df %>%
   select(all_of(codebook$colname)) %>% 
+  mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "")

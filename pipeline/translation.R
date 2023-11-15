@@ -1,4 +1,5 @@
 ### packages
+require(tidyverse)
 require(deeplr)
 require(keyring)
 
@@ -40,15 +41,15 @@ translate <- function(col) {
 }
 if(go_ahead) {
   ## do not translate the country field; this is used in the website structure
+  start <- Sys.time()
   db[["fr_Countries"]] <- db[["Countries"]] %>% 
     rowwise() %>% ### deeplr does not handle NAs well; this seems to be a work-around
-    mutate(# country = ifelse(is.na(country), NA, translate(country)), 
-           txt_intro = ifelse(is.na(txt_intro), NA, translate(txt_intro)), 
-           txt_regime = ifelse(is.na(txt_regime), NA, translate(txt_regime)), 
-           txt_conflict = ifelse(is.na(txt_conflict), 
-                                 NA, translate(txt_conflict)), 
-           txt_TJ = ifelse(is.na(txt_TJ), NA, translate(txt_TJ))) %>%
+    mutate(txt_intro = ifelse(is.na(txt_intro), "", translate(txt_intro)), 
+           txt_regime = ifelse(is.na(txt_regime), "", translate(txt_regime)), 
+           txt_conflict = ifelse(is.na(txt_conflict), "", translate(txt_conflict)), 
+           txt_TJ = ifelse(is.na(txt_TJ), "", translate(txt_TJ))) %>%
     ungroup()
+  Sys.time() - start
 }
 
 ### saving locally 

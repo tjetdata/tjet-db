@@ -43,6 +43,7 @@ tjet <- map(names(to_download), function(base_id) {
   })
 })
 names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
+tjet[["db_timestamp"]] <- Sys.time()
 save(tjet, to_download, file = here::here("data", "tjet.RData"))
 
 fileurl <- tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]][[1]][["url"]]

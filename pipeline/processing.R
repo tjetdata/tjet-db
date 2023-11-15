@@ -600,7 +600,7 @@ countrylist <- db$Countries %>%
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
   
-# countrylist %>%
+# countrylist %>% 
 #   select(country, beg, end, ccode, ccode_case) %>%
 #   rename("country_case"= "country") %>%
 #   group_by(ccode_case) %>%
@@ -619,7 +619,8 @@ countrylist <- countrylist %>%
          tjet_focus, factsheet, txt_intro, txt_regime, txt_conflict, txt_TJ) 
 
 # countrylist %>%
-#   filter(country != country_case) 
+#   filter(country != country_case) %>%
+#   print(n = Inf)
   
 ### clean up text fields 
 tabs <- c("Amnesties", "Reparations", "TruthCommissions", 
@@ -756,8 +757,8 @@ confllist <- read_csv("conflicts/confl_dyads.csv", show_col_types = FALSE) %>%
 
 translist <- read_csv("transitions/transitions_new_revised.csv",
                       show_col_types = FALSE) %>% 
-  mutate(country = ifelse(country == "Eswatini", 
-                          "Swaziland (Eswatini)", country), 
+  mutate(
+    # country = ifelse(country == "Eswatini", "Swaziland (Eswatini)", country), 
          country = ifelse(country == "Republic of Vietnam", 
                           "Vietnam (Republic of / South)", country),
          country = ifelse(country == "St. Vincent", 
@@ -947,11 +948,11 @@ surveytab[1, ] <- as.list(tooltips)
 
 db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-2, ] %>%
     fill(Section, Question, Responses, .direction = "down")
-  
-### checking data tables
-# str(db, 1)
 
 ### saving database
+db[["db_timestamp"]] <- tjet[["db_timestamp"]] %>% tibble(tjet_timestamp = .)
+
+# str(db, 1)
 save(db, file = here::here("data", "tjetdb.RData"))
 
 ### cleaning up workspace environment
