@@ -22,8 +22,8 @@ to_download <-
       "VettingComparison", "BIcomparison", "ICC", "Investigations", 
       "AdHocHybrid", "SurveysMeta"),
     "appF8HAH7SN7C09cU" = c(
-      "Trials", "Accused", "CourtLevels",
-      "Countries", "Transitions", "Conflicts", "Dyads", "metadata")
+      "Trials", "Accused", "CourtLevels", "Countries", "Transitions", 
+      "Conflicts", "Dyads", "metadata", "Ethiopia")
   )
 
 ### the countries and conflicts tables are currently not synced between 
