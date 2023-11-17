@@ -42,13 +42,15 @@ translate <- function(col) {
 if(go_ahead) {
   ## do not translate the country field; this is used in the website structure
   start <- Sys.time()
+  order <- names(db[["Countries"]])
   db[["fr_Countries"]] <- db[["Countries"]] %>% 
     rowwise() %>% ### deeplr does not handle NAs well; this seems to be a work-around
     mutate(txt_intro = ifelse(is.na(txt_intro), "", translate(txt_intro)), 
            txt_regime = ifelse(is.na(txt_regime), "", translate(txt_regime)), 
            txt_conflict = ifelse(is.na(txt_conflict), "", translate(txt_conflict)), 
            txt_TJ = ifelse(is.na(txt_TJ), "", translate(txt_TJ))) %>%
-    ungroup()
+    ungroup() %>%
+    select(all_of(order))
   Sys.time() - start
 }
 

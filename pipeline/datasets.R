@@ -55,42 +55,6 @@ db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
 db[["Vettings"]] <- db[["Vettings"]] %>% 
   left_join(multies[["Vettings"]], by = "vettingID") 
 
-### saving individual mechanism tables
-
-dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
-db[["codebook"]] %>% 
-  mutate(tjet_version = timestamp) %>% 
-  # write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_codebook.csv"), na = "")
-db[["Amnesties"]] %>% 
-  mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
-db[["TruthCommissions"]] %>%
-  mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
-db[["Reparations"]] %>%
-  mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_reparations.csv"), na = "")
-db[["Trials"]] %>% 
-  mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_trials.csv"), na = "")
-db[["Accused"]] %>%
-  mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_accused.csv"), na = "")
-db[["CourtLevels"]] %>%
-  mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
-db[["Vettings"]] %>%
-  mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_vettings.csv"), na = "")
-
 ### helpers for CY measures
 source("functions/TCgoals.R")
 source("functions/TCmeasure.R")
@@ -154,7 +118,7 @@ sample_cy <- c(
 
 ### if country-year-dataset repo is made public, could get directly from there
 ### this currently does not work, but here is sample code to do so; if public, 
-### would have to reset token because had accidentally included here before
+### would have to reset token because had accidentally included in repo before
 # download.file(
 #   url = "https://github.com/timothoms/country-year-dataset/raw/main/cy_covariates.RData?raw=True",
 #   destfile = here::here("data", "cy_covariates.RData"), 
@@ -484,8 +448,6 @@ then <- names(df)[!names(df) %in% c(first, samples, not)]
 df <- df %>% 
   select(all_of(first), all_of(samples), all_of(then))
 
-# rm(trial_counts, conviction_counts, counts)
-
 ### last step, created lags and saving the analyses dataset
 
 lags <- df %>%
@@ -496,10 +458,11 @@ lags <- df %>%
   mutate(year = year + 1) %>%
   rename_with(~ paste0("lag_", .x))
 
+dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
+
 df %>%
-  left_join(lags, 
-            by = c("country_case" = "lag_country_case", 
-                   "year" = "lag_year")) %>% 
+  left_join(lags, by = c("country_case" = "lag_country_case", 
+                         "year" = "lag_year")) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_cy_analyses.csv"), na = "")
@@ -513,22 +476,58 @@ df %>%
 codebook <- db[["codebook"]] %>% 
   filter(tables == "tjet_cy_analyses.csv") %>% 
   filter(colname != "lag_*")
-  # filter(colname %in% c("sample_trans", "sample_confl", "sample_combi") ) %>% 
 names(df)[!names(df) %in% codebook$colname]
 codebook$colname[!codebook$colname %in% names(df)]
 
 codebook %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_codebook_analyses.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_codebook_analyses.csv"), na = "")
+
+db[["dl_tjet_codebook"]] <- codebook %>% 
   filter(is.na(source) | 
            source %in% c("TJET", "COW", "Kristian S. Gleditsch", 
                          "UN Statistics Division", "World Bank") | 
            colname %in% c("country_id_vdem", "country_name", "histname") ) %>% 
   select(colname, definition, source) %>% 
-  left_join(read_csv(here::here("data", "sources.csv")), 
-            by = "source") %>% 
+  left_join(read_csv(here::here("data", "sources.csv")), by = "source") %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
 
-df %>%
+db[["dl_tjet_cy"]] <- df %>%
   select(all_of(codebook$colname)) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "")
+
+save(db, file = here::here("data", "tjetdb.RData"))
+
+### saving individual mechanism tables
+
+db[["Amnesties"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
+db[["TruthCommissions"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
+db[["Reparations"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_reparations.csv"), na = "")
+db[["Trials"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_trials.csv"), na = "")
+db[["Accused"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_accused.csv"), na = "")
+db[["CourtLevels"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
+db[["Vettings"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_vettings.csv"), na = "")

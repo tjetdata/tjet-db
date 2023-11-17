@@ -12,13 +12,15 @@ load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 # str(db, 1)
 
 tabs <- c("Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook", 
-          "ConflictDyads", "Countries", "CountryYears", "CourtLevels",
-          "fr_Countries", "labels", "Reparations",
+          "ConflictDyads", "Countries", "CountryYears", "CourtLevels", 
+          "dl_tjet_cy", "dl_tjet_codebook", "labels", "Reparations",
           "Reparations_collectiveReparationsEligibility",
           "Reparations_individualReparationsEligible", "SurveysMeta",
           "Transitions", "Trials", "TruthCommissions",
           "Uganda_2005_descriptives", "Vettings",
           "Vettings_targetingAffiliation")
+
+# "fr_Countries"
 
 ### two different ways of establishing the same database connection
 ### (note that cloudways requires the local IP address to be added)
