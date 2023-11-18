@@ -15,10 +15,8 @@ conflicted::conflict_prefer("fixed", "stringr")
 
 ### downloading all data from Airtable MegaBase
 source(here::here("pipeline", "downloads.R"))
-### getting the production database ready 
+### processing raw data into production database & creating the TJET datasets 
 source(here::here("pipeline", "processing.R"))
-### creating the TJET analyses dataset 
-source(here::here("pipeline", "datasets.R"))
 ### translating necessary field into French
 source(here::here("pipeline", "translation.R"))
 ### writing the production database to the Cloudways server

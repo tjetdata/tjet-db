@@ -29,7 +29,7 @@ pkeys <- c(
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
              "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
              "Challenges", "VettingComparison", "ICDB", "BIcomparison", 
-             "TJETmembers", "AdHocHybrid")
+             "TJETmembers", "AdHocHybrid", "Ethiopia")
 
 ### check metadata table for non-existing fields
 ### can use this to determine which fields can be deleted from dev DB
@@ -544,7 +544,22 @@ rm(keep_amnesties)
 #   filter(torture == 1 | SGBV == 1 | forcedDisplacement == 1 | 
 #            torture == 1 | disappearance == 1 | 
 #            focusedPast == 1 | investigatePatternAbuse == 1)
-  
+
+db[["MegaBase"]][["Investigations"]] <-
+  db[["MegaBase"]][["Investigations"]] %>% 
+  rename(year = year_ongoing) %>% 
+  mutate(uninv = 1, 
+         ccode_cow = ifelse(ccode_cow == 860 & year == 1999, 850, ccode_cow),
+         ccode_cow = ifelse(ccode_cow == 541 & year == 1973, 235, ccode_cow)) %>% 
+  select(ccode_cow, year, uninv, 
+         uninv_dompros, uninv_evcoll, uninv_intlpros) %>% 
+  filter(year > 1969 & year < 2023) %>% 
+  group_by(ccode_cow, year) %>% 
+  reframe(uninv = max(uninv),  
+            uninv_dompros = max(uninv_dompros),  
+            uninv_evcoll = max(uninv_evcoll),  
+            uninv_intlpros = max(uninv_intlpros))
+
 ### compare numbers of records again
 ### last column is 
 dim_last <- map(db, function(dat) {
@@ -949,13 +964,574 @@ surveytab[1, ] <- as.list(tooltips)
 db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-2, ] %>%
     fill(Section, Question, Responses, .direction = "down")
 
-### saving database
-db[["db_timestamp"]] <- tjet[["db_timestamp"]] %>% tibble(tjet_timestamp = .)
+### cleaning up workspace environment
+rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, 
+   trials, domestic, intl, foreign) 
 
-# str(db, 1)
+### database version 
+db[["db_timestamp"]] <- tjet[["db_timestamp"]] %>% tibble(tjet_timestamp = .)
+timestamp <- db[["db_timestamp"]] %>% 
+  mutate(tjet_timestamp = as.character(date(tjet_timestamp))) %>% 
+  unlist(use.names = FALSE)
+
+### dealing with multi-select fields
+
+tabs <- c("Amnesties" = "amnestyID", 
+          "Reparations" = "reparationID", 
+          "Trials" = "trialID", 
+          "TruthCommissions" = "truthcommissionID", 
+          "Vettings" = "vettingID")
+multies <- map(names(tabs), function(tabname) {
+  multitabs <- names(db)[str_detect(names(db), paste(tabname, "_", sep = ""))]
+  temp <- map(multitabs, function(multitab) { 
+    if("labelID" %in% names(db[[multitab]])) {
+      db[[multitab]] %>% 
+        left_join(db$labels, by = "labelID") %>% 
+        group_by(across(all_of(tabs[[tabname]]))) %>%
+        mutate(!!str_replace(multitab, paste(tabname, "_", sep = ""), "") := 
+                 str_flatten(label, collapse ="; ")) %>% 
+        ungroup() %>% 
+        select(-labelID, -label) %>% 
+        distinct()
+    } else {
+      var <- names(db[[multitab]])[!names(db[[multitab]]) %in% tabs[[tabname]]]
+      db[[multitab]] %>% 
+        group_by(across(all_of(tabs[[tabname]]))) %>% 
+        mutate(across(all_of(var), 
+                      function(x) str_flatten(x, collapse ="; "))) %>%
+        ungroup() %>% 
+        distinct()
+    }
+  }) %>% 
+    reduce(full_join, by = tabs[[tabname]])
+  return(temp)
+}) 
+names(multies) <- names(tabs)
+# str(multies, 2)
+
+db[["Amnesties"]] <- db[["Amnesties"]] %>% 
+  left_join(multies[["Amnesties"]], by = "amnestyID") 
+db[["Reparations"]] <- db[["Reparations"]] %>% 
+  left_join(multies[["Reparations"]], by = "reparationID") 
+db[["Trials"]] <- db[["Trials"]] %>% 
+  left_join(multies[["Trials"]], by = "trialID") 
+db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>% 
+  left_join(multies[["TruthCommissions"]], by = "truthcommissionID") 
+db[["Vettings"]] <- db[["Vettings"]] %>% 
+  left_join(multies[["Vettings"]], by = "vettingID") 
+
+### helpers for CY measures
+source("functions/TCgoals.R")
+source("functions/TCmeasure.R")
+source("functions/TrialsMeasure.R")
+sample_cy <- c(
+  glo = "global", ### all, all the time, i.e. full dataset
+  dtr = "democratic transition", ### binary, from first transition year
+  aco = "all conflicts", ### binary, from first conflict year
+  dco = "during conflict", ### binary, when conflict active
+  pco = "post-conflict") ### binary, after active conflict ended
+
+### old version of trial counts 
+# trial_counts <- db[["Trials"]] %>% 
+#   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
+#   select(ccode_Accused, yearStart, HRs, 
+#          fitsPostAutocraticTJ, fitsConflictTJ) %>%
+#   mutate(fitsBoth = ifelse(fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0),
+#          HRsConfl = ifelse(HRs + fitsPostAutocraticTJ + fitsConflictTJ > 0, 
+#                            1, 0)) %>%
+#   arrange(ccode_Accused, yearStart) %>% 
+#   group_by(ccode_Accused, yearStart) %>% 
+#   mutate(trials_HRs = sum(HRs) , 
+#          trials_PostAuto = sum(fitsPostAutocraticTJ), 
+#          trials_Conflict = sum(fitsConflictTJ), 
+#          trials_HRsConfl = sum(HRsConfl), 
+#          trials_unionFit = sum(fitsBoth) ) %>% 
+#   select(ccode_Accused, yearStart, trials_HRs, trials_PostAuto, 
+#          trials_Conflict, trials_HRsConfl, trials_unionFit) %>% 
+#   distinct() %>% 
+#   rename(ccode = ccode_Accused, 
+#          year = yearStart) %>% 
+#   filter(year >= 1970 & year <= 2020) 
+
+### old version of trial conviction counts 
+# conviction_counts <- db[["Trials"]] %>% 
+#   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
+#   select(ccode_Accused, firstConvictionYear_min, HRs, 
+#          fitsPostAutocraticTJ, fitsConflictTJ) %>%
+#   mutate(fitsBoth = ifelse(fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0),
+#          firstConvictionYear_min = as.integer(firstConvictionYear_min)) %>%
+#   filter(!is.na(firstConvictionYear_min) ) %>% 
+#   arrange(ccode_Accused, firstConvictionYear_min) %>% 
+#   group_by(ccode_Accused, firstConvictionYear_min) %>% 
+#   mutate(convict_HRs = sum(HRs) , 
+#          convict_PostAuto = sum(fitsPostAutocraticTJ) , 
+#          convict_Conflict = sum(fitsConflictTJ), 
+#          convict_unionFit = sum(fitsBoth) ) %>% 
+#   select(ccode_Accused, firstConvictionYear_min, convict_HRs, 
+#          convict_PostAuto, convict_Conflict, 
+#          convict_unionFit) %>% 
+#   distinct() %>% 
+#   rename(ccode = ccode_Accused, 
+#          year = firstConvictionYear_min) %>% 
+#   filter(year >= 1970 & year <= 2020)
+
+### merging of old count variables 
+# counts <- full_join(trial_counts, conviction_counts, by = c("ccode", "year")) %>% 
+#   mutate(ccode = ifelse(ccode == 679 & year < 1990, 678, ccode)) # Yemen YAR
+
+### merging it all together
+
+### if country-year-dataset repo is made public, could get directly from there
+### this currently does not work, but here is sample code to do so; if public, 
+### would have to reset token because had accidentally included in repo before
+# download.file(
+#   url = "https://github.com/timothoms/country-year-dataset/raw/main/cy_covariates.RData?raw=True",
+#   destfile = here::here("data", "cy_covariates.RData"), 
+#   method = "auto", cacheOK = FALSE,
+#   headers = c(
+#     Authorization = "Authorization: token INSERT TOKEN HERE",
+#     Accept = "Accept: application/vnd.github.v3.raw"))
+
+df <- readRDS(here::here("data", "cy_covariates.rds"))
+not <- c("cid_who", "ldc", "lldc", "sids", "income_wb", "region_wb2")
+first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", 
+           "country_id_vdem", "country_name", "histname", "m49", "isoa3", 
+           "iso3c_wb", "region", "subregion", "intregion", "region_wb", 
+           "micro_ksg")
+then <- names(df)[!names(df) %in% c(first, not)]
+df <- df %>%
+  select(all_of(first), all_of(then)) %>%
+  mutate(ccode_cow = ifelse(is.na(ccode_cow) & country == "Soviet Union",
+                            365, ccode_cow),
+         ccode_cow = ifelse(is.na(ccode_cow) & country == "Serbia",
+                            345, ccode_cow),
+         ccode_cow = ifelse(is.na(ccode_cow) & country == "Serbia & Montenegro",
+                            345, ccode_cow),
+         ccode_cow = ifelse(is.na(ccode_cow) & country == "North Vietnam",
+                            816, ccode_cow),
+         ccode_cow = ifelse(year == 1990 & country == "West Germany",
+                            255, ccode_cow)) %>%
+  left_join(db[["CountryYears"]] %>%
+              select(-cyID, -country, -country_case, -country_label,
+                     -ccode_case, -beg, -end, -region, -tjet_focus),
+            by = c("ccode_cow" = "ccode",
+                   "ccode_ksg" = "ccode_ksg",
+                   "year" = "year")) %>% # losing Slovenia 1991 here
+  full_join(db[["ICC"]] %>% select(-country),
+            by = "ccode_cow" ) %>%
+  mutate(ICC_referral = case_when(is.na(ICC_referral) ~ 0,
+                                  year < ICC_referral ~ 0,
+                                  year >= ICC_referral ~ 1),
+         ICC_prelim_exam = case_when(
+           is.na(ICC_prelim_exam) ~ 0,
+           year < ICC_prelim_exam |
+             year > ICC_prelimEnd |
+             year > ICC_investigation ~ 0,
+           year >= ICC_prelim_exam ~ 1),
+         ICC_investigation = case_when(is.na(ICC_investigation) ~ 0,
+                                       year < ICC_investigation ~ 0,
+                                       year >= ICC_investigation ~ 1),
+         ICC_arrest_warrant = case_when(is.na(ICC_arrest_warrant) ~ 0,
+                                        year < ICC_arrest_warrant ~ 0,
+                                        year >= ICC_arrest_warrant ~ 1),
+         ICC_arrestAppear = case_when(is.na(ICC_arrestAppear) ~ 0,
+                                      year < ICC_arrestAppear ~ 0,
+                                      year >= ICC_arrestAppear ~ 1),
+         ICC_confirm_charges = case_when(is.na(ICC_confirm_charges) ~ 0,
+                                         year < ICC_confirm_charges ~ 0,
+                                         year >= ICC_confirm_charges ~ 1),
+         ICC_proceedings = case_when(
+           is.na(ICC_proceedings) ~ 0,
+           year < ICC_proceedings | year > ICC_proceedEnd ~ 0,
+           year >= ICC_proceedings & year <= ICC_proceedEnd ~ 1),
+         ICC_withdrawnDismissed = case_when(
+           is.na(ICC_withdrawnDismissed) ~ 0,
+           year < ICC_withdrawnDismissed ~ 0,
+           year >= ICC_withdrawnDismissed ~ 1)
+  ) %>%
+  select(-ICC_prelimEnd, -ICC_proceedEnd) %>%
+  left_join(read_csv("data/icc_statesparty.csv") %>%
+              filter(ccode != 511) %>%
+              mutate(ccode = ifelse(ccode == 260 &
+                                      year == 1990, 255, ccode)) %>%
+              select(-country),
+            by = c("ccode_cow" = "ccode", "year" = "year") ) %>%
+  left_join(db[["Investigations"]], by = c("ccode_cow", "year")) %>% 
+  mutate(uninv = ifelse(is.na(uninv), 0, uninv), 
+         uninv_dompros = ifelse(is.na(uninv_dompros), 0, uninv_dompros),
+         uninv_evcoll = ifelse(is.na(uninv_evcoll), 0, uninv_evcoll),
+         uninv_intlpros = ifelse(is.na(uninv_intlpros), 0, uninv_intlpros)) %>% 
+  # filter(year <= 2020) %>% 
+  mutate(sample_trans = ifelse(transition == 1, year, NA),
+         sample_confl = ifelse(conflict_active == 1, year, NA), 
+         # active_confl = sample_confl,
+         dco = ifelse(!is.na(sample_confl) & year == sample_confl, 1, 0) # dco = "during conflict", ### binary, when conflict active
+  ) %>% 
+  group_by(country_case) %>% 
+  mutate(sample_trans = min(sample_trans, na.rm = TRUE), 
+         sample_confl = min(sample_confl, na.rm = TRUE) ) %>% 
+  ## warning here that is addressed in next mutate
+  ungroup() %>%
+  mutate(pco = ifelse(year > sample_confl & dco == 0, 1, 0), ## "post-conflict"
+         sample_trans = ifelse(is.infinite(sample_trans), NA, sample_trans),
+         sample_trans = case_when(is.na(sample_trans) ~ 0, 
+                                  year < sample_trans ~ 0, 
+                                  year >= sample_trans ~ 1), 
+         dtr = sample_trans, ## "democratic transition"
+         sample_confl = ifelse(is.infinite(sample_confl), NA, sample_confl),
+         sample_confl = case_when(is.na(sample_confl) ~ 0, 
+                                  year < sample_confl ~ 0, 
+                                  year >= sample_confl ~ 1), 
+         aco = sample_confl ## "all conflicts"
+  ) %>% 
+  ### the next line was merging in the old counts 
+  ### and the remaining code deals with those 
+  # left_join(counts, by = c("ccode_cow" = "ccode", "year" = "year") ) %>%
+  ## losing Timor Leste prior to 2002; should be incorporated into Indonesia
+  ### filling in NAs
+  # mutate(across(all_of(c("trials_HRs", "trials_PostAuto", "trials_Conflict",
+  #                        "convict_HRs", "convict_PostAuto", "convict_Conflict")),
+  #               function(x) ifelse(is.na(x), 0, x))) %>% 
+  arrange(country_case, year) %>%
+  group_by(country_case, isna = is.na(theta_mean_fariss) ) %>%
+  mutate(cum_theta_mean_fariss = ifelse(isna, NA, cummean(theta_mean_fariss)),
+         sample_combi = ifelse(sample_trans + sample_confl > 0, 1, 0) ) %>%
+  ungroup() %>%
+  select(-isna)
+
+### these CYs are included in analyses data but not in TJET CountryYears
+### this is ok because CountryYears is for mapping purposes and 
+### these are for the most part microstates for which TJET has later start years
+### we could elect to delete these country years from the analyses dataset
+### moreover the analyses data include years 2021-2022, which we should drop below
+df %>% 
+  select(country, ccode_cow, ccode_ksg, year) %>% 
+  mutate(df = TRUE) %>% 
+  filter(year < 2021) %>% ### need to limit years in datasets
+  full_join(db[["CountryYears"]] %>% 
+              select(country, ccode, ccode_ksg, year) %>% 
+              mutate(db = TRUE), 
+            by = c("ccode_cow" = "ccode", 
+                   "ccode_ksg" = "ccode_ksg", 
+                   "year" = "year") ) %>% 
+  filter(is.na(df) | is.na(db)) %>% 
+  group_by(ccode_cow) %>% 
+  mutate(beg = min(year), 
+         end = max(year) ) %>% 
+  select(-year) %>% 
+  distinct() %>% 
+  print(n = Inf)
+
+### old cumulative measures from here
+# group_by(country_case) %>% 
+# mutate(cum_trials_HRs = cumsum(trials_HRs), 
+#        cum_trials_PostAuto = cumsum(trials_PostAuto), 
+#        cum_trials_Conflict = cumsum(trials_Conflict),
+#        cum_convict_HRs = cumsum(convict_HRs), 
+#        cum_convict_PostAuto = cumsum(convict_PostAuto), 
+#        cum_convict_Conflict = cumsum(convict_Conflict)) %>% 
+# ungroup() %>%
+# group_by(country_case, sample_trans) %>% 
+# mutate(trans_cum_trials_PostAuto = cumsum(trials_PostAuto), 
+#        trans_cum_trials_PostAuto = ifelse(sample_trans == 0, 
+#                                           0, trans_cum_trials_PostAuto),
+#        trans_cum_convict_PostAuto = cumsum(convict_PostAuto), 
+#        trans_cum_convict_PostAuto = ifelse(sample_trans == 0, 
+#                                            0, trans_cum_convict_PostAuto)) %>% 
+# ungroup() %>% 
+# group_by(country_case, sample_confl) %>% 
+# mutate(confl_cum_trials_Conflict = cumsum(trials_Conflict), 
+#        confl_cum_trials_Conflict = ifelse(sample_confl == 0, 
+#                                           0, confl_cum_trials_Conflict),
+#        confl_cum_convict_Conflict = cumsum(convict_Conflict), 
+#        confl_cum_convict_Conflict = ifelse(sample_confl == 0, 
+#                                            0, confl_cum_convict_Conflict)) %>% 
+# ungroup() %>% 
+# group_by(country_case, sample_combi) %>% 
+# mutate(combi_cum_trials_fits = cumsum(trials_unionFit), 
+#        combi_cum_trials_fits = ifelse(
+#          sample_combi == 0, 0, combi_cum_trials_fits),
+#        combi_cum_convictions_fits = cumsum(convict_unionFit), 
+#        combi_cum_convictions_fits = ifelse(sample_combi == 0, 
+#                                            0, combi_cum_convictions_fits)) %>% 
+# ungroup()
+
+### if we need to integrate the UN investigations
+# db[["Investigations"]] %>% 
+#   select(-pkey)
+
+### trials 
+
+measures <- c(trs = "trials started", tro = "trials ongoing", 
+              tfc = "trials with final convictions", cct = "conviction count", 
+              crt = "conviction rate by all accused", sen = "sentence totals")
+
+## for dev only
+# df <- df %>%
+#   select(country, ccode_cow, year)
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
+
+### TCs
+
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_all", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all", 
+                independence_opts = NULL, aims_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = NULL, recommend_vars = NULL, 
+                monitor_vars = NULL) %>% 
+  select(-tcs_ctj_all) 
+
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_victim_process", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all",
+                aims_opts = c("truth for victims", "memorialization", "apology",
+                              "recognition of victims", "reparation"), 
+                independence_opts = NULL, consult_vars = "consultedVictims", 
+                powers_vars = "allocateReparations", 
+                testimony_vars = "encourageVictimTestimony", 
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL)
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_victim_outcome", 
+                start_year_var = "yearCompleteOperation",
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all",
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = "reportPubliclyAvailable",
+                recommend_vars = "recommendReparations",
+                monitor_vars = "mandatePeriodicMonitoringImplementation") 
+
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_account_process", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all",
+                aims_opts = c("accountability", "responsibility",
+                              "prevention of human rights violations"),
+                independence_opts = c("partially independent", 
+                                      "fully independent"), 
+                consult_vars = NULL, 
+                powers_vars = c("compelTestimony", "supportProsecutions", 
+                                "namePerpetrators"),
+                testimony_vars = "perpetratorTestimony",
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_account_outcome", 
+                start_year_var = "yearCompleteOperation",
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all",
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = "reportPubliclyAvailable",
+                recommend_vars = "recommendProsecutions",
+                monitor_vars = "mandatePeriodicMonitoringImplementation")
+
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_peace_process", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all",
+                aims_opts = c("reconciliation", "coexistence", "dialogue", 
+                              "non-recurrence"),
+                independence_opts = NULL, consult_vars = NULL,
+                powers_vars = "grantAmnesty",
+                testimony_vars = "heldPublicHearings",
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_peace_outcome", 
+                start_year_var = "yearCompleteOperation",
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all",
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = "reportPubliclyAvailable",
+                recommend_vars = NULL, monitor_vars = NULL)
+
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_reform_process", 
+                start_year_var = "yearBeginOperation", 
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all",
+                aims_opts = c("historial truth", "institutional reform", 
+                              "addressing corruption"),
+                independence_opts = c("partially independent", 
+                                      "fully independent"), 
+                consult_vars = NULL,
+                powers_vars = "recommendInstitutionalReforms",
+                testimony_vars = "heldPublicHearings",
+                reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) 
+df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_reform_outcome", 
+                start_year_var = "yearCompleteOperation",
+                nexus_vars = "fitsConflictTJ", crimes_vars = "all",
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL, 
+                powers_vars = NULL, testimony_vars = NULL, 
+                reports_vars = "reportPubliclyAvailable",
+                recommend_vars = "reportRecommendInstitutionalReform", 
+                monitor_vars = "mandatePeriodicMonitoringImplementation")
+
+first <- c("country", "country_case", "year", "ccode_cow", # "ccode_case", 
+           "ccode_ksg", "country_id_vdem", "country_name", "histname", "m49", 
+           "isoa3", "iso3c_wb", "region", "subregion", "intregion", 
+           "region_wb", "micro_ksg")
+not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", # website
+         "transition", "conflict", "conflict_active") 
+samples <- c("sample_trans", "sample_confl", "sample_combi", 
+             "dtr", "aco", "dco", "pco") # dtr = sample_trans; aco = sample_confl
+then <- names(df)[!names(df) %in% c(first, samples, not)]
+
+df <- df %>% 
+  select(all_of(first), all_of(samples), all_of(then))
+
+### last step, created lags and saving the analyses dataset
+
+lags <- df %>%
+  select(-country, -ccode_cow, -ccode_ksg, -country_id_vdem, 
+         -country_name, -histname, -m49, -isoa3, -iso3c_wb, -micro_ksg, 
+         -region, -subregion, -intregion, -region_wb, -sample_trans, 
+         -sample_confl, -sample_combi, -dtr, -aco, -dco, -pco) %>%
+  mutate(year = year + 1) %>%
+  rename_with(~ paste0("lag_", .x))
+
+dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
+
+df %>%
+  left_join(lags, by = c("country_case" = "lag_country_case", 
+                         "year" = "lag_year")) %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_cy_analyses.csv"), na = "")
+
+### downloads datasets 
+# - include country IDs, transitions and our data
+# - everything in our filters, but not other outcomes
+# - variables that should not be in public CY downloads file?
+#   - regime_sample, reg_democ, reg_autoc, reg_trans, conflict, transition
+
+codebook <- db[["codebook"]] %>% 
+  filter(tables == "tjet_cy") %>% 
+  filter(colname != "lag_*")
+names(df)[!names(df) %in% codebook$colname]
+codebook$colname[!codebook$colname %in% names(df)]
+
+codebook %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_codebook_analyses.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_codebook_analyses.csv"), na = "")
+
+db[["dl_tjet_codebook"]] <- codebook %>% 
+  filter(is.na(source) | 
+           source %in% c("TJET", "COW", "Kristian S. Gleditsch", 
+                         "UN Statistics Division", "World Bank") | 
+           colname %in% c("country_id_vdem", "country_name", "histname") ) %>% 
+  select(colname, definition, source) %>% 
+  left_join(read_csv(here::here("data", "sources.csv")), by = "source") %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
+
+db[["dl_tjet_cy"]] <- df %>%
+  select(all_of(codebook$colname)) %>% 
+  filter(year >= 1970 & year <= 2020) %>% 
+  filter(!(country == "Andorra" & year < 1994)) %>% 
+  filter(!(country == "Antigua & Barbuda" & year == 1981)) %>%
+  filter(!(country == "Brunei" & year == 1984)) %>% 
+  filter(!(country == "Kiribati" & year < 1997)) %>%
+  filter(!(country == "Liechtenstein" & year < 1991)) %>% 
+  filter(!(country == "Marshall Islands" & year < 1992)) %>%
+  filter(!(country == "Micronesia" & year < 1992)) %>%
+  filter(!(country == "Monaco" & year < 1994)) %>%
+  filter(!(country == "Palau" & year < 1995)) %>%
+  filter(!(country == "Saint Kitts & Nevis" & year == 1983)) %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "")
+
 save(db, file = here::here("data", "tjetdb.RData"))
 
-### cleaning up workspace environment
-rm(countrylist, translist, confllist, 
-   amnesties, reparations, tcs, vettings, 
-   trials, domestic, intl, foreign) 
+### saving individual mechanism tables for local analyses & repo
+### these will also be written to the database for downloads
+
+db[["Amnesties"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
+db[["TruthCommissions"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
+db[["Reparations"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_reparations.csv"), na = "")
+db[["Trials"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_trials.csv"), na = "")
+db[["Accused"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_accused.csv"), na = "")
+db[["CourtLevels"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
+db[["Vettings"]] %>%
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_vettings.csv"), na = "")
