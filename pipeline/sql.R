@@ -11,8 +11,8 @@ load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 ### for checking the loaded data
 # str(db, 1)
 
-tabs <- c("Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook", 
-          "ConflictDyads", "Countries", "CountryYears", "CourtLevels", 
+tabs <- c("Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
+          "ConflictDyads", "Countries", "CountryYears", "CourtLevels",
           "dl_tjet_cy", "dl_tjet_codebook", "labels", "Reparations",
           "Reparations_collectiveReparationsEligibility",
           "Reparations_individualReparationsEligible", "SurveysMeta",

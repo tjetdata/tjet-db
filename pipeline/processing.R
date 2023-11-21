@@ -51,16 +51,17 @@ map(names(to_download), function(basename) {
 })
 
 ### create prodDB tables
-db <- map(names(to_download), function(basename) {
+db <- map(names(to_download), function(basename) { # basename = "MegaBase"
   names(select_tables) <- select_tables <- 
     to_download[[basename]][!to_download[[basename]] %in% exclude]
-  map(select_tables, function(tab_name) {
+  map(select_tables, function(tab_name) { # tab_name = "Amnesties"
     select_vars <- tjet[[basename]]$metadata %>%
       filter(incl_prod == 1 & 
                ### doing multi-select fields separately
                incl_data != "transform: multiple" &
                ### include these later if creating dummies
                table_name == tab_name) %>%
+      arrange(order)  %>%
       select(field_name) %>%
       unlist(use.names = FALSE)
     ### order of fields
@@ -79,6 +80,7 @@ db <- map(names(to_download), function(basename) {
       select(all_of(select_vars))
   })
 })
+
 names(db) <- names(to_download)
 ### for later checking
 dim_orig <- map(db, function(dat) {
@@ -1502,36 +1504,43 @@ db[["dl_tjet_cy"]] <- df %>%
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "")
 
-save(db, file = here::here("data", "tjetdb.RData"))
-
 ### saving individual mechanism tables for local analyses & repo
 ### these will also be written to the database for downloads
 
-db[["Amnesties"]] %>% 
+db[["Amnesties"]] <- db[["Amnesties"]] %>% 
+  rename(ccode_cow = ccode) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
-db[["TruthCommissions"]] %>%
-  mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
-  write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
-db[["Reparations"]] %>%
+db[["Reparations"]] <- db[["Reparations"]] %>%
+  rename(ccode_cow = ccode) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_reparations.csv"), na = "")
-db[["Trials"]] %>% 
+db[["Trials"]] <- db[["Trials"]] %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_trials.csv"), na = "")
-db[["Accused"]] %>%
+db[["Accused"]] <- db[["Accused"]] %>%
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_accused.csv"), na = "")
-db[["CourtLevels"]] %>%
+db[["CourtLevels"]] <- db[["CourtLevels"]] %>%
+  select(CLID, accusedID, courtLevel, courtName, day, month, year, date, 
+         last_fx, verdict, guilty, sentence, sentencingTime, 
+         sentencingArrangement, sentenceNotes) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
-db[["Vettings"]] %>%
+db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
+  rename(ccode_cow = ccode) %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
+db[["Vettings"]] <- db[["Vettings"]] %>% 
+  rename(ccode_cow = ccode) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_vettings.csv"), na = "")
+
+save(db, file = here::here("data", "tjetdb.RData"))
