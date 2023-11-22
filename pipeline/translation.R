@@ -20,8 +20,8 @@ require(keyring)
 #                          source_lang = "FR",
 #                          auth_key = key_get("DeepL"))
 # split_text(txt, max_size_bytes = 29000, tokenize = "sentences")
-# pimp2(txt, source_lang = "EN", help_lang = "FR", auth_key = key_get("DeepL"))
-# usage2(key_get("DeepL"))
+# pimp(txt, source_lang = "EN", help_lang = "FR", auth_key = key_get("DeepL"))
+# usage(key_get("DeepL"))
 
 ### loading & checking our database
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
@@ -33,7 +33,7 @@ load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 ### the code is wrapped in a conditional statement because it's costly
 go_ahead <- FALSE
 translate <- function(col) {
-  toFrench2(
+  toFrench(
     text = col,
     source_lang = "EN", 
     auth_key = key_get("DeepL"))
@@ -53,6 +53,9 @@ if(go_ahead) {
     select(all_of(order))
   Sys.time() - start
 }
+
+db[["fr_Countries"]] %>% 
+  select(country, txt_intro, txt_regime, txt_conflict, txt_TJ) 
 
 ### saving locally 
 save(db, file = here::here("data", "tjetdb.RData"))
