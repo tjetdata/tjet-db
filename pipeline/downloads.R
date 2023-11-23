@@ -46,8 +46,8 @@ names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
 tjet[["db_timestamp"]] <- Sys.time()
 save(tjet, to_download, file = here::here("data", "tjet.RData"))
 
-fileurl <- tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]][[1]][["url"]]
-filepath <- here::here("data", "downloads", 
-                       tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]][[1]][["filename"]])
-download.file(url = fileurl, 
-              destfile = filepath)
+map(tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]], function(x) {
+  x$url
+  here::here("data", "downloads", x$filename)
+  download.file(url = x$url, destfile = here::here("data", "downloads", x$filename))
+})
