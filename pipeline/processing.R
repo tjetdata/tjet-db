@@ -944,34 +944,35 @@ attr(db$ConflictDyads, "spec") <- NULL
 attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
 
-db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>% 
+db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
   unnest(country) %>% 
   rename(airtable_record_id = country) %>% 
   left_join(tjet[["MegaBase"]][["Countries"]] %>% 
               select(airtable_record_id, country),
             by = "airtable_record_id") %>%
-  # mutate(results_tables = results_tables[[1]][["filename"]]) %>%
   mutate(results_tables = map(results_tables, function(x) x[["filename"]])) %>% 
   select(country, year, date_start, date_end, section_title, text_context, 
          text_results, text_methods, survey_design, sample_size,
          bibtex_key, results_tables) %>% 
   unnest(results_tables)
 
-filename <- db[["SurveysMeta"]][["results_tables"]][1]
-surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename))
-last <- names(surveytab)
-last[str_detect(last, "...")] <- NA
-last <- fillr::fill_missing_previous(last)
-last <- str_replace(last, fixed("%"), "")
-last <- str_replace(last, fixed("N"), "_N")
-last[is.na(last)] <- ""
-names(surveytab) <- str_trim(paste(surveytab[2, ], last, sep = ""))
-tooltips <- unlist(fillr::fill_missing_previous(surveytab[1, ]), use.names = FALSE)
-names(tooltips) <- names(surveytab)
-surveytab[1, ] <- as.list(tooltips)
-
-# db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-2, ] %>%
-#     fill(Section, Question, Responses, .direction = "down")
+map(db[["SurveysMeta"]]$results_tables, function(filename) {
+  surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename))
+  tooltips <- names(surveytab)
+  tooltips[str_detect(tooltips, fixed("..."))] <- NA
+  if(is.na(tooltips[1]) & surveytab[1, 1] == "Section") tooltips[1] <- "Section"
+  if(is.na(tooltips[2]) & surveytab[1, 2] == "Question") tooltips[2] <- "Question"
+  if(is.na(tooltips[3]) & surveytab[1, 3] == "Responses") tooltips[3] <- "Responses"
+  tooltips <- fillr::fill_missing_previous(tooltips)
+  tooltips[is.na(tooltips)] <- ""
+  if(is.na(surveytab[1, 1]) & tooltips[1] == "Section") surveytab[1, 1] <- "Section"
+  if(is.na(surveytab[1, 2]) & tooltips[2] == "Question") surveytab[1, 2] <- "Question"
+  if(is.na(surveytab[1, 3]) & tooltips[3] == "Responses") surveytab[1, 3] <- "Responses"
+  names(tooltips) <- names(surveytab) <- str_trim(paste(surveytab[1, ]))
+  surveytab[1, ] <- as.list(tooltips)
+  db[[str_replace(filename, ".xlsx", "")]] <<- surveytab %>%
+    fill(Section, Question, Responses, .direction = "down")
+})
 
 ### cleaning up workspace environment
 rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, 
