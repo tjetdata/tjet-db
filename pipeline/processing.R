@@ -774,8 +774,8 @@ confllist <- read_csv("conflicts/confl_dyads.csv", show_col_types = FALSE) %>%
 
 translist <- read_csv("transitions/transitions_new_revised.csv",
                       show_col_types = FALSE) %>% 
-  mutate(
-    # country = ifelse(country == "Eswatini", "Swaziland (Eswatini)", country), 
+  mutate(country = ifelse(country == "Congo (Brazzaville)", "Congo", country),
+         country = ifelse(country == "DR Congo", "Congo DR", country),
          country = ifelse(country == "Republic of Vietnam", 
                           "Vietnam (Republic of / South)", country),
          country = ifelse(country == "St. Vincent", 
@@ -880,8 +880,9 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
                                 paste(country, " [-", end, "]", sep = ""), 
                                 country)) %>% 
   select(cyID, country, country_label, country_case, beg, end, year, ccode, 
-         ccode_case, ccode_ksg, tjet_focus, region, regime_sample, reg_democ, 
-         reg_autoc, reg_trans, conflict, transition, conflict_active) %>%
+         ccode_case, ccode_ksg, tjet_focus, region, regime_sample, 
+         reg_democ, reg_autoc, reg_trans, conflict, # ?
+         transition, conflict_active) %>%
   # filter(country != country_case)
   left_join(amnesties, by = c("ccode_case", "year") ) %>%  
   mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties),
@@ -923,7 +924,11 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 
 ### countries table for database
 db$Countries <- countrylist %>% 
-  mutate(beg = ifelse(beg < 1970, 1970, beg)) 
+  mutate(beg = ifelse(beg < 1970, 1970, beg)) %>% 
+  select(country, country_case, country_fr, ccode, ccode_case, # ccode_ksg, 
+         beg, end, m49, isoa3, # country_id_vdem, micro_ksg, 
+         region, region_sub_un, region_wb, tjet_focus, # factsheet, 
+         txt_intro, txt_regime, txt_conflict, txt_TJ)
 
 ### data definition codebook
 db$codebook <- read_csv(here::here("data", "codebook.csv"), 
@@ -944,13 +949,15 @@ db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
   rename(airtable_record_id = country) %>% 
   left_join(tjet[["MegaBase"]][["Countries"]] %>% 
               select(airtable_record_id, country),
-            by = "airtable_record_id") %>% 
-  mutate(results_tables = results_tables[[1]][["filename"]]) %>% 
+            by = "airtable_record_id") %>%
+  # mutate(results_tables = results_tables[[1]][["filename"]]) %>%
+  mutate(results_tables = map(results_tables, function(x) x[["filename"]])) %>% 
   select(country, year, date_start, date_end, section_title, text_context, 
-         text_results, text_methods, survey_design, sample_size, 
-         bibtex_key, results_tables)
+         text_results, text_methods, survey_design, sample_size,
+         bibtex_key, results_tables) %>% 
+  unnest(results_tables)
 
-filename <- db[["SurveysMeta"]][["results_tables"]]
+filename <- db[["SurveysMeta"]][["results_tables"]][1]
 surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename))
 last <- names(surveytab)
 last[str_detect(last, "...")] <- NA
@@ -963,8 +970,8 @@ tooltips <- unlist(fillr::fill_missing_previous(surveytab[1, ]), use.names = FAL
 names(tooltips) <- names(surveytab)
 surveytab[1, ] <- as.list(tooltips)
 
-db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-2, ] %>%
-    fill(Section, Question, Responses, .direction = "down")
+# db[[str_replace(filename, "_TJET.xlsx", "")]] <- surveytab[-2, ] %>%
+#     fill(Section, Question, Responses, .direction = "down")
 
 ### cleaning up workspace environment
 rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, 
@@ -1026,6 +1033,8 @@ db[["Vettings"]] <- db[["Vettings"]] %>%
 source("functions/TCgoals.R")
 source("functions/TCmeasure.R")
 source("functions/TrialsMeasure.R")
+source("functions/AmnestyMeasure.R")
+
 sample_cy <- c(
   glo = "global", ### all, all the time, i.e. full dataset
   dtr = "democratic transition", ### binary, from first transition year
@@ -1097,9 +1106,10 @@ sample_cy <- c(
 df <- readRDS(here::here("data", "cy_covariates.rds"))
 not <- c("cid_who", "ldc", "lldc", "sids", "income_wb", "region_wb2")
 first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", 
-           "country_id_vdem", "country_name", "histname", "m49", "isoa3", 
-           "iso3c_wb", "region", "subregion", "intregion", "region_wb", 
-           "micro_ksg")
+           "country_id_vdem", 
+           # "country_name", 
+           "histname", "m49", "isoa3", "iso3c_wb", "region", 
+           "subregion", "intregion", "region_wb", "micro_ksg")
 then <- names(df)[!names(df) %in% c(first, not)]
 df <- df %>%
   select(all_of(first), all_of(then)) %>%
@@ -1307,13 +1317,6 @@ df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "h
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "hrs", memb_opts = "sta") 
 
-df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
-df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
@@ -1321,12 +1324,12 @@ df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "h
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 
-df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
@@ -1334,6 +1337,27 @@ df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "c
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "con", memb_opts = "sta") 
 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
@@ -1429,10 +1453,18 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_reform_outcome",
                 recommend_vars = "reportRecommendInstitutionalReform", 
                 monitor_vars = "mandatePeriodicMonitoringImplementation")
 
+### amnesties
+
+df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "sta") 
+df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "opp") 
+
+### cleanup
+
 first <- c("country", "country_case", "year", "ccode_cow", # "ccode_case", 
-           "ccode_ksg", "country_id_vdem", "country_name", "histname", "m49", 
-           "isoa3", "iso3c_wb", "region", "subregion", "intregion", 
-           "region_wb", "micro_ksg")
+           "ccode_ksg", "country_id_vdem", 
+           # "country_name", 
+           "histname", "m49", "isoa3", "iso3c_wb", "region", 
+           "subregion", "intregion", "region_wb", "micro_ksg")
 not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", # website
          "transition", "conflict", "conflict_active") 
 samples <- c("sample_trans", "sample_confl", "sample_combi", 
@@ -1482,14 +1514,14 @@ db[["dl_tjet_codebook"]] <- codebook %>%
   filter(is.na(source) | 
            source %in% c("TJET", "COW", "Kristian S. Gleditsch", 
                          "UN Statistics Division", "World Bank") | 
-           colname %in% c("country_id_vdem", "country_name", "histname") ) %>% 
+           colname %in% c("country_id_vdem", "histname") ) %>% # "country_name",
   select(colname, definition, source) %>% 
   left_join(read_csv(here::here("data", "sources.csv")), by = "source") %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
 
 db[["dl_tjet_cy"]] <- df %>%
-  select(all_of(codebook$colname)) %>% 
+  select(all_of(db[["dl_tjet_codebook"]]$colname)) %>% 
   filter(year >= 1970 & year <= 2020) %>% 
   filter(!(country == "Andorra" & year < 1994)) %>% 
   filter(!(country == "Antigua & Barbuda" & year == 1981)) %>%
