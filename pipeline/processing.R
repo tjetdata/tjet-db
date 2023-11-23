@@ -244,7 +244,6 @@ cbind(orig = dim_orig[[2]], drop = dim_drop[[2]],
       now = dim_now[[2]][names(dim_orig[[2]])])
 
 ### dummies for multi-select fields for data downloads?
-### (may not need this if we can get it with SQL queries)
 ### sample code, would have to be expanded and generalized
 ### would need a consistent naming scheme
 # make_named_list <- function(lst) {
@@ -1043,54 +1042,6 @@ sample_cy <- c(
   dco = "during conflict", ### binary, when conflict active
   pco = "post-conflict") ### binary, after active conflict ended
 
-### old version of trial counts 
-# trial_counts <- db[["Trials"]] %>% 
-#   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
-#   select(ccode_Accused, yearStart, HRs, 
-#          fitsPostAutocraticTJ, fitsConflictTJ) %>%
-#   mutate(fitsBoth = ifelse(fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0),
-#          HRsConfl = ifelse(HRs + fitsPostAutocraticTJ + fitsConflictTJ > 0, 
-#                            1, 0)) %>%
-#   arrange(ccode_Accused, yearStart) %>% 
-#   group_by(ccode_Accused, yearStart) %>% 
-#   mutate(trials_HRs = sum(HRs) , 
-#          trials_PostAuto = sum(fitsPostAutocraticTJ), 
-#          trials_Conflict = sum(fitsConflictTJ), 
-#          trials_HRsConfl = sum(HRsConfl), 
-#          trials_unionFit = sum(fitsBoth) ) %>% 
-#   select(ccode_Accused, yearStart, trials_HRs, trials_PostAuto, 
-#          trials_Conflict, trials_HRsConfl, trials_unionFit) %>% 
-#   distinct() %>% 
-#   rename(ccode = ccode_Accused, 
-#          year = yearStart) %>% 
-#   filter(year >= 1970 & year <= 2020) 
-
-### old version of trial conviction counts 
-# conviction_counts <- db[["Trials"]] %>% 
-#   mutate(HRs = ifelse(HRs_charges > 0 | humanRights == 1, 1, 0) ) %>%
-#   select(ccode_Accused, firstConvictionYear_min, HRs, 
-#          fitsPostAutocraticTJ, fitsConflictTJ) %>%
-#   mutate(fitsBoth = ifelse(fitsPostAutocraticTJ + fitsConflictTJ > 0, 1, 0),
-#          firstConvictionYear_min = as.integer(firstConvictionYear_min)) %>%
-#   filter(!is.na(firstConvictionYear_min) ) %>% 
-#   arrange(ccode_Accused, firstConvictionYear_min) %>% 
-#   group_by(ccode_Accused, firstConvictionYear_min) %>% 
-#   mutate(convict_HRs = sum(HRs) , 
-#          convict_PostAuto = sum(fitsPostAutocraticTJ) , 
-#          convict_Conflict = sum(fitsConflictTJ), 
-#          convict_unionFit = sum(fitsBoth) ) %>% 
-#   select(ccode_Accused, firstConvictionYear_min, convict_HRs, 
-#          convict_PostAuto, convict_Conflict, 
-#          convict_unionFit) %>% 
-#   distinct() %>% 
-#   rename(ccode = ccode_Accused, 
-#          year = firstConvictionYear_min) %>% 
-#   filter(year >= 1970 & year <= 2020)
-
-### merging of old count variables 
-# counts <- full_join(trial_counts, conviction_counts, by = c("ccode", "year")) %>% 
-#   mutate(ccode = ifelse(ccode == 679 & year < 1990, 678, ccode)) # Yemen YAR
-
 ### merging it all together
 
 ### if country-year-dataset repo is made public, could get directly from there
@@ -1174,10 +1125,8 @@ df <- df %>%
          uninv_dompros = ifelse(is.na(uninv_dompros), 0, uninv_dompros),
          uninv_evcoll = ifelse(is.na(uninv_evcoll), 0, uninv_evcoll),
          uninv_intlpros = ifelse(is.na(uninv_intlpros), 0, uninv_intlpros)) %>% 
-  # filter(year <= 2020) %>% 
   mutate(sample_trans = ifelse(transition == 1, year, NA),
          sample_confl = ifelse(conflict_active == 1, year, NA), 
-         # active_confl = sample_confl,
          dco = ifelse(!is.na(sample_confl) & year == sample_confl, 1, 0) # dco = "during conflict", ### binary, when conflict active
   ) %>% 
   group_by(country_case) %>% 
@@ -1197,14 +1146,6 @@ df <- df %>%
                                   year >= sample_confl ~ 1), 
          aco = sample_confl ## "all conflicts"
   ) %>% 
-  ### the next line was merging in the old counts 
-  ### and the remaining code deals with those 
-  # left_join(counts, by = c("ccode_cow" = "ccode", "year" = "year") ) %>%
-  ## losing Timor Leste prior to 2002; should be incorporated into Indonesia
-  ### filling in NAs
-  # mutate(across(all_of(c("trials_HRs", "trials_PostAuto", "trials_Conflict",
-  #                        "convict_HRs", "convict_PostAuto", "convict_Conflict")),
-  #               function(x) ifelse(is.na(x), 0, x))) %>% 
   arrange(country_case, year) %>%
   group_by(country_case, isna = is.na(theta_mean_fariss) ) %>%
   mutate(cum_theta_mean_fariss = ifelse(isna, NA, cummean(theta_mean_fariss)),
@@ -1234,44 +1175,6 @@ df %>%
   select(-year) %>% 
   distinct() %>% 
   print(n = Inf)
-
-### old cumulative measures from here
-# group_by(country_case) %>% 
-# mutate(cum_trials_HRs = cumsum(trials_HRs), 
-#        cum_trials_PostAuto = cumsum(trials_PostAuto), 
-#        cum_trials_Conflict = cumsum(trials_Conflict),
-#        cum_convict_HRs = cumsum(convict_HRs), 
-#        cum_convict_PostAuto = cumsum(convict_PostAuto), 
-#        cum_convict_Conflict = cumsum(convict_Conflict)) %>% 
-# ungroup() %>%
-# group_by(country_case, sample_trans) %>% 
-# mutate(trans_cum_trials_PostAuto = cumsum(trials_PostAuto), 
-#        trans_cum_trials_PostAuto = ifelse(sample_trans == 0, 
-#                                           0, trans_cum_trials_PostAuto),
-#        trans_cum_convict_PostAuto = cumsum(convict_PostAuto), 
-#        trans_cum_convict_PostAuto = ifelse(sample_trans == 0, 
-#                                            0, trans_cum_convict_PostAuto)) %>% 
-# ungroup() %>% 
-# group_by(country_case, sample_confl) %>% 
-# mutate(confl_cum_trials_Conflict = cumsum(trials_Conflict), 
-#        confl_cum_trials_Conflict = ifelse(sample_confl == 0, 
-#                                           0, confl_cum_trials_Conflict),
-#        confl_cum_convict_Conflict = cumsum(convict_Conflict), 
-#        confl_cum_convict_Conflict = ifelse(sample_confl == 0, 
-#                                            0, confl_cum_convict_Conflict)) %>% 
-# ungroup() %>% 
-# group_by(country_case, sample_combi) %>% 
-# mutate(combi_cum_trials_fits = cumsum(trials_unionFit), 
-#        combi_cum_trials_fits = ifelse(
-#          sample_combi == 0, 0, combi_cum_trials_fits),
-#        combi_cum_convictions_fits = cumsum(convict_unionFit), 
-#        combi_cum_convictions_fits = ifelse(sample_combi == 0, 
-#                                            0, combi_cum_convictions_fits)) %>% 
-# ungroup()
-
-### if we need to integrate the UN investigations
-# db[["Investigations"]] %>% 
-#   select(-pkey)
 
 ### trials 
 
