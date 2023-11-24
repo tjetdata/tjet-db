@@ -47,7 +47,5 @@ tjet[["db_timestamp"]] <- Sys.time()
 save(tjet, to_download, file = here::here("data", "tjet.RData"))
 
 map(tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]], function(x) {
-  x$url
-  here::here("data", "downloads", x$filename)
   download.file(url = x$url, destfile = here::here("data", "downloads", x$filename))
 })
