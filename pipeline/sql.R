@@ -12,13 +12,13 @@ load(here::here("data", "tjetdb.RData"), verbose = TRUE)
 # str(db, 1)
 
 tabs <- c("Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
-          "ConflictDyads", "Countries", "CountryYears", "CourtLevels",
+          "ConflictDyads", "Countries", "CountryYears", "CourtLevels", 
           "dl_tjet_cy", "dl_tjet_codebook", "labels", "Reparations",
           "Reparations_collectiveReparationsEligibility",
-          "Reparations_individualReparationsEligible", "SurveysMeta",
-          "Transitions", "Trials", "TruthCommissions",
-          "Uganda_2005_descriptives", "Vettings",
-          "Vettings_targetingAffiliation")
+          "Reparations_individualReparationsEligible", 
+          "SurveysMeta", "Transitions", "Trials", "TruthCommissions",
+          "Vettings", "Vettings_targetingAffiliation"
+)
 
 # "fr_Countries"
 
@@ -45,13 +45,25 @@ dbListTables(con) %>%
 ### (this overwrites existing tables by first truncating and then appending)
 map(tabs, function(table_name) {
   print(table_name)
-  dbExecute(con, 
-            paste("TRUNCATE TABLE ", table_name, sep = ""))
+  dbExecute(con, paste("TRUNCATE TABLE ", table_name, sep = ""))
   dbWriteTable(conn = con,
                name = table_name,
                value = db[[table_name]],
                append = TRUE)
 })
+
+### write survey data 
+db[["SurveysMeta"]] %>% 
+  select(results_tables) %>% 
+  unlist(use.names = FALSE) %>% 
+  str_replace(fixed(".xlsx"), "") %>% 
+  map(function(table_name) {
+    print(table_name)
+    dbWriteTable(conn = con,
+                 name = table_name,
+                 value = db[[table_name]],
+                 overwrite = TRUE)
+  })
 
 dbExecute(con, "TRUNCATE TABLE tjet_timestamp")
 dbWriteTable(conn = con,
