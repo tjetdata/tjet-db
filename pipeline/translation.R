@@ -57,5 +57,20 @@ if(go_ahead) {
 db[["fr_Countries"]] %>% 
   select(country, txt_intro, txt_regime, txt_conflict, txt_TJ) 
 
+if(go_ahead) {
+  ## do not translate the country field; this is used in the website structure
+  start <- Sys.time()
+  order <- names(db[["TJETmembers"]])
+  db[["fr_TJETmembers"]] <- db[["TJETmembers"]] %>% 
+    rowwise() %>% ### deeplr does not handle NAs well; this seems to be a work-around
+    mutate(bio_text = ifelse(is.na(bio_text), "", translate(bio_text))) %>%
+    ungroup() %>%
+    select(all_of(order))
+  Sys.time() - start
+}
+
+db[["fr_TJETmembers"]] %>% 
+  select(last_name, given_name, bio_text) 
+
 ### saving locally 
 save(db, file = here::here("data", "tjetdb.RData"))

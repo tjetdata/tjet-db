@@ -19,7 +19,8 @@ pkeys <- c(
   "Conflicts" = "conflict_id",
   "Dyads" = "dyad_id",
   "ICC" = "ccode_cow", 
-  "Investigations" = "pkey") # ccode_cow-year
+  "Investigations" = "pkey", 
+  "TJETmembers" = "pkey") # ccode_cow-year
 
 ### note that both bases have Countries, Transitions, Conflicts and Dyads tables
 ### but these should be the same
@@ -29,7 +30,7 @@ pkeys <- c(
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
              "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
              "Challenges", "VettingComparison", "ICDB", "BIcomparison", 
-             "TJETmembers", "AdHocHybrid", "Ethiopia")
+             "AdHocHybrid", "Ethiopia")
 
 ### check metadata table for non-existing fields
 ### can use this to determine which fields can be deleted from dev DB
@@ -981,6 +982,11 @@ map(db[["SurveysMeta"]]$results_tables, function(filename) { # filename = "Ugand
 ### cleaning up workspace environment
 rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, 
    trials, domestic, intl, foreign) 
+
+db[["TJETmembers"]] <- db[["TJETmembers"]] %>% 
+  filter(TJET_website_add == 1 & !is.na(bio_text) ) %>% 
+  select(last_name, given_name, institution, position, TJET_role, 
+         email, email_public, url, url_public, bio_text)
 
 ### database version 
 db[["db_timestamp"]] <- tjet[["db_timestamp"]] %>% tibble(tjet_timestamp = .)

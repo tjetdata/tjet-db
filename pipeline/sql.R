@@ -15,12 +15,13 @@ tabs <- c("Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
           "ConflictDyads", "Countries", "CountryYears", "CourtLevels", 
           "dl_tjet_cy", "dl_tjet_codebook", "labels", "Reparations",
           "Reparations_collectiveReparationsEligibility",
-          "Reparations_individualReparationsEligible", 
+          "Reparations_individualReparationsEligible",
           "SurveysMeta", "Transitions", "Trials", "TruthCommissions",
           "Vettings", "Vettings_targetingAffiliation"
 )
 
 # "fr_Countries"
+# "fr_TJETmembers"
 
 ### two different ways of establishing the same database connection
 ### (note that cloudways requires the local IP address to be added)
