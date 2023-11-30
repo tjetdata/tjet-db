@@ -639,8 +639,8 @@ countrylist %>%
   filter(country != country_case | ccode != ccode_case |
            ccode %in% c(255, 260, 265, 315, 316, 345, 365, 678, 679, 680, 816, 817)) %>%
   select(country_case, ccode_case, country, ccode, beg, end) %>%
-  arrange(country_case, end) %>%
-  write_csv("~/Desktop/temp.csv")
+  arrange(country_case, end) %>% I
+  # write_csv("~/Desktop/temp.csv")
 
 ### clean up text fields 
 tabs <- c("Amnesties", "Reparations", "TruthCommissions", 
