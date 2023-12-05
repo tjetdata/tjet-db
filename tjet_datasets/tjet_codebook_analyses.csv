@@ -1,0 +1,365 @@
+tables,colname,definition,source,colname_Dima,tjet_version
+tjet_cy,country,country name,,,2023-12-05
+tjet_cy,country_case,country continuity,,,2023-12-05
+tjet_cy,year,year of observation,,,2023-12-05
+tjet_cy,ccode_cow,Correlates of War country code,COW,,2023-12-05
+tjet_cy,ccode_ksg,Gleditsch & Ward country code,Kristian S. Gleditsch,,2023-12-05
+tjet_cy,country_id_vdem,VDem country code,VDem,,2023-12-05
+tjet_cy,country_name,VDem country name,VDem,,2023-12-05
+tjet_cy,histname,VDem historical country name,VDem,,2023-12-05
+tjet_cy,m49,M49 / ISO 3166 numeric country code,UN Statistics Division,,2023-12-05
+tjet_cy,isoa3,ISO 3166 alpha3 country code,UN Statistics Division,,2023-12-05
+tjet_cy,iso3c_wb,World Bank alpha3 country code,World Bank,,2023-12-05
+tjet_cy,region,United Nations region,UN Statistics Division,,2023-12-05
+tjet_cy,subregion,United Nations sub-region,UN Statistics Division,,2023-12-05
+tjet_cy,intregion,United Nations intermediate region,UN Statistics Division,,2023-12-05
+tjet_cy,region_wb,World Bank region,World Bank,,2023-12-05
+tjet_cy,micro_ksg,Gleditsch micro-state,Kristian S. Gleditsch,,2023-12-05
+tjet_cy,sample_trans,"democratic transition sample, binary",TJET,,2023-12-05
+tjet_cy,sample_confl,"conflict sample, binary",TJET,,2023-12-05
+tjet_cy,sample_combi,combined sample (democratic transition & conflict),TJET,,2023-12-05
+tjet_cy,dtr,"democratic transition sample, binary",TJET,,2023-12-05
+tjet_cy,aco,"conflict & post-conflict, binary",TJET,,2023-12-05
+tjet_cy,dco,"during conflict, binary",TJET,,2023-12-05
+tjet_cy,pco,"after conflict, binary",TJET,,2023-12-05
+tjet_cy,latent_gdp_mean_log,latent estimate of logged GDP,Fariss et al,,2023-12-05
+tjet_cy,latent_gdp_mean,latent estimate of GDP,Fariss et al,,2023-12-05
+tjet_cy,latent_gdp_sd_log,"latent estimate of logged GDP, standard deviation",Fariss et al,,2023-12-05
+tjet_cy,latent_gdp_sd,"latent estimate of GDP, standard deviation",Fariss et al,,2023-12-05
+tjet_cy,latent_gdppc_mean_log,latent estimate of logged GDP per capita,Fariss et al,,2023-12-05
+tjet_cy,latent_gdppc_mean,latent estimate of GDP per capita,Fariss et al,,2023-12-05
+tjet_cy,latent_gdppc_sd_log,"latent estimate of logged GDP per capita, standard deviation",Fariss et al,,2023-12-05
+tjet_cy,latent_gdppc_sd,"latent estimate of GDP per capita, standard deviation",Fariss et al,,2023-12-05
+tjet_cy,latent_pop_mean_log,latent estimate of logged population size,Fariss et al,,2023-12-05
+tjet_cy,latent_pop_mean,latent estimate of population size,Fariss et al,,2023-12-05
+tjet_cy,latent_pop_sd_log,"latent estimate of logged population size, standard deviation",Fariss et al,,2023-12-05
+tjet_cy,latent_pop_sd,"latent estimate of population size, standard deviation",Fariss et al,,2023-12-05
+tjet_cy,gdp_const_wdi,"GDP, constant USD",WDI,,2023-12-05
+tjet_cy,gdp_growth_wdi,GDP growth,WDI,,2023-12-05
+tjet_cy,gdppc_const_wdi,"GDP per capita, constant USD",WDI,,2023-12-05
+tjet_cy,gdppc_ppp_wdi,"GDP per capita, purchasing power parity",WDI,,2023-12-05
+tjet_cy,gdppc_growth_wdi,"GDP per capita growth, constant USD",WDI,,2023-12-05
+tjet_cy,pop_wdi,population size,WDI,,2023-12-05
+tjet_cy,pop_male_wdi,"population size, male",WDI,,2023-12-05
+tjet_cy,pop_fem_wdi,"population size, female",WDI,,2023-12-05
+tjet_cy,pop_density_wdi,population density,WDI,,2023-12-05
+tjet_cy,land_area_sqkm_wdi,"country land area, square kilometers",WDI,,2023-12-05
+tjet_cy,gini_wdi,GINI,WDI,,2023-12-05
+tjet_cy,pop_pwt,population size,PWT,,2023-12-05
+tjet_cy,rgdpna_pwt,"Real GDP using national-accounts growth rates, for studies comparing (output-based) growth rates across countries",PWT,,2023-12-05
+tjet_cy,rgdpe_pwt,"Expenditure-side real GDP at chained PPPs, to compare relative living standards across countries over time",PWT,,2023-12-05
+tjet_cy,rgdpo_pwt,"Output-side real GDP at chained PPPs, to compare relative productive capacity across countries over time",PWT,,2023-12-05
+tjet_cy,growth_rgdpe_pwt,Expenditure-side GDP growth,PWT,,2023-12-05
+tjet_cy,v2clkill,"Freedom from political killings, estimate",VDem,,2023-12-05
+tjet_cy,v2clkill_sd,"Freedom from political killings, standard deviation",VDem,,2023-12-05
+tjet_cy,v2clkill_nr,"Freedom from political killings, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2cltort,Freedom from torture,VDem,,2023-12-05
+tjet_cy,v2cltort_sd,"Freedom from torture, standard deviation",VDem,,2023-12-05
+tjet_cy,v2cltort_nr,"Freedom from torture, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2caviol,Political violence,VDem,,2023-12-05
+tjet_cy,v2caviol_sd,"Political violence, standard deviation",VDem,,2023-12-05
+tjet_cy,v2caviol_nr,"Political violence, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2x_polyarchy,Electoral democracy index,VDem,,2023-12-05
+tjet_cy,v2x_polyarchy_sd,"Electoral democracy index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_api,Additive polyarchy index,VDem,,2023-12-05
+tjet_cy,v2x_api_sd,"Additive polyarchy index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_mpi,Multiplicative polyarchy index,VDem,,2023-12-05
+tjet_cy,v2x_mpi_sd,"Multiplicative polyarchy index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_libdem,Liberal democracy index,VDem,,2023-12-05
+tjet_cy,v2x_libdem_sd,"Liberal democracy index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_liberal,Liberal component index,VDem,,2023-12-05
+tjet_cy,v2x_liberal_sd,"Liberal component index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_partipdem,Participatory democracy index,VDem,,2023-12-05
+tjet_cy,v2x_partipdem_sd,"Participatory democracy index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_partip,Participatory component index,VDem,,2023-12-05
+tjet_cy,v2x_partip_sd,"Participatory component index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_delibdem,Deliberative democracy index,VDem,,2023-12-05
+tjet_cy,v2x_delibdem_sd,"Deliberative democracy index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2xdl_delib,Deliberative component index,VDem,,2023-12-05
+tjet_cy,v2xdl_delib_sd,"Deliberative component index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_egaldem,Egalitarian democracy index,VDem,,2023-12-05
+tjet_cy,v2x_egaldem_sd,"Egalitarian democracy index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_egal,Egalitarian component index,VDem,,2023-12-05
+tjet_cy,v2x_egal_sd,"Egalitarian component index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_cspart,Civil society participation index,VDem,,2023-12-05
+tjet_cy,v2x_cspart_sd,"Civil society participation index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2cseeorgs,CSO entry and exit,VDem,,2023-12-05
+tjet_cy,v2cseeorgs_sd,"CSO entry and exit, standard deviation",VDem,,2023-12-05
+tjet_cy,v2cseeorgs_nr,"CSO entry and exit, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2csreprss,CSO repression,VDem,,2023-12-05
+tjet_cy,v2csreprss_sd,"CSO repression, standard deviation",VDem,,2023-12-05
+tjet_cy,v2csreprss_nr,"CSO repression, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2csprtcpt,CSO participatory environment,VDem,,2023-12-05
+tjet_cy,v2csprtcpt_sd,"CSO participatory environment, standard deviation",VDem,,2023-12-05
+tjet_cy,v2csprtcpt_nr,"CSO participatory environment, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2xcs_ccsi,Core civil society index ordinal,VDem,,2023-12-05
+tjet_cy,v2xcs_ccsi_sd,"Core civil society index ordinal, standard deviation",VDem,,2023-12-05
+tjet_cy,v2juhcind,High court independence,VDem,,2023-12-05
+tjet_cy,v2juhcind_sd,"High court independence, standard deviation",VDem,,2023-12-05
+tjet_cy,v2juhcind_nr,"High court independence, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2juncind,Lower court independence,VDem,,2023-12-05
+tjet_cy,v2juncind_sd,"Lower court independence, standard deviation",VDem,,2023-12-05
+tjet_cy,v2juncind_nr,"Lower court independence, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2jureform,Judicial reform,VDem,,2023-12-05
+tjet_cy,v2jureform_sd,"Judicial reform, standard deviation",VDem,,2023-12-05
+tjet_cy,v2jureform_nr,"Judicial reform, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2jucomp,Compliance with judiciary,VDem,,2023-12-05
+tjet_cy,v2jucomp_sd,"Compliance with judiciary, standard deviation",VDem,,2023-12-05
+tjet_cy,v2jucomp_nr,"Compliance with judiciary, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2x_jucon,Judicial constraints on the executive index,VDem,,2023-12-05
+tjet_cy,v2x_jucon_sd,"Judicial constraints on the executive index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2elmulpar,Elections multiparty,VDem,,2023-12-05
+tjet_cy,v2elmulpar_sd,"Elections multiparty, standard deviation",VDem,,2023-12-05
+tjet_cy,v2elmulpar_nr,"Elections multiparty, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2xdd_dd,Direct popular vote index,VDem,,2023-12-05
+tjet_cy,v2xel_locelec,Local government index,VDem,,2023-12-05
+tjet_cy,v2xel_locelec_sd,"Local government index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2xel_regelec,Regional government index,VDem,,2023-12-05
+tjet_cy,v2xel_regelec_sd,"Regional government index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2xel_frefair,Clean elections index,VDem,,2023-12-05
+tjet_cy,v2xel_frefair_sd,"Clean elections index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_frassoc_thick,Freedom of association thick index,VDem,,2023-12-05
+tjet_cy,v2x_frassoc_thick_sd,"Freedom of association thick index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_freexp_altinf,Freedom of Expression and Alternative Sources of Information index,VDem,,2023-12-05
+tjet_cy,v2x_freexp_altinf_sd,"Freedom of Expression and Alternative Sources of Information index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_elecoff,Elected officials index,VDem,,2023-12-05
+tjet_cy,v2x_suffr,Share of population with suffrage,VDem,,2023-12-05
+tjet_cy,v2x_rule,Rule of law index,VDem,,2023-12-05
+tjet_cy,v2x_rule_sd,"Rule of law index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_accountability,Accountability index,VDem,,2023-12-05
+tjet_cy,v2x_diagacc,Diagonal accountability index,VDem,,2023-12-05
+tjet_cy,v2x_veracc,Vertical accountability index,VDem,,2023-12-05
+tjet_cy,v2x_horacc,Horizontal accountability index,VDem,,2023-12-05
+tjet_cy,v2xnp_regcorr,Regime corruption,VDem,,2023-12-05
+tjet_cy,v2xnp_regcorr_sd,"Regime corruption, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_corr,Political corruption index,VDem,,2023-12-05
+tjet_cy,v2x_corr_sd,"Political corruption index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_execorr,Executive corruption index,VDem,,2023-12-05
+tjet_cy,v2x_execorr_sd,"Executive corruption index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2x_pubcorr,Public sector corruption index,VDem,,2023-12-05
+tjet_cy,v2x_pubcorr_sd,"Public sector corruption index, standard deviation",VDem,,2023-12-05
+tjet_cy,v2jucorrdc,Judicial corruption decision,VDem,,2023-12-05
+tjet_cy,v2jucorrdc_sd,"Judicial corruption decision, standard deviation",VDem,,2023-12-05
+tjet_cy,v2jucorrdc_nr,"Judicial corruption decision, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2cscnsult,CSO consultation,VDem,,2023-12-05
+tjet_cy,v2cscnsult_sd,"CSO consultation, standard deviation",VDem,,2023-12-05
+tjet_cy,v2cscnsult_nr,"CSO consultation, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2csgender,CSO women’s participation,VDem,,2023-12-05
+tjet_cy,v2csgender_sd,"CSO women’s participation, standard deviation",VDem,,2023-12-05
+tjet_cy,v2csgender_nr,"CSO women’s participation, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2csantimv,CSO anti-system movements,VDem,,2023-12-05
+tjet_cy,v2csantimv_sd,"CSO anti-system movements, standard deviation",VDem,,2023-12-05
+tjet_cy,v2csantimv_nr,"CSO anti-system movements, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2csrlgrep,Religious organization repression,VDem,,2023-12-05
+tjet_cy,v2csrlgrep_sd,"Religious organization repression, standard deviation",VDem,,2023-12-05
+tjet_cy,v2csrlgrep_nr,"Religious organization repression, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2csrlgcon,Religious organization consultation,VDem,,2023-12-05
+tjet_cy,v2csrlgcon_sd,"Religious organization consultation, standard deviation",VDem,,2023-12-05
+tjet_cy,v2csrlgcon_nr,"Religious organization consultation, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2csanmvch_0,"CSO anti-system movement character, binary: Works through legal channels, for the most part",VDem,,2023-12-05
+tjet_cy,v2csanmvch_1,"CSO anti-system movement character, binary: Participates in elections",VDem,,2023-12-05
+tjet_cy,v2csanmvch_2,"CSO anti-system movement character, binary: Works through a mix of legal and extra-legal channels",VDem,,2023-12-05
+tjet_cy,v2csanmvch_3,"CSO anti-system movement character, binary: Insurrectionary",VDem,,2023-12-05
+tjet_cy,v2csanmvch_4,"CSO anti-system movement character, binary: Democratic. Perceived by most disinterested observers as willing to play by the rules of the democratic game, willing to respect constitutional provisions or electoral outcomes, and willing to relinquish power (under democratic auspices)",VDem,,2023-12-05
+tjet_cy,v2csanmvch_5,"CSO anti-system movement character, binary: Anti-democratic. Perceived by most disinterested observers as unwilling to play by the rules of the democratic game, not willing to respect constitutional provisions or electoral outcomes, and/or not willing to relinquish power (under democratic auspices)",VDem,,2023-12-05
+tjet_cy,v2csanmvch_6,"CSO anti-system movement character, binary: Leftist, socialist, communist",VDem,,2023-12-05
+tjet_cy,v2csanmvch_7,"CSO anti-system movement character, binary: Rightist, conservative, party of order",VDem,,2023-12-05
+tjet_cy,v2csanmvch_8,"CSO anti-system movement character, binary: Ethnolinguistic, tribe, kinship, clan",VDem,,2023-12-05
+tjet_cy,v2csanmvch_9,"CSO anti-system movement character, binary: Separatist or autonomist",VDem,,2023-12-05
+tjet_cy,v2csanmvch_10,"CSO anti-system movement character, binary: Religious",VDem,,2023-12-05
+tjet_cy,v2csanmvch_11,"CSO anti-system movement character, binary: Paramilitary",VDem,,2023-12-05
+tjet_cy,v2csanmvch_12,"CSO anti-system movement character, binary: Heavily engaged in criminal activity, e.g., narcotics, bootlegging, illegal exploitation of natural resources, extortion, kidnapping",VDem,,2023-12-05
+tjet_cy,v2csanmvch_nr,"CSO anti-system movement character, count of expert ratings",VDem,,2023-12-05
+tjet_cy,v2csstruc_0,"CSO structure, binary: The state does not allow autonomous CSOs",VDem,,2023-12-05
+tjet_cy,v2csstruc_1,"CSO structure, binary: Large encompassing organizations dominate. The government and CSOs are linked formally through a corporatist system of interest intermediation; or, due to historical circumstances, particular large CSOs are highly influential. The voice of such organizations is recognized by the government and is accorded special weight by policymakers",VDem,,2023-12-05
+tjet_cy,v2csstruc_2,"CSO structure, binary: Neither large encompassing nor small CSOs dominate. Influence is contingent on circumstances. Organizations, both large and small, contend with one another to have their voice considered by policymakers",VDem,,2023-12-05
+tjet_cy,v2csstruc_3,"CSO structure, binary: Small CSOs dominate. Many small organizations contend with one another to have their voices heard by policymakers",VDem,,2023-12-05
+tjet_cy,v2csstruc_nr,"CSO structure, count of expert ratings",VDem,,2023-12-05
+tjet_cy,theta_mean_fariss,"estimated latent physical integrity (formerly latent mean, the posterior mean of the latent variable)","Fariss, Kenwick, & Reuning",,2023-12-05
+tjet_cy,theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",,2023-12-05
+tjet_cy,killing_estimate_mean_fariss,posterior mean of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",,2023-12-05
+tjet_cy,killing_estimate_median_fariss,posterior median of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",,2023-12-05
+tjet_cy,events_pitf,count of atrocity events,PITF,,2023-12-05
+tjet_cy,deaths_pitf,counts of deaths due to atrocities,PITF,,2023-12-05
+tjet_cy,prev_state_svac,"prevalence of sexual violence among state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,2023-12-05
+tjet_cy,prev_nonstate_svac,"prevalence of sexual violence among non-state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,2023-12-05
+tjet_cy,conflictyear_svac,conflict-year in SVAC dataset,SVAC,,2023-12-05
+tjet_cy,conf_intra,"count of minor internal (incl. internationalized) conflicts (25-999 BRDs, from ACD)",UCDP,,2023-12-05
+tjet_cy,wars_intra,"count of internal (incl. internationalized) wars (1000+ BRDs, from ACD)",UCDP,,2023-12-05
+tjet_cy,conf_intra_strict,"count of minor internal (excl. internationalized) conflicts (25-999 BRDs, from ACD)",UCDP,,2023-12-05
+tjet_cy,wars_intra_strict,"count of internal (excl. internationalized) wars (1000+ BRDs, from ACD)",UCDP,,2023-12-05
+tjet_cy,conf_inter,"count of minor external conflicts (25-999 BRDs, from ACD)",UCDP,,2023-12-05
+tjet_cy,wars_inter,count of external wars (1000+ BRDs),UCDP,,2023-12-05
+tjet_cy,deaths_state_osv,count of civilian deaths from one-sided violence due to state actors,UCDP,,2023-12-05
+tjet_cy,deaths_nonstate_osv,count of civilian deaths from one-sided violence due to non-state actors,UCDP,,2023-12-05
+tjet_cy,conflicts_int,count of internal conflicts (from GED),UCDP,,2023-12-05
+tjet_cy,conflicts_ext,count of external conflicts (from GED),UCDP,,2023-12-05
+tjet_cy,conflicts_nsc,count of non-state conflicts (from GED),UCDP,,2023-12-05
+tjet_cy,conflicts_osv,count of one-sided violence events (from GED),UCDP,,2023-12-05
+tjet_cy,deaths_all_int,"sum of all deaths from internal conflicts (best estimates, from GED)",UCDP,,2023-12-05
+tjet_cy,deaths_civilians_int,sum of civilian deaths from internal conflicts (from GED),UCDP,,2023-12-05
+tjet_cy,deaths_all_ext,"sum of all deaths from external conflicts (best estimates, from GED)",UCDP,,2023-12-05
+tjet_cy,deaths_civilians_ext,sum of civilian deaths from external conflicts (from GED),UCDP,,2023-12-05
+tjet_cy,deaths_all_nsc,"sum of all deaths from non-state conflicts (best estimates, from GED)",UCDP,,2023-12-05
+tjet_cy,deaths_civilians_nsc,sum of civilian deaths from external conflicts (from GED),UCDP,,2023-12-05
+tjet_cy,deaths_all_osv,"sum of all deaths from one-sided violence (best estimates, from GED)",UCDP,,2023-12-05
+tjet_cy,deaths_civilians_osv,sum of civilian deaths from one-sided violence (from GED),UCDP,,2023-12-05
+tjet_cy,internal,maximal level of internal (incl. internationalized) conflict (none; conflict; war),UCDP,,2023-12-05
+tjet_cy,internal_strict,maximal level of internal (excl. internationalized) conflict (none; conflict; war),UCDP,,2023-12-05
+tjet_cy,external,maximal level of external conflict (none; conflict; war),UCDP,,2023-12-05
+tjet_cy,conflict_internal,"any internal (incl. internationalized) conflict (25+ BRD) , binary",UCDP,,2023-12-05
+tjet_cy,conflict_internal_strict,"any internal (excl. internationalized) conflict (25+ BRD), binary",UCDP,,2023-12-05
+tjet_cy,conflict_external,"any external conflict (25+ BRD), binary",UCDP,,2023-12-05
+tjet_cy,war_internal,"any internal (incl. internationalized) war (1000+ BRD) , binary",UCDP,,2023-12-05
+tjet_cy,war_internal_strict,"any internal (excl. internationalized) war (1000+ BRD), binary",UCDP,,2023-12-05
+tjet_cy,war_external,"any external war (1000+ BRD), binary",UCDP,,2023-12-05
+tjet_cy,conflict_non_state,"any non-state conflict (25+ BRD), binary",UCDP,,2023-12-05
+tjet_cy,conflict_one_sided,"any one-side violence (25+ BRD), binary",UCDP,,2023-12-05
+tjet_cy,territorial,"any internal armed conflict over territorial incompatibility, binary (from ACD)",UCDP,,2023-12-05
+tjet_cy,intensity,maximum internal conflict intensity level (from ACD),UCDP,,2023-12-05
+tjet_cy,confterm,"any internal conflict dyad episode terminated, binary (from termination dataset)",UCDP,,2023-12-05
+tjet_cy,recur,"any internal conflict dyad recurrence after spell of non-conflict, binary (from termination dataset)",UCDP,,2023-12-05
+tjet_cy,outcome_agreement,count of internal conflict terminations with peace agreement (from termination dataset),UCDP,,2023-12-05
+tjet_cy,outcome_ceasefire,count of internal conflict terminations with ceasefire (from termination dataset),UCDP,,2023-12-05
+tjet_cy,outcome_victory_gov,count of internal conflict terminations with government victory (from termination dataset),UCDP,,2023-12-05
+tjet_cy,outcome_victory_reb,count of internal conflict terminations with victory by non-state side (from termination dataset),UCDP,,2023-12-05
+tjet_cy,outcome_low_activity,count of internal conflict terminations due to low activity (from termination dataset),UCDP,,2023-12-05
+tjet_cy,outcome_actor_ceases,count of internal conflict terminations because an actor ceased to exist (from termination dataset),UCDP,,2023-12-05
+tjet_cy,reb_claim,count of rebel groups in internal conflict dyads making exclusive ethnic claims,EPR,,2023-12-05
+tjet_cy,reb_recruit,count of rebel groups in internal conflict dyads recruiting from ethnic groups,EPR,,2023-12-05
+tjet_cy,gov_recruit,count of internal conflict dyads where governments recruit on the basis of ethnicity,EPR,,2023-12-05
+tjet_cy,dyads_active,count of active internal conflict dyads,UCDP,,2023-12-05
+tjet_cy,grps_in_dyads,ethnic groups in internal conflict dyads in EPR dataset,EPR,,2023-12-05
+tjet_cy,dyads_new,count of new conflict dyads of internal (incl. internationalized) conflict,UCDP,,2023-12-05
+tjet_cy,dyads_ep_new,count of new dyad episodes (incl. recurrence) of internal (incl. internationalized) conflict,UCDP,,2023-12-05
+tjet_cy,pko_mission,"active UN peacekeeping mission, binary",PKO,,2023-12-05
+tjet_cy,amnesties,count of amnesties per country and year of passing,TJET,,2023-12-05
+tjet_cy,amnesties_SGBV,"binary for whether amnesties for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,,2023-12-05
+tjet_cy,reparations,count of reparations polices per country and year of creation,TJET,,2023-12-05
+tjet_cy,reparations_SGBV,"binary for whether reparations for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,,2023-12-05
+tjet_cy,tcs,count of truth commissions per country and year of creation,TJET,,2023-12-05
+tjet_cy,tcs_SGBV,"binary for whether truth commissions for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,,2023-12-05
+tjet_cy,vettings,count of vetting policies per country and year of creation,TJET,,2023-12-05
+tjet_cy,trials_domestic,"count of domestic trials per country and start year, by country of the accused",TJET,,2023-12-05
+tjet_cy,trials_domestic_SGBV,"binary for whether domestic trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,,2023-12-05
+tjet_cy,trials_intl,"count of international and hydrid trials per country and start year, by country of the accused",TJET,,2023-12-05
+tjet_cy,trials_intl_SGBV,"binary for whether international and hydrid trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,,2023-12-05
+tjet_cy,trials_foreign,"count of foreign trials per country and start year, by country of the accused",TJET,,2023-12-05
+tjet_cy,trials_foreign_SGBV,"binary for whether foreign trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,,2023-12-05
+tjet_cy,ICC_confirm_charges,ICC trial chamber confirmed charges,TJET,,2023-12-05
+tjet_cy,ICC_investigation,ICC investigation by OTP,TJET,,2023-12-05
+tjet_cy,ICC_arrest_warrant,ICC issued arrest warrant,TJET,,2023-12-05
+tjet_cy,ICC_withdrawnDismissed,ICC case withdrawn or dismissed,TJET,,2023-12-05
+tjet_cy,ICC_arrestAppear,ICC appearance after arrest,TJET,,2023-12-05
+tjet_cy,ICC_referral,state referral of situation to ICC,TJET,,2023-12-05
+tjet_cy,ICC_proceedings,active ICC proceedings,TJET,,2023-12-05
+tjet_cy,ICC_prelim_exam,ICC preliminary examination by OTP,TJET,,2023-12-05
+tjet_cy,icc_sp,"state party to Rome Statute, binary",TJET,,2023-12-05
+tjet_cy,uninv,"ongoing UN investigation, binary",TJET,,2023-12-05
+tjet_cy,uninv_dompros,"ongoing UN investigation which recommends domestic prosecutions, binary",TJET,,2023-12-05
+tjet_cy,uninv_evcoll,"ongoing UN investigation which collects evidence, binary",TJET,,2023-12-05
+tjet_cy,uninv_intlpros,"ongoing UN investigation which collects evidence for international prosecutions, binary",TJET,,2023-12-05
+tjet_cy,cum_theta_mean_fariss,cumulative average of latent physical integrity since 1970 (or entrance into dataset),"Fariss, Kenwick, & Reuning",,2023-12-05
+tjet_cy,trs_int_hrs_con_sta,"count of trials beginning, by country of accused & start year (int'l & hybrid trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tro_int_hrs_con_sta,"count of trials ongoing, by country of accused (int'l & hybrid trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tfc_int_hrs_con_sta,"count of trials with any final convictions, by country of accused & conviction year (int'l & hybrid trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,cct_int_hrs_con_sta,"count of convictions, by country of accused & conviction year (int'l & hybrid trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,acc_int_hrs_con_sta,"count of accused in ongoing trials, by country of accused (int'l & hybrid trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,crt_int_hrs_con_sta,"conviction rate, cct/acc (int'l & hybrid trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,sen_int_hrs_con_sta,"total sum of sentences scale, by country of accused & conviction year (int'l & hybrid trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,trs_int_hrs_con_opp,"count of trials beginning, by country of accused & start year (int'l & hybrid trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tro_int_hrs_con_opp,"count of trials ongoing, by country of accused (int'l & hybrid trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tfc_int_hrs_con_opp,"count of trials with any final convictions, by country of accused & conviction year (int'l & hybrid trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,cct_int_hrs_con_opp,"count of convictions, by country of accused & conviction year (int'l & hybrid trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,acc_int_hrs_con_opp,"count of accused in ongoing trials, by country of accused (int'l & hybrid trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,crt_int_hrs_con_opp,"conviction rate, cct/acc (int'l & hybrid trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,sen_int_hrs_con_opp,"total sum of sentences scale, by country of accused & conviction year (int'l & hybrid trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,trs_for_hrs_con_sta,"count of trials beginning, by country of accused & start year (foreign trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tro_for_hrs_con_sta,"count of trials ongoing, by country of accused (foreign trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tfc_for_hrs_con_sta,"count of trials with any final convictions, by country of accused & conviction year (foreign trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,cct_for_hrs_con_sta,"count of convictions, by country of accused & conviction year (foreign trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,acc_for_hrs_con_sta,"count of accused in ongoing trials, by country of accused (foreign trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,crt_for_hrs_con_sta,"conviction rate, cct/acc (foreign trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,sen_for_hrs_con_sta,"total sum of sentences scale, by country of accused & conviction year (foreign trials, human rights & conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,trs_for_hrs_con_opp,"count of trials beginning, by country of accused & start year (foreign trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tro_for_hrs_con_opp,"count of trials ongoing, by country of accused (foreign trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tfc_for_hrs_con_opp,"count of trials with any final convictions, by country of accused & conviction year (foreign trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,cct_for_hrs_con_opp,"count of convictions, by country of accused & conviction year (foreign trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,acc_for_hrs_con_opp,"count of accused in ongoing trials, by country of accused (foreign trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,crt_for_hrs_con_opp,"conviction rate, cct/acc (foreign trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,sen_for_hrs_con_opp,"total sum of sentences scale, by country of accused & conviction year (foreign trials, human rights & conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,trs_dom_dtj_sta,"count of trials beginning, by country of accused & start year (domestic trials, post-autocratic transition nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tro_dom_dtj_sta,"count of trials ongoing, by country of accused (domestic trials, post-autocratic transition nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tfc_dom_dtj_sta,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, post-autocratic transition nexus, state agents)",TJET,,2023-12-05
+tjet_cy,cct_dom_dtj_sta,"count of convictions, by country of accused & conviction year (domestic trials, post-autocratic transition nexus, state agents)",TJET,,2023-12-05
+tjet_cy,acc_dom_dtj_sta,"count of accused in ongoing trials, by country of accused (domestic trials, post-autocratic transition nexus, state agents)",TJET,,2023-12-05
+tjet_cy,crt_dom_dtj_sta,"conviction rate, cct/acc (domestic trials, post-autocratic transition nexus, state agents)",TJET,,2023-12-05
+tjet_cy,sen_dom_dtj_sta,"total sum of sentences scale, by country of accused & conviction year (domestic trials, post-autocratic transition nexus, state agents)",TJET,,2023-12-05
+tjet_cy,trs_dom_hrs_sta,"count of trials beginning, by country of accused & start year (domestic trials, human rights nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tro_dom_hrs_sta,"count of trials ongoing, by country of accused (domestic trials, human rights nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tfc_dom_hrs_sta,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, human rights nexus, state agents)",TJET,,2023-12-05
+tjet_cy,cct_dom_hrs_sta,"count of convictions, by country of accused & conviction year (domestic trials, human rights nexus, state agents)",TJET,,2023-12-05
+tjet_cy,acc_dom_hrs_sta,"count of accused in ongoing trials, by country of accused (domestic trials, human rights nexus, state agents)",TJET,,2023-12-05
+tjet_cy,crt_dom_hrs_sta,"conviction rate, cct/acc (domestic trials, human rights nexus, state agents)",TJET,,2023-12-05
+tjet_cy,sen_dom_hrs_sta,"total sum of sentences scale, by country of accused & conviction year (domestic trials, human rights nexus, state agents)",TJET,,2023-12-05
+tjet_cy,trs_dom_hrs_opp,"count of trials beginning, by country of accused & start year (domestic trials, human rights nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tro_dom_hrs_opp,"count of trials ongoing, by country of accused (domestic trials, human rights nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tfc_dom_hrs_opp,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, human rights nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,cct_dom_hrs_opp,"count of convictions, by country of accused & conviction year (domestic trials, human rights nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,acc_dom_hrs_opp,"count of accused in ongoing trials, by country of accused (domestic trials, human rights nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,crt_dom_hrs_opp,"conviction rate, cct/acc (domestic trials, human rights nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,sen_dom_hrs_opp,"total sum of sentences scale, by country of accused & conviction year (domestic trials, human rights nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,trs_dom_con_sta,"count of trials beginning, by country of accused & start year (domestic trials, conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tro_dom_con_sta,"count of trials ongoing, by country of accused (domestic trials, conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tfc_dom_con_sta,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,cct_dom_con_sta,"count of convictions, by country of accused & conviction year (domestic trials, conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,acc_dom_con_sta,"count of accused in ongoing trials, by country of accused (domestic trials, conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,crt_dom_con_sta,"conviction rate, cct/acc (domestic trials, conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,sen_dom_con_sta,"total sum of sentences scale, by country of accused & conviction year (domestic trials, conflict nexus, state agents)",TJET,,2023-12-05
+tjet_cy,trs_dom_con_opp,"count of trials beginning, by country of accused & start year (domestic trials, conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tro_dom_con_opp,"count of trials ongoing, by country of accused (domestic trials, conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tfc_dom_con_opp,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,cct_dom_con_opp,"count of convictions, by country of accused & conviction year (domestic trials, conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,acc_dom_con_opp,"count of accused in ongoing trials, by country of accused (domestic trials, conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,crt_dom_con_opp,"conviction rate, cct/acc (domestic trials, conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,sen_dom_con_opp,"total sum of sentences scale, by country of accused & conviction year (domestic trials, conflict nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,trs_dom_ctj_sta,"count of trials beginning, by country of accused & start year (domestic trials, conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tro_dom_ctj_sta,"count of trials ongoing, by country of accused (domestic trials, conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tfc_dom_ctj_sta,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,cct_dom_ctj_sta,"count of convictions, by country of accused & conviction year (domestic trials, conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,acc_dom_ctj_sta,"count of accused in ongoing trials, by country of accused (domestic trials, conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,crt_dom_ctj_sta,"conviction rate, cct/acc (domestic trials, conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,sen_dom_ctj_sta,"total sum of sentences scale, by country of accused & conviction year (domestic trials, conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,trs_dom_dtj_ctj_sta,"count of trials beginning, by country of accused & start year (domestic trials, post-autocratic and conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tro_dom_dtj_ctj_sta,"count of trials ongoing, by country of accused (domestic trials, post-autocratic and conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,tfc_dom_dtj_ctj_sta,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, post-autocratic and conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,cct_dom_dtj_ctj_sta,"count of convictions, by country of accused & conviction year (domestic trials, post-autocratic and conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,acc_dom_dtj_ctj_sta,"count of accused in ongoing trials, by country of accused (domestic trials, post-autocratic and conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,crt_dom_dtj_ctj_sta,"conviction rate, cct/acc (domestic trials, post-autocratic and conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,sen_dom_dtj_ctj_sta,"total sum of sentences scale, by country of accused & conviction year (domestic trials, post-autocratic and conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,trs_dom_dtj_ctj_opp,"count of trials beginning, by country of accused & start year (domestic trials, post-autocratic and conflict transitional justice nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tro_dom_dtj_ctj_opp,"count of trials ongoing, by country of accused (domestic trials, post-autocratic and conflict transitional justice nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tfc_dom_dtj_ctj_opp,"count of trials with any final convictions, by country of accused & conviction year (domestic trials, post-autocratic and conflict transitional justice nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,cct_dom_dtj_ctj_opp,"count of convictions, by country of accused & conviction year (domestic trials, post-autocratic and conflict transitional justice nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,acc_dom_dtj_ctj_opp,"count of accused in ongoing trials, by country of accused (domestic trials, post-autocratic and conflict transitional justice nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,crt_dom_dtj_ctj_opp,"conviction rate, cct/acc (domestic trials, post-autocratic and conflict transitional justice nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,sen_dom_dtj_ctj_opp,"total sum of sentences scale, by country of accused & conviction year (domestic trials, post-autocratic and conflict transitional justice nexus, opposition members)",TJET,,2023-12-05
+tjet_cy,tcs_ctj_all_n,"count of TCs, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_victim_process,"victim-centered TC process scale, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_victim_process_n,"victim-centered TC process scale, conflict TJ, count of TCs included in scale",TJET,,2023-12-05
+tjet_cy,tcs_ctj_victim_outcome,"victim-centered TC outcome scale, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_victim_outcome_n,"victim-centered TC outcome scale, conflict TJ, count of TCs included in scale",TJET,,2023-12-05
+tjet_cy,tcs_ctj_account_process,"accountability-oriented TC process scale, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_account_process_n,"accountability-oriented TC process scale, conflict TJ, count of TCs included in scale",TJET,,2023-12-05
+tjet_cy,tcs_ctj_account_outcome,"accountability-oriented TC outcome scale, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_account_outcome_n,"accountability-oriented TC outcome scale, conflict TJ, count of TCs included in scale",TJET,,2023-12-05
+tjet_cy,tcs_ctj_peace_process,"peace-oriented TC process scale, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_peace_process_n,"peace-oriented TC process scale, conflict TJ, count of TCs included in scale",TJET,,2023-12-05
+tjet_cy,tcs_ctj_peace_outcome,"peace-oriented TC outcome scale, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_peace_outcome_n,"peace-oriented TC outcome scale, conflict TJ, count of TCs included in scale",TJET,,2023-12-05
+tjet_cy,tcs_ctj_reform_process,"reform-oriented TC process scale, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_reform_process_n,"reform-oriented TC process scale, conflict TJ, count of TCs included in scale",TJET,,2023-12-05
+tjet_cy,tcs_ctj_reform_outcome,"reform-oriented TC outcome scale, conflict TJ",TJET,,2023-12-05
+tjet_cy,tcs_ctj_reform_outcome_n,"reform-oriented TC outcome scale, conflict TJ, count of TCs included in scale",TJET,,2023-12-05
+tjet_cy,amnesty_dtj_ctj_sta,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents)",TJET,,2023-12-05
+tjet_cy,amnesty_dtj_ctj_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, opposition members)",TJET,,2023-12-05

@@ -23,19 +23,24 @@ This repository contains the code for processing TJET raw data and assembling da
 7. writing data to the production database for the TJET website
     - pipeline/sql.R
     
-Running the `pipeline.R` script will carry out all necessary tasks for moving updated TJET data to the website production database. USE WITH CAUTION!
+Running the `pipeline.R` script will carry out all necessary tasks for moving updated TJET data to the website production database. USE WITH CAUTION! There is a risk of damage to the (staging) website and of incurring costs. 
 
-# Folders in this repository:
+# Important note
+
+This repository is made public for the purpose of transparency and replicability. Only those with access to required credentials (read from the local environment) will be able to run all the code. 
+
+# Folders in this repository
 
 ```bash
 ├── conflicts
 │   ├── original_data
 ├── data
+│   ├── downloads
 ├── functions
 ├── pipeline
 ├── tjet-datasets
 ├── transitions 
-│   ├── original_data 
+    ├── original_data 
 ```
 
 Processed TJET data which can be used for analyses are contained in `tjet-datasets`.
