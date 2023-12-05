@@ -6,7 +6,5 @@
 .env
 .DS_Store
 
-data/cy_covariates_prev.rds
-data/cy_covariates_old.rds
 data/*.RData
-data/downloads/
+data/downloads/*.xlsx
