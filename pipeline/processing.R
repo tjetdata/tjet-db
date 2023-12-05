@@ -466,13 +466,19 @@ db[["Prosecutions"]][["Trials"]] <-
   db[["Prosecutions"]][["Trials"]] %>%
   select(-lastVerdict, -lastSentencingTime)
 
-### fixing missing Trials endYear
+### fixing missing Trials endYear & cleaning description
 db[["Prosecutions"]][["Trials"]] <- 
   db[["Prosecutions"]][["Trials"]] %>% 
   mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2023, yearEnd), 
          yearEnd = ifelse(is.na(yearEnd) & ongoing == 0 & CLs_final_year > 1970, 
                           CLs_final_year, yearEnd), 
-         yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd), ) 
+         yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd), 
+         caseDescription = str_squish(caseDescription), 
+         charnum = nchar(caseDescription),
+         caseDescription = ifelse(str_sub(caseDescription, charnum, charnum) == ".", 
+                                  str_sub(caseDescription, 1, charnum-1), 
+                                  caseDescription)) %>% 
+  select(-charnum) 
 
 ### formatting transitions table for website 
 db[["MegaBase"]][["Transitions"]] <-
@@ -1374,6 +1380,8 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_ctj_reform_outcome",
 
 df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "sta") 
 df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "opp") 
+df <- AmnestyMeasure(cy = df, nexus_vars = "ctj", who_opts = c("sta", "opp")) 
+df <- AmnestyMeasure(cy = df, nexus_vars = "ctj", who_opts = "all") 
 
 ### cleanup
 

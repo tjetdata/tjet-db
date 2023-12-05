@@ -31,7 +31,8 @@ AmnestyMeasure <- function(cy, nexus_vars, who_opts, what_opts = NULL) {
   var_name <- str_flatten(c("amnesty", nexus_vars, who_opts, what_opts), collapse = "_")
   
   amn <- db[["Amnesties"]] %>% 
-    mutate(who_sta = ifelse(str_detect(whoWasAmnestied, "state agents"), 1, 0), 
+    mutate(all = 1, 
+           who_sta = ifelse(str_detect(whoWasAmnestied, "state agents"), 1, 0), 
            who_opp = ifelse(str_detect(whoWasAmnestied, "protesters / political prisoners") | 
                               str_detect(whoWasAmnestied, "armed opposition"), 1, 0),  
            who_oth = ifelse(str_detect(whoWasAmnestied, "collaborators") | 
@@ -51,7 +52,7 @@ AmnestyMeasure <- function(cy, nexus_vars, who_opts, what_opts = NULL) {
                                str_detect(whoWasAmnestied, "other"), 1, 0), 
     ) %>% 
     select(amnestyID, ccode, amnestyYear, fitsPostAutocraticTJ, fitsConflictTJ, 
-           dcj, pcj, who_sta, who_opp, who_oth, 
+           dcj, pcj, all, who_sta, who_opp, who_oth, 
            what_reb, what_hrs, what_pol, what_oth, what_rev) %>% 
     filter(if_any(all_of(nexus[nexus_vars]), ~ . == 1)) %>% 
     filter(if_any(all_of(who[who_opts]), ~ . == 1)) %>% 
