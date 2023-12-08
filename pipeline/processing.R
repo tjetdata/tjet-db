@@ -917,10 +917,10 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 
 ## country labels in map table for special cases
 # db[["CountryYears"]] %>%
-#   select(cyID, country, country_label, country_case,
-#          beg, end, year, ccode, ccode_case, ccode_ksg) %>%
+#   select(country, country_label, country_case,
+#          beg, end, ccode, ccode_case, ccode_ksg) %>%
 #   filter(country != country_label) %>%
-#   print(n = Inf)
+#   distinct()
 
 ### countries table for database
 db$Countries <- countrylist %>% 
@@ -931,7 +931,7 @@ db$Countries <- countrylist %>%
          txt_intro, txt_regime, txt_conflict, txt_TJ)
 
 ### data definition codebook
-db$codebook <- read_csv(here::here("data", "codebook.csv"), 
+db$codebook <- read_csv(here::here("data", "tjet_codebook.csv"), 
                           show_col_types = FALSE) %>% tibble()
 attr(db$codebook, "spec") <- NULL
 attr(db$codebook, "problems") <- NULL
