@@ -20,7 +20,7 @@ pkeys <- c(
   "Dyads" = "dyad_id",
   "ICC" = "ccode_cow", 
   "Investigations" = "pkey", 
-  "TJETmembers" = "pkey") # ccode_cow-year
+  "TJETmembers" = "pkey")
 
 ### note that both bases have Countries, Transitions, Conflicts and Dyads tables
 ### but these should be the same
@@ -633,8 +633,8 @@ countrylist %>%
 countrylist <- countrylist %>%
   left_join(countrylist %>% 
               select(country, ccode) %>%
-              filter(!country %in% c("Soviet Union", "Yugoslavia", 
-                                     "Serbia and Montenegro") ) %>%
+              filter(!country %in% 
+                       c("Soviet Union", "Yugoslavia", "Serbia and Montenegro") ) %>%
               rename("country_case" = "country"),
           by = c("ccode_case" = "ccode")) %>% 
   select(country, country_case, country_fr, ccode, ccode_case, ccode_ksg, m49, isoa3, 
@@ -795,7 +795,9 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
          country = ifelse(country == "Serbia" & year < 1992, "Yugoslavia", country),
          country = ifelse(country == "Serbia" & year %in% 1992:2005, "Serbia and Montenegro", country)
   ) %>% 
-  full_join(countrylist %>% select(country, beg, end), by = "country") %>%
+  full_join(countrylist %>% 
+              select(country, beg, end), 
+            by = "country") %>%
   arrange(country, year) %>% 
   filter(year >= beg & year <= end) %>% 
   mutate(transition = ifelse(is.na(trans_year), 0, 1), 
@@ -878,11 +880,15 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   ungroup() %>% 
   mutate(country_label = ifelse(end < 2020, 
                                 paste(country, " [-", end, "]", sep = ""), 
-                                country)) %>% 
-  select(cyID, country, country_label, year, beg, end, ccode, 
-         country_case, ccode_case, ccode_ksg, tjet_focus, region,
-         regime_sample, reg_democ, reg_autoc, reg_trans, conflict, # ?
-         transition, conflict_active) %>%
+                                country), 
+         country_label_fr = ifelse(end < 2020,
+                                   paste(country_fr, " [-", end, "]", sep = ""),
+                                   country_fr)
+         ) %>% 
+  select(cyID, country, country_fr, country_label, country_label_fr, year, 
+         beg, end, ccode, ccode_case, country_case, ccode_ksg, country_id_vdem, 
+         tjet_focus, region, regime_sample, reg_democ, reg_autoc, reg_trans, 
+         conflict, transition, conflict_active) %>% 
   left_join(amnesties, by = c("ccode", "year") ) %>% 
   mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties),
          amnesties_SGBV = ifelse(is.na(amnesties_SGBV), 
@@ -918,17 +924,18 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 ## country labels in map table for special cases
 # db[["CountryYears"]] %>%
 #   select(country, country_label, country_case,
-#          beg, end, ccode, ccode_case, ccode_ksg) %>%
+#          beg, end, ccode, ccode_case, ccode_ksg, country_id_vdem) %>%
 #   filter(country != country_label) %>%
 #   distinct()
 
 ### countries table for database
 db$Countries <- countrylist %>% 
   mutate(beg = ifelse(beg < 1970, 1970, beg)) %>% 
-  select(country, country_case, country_fr, ccode, ccode_case, ccode_ksg, 
-         beg, end, m49, isoa3, # country_id_vdem, 
-         micro_ksg, region, region_sub_un, region_wb, tjet_focus, # factsheet, 
-         txt_intro, txt_regime, txt_conflict, txt_TJ)
+  select(country, country_case, country_fr, ccode, ccode_case, ccode_ksg, beg, 
+         end, m49, isoa3, 
+         # country_id_vdem, 
+         micro_ksg, region, region_sub_un, 
+         region_wb, tjet_focus, txt_intro, txt_regime, txt_conflict, txt_TJ)
 
 ### data definition codebook
 db$codebook <- read_csv(here::here("data", "tjet_codebook.csv"), 
@@ -1073,10 +1080,11 @@ sample_cy <- c(
 #     Accept = "Accept: application/vnd.github.v3.raw"))
 
 df <- readRDS(here::here("data", "cy_covariates.rds"))
-not <- c("cid_who", "ldc", "lldc", "sids", "income_wb", "region_wb2")
-first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", 
-           "country_id_vdem", "histname", "m49", "isoa3", "iso3c_wb", 
-           "region", "subregion", "intregion", "region_wb", "micro_ksg")
+not <- c("histname", "cid_who", "ldc", "lldc", "sids", "income_wb", 
+         "iso3c_wb", "region_wb2")
+first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", "m49", 
+           "isoa3", "country_id_vdem", "region", "subregion", "intregion", 
+           "region_wb", "micro_ksg")
 then <- names(df)[!names(df) %in% c(first, not)]
 df <- df %>%
   select(all_of(first), all_of(then)) %>%
@@ -1100,7 +1108,7 @@ df <- df %>%
                                 "country_label", "beg", "end", "region", "tjet_focus", 
                                 "reg_democ", "reg_autoc", "reg_trans", "conflict"))) %>%
                rename(ccode_cow = ccode), 
-             by = c("ccode_cow", "ccode_ksg", "year" = "year")) %>% # losing Slovenia 1991
+             by = c("ccode_cow", "ccode_ksg", "country_id_vdem", "year")) %>% # losing Slovenia 1991
   full_join(db[["ICC"]] %>% select(-country),
             by = "ccode_cow" ) %>%
   mutate(ICC_referral = case_when(is.na(ICC_referral) ~ 0,
@@ -1139,6 +1147,10 @@ df <- df %>%
               mutate(ccode = ifelse(ccode == 260 & year == 1990, 255, ccode)) %>%
               select(-country),
             by = c("ccode_cow" = "ccode", "year" = "year") ) %>%
+  mutate(icc_sp = ifelse(country ==  "Tuvalu", 0, icc_sp), 
+         # icc_sp = ifelse(year < 1998, NA, icc_sp), 
+         icc_sp = ifelse(country ==  "Vanuatu" & year < 2011, 0, icc_sp),
+         icc_sp = ifelse(country ==  "Vanuatu" & year >= 2011, 1, icc_sp)) %>%
   left_join(db[["Investigations"]], by = c("ccode_cow", "year")) %>% 
   mutate(uninv = ifelse(is.na(uninv), 0, uninv), 
          uninv_dompros = ifelse(is.na(uninv_dompros), 0, uninv_dompros),
@@ -1385,27 +1397,21 @@ df <- AmnestyMeasure(cy = df, nexus_vars = "ctj", who_opts = "all")
 
 ### cleanup
 
-first <- c("country", "country_case", "year", "ccode_cow", # "ccode_case", 
-           "ccode_ksg", "country_id_vdem", 
-           # "country_name", 
-           "histname", "m49", "isoa3", "iso3c_wb", "region", 
-           "subregion", "intregion", "region_wb", "micro_ksg")
-not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", # website
-         "transition", "conflict", "conflict_active") 
-samples <- c("sample_trans", "sample_confl", "sample_combi", 
-             "dtr", "aco", "dco", "pco") # dtr = sample_trans; aco = sample_confl
-then <- names(df)[!names(df) %in% c(first, samples, not)]
+first <- c(first, "dtr", "aco", "dco", "pco")
+not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", 
+         "transition", "conflict", "conflict_active", 
+         "sample_trans", "sample_confl", "sample_combi") 
+then <- names(df)[!names(df) %in% c(first, not)]
 
 df <- df %>% 
-  select(all_of(first), all_of(samples), all_of(then))
+  select(all_of(first), all_of(then))
 
 ### last step, created lags and saving the analyses dataset
 
 lags <- df %>%
-  select(-country, -ccode_cow, -ccode_ksg, -country_id_vdem, 
-         -country_name, -histname, -m49, -isoa3, -iso3c_wb, -micro_ksg, 
-         -region, -subregion, -intregion, -region_wb, -sample_trans, 
-         -sample_confl, -sample_combi, -dtr, -aco, -dco, -pco) %>%
+  select(!any_of(c("country", "ccode_cow", "ccode_ksg", "m49", "isoa3", 
+                   "country_id_vdem", "region", "subregion", "intregion", 
+                   "region_wb", "micro_ksg", "dtr", "aco", "dco", "pco"))) %>%
   mutate(year = year + 1) %>%
   rename_with(~ paste0("lag_", .x))
 
@@ -1439,7 +1445,8 @@ db[["dl_tjet_codebook"]] <- codebook %>%
   filter(is.na(source) | 
            source %in% c("TJET", "COW", "Kristian S. Gleditsch", 
                          "UN Statistics Division", "World Bank") | 
-           colname %in% c("country_id_vdem", "histname") ) %>%
+           colname %in% c("country_id_vdem") ) %>%
+  filter(!colname %in% c("iso3c_wb", "sample_trans", "sample_confl", "sample_combi") ) %>%
   select(colname, definition, source) %>% 
   left_join(read_csv(here::here("data", "sources.csv")), by = "source") %>% 
   mutate(tjet_version = timestamp) %>% 
