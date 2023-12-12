@@ -8,20 +8,19 @@ require(RMariaDB)
 
 ### loading the tables to write to the database
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
-### for checking the loaded data
-# str(db, 1)
+fr <- readRDS(file = here::here("data", "tjetdb_fr.rds"))
+str(fr[sort(names(fr))], 1)
+db <- c(db, fr[names(fr)[!names(fr) %in% names(db)]])
+str(db[sort(names(db))], 1)
+fr <- names(db)[str_detect(names(db), "_fr")]
 
-tabs <- c("Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
-          "ConflictDyads", "Countries", "CountryYears", "CourtLevels", 
-          "dl_tjet_cy", "dl_tjet_codebook", "labels", "Reparations",
-          "Reparations_collectiveReparationsEligibility",
-          "Reparations_individualReparationsEligible",
-          "SurveysMeta", "Transitions", "Trials", "TruthCommissions",
-          "Vettings", "Vettings_targetingAffiliation"
-)
-
-# "fr_Countries"
-# "fr_TJETmembers"
+tabs <- c(fr, 
+  "Accused", "Amnesties", "codebook", "ConflictDyads", "Countries",
+  "CountryYears", "CourtLevels", "dl_tjet_cy", "dl_tjet_codebook", "labels",
+  "Reparations", "Reparations_collectiveReparationsEligibility",
+  "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions",
+  "Trials", "TruthCommissions", "Vettings"
+  ) %>% sort()
 
 ### two different ways of establishing the same database connection
 ### (note that cloudways requires the local IP address to be added)
@@ -39,8 +38,9 @@ con <- dbConnect(RMariaDB::MariaDB(),
 ### list of all tables in database
 dbListTables(con) %>% 
   sort()
+
 ### reading specific table
-# dbReadTable(con, "fr_Countries") %>% tibble() %>% print(n = Inf)
+# dbReadTable(con, "fr_Countries") %>% tibble() 
 
 ### write all tables to the database 
 ### (this overwrites existing tables by first truncating and then appending)

@@ -955,11 +955,11 @@ db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
   unnest(country) %>% 
   rename(airtable_record_id = country) %>% 
   left_join(tjet[["MegaBase"]][["Countries"]] %>% 
-              select(airtable_record_id, country),
+              select(airtable_record_id, country, country_fr),
             by = "airtable_record_id") %>%
   mutate(results_tables = map(results_tables, function(x) x[["filename"]])) %>% 
-  select(country, year, date_start, date_end, section_title, text_context, 
-         text_results, text_methods, survey_design, sample_size,
+  select(country, country_fr, year, date_start, date_end, section_title, 
+         text_context, text_results, text_methods, survey_design, sample_size,
          bibtex_key, results_tables) %>% 
   unnest(results_tables)
 
