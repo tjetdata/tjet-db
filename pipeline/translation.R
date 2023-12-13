@@ -94,8 +94,7 @@ if(translate$amnesties) { # about 8.5 min / 170,000 characters
   db[["Amnesties_fr"]] <- db[["Amnesties"]] %>% 
     select(amnestyID, mechanismDescription, whoWasAmnestied) %>%
     rowwise() %>%
-    mutate(mechanismDescription = translate(mechanismDescription),
-           whoWasAmnestied = translate(whoWasAmnestied)) %>% ### could improve on more efficient translation of this field
+    mutate(mechanismDescription = translate(mechanismDescription)) %>%
     ungroup()
   Sys.time() - start
   usage(key_get("DeepL"))

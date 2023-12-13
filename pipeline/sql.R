@@ -15,11 +15,12 @@ str(db[sort(names(db))], 1)
 fr <- names(db)[str_detect(names(db), "_fr")]
 
 tabs <- c(fr, 
-  "Accused", "Amnesties", "codebook", "ConflictDyads", "Countries",
-  "CountryYears", "CourtLevels", "dl_tjet_cy", "dl_tjet_codebook", "labels",
-  "Reparations", "Reparations_collectiveReparationsEligibility",
+  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook", 
+  "ConflictDyads", "Countries", "CountryYears", "CourtLevels", "dl_tjet_cy", 
+  "dl_tjet_codebook", "labels", "Reparations", 
+  "Reparations_collectiveReparationsEligibility",
   "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions",
-  "Trials", "TruthCommissions", "Vettings"
+  "Trials", "TruthCommissions", "Vettings", "Vettings_targetingAffiliation"
   ) %>% sort()
 
 ### two different ways of establishing the same database connection
