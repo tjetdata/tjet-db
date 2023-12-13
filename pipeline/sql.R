@@ -54,17 +54,17 @@ map(tabs, function(table_name) {
 })
 
 ### write survey data 
-db[["SurveysMeta"]] %>% 
-  select(results_tables) %>% 
-  unlist(use.names = FALSE) %>% 
-  str_replace(fixed(".xlsx"), "") %>% 
-  map(function(table_name) {
-    print(table_name)
-    dbWriteTable(conn = con,
-                 name = table_name,
-                 value = db[[table_name]],
-                 overwrite = TRUE)
-  })
+# db[["SurveysMeta"]] %>% 
+#   select(results_tables) %>% 
+#   unlist(use.names = FALSE) %>% 
+#   str_replace(fixed(".xlsx"), "") %>% 
+#   map(function(table_name) {
+#     print(table_name)
+#     dbWriteTable(conn = con,
+#                  name = table_name,
+#                  value = db[[table_name]],
+#                  overwrite = TRUE)
+#   })
 
 dbExecute(con, "TRUNCATE TABLE tjet_timestamp")
 dbWriteTable(conn = con,
