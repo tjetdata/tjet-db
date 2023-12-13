@@ -14,7 +14,8 @@ translate <- list(
   accused = FALSE,
   vetting = FALSE,
   surveysmeta = FALSE,
-  surveys = FALSE)
+  surveys = FALSE, 
+  labels = FALSE)
 
 ### setting the authorization key locally (do only once for each new key)
 # keyring::key_set(service = "DeepL") 
@@ -62,6 +63,17 @@ if(translate$country_profiles) { # about 5 min, 425,000 characters
 }
 db[["Countries_fr"]] %>%
   select(country, txt_intro, txt_regime, txt_conflict, txt_TJ)
+
+if(translate$labels) { # about 0.5 min / 5000 characters 
+  start <- Sys.time()
+  db[["labels_fr"]] <- db[["labels"]] %>% 
+    rowwise() %>%
+    mutate(label = translate(label)) %>%
+    ungroup()
+  Sys.time() - start
+  usage(key_get("DeepL"))
+}
+db[["labels_fr"]]
 
 if(translate$tjet_bios) {
   start <- Sys.time()
@@ -203,7 +215,7 @@ save(db, file = here::here("data", "tjetdb.RData"))
 
 to_save <- c("Countries", "Amnesties", "Reparations", "TruthCommissions", 
              "Trials", "Accused", "Vettings", "SurveysMeta", surveytabs, 
-             "TJETmembers") 
+             "labels", "TJETmembers") 
 tabs <- paste(to_save, "_fr", sep = "")
 tabs <- tabs[tabs %in% names(db)]
 db[tabs] %>% 
