@@ -6,6 +6,7 @@ require(keyring)
 ### translation code is wrapped in a conditional statements because it's costly
 translate <- list(
   country_profiles = FALSE, 
+  conflicts = FALSE,
   tjet_bios = FALSE, 
   amnesties = FALSE,
   reparations = FALSE, 
@@ -22,7 +23,8 @@ translate <- list(
 
 ### loading & checking our database
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
-db <- c(db, readRDS(file = here::here("data", "tjetdb_fr.rds")))
+fr <- readRDS(file = here::here("data", "tjetdb_fr.rds"))
+db[names(fr)] <- fr
 str(db[sort(names(db))], 1)
 
 ### sample code for using the Deepl API (useful as reference) 
@@ -74,6 +76,18 @@ if(translate$labels) { # about 0.5 min / 5000 characters
   usage(key_get("DeepL"))
 }
 db[["labels_fr"]]
+
+if(translate$conflicts) { # about 3 min / 2000 characters 
+  start <- Sys.time()
+  db[["ConflictDyads_fr"]] <- db[["ConflictDyads"]] %>% 
+    select(dyad_id, conflict_id, side_b) %>% 
+    rowwise() %>%
+    mutate(side_b = translate(side_b)) %>%
+    ungroup()
+  Sys.time() - start
+  usage(key_get("DeepL"))
+}
+db[["ConflictDyads_fr"]]
 
 if(translate$tjet_bios) {
   start <- Sys.time()
@@ -179,12 +193,13 @@ if(translate$surveysmeta) { # about 0.5 min / 12,000 characters
 }
 db[["SurveysMeta_fr"]]
 
+surveytabs <- db[["SurveysMeta"]] %>% 
+  select(results_tables) %>% 
+  unlist(use.names = FALSE) %>% 
+  str_replace(fixed(".xlsx"), "")
+
 if(translate$surveys) { # about 14 min / 67,000 characters  
   start <- Sys.time()
-  surveytabs <- db[["SurveysMeta"]] %>% 
-    select(results_tables) %>% 
-    unlist(use.names = FALSE) %>% 
-    str_replace(fixed(".xlsx"), "")
   db[paste(surveytabs, "_fr", sep = "")] <- surveytabs %>% 
     map(function(tab) {
       df <- db[[tab]]
