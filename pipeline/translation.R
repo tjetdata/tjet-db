@@ -80,14 +80,14 @@ db[["labels_fr"]]
 if(translate$conflicts) { # about 3 min / 2000 characters 
   start <- Sys.time()
   db[["ConflictDyads_fr"]] <- db[["ConflictDyads"]] %>% 
-    select(dyad_id, conflict_id, side_b) %>% 
+    select(dyad_id, conflict_id, gwno_loc, side_b, ep_start_date) %>% 
     rowwise() %>%
     mutate(side_b = translate(side_b)) %>%
     ungroup()
   Sys.time() - start
   usage(key_get("DeepL"))
 }
-db[["ConflictDyads_fr"]]
+db[["ConflictDyads_fr"]] 
 
 if(translate$tjet_bios) {
   start <- Sys.time()
