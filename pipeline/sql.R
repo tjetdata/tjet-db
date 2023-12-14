@@ -13,6 +13,11 @@ str(fr[sort(names(fr))], 1)
 db <- c(db, fr[names(fr)[!names(fr) %in% names(db)]])
 str(db[sort(names(db))], 1)
 fr <- names(db)[str_detect(names(db), "_fr")]
+surveytabs <- db[["SurveysMeta"]] %>%
+  select(results_tables) %>%
+  unlist(use.names = FALSE) %>%
+  str_replace(fixed(".xlsx"), "_fr")
+fr <- fr[!fr %in% surveytabs]
 
 tabs <- c(fr, 
   "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook", 
@@ -55,17 +60,14 @@ map(tabs, function(table_name) {
 })
 
 ### write survey data 
-# db[["SurveysMeta"]] %>% 
-#   select(results_tables) %>% 
-#   unlist(use.names = FALSE) %>% 
-#   str_replace(fixed(".xlsx"), "") %>% 
-#   map(function(table_name) {
-#     print(table_name)
-#     dbWriteTable(conn = con,
-#                  name = table_name,
-#                  value = db[[table_name]],
-#                  overwrite = TRUE)
-#   })
+surveytabs %>%
+  map(function(table_name) {
+    print(table_name)
+    dbWriteTable(conn = con,
+                 name = table_name,
+                 value = db[[table_name]],
+                 overwrite = TRUE)
+  })
 
 dbExecute(con, "TRUNCATE TABLE tjet_timestamp")
 dbWriteTable(conn = con,

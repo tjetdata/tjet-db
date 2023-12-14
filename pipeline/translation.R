@@ -166,11 +166,11 @@ if(translate$surveysmeta) { # about 0.5 min / 12,000 characters
   order <- names(db[["SurveysMeta"]])
   db[["SurveysMeta_fr"]] <- db[["SurveysMeta"]] %>%
     rowwise() %>%
-    mutate(section_title = ifelse(is.na(section_title), "", translate(section_title)),
-           text_context = ifelse(is.na(text_context), "", translate(text_context)),
-           text_results = ifelse(is.na(text_results), "", translate(text_results)),
-           text_methods = ifelse(is.na(text_methods), "", translate(text_methods)), 
-           survey_design = ifelse(is.na(survey_design), "", translate(survey_design))
+    mutate(section_title = translate(section_title),
+           text_context = translate(text_context),
+           text_results = translate(text_results),
+           text_methods = translate(text_methods), 
+           survey_design = translate(survey_design)
            ) %>%
     ungroup() %>%
     select(all_of(order))
@@ -179,7 +179,7 @@ if(translate$surveysmeta) { # about 0.5 min / 12,000 characters
 }
 db[["SurveysMeta_fr"]]
 
-if(translate$surveys) { # about 10 min / 65,000 characters  
+if(translate$surveys) { # about 14 min / 67,000 characters  
   start <- Sys.time()
   surveytabs <- db[["SurveysMeta"]] %>% 
     select(results_tables) %>% 
@@ -187,8 +187,11 @@ if(translate$surveys) { # about 10 min / 65,000 characters
     str_replace(fixed(".xlsx"), "")
   db[paste(surveytabs, "_fr", sep = "")] <- surveytabs %>% 
     map(function(tab) {
-      df <- db[[tab]] 
+      df <- db[[tab]]
       order <- names(df)
+      headers <- translate(names(df))
+      tooltips <- translate(df[1, ])
+      df <- rbind(headers, tooltips, df) %>% tibble()
       sec <- df %>% 
         select(Section) %>% 
         distinct() %>% 
@@ -199,7 +202,7 @@ if(translate$surveys) { # about 10 min / 65,000 characters
         mutate(Question_fr = ifelse(is.na(Question), "", translate(Question)))
       df %>% 
         rowwise() %>%
-        mutate(Responses_fr = ifelse(is.na(Responses), "", translate(Responses))) %>%
+        mutate(Responses_fr = translate(Responses)) %>%
         ungroup() %>%
         left_join(sec, by = "Section") %>% 
         left_join(que, by = "Question") %>% 
