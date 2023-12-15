@@ -20,9 +20,9 @@ surveytabs <- db[["SurveysMeta"]] %>%
 fr <- fr[!fr %in% surveytabs]
 
 tabs <- c(fr, 
-  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook", 
+  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
   "ConflictDyads", "Countries", "CountryYears", "CourtLevels", "dl_tjet_cy", 
-  "dl_tjet_codebook", "labels", "Reparations", 
+  "dl_tjet_codebook", "fields_meta", "labels", "Reparations", 
   "Reparations_collectiveReparationsEligibility",
   "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions",
   "Trials", "TruthCommissions", "Vettings", "Vettings_targetingAffiliation"

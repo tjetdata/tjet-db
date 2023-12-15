@@ -17,7 +17,7 @@ translate <- list(
   surveysmeta = FALSE,
   surveys = FALSE, 
   labels = FALSE, 
-  codebook = FALSE)
+  dl_codebook = FALSE)
 
 ### setting the authorization key locally (do only once for each new key)
 # keyring::key_set(service = "DeepL") 
@@ -78,16 +78,16 @@ if(translate$labels) { # about 0.5 min / 5000 characters
 }
 db[["labels_fr"]]
 
-if(translate$codebook) { # about 3 min / 28,000 characters 
+if(translate$dl_codebook) { # about 1 min / 2000 characters 
   start <- Sys.time()
-  db[["codebook_fr"]] <- db[["codebook"]] %>% 
+  db[["dl_tjet_codebook_fr"]] <- db[["dl_tjet_codebook"]] %>% 
     rowwise() %>%
     mutate(definition = translate(definition)) %>%
     ungroup()
   Sys.time() - start
   usage(key_get("DeepL"))
 }
-db[["codebook_fr"]]
+db[["dl_tjet_codebook_fr"]]
 
 if(translate$conflicts) { # about 3 min / 2000 characters 
   start <- Sys.time()
@@ -242,9 +242,9 @@ if(translate$surveys) { # about 14 min / 67,000 characters
 ### saving locally 
 save(db, file = here::here("data", "tjetdb.RData"))
 
-to_save <- c("Countries", "Amnesties", "Reparations", "TruthCommissions", 
-             "Trials", "Accused", "Vettings", "SurveysMeta", surveytabs, 
-             "labels", "TJETmembers") 
+to_save <- c("Countries", "ConflictDyads", "dl_tjet_codebook", "Amnesties", 
+             "Reparations", "TruthCommissions", "Trials", "Accused", "Vettings", 
+             "SurveysMeta", surveytabs, "labels", "TJETmembers") 
 tabs <- paste(to_save, "_fr", sep = "")
 tabs <- tabs[tabs %in% names(db)]
 db[tabs] %>% 
