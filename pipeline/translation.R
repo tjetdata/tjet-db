@@ -16,7 +16,8 @@ translate <- list(
   vetting = FALSE,
   surveysmeta = FALSE,
   surveys = FALSE, 
-  labels = FALSE)
+  labels = FALSE, 
+  codebook = FALSE)
 
 ### setting the authorization key locally (do only once for each new key)
 # keyring::key_set(service = "DeepL") 
@@ -76,6 +77,17 @@ if(translate$labels) { # about 0.5 min / 5000 characters
   usage(key_get("DeepL"))
 }
 db[["labels_fr"]]
+
+if(translate$codebook) { # about 3 min / 28,000 characters 
+  start <- Sys.time()
+  db[["codebook_fr"]] <- db[["codebook"]] %>% 
+    rowwise() %>%
+    mutate(definition = translate(definition)) %>%
+    ungroup()
+  Sys.time() - start
+  usage(key_get("DeepL"))
+}
+db[["codebook_fr"]]
 
 if(translate$conflicts) { # about 3 min / 2000 characters 
   start <- Sys.time()

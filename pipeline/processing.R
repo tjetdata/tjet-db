@@ -944,6 +944,12 @@ attr(db$codebook, "spec") <- NULL
 attr(db$codebook, "problems") <- NULL
 # attributes(db$codebook) 
 
+db[["fields_meta"]] <- read_csv(here::here("data", "tjet_fields_meta.csv"), 
+                                show_col_types = FALSE) %>% tibble()
+attr(db$fields_meta, "spec") <- NULL
+attr(db$fields_meta, "problems") <- NULL
+# attributes(db$fields_meta) 
+
 ### conflict dyads lookup table for database
 db$ConflictDyads <- read_csv(here::here("conflicts", "confl_dyads.csv"), 
                              show_col_types = FALSE) %>% tibble()
