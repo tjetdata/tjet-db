@@ -613,6 +613,8 @@ countrylist <- db$Countries %>%
          end = ifelse(country == "German Federal Republic (West)", 1989, end),
          end = ifelse(country == "Yemen Arab Republic (North)", 1989, end),
          region_sub_un = ifelse(is.na(intregion), subregion, intregion),
+         region = ifelse(region_wb == "Middle East & North Africa" & 
+                           region %in% c("Asia", "Africa"), "MENA", region), 
          txt_intro = str_squish(txt_intro), 
          txt_regime = str_squish(txt_regime), 
          txt_conflict = str_squish(txt_conflict), 
