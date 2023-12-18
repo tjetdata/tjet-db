@@ -1472,7 +1472,8 @@ db[["dl_tjet_cy"]] <- df %>%
   filter(!(country == "Palau" & year < 1995)) %>%
   filter(!(country == "Saint Kitts and Nevis" & year == 1983)) %>%
   mutate(tjet_version = timestamp) %>% 
-  write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_cy.csv"), na = "")
 
 ### saving individual mechanism tables for local analyses & repo
 ### these will also be written to the database for downloads
