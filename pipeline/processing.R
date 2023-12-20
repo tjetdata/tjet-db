@@ -634,12 +634,13 @@ countrylist %>%
 
 countrylist <- countrylist %>%
   left_join(countrylist %>% 
-              select(country, ccode) %>%
+              select(country, country_fr, ccode) %>%
               filter(!country %in% 
                        c("Soviet Union", "Yugoslavia", "Serbia and Montenegro") ) %>%
-              rename("country_case" = "country"),
+              rename("country_case" = "country", 
+                     "country_case_fr" = "country_fr"),
           by = c("ccode_case" = "ccode")) %>% 
-  select(country, country_case, country_fr, ccode, ccode_case, ccode_ksg, m49, isoa3, 
+  select(country, country_case, country_fr, country_case_fr, ccode, ccode_case, ccode_ksg, m49, isoa3, 
          country_id_vdem, beg, end, micro_ksg, region, region_sub_un, region_wb, 
          tjet_focus, factsheet, txt_intro, txt_regime, txt_conflict, txt_TJ) 
 
@@ -881,10 +882,10 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   mutate(conflict = max(conflict) ) %>%
   ungroup() %>% 
   mutate(country_label = ifelse(end < 2020, 
-                                paste(country, " [-", end, "]", sep = ""), 
+                                paste(country, " [-", end, ", included on ", country_case, " page]", sep = ""), 
                                 country), 
          country_label_fr = ifelse(end < 2020,
-                                   paste(country_fr, " [-", end, "]", sep = ""),
+                                   paste(country_fr, " [-", end, ", inclus dans la page ", country_case_fr, "]", sep = ""),
                                    country_fr)
          ) %>% 
   select(cyID, country, country_fr, country_label, country_label_fr, year, 
@@ -925,6 +926,10 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 
 ## country labels in map table for special cases
 # db[["CountryYears"]] %>%
+#   filter(ccode_case %in% c(316, 255, 345, 365, 816, 679) ) %>%
+#   select(country, country_label, country_label_fr) %>%
+#   distinct()
+# db[["CountryYears"]] %>%
 #   select(country, country_label, country_case,
 #          beg, end, ccode, ccode_case, ccode_ksg, country_id_vdem) %>%
 #   filter(country != country_label) %>%
@@ -934,10 +939,8 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 db$Countries <- countrylist %>% 
   mutate(beg = ifelse(beg < 1970, 1970, beg)) %>% 
   select(country, country_case, country_fr, ccode, ccode_case, ccode_ksg, beg, 
-         end, m49, isoa3, 
-         # country_id_vdem, 
-         micro_ksg, region, region_sub_un, 
-         region_wb, tjet_focus, txt_intro, txt_regime, txt_conflict, txt_TJ)
+         end, m49, isoa3, micro_ksg, region, region_sub_un, region_wb, 
+         tjet_focus, txt_intro, txt_regime, txt_conflict, txt_TJ)
 
 ### data definition codebook
 db$codebook <- read_csv(here::here("data", "tjet_codebook.csv"), 
@@ -1417,7 +1420,8 @@ df <- df %>%
 ### last step, created lags and saving the analyses dataset
 
 lags <- df %>%
-  select(!any_of(c("country", "ccode_cow", "ccode_ksg", "m49", "isoa3", 
+  select(!any_of(c("country", "country_label", "country_name", "country_fr", 
+                   "country_label_fr", "ccode_cow", "ccode_ksg", "m49", "isoa3", 
                    "country_id_vdem", "region", "subregion", "intregion", 
                    "region_wb", "micro_ksg", "dtr", "aco", "dco", "pco"))) %>%
   mutate(year = year + 1) %>%
@@ -1425,10 +1429,13 @@ lags <- df %>%
 
 dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
 
-df %>%
+exclude <- c("country_label", "country_name", "country_fr", "country_label_fr")
+  
+df %>% 
   left_join(lags, by = c("country_case" = "lag_country_case", 
                          "year" = "lag_year")) %>% 
   mutate(tjet_version = timestamp) %>% 
+  select(!any_of(exclude)) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_cy_analyses.csv"), na = "")
 
