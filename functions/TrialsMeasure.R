@@ -1,5 +1,6 @@
-TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts, 
-                          rank_opts = NULL, charges_opts = NULL, measure) {
+TrialsMeasure <- function(cy, type_opts, nexus_vars, excl_nexus_vars = NULL, 
+                          memb_opts, rank_opts = NULL, charges_opts = NULL, 
+                          measure) {
   
   ## options
   type_trial <- c(int = "international", 
@@ -7,10 +8,10 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
                   dom = "domestic")
   nexus_trial <- c(hrs = "humanRights", 
                    con = "IntraConfl",
-                   ctj = "fitsConflictTJ", 
+                   ctj = "fitsConflictTJ",
                    dtj = "fitsPostAutocraticTJ", 
-                   dcj = "beganDuringIntraConfl", 
-                   pcj = "beganAfterIntraConfl") 
+                   dcj = "beganDuringIntraConfl", # subset of ctj
+                   pcj = "beganAfterIntraConfl") # subset of ctj
   membership_acc <- c(all = "all", 
                       sta = "stateAgent", 
                       opp = "opposedToGovernment")
@@ -27,51 +28,70 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
                 cct = "conviction count", 
                 crt = "conviction rate by all accused", 
                 sen = "sentence totals")
-  
+
   ## input errors
   suffix <- "\n  or NULL if this aspect is not relevant to the new measure"
   
   error <- expression(
     stop("Missing or invalid argument for 'type_opts', select one or more of:", 
          "\n  ", paste(names(type_trial), collapse = "; "), suffix) )
-  if(missing(type_opts)) eval(error)
-  else if(sum(!type_opts %in% names(type_trial)) > 0) eval(error)
+  if(missing(type_opts)) {
+    eval(error)
+  } else if(sum(!type_opts %in% names(type_trial)) > 0) eval(error)
   
   error <- expression(
     stop("Missing or invalid argument for 'nexus_vars', select one or more of:", 
          "\n  ", paste(names(nexus_trial), collapse = "; "), suffix) )
-  if(missing(nexus_vars)) eval(error)
-  else if(sum(!nexus_vars %in% names(nexus_trial)) > 0) eval(error)
+  if(missing(nexus_vars)) {
+    eval(error)
+  } else if(sum(!nexus_vars %in% names(nexus_trial)) > 0) eval(error)
   
+  error <- expression(
+    stop("Invalid argument for 'excl_nexus_vars', select one or more of:", 
+         "\n  ", paste(names(nexus_trial), collapse = "; "), suffix) )
+  # if(missing(excl_nexus_vars)) {
+  #   eval(error)
+  # } else 
+  if(sum(!excl_nexus_vars %in% names(nexus_trial)) > 0) eval(error)
+
+  if(sum(table(c(nexus_vars, excl_nexus_vars)) > 1)) 
+    stop("Not possible to include and exclude a nexus option at the same time." )
+
   error <- expression(
     stop("Missing or invalid argument for 'memb_opts', select one or more of:", 
          "\n  ", paste(names(membership_acc), collapse = "; "), suffix) )
-  if(missing(memb_opts)) eval(error)
-  else if(sum(!memb_opts %in% names(membership_acc)) > 0) eval(error)
+  if(missing(memb_opts)) {
+    eval(error)
+  } else if(sum(!memb_opts %in% names(membership_acc)) > 0) eval(error)
 
   error <- expression(
-    stop("Missing or invalid argument for 'rank_opts', select one or more of:", 
+    stop("Invalid argument for 'rank_opts', select one or more of:", 
          "\n  ", paste(names(rank_acc), collapse = "; "), suffix) )
-  # if(missing(rank_opts)) eval(error)
-  # else 
+  # if(missing(rank_opts)) { eval(error) } else 
   if(sum(!rank_opts %in% names(rank_acc)) > 0) eval(error)
 
   error <- expression(
-    stop("Missing or invalid argument for 'charges_opts', select one or more of:", 
+    stop("Invalid argument for 'charges_opts', select one or more of:", 
          "\n  ", paste(names(charges_acc), collapse = "; "), suffix) )
-  # if(missing(charges_opts)) eval(error)
-  # else 
+  # if(missing(charges_opts)) { eval(error) } else 
   if(sum(!charges_opts %in% names(charges_acc)) > 0) eval(error)
   
   error <- expression(
     stop("Missing or invalid argument for 'measure', select one or more of:", 
          "\n  ", paste(names(measures), collapse = "; ")) )
-  if(missing(measure)) eval(error)
-  else if(sum(!measure %in% names(measures)) > 0) eval(error)
+  if(missing(measure)) {
+    eval(error)
+  } else if(sum(!measure %in% names(measures)) > 0) eval(error)
   
-  var_name <- str_flatten(c(measure, type_opts, nexus_vars, memb_opts, rank_opts, 
-                            charges_opts), collapse = "_")
+  if(length(excl_nexus_vars) > 0) {
+    excl <- paste("-", excl_nexus_vars, sep = "")
+  } else {
+    excl <- NULL
+  }
   
+  var_name <- str_flatten(c(measure, type_opts, nexus_vars, excl,
+                            memb_opts, rank_opts, charges_opts), collapse = "_")
+
   ## CLs data
   
   # accused_ended <- db[["CourtLevels"]] %>%
@@ -119,7 +139,7 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     rename(year_ended = year)
   
   guilty <- db[["CourtLevels"]] %>%
-    # filter(str_detect(verdict, "Reduced") & year == 2005) %>% # some problenm cases 
+    # filter(str_detect(verdict, "Reduced") & year == 2005) %>% # some problem cases 
     mutate(date = as_date(date)) %>% 
     filter(!is.na(accusedID) & guilty == 1) %>% 
     filter(!(accusedID == 15441 & is.na(sentencingTime)) ) %>% ## temp fix
@@ -172,7 +192,7 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     mutate(all = 1, 
            lowRank = 1 - highRank) %>% 
     filter(if_any(all_of(membership_acc[memb_opts]), ~ . == 1)) %>% 
-    filter(if_any(all_of(rank_acc[rank_opts]), ~ . == 1)) %>% 
+    filter(if_any(all_of(rank_acc[rank_opts]), ~ . == 1)) %>%
     filter(if_any(all_of(charges_acc[charges_opts]), ~ . == 1)) %>% 
     arrange(accusedID) %>% 
     select(accusedID, trialID)
@@ -186,7 +206,16 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     rename(year_convict_final = year)
 
   ## Trials data  
-  trials <- db[["Trials"]] %>% 
+  
+  if(length(excl_nexus_vars) > 0) {
+    exclusion_condition <- expr(
+      !if_any(all_of(nexus_trial[excl_nexus_vars]), ~ . == 1)
+    )
+  } else {
+    exclusion_condition <- TRUE
+  }
+  
+  trials <- db[["Trials"]] %>%
     mutate(
       humanRights = ifelse(HRs_charges > 0 & humanRights == 0, 1, humanRights), 
       trialType = case_when(
@@ -194,7 +223,8 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
         trialType %in% c("international", "international (hybrid)") ~ "international",
         trialType == "foreign" ~ "foreign") ) %>% 
     filter(trialType == type_trial[type_opts]) %>%
-    filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) %>% 
+    filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) %>%
+    filter(eval(exclusion_condition)) %>%
     select(trialID, ccode_Accused, yearStart, yearEnd, firstConvictionYear_min)
            # ongoing, anyOpposedToGov, anyHighRank, anyStateAgent, 
            # firstConvictionYear_min, finalConvictionYear_min, 
@@ -325,8 +355,11 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, memb_opts,
     }
     
     if(measure == "crt") { ## "conviction rate by all accused": yearly count of convictions as percentage of all accused on trial
-      acc_var_name <- str_flatten(c("acc", type_opts, nexus_vars, memb_opts, 
-                                    rank_opts, charges_opts), collapse = "_")
+      # acc_var_name <- str_flatten(c("acc", type_opts, nexus_vars, excl,
+      #                               memb_opts, rank_opts, charges_opts), collapse = "_")
+      acc_var_name <- var_name %>% 
+        str_replace(fixed("crt_"), "acc_")
+      
       accused_ongoing <- subset_accused %>%
         left_join(accused_ended, by = "accusedID") %>%
         mutate(yearEnd = ifelse(!is.na(year_ended) & yearEnd > year_ended,
