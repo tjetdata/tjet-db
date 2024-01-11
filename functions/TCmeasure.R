@@ -40,8 +40,7 @@ TCmeasure <- function(cy, new_col_name,
   all_recommend_vars = c("recommendProsecutions", "recommendReparations", 
                          "reportRecommendInstitutionalReform", "vetting", 
                          "SecuritySectorReforms", "legalReform", "judicialReforms", 
-                         "humanRightsReforms", "corruptionReforms", 
-                         "genderReform", "corruptionReforms")
+                         "humanRightsReforms", "corruptionReforms", "genderReform")
   all_monitor_vars = c("mandatePeriodicMonitoringImplementation")
 
   suffix <- "\n  OR NULL if this aspect is not relevant to the new measure"
@@ -235,7 +234,9 @@ TCmeasure <- function(cy, new_col_name,
     left_join(new, by = c("ccode_cow" = "ccode", "year" = "year_start")) %>% 
     arrange(ccode_cow, year) %>% 
     group_by(ccode_cow) %>% 
-    fill(scale, binary, .direction = "down") %>%
+    fill(scale, 
+         binary, 
+         .direction = "down") %>%
     ungroup() %>% 
     mutate(scale = ifelse(year %in% 1970:2020 & is.na(scale), 0, scale), 
            binary = ifelse(year %in% 1970:2020 & is.na(binary), 0, binary)) %>%

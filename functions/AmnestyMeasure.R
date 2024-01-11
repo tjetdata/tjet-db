@@ -12,7 +12,7 @@ AmnestyMeasure <- function(cy,
   who <- c(all = "all", 
            sta = "who_sta", # state agents
            opp = "who_opp", # armed opposition
-           pol = "who_pol", # political prisoners
+           pol = "who_pol", # political prisoners, protesters
            oth = "who_oth")
   what <- c(all = "all", 
             reb = "what_reb", # rebellion & terrorism

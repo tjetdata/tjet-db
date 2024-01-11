@@ -85,8 +85,15 @@ ReparationMeasures <- function(cy,
     left_join(reps, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
     arrange(ccode_cow, year) %>% 
     group_by(ccode_cow) %>% 
-    fill(binary, peaceagree, collective, symbolic, compensation, services, 
-         victim_centered, scope, .direction = "down") %>%
+    fill(binary, 
+         peaceagree, 
+         collective, 
+         symbolic, 
+         compensation, 
+         services, 
+         victim_centered, 
+         scope, 
+         .direction = "down") %>%
     ungroup() %>% 
     mutate(
       binary = ifelse(year %in% 1970:2020 & is.na(binary), 0, binary),

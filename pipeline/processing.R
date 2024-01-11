@@ -1536,11 +1536,8 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_powers",
                 filter_crimes_vars = "all", 
                 aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
                 powers_vars = c("investigateStateMembers", "compelTestimony", 
-                                "accessOfficialDocuments", 
-                                "grantAmnesty", "supportProsecutions", 
-                                "namePerpetrators", "penalizeIndividuals", 
-                                "recommendInstitutionalReforms", 
-                                "allocateReparations"), 
+                                "accessOfficialDocuments", "namePerpetrators", 
+                                "recommendInstitutionalReforms"), 
                 testimony_vars = NULL, reports_vars = NULL,
                 recommend_vars = NULL, monitor_vars = NULL) %>% 
   select(-tcs_powers_binary)
@@ -1577,13 +1574,14 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_public_outcome",
 
 df <- TCmeasure(cy = df, new_col_name = "tcs_recommendations",
                 start_year_var = "yearCompleteOperation",
-                filter_nexus_vars = NULL, 
-                filter_crimes_vars = "all", 
+                filter_nexus_vars = NULL,
+                filter_crimes_vars = "all",
                 aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
                 powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
-                recommend_vars = c("recommendProsecutions", 
-                                   "recommendReparations",
-                                   "reportRecommendInstitutionalReform") , 
+                recommend_vars = c("vetting", "SecuritySectorReforms", 
+                                   "legalReform", "judicialReforms", 
+                                   "humanRightsReforms", "corruptionReforms", 
+                                   "genderReform") , 
                 monitor_vars = NULL) %>% 
   select(-tcs_recommendations_binary)
 

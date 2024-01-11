@@ -458,5 +458,5 @@ vet_ban,"vetting policy, type ban, binary",TJET,2023-12-18
 vet_declass,"vetting policy, type declassification, binary",TJET,2023-12-18
 vet_perjury,"vetting policy, type perjury, binary",TJET,2023-12-18
 vet_ban_from_elected,"vetting policy, ban from elected office, binary",TJET,2023-12-18
-vet_implementation,was vetting policy implemented,TJET,2023-12-18
+vet_implemented,was vetting policy implemented?,TJET,2023-12-18
 vet_fairness,vetting policy fairness scale,TJET,2023-12-18

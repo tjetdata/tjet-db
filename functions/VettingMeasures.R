@@ -12,8 +12,7 @@ vet_ctry <- read_csv("data/vetting_countries.csv") %>%
          country_new = ifelse(country_new == "Macedonia", "North Macedonia", country_new)) %>% 
   left_join(db[["Countries"]] %>% select(country, ccode, ccode_case), by = c("country_new" = "country")) %>% 
   select(country, ccode, ccode_case, begin_year, end_year, post_Soviet, vetting, coded) %>% 
-  arrange(country) %>% 
-  print(n = Inf)
+  arrange(country)
 
 vet_cols <- c(
   "policy_type", "type_dismissal", "type_ban", "type_declass", 
@@ -22,7 +21,7 @@ vet_cols <- c(
   "inst_targeted", "inst_exe", "inst_legis", "inst_parties", "inst_judiciary", 
   "inst_police", "inst_public", "inst_military", "inst_other", 
   # "inst_education", "inst_business", 
-  "implementation", "fairness", "ban_from_elected")
+  "conduct", "implementation", "public", "fairness", "ban_from_elected")
 
 vet_incl <- vet_ctry %>% select(ccode) %>% 
   distinct() %>% 
@@ -30,7 +29,11 @@ vet_incl <- vet_ctry %>% select(ccode) %>%
 
 vet_spells <- db[["Vettings"]] %>% 
   filter(ccode %in% vet_incl) %>% 
-  mutate(yearEnd = ifelse(is.na(yearEnd) | yearEnd > 2020, 2020, yearEnd)) %>% 
+  mutate(public = case_when(hearingsPublic == "public" ~ 1,
+                            TRUE ~ 0), 
+         conduct = case_when(targetingWhy == "specific individual conduct" ~ 1,
+                            TRUE ~ 0),
+         yearEnd = ifelse(is.na(yearEnd) | yearEnd > 2020, 2020, yearEnd)) %>% 
   rowwise() %>%
   mutate(year = map2(yearStart, yearEnd, seq)) %>% 
   unnest(cols = c(year)) %>%
@@ -40,15 +43,20 @@ vet_spells <- db[["Vettings"]] %>%
          grp_military, grp_parties, grp_other, groups_targeted, inst_exe, 
          inst_legis, inst_judiciary, inst_public, inst_police, inst_military, 
          inst_parties, inst_other, inst_targeted, sum_inst, ban_from_elected, 
-         implementation, var_fairness, 
-         # targetingWhy, targetingAffiliationRank, targetingPositionSought, targetingAffiliation, targetingPositionsRank, sanctions
+         conduct, implementation, public, var_fairness, 
+         # targetingWhy, targetingAffiliationRank, targetingPositionSought, 
+         # targetingAffiliation, targetingPositionsRank, sanctions
          ) %>% 
   rename("type_declass" = "type_declassification", 
          "fairness" = "var_fairness") %>% 
   summarise(across(everything(), .fns = ~ max(.x, na.rm = TRUE)), .by = c(ccode, year)) %>%
   mutate(across(everything(), .fns = ~ ifelse(is.infinite(.x), NA, .x)) ) %>% 
   mutate(across(all_of(vet_cols), .fns = ~ ifelse(is.na(.x), 0, .x)) ) 
-  
+
+vet_ctry_incl <- vet_ctry %>% 
+  select(ccode) %>% 
+  distinct() %>% 
+  unlist(use.names = FALSE)
 rm(vet_ctry, vet_incl, vet_cols)
 
 ### to country-year (no longer needed, was part of analysis for briefing)
@@ -89,24 +97,43 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
     filter(if_any(all_of(nexus[nexus_vars]), ~ . == 1)) %>%
     select(ccode, year, type_dismissal, type_ban, type_declass, type_perjury, 
            # policy_type, groups_targeted, inst_targeted, sum_inst, 
-           ban_from_elected, implementation, fairness)
+           ban_from_elected, conduct, implementation, public, fairness)
+
+  non_na <- expr(ccode_cow %in% vet_ctry_incl & year %in% 1970:2020)
   
   cy %>%
     left_join(vet, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
-    mutate(type_dismissal = ifelse(year %in% 1970:2020 & is.na(type_dismissal), 0, type_dismissal), 
-           type_ban = ifelse(year %in% 1970:2020 & is.na(type_ban), 0, type_ban), 
-           type_declass = ifelse(year %in% 1970:2020 & is.na(type_declass), 0, type_declass), 
-           type_perjury = ifelse(year %in% 1970:2020 & is.na(type_perjury), 0, type_perjury), 
-           ban_from_elected = ifelse(year %in% 1970:2020 & is.na(ban_from_elected), 0, ban_from_elected), 
-           implementation = ifelse(year %in% 1970:2020 & is.na(implementation), 0, implementation), 
-           fairness = ifelse(year %in% 1970:2020 & is.na(fairness), 0, fairness) 
+    arrange(ccode_cow, year) %>%
+    group_by(ccode_cow) %>%
+    fill(type_dismissal, 
+         type_ban, 
+         type_declass, 
+         type_perjury, 
+         ban_from_elected, 
+         conduct, 
+         implementation, 
+         public, 
+         fairness, 
+         .direction = "down") %>%
+    ungroup() %>% 
+    mutate(type_dismissal = ifelse(eval(non_na) & is.na(type_dismissal), 0, type_dismissal), 
+           type_ban = ifelse(eval(non_na) & is.na(type_ban), 0, type_ban), 
+           type_declass = ifelse(eval(non_na) & is.na(type_declass), 0, type_declass), 
+           type_perjury = ifelse(eval(non_na) & is.na(type_perjury), 0, type_perjury), 
+           ban_from_elected = ifelse(eval(non_na) & is.na(ban_from_elected), 0, ban_from_elected), 
+           conduct = ifelse(eval(non_na) & is.na(conduct), 0, conduct), 
+           implementation = ifelse(eval(non_na) & is.na(implementation), 0, implementation), 
+           public = ifelse(eval(non_na) & is.na(public), 0, public), 
+           fairness = ifelse(eval(non_na) & is.na(fairness), 0, fairness) 
            ) %>%
     rename("vet_dismiss" = "type_dismissal", 
            "vet_ban" = "type_ban", 
            "vet_declass" = "type_declass", 
            "vet_perjury" = "type_perjury", 
            "vet_ban_from_elected" = "ban_from_elected",
-           "vet_implementation" = "implementation", 
+           "vet_conduct" = "conduct", 
+           "vet_implemented" = "implementation", 
+           "vet_public" = "public", 
            "vet_fairness" = "fairness") %>% 
     return()
 }

@@ -201,5 +201,5 @@ vet_ban,"vetting policy, type ban, binary",TJET,Transitional Justice Evaluation 
 vet_declass,"vetting policy, type declassification, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2023-12-18
 vet_perjury,"vetting policy, type perjury, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2023-12-18
 vet_ban_from_elected,"vetting policy, ban from elected office, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2023-12-18
-vet_implementation,was vetting policy implemented,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2023-12-18
+vet_implemented,was vetting policy implemented?,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2023-12-18
 vet_fairness,vetting policy fairness scale,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2023-12-18
