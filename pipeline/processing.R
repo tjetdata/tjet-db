@@ -994,7 +994,14 @@ map(db[["SurveysMeta"]]$results_tables, function(filename) { # filename = "Ugand
   if(is.na(surveytab[1, 1]) & tooltips[1] == "Section") surveytab[1, 1] <- "Section"
   if(is.na(surveytab[1, 2]) & tooltips[2] == "Question") surveytab[1, 2] <- "Question"
   if(is.na(surveytab[1, 3]) & tooltips[3] == "Responses") surveytab[1, 3] <- "Responses"
-  names(tooltips) <- names(surveytab) <- str_trim(paste(surveytab[1, ]))
+  # names(tooltips) <- names(surveytab) <- str_trim(paste(surveytab[1, ]))
+  names(tooltips) <- names(surveytab) <- surveytab[1, ] %>% 
+    as.character() %>% 
+    str_trim() %>% 
+    str_replace(fixed("Man"), "Men") %>% 
+    str_replace(fixed("Woman"), "Women") %>% 
+    str_replace(fixed("Male"), "Men") %>% 
+    str_replace(fixed("Female"), "Women")
   surveytab[1, ] <- as.list(tooltips)
   surveytab <- surveytab %>% 
     mutate(Question = str_replace_all(Question, gl), 
