@@ -19,7 +19,7 @@ surveytabs <- db[["SurveysMeta"]] %>%
   str_replace(fixed(".xlsx"), "_fr")
 fr <- fr[!fr %in% surveytabs]
 
-tabs <- c(fr, 
+tabs <- c(names(fr), 
   "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
   "ConflictDyads", "Countries", "CountryYears", "CourtLevels", "dl_tjet_cy", 
   "dl_tjet_codebook", "fields_meta", "labels", "Reparations", 
@@ -46,7 +46,8 @@ dbListTables(con) %>%
   sort()
 
 ### reading specific table
-# dbReadTable(con, "fr_Countries") %>% tibble() 
+# dbReadTable(con, "fr_Countries") %>% tibble()
+# dbReadTable(con, "Countries_fr") %>% tibble()
 
 ### write all tables to the database 
 ### (this overwrites existing tables by first truncating and then appending)

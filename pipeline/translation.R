@@ -49,7 +49,7 @@ translate <- function(col) {
 usage(key_get("DeepL"))
 ### translation of relevant fields in tables
 
-if(translate$country_profiles) { # about 5 min, 425,000 characters
+if(translate$country_profiles) { # about 5 min, 570,000 characters
   ## do not translate the country field; this is used in the website structure
   start <- Sys.time()
   order <- names(db[["Countries"]])
