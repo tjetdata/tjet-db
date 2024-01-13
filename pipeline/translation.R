@@ -210,13 +210,15 @@ surveytabs <- db[["SurveysMeta"]] %>%
   unlist(use.names = FALSE) %>% 
   str_replace(fixed(".xlsx"), "")
 
-if(translate$surveys) { # about 14 min / 67,000 characters  
+if(translate$surveys) { # about 11 min / 67,000 characters
   start <- Sys.time()
   db[paste(surveytabs, "_fr", sep = "")] <- surveytabs %>% 
     map(function(tab) {
       df <- db[[tab]]
       order <- names(df)
-      headers <- translate(names(df))
+      headers <- translate(names(df)) %>% 
+        str_replace(fixed("Les femmes"), "Femmes") %>% 
+        str_replace(fixed("Les hommes"), "Hommes") 
       tooltips <- translate(df[1, ])
       df <- rbind(headers, tooltips, df) %>% tibble()
       sec <- df %>% 

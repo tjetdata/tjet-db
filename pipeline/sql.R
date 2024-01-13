@@ -8,10 +8,11 @@ require(RMariaDB)
 
 ### loading the tables to write to the database
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
-fr <- readRDS(file = here::here("data", "tjetdb_fr.rds"))
-str(fr[sort(names(fr))], 1)
-db <- c(db, fr[names(fr)[!names(fr) %in% names(db)]])
+db_fr <- readRDS(file = here::here("data", "tjetdb_fr.rds"))
+str(db_fr[sort(names(db_fr))], 1)
+db <- c(db, db_fr[names(db_fr)[!names(db_fr) %in% names(db)]])
 str(db[sort(names(db))], 1)
+
 fr <- names(db)[str_detect(names(db), "_fr")]
 surveytabs <- db[["SurveysMeta"]] %>%
   select(results_tables) %>%
@@ -19,9 +20,9 @@ surveytabs <- db[["SurveysMeta"]] %>%
   str_replace(fixed(".xlsx"), "_fr")
 fr <- fr[!fr %in% surveytabs]
 
-tabs <- c(names(fr), 
-  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
-  "ConflictDyads", "Countries", "CountryYears", "CourtLevels", "dl_tjet_cy", 
+tabs <- c(
+  fr, "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
+  "ConflictDyads", "Countries", "CountryYears", "CourtLevels", "dl_tjet_cy",
   "dl_tjet_codebook", "fields_meta", "labels", "Reparations", 
   "Reparations_collectiveReparationsEligibility",
   "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions",
@@ -46,8 +47,12 @@ dbListTables(con) %>%
   sort()
 
 ### reading specific table
-# dbReadTable(con, "fr_Countries") %>% tibble()
 # dbReadTable(con, "Countries_fr") %>% tibble()
+
+# dbWriteTable(conn = con,
+#              name = "Amnesties_fr",
+#              value = db[["Amnesties_fr"]],
+#              overwrite = TRUE)
 
 ### write all tables to the database 
 ### (this overwrites existing tables by first truncating and then appending)
