@@ -273,6 +273,20 @@ grps_in_dyads,ethnic groups in internal conflict dyads in EPR dataset,EPR,2024-0
 dyads_new,count of new conflict dyads of internal (incl. internationalized) conflict,UCDP,2024-01-12
 dyads_ep_new,count of new dyad episodes (incl. recurrence) of internal (incl. internationalized) conflict,UCDP,2024-01-12
 pko_mission,"active UN peacekeeping mission, binary",PKO,2024-01-12
+leaders_n,number of consecutive effective political rulers,Archigos,2024-01-12
+irregentry,"irregular ruler entry, binary",Archigos,2024-01-12
+irregexit,"irregular ruler exit, binary",Archigos,2024-01-12
+removed,ruler was removed,Archigos,2024-01-12
+removed_for,ruler was removed with foreign contribution,Archigos,2024-01-12
+postdemise,"previous ruler met demise during year following exit (death, suicide, imprisonment or exile); this was lagged one year in order to match Archigos timeline",Archigos,2024-01-12
+lead_startdate_beg,start date of the ruler in power at the beginning of the year (can be used to code duration variables),Archigos,2024-01-12
+lead_enddate_beg,end date of the ruler in power at the beginning of the year (can be used to code duration variables),Archigos,2024-01-12
+lead_startdate_end,start date of the ruler in power at the end of the year (can be used to code duration variables),Archigos,2024-01-12
+lead_enddate_end,end date of the ruler in power at the end of the year (can be used to code duration variables),Archigos,2024-01-12
+lead_yrborn_beg,birth year of the ruler in power at the beginning of the year (can be used to code age variables),Archigos,2024-01-12
+lead_yrdied_beg,year of death of the ruler in power at the beginning of the year (can be used to code time to death variables),Archigos,2024-01-12
+lead_yrborn_end,birth year of the ruler in power at the end of the year (can be used to code age variables),Archigos,2024-01-12
+lead_yrdied_end,year of death of the ruler in power at the end of the year (can be used to code time to death variables),Archigos,2024-01-12
 amnesties,count of amnesties per country and year of passing,TJET,2024-01-12
 amnesties_SGBV,"binary for whether amnesties for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-01-12
 reparations,count of reparations polices per country and year of creation,TJET,2024-01-12
