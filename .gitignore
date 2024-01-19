@@ -7,4 +7,5 @@
 .DS_Store
 
 data/*.RData
+data/cy_covariates_prev.rds
 data/downloads/*.xlsx

@@ -848,7 +848,7 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
                             regime == 0 & (context_dem == sources | 
                                              context_dem > 1) ~ "democratic",
                             regime == 0 & dem_prop > 0.5 ~ "democratic"), 
-         ## India is the only ambiguous case by this algorithm, hence the last 
+         ## India is the only ambiguous case by this algorithm, hence the last line
          reg_democ = ifelse(regime == "democratic", 1, 0), 
          reg_autoc = ifelse(regime == "autocratic", 1, 0), 
          reg_trans = ifelse(regime == "transitional", 1, 0)
@@ -982,7 +982,7 @@ gloss <- read_csv(here::here("data", "HHI_surveys_glossary.csv")) %>%
 gl <- gloss$to
 names(gl) <- gloss$from
 
-map(db[["SurveysMeta"]]$results_tables, function(filename) { # filename = "Uganda_2005_Submission.xlsx" 
+map(db[["SurveysMeta"]]$results_tables, function(filename) { # for dev: filename = "Uganda_2005_Submission.xlsx" 
   surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename))
   tooltips <- names(surveytab)
   tooltips[str_detect(tooltips, fixed("..."))] <- NA
@@ -994,7 +994,6 @@ map(db[["SurveysMeta"]]$results_tables, function(filename) { # filename = "Ugand
   if(is.na(surveytab[1, 1]) & tooltips[1] == "Section") surveytab[1, 1] <- "Section"
   if(is.na(surveytab[1, 2]) & tooltips[2] == "Question") surveytab[1, 2] <- "Question"
   if(is.na(surveytab[1, 3]) & tooltips[3] == "Responses") surveytab[1, 3] <- "Responses"
-  # names(tooltips) <- names(surveytab) <- str_trim(paste(surveytab[1, ]))
   names(tooltips) <- names(surveytab) <- surveytab[1, ] %>% 
     as.character() %>% 
     str_trim() %>% 
@@ -1139,14 +1138,21 @@ df %>%
 # unique(df$country)[!unique(df$country) %in% unique(db[["CountryYears"]]$country) ]
 # unique(db[["CountryYears"]]$country)[!unique(db[["CountryYears"]]$country) %in% unique(df$country) ]
 
-# df <- 
-df %>% 
+df <- df %>% 
+  ### the creation of Archigos variables could be moved to cy-data
+  mutate(ruler_exit = ifelse(year(lead_enddate_beg) == year, 1, 0), 
+         ruler_days = case_when(
+           year(lead_enddate_beg) != year ~ 
+             as.integer(as_date(paste(year, 12, 31, sep = "-")) - lead_startdate_beg),
+           year(lead_enddate_beg) == year ~ 
+             as.integer(lead_enddate_beg - lead_startdate_beg)) 
+         ) %>%
   left_join(db[["CountryYears"]] %>%
                select(!any_of(c("country", "cyID", "country_case", "ccode_case", 
                                 "country_label", "beg", "end", "region", "tjet_focus", 
                                 "reg_democ", "reg_autoc", "reg_trans", "conflict"))) %>%
                rename(ccode_cow = ccode), 
-             by = c("ccode_cow", "ccode_ksg", "country_id_vdem", "year")) %>% # losing Slovenia 1991
+             by = c("ccode_cow", "ccode_ksg", "country_id_vdem", "year")) %>% # losing Slovenia 1991?
   full_join(db[["ICC"]] %>% select(-country),
             by = "ccode_cow" ) %>%
   mutate(
@@ -1159,34 +1165,44 @@ df %>%
     ICC_investigation = case_when(year >= ICC_investigation ~ 1, 
                                   TRUE ~ 0)) %>% 
   select(-ICC_prelimEnd) %>%
+  arrange(country_case, year) %>%
+  group_by(country_case) %>% 
+  mutate(ICC_prelim_exam_cumu = cumsum(ICC_prelim_exam), 
+         ICC_investigation_cumu = cumsum(ICC_investigation)) %>% 
+  ungroup() %>% 
   full_join(icc_accused %>% 
               select(ccode_Crime, ICC_arrest_warrant, icc_action) %>%
               filter(!is.na(ICC_arrest_warrant)) %>%
-              distinct(),
+              group_by(ccode_Crime, ICC_arrest_warrant) %>%  
+              reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_arrest_warrant")) %>% 
   rename(ICC_arrest_warrant = icc_action) %>% 
   full_join(icc_accused %>% 
               select(ccode_Crime, ICC_arrestAppear, icc_action) %>%
               filter(!is.na(ICC_arrestAppear)) %>%
-              distinct(),
+              group_by(ccode_Crime, ICC_arrestAppear) %>%  
+              reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_arrestAppear")) %>% 
   rename(ICC_arrestAppear = icc_action) %>% 
   full_join(icc_accused %>% 
               select(ccode_Crime, ICC_confirm_charges, icc_action) %>%
               filter(!is.na(ICC_confirm_charges)) %>%
-              distinct(),
+              group_by(ccode_Crime, ICC_confirm_charges) %>%  
+              reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_confirm_charges")) %>% 
   rename(ICC_confirm_charges = icc_action) %>% 
   full_join(icc_accused %>% 
               select(ccode_Crime, ICC_proceedings, icc_action) %>%
               filter(!is.na(ICC_proceedings)) %>%
-              distinct(),
+              group_by(ccode_Crime, ICC_proceedings) %>%  
+              reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_proceedings")) %>% 
   rename(ICC_proceedings = icc_action) %>% 
   full_join(icc_accused %>% 
               select(ccode_Crime, ICC_withdrawnDismissed, icc_action) %>%
               filter(!is.na(ICC_withdrawnDismissed)) %>%
-              distinct(),
+              group_by(ccode_Crime, ICC_withdrawnDismissed) %>%  
+              reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_withdrawnDismissed")) %>% 
   rename(ICC_withdrawnDismissed = icc_action) %>% 
   mutate(ICC_arrest_warrant = ifelse(is.na(ICC_arrest_warrant), 0, ICC_arrest_warrant), 
@@ -1194,6 +1210,11 @@ df %>%
          ICC_confirm_charges = ifelse(is.na(ICC_confirm_charges), 0, ICC_confirm_charges), 
          ICC_proceedings = ifelse(is.na(ICC_proceedings), 0, ICC_proceedings), 
          ICC_withdrawnDismissed = ifelse(is.na(ICC_withdrawnDismissed), 0, ICC_withdrawnDismissed)) %>% 
+  arrange(country_case, year) %>%
+  group_by(country_case) %>% 
+  mutate(ICC_arrest_warrant_cumu = cumsum(ICC_arrest_warrant), 
+         ICC_proceedings_cumu = cumsum(ICC_proceedings)) %>% 
+  ungroup() %>% 
   left_join(read_csv("data/icc_statesparty.csv") %>%
               filter(ccode != 511) %>%
               mutate(ccode = ifelse(ccode == 260 & year == 1990, 255, ccode)) %>%
@@ -1219,34 +1240,19 @@ df %>%
     icc_sp = ifelse(is.na(icc_sp) & country ==  "Tonga", 0, icc_sp), 
     icc_sp = ifelse(is.na(icc_sp) & country ==  "Tuvalu", 0, icc_sp),
     icc_sp = ifelse(is.na(icc_sp) & country ==  "Vanuatu" & year >= 2011, 1, icc_sp),
+    icc_sp = ifelse(is.na(icc_sp) & country ==  "Burundi" & year >= 2017, 0, icc_sp),
+    icc_sp = ifelse(is.na(icc_sp) & country ==  "Philippines" & year >= 2019, 0, icc_sp),
     icc_sp = ifelse(is.na(icc_sp) & year != 2022, 0, icc_sp)
-    #      # icc_sp = ifelse(year < 1998, NA, icc_sp)
+    # icc_sp = ifelse(year < 1998, NA, icc_sp)
     ) %>% 
   group_by(region, year) %>% 
-  mutate(icc_sp_region = sum(icc_sp)
-         # ICC_prelim_exam_region = , 
-         # ICC_investigation_region = , 
-         # ICC_arrest_warrant_region = , 
-         # ICC_proceedings = 
+  mutate(icc_sp_region = sum(icc_sp), 
+         ICC_prelim_exam_region = sum(ICC_prelim_exam_cumu),
+         ICC_investigation_region = sum(ICC_investigation_cumu),
+         ICC_arrest_warrant_region = sum(ICC_arrest_warrant_cumu),
+         ICC_proceedings_region = sum(ICC_proceedings_cumu)
          ) %>% 
   ungroup() %>% 
-  # select(country, year, leaders_n, irregexit,
-  #        postdemise, lead_startdate_beg, lead_enddate_beg, lead_startdate_end, 
-  #        lead_enddate_end) 
-
-# binary failure variable: ruler_exit, irregexit
-# days variable at end of each year or end date
-# region variables: prelim; investigation; arrestwarrant; proceedings; statesparty 
-  
-  select(country, year, 
-         ICC_prelim_exam, ICC_referral, ICC_investigation, ICC_arrest_warrant, ICC_arrestAppear, ICC_confirm_charges, ICC_proceedings, ICC_withdrawnDismissed,
-         icc_sp, icc_sp_region) %>% 
-  # filter(year != 2022) %>% 
-  filter(ICC_prelim_exam == 1 | ICC_investigation == 1 | ICC_referral == 1) %>% 
-  print(n = Inf)
-
-
-    
   left_join(db[["Investigations"]], by = c("ccode_cow", "year")) %>% 
   mutate(uninv = ifelse(is.na(uninv), 0, uninv), 
          uninv_dompros = ifelse(is.na(uninv_dompros), 0, uninv_dompros),
