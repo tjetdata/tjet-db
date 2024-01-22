@@ -48,10 +48,9 @@ dbListTables(con) %>%
 
 ### reading specific table
 # dbReadTable(con, "Countries_fr") %>% tibble()
-
 # dbWriteTable(conn = con,
-#              name = "Amnesties_fr",
-#              value = db[["Amnesties_fr"]],
+#              name = "dl_tjet_cy",
+#              value = db[["dl_tjet_cy"]],
 #              overwrite = TRUE)
 
 ### write all tables to the database 

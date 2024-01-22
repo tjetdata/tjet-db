@@ -4,7 +4,7 @@ require(deeplr)
 require(keyring)
 
 ### translation code is wrapped in a conditional statements because it's costly
-translate <- list(
+translations <- list(
   country_profiles = FALSE, 
   conflicts = FALSE,
   tjet_bios = FALSE, 
@@ -24,7 +24,9 @@ translate <- list(
 
 ### loading & checking our database
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
+str(db[sort(names(db))], 1)
 fr <- readRDS(file = here::here("data", "tjetdb_fr.rds"))
+str(fr[sort(names(fr))], 1)
 db[names(fr)] <- fr
 str(db[sort(names(db))], 1)
 
@@ -49,7 +51,7 @@ translate <- function(col) {
 usage(key_get("DeepL"))
 ### translation of relevant fields in tables
 
-if(translate$country_profiles) { # about 5 min, 570,000 characters
+if(translations$country_profiles) { # about 5 min, 570,000 characters
   ## do not translate the country field; this is used in the website structure
   start <- Sys.time()
   order <- names(db[["Countries"]])
@@ -67,7 +69,7 @@ if(translate$country_profiles) { # about 5 min, 570,000 characters
 db[["Countries_fr"]] %>%
   select(country, txt_intro, txt_regime, txt_conflict, txt_TJ)
 
-if(translate$labels) { # about 0.5 min / 5000 characters 
+if(translations$labels) { # about 0.5 min / 5000 characters 
   start <- Sys.time()
   db[["labels_fr"]] <- db[["labels"]] %>% 
     rowwise() %>%
@@ -78,7 +80,7 @@ if(translate$labels) { # about 0.5 min / 5000 characters
 }
 db[["labels_fr"]]
 
-if(translate$dl_codebook) { # about 1 min / 2000 characters 
+if(translations$dl_codebook) { # about 1 min / 20000 characters 
   start <- Sys.time()
   db[["dl_tjet_codebook_fr"]] <- db[["dl_tjet_codebook"]] %>% 
     rowwise() %>%
@@ -89,7 +91,7 @@ if(translate$dl_codebook) { # about 1 min / 2000 characters
 }
 db[["dl_tjet_codebook_fr"]]
 
-if(translate$conflicts) { # about 3 min / 2000 characters 
+if(translations$conflicts) { # about 3 min / 2000 characters 
   start <- Sys.time()
   db[["ConflictDyads_fr"]] <- db[["ConflictDyads"]] %>% 
     select(dyad_id, conflict_id, gwno_loc, side_b, ep_start_date) %>% 
@@ -101,7 +103,7 @@ if(translate$conflicts) { # about 3 min / 2000 characters
 }
 db[["ConflictDyads_fr"]] 
 
-if(translate$tjet_bios) {
+if(translations$tjet_bios) {
   start <- Sys.time()
   order <- names(db[["TJETmembers"]])
   db[["TJETmembers_fr"]] <- db[["TJETmembers"]] %>% 
@@ -112,10 +114,10 @@ if(translate$tjet_bios) {
   Sys.time() - start
   usage(key_get("DeepL"))
 }
-db[["TJETmembers_fr"]] %>%
-  select(last_name, given_name, bio_text)
+# db[["TJETmembers_fr"]] %>%
+#   select(last_name, given_name, bio_text)
 
-if(translate$amnesties) { # about 8.5 min / 170,000 characters  
+if(translations$amnesties) { # about 8.5 min / 170,000 characters  
   start <- Sys.time()
   db[["Amnesties_fr"]] <- db[["Amnesties"]] %>% 
     select(amnestyID, mechanismDescription, whoWasAmnestied) %>%
@@ -127,7 +129,7 @@ if(translate$amnesties) { # about 8.5 min / 170,000 characters
 }
 db[["Amnesties_fr"]] 
 
-if(translate$reparations) { # about 0.5 min  / 9000 characters  
+if(translations$reparations) { # about 0.5 min  / 9000 characters  
   start <- Sys.time()
   db[["Reparations_fr"]] <- db[["Reparations"]] %>% 
     select(reparationID, officialName_en) %>%
@@ -139,7 +141,7 @@ if(translate$reparations) { # about 0.5 min  / 9000 characters
 }
 db[["Reparations_fr"]]
 
-if(translate$tcs) { # about 0.5 min / 12,000 characters  
+if(translations$tcs) { # about 0.5 min / 12,000 characters  
   start <- Sys.time()
   db[["TruthCommissions_fr"]] <- db[["TruthCommissions"]] %>% 
     select(truthcommissionID, officialName_en) %>%
@@ -151,7 +153,7 @@ if(translate$tcs) { # about 0.5 min / 12,000 characters
 }
 db[["TruthCommissions_fr"]]
 
-if(translate$trials) { # about 29 min / 650,000 characters  
+if(translations$trials) { # about 29 min / 650,000 characters  
   start <- Sys.time()
   db[["Trials_fr"]] <- db[["Trials"]] %>% 
     select(trialID, caseDescription) %>%
@@ -163,7 +165,7 @@ if(translate$trials) { # about 29 min / 650,000 characters
 }
 db[["Trials_fr"]]
 
-if(translate$accused) { # about 56 min / 470,000 characters 
+if(translations$accused) { # about 56 min / 470,000 characters 
   start <- Sys.time()
   db[["Accused_fr"]] <- db[["Accused"]] %>% 
     select(accusedID, nameOrDesc) %>%
@@ -175,7 +177,7 @@ if(translate$accused) { # about 56 min / 470,000 characters
 }
 db[["Accused_fr"]]
 
-if(translate$vetting) { # about 0.5 min / 9,000 characters  
+if(translations$vetting) { # about 0.5 min / 9,000 characters  
   start <- Sys.time()
   db[["Vettings_fr"]] <- db[["Vettings"]] %>% 
     select(vettingID, policyName) %>%
@@ -187,7 +189,7 @@ if(translate$vetting) { # about 0.5 min / 9,000 characters
 }
 db[["Vettings_fr"]]
 
-if(translate$surveysmeta) { # about 0.5 min / 12,000 characters  
+if(translations$surveysmeta) { # about 0.5 min / 12,000 characters  
   start <- Sys.time()
   order <- names(db[["SurveysMeta"]])
   db[["SurveysMeta_fr"]] <- db[["SurveysMeta"]] %>%
@@ -210,7 +212,7 @@ surveytabs <- db[["SurveysMeta"]] %>%
   unlist(use.names = FALSE) %>% 
   str_replace(fixed(".xlsx"), "")
 
-if(translate$surveys) { # about 11 min / 67,000 characters
+if(translations$surveys) { # about 11 min / 67,000 characters
   start <- Sys.time()
   db[paste(surveytabs, "_fr", sep = "")] <- surveytabs %>% 
     map(function(tab) {
@@ -242,6 +244,7 @@ if(translate$surveys) { # about 11 min / 67,000 characters
 }
 
 ### saving locally 
+str(db[sort(names(db))], 1)
 save(db, file = here::here("data", "tjetdb.RData"))
 
 to_save <- c("Countries", "ConflictDyads", "dl_tjet_codebook", "Amnesties", 
