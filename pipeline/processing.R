@@ -553,20 +553,69 @@ rm(keep_amnesties)
 #            torture == 1 | disappearance == 1 | 
 #            focusedPast == 1 | investigatePatternAbuse == 1)
 
+dl_invest <- db[["MegaBase"]][["Investigations"]] %>%   
+  rename(year = year_ongoing) %>% 
+  filter(year > 1969 & year < 2023) %>% 
+  mutate(
+    ccode_cow = ifelse(ccode_cow == 860 & year == 1999, 850, ccode_cow),
+    ccode_cow = ifelse(ccode_cow == 541 & year == 1973, 235, ccode_cow)
+  ) %>% 
+  select(-source) %>%  
+  left_join(db[["MegaBase"]][["Investigations"]] %>% 
+              select(name, source) %>% 
+              unnest(source) %>% 
+              group_by(name) %>% 
+              reframe(source = str_flatten(source, "; ")), 
+            by = "name") %>%
+  arrange(name, year) %>%
+  mutate(name = str_split(name, " & ") ) %>% 
+  unnest(name, keep_empty = TRUE) %>% 
+  group_by(name, ccode_cow) %>%
+  mutate(beg = min(year), 
+         end = max(year)) %>% 
+  ungroup() %>% 
+  select(ccode_cow, beg, end, name, secgen, unsc, cohr, unga, ohchr, hrc,
+         uninv_intlpros, uninv_evcoll, uninv_dompros, source) %>%
+  distinct() %>% 
+  mutate(country = str_split_i(name, "_", 1),
+         country = str_remove(country, as.character(beg)),
+         country = str_replace(country, "CAR", "Central African Republic"),
+         country = str_replace(country, "DRC", "Democratic Republic of the Congo"),
+         country = str_replace(country, "DPRK", "DPRK (North Korea)"),
+         country = str_replace(country, "Lebanon2005", "Lebanon"),
+         mandate = str_split_i(name, "_", 2), 
+         mandate = ifelse(is.na(mandate) &ccode_cow == 93 & unsc == 1, "UNSC", mandate), 
+         mandate = ifelse(mandate == "rep" & ccode_cow == 860 & secgen == 1, "SECGEN", mandate), 
+         mandate = str_squish(mandate),
+         mandate = str_replace(mandate, "UNSC", "UN Security Council"),
+         mandate = str_replace(mandate, "SECGEN", "UN Secretary General"),
+         mandate = str_replace(mandate, "UNSG", "UN Secretary General"),
+         mandate = str_replace(mandate, "UNGA", "UN General Assembly"),
+         mandate = str_replace(mandate, "GA ", "UN General Assembly "),
+         mandate = str_replace(mandate, "OHCHR", "Office of the UN High Commissioner for Human Rights"),
+         mandate = str_replace(mandate, "HCHR", "Office of the UN High Commissioner for Human Rights"),
+         mandate = str_replace(mandate, "HRC ", "UN Human Rights Council "),
+         mandate = str_replace(mandate, "CHR ", "UN Commission on Human Rights "),
+         goals = case_when(uninv_intlpros == 1 & uninv_evcoll == 1 & uninv_dompros == 1 ~ "support international prosecutions; collect evidence; encourage domestic prosecutions", 
+                           uninv_intlpros == 1 & uninv_evcoll == 1 ~ "support international prosecutions; collect evidence",
+                           uninv_intlpros == 1 & uninv_dompros == 1 ~ "support international prosecutions; encourage domestic prosecutions", 
+                           uninv_evcoll == 1 & uninv_dompros == 1 ~ "collect evidence; encourage domestic prosecutions", 
+                           uninv_intlpros == 1 ~ "support international prosecutions", 
+                           uninv_evcoll == 1 ~ "collect evidence",
+                           uninv_dompros == 1 ~ "encourage domestic prosecutions") 
+         ) %>% 
+  select(country, ccode_cow, beg, end, mandate, goals, source)
+
 db[["MegaBase"]][["Investigations"]] <-
   db[["MegaBase"]][["Investigations"]] %>% 
   rename(year = year_ongoing) %>% 
-  mutate(uninv = 1, 
-         ccode_cow = ifelse(ccode_cow == 860 & year == 1999, 850, ccode_cow),
-         ccode_cow = ifelse(ccode_cow == 541 & year == 1973, 235, ccode_cow)) %>% 
-  select(ccode_cow, year, uninv, 
-         uninv_dompros, uninv_evcoll, uninv_intlpros) %>% 
   filter(year > 1969 & year < 2023) %>% 
-  group_by(ccode_cow, year) %>% 
-  reframe(uninv = max(uninv),  
-            uninv_dompros = max(uninv_dompros),  
-            uninv_evcoll = max(uninv_evcoll),  
-            uninv_intlpros = max(uninv_intlpros))
+  mutate(
+         ccode_cow = ifelse(ccode_cow == 860 & year == 1999, 850, ccode_cow),
+         ccode_cow = ifelse(ccode_cow == 541 & year == 1973, 235, ccode_cow), 
+         uninv = 1) %>% 
+    select(ccode_cow, year, uninv, 
+           uninv_dompros, uninv_evcoll, uninv_intlpros) 
 
 ### compare numbers of records again
 ### last column is 
@@ -1070,22 +1119,21 @@ db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
 db[["Vettings"]] <- db[["Vettings"]] %>% 
   left_join(multies[["Vettings"]], by = "vettingID") 
 
-db[["ICC"]] <- db[["ICC"]] %>%
-  select(country, ccode_cow, ICC_prelim_exam, ICC_prelimEnd, ICC_referral, 
-         ICC_investigation) %>% 
-  print(n = Inf)
+db[["ICC"]] <-
+  db[["ICC"]] %>%  
+  select(country, ccode_cow, 
+         ICC_referral, ICC_prelim_exam, ICC_prelimEnd, ICC_investigation)
 
-icc_accused <- db[["Accused"]] %>% 
+db[["ICCaccused"]] <- 
+  db[["Accused"]] %>% 
   filter(!is.na(ICC_investigation)) %>% 
   left_join(db[["Trials"]] %>% 
               select(trialID, ccode_Crime), 
             by = "trialID") %>% 
-  select(ccode_Crime, ICC_arrest_warrant, ICC_arrestAppear, 
+  select(trialID, accusedID, ccode_Crime, nameOrDesc, ICC_arrest_warrant, ICC_arrestAppear, 
          ICC_confirm_charges, ICC_proceedings, ICC_withdrawnDismissed) %>% 
-  mutate(icc_action = 1, 
-         ccode_Crime = as.integer(ccode_Crime)) %>% 
-  arrange(ccode_Crime, ICC_arrest_warrant) %>%  
-  print(n = Inf)
+  mutate(ccode_Crime = as.integer(ccode_Crime)) %>% 
+  arrange(ccode_Crime, ICC_arrest_warrant)
 
 ### helpers for CY measures
 source("functions/AmnestyMeasure.R")
@@ -1170,37 +1218,42 @@ df <- df %>%
   mutate(ICC_prelim_exam_cumu = cumsum(ICC_prelim_exam), 
          ICC_investigation_cumu = cumsum(ICC_investigation)) %>% 
   ungroup() %>% 
-  full_join(icc_accused %>% 
-              select(ccode_Crime, ICC_arrest_warrant, icc_action) %>%
-              filter(!is.na(ICC_arrest_warrant)) %>%
+  full_join(db[["ICCaccused"]] %>% 
+              select(ccode_Crime, ICC_arrest_warrant) %>%
+              filter(!is.na(ICC_arrest_warrant)) %>% 
+              mutate(icc_action = 1) %>%
               group_by(ccode_Crime, ICC_arrest_warrant) %>%  
               reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_arrest_warrant")) %>% 
   rename(ICC_arrest_warrant = icc_action) %>% 
-  full_join(icc_accused %>% 
-              select(ccode_Crime, ICC_arrestAppear, icc_action) %>%
+  full_join(db[["ICCaccused"]] %>% 
+              select(ccode_Crime, ICC_arrestAppear) %>%
               filter(!is.na(ICC_arrestAppear)) %>%
+              mutate(icc_action = 1) %>%
               group_by(ccode_Crime, ICC_arrestAppear) %>%  
               reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_arrestAppear")) %>% 
   rename(ICC_arrestAppear = icc_action) %>% 
-  full_join(icc_accused %>% 
-              select(ccode_Crime, ICC_confirm_charges, icc_action) %>%
+  full_join(db[["ICCaccused"]] %>% 
+              select(ccode_Crime, ICC_confirm_charges) %>%
               filter(!is.na(ICC_confirm_charges)) %>%
+              mutate(icc_action = 1) %>%
               group_by(ccode_Crime, ICC_confirm_charges) %>%  
               reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_confirm_charges")) %>% 
   rename(ICC_confirm_charges = icc_action) %>% 
-  full_join(icc_accused %>% 
-              select(ccode_Crime, ICC_proceedings, icc_action) %>%
+  full_join(db[["ICCaccused"]] %>% 
+              select(ccode_Crime, ICC_proceedings) %>%
               filter(!is.na(ICC_proceedings)) %>%
+              mutate(icc_action = 1) %>%
               group_by(ccode_Crime, ICC_proceedings) %>%  
               reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_proceedings")) %>% 
   rename(ICC_proceedings = icc_action) %>% 
-  full_join(icc_accused %>% 
-              select(ccode_Crime, ICC_withdrawnDismissed, icc_action) %>%
+  full_join(db[["ICCaccused"]] %>% 
+              select(ccode_Crime, ICC_withdrawnDismissed) %>%
               filter(!is.na(ICC_withdrawnDismissed)) %>%
+              mutate(icc_action = 1) %>%
               group_by(ccode_Crime, ICC_withdrawnDismissed) %>%  
               reframe(icc_action = sum(icc_action)),
             by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_withdrawnDismissed")) %>% 
@@ -1253,7 +1306,12 @@ df <- df %>%
          ICC_proceedings_region = sum(ICC_proceedings_cumu)
          ) %>% 
   ungroup() %>% 
-  left_join(db[["Investigations"]], by = c("ccode_cow", "year")) %>% 
+  left_join(db[["Investigations"]] %>% 
+              select(ccode_cow, year, uninv, uninv_dompros, uninv_evcoll, uninv_intlpros) %>% 
+              group_by(ccode_cow, year) %>% 
+              reframe(across(all_of(c("uninv", "uninv_dompros", 
+                                      "uninv_evcoll", "uninv_intlpros")), max)), 
+            by = c("ccode_cow", "year")) %>% 
   mutate(uninv = ifelse(is.na(uninv), 0, uninv), 
          uninv_dompros = ifelse(is.na(uninv_dompros), 0, uninv_dompros),
          uninv_evcoll = ifelse(is.na(uninv_evcoll), 0, uninv_evcoll),
@@ -1823,5 +1881,17 @@ db[["Vettings"]] <- db[["Vettings"]] %>%
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_vettings.csv"), na = "")
+db[["Investigations"]] <- dl_invest %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_un_investigations.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_un_investigations.csv"), na = "")
+db[["ICC"]] <- db[["ICC"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_icc_interventions.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_icc_interventions.csv"), na = "")
+db[["ICCaccused"]] <- db[["ICCaccused"]] %>% 
+  mutate(tjet_version = timestamp) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_icc_accused.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_icc_accused.csv"), na = "")
 
 save(db, file = here::here("data", "tjetdb.RData"))

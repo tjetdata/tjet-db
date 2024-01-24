@@ -537,3 +537,9 @@ transitions <- df %>%
 #   select(country, trans, trans_year, p5_year, bmr_year, ert_year, 
 #          trans_note, tjet_dtrid, year) %>% 
 #   write_csv("~/Desktop/for_Airtable.csv", na = "")
+
+transitions %>% 
+  select(ccode, country_id_vdem, country, year, trans_year, 
+         p5_year, bmr_year, ert_year, dem_bmr, dem_trans_bmr,
+         polity_p5, polity2_p5, v2x_regime_amb, dem_ep_outcome) %>% 
+  filter(!is.na(trans_year) ) 
