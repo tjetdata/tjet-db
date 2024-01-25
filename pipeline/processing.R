@@ -664,10 +664,10 @@ countrylist <- db$Countries %>%
          region_sub_un = ifelse(is.na(intregion), subregion, intregion),
          region = ifelse(region_wb == "Middle East & North Africa" & 
                            region %in% c("Asia", "Africa"), "MENA", region), 
-         txt_intro = str_squish(txt_intro), 
-         txt_regime = str_squish(txt_regime), 
-         txt_conflict = str_squish(txt_conflict), 
-         txt_TJ = str_squish(txt_TJ) ) %>% 
+         txt_intro = str_trim(txt_intro), 
+         txt_regime = str_trim(txt_regime), 
+         txt_conflict = str_trim(txt_conflict), 
+         txt_TJ = str_trim(txt_TJ) ) %>% 
   select(country, country_fr, ccode, ccode_case, ccode_ksg, m49, isoa3, 
          country_id_vdem, beg, end, micro_ksg, region, region_sub_un, region_wb, 
          focus, factsheet, txt_intro, txt_regime, txt_conflict, txt_TJ) %>% 
