@@ -1815,8 +1815,8 @@ dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
 exclude <- c("country_label", "country_name", "country_fr", "country_label_fr")
   
 df %>% 
-  left_join(lags, by = c("country_case" = "lag_country_case", 
-                         "year" = "lag_year")) %>% 
+  left_join(lags, by = c("country_case" = "lag_country_case",
+                         "year" = "lag_year")) %>%
   mutate(tjet_version = timestamp) %>% 
   select(!any_of(exclude)) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
