@@ -31,7 +31,7 @@ vet_spells <- db[["Vettings"]] %>%
   filter(ccode %in% vet_incl) %>% 
   mutate(public = case_when(hearingsPublic == "public" ~ 1,
                             TRUE ~ 0), 
-         conduct = case_when(targetingWhy == "specific individual conduct" ~ 1,
+         conduct = case_when(str_detect(targetingWhy, "specific individual conduct") ~ 1,
                             TRUE ~ 0),
          yearEnd = ifelse(is.na(yearEnd) | yearEnd > 2020, 2020, yearEnd)) %>% 
   rowwise() %>%
