@@ -1124,15 +1124,20 @@ db[["ICC"]] <-
   select(country, ccode_cow, 
          ICC_referral, ICC_prelim_exam, ICC_prelimEnd, ICC_investigation)
 
-db[["ICCaccused"]] <- 
+db[["ICCaccused"]] <-
   db[["Accused"]] %>% 
   filter(!is.na(ICC_investigation)) %>% 
   left_join(db[["Trials"]] %>% 
               select(trialID, ccode_Crime), 
             by = "trialID") %>% 
-  select(trialID, accusedID, ccode_Crime, nameOrDesc, ICC_arrest_warrant, ICC_arrestAppear, 
+  mutate(ccode_Crime = as.integer(ccode_Crime)) %>%   
+  left_join(db[["Countries"]] %>% 
+              filter(end == 2020) %>% 
+              select(country, ccode),
+            by = c(ccode_Crime = "ccode")) %>%
+  select(trialID, accusedID, country, ccode_Crime, nameOrDesc, ICC_arrest_warrant, ICC_arrestAppear, 
          ICC_confirm_charges, ICC_proceedings, ICC_withdrawnDismissed) %>% 
-  mutate(ccode_Crime = as.integer(ccode_Crime)) %>% 
+  
   arrange(ccode_Crime, ICC_arrest_warrant)
 
 ### helpers for CY measures
@@ -1419,6 +1424,13 @@ df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "h
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "hrs", memb_opts = "opp") 
@@ -1468,6 +1480,13 @@ df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = c(
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
 
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
+
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp") 
@@ -1488,6 +1507,13 @@ df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "c
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "con", memb_opts = "opp") 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
 
 ### TCs
 

@@ -84,7 +84,7 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, excl_nexus_vars = NULL,
   } else if(sum(!measure %in% names(measures)) > 0) eval(error)
   
   if(length(excl_nexus_vars) > 0) {
-    excl <- paste("-", excl_nexus_vars, sep = "")
+    excl <- paste("X", excl_nexus_vars, sep = "")
   } else {
     excl <- NULL
   }
