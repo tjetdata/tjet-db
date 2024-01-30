@@ -33,7 +33,6 @@ data[["Amnesties"]] <- db[["Amnesties"]] %>%
   distinct() %>%
   arrange(country)
 
-
 ###
 # total number of domestic trials: trials_domestic
 # domestic state agents dtj: trs_dom_dtj_sta
@@ -155,6 +154,14 @@ data[["peace-agreements"]] <- readxl::read_xlsx("data/PAM_ID-V.1.5-Updated-29JUL
          amnest_prov, humrts_prov, prisr_prov, repar_prov, truth_prov) %>%
   distinct() %>%
   arrange(country, cease_date)
+
+
+### PAX: https://www.peaceagreements.org/search
+data[["PAX"]] <- read_csv("data/pax_all_agreements_data_v6.csv") %>%
+  select(Con, PP, PPName, AgtId, Agt, Dat, Status, Agtp, Stage, Loc1GWNO, 
+         Loc2GWNO, UcdpCon, UcdpAgr, PamAgr, 
+         TjGen, TjAm, TjAmPro, TjSan, TjPower, TjAmBan, TjCou, TjJaNc, TjJaIc, 
+         TjMech, TjPrire, TjVet, TjVic, TjMis, TjRep, TjRSym, TjRMa, TjNR)
 
 ### write to file 
 write_xlsx(data, path = "~/Dropbox/TJLab/TimoDataWork/country_profiles/summary_data.xlsx")
