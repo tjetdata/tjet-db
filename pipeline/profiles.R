@@ -11,6 +11,18 @@ countries <- db[["Countries"]] %>%
   filter(!country %in% c("Serbia and Montenegro", "Soviet Union", "Yugoslavia") ) %>% 
   select(country, country_case, ccode, ccode_case) 
 
+
+
+db[["Trials"]] %>% 
+  mutate(HRs_charges = ifelse(HRs_charges > 0, 1, 0) ) %>%  
+  select(trialID, humanRights, IntraConfl, HRs_charges, 
+         fitsPostAutocraticTJ, fitsConflictTJ, 
+         beganDuringIntraConfl, beganAfterIntraConfl) %>% 
+  select(humanRights, fitsConflictTJ) %>% 
+  table()
+
+
+
 data[["Amnesties"]] <- db[["Amnesties"]] %>%
   left_join(countries, by = c(ccode_cow = "ccode")) %>% 
   filter(amnestyYear <= 2020) %>%
