@@ -78,6 +78,15 @@ data[["Trials"]] <- db[["dl_tjet_cy"]] %>%
           tfc_for_hrs_con_all = sum(tfc_for_hrs_con_sta + tfc_for_hrs_con_opp)
           )
 
+data[["Foreign"]] <- db[["Trials"]] %>%
+    left_join(countries, by = c(ccode_Accused = "ccode")) %>%
+    rename(countryAccused = country) %>%
+    left_join(countries, by = c(ccode_Trial = "ccode")) %>%
+    rename(countryTrial = country) %>%
+    filter(trialType == "foreign") %>% 
+    select(trialID, countryAccused, ccode_Accused, countryTrial, ccode_Trial, yearStart, yearEnd, caseDescription) %>% 
+    arrange(countryAccused, yearStart)
+  
 data[["Reparations"]] <- db[["Reparations"]] %>%
   left_join(countries, by = c(ccode_cow = "ccode")) %>% 
   filter(yearCreated <= 2020) %>%
