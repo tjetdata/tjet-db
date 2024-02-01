@@ -1,6 +1,6 @@
-TrialsMeasure <- function(cy, type_opts, nexus_vars, excl_nexus_vars = NULL, 
-                          memb_opts, rank_opts = NULL, charges_opts = NULL, 
-                          measure) {
+TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, 
+                          nexus_vars, excl_nexus_vars = NULL, 
+                          memb_opts, rank_opts = NULL, charges_opts = NULL) {
   
   ## options
   type_trial <- c(int = "international", 
@@ -89,8 +89,22 @@ TrialsMeasure <- function(cy, type_opts, nexus_vars, excl_nexus_vars = NULL,
     excl <- NULL
   }
   
-  var_name <- str_flatten(c(measure, type_opts, nexus_vars, excl,
-                            memb_opts, rank_opts, charges_opts), collapse = "_")
+  var_name <- str_flatten(
+    c(prefix, measure, type_opts, nexus_vars, excl,
+      memb_opts, rank_opts, charges_opts), 
+    collapse = "_") %>% 
+    str_replace("_hrs", "") %>% 
+    str_replace("_con", "")
+  
+  var_name <- ifelse(str_detect(var_name, "lcon_"),
+                    str_replace(var_name, "_Xctj", ""), 
+                    var_name)
+  var_name <- ifelse(str_detect(var_name, "ordy_"),
+                    str_replace(var_name, "_Xctj", ""), 
+                    var_name)
+  var_name <- ifelse(str_detect(var_name, "ordy_"),
+                    str_replace(var_name, "_Xdtj", ""), 
+                    var_name)
 
   ## CLs data
   
