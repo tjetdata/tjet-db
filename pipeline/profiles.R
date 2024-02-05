@@ -9,19 +9,15 @@ data <- list()
 
 countries <- db[["Countries"]] %>% 
   filter(!country %in% c("Serbia and Montenegro", "Soviet Union", "Yugoslavia") ) %>% 
-  select(country, country_case, ccode, ccode_case) 
+  select(country, country_case, ccode) 
 
-
-
-db[["Trials"]] %>% 
-  mutate(HRs_charges = ifelse(HRs_charges > 0, 1, 0) ) %>%  
-  select(trialID, humanRights, IntraConfl, HRs_charges, 
-         fitsPostAutocraticTJ, fitsConflictTJ, 
-         beganDuringIntraConfl, beganAfterIntraConfl) %>% 
-  select(humanRights, fitsConflictTJ) %>% 
-  table()
-
-
+# db[["Trials"]] %>% 
+#   mutate(HRs_charges = ifelse(HRs_charges > 0, 1, 0) ) %>%  
+#   select(trialID, humanRights, IntraConfl, HRs_charges, 
+#          fitsPostAutocraticTJ, fitsConflictTJ, 
+#          beganDuringIntraConfl, beganAfterIntraConfl) %>% 
+#   select(humanRights, fitsConflictTJ) %>% 
+#   table()
 
 data[["Amnesties"]] <- db[["Amnesties"]] %>%
   left_join(countries, by = c(ccode_cow = "ccode")) %>% 
@@ -45,50 +41,25 @@ data[["Amnesties"]] <- db[["Amnesties"]] %>%
   distinct() %>%
   arrange(country)
 
-###
-# total number of domestic trials: trials_domestic
-# domestic state agents dtj: trs_dom_dtj_sta
-# domestic state agents ctj: trs_dom_ctj_sta
-# domestic state agents, every other trial: trs_dom_hrs_con_Xdtj_Xctj_sta
-# domestic state agents total conviction count: tfc_dom_dtj_ctj_sta + tfc_dom_hrs_con_Xdtj_Xctj_sta
-# domestic state agents high rank for the four added up (?): trs_dom_hrs_con_sta_hi
-# domestic state agents high rank convictions: tfc_dom_hrs_con_sta_hi
-# domestic ctj opposition: trs_dom_ctj_opp
-# total count of intl trials: trials_intl OR trs_int_hrs_con_sta + trs_int_hrs_con_opp
-# count of convictions in intl trials: tfc_int_hrs_con_sta + tfc_int_hrs_con_opp
-# total count of foreign trials: trials_foreign OR trs_for_hrs_con_sta + trs_for_hrs_con_opp
-# count of convictions in foreign trials: tfc_for_hrs_con_sta + tfc_for_hrs_con_opp
-
 data[["Trials"]] <- db[["dl_tjet_cy"]] %>% 
-  select(country_case, ccode_cow, year, 
-         trials_domestic, 
-         trs_dom_dtj_sta, trs_dom_ctj_sta, 
-         trs_dom_hrs_con_Xdtj_Xctj_sta, tfc_dom_dtj_ctj_sta, 
-         tfc_dom_hrs_con_Xdtj_Xctj_sta, trs_dom_hrs_con_sta_hi, 
-         tfc_dom_hrs_con_sta_hi, trs_dom_ctj_opp, 
-         trials_intl, trs_int_hrs_con_sta, tfc_int_hrs_con_sta,        
-         trs_int_hrs_con_opp, tfc_int_hrs_con_opp, 
-         trials_foreign, trs_for_hrs_con_sta , tfc_for_hrs_con_sta,
-         trs_for_hrs_con_opp, tfc_for_hrs_con_opp
-         ) %>% 
+  select(-country) %>% 
   rename(country = "country_case") %>%
   arrange(country, year) %>% 
   group_by(country) %>% 
   reframe(trials_domestic = sum(trials_domestic), 
-          trs_dom_dtj_sta = sum(trs_dom_dtj_sta),
-          trs_dom_ctj_sta = sum(trs_dom_ctj_sta),
-          trs_dom_hrs_con_Xdtj_Xctj_sta = sum(trs_dom_hrs_con_Xdtj_Xctj_sta),
-          tfc_dom_hrs_con_sta = sum(tfc_dom_dtj_ctj_sta + tfc_dom_hrs_con_Xdtj_Xctj_sta),
-          trs_dom_hrs_con_sta_hi = sum(trs_dom_hrs_con_sta_hi),
-          tfc_dom_hrs_con_sta_hi = sum(tfc_dom_hrs_con_sta_hi),
-          trs_dom_ctj_opp = sum(trs_dom_ctj_opp),
+          xord_trs_dom_dtj_sta = sum(xord_trs_dom_dtj_sta),
+          xord_trs_dom_ctj_sta = sum(xord_trs_dom_ctj_sta),
+          ordy_trs_dom_sta = sum(ordy_trs_dom_sta),
+          tfc_dom_hrs_con_sta = sum(xord_tfc_dom_dtj_ctj_sta + ordy_tfc_dom_sta),
+          xord_trs_dom_dtj_ctj_sta_hi = sum(xord_trs_dom_dtj_ctj_sta_hi),
+          xord_tfc_dom_dtj_ctj_sta_hi = sum(xord_tfc_dom_dtj_ctj_sta_hi),
+          xord_trs_dom_ctj_opp = sum(xord_trs_dom_ctj_opp),
           trials_intl = sum(trials_intl),
-          trs_int_hrs_con_all = sum(trs_int_hrs_con_sta + trs_int_hrs_con_opp), 
-          tfc_int_hrs_con_all = sum(tfc_int_hrs_con_sta + tfc_int_hrs_con_opp),
+          trs_int_hrs_con_all = sum(trs_int_sta + trs_int_opp), 
+          tfc_int_hrs_con_all = sum(tfc_int_sta + tfc_int_opp),
           trials_foreign = sum(trials_foreign),
-          trs_for_hrs_con_all = sum(trs_for_hrs_con_sta + trs_for_hrs_con_opp), 
-          tfc_for_hrs_con_all = sum(tfc_for_hrs_con_sta + tfc_for_hrs_con_opp)
-          )
+          trs_for_hrs_con_all = sum(trs_for_sta + trs_for_opp), 
+          tfc_for_hrs_con_all = sum(tfc_for_sta + tfc_for_opp))
 
 data[["Foreign"]] <- db[["Trials"]] %>%
     left_join(countries, by = c(ccode_Accused = "ccode")) %>%
@@ -232,3 +203,32 @@ map(df$country, function(ctry) {
 file.copy(from = list.files("~/Dropbox/TJLab/TimoDataWork/country_profiles/original", full.names = TRUE), 
           to = "~/Dropbox/TJLab/TimoDataWork/country_profiles/edits/", 
           overwrite = FALSE, recursive = TRUE, copy.mode = FALSE)  
+
+
+dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/")
+df %>% 
+  filter(focus == 1 | country == "Uganda") %>%  
+  select(country) %>%
+  unlist(use.names = FALSE) %>%  
+  map(., function(ctry) {
+    temp <- df %>% 
+      filter(country == ctry) %>%
+      mutate(txt_intro = str_replace_all(str_trim(txt_intro), "\n", "\n\n"),
+             txt_regime = str_replace_all(str_trim(txt_regime), "\n", "\n\n"),
+             txt_conflict = str_replace_all(str_trim(txt_conflict), "\n", "\n\n"),
+             txt_TJ = str_replace_all(str_trim(txt_TJ), "\n", "\n\n")) %>%
+      select(txt_intro, txt_regime, txt_conflict, txt_TJ) %>% 
+      unlist()
+    paste("---\ntitle: ", ctry, "\nformat: docx\n---", 
+          "\n\n## Introduction\n\n", 
+          temp[["txt_intro"]], 
+          "\n\n## Regime Background\n\n", 
+          temp[["txt_regime"]], 
+          "\n\n## Conflict Background\n\n", 
+          temp[["txt_conflict"]], 
+          "\n\n## Transitional Justice\n\n", 
+          temp[["txt_TJ"]], 
+          sep = "") %>% 
+    write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/", ctry, ".qmd", sep = ""))
+  })
+  
