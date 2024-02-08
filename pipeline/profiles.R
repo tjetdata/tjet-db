@@ -231,4 +231,83 @@ df %>%
           sep = "") %>% 
     write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/", ctry, ".qmd", sep = ""))
   })
-  
+
+### automating written summaries 
+
+tabs <- c("Amnesties", "Trials", "ICC-interventions", "ICC-accused", "Foreign", 
+  "Reparations", "TruthCommissions", "Vettings") # "UN-investigations", "peace-agreements", "PAX"
+
+n_transform <- function(x) {
+  x %>% 
+    paste(" ", ., sep = "") %>%  
+    str_replace_all(" 1 ", " one ") %>% 
+    str_replace_all(" 2 ", " two ") %>% 
+    str_replace_all(" 3 ", " three ") %>% 
+    str_replace_all(" 4 ", " four ") %>% 
+    str_replace_all(" 5 ", " five ") %>% 
+    str_replace_all(" 6 ", " six ") %>% 
+    str_replace_all(" 7 ", " seven ") %>% 
+    str_replace_all(" 8 ", " eight ") %>% 
+    str_replace_all(" 9 ", " nine ") %>% 
+    str_replace_all(" 10 ", " ten ") %>%
+    str_replace_all(" 11 ", " eleven ") %>% 
+    str_replace_all(" 12 ", " twelve ") %>% 
+    str_trim() %>%
+    return() 
+}
+
+str_transform <- function(x) {
+  x %>% 
+    n_transform() %>% 
+    str_to_sentence() %>% 
+    str_trim() %>%
+    return() 
+} 
+
+data[["Amnesties"]] %>% 
+  rowwise() %>%
+  mutate(
+    strings = list(
+      paste(country, "had", count_all, ifelse(count_all == 1, "amnesty", "amnesties"), "in total.") %>% 
+        n_transform() ), 
+    strings = list(c(strings, 
+                     if(count_demtrans > 0) 
+                       paste(count_demtrans, "occurred in the context of democratic transition.") %>% 
+                       str_transform() )), 
+    strings = list(c(strings, 
+                     if(count_dcj > 0) 
+                       paste(count_dcj, ifelse(count_dcj == 1, "was", "were"), "passed during ongoing internal armed conflict.") %>% 
+                       str_transform() )), 
+    strings = list(c(strings, 
+                     if(count_pcj > 0) 
+                       paste(count_pcj, ifelse(count_pcj == 1, "was", "were"), "passed after internal armed conflict.") %>% 
+                       str_transform() )), 
+    strings = list(c(strings, 
+                     if(count_peaceagree > 0) 
+                       paste(count_peaceagree, ifelse(count_peaceagree == 1, "was", "were"), "part of a peace agreement.") %>% 
+                       str_transform() )), 
+    strings = list(c(strings, 
+                     if(count_prisoners > 0) 
+                       paste(count_prisoners, ifelse(count_prisoners == 1, "amnesty", "amnesties"), "released political prisoners.") %>% 
+                       str_transform() )),
+    strings = list(c(strings, 
+                     if(count_hrv > 0) 
+                       paste(count_hrv, ifelse(count_hrv == 1, "amnesty", "amnesties"), "forgave human rights violations.") %>% 
+                       str_transform() )), 
+    strings = str_flatten(strings, " "), 
+    # strings = paste(country, ": ", strings, sep = "") 
+  ) %>%
+  select(country, strings) %>% I
+  # unlist(use.names = FALSE) %>% 
+  # str_flatten("\n\n") %>% 
+  # write_file(., file = "~/Desktop/temp.txt")
+
+# map(df$country, function(ctry) {
+#   print(ctry)
+#   map(tabs, function(tab) {
+#     print(tab)
+#   })
+#   data[["Amnesties"]] %>%
+#     filter(country == ctry) %>%
+#     as.list()
+# })
