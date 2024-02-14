@@ -553,38 +553,33 @@ rm(keep_amnesties)
 #            torture == 1 | disappearance == 1 | 
 #            focusedPast == 1 | investigatePatternAbuse == 1)
 
-dl_invest <- db[["MegaBase"]][["Investigations"]] %>%   
-  rename(year = year_ongoing) %>% 
-  filter(year > 1969 & year < 2023) %>% 
+dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
+  rename(beg = year_beg, 
+         end = year_end) %>% 
+  select(ccode_cow, beg, end, name, uninv_dompros, uninv_intlpros, uninv_evcoll, 
+         secgen, unsc, cohr, unga, ohchr, hrc, source) %>% 
+  filter(beg > 1969 & beg < 2023) %>%
   mutate(
-    ccode_cow = ifelse(ccode_cow == 860 & year == 1999, 850, ccode_cow),
-    ccode_cow = ifelse(ccode_cow == 541 & year == 1973, 235, ccode_cow)
+    ccode_cow = ifelse(ccode_cow == 860 & beg == 1999, 850, ccode_cow),
+    ccode_cow = ifelse(ccode_cow == 541 & beg == 1973, 235, ccode_cow)
   ) %>% 
-  select(-source) %>%  
-  left_join(db[["MegaBase"]][["Investigations"]] %>% 
-              select(name, source) %>% 
-              unnest(source) %>% 
-              group_by(name) %>% 
-              reframe(source = str_flatten(source, "; ")), 
-            by = "name") %>%
-  arrange(name, year) %>%
-  mutate(name = str_split(name, " & ") ) %>% 
-  unnest(name, keep_empty = TRUE) %>% 
-  group_by(name, ccode_cow) %>%
-  mutate(beg = min(year), 
-         end = max(year)) %>% 
-  ungroup() %>% 
-  select(ccode_cow, beg, end, name, secgen, unsc, cohr, unga, ohchr, hrc,
-         uninv_intlpros, uninv_evcoll, uninv_dompros, source) %>%
-  distinct() %>% 
+  arrange(name, beg) %>%
+  filter(!(ccode_cow == 490 & str_detect(name, " & "))) %>% 
+  # mutate(name = str_split(name, " & ") ) %>% 
+  # unnest(name, keep_empty = TRUE) %>% 
+  distinct() %>%
   mutate(country = str_split_i(name, "_", 1),
          country = str_remove(country, as.character(beg)),
          country = str_replace(country, "CAR", "Central African Republic"),
          country = str_replace(country, "DRC", "Democratic Republic of the Congo"),
-         country = str_replace(country, "DPRK", "DPRK (North Korea)"),
+         country = str_replace(country, "DPRK", "North Korea"),
          country = str_replace(country, "Lebanon2005", "Lebanon"),
+         country = str_replace(country, "Syria2011", "Syria"),
+         country = str_replace(country, "Myanmar2017", "Myanmar"),
+         country = str_replace(country, "Myanmar2018", "Myanmar"),
+         country = str_replace(country, "SouthAfrica", "South Africa"),
          mandate = str_split_i(name, "_", 2), 
-         mandate = ifelse(is.na(mandate) &ccode_cow == 93 & unsc == 1, "UNSC", mandate), 
+         mandate = ifelse(is.na(mandate) & ccode_cow == 93 & unsc == 1, "UNSC", mandate), 
          mandate = ifelse(mandate == "rep" & ccode_cow == 860 & secgen == 1, "SECGEN", mandate), 
          mandate = str_squish(mandate),
          mandate = str_replace(mandate, "UNSC", "UN Security Council"),
@@ -604,18 +599,23 @@ dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
                            uninv_evcoll == 1 ~ "collect evidence",
                            uninv_dompros == 1 ~ "encourage domestic prosecutions") 
          ) %>% 
-  select(country, ccode_cow, beg, end, mandate, goals, source)
+  select(country, ccode_cow, beg, end, mandate, goals, 
+         uninv_dompros, uninv_evcoll, uninv_intlpros, source)
+  # group_by(ccode_cow, mandate, beg) %>%
+  # mutate(n = n() ) %>%
+  # filter(n > 1) %>% 
+  # print(n = Inf)
 
 db[["MegaBase"]][["Investigations"]] <-
-  db[["MegaBase"]][["Investigations"]] %>% 
-  rename(year = year_ongoing) %>% 
-  filter(year > 1969 & year < 2023) %>% 
-  mutate(
-         ccode_cow = ifelse(ccode_cow == 860 & year == 1999, 850, ccode_cow),
-         ccode_cow = ifelse(ccode_cow == 541 & year == 1973, 235, ccode_cow), 
-         uninv = 1) %>% 
-    select(ccode_cow, year, uninv, 
-           uninv_dompros, uninv_evcoll, uninv_intlpros) 
+  dl_invest %>% 
+  rowwise() %>% 
+  mutate(uninv = 1, 
+         year = list(beg:end)) %>% 
+  unnest(year) %>% 
+  select(ccode_cow, year, uninv, uninv_dompros, uninv_evcoll, uninv_intlpros) %>%
+  group_by(ccode_cow, year) %>% 
+  reframe(across(all_of(c("uninv", "uninv_dompros", 
+                          "uninv_evcoll", "uninv_intlpros")), max))
 
 ### compare numbers of records again
 ### last column is 
@@ -1311,11 +1311,7 @@ df <- df %>%
          ICC_proceedings_region = sum(ICC_proceedings_cumu)
          ) %>% 
   ungroup() %>% 
-  left_join(db[["Investigations"]] %>% 
-              select(ccode_cow, year, uninv, uninv_dompros, uninv_evcoll, uninv_intlpros) %>% 
-              group_by(ccode_cow, year) %>% 
-              reframe(across(all_of(c("uninv", "uninv_dompros", 
-                                      "uninv_evcoll", "uninv_intlpros")), max)), 
+  left_join(db[["Investigations"]], 
             by = c("ccode_cow", "year")) %>% 
   mutate(uninv = ifelse(is.na(uninv), 0, uninv), 
          uninv_dompros = ifelse(is.na(uninv_dompros), 0, uninv_dompros),
