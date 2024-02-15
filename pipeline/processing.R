@@ -713,7 +713,7 @@ db[tabs] <- map(tabs, function(tab) {
 ### the next few code blocks could be simplified with functions
 
 ### preparing amnesties list for merging into country-year dataset
-amnesties <- db$Amnesties %>% 
+amnesties <- db[["Amnesties"]] %>% 
   arrange(ccode, amnestyYear) %>%  
   group_by(ccode, amnestyYear) %>%
   mutate(amnesties = n(),
@@ -726,7 +726,7 @@ amnesties <- db$Amnesties %>%
   filter(year >= 1970 & year <= 2020)
 
 ### preparing reparations list for merging into country-year dataset
-reparations <- db$Reparations %>%
+reparations <- db[["Reparations"]] %>%
   arrange(ccode, yearCreated) %>%  
   mutate(SGBV = ifelse(harmsSexualViolence == 1 | 
                          genderCrimes == "yes" | 
@@ -742,7 +742,7 @@ reparations <- db$Reparations %>%
   filter(year >= 1970 & year <= 2020)
 
 ### preparing TCs list for merging into country-year dataset
-tcs <- db$TruthCommissions %>%
+tcs <- db[["TruthCommissions"]] %>%
   arrange(ccode, yearPassed) %>%  
   group_by(ccode, yearPassed) %>%
   mutate(tcs = n(),
@@ -755,7 +755,7 @@ tcs <- db$TruthCommissions %>%
   filter(year >= 1970 & year <= 2020)
 
 ### preparing vettings list for merging into country-year dataset
-vettings <- db$Vettings %>%
+vettings <- db[["Vettings"]] %>%
   # select(vettingID, alterationOf, ccode, yearStart, yearEnd) %>% 
   filter(is.na(alterationOf)) %>% 
   arrange(ccode, yearStart) %>%  
@@ -768,8 +768,8 @@ vettings <- db$Vettings %>%
   filter(year >= 1970 & year <= 2020)
 
 ### preparing trials list for merging into country-year dataset
-trials <- db$Trials %>%
-  rename(ccode = "ccode_Accused") %>% 
+trials <- db[["Trials"]] %>%
+  rename("ccode" = "ccode_Accused") %>% 
   arrange(ccode, yearStart) %>%
   mutate(SGBV = ifelse(rape_Accused == 1 | 
                          sexualViolence_Accused == 1 | 
