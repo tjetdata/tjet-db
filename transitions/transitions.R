@@ -357,6 +357,7 @@ ert <- episodes %>%
            '3' = "Regressed autocracy",
            '4' = "Outcome censored")) 
 
+### also need to include autocratic reversion year in the following code
 trans <- ert %>%
   left_join(ert %>%
               select(country_id, year, v2x_regime_orig) %>%

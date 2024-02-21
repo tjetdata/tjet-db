@@ -484,6 +484,7 @@ db[["Prosecutions"]][["Trials"]] <-
 db[["MegaBase"]][["Transitions"]] <-
   db[["MegaBase"]][["Transitions"]] %>%
   filter(trans == 1) %>% 
+  # filter(!(ccode == 265 & year == 1990)) %>% 
   mutate(p5 = case_when(is.na(p5_year) ~ 0, 
                         trans_year_begin < p5_year ~ 0,
                         trans_year_begin >= p5_year ~ 1),
