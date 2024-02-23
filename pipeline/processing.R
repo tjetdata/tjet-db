@@ -972,7 +972,7 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   mutate(trials_foreign = ifelse(is.na(trials_foreign), 
                                  0, trials_foreign),
          trials_foreign_SGBV = ifelse(is.na(trials_foreign_SGBV), 
-                                      0, trials_foreign_SGBV))
+                                      0, trials_foreign_SGBV)) 
 
 ## country labels in map table for special cases
 # db[["CountryYears"]] %>%
@@ -1207,6 +1207,25 @@ df <- df %>%
                                 "reg_democ", "reg_autoc", "reg_trans", "conflict"))) %>%
                rename(ccode_cow = ccode), 
              by = c("ccode_cow", "ccode_ksg", "country_id_vdem", "year")) %>% # losing Slovenia 1991?
+  arrange(country_case, year) %>%
+  mutate(amnesties_sample = ifelse(amnesties > 0, 1, NA),
+         reparations_sample = ifelse(reparations > 0, 1, NA),
+         tcs_sample = ifelse(tcs > 0, 1, NA),
+         trials_domestic_sample = ifelse(trials_domestic > 0, 1, NA),
+         vettings_sample = ifelse(vettings > 0, 1, NA)) %>%
+  group_by(country_case) %>%
+  fill(amnesties_sample,
+       reparations_sample,
+       tcs_sample,
+       trials_domestic_sample, 
+       vettings_sample,
+       .direction = "down") %>%
+  mutate(amnesties_sample = ifelse(is.na(amnesties_sample), 0, amnesties_sample),
+         reparations_sample = ifelse(is.na(reparations_sample), 0, reparations_sample),
+         tcs_sample = ifelse(is.na(tcs_sample), 0, tcs_sample),
+         trials_domestic_sample = ifelse(is.na(trials_domestic_sample), 0, trials_domestic_sample),
+         vettings_sample = ifelse(is.na(vettings_sample), 0, vettings_sample)) %>%
+  ungroup() %>%
   full_join(db[["ICC"]] %>% select(-country),
             by = "ccode_cow" ) %>%
   mutate(
@@ -1784,6 +1803,18 @@ df <- AmnestyMeasure(cy = df, peace_vars = "peaceSettlement")
 ### vetting
 
 df <- VettingMeasures(cy = df)
+
+### domestic trials sample indicator 
+
+df <- df %>% 
+  arrange(country_case, year) %>%
+  mutate(trials_domestic_sample_sta_opp = xord_trs_dom_dtj_ctj_sta + ordy_trs_dom_sta + xord_trs_dom_ctj_opp + lcon_trs_dom_sta_opp, 
+         trials_domestic_sample_sta_opp = ifelse(trials_domestic_sample_sta_opp > 0, 1, NA)) %>% 
+  group_by(country_case) %>% 
+  fill(trials_domestic_sample_sta_opp, 
+       .direction = "down") %>%
+  mutate(trials_domestic_sample_sta_opp = ifelse(is.na(trials_domestic_sample_sta_opp), 0, trials_domestic_sample_sta_opp)) %>%
+  ungroup()
 
 ### cleanup
 

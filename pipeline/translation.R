@@ -80,7 +80,7 @@ if(translations$labels) { # about 0.5 min / 5000 characters
 }
 db[["labels_fr"]]
 
-if(translations$dl_codebook) { # about 1 min / 20000 characters 
+if(translations$dl_codebook) { # about 1 min / 23000 characters 
   start <- Sys.time()
   db[["dl_tjet_codebook_fr"]] <- db[["dl_tjet_codebook"]] %>% 
     rowwise() %>%
