@@ -17,6 +17,12 @@ dtr,"democratic transition sample, binary",TJET,Transitional Justice Evaluation 
 aco,"conflict & post-conflict, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
 dco,"during conflict, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
 pco,"after conflict, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
+amnesties_sample,country-years from first year with any amnesties,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
+reparations_sample,country-years from first year with any reparations policies,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
+tcs_sample,country-years from first year with any truth commissions,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
+trials_domestic_sample,country-years from first year with any domestic human rights or conflict prosecutions,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
+trials_domestic_sample_sta_opp,country-years from first year with any domestic human rights or conflict prosecutions of state agents or opposition members,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
+vettings_sample,country-years from first year with any vetting policies,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
 amnesties,count of amnesties per country and year of passing,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
 amnesties_SGBV,"binary for whether amnesties for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
 reparations,count of reparations polices per country and year of creation,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-02-21
