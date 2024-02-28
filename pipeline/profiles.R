@@ -21,9 +21,12 @@ data <- list()
 #   select(humanRights, fitsConflictTJ) %>% 
 #   table()
 
+db[["Transitions"]]
+
+db[["ConflictDyads"]] 
+
 data[["Amnesties"]] <- db[["Amnesties"]] %>%
   left_join(countries, by = c(ccode_cow = "ccode")) %>% 
-  filter(amnestyYear <= 2020) %>%
   mutate(what_hrv = ifelse(str_detect(whatCrimes, "human rights violations"), 1, 0), 
          who_pol = ifelse(str_detect(whoWasAmnestied, "protesters / political prisoners"), 1, 0)) %>% 
   group_by(country_case) %>%
@@ -56,6 +59,7 @@ data[["Domestic_totals"]] <- db[["dl_tjet_cy"]] %>%
   select(-country) %>% 
   rename("country" = "country_case") %>%
   arrange(country, year) %>% 
+  filter(year <= 2020) %>% 
   filter(if_any(all_of(vars_dom), ~ . > 0)) %>%
   group_by(country) %>% 
   reframe(beg = min(year), 
@@ -72,13 +76,13 @@ data[["Domestic_totals"]] <- db[["dl_tjet_cy"]] %>%
           xord_trs_dom_ctj_opp = sum(xord_trs_dom_ctj_opp), 
           xord_tfc_dom_ctj_opp = sum(xord_tfc_dom_ctj_opp), 
           lcon_trs_dom_sta_opp = sum(lcon_trs_dom_sta_opp), 
-          lcon_tfc_dom_sta_opp = sum(lcon_tfc_dom_sta_opp), 
-          )
+          lcon_tfc_dom_sta_opp = sum(lcon_tfc_dom_sta_opp))
 
 data[["Intl_totals"]] <- db[["dl_tjet_cy"]] %>% 
   select(-country) %>% 
   rename("country" = "country_case") %>%
   arrange(country, year) %>% 
+  filter(year <= 2020) %>% 
   filter(if_any(all_of(vars_int), ~ . > 0)) %>%
   group_by(country) %>% 
   reframe(beg = min(year), 
@@ -91,6 +95,7 @@ data[["Foreign_totals"]] <- db[["dl_tjet_cy"]] %>%
   select(-country) %>% 
   rename("country" = "country_case") %>%
   arrange(country, year) %>% 
+  filter(year <= 2020) %>%
   filter(if_any(all_of(vars_for), ~ . > 0)) %>%
   group_by(country) %>% 
   reframe(beg = min(year), 
@@ -110,7 +115,6 @@ data[["Foreign"]] <- db[["Trials"]] %>%
   
 data[["Reparations"]] <- db[["Reparations"]] %>%
   left_join(countries, by = c(ccode_cow = "ccode")) %>% 
-  filter(yearCreated <= 2020) %>%
   group_by(country_case) %>% 
   mutate(count = n()) %>% 
   ungroup() %>% 
@@ -121,7 +125,6 @@ data[["Reparations"]] <- db[["Reparations"]] %>%
 
 data[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
   left_join(countries, by = c(ccode_cow = "ccode")) %>% 
-  filter(yearPassed <= 2020) %>%
   group_by(country_case) %>% 
   mutate(count = n()) %>% 
   ungroup() %>% 
@@ -147,7 +150,6 @@ data[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
 
 data[["Vettings"]] <- db[["Vettings"]] %>%
   left_join(countries, by = c(ccode_cow = "ccode")) %>% 
-  filter(yearStart <= 2020) %>%
   mutate(individual_conduct = case_when(
     str_detect(targetingWhy, "specific individual conduct") ~ 1,
     TRUE ~ 0)) %>%
@@ -296,7 +298,7 @@ auto_text[["Domestic_totals"]] <- data[["Domestic_totals"]] %>%
                          paste("There",
                                ifelse(xord_trs_dom_dtj_sta == 1, "was", "were"),
                                xord_trs_dom_dtj_sta,
-                               "extra-ordinary",
+                               "extraordinary",
                                ifelse(xord_trs_dom_dtj_sta == 1,
                                       "prosecution of state agents in a democratic transition context.",
                                       "prosecutions of state agents in democratic transition contexts.")
@@ -307,7 +309,7 @@ auto_text[["Domestic_totals"]] <- data[["Domestic_totals"]] %>%
                          paste("There",
                                ifelse(xord_trs_dom_ctj_sta == 1, "was", "were"),
                                xord_trs_dom_ctj_sta,
-                               "extra-ordinary",
+                               "extraordinary",
                                ifelse(xord_trs_dom_ctj_sta == 1,
                                       "prosecution of state agents in a conflict context.",
                                       "prosecutions of state agents in conflict contexts.")
@@ -319,16 +321,16 @@ auto_text[["Domestic_totals"]] <- data[["Domestic_totals"]] %>%
                                ifelse(xord_tfc_dom_dtj_ctj_sta == 1, "was", "were"),
                                xord_tfc_dom_dtj_ctj_sta,
                                ifelse(xord_tfc_dom_dtj_ctj_sta == 1,
-                                      "final conviction of a state agent in an extra-ordinary prosecution.",
-                                      "final convictions of state agents in extra-ordinary prosecutions.")) %>%
+                                      "final conviction of a state agent in an extraordinary prosecution.",
+                                      "final convictions of state agents in extraordinary prosecutions.")) %>%
                          n_transform())),
          text = list(c(text,
                        if(xord_trs_dom_dtj_ctj_sta_hi > 0)
                          paste("Of",
                                xord_trs_dom_dtj_ctj_sta_hi,
                                ifelse(xord_trs_dom_dtj_ctj_sta_hi == 1,
-                                      "extra-ordinary prosecution of high-ranking state agents,",
-                                      "extra-ordinary prosecutions of high-ranking state agents,"),
+                                      "extraordinary prosecution of high-ranking state agents,",
+                                      "extraordinary prosecutions of high-ranking state agents,"),
                                xord_tfc_dom_dtj_ctj_sta_hi,
                                ifelse(xord_tfc_dom_dtj_ctj_sta_hi == 1,
                                       "led to a final conviction.",
@@ -355,8 +357,8 @@ auto_text[["Domestic_totals"]] <- data[["Domestic_totals"]] %>%
                                ifelse(xord_trs_dom_ctj_opp == 1, "was", "were"),
                                xord_trs_dom_ctj_opp,
                                ifelse(xord_trs_dom_ctj_opp == 1,
-                                      "extra-ordinary prosecution of opposition members in a conflict context;",
-                                      "extra-ordinary prosecutions of opposition members in conflict contexts;"),
+                                      "extraordinary prosecution of opposition members in a conflict context;",
+                                      "extraordinary prosecutions of opposition members in conflict contexts;"),
                                xord_tfc_dom_ctj_opp,
                                ifelse(xord_tfc_dom_ctj_opp <= 1,
                                       "led to a final conviction.",
@@ -383,16 +385,16 @@ auto_text[["Domestic_totals"]] <- data[["Domestic_totals"]] %>%
   ungroup() %>% 
   select(country, 
          # beg, end, total, # total domestic trials between beg and end
-         # xord_trs_dom_dtj_sta, # extra-ordinary prosecutions of state agents in democratic transition context
-         # xord_trs_dom_ctj_sta, # extra-ordinary prosecutions of state agents in conflict or post-conflict context
-         # xord_trs_dom_dtj_ctj_sta, # extra-ordinary prosecutions of state agents
-         # xord_tfc_dom_dtj_ctj_sta, # total final convictions in extra-ordinary prosecutions of state agents
-         # xord_trs_dom_dtj_ctj_sta_hi, # extra-ordinary prosecutions of high-ranking state agents
-         # xord_tfc_dom_dtj_ctj_sta_hi, # total final convictions in extra-ordinary prosecutions of high-ranking state agents
+         # xord_trs_dom_dtj_sta, # extraordinary prosecutions of state agents in democratic transition context
+         # xord_trs_dom_ctj_sta, # extraordinary prosecutions of state agents in conflict or post-conflict context
+         # xord_trs_dom_dtj_ctj_sta, # extraordinary prosecutions of state agents
+         # xord_tfc_dom_dtj_ctj_sta, # total final convictions in extraordinary prosecutions of state agents
+         # xord_trs_dom_dtj_ctj_sta_hi, # extraordinary prosecutions of high-ranking state agents
+         # xord_tfc_dom_dtj_ctj_sta_hi, # total final convictions in extraordinary prosecutions of high-ranking state agents
          # ordy_trs_dom_sta, # ordinary human rights prosecutions of state agents
          # ordy_tfc_dom_sta, # total final convictions in ordinary human rights prosecutions of state agents
-         # xord_trs_dom_ctj_opp, # extra-ordinary prosecutions of opposition members in conflict or post-conflict context
-         # xord_tfc_dom_ctj_opp, # total final convictions in extra-ordinary prosecutions of opposition members in conflict or post-conflict context
+         # xord_trs_dom_ctj_opp, # extraordinary prosecutions of opposition members in conflict or post-conflict context
+         # xord_tfc_dom_ctj_opp, # total final convictions in extraordinary prosecutions of opposition members in conflict or post-conflict context
          # lcon_trs_dom_sta_opp, # prosecutions of state agents or opposition members in low-level conflict context
          # lcon_tfc_dom_sta_opp, # total final convictions in prosecutions of state agents or opposition members in low-level conflict context
          text)
@@ -457,7 +459,7 @@ auto_text[["ICC"]] <- data[["ICC-interventions"]] %>%
   rowwise() %>%
   mutate(
     text = ifelse(is.na(ICC_prelimEnd), 
-                  paste("The ICC's Office of the Prosecutor began a preliminary examination of the situation in ", 
+                  paste("The ICC's Office of the Prosecutor opened a preliminary examination of the situation in ", 
                         country, " in ", ICC_prelim_exam, ".", sep = ""), 
                   paste("The ICC's Office of the Prosecutor carried out a preliminary examination of the situation in ", 
                         country, " from ", ICC_prelim_exam, " until ", ICC_prelimEnd, ".", sep = "")), 
