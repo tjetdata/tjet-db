@@ -183,7 +183,10 @@ df <- vdem %>%
                                     "Czech Republic")) %>% 
   select(country_id, COWcode, country_name, year, 
          v2x_regime, v2x_regime_amb, e_boix_regime, e_democracy_trans, 
-         e_p_polity, e_polity2, e_pt_coup, e_coups) %>% 
+         e_p_polity, e_polity2, 
+         # e_pt_coup, 
+         e_coups
+         ) %>% 
   mutate(v2x_regime = recode_factor(v2x_regime, 
            '0' = "Closed autocracy", 
            '1' = "Electoral Autocracy", 
@@ -200,10 +203,11 @@ df <- vdem %>%
            '7' = "Electoral democracy upper bound", 
            '8' = "Liberal democracy lower bound", 
            '9' = "Liberal Democracy"),
-         e_pt_coup = recode_factor(e_pt_coup, 
-           '0' = "No coup attempt occurred", 
-           '1' = "Unssuccessful coup attempt occurred", 
-           '2' = "Successful coup attempt occurred") ) %>%
+         # e_pt_coup = recode_factor(e_pt_coup, 
+         #   '0' = "No coup attempt occurred", 
+         #   '1' = "Unssuccessful coup attempt occurred", 
+         #   '2' = "Successful coup attempt occurred") 
+         ) %>%
   rename(ccode_vdem = COWcode,
          v2x_regime_vdem = v2x_regime,
          bmr_dem_vdem = e_boix_regime,
@@ -211,7 +215,8 @@ df <- vdem %>%
          polity_vdem = e_p_polity, 
          polity2_vdem = e_polity2, 
          coups_pipe_vdem = e_coups, 
-         coup_pt_vdem = e_pt_coup) %>% 
+         # coup_pt_vdem = e_pt_coup
+         ) %>% 
   full_join(read_delim(here::here("transitions/original_data", 
                                   "GWF_AllPoliticalRegimes.txt"), 
                        show_col_types = FALSE) %>%
@@ -529,6 +534,8 @@ transitions <- df %>%
 
 ### only used the code below for adding to Airtable once
 ### subsequent updates were entered manually
+### MANUAL UPDATES HAVE TO BE MADE IN BOTH AIRTABLE AND GOOGLE SHEETS
+
 # transitions %>%
 #   filter(year < 2021) %>%
 #   filter(!is.na(trans_year) | !is.na(trans_note)) %>%
