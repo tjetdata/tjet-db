@@ -642,9 +642,12 @@ db <- c(db[["MegaBase"]],
 rm(select, checkbox_to_binary, dim_drop, dim_last, dim_now, dim_orig, 
    crimes, victims, multi_selects) 
 
-txt_fields <- c("txt_intro", "txt_regime", "txt_conflict", "txt_TJ", 
-                "txt_amnesties", "txt_domestic", "txt_intl", "txt_foreign", 
-                "txt_reparations", "txt_TCs", "txt_vetting", "txt_investigations")
+txt_fields <- c("txt_summary", "auto_summary", "txt_intro", "txt_regime", 
+                "auto_regime", "txt_conflict", "auto_conflict", "txt_TJ", 
+                "txt_amnesties", "auto_amnesties", "txt_domestic", "auto_domestic", 
+                "txt_intl", "auto_intl", "txt_foreign", "auto_foreign",  
+                "txt_reparations", "auto_reparations", "txt_tcs", "auto_tcs", 
+                "txt_vetting", "auto_vetting", "txt_un", "auto_un")
 
 ### creating country list as basis for country-year dataset
 countrylist <- db$Countries %>% 

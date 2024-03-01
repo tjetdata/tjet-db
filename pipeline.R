@@ -21,3 +21,9 @@ source(here::here("pipeline", "processing.R"))
 source(here::here("pipeline", "translation.R"))
 ### writing the production database to the Cloudways server
 source(here::here("pipeline", "sql.R"))
+
+### one-offs NEED TO ADD EXPLANATORY COMMENTS
+## transitions 
+## conflicts 
+## pipeline/profiles
+

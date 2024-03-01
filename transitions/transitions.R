@@ -550,4 +550,5 @@ transitions %>%
   select(ccode, country_id_vdem, country, year, trans_year, 
          p5_year, bmr_year, ert_year, dem_bmr, dem_trans_bmr,
          polity_p5, polity2_p5, v2x_regime_amb, dem_ep_outcome) %>% 
-  filter(!is.na(trans_year) ) 
+  filter(!is.na(trans_year) ) %>% 
+  print(n = Inf)
