@@ -20,7 +20,7 @@ translations <- list(
   dl_codebook = FALSE)
 
 ### setting the authorization key locally (do only once for each new key)
-# keyring::key_set(service = "DeepL") 
+# keyring::key_set(service = "DeepL")
 
 ### loading & checking our database
 load(here::here("data", "tjetdb.RData"), verbose = TRUE)
@@ -51,7 +51,7 @@ translate <- function(col) {
 usage(key_get("DeepL"))
 ### translation of relevant fields in tables
 
-if(translations$country_profiles) { # about 5 min, 570,000 characters
+if(translations$country_profiles) { # about 10 min, 810,000 characters
   ## do not translate the country field; this is used in the website structure
   start <- Sys.time()
   order <- names(db[["Countries"]])
@@ -60,10 +60,20 @@ if(translations$country_profiles) { # about 5 min, 570,000 characters
     mutate(txt_intro = translate(txt_intro), 
            txt_regime = translate(txt_regime), 
            txt_conflict = translate(txt_conflict), 
-           txt_TJ = translate(txt_TJ)) %>%
+           txt_TJ = translate(txt_TJ), 
+           txt_summary = translate(txt_summary), 
+           txt_amnesties = translate(txt_amnesties), 
+           txt_domestic = translate(txt_domestic), 
+           txt_intl = translate(txt_intl), 
+           txt_foreign = translate(txt_foreign), 
+           txt_reparations = translate(txt_reparations), 
+           txt_tcs = translate(txt_tcs), 
+           txt_vetting = translate(txt_vetting), 
+           txt_un = translate(txt_un)
+           ) %>%
     ungroup() %>%
     select(all_of(order))
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["Countries_fr"]] %>%
@@ -75,7 +85,7 @@ if(translations$labels) { # about 0.5 min / 5000 characters
     rowwise() %>%
     mutate(label = translate(label)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["labels_fr"]]
@@ -86,7 +96,7 @@ if(translations$dl_codebook) { # about 1 min / 23000 characters
     rowwise() %>%
     mutate(definition = translate(definition)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["dl_tjet_codebook_fr"]]
@@ -98,7 +108,7 @@ if(translations$conflicts) { # about 3 min / 2000 characters
     rowwise() %>%
     mutate(side_b = translate(side_b)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["ConflictDyads_fr"]] 
@@ -111,20 +121,20 @@ if(translations$tjet_bios) {
     mutate(bio_text = translate(bio_text)) %>%
     ungroup() %>%
     select(all_of(order))
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 # db[["TJETmembers_fr"]] %>%
 #   select(last_name, given_name, bio_text)
 
-if(translations$amnesties) { # about 8.5 min / 170,000 characters  
+if(translations$amnesties) { # about 5 min / 124,000 characters  
   start <- Sys.time()
   db[["Amnesties_fr"]] <- db[["Amnesties"]] %>% 
     select(amnestyID, mechanismDescription, whoWasAmnestied) %>%
     rowwise() %>%
     mutate(mechanismDescription = translate(mechanismDescription)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["Amnesties_fr"]] 
@@ -136,19 +146,19 @@ if(translations$reparations) { # about 0.5 min  / 9000 characters
     rowwise() %>%
     mutate(officialName_en = translate(officialName_en)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["Reparations_fr"]]
 
-if(translations$tcs) { # about 0.5 min / 12,000 characters  
+if(translations$tcs) { # about 0.5 min / 8000 characters  
   start <- Sys.time()
   db[["TruthCommissions_fr"]] <- db[["TruthCommissions"]] %>% 
     select(truthcommissionID, officialName_en) %>%
     rowwise() %>%
     mutate(officialName_en = translate(officialName_en)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["TruthCommissions_fr"]]
@@ -160,7 +170,7 @@ if(translations$trials) { # about 29 min / 650,000 characters
     rowwise() %>%
     mutate(caseDescription = translate(caseDescription)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["Trials_fr"]]
@@ -172,7 +182,7 @@ if(translations$accused) { # about 56 min / 470,000 characters
     rowwise() %>%
     mutate(nameOrDesc = translate(nameOrDesc)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["Accused_fr"]]
@@ -184,7 +194,7 @@ if(translations$vetting) { # about 0.5 min / 9,000 characters
     rowwise() %>%
     mutate(policyName = translate(policyName)) %>%
     ungroup()
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["Vettings_fr"]]
@@ -202,7 +212,7 @@ if(translations$surveysmeta) { # about 0.5 min / 12,000 characters
            ) %>%
     ungroup() %>%
     select(all_of(order))
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 db[["SurveysMeta_fr"]]
@@ -239,7 +249,7 @@ if(translations$surveys) { # about 11 min / 67,000 characters
         left_join(que, by = "Question") %>% 
         select(all_of(order), Section_fr, Question_fr, Responses_fr)
     })
-  Sys.time() - start
+  print(Sys.time() - start)
   usage(key_get("DeepL"))
 }
 
