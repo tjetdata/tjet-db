@@ -1416,7 +1416,7 @@ autotxt <- df %>%
             by = c("country_case", "ccode_case")) %>%
   left_join(autotxt[["UNinvestigations"]] %>%
               rename("un" = "text"),
-            by = c("country_case", "ccode_case")) %>% I
+            by = c("country_case", "ccode_case"))
   # write_csv(file = "~/Desktop/temp.csv", na = "")
 
 ### auto-text fields check 
@@ -1444,7 +1444,7 @@ db[["Countries"]] %>%
          reparations, auto_reparations, tcs, auto_tcs, 
          vetting, auto_vetting, un, auto_un) %>% 
   filter(if_any(all_of(check_vars), ~ . == 1)) %>% 
-  # write_csv("~/Desktop/temp.csv") %>% 
+  write_csv("~/Desktop/temp.csv") %>%
   print(n = Inf)
 
 ### print all country profiles with auto summaries to Quarto files 

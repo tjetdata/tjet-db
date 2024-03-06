@@ -1142,8 +1142,7 @@ db[["ICCaccused"]] <-
             by = c(ccode_Crime = "ccode")) %>%
   select(trialID, accusedID, country, ccode_Crime, nameOrDesc, ICC_arrest_warrant, ICC_arrestAppear, 
          ICC_confirm_charges, ICC_proceedings, ICC_withdrawnDismissed) %>% 
-  arrange(ccode_Crime, ICC_arrest_warrant) %>% I
-  # filter(ICC_arrest_warrant > 2020) 
+  arrange(ccode_Crime, ICC_arrest_warrant)
 
 ### helpers for CY measures
 source("functions/AmnestyMeasure.R")

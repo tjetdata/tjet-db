@@ -255,7 +255,7 @@ countries_df$country_name[!countries_df$country_name %in% countries_other]
 countries_other[!countries_other %in% countries_df$country_name]
 
 df <- df %>%
-  full_join(other, by = c("country_name" = "country", "year" = "year")) %>% I
+  full_join(other, by = c("country_name" = "country", "year" = "year"))
 
 df <- df %>% 
   left_join(df %>%
@@ -525,7 +525,7 @@ transitions <- df %>%
          v2x_regime_amb, v2x_polyarchy, dem_ep_start_year, dem_ep_end_year, 
          dem_founding_elec, dem_ep_outcome, regime_gwf, reg_fail_gwf) %>% 
   rename(country_id_vdem = country_id) %>%
-  write_csv(here::here("transitions", "transitions_new_revised.csv"), na = "") %>% I
+  write_csv(here::here("transitions", "transitions_new_revised.csv"), na = "")
   # sheet_write(ss = drive_get("TJET_transitions"), sheet = "new")
 
 ### at this point, the trans_year field was coded based on our rules

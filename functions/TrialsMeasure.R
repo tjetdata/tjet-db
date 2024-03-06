@@ -327,7 +327,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
       mutate(count_trial_convict_final = sum(convict_final)) %>% 
       ungroup() %>% 
       select(-trialID, -convict_final) %>% 
-      distinct() %>% I
+      distinct()
       # group_by(ccode_Accused, yearEnd) %>% 
       # mutate(n = n()) %>% 
       # filter(n > 1) 

@@ -18,16 +18,21 @@ surveytabs <- db[["SurveysMeta"]] %>%
   select(results_tables) %>%
   unlist(use.names = FALSE) %>%
   str_replace(fixed(".xlsx"), "_fr")
-fr <- fr[!fr %in% surveytabs]
+fr <- fr[!fr %in% surveytabs] %>% 
+  print()
 
 tabs <- c(
-  fr, "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook",
-  "ConflictDyads", "Countries", "CountryYears", "CourtLevels", "dl_tjet_cy",
-  "dl_tjet_codebook", "fields_meta", "ICC", "ICCaccused", "Investigations",
-  "labels", "Reparations", "Reparations_collectiveReparationsEligibility",
-  "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions",
-  "Trials", "TruthCommissions", "Vettings", "Vettings_targetingAffiliation"
-  ) %>% sort()
+  "Accused", "Accused_fr", "Amnesties", "Amnesties_fr", 
+  "Amnesties_whoWasAmnestied", "codebook", "ConflictDyads", "ConflictDyads_fr", 
+  "Countries", "Countries_fr", "CountryYears", "CourtLevels", 
+  "dl_tjet_codebook", "dl_tjet_codebook_fr", "dl_tjet_cy", "fields_meta", "ICC", 
+  "ICCaccused", "Investigations", "labels", "labels_fr", "Reparations", 
+  "Reparations_fr", "Reparations_collectiveReparationsEligibility",
+  "Reparations_individualReparationsEligible", "SurveysMeta", "SurveysMeta_fr", 
+  "Transitions", "Trials", "Trials_fr", "TruthCommissions", 
+  "TruthCommissions_fr", "Vettings", "Vettings_fr", "Vettings_targetingAffiliation"
+  ) %>% 
+  print()
 
 ### two different ways of establishing the same database connection
 ### (note that cloudways requires the local IP address to be added)
