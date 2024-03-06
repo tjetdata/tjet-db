@@ -1,509 +1,509 @@
 colname,definition,source,tjet_version
-country,country name,,2024-03-05
-country_fr,country name in French,,2024-03-05
-country_case,country continuity,TJET,2024-03-05
-year,year of observation,,2024-03-05
-ccode_cow,Correlates of War country code,COW,2024-03-05
-ccode_ksg,Gleditsch & Ward country code,Kristian S. Gleditsch,2024-03-05
-country_id_vdem,VDem country code,VDem,2024-03-05
-country_name,VDem country name,VDem,2024-03-05
-histname,VDem historical country name,VDem,2024-03-05
-m49,M49 / ISO 3166 numeric country code,UN Statistics Division,2024-03-05
-isoa3,ISO 3166 alpha3 country code,UN Statistics Division,2024-03-05
-cid_wb,World Bank alpha3 country code,World Bank,2024-03-05
-iso3c_wb,World Bank alpha3 country code,World Bank,2024-03-05
-region,United Nations region,UN Statistics Division,2024-03-05
-subregion,United Nations sub-region,UN Statistics Division,2024-03-05
-intregion,United Nations intermediate region,UN Statistics Division,2024-03-05
-region_wb,World Bank region,World Bank,2024-03-05
-micro_ksg,Gleditsch micro-state,Kristian S. Gleditsch,2024-03-05
-sample_trans,"democratic transition sample, binary",TJET,2024-03-05
-sample_confl,"conflict sample, binary",TJET,2024-03-05
-sample_combi,combined sample (democratic transition & conflict),TJET,2024-03-05
-dtr,"democratic transition sample, binary",TJET,2024-03-05
-aco,"conflict & post-conflict, binary",TJET,2024-03-05
-dco,"during conflict, binary",TJET,2024-03-05
-pco,"after conflict, binary",TJET,2024-03-05
-amnesties_sample,country-years from first year with any amnesties,TJET,2024-03-05
-reparations_sample,country-years from first year with any reparations policies,TJET,2024-03-05
-tcs_sample,country-years from first year with any truth commissions,TJET,2024-03-05
-trials_domestic_sample,country-years from first year with any domestic human rights or conflict prosecutions,TJET,2024-03-05
-trials_domestic_sample_sta_opp,country-years from first year with any domestic human rights or conflict prosecutions of state agents or opposition members,TJET,2024-03-05
-vettings_sample,country-years from first year with any vetting policies,TJET,2024-03-05
-amnesties,count of amnesties per country and year of passing,TJET,2024-03-05
-amnesties_SGBV,"binary for whether amnesties for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-05
-reparations,count of reparations polices per country and year of creation,TJET,2024-03-05
-reparations_SGBV,"binary for whether reparations for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-05
-tcs,count of truth commissions per country and year of creation,TJET,2024-03-05
-tcs_SGBV,"binary for whether truth commissions for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-05
-vettings,count of vetting policies per country and year of creation,TJET,2024-03-05
-trials_domestic,"count of domestic trials per country and start year, by country of the accused",TJET,2024-03-05
-trials_domestic_SGBV,"binary for whether domestic trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-05
-trials_intl,"count of international and hydrid trials per country and start year, by country of the accused",TJET,2024-03-05
-trials_intl_SGBV,"binary for whether international and hydrid trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-05
-trials_foreign,"count of foreign trials per country and start year, by country of the accused",TJET,2024-03-05
-trials_foreign_SGBV,"binary for whether foreign trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-05
-ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,2024-03-05
-ICC_prelim_exam,"ongoing ICC preliminary examination by OTP, binary",TJET,2024-03-05
-ICC_prelim_exam_cumu,cumulative country-year count of ICC preliminary examination,TJET,2024-03-05
-ICC_prelim_exam_region,"regional sum of cumulative country-year counts of ICC preliminary examinations (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-05
-ICC_investigation,"ICC investigation by OTP, binary, carried forward from first year",TJET,2024-03-05
-ICC_investigation_cumu,cumulative country-year count of ICC investigation,TJET,2024-03-05
-ICC_investigation_region,"regional sum of cumulative country-year counts of ICC investigations (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-05
-ICC_arrest_warrant,number of arrest warrants issued by ICC,TJET,2024-03-05
-ICC_arrest_warrant_cumu,cumulative number of arrest warrants issued by ICC,TJET,2024-03-05
-ICC_arrest_warrant_region,"cumulative number of arrest warrants issued by ICC in region (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-05
-ICC_arrestAppear,number of ICC appearances after arrest,TJET,2024-03-05
-ICC_confirm_charges,number of cases with charges confirmed by ICC trial chamber,TJET,2024-03-05
-ICC_proceedings,number of ICC proceedings beginning during the year,TJET,2024-03-05
-ICC_proceedings_cumu,cumulative number of ICC proceedings,TJET,2024-03-05
-ICC_proceedings_region,"cumulative number of ICC proceedings in region (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-05
-ICC_withdrawnDismissed,number of accused who have charges withdrawn or proceedings dismissed by ICC during the year,TJET,2024-03-05
-icc_sp,"state party to Rome Statute, binary",TJET,2024-03-05
-icc_sp_region,"number of states party to Rome Statute in region (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-05
-uninv,"ongoing UN investigation, binary",TJET,2024-03-05
-uninv_dompros,"ongoing UN investigation which recommends domestic prosecutions, binary",TJET,2024-03-05
-uninv_evcoll,"ongoing UN investigation which collects evidence, binary",TJET,2024-03-05
-uninv_intlpros,"ongoing UN investigation which collects evidence for international prosecutions, binary",TJET,2024-03-05
-cum_theta_mean_fariss,cumulative average of latent physical integrity since 1970 (or entrance into dataset),"Fariss, Kenwick, & Reuning",2024-03-05
-trs_int_sta,"int'l & hybrid trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-tro_int_sta,"int'l & hybrid trials of state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-tfc_int_sta,"int'l & hybrid trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-cct_int_sta,"int'l & hybrid trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-acc_int_sta,"int'l & hybrid trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-crt_int_sta,"int'l & hybrid trials of state agents, conviction rate, cct/acc",TJET,2024-03-05
-sen_int_sta,"int'l & hybrid trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-trs_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-tro_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-tfc_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-cct_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-acc_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-crt_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, conviction rate, cct/acc",TJET,2024-03-05
-sen_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-trs_int_opp,"int'l & hybrid trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-tro_int_opp,"int'l & hybrid trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-tfc_int_opp,"int'l & hybrid trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-cct_int_opp,"int'l & hybrid trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-acc_int_opp,"int'l & hybrid trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-crt_int_opp,"int'l & hybrid trials of opposition members, conviction rate, cct/acc",TJET,2024-03-05
-sen_int_opp,"int'l & hybrid trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-trs_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-tro_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-tfc_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-cct_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-acc_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-crt_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, conviction rate, cct/acc",TJET,2024-03-05
-sen_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-trs_for_sta,"foreign trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-tro_for_sta,"foreign trials of state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-tfc_for_sta,"foreign trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-cct_for_sta,"foreign trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-acc_for_sta,"foreign trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-crt_for_sta,"foreign trials of state agents, conviction rate, cct/acc",TJET,2024-03-05
-sen_for_sta,"foreign trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-trs_for_sta_hi,"foreign trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-tro_for_sta_hi,"foreign trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-tfc_for_sta_hi,"foreign trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-cct_for_sta_hi,"foreign trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-acc_for_sta_hi,"foreign trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-crt_for_sta_hi,"foreign trials of high-ranking state agents, conviction rate, cct/acc",TJET,2024-03-05
-sen_for_sta_hi,"foreign trials of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-trs_for_opp,"foreign trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-tro_for_opp,"foreign trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-tfc_for_opp,"foreign trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-cct_for_opp,"foreign trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-acc_for_opp,"foreign trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-crt_for_opp,"foreign trials of opposition members, conviction rate, cct/acc",TJET,2024-03-05
-sen_for_opp,"foreign trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-trs_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-tro_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-tfc_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-cct_for_opp_hi,"foreign trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-acc_for_opp_hi,"foreign trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-crt_for_opp_hi,"foreign trials of high-ranking opposition members, conviction rate, cct/acc",TJET,2024-03-05
-sen_for_opp_hi,"foreign trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_trs_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-xord_tro_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-xord_tfc_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_cct_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_acc_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-xord_crt_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, conviction rate, cct/acc",TJET,2024-03-05
-xord_sen_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_trs_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-xord_tro_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-xord_tfc_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_cct_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_acc_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-xord_crt_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, conviction rate, cct/acc",TJET,2024-03-05
-xord_sen_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_trs_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-xord_tro_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-xord_tfc_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_cct_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_acc_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-xord_crt_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, conviction rate, cct/acc",TJET,2024-03-05
-xord_sen_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_trs_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-xord_tro_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-xord_tfc_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_cct_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_acc_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-xord_crt_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, conviction rate, cct/acc",TJET,2024-03-05
-xord_sen_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_trs_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-xord_tro_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-xord_tfc_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_cct_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_acc_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-xord_crt_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, conviction rate, cct/acc",TJET,2024-03-05
-xord_sen_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_trs_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-xord_tro_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-xord_tfc_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_cct_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_acc_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-xord_crt_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, conviction rate, cct/acc",TJET,2024-03-05
-xord_sen_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_trs_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-xord_tro_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-xord_tfc_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_cct_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_acc_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-xord_crt_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, conviction rate, cct/acc",TJET,2024-03-05
-xord_sen_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_trs_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-xord_tro_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-xord_tfc_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_cct_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-xord_acc_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-xord_crt_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, conviction rate, cct/acc",TJET,2024-03-05
-xord_sen_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-ordy_trs_dom_sta,"ordinary domestic trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-05
-ordy_tro_dom_sta,"ordinary domestic trials of state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-05
-ordy_tfc_dom_sta,"ordinary domestic trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-ordy_cct_dom_sta,"ordinary domestic trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-05
-ordy_acc_dom_sta,"ordinary domestic trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-05
-ordy_crt_dom_sta,"ordinary domestic trials of state agents, conviction rate, cct/acc",TJET,2024-03-05
-ordy_sen_dom_sta,"ordinary domestic trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-05
-lcon_trs_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of trials beginning, by nationality of the accused & start year (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-05
-lcon_tro_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of trials ongoing, by nationality of the accused (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-05
-lcon_tfc_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-05
-lcon_cct_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of convictions, by nationality of the accused & conviction year (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-05
-lcon_acc_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of accused in ongoing trials, by nationality of the accused (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-05
-lcon_crt_dom_sta_opp,"low-level domestic conflict trials of opposition members, conviction rate, cct/acc (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-05
-lcon_sen_dom_sta_opp,"low-level domestic conflict trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-05
-tcs_victim_process,victim-centered TC process scale,TJET,2024-03-05
-tcs_victim_outcome,victim-centered TC outcome scale,TJET,2024-03-05
-tcs_recreparations,"truth commission reparations recommendation, binary",TJET,2024-03-05
-tcs_metcriteria,truth commission met all definitional criteria (but may not have operated),TJET,2024-03-05
-tcs_operated,"truth commission operated, binary",TJET,2024-03-05
-tcs_goalstruth,"truth commission with explicit goal of truth-finding, binary",TJET,2024-03-05
-tcs_independent,"truth commission was at least partially independent, binary",TJET,2024-03-05
-tcs_harms,"harms investigated by truth commission, scale",TJET,2024-03-05
-tcs_powers,"truth commission powers, scale",TJET,2024-03-05
-tcs_report,"truth commission issued final report, binary",TJET,2024-03-05
-tcs_public_process,"truth commission publicness, process scale",TJET,2024-03-05
-tcs_public_outcome,"truth commission publicness, outcome scale",TJET,2024-03-05
-tcs_recommendations,"truth commission recommendations in final report, scale",TJET,2024-03-05
-tcs_monitoring,"truth commission with mandated implementation monitoring, binary",TJET,2024-03-05
-tcs_ctj_binary,"TCs, binary, conflict TJ",TJET,2024-03-05
-tcs_ctj_victim_process,"victim-centered TC process scale, conflict TJ",TJET,2024-03-05
-tcs_ctj_victim_outcome,"victim-centered TC outcome scale, conflict TJ",TJET,2024-03-05
-tcs_ctj_account_process,"accountability-oriented TC process scale, conflict TJ",TJET,2024-03-05
-tcs_ctj_account_outcome,"accountability-oriented TC outcome scale, conflict TJ",TJET,2024-03-05
-tcs_ctj_peace_process,"peace-oriented TC process scale, conflict TJ",TJET,2024-03-05
-tcs_ctj_peace_outcome,"peace-oriented TC outcome scale, conflict TJ",TJET,2024-03-05
-tcs_ctj_reform_process,"reform-oriented TC process scale, conflict TJ",TJET,2024-03-05
-tcs_ctj_reform_outcome,"reform-oriented TC outcome scale, conflict TJ",TJET,2024-03-05
-amnesty_dtj_ctj_sta,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents)",TJET,2024-03-05
-amnesty_dtj_ctj_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, opposition members)",TJET,2024-03-05
-amnesty_ctj_sta_opp,"amnesty, binary (conflict transitional justice nexus, state agents and opposition members)",TJET,2024-03-05
-amnesty_ctj,"amnesty, binary (conflict transitional justice nexus)",TJET,2024-03-05
-amnesty_sta,"amnesty, binary (state agents)",TJET,2024-03-05
-amnesty_sta_hrv,"amnesty, binary (state agents for human rights violations)",TJET,2024-03-05
-amnesty_opp,"amnesty, binary (opposition members)",TJET,2024-03-05
-amnesty_opp_hrv,"amnesty, binary (opposition members for human rights violations)",TJET,2024-03-05
-amnesty_pol,"amnesty, binary (political prisoners and protestors)",TJET,2024-03-05
-amnesty_peaceagree,"amnesty included in peace agreement, binary",TJET,2024-03-05
-rep_binary,"reparations policy, binary",TJET,2024-03-05
-rep_peaceagree,"reparations policy included in peace agreement, binary",TJET,2024-03-05
-rep_collective,"reparations policy with collective component, binary",TJET,2024-03-05
-rep_symbolic,"reparations policy providing symbolic investments, binary",TJET,2024-03-05
-rep_compensation,"reparations policy providing compensation, binary",TJET,2024-03-05
-rep_services,"reparations policy providing services for rehabilitation and restitution, binary",TJET,2024-03-05
-rep_victim_centered,"victims-centered reparations policy, scale",TJET,2024-03-05
-rep_scope,"reparations policy scope, scale based on reported number of beneficiaries",TJET,2024-03-05
-vet_dismiss,"vetting policy, type dimissal, binary",TJET,2024-03-05
-vet_ban,"vetting policy, type ban, binary",TJET,2024-03-05
-vet_declass,"vetting policy, type declassification, binary",TJET,2024-03-05
-vet_perjury,"vetting policy, type perjury, binary",TJET,2024-03-05
-vet_ban_from_elected,"vetting policy, ban from elected office, binary",TJET,2024-03-05
-vet_conduct,"vetting policy targeting specific individual conduct, binary",TJET,2024-03-05
-vet_implemented,was vetting policy implemented?,TJET,2024-03-05
-vet_public,"vetting policy involving public hearings, binary",TJET,2024-03-05
-vet_fairness,vetting policy fairness scale,TJET,2024-03-05
-v2clkill,"Freedom from political killings, estimate",VDem,2024-03-05
-v2clkill_sd,"Freedom from political killings, standard deviation",VDem,2024-03-05
-v2clkill_nr,"Freedom from political killings, count of expert ratings",VDem,2024-03-05
-v2cltort,Freedom from torture,VDem,2024-03-05
-v2cltort_sd,"Freedom from torture, standard deviation",VDem,2024-03-05
-v2cltort_nr,"Freedom from torture, count of expert ratings",VDem,2024-03-05
-v2caviol,Political violence,VDem,2024-03-05
-v2caviol_sd,"Political violence, standard deviation",VDem,2024-03-05
-v2caviol_nr,"Political violence, count of expert ratings",VDem,2024-03-05
-v2x_regime,Regimes of the World categorical measure,VDem,2024-03-05
-v2x_regime_amb,"Regimes of the World categorical measure, with ambiguous edge cases",VDem,2024-03-05
-v2x_polyarchy,Electoral democracy index,VDem,2024-03-05
-v2x_polyarchy_sd,"Electoral democracy index, standard deviation",VDem,2024-03-05
-v2x_api,Additive polyarchy index,VDem,2024-03-05
-v2x_api_sd,"Additive polyarchy index, standard deviation",VDem,2024-03-05
-v2x_mpi,Multiplicative polyarchy index,VDem,2024-03-05
-v2x_mpi_sd,"Multiplicative polyarchy index, standard deviation",VDem,2024-03-05
-v2x_libdem,Liberal democracy index,VDem,2024-03-05
-v2x_libdem_sd,"Liberal democracy index, standard deviation",VDem,2024-03-05
-v2x_liberal,Liberal component index,VDem,2024-03-05
-v2x_liberal_sd,"Liberal component index, standard deviation",VDem,2024-03-05
-v2x_partipdem,Participatory democracy index,VDem,2024-03-05
-v2x_partipdem_sd,"Participatory democracy index, standard deviation",VDem,2024-03-05
-v2x_partip,Participatory component index,VDem,2024-03-05
-v2x_partip_sd,"Participatory component index, standard deviation",VDem,2024-03-05
-v2x_delibdem,Deliberative democracy index,VDem,2024-03-05
-v2x_delibdem_sd,"Deliberative democracy index, standard deviation",VDem,2024-03-05
-v2xdl_delib,Deliberative component index,VDem,2024-03-05
-v2xdl_delib_sd,"Deliberative component index, standard deviation",VDem,2024-03-05
-v2x_egaldem,Egalitarian democracy index,VDem,2024-03-05
-v2x_egaldem_sd,"Egalitarian democracy index, standard deviation",VDem,2024-03-05
-v2x_egal,Egalitarian component index,VDem,2024-03-05
-v2x_egal_sd,"Egalitarian component index, standard deviation",VDem,2024-03-05
-v2x_cspart,Civil society participation index,VDem,2024-03-05
-v2x_cspart_sd,"Civil society participation index, standard deviation",VDem,2024-03-05
-v2cseeorgs,CSO entry and exit,VDem,2024-03-05
-v2cseeorgs_sd,"CSO entry and exit, standard deviation",VDem,2024-03-05
-v2cseeorgs_nr,"CSO entry and exit, count of expert ratings",VDem,2024-03-05
-v2csreprss,CSO repression,VDem,2024-03-05
-v2csreprss_sd,"CSO repression, standard deviation",VDem,2024-03-05
-v2csreprss_nr,"CSO repression, count of expert ratings",VDem,2024-03-05
-v2csprtcpt,CSO participatory environment,VDem,2024-03-05
-v2csprtcpt_sd,"CSO participatory environment, standard deviation",VDem,2024-03-05
-v2csprtcpt_nr,"CSO participatory environment, count of expert ratings",VDem,2024-03-05
-v2xcs_ccsi,Core civil society index ordinal,VDem,2024-03-05
-v2xcs_ccsi_sd,"Core civil society index ordinal, standard deviation",VDem,2024-03-05
-v2juhcind,High court independence,VDem,2024-03-05
-v2juhcind_sd,"High court independence, standard deviation",VDem,2024-03-05
-v2juhcind_nr,"High court independence, count of expert ratings",VDem,2024-03-05
-v2juncind,Lower court independence,VDem,2024-03-05
-v2juncind_sd,"Lower court independence, standard deviation",VDem,2024-03-05
-v2juncind_nr,"Lower court independence, count of expert ratings",VDem,2024-03-05
-v2jureform,Judicial reform,VDem,2024-03-05
-v2jureform_sd,"Judicial reform, standard deviation",VDem,2024-03-05
-v2jureform_nr,"Judicial reform, count of expert ratings",VDem,2024-03-05
-v2jucomp,Compliance with judiciary,VDem,2024-03-05
-v2jucomp_sd,"Compliance with judiciary, standard deviation",VDem,2024-03-05
-v2jucomp_nr,"Compliance with judiciary, count of expert ratings",VDem,2024-03-05
-v2juhccomp,Compliance with high court,VDem,2024-03-05
-v2juhccomp_sd,"Compliance with high court, standard deviation",VDem,2024-03-05
-v2juhccomp_nr,"Compliance with high court, count of expert ratings",VDem,2024-03-05
-v2x_jucon,Judicial constraints on the executive index,VDem,2024-03-05
-v2x_jucon_sd,"Judicial constraints on the executive index, standard deviation",VDem,2024-03-05
-v2jureview,Judicial review,VDem,2024-03-05
-v2jureview_sd,"Judicial review, standard deviation",VDem,2024-03-05
-v2jureview_nr,"Judicial review, count of expert ratings",VDem,2024-03-05
-v2elmulpar,Elections multiparty,VDem,2024-03-05
-v2elmulpar_sd,"Elections multiparty, standard deviation",VDem,2024-03-05
-v2elmulpar_nr,"Elections multiparty, count of expert ratings",VDem,2024-03-05
-v2xdd_dd,Direct popular vote index,VDem,2024-03-05
-v2xel_locelec,Local government index,VDem,2024-03-05
-v2xel_locelec_sd,"Local government index, standard deviation",VDem,2024-03-05
-v2xel_regelec,Regional government index,VDem,2024-03-05
-v2xel_regelec_sd,"Regional government index, standard deviation",VDem,2024-03-05
-v2xel_frefair,Clean elections index,VDem,2024-03-05
-v2xel_frefair_sd,"Clean elections index, standard deviation",VDem,2024-03-05
-v2x_frassoc_thick,Freedom of association thick index,VDem,2024-03-05
-v2x_frassoc_thick_sd,"Freedom of association thick index, standard deviation",VDem,2024-03-05
-v2x_freexp_altinf,Freedom of Expression and Alternative Sources of Information index,VDem,2024-03-05
-v2x_freexp_altinf_sd,"Freedom of Expression and Alternative Sources of Information index, standard deviation",VDem,2024-03-05
-v2x_elecoff,Elected officials index,VDem,2024-03-05
-v2x_suffr,Share of population with suffrage,VDem,2024-03-05
-v2x_rule,Rule of law index,VDem,2024-03-05
-v2x_rule_sd,"Rule of law index, standard deviation",VDem,2024-03-05
-v2xcl_rol,Equality before the law and individual liberty index,VDem,2024-03-05
-v2xcl_rol_sd,"Equality before the law and individual liberty index, standard deviation",VDem,2024-03-05
-v2xcl_acjst,Access to justice,VDem,2024-03-05
-v2xcl_acjst_sd,"Access to justice, standard deviation",VDem,2024-03-05
-v2clacjstm,Access to justice for men,VDem,2024-03-05
-v2clacjstm_sd,"Access to justice for men, standard deviation",VDem,2024-03-05
-v2clacjstm_nr,"Access to justice for men, count of expert ratings",VDem,2024-03-05
-v2clacjstw,Access to justice for women,VDem,2024-03-05
-v2clacjstw_sd,"Access to justice for women, standard deviation",VDem,2024-03-05
-v2clacjstw_nr,"Access to justice for women, count of expert ratings",VDem,2024-03-05
-v2juaccnt,Judicial accountability,VDem,2024-03-05
-v2juaccnt_sd,"Judicial accountability, standard deviation",VDem,2024-03-05
-v2juaccnt_nr,"Judicial accountability, count of expert ratings",VDem,2024-03-05
-v2clacjust,Social class equality in respect for civil liberty,VDem,2024-03-05
-v2clacjust_sd,"Social class equality in respect for civil liberty, standard deviation",VDem,2024-03-05
-v2clacjust_nr,"Social class equality in respect for civil liberty, count of expert ratings",VDem,2024-03-05
-v2clsocgrp,Social group equality in respect for civil liberties,VDem,2024-03-05
-v2clsocgrp_sd,"Social group equality in respect for civil liberties, standard deviation",VDem,2024-03-05
-v2clsocgrp_nr,"Social group equality in respect for civil liberties, count of expert ratings",VDem,2024-03-05
-v2clgencl,Gender equality in respect for civil liberties,VDem,2024-03-05
-v2clgencl_sd,"Gender equality in respect for civil liberties, standard deviation",VDem,2024-03-05
-v2clgencl_nr,"Gender equality in respect for civil liberties, count of expert ratings",VDem,2024-03-05
-v2clgeocl,Urban-rural location equality in respect for civil liberties,VDem,2024-03-05
-v2clgeocl_sd,"Urban-rural location equality in respect for civil liberties, standard deviation",VDem,2024-03-05
-v2clgeocl_nr,"Urban-rural location equality in respect for civil liberties, count of expert ratings",VDem,2024-03-05
-v2clpolcl,Political group equality in respect for civil liberties,VDem,2024-03-05
-v2clpolcl_sd,"Political group equality in respect for civil liberties, standard deviation",VDem,2024-03-05
-v2clpolcl_nr,"Political group equality in respect for civil liberties, count of expert ratings",VDem,2024-03-05
-v2x_gencl,Women civil liberties index,VDem,2024-03-05
-v2x_gencl_sd,"Women civil liberties index, standard deviation",VDem,2024-03-05
-v2x_accountability,Accountability index,VDem,2024-03-05
-v2x_diagacc,Diagonal accountability index,VDem,2024-03-05
-v2x_veracc,Vertical accountability index,VDem,2024-03-05
-v2x_horacc,Horizontal accountability index,VDem,2024-03-05
-v2xnp_regcorr,Regime corruption,VDem,2024-03-05
-v2xnp_regcorr_sd,"Regime corruption, standard deviation",VDem,2024-03-05
-v2x_corr,Political corruption index,VDem,2024-03-05
-v2x_corr_sd,"Political corruption index, standard deviation",VDem,2024-03-05
-v2x_execorr,Executive corruption index,VDem,2024-03-05
-v2x_execorr_sd,"Executive corruption index, standard deviation",VDem,2024-03-05
-v2x_pubcorr,Public sector corruption index,VDem,2024-03-05
-v2x_pubcorr_sd,"Public sector corruption index, standard deviation",VDem,2024-03-05
-v2jucorrdc,Judicial corruption decision,VDem,2024-03-05
-v2jucorrdc_sd,"Judicial corruption decision, standard deviation",VDem,2024-03-05
-v2jucorrdc_nr,"Judicial corruption decision, count of expert ratings",VDem,2024-03-05
-v2cscnsult,CSO consultation,VDem,2024-03-05
-v2cscnsult_sd,"CSO consultation, standard deviation",VDem,2024-03-05
-v2cscnsult_nr,"CSO consultation, count of expert ratings",VDem,2024-03-05
-v2csgender,CSO women’s participation,VDem,2024-03-05
-v2csgender_sd,"CSO women’s participation, standard deviation",VDem,2024-03-05
-v2csgender_nr,"CSO women’s participation, count of expert ratings",VDem,2024-03-05
-v2csantimv,CSO anti-system movements,VDem,2024-03-05
-v2csantimv_sd,"CSO anti-system movements, standard deviation",VDem,2024-03-05
-v2csantimv_nr,"CSO anti-system movements, count of expert ratings",VDem,2024-03-05
-v2csrlgrep,Religious organization repression,VDem,2024-03-05
-v2csrlgrep_sd,"Religious organization repression, standard deviation",VDem,2024-03-05
-v2csrlgrep_nr,"Religious organization repression, count of expert ratings",VDem,2024-03-05
-v2csrlgcon,Religious organization consultation,VDem,2024-03-05
-v2csrlgcon_sd,"Religious organization consultation, standard deviation",VDem,2024-03-05
-v2csrlgcon_nr,"Religious organization consultation, count of expert ratings",VDem,2024-03-05
-v2csanmvch_0,"CSO anti-system movement character, binary: Works through legal channels, for the most part",VDem,2024-03-05
-v2csanmvch_1,"CSO anti-system movement character, binary: Participates in elections",VDem,2024-03-05
-v2csanmvch_2,"CSO anti-system movement character, binary: Works through a mix of legal and extra-legal channels",VDem,2024-03-05
-v2csanmvch_3,"CSO anti-system movement character, binary: Insurrectionary",VDem,2024-03-05
-v2csanmvch_4,"CSO anti-system movement character, binary: Democratic. Perceived by most disinterested observers as willing to play by the rules of the democratic game, willing to respect constitutional provisions or electoral outcomes, and willing to relinquish power (under democratic auspices)",VDem,2024-03-05
-v2csanmvch_5,"CSO anti-system movement character, binary: Anti-democratic. Perceived by most disinterested observers as unwilling to play by the rules of the democratic game, not willing to respect constitutional provisions or electoral outcomes, and/or not willing to relinquish power (under democratic auspices)",VDem,2024-03-05
-v2csanmvch_6,"CSO anti-system movement character, binary: Leftist, socialist, communist",VDem,2024-03-05
-v2csanmvch_7,"CSO anti-system movement character, binary: Rightist, conservative, party of order",VDem,2024-03-05
-v2csanmvch_8,"CSO anti-system movement character, binary: Ethnolinguistic, tribe, kinship, clan",VDem,2024-03-05
-v2csanmvch_9,"CSO anti-system movement character, binary: Separatist or autonomist",VDem,2024-03-05
-v2csanmvch_10,"CSO anti-system movement character, binary: Religious",VDem,2024-03-05
-v2csanmvch_11,"CSO anti-system movement character, binary: Paramilitary",VDem,2024-03-05
-v2csanmvch_12,"CSO anti-system movement character, binary: Heavily engaged in criminal activity, e.g., narcotics, bootlegging, illegal exploitation of natural resources, extortion, kidnapping",VDem,2024-03-05
-v2csanmvch_nr,"CSO anti-system movement character, count of expert ratings",VDem,2024-03-05
-v2csstruc_0,"CSO structure, binary: The state does not allow autonomous CSOs",VDem,2024-03-05
-v2csstruc_1,"CSO structure, binary: Large encompassing organizations dominate. The government and CSOs are linked formally through a corporatist system of interest intermediation; or, due to historical circumstances, particular large CSOs are highly influential. The voice of such organizations is recognized by the government and is accorded special weight by policymakers",VDem,2024-03-05
-v2csstruc_2,"CSO structure, binary: Neither large encompassing nor small CSOs dominate. Influence is contingent on circumstances. Organizations, both large and small, contend with one another to have their voice considered by policymakers",VDem,2024-03-05
-v2csstruc_3,"CSO structure, binary: Small CSOs dominate. Many small organizations contend with one another to have their voices heard by policymakers",VDem,2024-03-05
-v2csstruc_nr,"CSO structure, count of expert ratings",VDem,2024-03-05
-conf_intra,"count of minor internal (incl. internationalized) conflicts (25-999 BRDs, from ACD)",UCDP,2024-03-05
-wars_intra,"count of internal (incl. internationalized) wars (1000+ BRDs, from ACD)",UCDP,2024-03-05
-conf_intra_strict,"count of minor internal (excl. internationalized) conflicts (25-999 BRDs, from ACD)",UCDP,2024-03-05
-wars_intra_strict,"count of internal (excl. internationalized) wars (1000+ BRDs, from ACD)",UCDP,2024-03-05
-conf_inter,"count of minor external conflicts (25-999 BRDs, from ACD)",UCDP,2024-03-05
-wars_inter,count of external wars (1000+ BRDs),UCDP,2024-03-05
-deaths_state_osv,count of civilian deaths from one-sided violence due to state actors,UCDP,2024-03-05
-deaths_nonstate_osv,count of civilian deaths from one-sided violence due to non-state actors,UCDP,2024-03-05
-conflicts_int,count of internal conflicts (from GED),UCDP,2024-03-05
-conflicts_ext,count of external conflicts (from GED),UCDP,2024-03-05
-conflicts_nsc,count of non-state conflicts (from GED),UCDP,2024-03-05
-conflicts_osv,count of one-sided violence events (from GED),UCDP,2024-03-05
-deaths_all_int,"sum of all deaths from internal conflicts (best estimates, from GED)",UCDP,2024-03-05
-deaths_civilians_int,sum of civilian deaths from internal conflicts (from GED),UCDP,2024-03-05
-deaths_all_ext,"sum of all deaths from external conflicts (best estimates, from GED)",UCDP,2024-03-05
-deaths_civilians_ext,sum of civilian deaths from external conflicts (from GED),UCDP,2024-03-05
-deaths_all_nsc,"sum of all deaths from non-state conflicts (best estimates, from GED)",UCDP,2024-03-05
-deaths_civilians_nsc,sum of civilian deaths from external conflicts (from GED),UCDP,2024-03-05
-deaths_all_osv,"sum of all deaths from one-sided violence (best estimates, from GED)",UCDP,2024-03-05
-deaths_civilians_osv,sum of civilian deaths from one-sided violence (from GED),UCDP,2024-03-05
-internal,maximal level of internal (incl. internationalized) conflict (none; conflict; war),UCDP,2024-03-05
-internal_strict,maximal level of internal (excl. internationalized) conflict (none; conflict; war),UCDP,2024-03-05
-external,maximal level of external conflict (none; conflict; war),UCDP,2024-03-05
-conflict_internal,"any internal (incl. internationalized) conflict (25+ BRD) , binary",UCDP,2024-03-05
-conflict_internal_strict,"any internal (excl. internationalized) conflict (25+ BRD), binary",UCDP,2024-03-05
-conflict_external,"any external conflict (25+ BRD), binary",UCDP,2024-03-05
-war_internal,"any internal (incl. internationalized) war (1000+ BRD) , binary",UCDP,2024-03-05
-war_internal_strict,"any internal (excl. internationalized) war (1000+ BRD), binary",UCDP,2024-03-05
-war_external,"any external war (1000+ BRD), binary",UCDP,2024-03-05
-conflict_non_state,"any non-state conflict (25+ BRD), binary",UCDP,2024-03-05
-conflict_one_sided,"any one-side violence (25+ BRD), binary",UCDP,2024-03-05
-territorial,"any internal armed conflict over territorial incompatibility, binary (from ACD)",UCDP,2024-03-05
-intensity,maximum internal conflict intensity level (from ACD),UCDP,2024-03-05
-confterm,"any internal conflict dyad episode terminated, binary (from termination dataset)",UCDP,2024-03-05
-recur,"any internal conflict dyad recurrence after spell of non-conflict, binary (from termination dataset)",UCDP,2024-03-05
-outcome_agreement,count of internal conflict terminations with peace agreement (from termination dataset),UCDP,2024-03-05
-outcome_ceasefire,count of internal conflict terminations with ceasefire (from termination dataset),UCDP,2024-03-05
-outcome_victory_gov,count of internal conflict terminations with government victory (from termination dataset),UCDP,2024-03-05
-outcome_victory_reb,count of internal conflict terminations with victory by non-state side (from termination dataset),UCDP,2024-03-05
-outcome_low_activity,count of internal conflict terminations due to low activity (from termination dataset),UCDP,2024-03-05
-outcome_actor_ceases,count of internal conflict terminations because an actor ceased to exist (from termination dataset),UCDP,2024-03-05
-reb_claim,count of rebel groups in internal conflict dyads making exclusive ethnic claims,EPR,2024-03-05
-reb_recruit,count of rebel groups in internal conflict dyads recruiting from ethnic groups,EPR,2024-03-05
-gov_recruit,count of internal conflict dyads where governments recruit on the basis of ethnicity,EPR,2024-03-05
-dyads_active,count of active internal conflict dyads,UCDP,2024-03-05
-grps_in_dyads,ethnic groups in internal conflict dyads in EPR dataset,EPR,2024-03-05
-dyads_new,count of new conflict dyads of internal (incl. internationalized) conflict,UCDP,2024-03-05
-dyads_ep_new,count of new dyad episodes (incl. recurrence) of internal (incl. internationalized) conflict,UCDP,2024-03-05
-pko_mission,"active UN peacekeeping mission, binary",PKO,2024-03-05
-prev_state_svac,"prevalence of sexual violence among state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,2024-03-05
-prev_nonstate_svac,"prevalence of sexual violence among non-state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,2024-03-05
-conflictyear_svac,conflict-year in SVAC dataset,SVAC,2024-03-05
-events_pitf,count of atrocity events,PITF,2024-03-05
-deaths_pitf,counts of deaths due to atrocities,PITF,2024-03-05
-theta_mean_fariss,"estimated latent physical integrity (formerly latent mean, the posterior mean of the latent variable)","Fariss, Kenwick, & Reuning",2024-03-05
-theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",2024-03-05
-killing_estimate_mean_fariss,posterior mean of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",2024-03-05
-killing_estimate_median_fariss,posterior median of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",2024-03-05
-leaders_n,number of consecutive effective political rulers,Archigos,2024-03-05
-irregentry,"irregular ruler entry, binary",Archigos,2024-03-05
-ruler_exit,"ruler exit, binary",Archigos,2024-03-05
-irregexit,"irregular ruler exit, binary",Archigos,2024-03-05
-removed,ruler was removed,Archigos,2024-03-05
-removed_for,ruler was removed with foreign contribution,Archigos,2024-03-05
-postdemise,"previous ruler met demise during year following exit (death, suicide, imprisonment or exile); this was lagged one year in order to match Archigos timeline",Archigos,2024-03-05
-ruler_days,"number of days ruler has ruled at the end of the year or at the end of his/her rule, if earlier than Dec 31; for country-years with more than one ruler change this variable only covers the rulers at the beginning and the end of the year, and not those whose rule started and ended in the same year",Archigos,2024-03-05
-lead_startdate_beg,start date of the ruler in power at the beginning of the year (can be used to code duration variables),Archigos,2024-03-05
-lead_enddate_beg,end date of the ruler in power at the beginning of the year (can be used to code duration variables),Archigos,2024-03-05
-lead_startdate_end,start date of the ruler in power at the end of the year (can be used to code duration variables),Archigos,2024-03-05
-lead_enddate_end,end date of the ruler in power at the end of the year (can be used to code duration variables),Archigos,2024-03-05
-lead_yrborn_beg,birth year of the ruler in power at the beginning of the year (can be used to code age variables),Archigos,2024-03-05
-lead_yrdied_beg,year of death of the ruler in power at the beginning of the year (can be used to code time to death variables),Archigos,2024-03-05
-lead_yrborn_end,birth year of the ruler in power at the end of the year (can be used to code age variables),Archigos,2024-03-05
-lead_yrdied_end,year of death of the ruler in power at the end of the year (can be used to code time to death variables),Archigos,2024-03-05
-latent_gdp_mean_log,latent estimate of logged GDP,Fariss et al,2024-03-05
-latent_gdp_mean,latent estimate of GDP,Fariss et al,2024-03-05
-latent_gdp_sd_log,"latent estimate of logged GDP, standard deviation",Fariss et al,2024-03-05
-latent_gdp_sd,"latent estimate of GDP, standard deviation",Fariss et al,2024-03-05
-latent_gdppc_mean_log,latent estimate of logged GDP per capita,Fariss et al,2024-03-05
-latent_gdppc_mean,latent estimate of GDP per capita,Fariss et al,2024-03-05
-latent_gdppc_sd_log,"latent estimate of logged GDP per capita, standard deviation",Fariss et al,2024-03-05
-latent_gdppc_sd,"latent estimate of GDP per capita, standard deviation",Fariss et al,2024-03-05
-latent_pop_mean_log,latent estimate of logged population size,Fariss et al,2024-03-05
-latent_pop_mean,latent estimate of population size,Fariss et al,2024-03-05
-latent_pop_sd_log,"latent estimate of logged population size, standard deviation",Fariss et al,2024-03-05
-latent_pop_sd,"latent estimate of population size, standard deviation",Fariss et al,2024-03-05
-gdp_const_wdi,"GDP, constant USD",WDI,2024-03-05
-gdp_growth_wdi,GDP growth,WDI,2024-03-05
-gdppc_const_wdi,"GDP per capita, constant USD",WDI,2024-03-05
-gdppc_ppp_wdi,"GDP per capita, purchasing power parity",WDI,2024-03-05
-gdppc_growth_wdi,"GDP per capita growth, constant USD",WDI,2024-03-05
-pop_wdi,population size,WDI,2024-03-05
-pop_male_wdi,"population size, male",WDI,2024-03-05
-pop_fem_wdi,"population size, female",WDI,2024-03-05
-pop_density_wdi,population density,WDI,2024-03-05
-land_area_sqkm_wdi,"country land area, square kilometers",WDI,2024-03-05
-gini_wdi,GINI,WDI,2024-03-05
-pop_pwt,population size,PWT,2024-03-05
-rgdpna_pwt,"Real GDP using national-accounts growth rates, for studies comparing (output-based) growth rates across countries",PWT,2024-03-05
-rgdpe_pwt,"Expenditure-side real GDP at chained PPPs, to compare relative living standards across countries over time",PWT,2024-03-05
-rgdpo_pwt,"Output-side real GDP at chained PPPs, to compare relative productive capacity across countries over time",PWT,2024-03-05
-growth_rgdpe_pwt,Expenditure-side GDP growth,PWT,2024-03-05
+country,country name,,2024-03-06
+country_fr,country name in French,,2024-03-06
+country_case,country continuity,TJET,2024-03-06
+year,year of observation,,2024-03-06
+ccode_cow,Correlates of War country code,COW,2024-03-06
+ccode_ksg,Gleditsch & Ward country code,Kristian S. Gleditsch,2024-03-06
+country_id_vdem,VDem country code,VDem,2024-03-06
+country_name,VDem country name,VDem,2024-03-06
+histname,VDem historical country name,VDem,2024-03-06
+m49,M49 / ISO 3166 numeric country code,UN Statistics Division,2024-03-06
+isoa3,ISO 3166 alpha3 country code,UN Statistics Division,2024-03-06
+cid_wb,World Bank alpha3 country code,World Bank,2024-03-06
+iso3c_wb,World Bank alpha3 country code,World Bank,2024-03-06
+region,United Nations region,UN Statistics Division,2024-03-06
+subregion,United Nations sub-region,UN Statistics Division,2024-03-06
+intregion,United Nations intermediate region,UN Statistics Division,2024-03-06
+region_wb,World Bank region,World Bank,2024-03-06
+micro_ksg,Gleditsch micro-state,Kristian S. Gleditsch,2024-03-06
+sample_trans,"democratic transition sample, binary",TJET,2024-03-06
+sample_confl,"conflict sample, binary",TJET,2024-03-06
+sample_combi,combined sample (democratic transition & conflict),TJET,2024-03-06
+dtr,"democratic transition sample, binary",TJET,2024-03-06
+aco,"conflict & post-conflict, binary",TJET,2024-03-06
+dco,"during conflict, binary",TJET,2024-03-06
+pco,"after conflict, binary",TJET,2024-03-06
+amnesties_sample,country-years from first year with any amnesties,TJET,2024-03-06
+reparations_sample,country-years from first year with any reparations policies,TJET,2024-03-06
+tcs_sample,country-years from first year with any truth commissions,TJET,2024-03-06
+trials_domestic_sample,country-years from first year with any domestic human rights or conflict prosecutions,TJET,2024-03-06
+trials_domestic_sample_sta_opp,country-years from first year with any domestic human rights or conflict prosecutions of state agents or opposition members,TJET,2024-03-06
+vettings_sample,country-years from first year with any vetting policies,TJET,2024-03-06
+amnesties,count of amnesties per country and year of passing,TJET,2024-03-06
+amnesties_SGBV,"binary for whether amnesties for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-06
+reparations,count of reparations polices per country and year of creation,TJET,2024-03-06
+reparations_SGBV,"binary for whether reparations for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-06
+tcs,count of truth commissions per country and year of creation,TJET,2024-03-06
+tcs_SGBV,"binary for whether truth commissions for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-06
+vettings,count of vetting policies per country and year of creation,TJET,2024-03-06
+trials_domestic,"count of domestic trials per country and start year, by country of the accused",TJET,2024-03-06
+trials_domestic_SGBV,"binary for whether domestic trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-06
+trials_intl,"count of international and hydrid trials per country and start year, by country of the accused",TJET,2024-03-06
+trials_intl_SGBV,"binary for whether international and hydrid trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-06
+trials_foreign,"count of foreign trials per country and start year, by country of the accused",TJET,2024-03-06
+trials_foreign_SGBV,"binary for whether foreign trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-03-06
+ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,2024-03-06
+ICC_prelim_exam,"ongoing ICC preliminary examination by OTP, binary",TJET,2024-03-06
+ICC_prelim_exam_cumu,cumulative country-year count of ICC preliminary examination,TJET,2024-03-06
+ICC_prelim_exam_region,"regional sum of cumulative country-year counts of ICC preliminary examinations (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-06
+ICC_investigation,"ICC investigation by OTP, binary, carried forward from first year",TJET,2024-03-06
+ICC_investigation_cumu,cumulative country-year count of ICC investigation,TJET,2024-03-06
+ICC_investigation_region,"regional sum of cumulative country-year counts of ICC investigations (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-06
+ICC_arrest_warrant,number of arrest warrants issued by ICC,TJET,2024-03-06
+ICC_arrest_warrant_cumu,cumulative number of arrest warrants issued by ICC,TJET,2024-03-06
+ICC_arrest_warrant_region,"cumulative number of arrest warrants issued by ICC in region (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-06
+ICC_arrestAppear,number of ICC appearances after arrest,TJET,2024-03-06
+ICC_confirm_charges,number of cases with charges confirmed by ICC trial chamber,TJET,2024-03-06
+ICC_proceedings,number of ICC proceedings beginning during the year,TJET,2024-03-06
+ICC_proceedings_cumu,cumulative number of ICC proceedings,TJET,2024-03-06
+ICC_proceedings_region,"cumulative number of ICC proceedings in region (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-06
+ICC_withdrawnDismissed,number of accused who have charges withdrawn or proceedings dismissed by ICC during the year,TJET,2024-03-06
+icc_sp,"state party to Rome Statute, binary",TJET,2024-03-06
+icc_sp_region,"number of states party to Rome Statute in region (Africa, Asia, Europe, Americas, Oceania)",TJET,2024-03-06
+uninv,"ongoing UN investigation, binary",TJET,2024-03-06
+uninv_dompros,"ongoing UN investigation which recommends domestic prosecutions, binary",TJET,2024-03-06
+uninv_evcoll,"ongoing UN investigation which collects evidence, binary",TJET,2024-03-06
+uninv_intlpros,"ongoing UN investigation which collects evidence for international prosecutions, binary",TJET,2024-03-06
+cum_theta_mean_fariss,cumulative average of latent physical integrity since 1970 (or entrance into dataset),"Fariss, Kenwick, & Reuning",2024-03-06
+trs_int_sta,"int'l & hybrid trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+tro_int_sta,"int'l & hybrid trials of state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+tfc_int_sta,"int'l & hybrid trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+cct_int_sta,"int'l & hybrid trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+acc_int_sta,"int'l & hybrid trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+crt_int_sta,"int'l & hybrid trials of state agents, conviction rate, cct/acc",TJET,2024-03-06
+sen_int_sta,"int'l & hybrid trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+trs_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+tro_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+tfc_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+cct_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+acc_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+crt_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, conviction rate, cct/acc",TJET,2024-03-06
+sen_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+trs_int_opp,"int'l & hybrid trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+tro_int_opp,"int'l & hybrid trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+tfc_int_opp,"int'l & hybrid trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+cct_int_opp,"int'l & hybrid trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+acc_int_opp,"int'l & hybrid trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+crt_int_opp,"int'l & hybrid trials of opposition members, conviction rate, cct/acc",TJET,2024-03-06
+sen_int_opp,"int'l & hybrid trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+trs_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+tro_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+tfc_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+cct_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+acc_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+crt_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, conviction rate, cct/acc",TJET,2024-03-06
+sen_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+trs_for_sta,"foreign trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+tro_for_sta,"foreign trials of state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+tfc_for_sta,"foreign trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+cct_for_sta,"foreign trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+acc_for_sta,"foreign trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+crt_for_sta,"foreign trials of state agents, conviction rate, cct/acc",TJET,2024-03-06
+sen_for_sta,"foreign trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+trs_for_sta_hi,"foreign trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+tro_for_sta_hi,"foreign trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+tfc_for_sta_hi,"foreign trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+cct_for_sta_hi,"foreign trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+acc_for_sta_hi,"foreign trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+crt_for_sta_hi,"foreign trials of high-ranking state agents, conviction rate, cct/acc",TJET,2024-03-06
+sen_for_sta_hi,"foreign trials of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+trs_for_opp,"foreign trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+tro_for_opp,"foreign trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+tfc_for_opp,"foreign trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+cct_for_opp,"foreign trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+acc_for_opp,"foreign trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+crt_for_opp,"foreign trials of opposition members, conviction rate, cct/acc",TJET,2024-03-06
+sen_for_opp,"foreign trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+trs_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+tro_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+tfc_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+cct_for_opp_hi,"foreign trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+acc_for_opp_hi,"foreign trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+crt_for_opp_hi,"foreign trials of high-ranking opposition members, conviction rate, cct/acc",TJET,2024-03-06
+sen_for_opp_hi,"foreign trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_trs_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+xord_tro_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+xord_tfc_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_cct_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_acc_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+xord_crt_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, conviction rate, cct/acc",TJET,2024-03-06
+xord_sen_dom_dtj_sta,"extra-ordinary domestic trials of state agents, post-autocratic transition nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_trs_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+xord_tro_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+xord_tfc_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_cct_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_acc_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+xord_crt_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, conviction rate, cct/acc",TJET,2024-03-06
+xord_sen_dom_dtj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic transition nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_trs_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+xord_tro_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+xord_tfc_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_cct_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_acc_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+xord_crt_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, conviction rate, cct/acc",TJET,2024-03-06
+xord_sen_dom_ctj_sta,"extra-ordinary domestic trials of state agents, conflict transitional justice nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_trs_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+xord_tro_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+xord_tfc_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_cct_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_acc_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+xord_crt_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, conviction rate, cct/acc",TJET,2024-03-06
+xord_sen_dom_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, conflict transitional justice nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_trs_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+xord_tro_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+xord_tfc_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_cct_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_acc_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+xord_crt_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, conviction rate, cct/acc",TJET,2024-03-06
+xord_sen_dom_dtj_ctj_sta,"extra-ordinary domestic trials of state agents, post-autocratic and conflict transitional justice nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_trs_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+xord_tro_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+xord_tfc_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_cct_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_acc_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+xord_crt_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, conviction rate, cct/acc",TJET,2024-03-06
+xord_sen_dom_dtj_ctj_sta_hi,"extra-ordinary domestic trials of high-ranking state agents, post-autocratic and conflict transitional justice nexus, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_trs_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+xord_tro_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+xord_tfc_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_cct_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_acc_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+xord_crt_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, conviction rate, cct/acc",TJET,2024-03-06
+xord_sen_dom_ctj_opp,"extra-ordinary domestic trials of opposition members, conflict transitional justice, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_trs_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+xord_tro_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+xord_tfc_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_cct_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+xord_acc_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+xord_crt_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, conviction rate, cct/acc",TJET,2024-03-06
+xord_sen_dom_ctj_opp_hi,"extra-ordinary domestic trials of high-ranking opposition members, conflict transitional justice, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+ordy_trs_dom_sta,"ordinary domestic trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-06
+ordy_tro_dom_sta,"ordinary domestic trials of state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-06
+ordy_tfc_dom_sta,"ordinary domestic trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+ordy_cct_dom_sta,"ordinary domestic trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,2024-03-06
+ordy_acc_dom_sta,"ordinary domestic trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,2024-03-06
+ordy_crt_dom_sta,"ordinary domestic trials of state agents, conviction rate, cct/acc",TJET,2024-03-06
+ordy_sen_dom_sta,"ordinary domestic trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-06
+lcon_trs_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of trials beginning, by nationality of the accused & start year (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-06
+lcon_tro_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of trials ongoing, by nationality of the accused (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-06
+lcon_tfc_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-06
+lcon_cct_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of convictions, by nationality of the accused & conviction year (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-06
+lcon_acc_dom_sta_opp,"low-level domestic conflict trials of opposition members, count of accused in ongoing trials, by nationality of the accused (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-06
+lcon_crt_dom_sta_opp,"low-level domestic conflict trials of opposition members, conviction rate, cct/acc (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-06
+lcon_sen_dom_sta_opp,"low-level domestic conflict trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year (low level means trials not matched to UCDP conflict IDs)",TJET,2024-03-06
+tcs_victim_process,victim-centered TC process scale,TJET,2024-03-06
+tcs_victim_outcome,victim-centered TC outcome scale,TJET,2024-03-06
+tcs_recreparations,"truth commission reparations recommendation, binary",TJET,2024-03-06
+tcs_metcriteria,truth commission met all definitional criteria (but may not have operated),TJET,2024-03-06
+tcs_operated,"truth commission operated, binary",TJET,2024-03-06
+tcs_goalstruth,"truth commission with explicit goal of truth-finding, binary",TJET,2024-03-06
+tcs_independent,"truth commission was at least partially independent, binary",TJET,2024-03-06
+tcs_harms,"harms investigated by truth commission, scale",TJET,2024-03-06
+tcs_powers,"truth commission powers, scale",TJET,2024-03-06
+tcs_report,"truth commission issued final report, binary",TJET,2024-03-06
+tcs_public_process,"truth commission publicness, process scale",TJET,2024-03-06
+tcs_public_outcome,"truth commission publicness, outcome scale",TJET,2024-03-06
+tcs_recommendations,"truth commission recommendations in final report, scale",TJET,2024-03-06
+tcs_monitoring,"truth commission with mandated implementation monitoring, binary",TJET,2024-03-06
+tcs_ctj_binary,"TCs, binary, conflict TJ",TJET,2024-03-06
+tcs_ctj_victim_process,"victim-centered TC process scale, conflict TJ",TJET,2024-03-06
+tcs_ctj_victim_outcome,"victim-centered TC outcome scale, conflict TJ",TJET,2024-03-06
+tcs_ctj_account_process,"accountability-oriented TC process scale, conflict TJ",TJET,2024-03-06
+tcs_ctj_account_outcome,"accountability-oriented TC outcome scale, conflict TJ",TJET,2024-03-06
+tcs_ctj_peace_process,"peace-oriented TC process scale, conflict TJ",TJET,2024-03-06
+tcs_ctj_peace_outcome,"peace-oriented TC outcome scale, conflict TJ",TJET,2024-03-06
+tcs_ctj_reform_process,"reform-oriented TC process scale, conflict TJ",TJET,2024-03-06
+tcs_ctj_reform_outcome,"reform-oriented TC outcome scale, conflict TJ",TJET,2024-03-06
+amnesty_dtj_ctj_sta,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents)",TJET,2024-03-06
+amnesty_dtj_ctj_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, opposition members)",TJET,2024-03-06
+amnesty_ctj_sta_opp,"amnesty, binary (conflict transitional justice nexus, state agents and opposition members)",TJET,2024-03-06
+amnesty_ctj,"amnesty, binary (conflict transitional justice nexus)",TJET,2024-03-06
+amnesty_sta,"amnesty, binary (state agents)",TJET,2024-03-06
+amnesty_sta_hrv,"amnesty, binary (state agents for human rights violations)",TJET,2024-03-06
+amnesty_opp,"amnesty, binary (opposition members)",TJET,2024-03-06
+amnesty_opp_hrv,"amnesty, binary (opposition members for human rights violations)",TJET,2024-03-06
+amnesty_pol,"amnesty, binary (political prisoners and protestors)",TJET,2024-03-06
+amnesty_peaceagree,"amnesty included in peace agreement, binary",TJET,2024-03-06
+rep_binary,"reparations policy, binary",TJET,2024-03-06
+rep_peaceagree,"reparations policy included in peace agreement, binary",TJET,2024-03-06
+rep_collective,"reparations policy with collective component, binary",TJET,2024-03-06
+rep_symbolic,"reparations policy providing symbolic investments, binary",TJET,2024-03-06
+rep_compensation,"reparations policy providing compensation, binary",TJET,2024-03-06
+rep_services,"reparations policy providing services for rehabilitation and restitution, binary",TJET,2024-03-06
+rep_victim_centered,"victims-centered reparations policy, scale",TJET,2024-03-06
+rep_scope,"reparations policy scope, scale based on reported number of beneficiaries",TJET,2024-03-06
+vet_dismiss,"vetting policy, type dimissal, binary",TJET,2024-03-06
+vet_ban,"vetting policy, type ban, binary",TJET,2024-03-06
+vet_declass,"vetting policy, type declassification, binary",TJET,2024-03-06
+vet_perjury,"vetting policy, type perjury, binary",TJET,2024-03-06
+vet_ban_from_elected,"vetting policy, ban from elected office, binary",TJET,2024-03-06
+vet_conduct,"vetting policy targeting specific individual conduct, binary",TJET,2024-03-06
+vet_implemented,was vetting policy implemented?,TJET,2024-03-06
+vet_public,"vetting policy involving public hearings, binary",TJET,2024-03-06
+vet_fairness,vetting policy fairness scale,TJET,2024-03-06
+v2clkill,"Freedom from political killings, estimate",VDem,2024-03-06
+v2clkill_sd,"Freedom from political killings, standard deviation",VDem,2024-03-06
+v2clkill_nr,"Freedom from political killings, count of expert ratings",VDem,2024-03-06
+v2cltort,Freedom from torture,VDem,2024-03-06
+v2cltort_sd,"Freedom from torture, standard deviation",VDem,2024-03-06
+v2cltort_nr,"Freedom from torture, count of expert ratings",VDem,2024-03-06
+v2caviol,Political violence,VDem,2024-03-06
+v2caviol_sd,"Political violence, standard deviation",VDem,2024-03-06
+v2caviol_nr,"Political violence, count of expert ratings",VDem,2024-03-06
+v2x_regime,Regimes of the World categorical measure,VDem,2024-03-06
+v2x_regime_amb,"Regimes of the World categorical measure, with ambiguous edge cases",VDem,2024-03-06
+v2x_polyarchy,Electoral democracy index,VDem,2024-03-06
+v2x_polyarchy_sd,"Electoral democracy index, standard deviation",VDem,2024-03-06
+v2x_api,Additive polyarchy index,VDem,2024-03-06
+v2x_api_sd,"Additive polyarchy index, standard deviation",VDem,2024-03-06
+v2x_mpi,Multiplicative polyarchy index,VDem,2024-03-06
+v2x_mpi_sd,"Multiplicative polyarchy index, standard deviation",VDem,2024-03-06
+v2x_libdem,Liberal democracy index,VDem,2024-03-06
+v2x_libdem_sd,"Liberal democracy index, standard deviation",VDem,2024-03-06
+v2x_liberal,Liberal component index,VDem,2024-03-06
+v2x_liberal_sd,"Liberal component index, standard deviation",VDem,2024-03-06
+v2x_partipdem,Participatory democracy index,VDem,2024-03-06
+v2x_partipdem_sd,"Participatory democracy index, standard deviation",VDem,2024-03-06
+v2x_partip,Participatory component index,VDem,2024-03-06
+v2x_partip_sd,"Participatory component index, standard deviation",VDem,2024-03-06
+v2x_delibdem,Deliberative democracy index,VDem,2024-03-06
+v2x_delibdem_sd,"Deliberative democracy index, standard deviation",VDem,2024-03-06
+v2xdl_delib,Deliberative component index,VDem,2024-03-06
+v2xdl_delib_sd,"Deliberative component index, standard deviation",VDem,2024-03-06
+v2x_egaldem,Egalitarian democracy index,VDem,2024-03-06
+v2x_egaldem_sd,"Egalitarian democracy index, standard deviation",VDem,2024-03-06
+v2x_egal,Egalitarian component index,VDem,2024-03-06
+v2x_egal_sd,"Egalitarian component index, standard deviation",VDem,2024-03-06
+v2x_cspart,Civil society participation index,VDem,2024-03-06
+v2x_cspart_sd,"Civil society participation index, standard deviation",VDem,2024-03-06
+v2cseeorgs,CSO entry and exit,VDem,2024-03-06
+v2cseeorgs_sd,"CSO entry and exit, standard deviation",VDem,2024-03-06
+v2cseeorgs_nr,"CSO entry and exit, count of expert ratings",VDem,2024-03-06
+v2csreprss,CSO repression,VDem,2024-03-06
+v2csreprss_sd,"CSO repression, standard deviation",VDem,2024-03-06
+v2csreprss_nr,"CSO repression, count of expert ratings",VDem,2024-03-06
+v2csprtcpt,CSO participatory environment,VDem,2024-03-06
+v2csprtcpt_sd,"CSO participatory environment, standard deviation",VDem,2024-03-06
+v2csprtcpt_nr,"CSO participatory environment, count of expert ratings",VDem,2024-03-06
+v2xcs_ccsi,Core civil society index ordinal,VDem,2024-03-06
+v2xcs_ccsi_sd,"Core civil society index ordinal, standard deviation",VDem,2024-03-06
+v2juhcind,High court independence,VDem,2024-03-06
+v2juhcind_sd,"High court independence, standard deviation",VDem,2024-03-06
+v2juhcind_nr,"High court independence, count of expert ratings",VDem,2024-03-06
+v2juncind,Lower court independence,VDem,2024-03-06
+v2juncind_sd,"Lower court independence, standard deviation",VDem,2024-03-06
+v2juncind_nr,"Lower court independence, count of expert ratings",VDem,2024-03-06
+v2jureform,Judicial reform,VDem,2024-03-06
+v2jureform_sd,"Judicial reform, standard deviation",VDem,2024-03-06
+v2jureform_nr,"Judicial reform, count of expert ratings",VDem,2024-03-06
+v2jucomp,Compliance with judiciary,VDem,2024-03-06
+v2jucomp_sd,"Compliance with judiciary, standard deviation",VDem,2024-03-06
+v2jucomp_nr,"Compliance with judiciary, count of expert ratings",VDem,2024-03-06
+v2juhccomp,Compliance with high court,VDem,2024-03-06
+v2juhccomp_sd,"Compliance with high court, standard deviation",VDem,2024-03-06
+v2juhccomp_nr,"Compliance with high court, count of expert ratings",VDem,2024-03-06
+v2x_jucon,Judicial constraints on the executive index,VDem,2024-03-06
+v2x_jucon_sd,"Judicial constraints on the executive index, standard deviation",VDem,2024-03-06
+v2jureview,Judicial review,VDem,2024-03-06
+v2jureview_sd,"Judicial review, standard deviation",VDem,2024-03-06
+v2jureview_nr,"Judicial review, count of expert ratings",VDem,2024-03-06
+v2elmulpar,Elections multiparty,VDem,2024-03-06
+v2elmulpar_sd,"Elections multiparty, standard deviation",VDem,2024-03-06
+v2elmulpar_nr,"Elections multiparty, count of expert ratings",VDem,2024-03-06
+v2xdd_dd,Direct popular vote index,VDem,2024-03-06
+v2xel_locelec,Local government index,VDem,2024-03-06
+v2xel_locelec_sd,"Local government index, standard deviation",VDem,2024-03-06
+v2xel_regelec,Regional government index,VDem,2024-03-06
+v2xel_regelec_sd,"Regional government index, standard deviation",VDem,2024-03-06
+v2xel_frefair,Clean elections index,VDem,2024-03-06
+v2xel_frefair_sd,"Clean elections index, standard deviation",VDem,2024-03-06
+v2x_frassoc_thick,Freedom of association thick index,VDem,2024-03-06
+v2x_frassoc_thick_sd,"Freedom of association thick index, standard deviation",VDem,2024-03-06
+v2x_freexp_altinf,Freedom of Expression and Alternative Sources of Information index,VDem,2024-03-06
+v2x_freexp_altinf_sd,"Freedom of Expression and Alternative Sources of Information index, standard deviation",VDem,2024-03-06
+v2x_elecoff,Elected officials index,VDem,2024-03-06
+v2x_suffr,Share of population with suffrage,VDem,2024-03-06
+v2x_rule,Rule of law index,VDem,2024-03-06
+v2x_rule_sd,"Rule of law index, standard deviation",VDem,2024-03-06
+v2xcl_rol,Equality before the law and individual liberty index,VDem,2024-03-06
+v2xcl_rol_sd,"Equality before the law and individual liberty index, standard deviation",VDem,2024-03-06
+v2xcl_acjst,Access to justice,VDem,2024-03-06
+v2xcl_acjst_sd,"Access to justice, standard deviation",VDem,2024-03-06
+v2clacjstm,Access to justice for men,VDem,2024-03-06
+v2clacjstm_sd,"Access to justice for men, standard deviation",VDem,2024-03-06
+v2clacjstm_nr,"Access to justice for men, count of expert ratings",VDem,2024-03-06
+v2clacjstw,Access to justice for women,VDem,2024-03-06
+v2clacjstw_sd,"Access to justice for women, standard deviation",VDem,2024-03-06
+v2clacjstw_nr,"Access to justice for women, count of expert ratings",VDem,2024-03-06
+v2juaccnt,Judicial accountability,VDem,2024-03-06
+v2juaccnt_sd,"Judicial accountability, standard deviation",VDem,2024-03-06
+v2juaccnt_nr,"Judicial accountability, count of expert ratings",VDem,2024-03-06
+v2clacjust,Social class equality in respect for civil liberty,VDem,2024-03-06
+v2clacjust_sd,"Social class equality in respect for civil liberty, standard deviation",VDem,2024-03-06
+v2clacjust_nr,"Social class equality in respect for civil liberty, count of expert ratings",VDem,2024-03-06
+v2clsocgrp,Social group equality in respect for civil liberties,VDem,2024-03-06
+v2clsocgrp_sd,"Social group equality in respect for civil liberties, standard deviation",VDem,2024-03-06
+v2clsocgrp_nr,"Social group equality in respect for civil liberties, count of expert ratings",VDem,2024-03-06
+v2clgencl,Gender equality in respect for civil liberties,VDem,2024-03-06
+v2clgencl_sd,"Gender equality in respect for civil liberties, standard deviation",VDem,2024-03-06
+v2clgencl_nr,"Gender equality in respect for civil liberties, count of expert ratings",VDem,2024-03-06
+v2clgeocl,Urban-rural location equality in respect for civil liberties,VDem,2024-03-06
+v2clgeocl_sd,"Urban-rural location equality in respect for civil liberties, standard deviation",VDem,2024-03-06
+v2clgeocl_nr,"Urban-rural location equality in respect for civil liberties, count of expert ratings",VDem,2024-03-06
+v2clpolcl,Political group equality in respect for civil liberties,VDem,2024-03-06
+v2clpolcl_sd,"Political group equality in respect for civil liberties, standard deviation",VDem,2024-03-06
+v2clpolcl_nr,"Political group equality in respect for civil liberties, count of expert ratings",VDem,2024-03-06
+v2x_gencl,Women civil liberties index,VDem,2024-03-06
+v2x_gencl_sd,"Women civil liberties index, standard deviation",VDem,2024-03-06
+v2x_accountability,Accountability index,VDem,2024-03-06
+v2x_diagacc,Diagonal accountability index,VDem,2024-03-06
+v2x_veracc,Vertical accountability index,VDem,2024-03-06
+v2x_horacc,Horizontal accountability index,VDem,2024-03-06
+v2xnp_regcorr,Regime corruption,VDem,2024-03-06
+v2xnp_regcorr_sd,"Regime corruption, standard deviation",VDem,2024-03-06
+v2x_corr,Political corruption index,VDem,2024-03-06
+v2x_corr_sd,"Political corruption index, standard deviation",VDem,2024-03-06
+v2x_execorr,Executive corruption index,VDem,2024-03-06
+v2x_execorr_sd,"Executive corruption index, standard deviation",VDem,2024-03-06
+v2x_pubcorr,Public sector corruption index,VDem,2024-03-06
+v2x_pubcorr_sd,"Public sector corruption index, standard deviation",VDem,2024-03-06
+v2jucorrdc,Judicial corruption decision,VDem,2024-03-06
+v2jucorrdc_sd,"Judicial corruption decision, standard deviation",VDem,2024-03-06
+v2jucorrdc_nr,"Judicial corruption decision, count of expert ratings",VDem,2024-03-06
+v2cscnsult,CSO consultation,VDem,2024-03-06
+v2cscnsult_sd,"CSO consultation, standard deviation",VDem,2024-03-06
+v2cscnsult_nr,"CSO consultation, count of expert ratings",VDem,2024-03-06
+v2csgender,CSO women’s participation,VDem,2024-03-06
+v2csgender_sd,"CSO women’s participation, standard deviation",VDem,2024-03-06
+v2csgender_nr,"CSO women’s participation, count of expert ratings",VDem,2024-03-06
+v2csantimv,CSO anti-system movements,VDem,2024-03-06
+v2csantimv_sd,"CSO anti-system movements, standard deviation",VDem,2024-03-06
+v2csantimv_nr,"CSO anti-system movements, count of expert ratings",VDem,2024-03-06
+v2csrlgrep,Religious organization repression,VDem,2024-03-06
+v2csrlgrep_sd,"Religious organization repression, standard deviation",VDem,2024-03-06
+v2csrlgrep_nr,"Religious organization repression, count of expert ratings",VDem,2024-03-06
+v2csrlgcon,Religious organization consultation,VDem,2024-03-06
+v2csrlgcon_sd,"Religious organization consultation, standard deviation",VDem,2024-03-06
+v2csrlgcon_nr,"Religious organization consultation, count of expert ratings",VDem,2024-03-06
+v2csanmvch_0,"CSO anti-system movement character, binary: Works through legal channels, for the most part",VDem,2024-03-06
+v2csanmvch_1,"CSO anti-system movement character, binary: Participates in elections",VDem,2024-03-06
+v2csanmvch_2,"CSO anti-system movement character, binary: Works through a mix of legal and extra-legal channels",VDem,2024-03-06
+v2csanmvch_3,"CSO anti-system movement character, binary: Insurrectionary",VDem,2024-03-06
+v2csanmvch_4,"CSO anti-system movement character, binary: Democratic. Perceived by most disinterested observers as willing to play by the rules of the democratic game, willing to respect constitutional provisions or electoral outcomes, and willing to relinquish power (under democratic auspices)",VDem,2024-03-06
+v2csanmvch_5,"CSO anti-system movement character, binary: Anti-democratic. Perceived by most disinterested observers as unwilling to play by the rules of the democratic game, not willing to respect constitutional provisions or electoral outcomes, and/or not willing to relinquish power (under democratic auspices)",VDem,2024-03-06
+v2csanmvch_6,"CSO anti-system movement character, binary: Leftist, socialist, communist",VDem,2024-03-06
+v2csanmvch_7,"CSO anti-system movement character, binary: Rightist, conservative, party of order",VDem,2024-03-06
+v2csanmvch_8,"CSO anti-system movement character, binary: Ethnolinguistic, tribe, kinship, clan",VDem,2024-03-06
+v2csanmvch_9,"CSO anti-system movement character, binary: Separatist or autonomist",VDem,2024-03-06
+v2csanmvch_10,"CSO anti-system movement character, binary: Religious",VDem,2024-03-06
+v2csanmvch_11,"CSO anti-system movement character, binary: Paramilitary",VDem,2024-03-06
+v2csanmvch_12,"CSO anti-system movement character, binary: Heavily engaged in criminal activity, e.g., narcotics, bootlegging, illegal exploitation of natural resources, extortion, kidnapping",VDem,2024-03-06
+v2csanmvch_nr,"CSO anti-system movement character, count of expert ratings",VDem,2024-03-06
+v2csstruc_0,"CSO structure, binary: The state does not allow autonomous CSOs",VDem,2024-03-06
+v2csstruc_1,"CSO structure, binary: Large encompassing organizations dominate. The government and CSOs are linked formally through a corporatist system of interest intermediation; or, due to historical circumstances, particular large CSOs are highly influential. The voice of such organizations is recognized by the government and is accorded special weight by policymakers",VDem,2024-03-06
+v2csstruc_2,"CSO structure, binary: Neither large encompassing nor small CSOs dominate. Influence is contingent on circumstances. Organizations, both large and small, contend with one another to have their voice considered by policymakers",VDem,2024-03-06
+v2csstruc_3,"CSO structure, binary: Small CSOs dominate. Many small organizations contend with one another to have their voices heard by policymakers",VDem,2024-03-06
+v2csstruc_nr,"CSO structure, count of expert ratings",VDem,2024-03-06
+conf_intra,"count of minor internal (incl. internationalized) conflicts (25-999 BRDs, from ACD)",UCDP,2024-03-06
+wars_intra,"count of internal (incl. internationalized) wars (1000+ BRDs, from ACD)",UCDP,2024-03-06
+conf_intra_strict,"count of minor internal (excl. internationalized) conflicts (25-999 BRDs, from ACD)",UCDP,2024-03-06
+wars_intra_strict,"count of internal (excl. internationalized) wars (1000+ BRDs, from ACD)",UCDP,2024-03-06
+conf_inter,"count of minor external conflicts (25-999 BRDs, from ACD)",UCDP,2024-03-06
+wars_inter,count of external wars (1000+ BRDs),UCDP,2024-03-06
+deaths_state_osv,count of civilian deaths from one-sided violence due to state actors,UCDP,2024-03-06
+deaths_nonstate_osv,count of civilian deaths from one-sided violence due to non-state actors,UCDP,2024-03-06
+conflicts_int,count of internal conflicts (from GED),UCDP,2024-03-06
+conflicts_ext,count of external conflicts (from GED),UCDP,2024-03-06
+conflicts_nsc,count of non-state conflicts (from GED),UCDP,2024-03-06
+conflicts_osv,count of one-sided violence events (from GED),UCDP,2024-03-06
+deaths_all_int,"sum of all deaths from internal conflicts (best estimates, from GED)",UCDP,2024-03-06
+deaths_civilians_int,sum of civilian deaths from internal conflicts (from GED),UCDP,2024-03-06
+deaths_all_ext,"sum of all deaths from external conflicts (best estimates, from GED)",UCDP,2024-03-06
+deaths_civilians_ext,sum of civilian deaths from external conflicts (from GED),UCDP,2024-03-06
+deaths_all_nsc,"sum of all deaths from non-state conflicts (best estimates, from GED)",UCDP,2024-03-06
+deaths_civilians_nsc,sum of civilian deaths from external conflicts (from GED),UCDP,2024-03-06
+deaths_all_osv,"sum of all deaths from one-sided violence (best estimates, from GED)",UCDP,2024-03-06
+deaths_civilians_osv,sum of civilian deaths from one-sided violence (from GED),UCDP,2024-03-06
+internal,maximal level of internal (incl. internationalized) conflict (none; conflict; war),UCDP,2024-03-06
+internal_strict,maximal level of internal (excl. internationalized) conflict (none; conflict; war),UCDP,2024-03-06
+external,maximal level of external conflict (none; conflict; war),UCDP,2024-03-06
+conflict_internal,"any internal (incl. internationalized) conflict (25+ BRD) , binary",UCDP,2024-03-06
+conflict_internal_strict,"any internal (excl. internationalized) conflict (25+ BRD), binary",UCDP,2024-03-06
+conflict_external,"any external conflict (25+ BRD), binary",UCDP,2024-03-06
+war_internal,"any internal (incl. internationalized) war (1000+ BRD) , binary",UCDP,2024-03-06
+war_internal_strict,"any internal (excl. internationalized) war (1000+ BRD), binary",UCDP,2024-03-06
+war_external,"any external war (1000+ BRD), binary",UCDP,2024-03-06
+conflict_non_state,"any non-state conflict (25+ BRD), binary",UCDP,2024-03-06
+conflict_one_sided,"any one-side violence (25+ BRD), binary",UCDP,2024-03-06
+territorial,"any internal armed conflict over territorial incompatibility, binary (from ACD)",UCDP,2024-03-06
+intensity,maximum internal conflict intensity level (from ACD),UCDP,2024-03-06
+confterm,"any internal conflict dyad episode terminated, binary (from termination dataset)",UCDP,2024-03-06
+recur,"any internal conflict dyad recurrence after spell of non-conflict, binary (from termination dataset)",UCDP,2024-03-06
+outcome_agreement,count of internal conflict terminations with peace agreement (from termination dataset),UCDP,2024-03-06
+outcome_ceasefire,count of internal conflict terminations with ceasefire (from termination dataset),UCDP,2024-03-06
+outcome_victory_gov,count of internal conflict terminations with government victory (from termination dataset),UCDP,2024-03-06
+outcome_victory_reb,count of internal conflict terminations with victory by non-state side (from termination dataset),UCDP,2024-03-06
+outcome_low_activity,count of internal conflict terminations due to low activity (from termination dataset),UCDP,2024-03-06
+outcome_actor_ceases,count of internal conflict terminations because an actor ceased to exist (from termination dataset),UCDP,2024-03-06
+reb_claim,count of rebel groups in internal conflict dyads making exclusive ethnic claims,EPR,2024-03-06
+reb_recruit,count of rebel groups in internal conflict dyads recruiting from ethnic groups,EPR,2024-03-06
+gov_recruit,count of internal conflict dyads where governments recruit on the basis of ethnicity,EPR,2024-03-06
+dyads_active,count of active internal conflict dyads,UCDP,2024-03-06
+grps_in_dyads,ethnic groups in internal conflict dyads in EPR dataset,EPR,2024-03-06
+dyads_new,count of new conflict dyads of internal (incl. internationalized) conflict,UCDP,2024-03-06
+dyads_ep_new,count of new dyad episodes (incl. recurrence) of internal (incl. internationalized) conflict,UCDP,2024-03-06
+pko_mission,"active UN peacekeeping mission, binary",PKO,2024-03-06
+prev_state_svac,"prevalence of sexual violence among state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,2024-03-06
+prev_nonstate_svac,"prevalence of sexual violence among non-state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,2024-03-06
+conflictyear_svac,conflict-year in SVAC dataset,SVAC,2024-03-06
+events_pitf,count of atrocity events,PITF,2024-03-06
+deaths_pitf,counts of deaths due to atrocities,PITF,2024-03-06
+theta_mean_fariss,"estimated latent physical integrity (formerly latent mean, the posterior mean of the latent variable)","Fariss, Kenwick, & Reuning",2024-03-06
+theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",2024-03-06
+killing_estimate_mean_fariss,posterior mean of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",2024-03-06
+killing_estimate_median_fariss,posterior median of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",2024-03-06
+leaders_n,number of consecutive effective political rulers,Archigos,2024-03-06
+irregentry,"irregular ruler entry, binary",Archigos,2024-03-06
+ruler_exit,"ruler exit, binary",Archigos,2024-03-06
+irregexit,"irregular ruler exit, binary",Archigos,2024-03-06
+removed,ruler was removed,Archigos,2024-03-06
+removed_for,ruler was removed with foreign contribution,Archigos,2024-03-06
+postdemise,"previous ruler met demise during year following exit (death, suicide, imprisonment or exile); this was lagged one year in order to match Archigos timeline",Archigos,2024-03-06
+ruler_days,"number of days ruler has ruled at the end of the year or at the end of his/her rule, if earlier than Dec 31; for country-years with more than one ruler change this variable only covers the rulers at the beginning and the end of the year, and not those whose rule started and ended in the same year",Archigos,2024-03-06
+lead_startdate_beg,start date of the ruler in power at the beginning of the year (can be used to code duration variables),Archigos,2024-03-06
+lead_enddate_beg,end date of the ruler in power at the beginning of the year (can be used to code duration variables),Archigos,2024-03-06
+lead_startdate_end,start date of the ruler in power at the end of the year (can be used to code duration variables),Archigos,2024-03-06
+lead_enddate_end,end date of the ruler in power at the end of the year (can be used to code duration variables),Archigos,2024-03-06
+lead_yrborn_beg,birth year of the ruler in power at the beginning of the year (can be used to code age variables),Archigos,2024-03-06
+lead_yrdied_beg,year of death of the ruler in power at the beginning of the year (can be used to code time to death variables),Archigos,2024-03-06
+lead_yrborn_end,birth year of the ruler in power at the end of the year (can be used to code age variables),Archigos,2024-03-06
+lead_yrdied_end,year of death of the ruler in power at the end of the year (can be used to code time to death variables),Archigos,2024-03-06
+latent_gdp_mean_log,latent estimate of logged GDP,Fariss et al,2024-03-06
+latent_gdp_mean,latent estimate of GDP,Fariss et al,2024-03-06
+latent_gdp_sd_log,"latent estimate of logged GDP, standard deviation",Fariss et al,2024-03-06
+latent_gdp_sd,"latent estimate of GDP, standard deviation",Fariss et al,2024-03-06
+latent_gdppc_mean_log,latent estimate of logged GDP per capita,Fariss et al,2024-03-06
+latent_gdppc_mean,latent estimate of GDP per capita,Fariss et al,2024-03-06
+latent_gdppc_sd_log,"latent estimate of logged GDP per capita, standard deviation",Fariss et al,2024-03-06
+latent_gdppc_sd,"latent estimate of GDP per capita, standard deviation",Fariss et al,2024-03-06
+latent_pop_mean_log,latent estimate of logged population size,Fariss et al,2024-03-06
+latent_pop_mean,latent estimate of population size,Fariss et al,2024-03-06
+latent_pop_sd_log,"latent estimate of logged population size, standard deviation",Fariss et al,2024-03-06
+latent_pop_sd,"latent estimate of population size, standard deviation",Fariss et al,2024-03-06
+gdp_const_wdi,"GDP, constant USD",WDI,2024-03-06
+gdp_growth_wdi,GDP growth,WDI,2024-03-06
+gdppc_const_wdi,"GDP per capita, constant USD",WDI,2024-03-06
+gdppc_ppp_wdi,"GDP per capita, purchasing power parity",WDI,2024-03-06
+gdppc_growth_wdi,"GDP per capita growth, constant USD",WDI,2024-03-06
+pop_wdi,population size,WDI,2024-03-06
+pop_male_wdi,"population size, male",WDI,2024-03-06
+pop_fem_wdi,"population size, female",WDI,2024-03-06
+pop_density_wdi,population density,WDI,2024-03-06
+land_area_sqkm_wdi,"country land area, square kilometers",WDI,2024-03-06
+gini_wdi,GINI,WDI,2024-03-06
+pop_pwt,population size,PWT,2024-03-06
+rgdpna_pwt,"Real GDP using national-accounts growth rates, for studies comparing (output-based) growth rates across countries",PWT,2024-03-06
+rgdpe_pwt,"Expenditure-side real GDP at chained PPPs, to compare relative living standards across countries over time",PWT,2024-03-06
+rgdpo_pwt,"Output-side real GDP at chained PPPs, to compare relative productive capacity across countries over time",PWT,2024-03-06
+growth_rgdpe_pwt,Expenditure-side GDP growth,PWT,2024-03-06
