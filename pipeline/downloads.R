@@ -20,10 +20,10 @@ to_download <-
       "select_options", "metadata", "UCDPcountries", "TJETmembers", 
       "Experts", "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges", 
       "VettingComparison", "BIcomparison", "ICC", "Investigations", 
-      "AdHocHybrid", "SurveysMeta"),
+      "AdHocHybrid", "SurveysMeta", "Ethiopia"),
     "appF8HAH7SN7C09cU" = c(
       "Trials", "Accused", "CourtLevels", "Countries", 
-      "Conflicts", "Dyads", "metadata", "Ethiopia")
+      "Conflicts", "Dyads", "metadata")
   )
 
 ### the countries and conflicts tables are currently not synced between 

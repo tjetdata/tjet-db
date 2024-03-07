@@ -15,6 +15,7 @@ translations <- list(
   trials = FALSE,
   accused = FALSE,
   vetting = FALSE,
+  investigations = FALSE,
   surveysmeta = FALSE,
   surveys = FALSE, 
   labels = FALSE, 
@@ -226,6 +227,20 @@ if(translations$vetting) { # about 0.5 min / 8,000 characters
   cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
 }
 db[["Vettings_fr"]]
+
+if(translations$investigations) { # about 0.5 min / 4000 characters  
+  usage_last <- usage(key_get("DeepL"))[["character_count"]]
+  start <- Sys.time()
+  db[["Investigations_fr"]] <- db[["Investigations"]] %>% 
+    select(ccode_cow, beg, end, mandate) %>%
+    rowwise() %>%
+    mutate(mandate_en = mandate, 
+           mandate = translate(mandate)) %>%
+    ungroup()
+  print(Sys.time() - start)
+  cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
+}
+db[["Investigations_fr"]]
 
 if(translations$surveysmeta) { # about 0.5 min / 12,000 characters  
   usage_last <- usage(key_get("DeepL"))[["character_count"]]

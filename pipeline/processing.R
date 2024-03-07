@@ -96,7 +96,7 @@ db <- map(names(to_download), function(basename) {
   base <- db[[basename]]
   base[drop_invalids] <- map(drop_invalids, function(tab_name) {
     base[[tab_name]] %>%
-      filter(invalid == 0)
+      filter(is.na(invalid) | invalid == 0)
   })
   return(base)
 })
@@ -557,7 +557,8 @@ rm(keep_amnesties)
 dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
   rename(beg = year_beg, 
          end = year_end) %>% 
-  select(ccode_cow, beg, end, name, uninv_dompros, uninv_intlpros, uninv_evcoll, 
+  select(ccode_cow, beg, end, name, mandate_en, mandate_fr, 
+         uninv_dompros, uninv_intlpros, uninv_evcoll, 
          secgen, unsc, cohr, unga, ohchr, hrc, source) %>% 
   filter(beg >= 1970 & beg <= 2020) %>%
   mutate(
@@ -591,7 +592,11 @@ dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
          mandate = str_replace(mandate, "OHCHR", "Office of the UN High Commissioner for Human Rights"),
          mandate = str_replace(mandate, "HCHR", "Office of the UN High Commissioner for Human Rights"),
          mandate = str_replace(mandate, "HRC ", "UN Human Rights Council "),
+         mandate = str_replace(mandate, "COHR ", "UN Commission on Human Rights "),
          mandate = str_replace(mandate, "CHR ", "UN Commission on Human Rights "),
+         mandate = str_replace(mandate, " res ", " resolution "),
+         mandate = str_replace(mandate, " dec ", " decision "),
+         mandate = str_replace(mandate, "/ ", "/"),
          goals = case_when(uninv_intlpros == 1 & uninv_evcoll == 1 & uninv_dompros == 1 ~ "support international prosecutions; collect evidence; encourage domestic prosecutions", 
                            uninv_intlpros == 1 & uninv_evcoll == 1 ~ "support international prosecutions; collect evidence",
                            uninv_intlpros == 1 & uninv_dompros == 1 ~ "support international prosecutions; encourage domestic prosecutions", 
@@ -600,13 +605,17 @@ dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
                            uninv_evcoll == 1 ~ "collect evidence",
                            uninv_dompros == 1 ~ "encourage domestic prosecutions") 
          ) %>% 
-  select(country, ccode_cow, beg, end, mandate, goals, 
-         uninv_dompros, uninv_evcoll, uninv_intlpros, source)
+  select(country, ccode_cow, beg, end, mandate, mandate_en, mandate_fr, goals, 
+         uninv_dompros, uninv_evcoll, uninv_intlpros, source) 
   # group_by(ccode_cow, mandate, beg) %>%
   # mutate(n = n() ) %>%
   # filter(n > 1) %>% 
   # print(n = Inf)
 
+### any where mandate differs?
+dl_invest %>% 
+  filter(mandate != mandate_en | is.na(mandate_en))
+  
 db[["MegaBase"]][["Investigations"]] <-
   dl_invest %>% 
   rowwise() %>% 
@@ -1018,8 +1027,9 @@ attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
 
 db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
+  select(-country_fr) %>% 
   unnest(country) %>% 
-  rename(airtable_record_id = country) %>% 
+  rename("airtable_record_id" = "country") %>% 
   left_join(tjet[["MegaBase"]][["Countries"]] %>% 
               select(airtable_record_id, country, country_fr),
             by = "airtable_record_id") %>%
@@ -1912,7 +1922,7 @@ db[["Amnesties"]] <- db[["Amnesties"]] %>%
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
-db[["Reparations"]] <- db[["Reparations"]] %>%
+db[["Reparations"]] <- db[["Reparations"]] %>% 
   filter(yearCreated >= 1970 & yearCreated <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
   mutate(tjet_version = timestamp) %>% 
