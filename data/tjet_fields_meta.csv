@@ -35,3 +35,16 @@ vettings,policyName,Name,Name or description of the vetting policy
 vettings,yearStart,Year,Year the vetting policy was initiated
 vettings,Context,Context,Was this post-autocratic transitional justice or conflict justice?
 vettings,Targets,Targets,Which institutional actors were targeted in the vetting policy?
+investigations,mandate,Mandate,Mandate
+investigations,years,Years,Years when investigation was ongoing
+investigations,uninv_intlpros,Support International Prosecutions,Did the investigation aim to support international prosecutions?
+investigations,uninv_evcoll,Collect Evidence,Did the investigation aim to collect evidence for possible future prosecutions?
+investigations,uninv_dompros,Encourage Domestic Prosecutions,Did the investigation aim to encourage prosecutions?
+transitions,transitionID,TJET Transition ID,TJET Transition ID
+transitions,trans_year_begin,Democratic Transition Year,Year democratic transition began
+transitions,sources,Coding Sources,Data sources and years on which transition coding is based
+conflicts,dyad_id,Dyad ID,UCDP Dyad ID
+conflicts,conflict_id,Conflict ID,UCDP Conflict ID
+conflicts,side_b,Armed Opposition,Organized armed group fighting against the government
+conflicts,ep_years,Episode Years,Years of ongoing violence (25 battle-related deaths or more)
+conflicts,intensity,Scale of Intra-State Violence,UCDP intensity classification: conflict (at least 25 battle-related deaths per year) or war (at least 1000 battle-related deaths per year)

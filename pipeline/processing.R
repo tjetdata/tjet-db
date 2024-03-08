@@ -1010,6 +1010,12 @@ attr(db$fields_meta, "spec") <- NULL
 attr(db$fields_meta, "problems") <- NULL
 # attributes(db$fields_meta) 
 
+db[["translations"]] <- read_csv(here::here("data", "tjet_translations.csv"), 
+                                show_col_types = FALSE) %>% tibble()
+attr(db$tjet_translations, "spec") <- NULL
+attr(db$tjet_translations, "problems") <- NULL
+# attributes(db$tjet_translations) 
+
 ### conflict dyads lookup table for database
 db$ConflictDyads <- read_csv(here::here("conflicts", "confl_dyads.csv"), 
                              show_col_types = FALSE) %>% 

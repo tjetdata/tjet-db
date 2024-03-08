@@ -85,6 +85,21 @@ surveytabs %>%
                  overwrite = TRUE)
   })
 
+### translations
+translations <- dbReadTable(con, "Translations") %>% tibble()
+newtrans <- translations %>% 
+  rename(Translation_exists = Translation) %>% 
+  full_join(db[["translations"]], by = "Source") %>%
+  filter(is.na(Translation_exists)) %>% 
+  select(id, Source, Translation) 
+if(nrow(newtrans) > 0) {
+  dbWriteTable(conn = con,
+               name = "Translations",
+               value = newtrans,
+               append = TRUE)
+}
+
+### timestamp 
 dbExecute(con, "TRUNCATE TABLE tjet_timestamp")
 dbWriteTable(conn = con,
              name = "tjet_timestamp",

@@ -18,6 +18,8 @@ Autocracy,Autocratie
 Brief,Synthèse
 Clear All Filters,Effacer tous les filtres
 Click,Cliquez
+Coding Sources,Sources de codage
+Collect Evidence,Recueillir des éléments de preuve
 Conflict,Conflit
 Conflict Background,Contexte du conflit
 Conflict ID,Identifiant du conflit
@@ -41,9 +43,14 @@ dark,sombre
 Data,Données
 Data Downloads,Téléchargements de données
 Data sources and years on which transition coding is based,Sources de données et années sur lesquelles le codage de transition est basé
+Data up to 2020,Données jusqu'en 2020
 Democracy,Démocratie
 Democratic Transition,Transition démocratique
+Democratic Transition Year,Année de transition démocratique
 Description,Description
+Did the investigation aim to collect evidence for possible future prosecutions?,L'enquête visait-elle à recueillir des éléments de preuve en vue d'éventuelles poursuites ultérieures?
+Did the investigation aim to encourage prosecutions?,L'enquête visait-elle à encourager les poursuites?
+Did the investigation aim to support international prosecutions?,L'enquête visait-elle à soutenir les poursuites internationales?
 "Did the truth commission issue a final report? If available, an electronic copy is hyperlinked","La commission de vérité a-t-elle publié un rapport final? Si disponible, une copie électronique est disponible en hyperlien"
 Did this reparation policy specifically address sexual or gender-based justice?,Cette politique de réparation traite-t-elle spécifiquement de la justice sexuelle ou sexiste?
 Did this trial involve charges of sexual or gender-based violence?,Le procès portait-il sur des accusations de violence sexuelle ou sexiste?
@@ -54,6 +61,7 @@ Download Country Data,Télécharger les données du pays
 Download the country-year dataset filtered to your selections,Télécharger l'ensemble des données par pays-année filtrées selon vos sélections
 Downloads,Téléchargements
 Dyad ID,Identifiant de la dyade
+Encourage Domestic Prosecutions,Encourager les poursuites nationales
 Episode Years,Épisode Années
 Europe,Europe
 Ever Convicted,Déjà fait l'objet d'une condamnation
@@ -66,6 +74,7 @@ Foreign Trial,Procès étranger
 Foreign Trials,Procès étrangers
 From,De
 High Rank,Rang élevé
+Hover over column labels for definitions,Survolez les étiquettes des colonnes pour obtenir des définitions
 Human Rights,Droits de la personne
 ID,Identifiant
 identification number,numéro d'identification
@@ -76,8 +85,10 @@ Intra-State Conflict,Conflit intra-étatique
 Legal,Droits
 light,clair
 Limit to Mechanisms Addressing SGBV,Limite des mécanismes de lutte contre la violence sexuelle et sexiste
+Mandate,Mandat
 Map,Carte
 Map from 2020,Carte de l'année 2020
+Map of 2020 - Table of selected mechanisms below,Carte de l'année 2020 - Tableau des mécanismes sélectionnés ci-dessous
 Mechanism,Mécanisme
 Mechanisms,Mécanismes
 MENA (Middle East and North Africa),Moyen-Orient et Afrique du Nord
@@ -103,6 +114,7 @@ Page Not Found,Page non trouvée
 People,Personnes
 Perception Surveys,Enquêtes de perception
 Policy Briefs,Notes de synthèse
+Predecessor country in parentheses,Pays prédécesseur entre parenthèses
 Privacy,Confidentialité
 Project,Projet
 Publications,Publications
@@ -117,6 +129,7 @@ Reparations Policies,Politiques de réparation
 Reparations Policy,Politique de réparation
 Report,Rapport
 Research,Recherche
+Reset Zoom,Réinitialiser le zoom
 Responses,Réponses
 Results,Résultats
 Scale of Intra-State Violence,Échelle de la violence intra-étatique
@@ -128,9 +141,11 @@ Show More,Afficher plus
 Source,Source
 Sources,Sources
 State Agent,Agent de l'État
+Support International Prosecutions,Soutenir les poursuites internationales
 Survey Section,Section d'enquête
 Table,Tableau
 Table of selected mechanisms below,Tableau des mécanismes sélectionnés ci-dessous
+Tags,Tags
 Targets,Personnes visées
 Team,Équipe
 Terms of Use,Conditions d'utilisation
@@ -152,6 +167,7 @@ Transitional Justice Perception Survey Data,Données des enquêtes sur la percep
 Transitional Justice Perception Surveys,Enquêtes sur la perception de la justice transitionnelle
 Trial,Procès
 Trial description,Description du procès pénal
+Trial Type,Type de procès
 Truth Commission,Commission de vérité
 Truth Commissions,Commissions de vérité
 "Type of trial (domestic, international, hybrid, or foreign)","Type de procès (domestique, international, hybride ou étranger)"
@@ -176,6 +192,7 @@ Which institutional actors were targeted in the vetting policy?,Quels sont les a
 Who were the intended recipients of the reparations policy?,Qui étaient les destinataires de la politique de réparation?
 Who were the intended recipients of this reparations policy?,Qui étaient les destinataires de cette politique de réparation?
 Year,Année
+Year democratic transition began,Année du début de la transition démocratique
 Year the amnesty was passed or announced,Année de l'adoption ou de l'annonce de l'amnistie
 Year the reparation policy was passed,Année d'adoption de la politique de réparation
 Year the trial began,Année du début du procès
@@ -185,6 +202,7 @@ Year transition began,Année du début de la transition
 Years,Années
 Years of Activity,Années d'activité
 Years of ongoing violence (25 battle-related deaths or more),Années de violence continue (25 mort au combat ou plus)
+Years when investigation was ongoing,Années où l'enquête était en cours
 Zoom In,Effectuer un zoom avant
 Zoom Out,Effectuer un zoom arrière
 © 2023 Transitional Justice Evaluation Tools. All rights reserved.,© 2023 Transitional Justice Evaluation Tools. Tous droits réservés.
