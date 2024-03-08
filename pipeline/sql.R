@@ -59,10 +59,10 @@ dbListTables(con) %>%
 
 ### reading specific table
 # dbWriteTable(conn = con,
-#              name = "Countries_fr",
-#              value = db[["Countries_fr"]],
+#              name = "Countries",
+#              value = db[["Countries"]],
 #              overwrite = TRUE)
-# dbReadTable(con, "Countries_fr") %>% tibble()
+# dbReadTable(con, "Countries") %>% tibble()
 
 ### write all tables to the database 
 ### (this overwrites existing tables by first truncating and then appending)

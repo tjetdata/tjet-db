@@ -651,13 +651,6 @@ db <- c(db[["MegaBase"]],
 rm(select, checkbox_to_binary, dim_drop, dim_last, dim_now, dim_orig, 
    crimes, victims, multi_selects) 
 
-txt_fields <- c("txt_summary", "auto_summary", "txt_intro", "txt_regime", 
-                "auto_regime", "txt_conflict", "auto_conflict", "txt_TJ", 
-                "txt_amnesties", "auto_amnesties", "txt_domestic", "auto_domestic", 
-                "txt_intl", "auto_intl", "txt_foreign", "auto_foreign",  
-                "txt_reparations", "auto_reparations", "txt_tcs", "auto_tcs", 
-                "txt_vetting", "auto_vetting", "txt_un", "auto_un")
-
 ### creating country list as basis for country-year dataset
 countrylist <- db$Countries %>% 
   mutate(beg = as.integer(str_sub(begin_date, 1, 4)), 
@@ -680,10 +673,11 @@ countrylist <- db$Countries %>%
          region_sub_un = ifelse(is.na(intregion), subregion, intregion),
          region = ifelse(region_wb == "Middle East & North Africa" & 
                            region %in% c("Asia", "Africa"), "MENA", region)) %>% 
-  mutate(across(all_of(txt_fields), str_trim) ) %>%
+  mutate(across(starts_with("txt_"), str_trim) ) %>%
+  mutate(across(starts_with("auto_"), str_trim) ) %>%
   select(country, country_fr, include, ccode, ccode_case, ccode_ksg, m49, isoa3, 
          country_id_vdem, beg, end, micro_ksg, region, region_sub_un, region_wb, 
-         focus, factsheet, all_of(txt_fields)) %>% 
+         focus, factsheet, starts_with("txt_"), starts_with("auto_")) %>% 
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
 
@@ -704,7 +698,7 @@ countrylist <- countrylist %>%
           by = c("ccode_case" = "ccode")) %>% 
   select(country, country_case, include, country_fr, country_case_fr, ccode, ccode_case, ccode_ksg, m49, isoa3, 
          country_id_vdem, beg, end, micro_ksg, region, region_sub_un, region_wb, 
-         tjet_focus, factsheet, all_of(txt_fields)) 
+         tjet_focus, factsheet, starts_with("txt_"), starts_with("auto_")) 
 
 ## ccode_case / country_case for the countries on the 2020 map that data are matched to
 countrylist %>%
@@ -997,11 +991,11 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 #   distinct()
 
 ### countries table for database
-db$Countries <- countrylist %>% 
+db[["Countries"]] <- countrylist %>% 
   mutate(beg = ifelse(beg < 1970, 1970, beg)) %>% 
   select(country, country_case, include, country_fr, ccode, ccode_case, ccode_ksg, beg, 
          end, m49, isoa3, micro_ksg, region, region_sub_un, region_wb, 
-         tjet_focus, all_of(txt_fields))
+         tjet_focus, starts_with("txt_"), starts_with("auto_"))
 
 ### data definition codebook
 db$codebook <- read_csv(here::here("data", "tjet_codebook.csv"), 
