@@ -40,7 +40,7 @@ investigations,years,Years,Years when investigation was ongoing
 investigations,uninv_intlpros,Support International Prosecutions,Did the investigation aim to support international prosecutions?
 investigations,uninv_evcoll,Collect Evidence,Did the investigation aim to collect evidence for possible future prosecutions?
 investigations,uninv_dompros,Encourage Domestic Prosecutions,Did the investigation aim to encourage prosecutions?
-transitions,transitionID,TJET Transition ID,TJET Transition ID
+transitions,transitionID,ID,TJET Transition ID
 transitions,trans_year_begin,Democratic Transition Year,Year democratic transition began
 transitions,sources,Coding Sources,Data sources and years on which transition coding is based
 conflicts,dyad_id,Dyad ID,UCDP Dyad ID
