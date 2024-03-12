@@ -35,7 +35,7 @@ vettings,policyName,Name,Name or description of the vetting policy
 vettings,yearStart,Year,Year the vetting policy was initiated
 vettings,Context,Context,Was this post-autocratic transitional justice or conflict justice?
 vettings,Targets,Targets,Which institutional actors were targeted in the vetting policy?
-investigations,mandate,Mandate,Mandate
+investigations,mandate,Mandate,Mandating Authority/Document 
 investigations,years,Years,Years when investigation was ongoing
 investigations,uninv_intlpros,Support International Prosecutions,Did the investigation aim to support international prosecutions?
 investigations,uninv_evcoll,Collect Evidence,Did the investigation aim to collect evidence for possible future prosecutions?
