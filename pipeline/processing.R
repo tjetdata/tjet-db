@@ -1917,6 +1917,11 @@ db[["dl_tjet_cy"]] <- df %>%
 ### saving individual mechanism tables for local analyses & repo
 ### these will also be written to the database for downloads
 
+db[["Transitions"]] <- db[["Transitions"]] %>% 
+  rename(ccode_cow = ccode) %>%
+  mutate(tjet_version = timestamp) %>%
+  write_csv(here::here("tjet_datasets", "tjet_transitions.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_transitions.csv"), na = "")
 db[["Amnesties"]] <- db[["Amnesties"]] %>% 
   filter(amnestyYear >= 1970 & amnestyYear <= 2020) %>%
   rename(ccode_cow = ccode) %>% 

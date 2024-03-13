@@ -39,7 +39,7 @@ tabs <- c(
   "Vettings_targetingAffiliation"
   ) %>% 
   print()
-
+  
 ### two different ways of establishing the same database connection
 ### (note that cloudways requires the local IP address to be added)
 con <- dbConnect(RMariaDB::MariaDB(),
@@ -59,10 +59,10 @@ dbListTables(con) %>%
 
 ### reading specific table
 # dbWriteTable(conn = con,
-#              name = "Countries",
-#              value = db[["Countries"]],
+#              name = "Transitions",
+#              value = db[["Transitions"]],
 #              overwrite = TRUE)
-# dbReadTable(con, "Countries") %>% tibble()
+# dbReadTable(con, "Transitions") %>% tibble()
 
 ### write all tables to the database 
 ### (this overwrites existing tables by first truncating and then appending)

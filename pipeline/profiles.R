@@ -109,7 +109,7 @@ temp$summary <- reduce(temp,
 temp$transitions <- db[["Transitions"]] %>% 
     left_join(countries %>% 
               select(country_case, ccode, ccode_case), 
-            by = c(ccode = "ccode")) %>%
+            by = c(ccode_cow = "ccode")) %>%
   select(country_case, ccode_case, trans_year_begin) %>%
   arrange(country_case, trans_year_begin) %>%
   group_by(country_case) %>% 

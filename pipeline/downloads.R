@@ -37,10 +37,13 @@ tjet <- map(names(to_download), function(base_id) {
   cat("base ID:", base_id, "\n")
   names(tab) <- tab <- to_download[[base_id]] 
   lapply(tab, function(df) {
+    Sys.sleep(1)
     cat("Downloading", df, "\n")
     airtable(df, base_id) %>%
-      read_airtable(id_to_col = TRUE)
-  })
+      read_airtable(id_to_col = TRUE) %>%
+      return()
+  }) %>%
+    return()
 })
 names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
 tjet[["db_timestamp"]] <- Sys.time()
