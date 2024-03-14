@@ -1,10 +1,7 @@
-ReparationMeasures <- function(cy, 
+ReparationMeasures <- function(cy = df, 
                                start_year_var = "yearCreated", 
                                nexus_vars = "all") {
-  
   ## options
-  # measures <- c("peaceagree", "collective", "symbolic", "compensation", 
-  #               "services", "victim_centered", "scope")
   year_vars <- c("yearCreated", "yearBegin")
   nexus <- c(all = "all", dtj = "fitsPostAutocraticTJ", ctj = "fitsConflictTJ", 
              dcj = "reparationConflictDuring", pcj = "reparationConflictAfter")
@@ -53,32 +50,38 @@ ReparationMeasures <- function(cy,
       accessibility = ifelse(!is.na(accessibility), 1, 0),
       victim_centered = diffAmount + outreach + alterationEffect + foreclose + accessibility, 
       scope = case_when(is.na(beneficiariesCount) | beneficiariesCount == 0 ~ 0, 
-                        beneficiariesCount > 0 & beneficiariesCount < 1039 ~ 1, 
-                        beneficiariesCount >= 1039 & beneficiariesCount < 6164 ~ 2, # above 1st quartile 
-                        beneficiariesCount >= 6164 & beneficiariesCount < 28778 ~ 3, # above median 
-                        beneficiariesCount >= 28778 ~ 4) # above 3rd quartile 
+                        # beneficiariesCount > 0 & beneficiariesCount < 1039 ~ 1, 
+                        # beneficiariesCount >= 1039 & beneficiariesCount < 6164 ~ 2, # above 1st quartile 
+                        # beneficiariesCount >= 6164 & beneficiariesCount < 28778 ~ 3, # above median 
+                        # beneficiariesCount >= 28778 ~ 4, 
+                        beneficiariesCount > 0 & beneficiariesCount < 6164 ~ 1, 
+                        beneficiariesCount >= 6164 ~ 2)
     ) %>% 
     filter(if_any(all_of(nexus[[nexus_vars]]), ~ . == 1)) %>% 
     rename(year = .env$start_year_var) %>% 
     arrange(ccode, year) %>%
     group_by(ccode, year) %>% 
-    mutate(n = n(), 
-           binary = ifelse(n > 0, 1, 0),
-           peaceagree = max(peaceagree), 
-           collective = max(collective), 
-           symbolic = max(symbolic) , 
-           compensation = max(compensation), 
-           services = max(services), 
-           victim_centered = max(victim_centered), 
-           scope = max(scope)
-           ) %>%
-    ungroup() %>%
-    select(ccode, year, binary, peaceagree, collective, symbolic, 
-           compensation, services, victim_centered, scope) %>% 
-    distinct() 
+    reframe(binary = ifelse(n() > 0, 1, 0),
+            peaceagree = max(peaceagree), 
+            collective = max(collective), 
+            symbolic = max(symbolic), 
+            compensation = max(compensation), 
+            services = max(services), 
+            victim_centered = max(victim_centered), 
+            diffAmount = max(diffAmount), 
+            outreach = max(outreach), alterationEffect = max(alterationEffect), 
+            foreclose = max(foreclose), 
+            accessibility = max(accessibility),
+            scope = max(scope)) %>% 
+    rename(diffamount = diffAmount, 
+           alteration = alterationEffect)
   
   prefix <- paste("rep", nexus_vars, sep = "_") %>% 
     str_replace(fixed("_all"), "") 
+  
+  vars <- c("binary", "peaceagree", "collective", "symbolic", "compensation", 
+            "services", "victim_centered", "diffamount", "outreach", 
+            "alteration", "foreclose", "accessibility", "scope") 
   
   ## merging 
   cy %>%
@@ -105,13 +108,6 @@ ReparationMeasures <- function(cy,
       victim_centered = ifelse(year %in% 1970:2020 & is.na(victim_centered), 0, victim_centered),
       scope = ifelse(year %in% 1970:2020 & is.na(scope), 0, scope),
     ) %>%
-    rename_with(.fn = ~ paste(prefix, "binary", sep = "_"), .cols = binary) %>% 
-    rename_with(.fn = ~ paste(prefix, "peaceagree", sep = "_"), .cols = peaceagree) %>% 
-    rename_with(.fn = ~ paste(prefix, "collective", sep = "_"), .cols = collective) %>% 
-    rename_with(.fn = ~ paste(prefix, "symbolic", sep = "_"), .cols = symbolic) %>% 
-    rename_with(.fn = ~ paste(prefix, "compensation", sep = "_"), .cols = compensation) %>% 
-    rename_with(.fn = ~ paste(prefix, "services", sep = "_"), .cols = services) %>% 
-    rename_with(.fn = ~ paste(prefix, "victim_centered", sep = "_"), .cols = victim_centered) %>% 
-    rename_with(.fn = ~ paste(prefix, "scope", sep = "_"), .cols = scope) %>% 
+    rename_with(.fn = ~ paste(prefix, .x, sep = "_"), .cols = all_of(vars)) %>% 
     return()
 }

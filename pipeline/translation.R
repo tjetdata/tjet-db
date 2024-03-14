@@ -3,6 +3,9 @@ require(tidyverse)
 require(deeplr)
 require(keyring)
 
+### should build in more data integrity checks and prevent accidental 
+### overwriting of translations that already exist in Airtable
+
 ### translation code is wrapped in a conditional statements because it's costly
 translations <- list(
   overwrite = FALSE, 

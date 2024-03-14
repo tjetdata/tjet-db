@@ -1,5 +1,7 @@
 ### packages
 require(tidyverse)
+library(readxl)
+library(writexl)
 
 ### load the raw data tables
 load(here::here("data", "tjet.RData"), verbose = TRUE)
@@ -160,6 +162,8 @@ db <- map(names(to_download), function(basename) {
   return(base)
 })
 names(db) <- names(to_download)
+
+rm(to_download) 
 
 ### ccode tables for Crimes and Victims
 
@@ -414,7 +418,10 @@ db[["Prosecutions"]][["Accused"]] <-
   db[["Prosecutions"]][["Accused"]] %>% 
   unnest_longer(all_of(c("lastGuiltyYear", "lastVerdictYear", 
                          "lastVerdict", "lastSentencingTime", 
-                         "lastSentencingArrangement")), keep_empty = TRUE)
+                         "lastSentencingArrangement")), keep_empty = TRUE) %>%
+  distinct() %>% 
+  filter(!(accusedID == 20968 & lastVerdictYear == 2015 & lastVerdict == "Guilty")) 
+  ## taking out duplicates that were missed in Airtable -- look at this again
 
 ### need to figure out a better way to deal with the multi-select field 
 ### because this now defunct code below created duplicates 
@@ -474,7 +481,7 @@ db[["Prosecutions"]][["Trials"]] <-
          caseDescription = str_squish(caseDescription), 
          charnum = nchar(caseDescription),
          caseDescription = ifelse(str_sub(caseDescription, charnum, charnum) == ".", 
-                                  str_sub(caseDescription, 1, charnum-1), 
+                                  str_sub(caseDescription, 1, charnum - 1), 
                                   caseDescription)) %>% 
   select(-charnum) 
 
@@ -508,7 +515,8 @@ db[["MegaBase"]][["Transitions"]] <-
          nsupport, sources, p5_year, ert_year, bmr_year) %>%
   arrange(trans_year_begin, ccode)
 
-### need to filter out non-HRs policies
+### need to filter out non-HRs policies & events, 
+### state agents and opposition members only for domestic trials
 ### check again: amnesties, TCs, reparations, vettings
 
 db[["Prosecutions"]][["Trials"]] <- 
@@ -518,11 +526,28 @@ db[["Prosecutions"]][["Trials"]] <-
 
 db[["Prosecutions"]][["Accused"]] <- 
   db[["Prosecutions"]][["Accused"]] %>% 
-  filter(trialID %in% db[["Prosecutions"]][["Trials"]]$trialID)
+  filter(trialID %in% db[["Prosecutions"]][["Trials"]]$trialID) 
 
 db[["Prosecutions"]][["CourtLevels"]] <- 
   db[["Prosecutions"]][["CourtLevels"]] %>%
   filter(accusedID %in% db[["Prosecutions"]][["Accused"]]$accusedID)
+
+### filtering out domestic trials that don't involve state agents or opposition members as accused
+
+trials_to_include <- db[["Prosecutions"]][["Accused"]] %>% 
+  filter(stateAgent == 1 | opposedToGovernment == 1) %>% 
+  select(trialID) %>% 
+  distinct() %>% 
+  arrange(trialID) %>% 
+  unlist(use.names = FALSE)
+
+db[["Prosecutions"]][["Trials"]] <- 
+  db[["Prosecutions"]][["Trials"]] %>% 
+  filter((trialType %in% c("domestic", "don't know") & 
+            trialID %in% trials_to_include) | 
+           trialType %in% c("foreign", "international", "international (hybrid)"))
+
+rm(trials_to_include) 
 
 ### checking amnesties
 # crime_labels <- db[["MegaBase"]][["Amnesties_whatCrimes"]] %>%
@@ -617,8 +642,7 @@ dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
 dl_invest %>% 
   filter(mandate != mandate_en | is.na(mandate_en))
   
-db[["MegaBase"]][["Investigations"]] <-
-  dl_invest %>% 
+db[["MegaBase"]][["Investigations"]] <- dl_invest %>% 
   rowwise() %>% 
   mutate(uninv = 1, 
          year = list(beg:end)) %>% 
@@ -649,8 +673,8 @@ db <- c(db[["MegaBase"]],
                                "Trials_lastSentencingTime")])
 
 ### cleaning up workspace environment
-rm(select, checkbox_to_binary, dim_drop, dim_last, dim_now, dim_orig, 
-   crimes, victims, multi_selects) 
+rm(exclude, select, checkbox_to_binary, dim_drop, dim_last, dim_now, dim_orig, 
+   drop_invalids, crimes, victims, multi_selects, pkeys)
 
 ### creating country list as basis for country-year dataset
 countrylist <- db$Countries %>% 
@@ -723,11 +747,8 @@ db[tabs] <- map(tabs, function(tab) {
 amnesties <- db[["Amnesties"]] %>% 
   arrange(ccode, amnestyYear) %>%  
   group_by(ccode, amnestyYear) %>%
-  mutate(amnesties = n(),
-         SGBV = max(SGBV)) %>% 
-  ungroup() %>% 
-  select(ccode, amnestyYear, amnesties, SGBV) %>% 
-  distinct() %>% 
+  reframe(amnesties = n(),
+          SGBV = max(SGBV)) %>%
   rename("year" = "amnestyYear", 
          "amnesties_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
@@ -739,11 +760,8 @@ reparations <- db[["Reparations"]] %>%
                          genderCrimes == "yes" | 
                          lgbtqCrimes == "yes", 1, 0) ) %>%    
   group_by(ccode, yearCreated) %>%
-  mutate(reparations = n(),
-         SGBV = max(SGBV)) %>% 
-  ungroup() %>% 
-  select(ccode, yearCreated, reparations, SGBV) %>% 
-  distinct() %>% 
+  reframe(reparations = n(),
+          SGBV = max(SGBV)) %>% 
   rename("year" = "yearCreated",
          "reparations_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
@@ -752,29 +770,23 @@ reparations <- db[["Reparations"]] %>%
 tcs <- db[["TruthCommissions"]] %>%
   arrange(ccode, yearPassed) %>%  
   group_by(ccode, yearPassed) %>%
-  mutate(tcs = n(),
-         SGBV = max(SGBV)) %>% 
-  ungroup() %>% 
-  select(ccode, ccode, yearPassed, tcs, SGBV) %>% 
-  distinct() %>% 
+  reframe(tcs = n(),
+          SGBV = max(SGBV)) %>% 
   rename("year" = "yearPassed",
          "tcs_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
 
 ### preparing vettings list for merging into country-year dataset
 vettings <- db[["Vettings"]] %>%
-  # select(vettingID, alterationOf, ccode, yearStart, yearEnd) %>% 
   filter(is.na(alterationOf)) %>% 
   arrange(ccode, yearStart) %>%  
   group_by(ccode, yearStart) %>%  
-  mutate(vettings = n()) %>% 
-  ungroup() %>% 
-  select(ccode, yearStart, vettings) %>% 
-  distinct() %>%
+  reframe(vettings = n()) %>% 
   rename("year" = "yearStart") %>% 
   filter(year >= 1970 & year <= 2020)
 
 ### preparing trials list for merging into country-year dataset
+
 trials <- db[["Trials"]] %>%
   rename("ccode" = "ccode_Accused") %>% 
   arrange(ccode, yearStart) %>%
@@ -782,40 +794,29 @@ trials <- db[["Trials"]] %>%
                          sexualViolence_Accused == 1 | 
                          otherSGBV_Accused == 1, 1, 0) ) %>% 
   select(ccode, trialType, yearStart, SGBV) %>% 
-  filter(yearStart >= 1970 & yearStart <= 2020)
+  filter(yearStart >= 1970 & yearStart <= 2020) %>%
+  rename("year" = "yearStart")
 
 ### subsetting and coding domestic trials total count measures for website
 domestic <- trials %>% 
   filter(trialType %in% c("domestic", "don't know")) %>% 
-  group_by(ccode, yearStart) %>%
-  mutate(trials_domestic = n(),
-         trials_domestic_SGBV = max(SGBV)) %>%
-  ungroup() %>%
-  select(ccode, yearStart, trials_domestic, trials_domestic_SGBV) %>%
-  rename("year" = "yearStart") %>% 
-  distinct() 
+  group_by(ccode, year) %>%
+  reframe(trials_domestic = n(),
+          trials_domestic_SGBV = max(SGBV))
 
 ### subsetting and coding foreign trials total count measures for website
 foreign <- trials %>% 
   filter(trialType == "foreign") %>% 
-  group_by(ccode, yearStart) %>%
-  mutate(trials_foreign = n(),
-         trials_foreign_SGBV = max(SGBV)) %>%
-  ungroup() %>%
-  select(ccode, yearStart, trials_foreign, trials_foreign_SGBV) %>%
-  rename("year" = "yearStart") %>% 
-  distinct() 
+  group_by(ccode, year) %>%
+  reframe(trials_foreign = n(),
+          trials_foreign_SGBV = max(SGBV))
 
 ### subsetting and coding intl trials total count measures for website
 intl <- trials %>% 
   filter(trialType %in% c("international", "international (hybrid)")) %>% 
-  group_by(ccode, yearStart) %>%
-  mutate(trials_intl = n(),
-         trials_intl_SGBV = max(SGBV)) %>%
-  ungroup() %>%
-  select(ccode, yearStart, trials_intl, trials_intl_SGBV) %>%
-  rename("year" = "yearStart") %>% 
-  distinct() 
+  group_by(ccode, year) %>%
+  reframe(trials_intl = n(),
+          trials_intl_SGBV = max(SGBV))
 
 ### preparing conflicts list for merging into country-year dataset
 confllist <- read_csv("conflicts/confl_dyads.csv", show_col_types = FALSE) %>% 
@@ -994,9 +995,9 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
 ### countries table for database
 db[["Countries"]] <- countrylist %>% 
   mutate(beg = ifelse(beg < 1970, 1970, beg)) %>% 
-  select(country, country_case, include, country_fr, ccode, ccode_case, ccode_ksg, beg, 
-         end, m49, isoa3, micro_ksg, region, region_sub_un, region_wb, 
-         tjet_focus, starts_with("txt_"), starts_with("auto_"))
+  select(country, country_case, include, country_fr, ccode, ccode_case, 
+         ccode_ksg, beg, end, m49, isoa3, micro_ksg, region, region_sub_un, 
+         region_wb, tjet_focus, starts_with("txt_"), starts_with("auto_"))
 
 ### data definition codebook
 db$codebook <- read_csv(here::here("data", "tjet_codebook.csv"), 
@@ -1048,6 +1049,8 @@ gloss <- read_csv(here::here("data", "HHI_surveys_glossary.csv")) %>%
 gl <- gloss$to
 names(gl) <- gloss$from
 
+rm(gloss) 
+
 map(db[["SurveysMeta"]]$results_tables, function(filename) { # for dev: filename = "Uganda_2005_Submission.xlsx" 
   surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename))
   tooltips <- names(surveytab)
@@ -1076,8 +1079,9 @@ map(db[["SurveysMeta"]]$results_tables, function(filename) { # for dev: filename
 })
 
 ### cleaning up workspace environment
-rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, 
-   trials, domestic, intl, foreign) 
+# rm(countrylist, translist, confllist, amnesties, reparations, tcs, vettings, 
+#    trials, domestic, intl, foreign) 
+rm(countrylist, translist, confllist, gl) 
 
 db[["TJETmembers"]] <- db[["TJETmembers"]] %>% 
   filter(TJET_website_add == 1 & !is.na(bio_text) ) %>% 
@@ -1135,25 +1139,24 @@ db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
 db[["Vettings"]] <- db[["Vettings"]] %>% 
   left_join(multies[["Vettings"]], by = "vettingID") 
 
-db[["ICC"]] <-
-  db[["ICC"]] %>%  
+rm(tabs, multies)
+
+db[["ICC"]] <- db[["ICC"]] %>%  
   select(country, ccode_cow, 
          ICC_referral, ICC_prelim_exam, ICC_prelimEnd, ICC_investigation)
 
-db[["ICCaccused"]] <-
-  db[["Accused"]] %>% 
+db[["ICCaccused"]] <- db[["Accused"]] %>% 
   filter(!is.na(ICC_investigation)) %>% 
   left_join(db[["Trials"]] %>% 
-              select(trialID, ccode_Crime), 
+              select(trialID, ccode_Accused), 
             by = "trialID") %>% 
-  mutate(ccode_Crime = as.integer(ccode_Crime)) %>%   
   left_join(db[["Countries"]] %>% 
               filter(end == 2020) %>% 
               select(country, ccode),
-            by = c(ccode_Crime = "ccode")) %>%
-  select(trialID, accusedID, country, ccode_Crime, nameOrDesc, ICC_arrest_warrant, ICC_arrestAppear, 
+            by = c(ccode_Accused = "ccode")) %>%
+  select(trialID, accusedID, country, ccode_Accused, nameOrDesc, ICC_arrest_warrant, ICC_arrestAppear, 
          ICC_confirm_charges, ICC_proceedings, ICC_withdrawnDismissed) %>% 
-  arrange(ccode_Crime, ICC_arrest_warrant)
+  arrange(ccode_Accused, ICC_arrest_warrant)
 
 ### helpers for CY measures
 source("functions/AmnestyMeasure.R")
@@ -1163,12 +1166,12 @@ source("functions/TCmeasure.R")
 source("functions/TrialsMeasure.R")
 source("functions/VettingMeasures.R")
 
-sample_cy <- c(
-  glo = "global", ### all, all the time, i.e. full dataset
-  dtr = "democratic transition", ### binary, from first transition year
-  aco = "all conflicts", ### binary, from first conflict year
-  dco = "during conflict", ### binary, when conflict active
-  pco = "post-conflict") ### binary, after active conflict ended
+# sample_cy <- c(
+#   glo = "global", ### all, all the time, i.e. full dataset
+#   dtr = "democratic transition", ### binary, from first transition year
+#   aco = "all conflicts", ### binary, from first conflict year
+#   dco = "during conflict", ### binary, when conflict active
+#   pco = "post-conflict") ### binary, after active conflict ended
 
 ### merging it all together
 
@@ -1186,9 +1189,9 @@ sample_cy <- c(
 df <- readRDS(here::here("data", "cy_covariates.rds"))
 not <- c("histname", "cid_who", "ldc", "lldc", "sids", "income_wb", 
          "iso3c_wb", "region_wb2")
-first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", "m49", 
-           "isoa3", "country_id_vdem", "region", "subregion", "intregion", 
-           "region_wb", "micro_ksg")
+first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", 
+           "m49", "isoa3", "country_id_vdem", "region", "subregion", 
+           "intregion", "region_wb", "micro_ksg")
 then <- names(df)[!names(df) %in% c(first, not)]
 df <- df %>%
   select(all_of(first), all_of(then)) %>%
@@ -1206,8 +1209,7 @@ df %>%
 # unique(df$country)[!unique(df$country) %in% unique(db[["CountryYears"]]$country) ]
 # unique(db[["CountryYears"]]$country)[!unique(db[["CountryYears"]]$country) %in% unique(df$country) ]
 
-df <- df %>% 
-  ### the creation of Archigos variables could be moved to cy-data
+df <- df %>%
   mutate(ruler_exit = ifelse(year(lead_enddate_beg) == year, 1, 0), 
          ruler_days = case_when(
            year(lead_enddate_beg) != year ~ 
@@ -1215,12 +1217,21 @@ df <- df %>%
            year(lead_enddate_beg) == year ~ 
              as.integer(lead_enddate_beg - lead_startdate_beg)) 
          ) %>%
+  ### the creation of Archigos variables could be moved to cy-data
   left_join(db[["CountryYears"]] %>%
-               select(!any_of(c("country", "cyID", "country_case", "ccode_case", 
-                                "country_label", "beg", "end", "region", "tjet_focus", 
-                                "reg_democ", "reg_autoc", "reg_trans", "conflict"))) %>%
+               select(!any_of(c(
+                 "country", "cyID", "country_case", "ccode_case", "beg", "end",
+                 "country_label", "country_label_fr", "region", "tjet_focus", 
+                 "reg_democ", "reg_autoc", "reg_trans", "conflict"))) %>%
                rename(ccode_cow = ccode), 
              by = c("ccode_cow", "ccode_ksg", "country_id_vdem", "year")) %>% # losing Slovenia 1991?
+  ### problem here with country years for micros states left in that TJET did not collect data on, filtering them out
+  left_join(db[["CountryYears"]] %>%
+              select(country, beg, end) %>%
+              distinct(), 
+            by = "country") %>% 
+  filter(year >= beg | is.na(beg)) %>% 
+  select(-beg, -end) %>% 
   arrange(country_case, year) %>%
   mutate(amnesties_sample = ifelse(amnesties > 0, 1, NA),
          reparations_sample = ifelse(reparations > 0, 1, NA),
@@ -1258,44 +1269,44 @@ df <- df %>%
          ICC_investigation_cumu = cumsum(ICC_investigation)) %>% 
   ungroup() %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Crime, ICC_arrest_warrant) %>%
+              select(ccode_Accused, ICC_arrest_warrant) %>%
               filter(!is.na(ICC_arrest_warrant)) %>% 
               mutate(icc_action = 1) %>%
-              group_by(ccode_Crime, ICC_arrest_warrant) %>%  
+              group_by(ccode_Accused, ICC_arrest_warrant) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_arrest_warrant")) %>% 
+            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_arrest_warrant")) %>% 
   rename(ICC_arrest_warrant = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Crime, ICC_arrestAppear) %>%
+              select(ccode_Accused, ICC_arrestAppear) %>%
               filter(!is.na(ICC_arrestAppear)) %>%
               mutate(icc_action = 1) %>%
-              group_by(ccode_Crime, ICC_arrestAppear) %>%  
+              group_by(ccode_Accused, ICC_arrestAppear) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_arrestAppear")) %>% 
+            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_arrestAppear")) %>% 
   rename(ICC_arrestAppear = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Crime, ICC_confirm_charges) %>%
+              select(ccode_Accused, ICC_confirm_charges) %>%
               filter(!is.na(ICC_confirm_charges)) %>%
               mutate(icc_action = 1) %>%
-              group_by(ccode_Crime, ICC_confirm_charges) %>%  
+              group_by(ccode_Accused, ICC_confirm_charges) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_confirm_charges")) %>% 
+            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_confirm_charges")) %>% 
   rename(ICC_confirm_charges = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Crime, ICC_proceedings) %>%
+              select(ccode_Accused, ICC_proceedings) %>%
               filter(!is.na(ICC_proceedings)) %>%
               mutate(icc_action = 1) %>%
-              group_by(ccode_Crime, ICC_proceedings) %>%  
+              group_by(ccode_Accused, ICC_proceedings) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_proceedings")) %>% 
+            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_proceedings")) %>% 
   rename(ICC_proceedings = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Crime, ICC_withdrawnDismissed) %>%
+              select(ccode_Accused, ICC_withdrawnDismissed) %>%
               filter(!is.na(ICC_withdrawnDismissed)) %>%
               mutate(icc_action = 1) %>%
-              group_by(ccode_Crime, ICC_withdrawnDismissed) %>%  
+              group_by(ccode_Accused, ICC_withdrawnDismissed) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Crime", "year" = "ICC_withdrawnDismissed")) %>% 
+            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_withdrawnDismissed")) %>% 
   rename(ICC_withdrawnDismissed = icc_action) %>% 
   mutate(ICC_arrest_warrant = ifelse(is.na(ICC_arrest_warrant), 0, ICC_arrest_warrant), 
          ICC_arrestAppear = ifelse(is.na(ICC_arrestAppear), 0, ICC_arrestAppear), 
@@ -1404,81 +1415,103 @@ df %>%
 
 ## for dev only
 # df <- df %>%
-#   select(country, ccode_cow, year)
+#   select(country, ccode_cow, year, trials_domestic)
 
 ### trials 
+# measures <- c(trs = "trials started", tro = "trials ongoing", 
+#               tfc = "trials with final convictions", cct = "conviction count", 
+#               crt = "conviction rate by all accused", sen = "sentence totals")
 
-measures <- c(trs = "trials started", tro = "trials ongoing", 
-              tfc = "trials with final convictions", cct = "conviction count", 
-              crt = "conviction rate by all accused", sen = "sentence totals")
+### tested with confirmation that all_trs_dom_ctj_dtj_dcj_pcj_all == trials_domestic == all_trs_dom
+# df <- TrialsMeasure(cy = df, prefix = "all", measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con", "ctj", "dtj", "dcj", "pcj"), memb_opts = "all") %>% 
+#   rename(all_trs_dom = all_trs_dom_ctj_dtj_dcj_pcj)
 
-#### extraordinary HRs prosecutions (prefix: xord)
+#### transitional prosecutions (prefix: tran)
 
 ## dtj trials of state agents: _dtj_sta
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi")
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi")
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
 
 ## ctj trials of state agents: _ctj_sta
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
 
 ## combined dtj and ctj trials of state agents: _dtj_ctj_sta
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tro", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tfc", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "cct", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tro", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tfc", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "cct", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") %>% 
+  mutate(tran_trs_dom_dtj_ctj_sta_binary = ifelse(tran_trs_dom_dtj_ctj_sta > 0, 1, 0), 
+         tran_trs_dom_dtj_ctj_sta_scale = case_when(tran_trs_dom_dtj_ctj_sta == 0 ~ 0, 
+                                                tran_trs_dom_dtj_ctj_sta %in% 1:2 ~ 1, 
+                                                tran_trs_dom_dtj_ctj_sta > 2 ~ 2) ) 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
 
 ## ctj trials of opposition members: _ctj_opp 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
-df <- TrialsMeasure(cy = df, prefix = "xord", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") %>% 
+  mutate(tran_trs_dom_ctj_opp_binary = ifelse(tran_trs_dom_ctj_opp > 0, 1, 0), 
+         tran_trs_dom_ctj_opp_scale = case_when(tran_trs_dom_ctj_opp == 0 ~ 0, 
+                                                tran_trs_dom_ctj_opp %in% 1:2 ~ 1, 
+                                                tran_trs_dom_ctj_opp > 2 ~ 2)) 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
 
-#### ordinary HRs prosecutions (prefix: ord)
+# TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "opp") %>% 
+#   select(tran_trs_dom_dtj_opp) %>% 
+#   filter(tran_trs_dom_dtj_opp > 0) 
+
+#### regular HRs prosecutions (prefix: regu)
 
 ## trials of state agents that are not dtj or ctj: [_hrs_con]_Xdtj_Xctj_sta
-df <- TrialsMeasure(cy = df, prefix = "ordy", measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "ordy", measure = "tro", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "ordy", measure = "tfc", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "ordy", measure = "cct", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "ordy", measure = "crt", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "ordy", measure = "sen", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") %>% 
+  mutate(regu_trs_dom_sta_binary = ifelse(regu_trs_dom_sta > 0, 1, 0), 
+         regu_trs_dom_sta_scale = case_when(regu_trs_dom_sta == 0 ~ 0, 
+                                            regu_trs_dom_sta %in% 1:2 ~ 1, 
+                                            regu_trs_dom_sta > 2 ~ 2)) 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "tro", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "tfc", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "cct", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "crt", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "sen", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+
+# TrialsMeasure(cy = df, prefix = "regu", measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "opp") %>% 
+#   select(regu_trs_dom_opp) %>% summary 
 
 #### low level conflict prosecutions: (prefix: lcon)
 
@@ -1719,6 +1752,39 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_independent",
                 consult_vars = NULL, powers_vars = NULL, testimony_vars = NULL, 
                 reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) %>% 
   select(-tcs_independent_binary)
+df <- TCmeasure(cy = df, new_col_name = "tcs_ind_no",
+          start_year_var = "yearBeginOperation",
+          filter_nexus_vars = NULL, 
+          filter_crimes_vars = "all", 
+          aims_opts = NULL,
+          independence_opts = c("don't know", "not independent"), 
+          consult_vars = NULL, powers_vars = NULL, testimony_vars = NULL, 
+          reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) %>% 
+  select(-tcs_ind_no_binary)
+df <- TCmeasure(cy = df, new_col_name = "tcs_ind_part",
+          start_year_var = "yearBeginOperation",
+          filter_nexus_vars = NULL, 
+          filter_crimes_vars = "all", 
+          aims_opts = NULL,
+          independence_opts = c("partially independent"), 
+          consult_vars = NULL, powers_vars = NULL, testimony_vars = NULL, 
+          reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) %>% 
+  select(-tcs_ind_part_binary)
+df <- TCmeasure(cy = df, new_col_name = "tcs_ind_full",
+          start_year_var = "yearBeginOperation",
+          filter_nexus_vars = NULL, 
+          filter_crimes_vars = "all", 
+          aims_opts = NULL,
+          independence_opts = c("fully independent"), 
+          consult_vars = NULL, powers_vars = NULL, testimony_vars = NULL, 
+          reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) %>% 
+  select(-tcs_ind_full_binary)
+df <- df %>% 
+  mutate(tcs_independent_scale = case_when(tcs_ind_no == 1 ~ 0,
+                                           tcs_ind_part == 1 ~ 1, 
+                                           tcs_ind_full == 1 ~ 2,
+                                           TRUE ~ 0)) %>% 
+  select(-tcs_ind_no,-tcs_ind_part, -tcs_ind_full) 
 
 df <- TCmeasure(cy = df, new_col_name = "tcs_harms", 
                 start_year_var = "yearBeginOperation",
@@ -1730,7 +1796,11 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_harms",
                 independence_opts = NULL,
                 consult_vars = NULL, powers_vars = NULL, testimony_vars = NULL,
                 reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL) %>% 
-  select(-tcs_harms_binary)
+  select(-tcs_harms_binary) %>% 
+  mutate(tcs_harms = case_when(tcs_harms == 0 ~ 0, 
+                               tcs_harms %in% 1:2 ~ 1, 
+                               tcs_harms %in% 3:5 ~ 2, 
+                               tcs_harms %in% 6:7 ~ 3)) 
 
 df <- TCmeasure(cy = df, new_col_name = "tcs_powers",
                 start_year_var = "yearBeginOperation",
@@ -1743,6 +1813,52 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_powers",
                 testimony_vars = NULL, reports_vars = NULL,
                 recommend_vars = NULL, monitor_vars = NULL) %>% 
   select(-tcs_powers_binary)
+
+df <- TCmeasure(cy = df, new_col_name = "tcs_power_investigate",
+                start_year_var = "yearBeginOperation",
+                filter_nexus_vars = NULL, 
+                filter_crimes_vars = "all", 
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
+                powers_vars = c("investigateStateMembers"), 
+                testimony_vars = NULL, reports_vars = NULL,
+                recommend_vars = NULL, monitor_vars = NULL) %>% 
+  select(-tcs_power_investigate_binary)
+df <- TCmeasure(cy = df, new_col_name = "tcs_power_compel",
+                start_year_var = "yearBeginOperation",
+                filter_nexus_vars = NULL, 
+                filter_crimes_vars = "all", 
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
+                powers_vars = c("compelTestimony"), 
+                testimony_vars = NULL, reports_vars = NULL,
+                recommend_vars = NULL, monitor_vars = NULL) %>% 
+  select(-tcs_power_compel_binary)
+df <- TCmeasure(cy = df, new_col_name = "tcs_power_docs",
+                start_year_var = "yearBeginOperation",
+                filter_nexus_vars = NULL, 
+                filter_crimes_vars = "all", 
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
+                powers_vars = c("accessOfficialDocuments"), 
+                testimony_vars = NULL, reports_vars = NULL,
+                recommend_vars = NULL, monitor_vars = NULL) %>% 
+  select(-tcs_power_docs_binary)
+df <- TCmeasure(cy = df, new_col_name = "tcs_power_name",
+                start_year_var = "yearBeginOperation",
+                filter_nexus_vars = NULL, 
+                filter_crimes_vars = "all", 
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
+                powers_vars = c("namePerpetrators"), 
+                testimony_vars = NULL, reports_vars = NULL,
+                recommend_vars = NULL, monitor_vars = NULL) %>% 
+  select(-tcs_power_name_binary)
+df <- TCmeasure(cy = df, new_col_name = "tcs_power_reform",
+                start_year_var = "yearBeginOperation",
+                filter_nexus_vars = NULL, 
+                filter_crimes_vars = "all", 
+                aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
+                powers_vars = c("recommendInstitutionalReforms"), 
+                testimony_vars = NULL, reports_vars = NULL,
+                recommend_vars = NULL, monitor_vars = NULL) %>% 
+  select(-tcs_power_reform_binary)
 
 df <- TCmeasure(cy = df, new_col_name = "tcs_report",
                 start_year_var = "yearCompleteOperation",
@@ -1818,35 +1934,46 @@ df <- AmnestyMeasure(cy = df, peace_vars = "peaceSettlement")
 
 df <- VettingMeasures(cy = df)
 
-### domestic trials sample indicator 
+rm(vet_ctry_incl, vet_spells)
 
-df <- df %>% 
-  arrange(country_case, year) %>%
-  mutate(trials_domestic_sample_sta_opp = xord_trs_dom_dtj_ctj_sta + ordy_trs_dom_sta + xord_trs_dom_ctj_opp + lcon_trs_dom_sta_opp, 
-         trials_domestic_sample_sta_opp = ifelse(trials_domestic_sample_sta_opp > 0, 1, NA)) %>% 
-  group_by(country_case) %>% 
-  fill(trials_domestic_sample_sta_opp, 
-       .direction = "down") %>%
-  mutate(trials_domestic_sample_sta_opp = ifelse(is.na(trials_domestic_sample_sta_opp), 0, trials_domestic_sample_sta_opp)) %>%
-  ungroup()
+### domestic trials sample indicator
+
+# df %>% 
+#   filter(year < 2021) %>%
+#   # filter(is.na(trials_domestic) | 
+#   #          is.na(all_trs_dom_ctj_dtj_dcj_pcj_all) | 
+#   #          is.na(tran_trs_dom_dtj_ctj_sta) |
+#   #          is.na(tran_trs_dom_ctj_opp) |
+#   #          is.na(regu_trs_dom_sta) |
+#   #          is.na(lcon_trs_dom_sta_opp))  %>% 
+#   arrange(country, year) %>%
+#   select(country, year, trials_domestic, tran_trs_dom_dtj_ctj_sta, tran_trs_dom_ctj_opp, regu_trs_dom_sta, lcon_trs_dom_sta_opp) %>%
+#   mutate(new = tran_trs_dom_dtj_ctj_sta + regu_trs_dom_sta + tran_trs_dom_ctj_opp + lcon_trs_dom_sta_opp, 
+#          diff = new - trials_domestic) %>% 
+#   filter(diff != 0) %>% 
+#   print(n = Inf)
 
 ### cleanup
 
 first <- c(first, "dtr", "aco", "dco", "pco")
-not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", 
-         "transition", "conflict", "conflict_active", 
-         "sample_trans", "sample_confl", "sample_combi") 
+not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", "transition", 
+         "conflict", "conflict_active", "sample_trans", "sample_confl", "sample_combi") 
 then <- names(df)[!names(df) %in% c(first, not)]
 
 df <- df %>% 
   select(all_of(first), all_of(then))
 
+rm(first, not, then)
+
 ### var order
 codebook <- db[["codebook"]] %>% 
   filter(tables == "tjet_cy") %>% 
   filter(colname != "lag_*")
-names(df)[!names(df) %in% codebook$colname]
+
+## these are in the codebook but not in the dataset 
 codebook$colname[!codebook$colname %in% names(df)]
+## these are in the dataset but not in the codebook
+names(df)[!names(df) %in% codebook$colname]
 
 df <- df %>% 
   select(all_of(codebook$colname[codebook$colname %in% names(df)]))
@@ -1873,6 +2000,8 @@ df %>%
   write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_cy_analyses.csv"), na = "")
 
+rm(lags, exclude)
+
 ### downloads datasets 
 # - include country IDs, transitions and our data
 # - everything in our filters, but not other outcomes
@@ -1896,6 +2025,8 @@ db[["dl_tjet_codebook"]] <- codebook %>%
   left_join(read_csv(here::here("data", "sources.csv")), by = "source") %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
+
+rm(codebook) 
 
 db[["dl_tjet_cy"]] <- df %>%
   select(all_of(db[["dl_tjet_codebook"]]$colname)) %>% 
@@ -1976,3 +2107,1504 @@ db[["ICCaccused"]] <- db[["ICCaccused"]] %>%
   write_csv(here::here(dropbox_path, "tjet_icc_accused.csv"), na = "")
 
 save(db, file = here::here("data", "tjetdb.RData"))
+
+rm(dl_invest, timestamp)
+
+### country profiles
+
+options(scipen = 999) 
+
+countries <- db[["Countries"]] %>%
+  filter(!country %in% c("Serbia and Montenegro",
+                         "Soviet Union",
+                         "Yugoslavia") ) %>%
+  select(country, country_case, ccode, ccode_case, ccode_ksg)
+
+# countries %>% 
+#   select(country_case, ccode_case) %>% 
+#   distinct() %>% 
+#   group_by(ccode_case) %>% 
+#   mutate(n = n()) %>% 
+#   filter(n > 1) 
+
+autotxt <- autoprep <- data <- list()
+
+### summaries autoprep
+
+autoprep$amnesties <-  amnesties %>% 
+  left_join(countries %>% select(ccode, ccode_case), 
+            by = "ccode") %>% 
+  group_by(ccode_case) %>%
+  reframe(amnesties = sum(amnesties), 
+          amnesties_yrs = list(sort(unique(year))))
+
+autoprep$domestic <- domestic %>% 
+  left_join(countries %>% select(ccode, ccode_case), 
+            by = "ccode") %>% 
+  group_by(ccode_case) %>%
+  reframe(domestic = sum(trials_domestic), 
+          domestic_yrs = list(sort(unique(year))))
+
+autoprep$foreign <- foreign %>% 
+  left_join(countries %>% select(ccode, ccode_case), 
+            by = "ccode") %>% 
+  group_by(ccode_case) %>%
+  reframe(foreign = sum(trials_foreign), 
+          foreign_yrs = list(sort(unique(year))))
+
+autoprep$intl <- intl %>% 
+  left_join(countries %>% select(ccode, ccode_case), 
+            by = "ccode") %>% 
+  group_by(ccode_case) %>%
+  reframe(intl = sum(trials_intl), 
+          intl_yrs = list(sort(unique(year))))
+
+autoprep$reparations <-  reparations %>% 
+  left_join(countries %>% select(ccode, ccode_case), 
+            by = "ccode") %>% 
+  group_by(ccode_case) %>%
+  reframe(reparations = sum(reparations), 
+          reparations_yrs = list(sort(unique(year))))
+
+autoprep$tcs <-  tcs %>% 
+  left_join(countries %>% select(ccode, ccode_case), 
+            by = "ccode") %>% 
+  group_by(ccode_case) %>%
+  reframe(tcs = sum(tcs), 
+          tcs_yrs = list(sort(unique(year))))
+
+autoprep$vettings <-  vettings %>% 
+  left_join(countries %>% select(ccode, ccode_case), 
+            by = "ccode") %>% 
+  group_by(ccode_case) %>%
+  reframe(vettings = sum(vettings), 
+          vettings_yrs = list(sort(unique(year))))
+
+autoprep$summary <- reduce(autoprep, 
+                       function(x, y) full_join(x, y, by = "ccode_case")) %>% 
+  mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties), 
+         domestic = ifelse(is.na(domestic), 0, domestic), 
+         foreign = ifelse(is.na(foreign), 0, foreign), 
+         intl = ifelse(is.na(intl), 0, intl), 
+         reparations = ifelse(is.na(reparations), 0, reparations), 
+         tcs = ifelse(is.na(tcs), 0, tcs), 
+         vettings = ifelse(is.na(vettings), 0, vettings)) %>%
+  left_join(countries %>% 
+              select(country_case, ccode_case) %>% 
+              distinct(), 
+            by = "ccode_case") %>%
+  arrange(country_case) 
+
+autoprep$transitions <- db[["Transitions"]] %>% 
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>%
+  select(country_case, ccode_case, trans_year_begin) %>%
+  arrange(country_case, trans_year_begin) %>%
+  group_by(country_case) %>% 
+  reframe(ccode_case = unique(ccode_case), 
+          trans_year_begin = list(unique(trans_year_begin)))
+
+autoprep$conflicts <- db[["ConflictDyads"]] %>% 
+  mutate(internationalized = ifelse(str_detect(intensity, "Internationalized"), 1, 0)) %>% 
+  rowwise() %>% 
+  mutate(years = list(ep_start_year:ep_end_year) ) %>% 
+  ungroup() %>% 
+  select(dyad_id, conflict_id, gwno_loc, ep_start_year, ep_end_year, years, internationalized) %>%
+  left_join(countries %>% 
+              select(country_case, ccode_ksg, ccode_case) %>% 
+              distinct(), 
+            by = c("gwno_loc" = "ccode_ksg")) %>%
+  select(country_case, ccode_case, dyad_id, conflict_id, years, internationalized) %>%
+  group_by(country_case) %>%
+  reframe(ccode_case = unique(ccode_case), 
+          conflicts = length(unique(conflict_id)), 
+          dyads = length(unique(dyad_id)), 
+          episodes = n(),
+          years = list(sort(unique(unlist(years)))),
+          years = list(unlist(years)[unlist(years) %in% 1970:2020]),
+          int_ep = sum(internationalized))
+
+### data for summary spreadsheet
+
+data[["Amnesties"]] <- db[["Amnesties"]] %>%
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  mutate(what_hrv = ifelse(str_detect(whatCrimes, 
+                                      "human rights violations"), 1, 0), 
+         who_pol = ifelse(str_detect(whoWasAmnestied, 
+                                     "protesters / political prisoners"), 1, 0)) %>% 
+  group_by(country_case) %>%
+  mutate(beg = min(amnestyYear), 
+         end = max(amnestyYear), 
+         count_all = n(), 
+         count_demtrans = sum(fitsPostAutocraticTJ),
+         count_conflict = sum(fitsConflictTJ),
+         count_dcj = sum(dcj),
+         count_pcj = sum(pcj),
+         count_peaceagree = sum(peaceSettlement), 
+         count_prisoners = sum(who_pol),
+         count_hrv = sum(what_hrv),
+  ) %>%
+  ungroup() %>%
+  select(country_case, ccode_case, beg, end, count_all, count_demtrans, count_conflict, count_dcj, 
+         count_pcj, count_peaceagree, count_prisoners, count_hrv) %>%
+  distinct() %>%
+  arrange(country_case)
+
+vars_dom <- c("trials_domestic", "tran_trs_dom_dtj_sta", "tran_trs_dom_ctj_sta", 
+              "tran_trs_dom_dtj_ctj_sta", "regu_trs_dom_sta", 
+              "tran_tfc_dom_dtj_ctj_sta", "regu_tfc_dom_sta", 
+              "tran_trs_dom_dtj_ctj_sta_hi", "tran_tfc_dom_dtj_ctj_sta_hi", 
+              "tran_trs_dom_ctj_opp", "tran_tfc_dom_ctj_opp", 
+              "lcon_trs_dom_sta_opp", "lcon_tfc_dom_sta_opp")
+vars_int <- c("trials_intl", "trs_int_sta", "trs_int_opp", 
+              "tfc_int_sta", "tfc_int_opp") 
+vars_for <- c("trials_foreign", "trs_for_sta", "trs_for_opp", 
+              "tfc_for_sta", "tfc_for_opp") 
+
+data[["Domestic_cy"]] <- db[["dl_tjet_cy"]] %>% 
+  select(-country_case) %>% 
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  ### why this craziness? because what is outwardly the country-case does not line up perfectly with how we need to assign TJ events internally for consistency
+  arrange(country_case, year) %>% 
+  filter(if_any(all_of(vars_dom), ~ . > 0)) %>%
+  group_by(country_case) %>% 
+  reframe(ccode_case = unique(ccode_case), 
+          beg = min(year), 
+          end = max(year),
+          total = sum(trials_domestic), 
+          tran_trs_dom_dtj_sta = sum(tran_trs_dom_dtj_sta), 
+          tran_trs_dom_ctj_sta = sum(tran_trs_dom_ctj_sta), 
+          tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta), 
+          tran_tfc_dom_dtj_ctj_sta = sum(tran_tfc_dom_dtj_ctj_sta), 
+          tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi), 
+          tran_tfc_dom_dtj_ctj_sta_hi = sum(tran_tfc_dom_dtj_ctj_sta_hi), 
+          regu_trs_dom_sta = sum(regu_trs_dom_sta), 
+          regu_tfc_dom_sta = sum(regu_tfc_dom_sta), 
+          tran_trs_dom_ctj_opp = sum(tran_trs_dom_ctj_opp), 
+          tran_tfc_dom_ctj_opp = sum(tran_tfc_dom_ctj_opp), 
+          lcon_trs_dom_sta_opp = sum(lcon_trs_dom_sta_opp), 
+          lcon_tfc_dom_sta_opp = sum(lcon_tfc_dom_sta_opp))
+
+data[["Intl_cy"]] <- db[["dl_tjet_cy"]] %>% 
+  select(-country_case) %>% 
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  arrange(country_case, year) %>% 
+  filter(if_any(all_of(vars_int), ~ . > 0)) %>% 
+  group_by(country_case) %>% 
+  reframe(ccode_case = unique(ccode_case), 
+          beg = min(year), 
+          end = max(year),
+          trials_intl = sum(trials_intl),
+          trs_int_hrs_con_all = sum(trs_int_sta + trs_int_opp), 
+          tfc_int_hrs_con_all = sum(tfc_int_sta + tfc_int_opp))
+
+data[["Foreign_cy"]] <- db[["dl_tjet_cy"]] %>% 
+  select(-country_case) %>% 
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  arrange(country_case, year) %>% 
+  filter(if_any(all_of(vars_for), ~ . > 0)) %>%
+  group_by(country_case) %>% 
+  reframe(ccode_case = unique(ccode_case), 
+          beg = min(year), 
+          end = max(year), 
+          trials_foreign = sum(trials_foreign),
+          trs_for_hrs_con_all = sum(trs_for_sta + trs_for_opp), 
+          tfc_for_hrs_con_all = sum(tfc_for_sta + tfc_for_opp)) 
+
+data[["Foreign"]] <- db[["Trials"]] %>%
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_Accused = "ccode")) %>%
+  select(-ccode_Accused) %>%  
+  rename("countryAccused" = "country_case", 
+         "ccode_Accused" = "ccode_case") %>%
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_Trial = "ccode")) %>%
+  select(-ccode_Trial) %>%  
+  rename("countryTrial" = "country_case", 
+         "ccode_Trial" = "ccode_case") %>%
+  filter(trialType == "foreign") %>% 
+  select(trialID, countryAccused, ccode_Accused, countryTrial, ccode_Trial, yearStart, yearEnd, caseDescription) %>% 
+  arrange(countryAccused, yearStart) 
+
+data[["Reparations"]] <- db[["Reparations"]] %>%
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  group_by(country_case) %>% 
+  mutate(count = n()) %>% 
+  ungroup() %>% 
+  select(country_case, ccode_case, count, reparationID, yearCreated, yearBegin, yearEnd, 
+         individualReparations, collectiveReparations, beneficiariesCount) %>%
+  arrange(country_case, yearCreated)
+
+data[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  group_by(country_case) %>% 
+  mutate(count = n()) %>% 
+  ungroup() %>% 
+  rename("rec_prosecutions" = "recommendProsecutions", 
+         "rec_reparations" = "recommendReparations", 
+         "rec_reforms" = "reportRecommendInstitutionalReform", 
+         "reform_HRs" = "humanRightsReforms", 
+         "reform_legal" = "legalReform", 
+         "reform_judicial" = "judicialReforms", 
+         "reform_gender" = "genderReform", 
+         "reform_corruption" = "corruptionReforms", 
+         "reform_SSR" = "SecuritySectorReforms", 
+         "reform_vetting" = "vetting") %>% 
+  select(country_case, ccode_case, count, truthcommissionID, yearPassed, 
+         yearBeginOperation, yearCompleteOperation, finalReportIssued, 
+         reportPubliclyAvailable, rec_prosecutions, rec_reparations, 
+         rec_reforms, reform_HRs, reform_legal, reform_judicial, reform_gender, 
+         reform_corruption, reform_SSR, reform_vetting, consultedVictims, 
+         commissionersVictimGroups, encourageVictimTestimony
+  ) %>%
+  arrange(country_case, yearPassed)
+
+data[["Vettings"]] <- db[["Vettings"]] %>%
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  mutate(
+    individual_conduct = case_when(
+      str_detect(targetingWhy, "specific individual conduct") ~ 1,
+      TRUE ~ 0)) %>%
+  select(country_case, ccode_case, vettingID, alterationOf, yearStart, yearEnd, 
+         individual_conduct, type_dismissal, type_ban, type_declassification, 
+         type_perjury, numberInvestigated, dateLaw) %>%
+  arrange(country_case, ccode_case, yearStart)
+
+data[["ICC-interventions"]] <- db[["ICC"]] %>% 
+  select(-country) %>%  
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  select(country_case, ccode_case, ICC_referral, ICC_prelim_exam, ICC_prelimEnd, ICC_investigation) %>%
+  arrange(country_case, ICC_prelim_exam) 
+
+data[["ICC-accused"]] <- db[["ICCaccused"]] %>% 
+  select(-country) %>%  
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_Accused = "ccode")) %>% 
+  select(country_case, ccode_case, nameOrDesc, ICC_arrest_warrant, 
+         ICC_arrestAppear, ICC_confirm_charges, ICC_proceedings, 
+         ICC_withdrawnDismissed, trialID, accusedID) %>%
+  arrange(country_case, ICC_arrest_warrant) 
+
+data[["Investigations"]] <- db[["Investigations"]] %>% 
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(ccode_cow = "ccode")) %>% 
+  select(country, country_case, ccode_case, beg, end, mandate, 
+         uninv_dompros, uninv_evcoll, uninv_intlpros, goals) %>%
+  arrange(country_case, beg)
+
+### peace agreements: "https://peaceaccords.nd.edu/wp-content/uploads/2019/08/PAM_ID-V.1.5-Updated-29JULY2015.xlsx"
+data[["peace-agreements"]] <- readxl::read_xlsx("data/PAM_ID-V.1.5-Updated-29JULY2015.xlsx") %>% 
+  rename("accord_name" = "accord name") %>%
+  group_by(pam_caseid) %>% 
+  mutate(beg = min(year), 
+         end = max(year)) %>% 
+  ungroup() %>%
+  mutate(war_start = as_date(war_start), 
+         cease_date = as_date(cease_date)) %>%
+  left_join(countries %>% 
+              select(country_case, ccode, ccode_case), 
+            by = c(cowcode = "ccode")) %>% 
+  
+  select(pam_caseid, country_case, ccode_case, accord_name, war_start, 
+         cease_date, beg, end, amnest_prov, humrts_prov, prisr_prov, repar_prov, 
+         truth_prov) %>%
+  distinct() %>%
+  arrange(country_case, cease_date)
+
+### PAX: https://www.peaceagreements.org/search
+tj_vars <- c("TjGen", "TjAm", "TjAmPro", "TjSan", "TjPower", "TjCou", "TjJaNc", 
+             "TjJaIc", "TjMech", "TjPrire", "TjVet", "TjVic", "TjMis", "TjRep", 
+             "TjRSym", "TjRMa", "TjNR")
+## have not adjusted this to ccode_case
+data[["PAX"]] <- read_csv("data/pax_all_agreements_data_v6.csv") %>% 
+  arrange(Con, PPName, Dat) %>% 
+  filter(Stage %in% c("SubComp", "SubPar")) %>% 
+  filter(if_any(all_of(tj_vars), ~ . == 1)) %>%
+  select(Con, PP, PPName, AgtId, Agt, Dat, Status, Agtp, Stage, Loc1GWNO, 
+         Loc2GWNO, UcdpCon, UcdpAgr, PamAgr, all_of(tj_vars)) 
+
+### write to file 
+write_xlsx(data, path = "~/Dropbox/TJLab/TimoDataWork/country_profiles/summary_data.xlsx")
+
+rm(tj_vars, vars_dom, vars_for, vars_int) 
+
+### automating written summaries 
+
+n_transform <- function(x) {
+  x %>% 
+    paste(" ", ., sep = "") %>%  
+    str_replace_all(" 0 ", " none ") %>% 
+    str_replace_all(" 1 ", " one ") %>% 
+    str_replace_all(" 2 ", " two ") %>% 
+    str_replace_all(" 3 ", " three ") %>% 
+    str_replace_all(" 4 ", " four ") %>% 
+    str_replace_all(" 5 ", " five ") %>% 
+    str_replace_all(" 6 ", " six ") %>% 
+    str_replace_all(" 7 ", " seven ") %>% 
+    str_replace_all(" 8 ", " eight ") %>% 
+    str_replace_all(" 9 ", " nine ") %>% 
+    str_replace_all(" 10 ", " ten ") %>%
+    str_replace_all(" 11 ", " eleven ") %>% 
+    str_replace_all(" 12 ", " twelve ") %>% 
+    str_trim() %>%
+    return() 
+}
+
+### summary 
+
+autotxt[["summary"]] <- autoprep[["summary"]] %>%
+  rowwise() %>%
+  mutate(
+    text = paste("For ", 
+                 country_case, 
+                 ", TJET has collected information on: ",  
+                 str_flatten(
+                   c(
+                     if(amnesties > 0) paste(amnesties, 
+                                             ifelse(amnesties == 1,
+                                                    "amnesty", "amnesties"), 
+                                             ifelse(min(amnesties_yrs) == max(amnesties_yrs), 
+                                                    paste("in", unique(amnesties_yrs)), 
+                                                    paste("between", 
+                                                          min(amnesties_yrs), 
+                                                          "and", 
+                                                          max(amnesties_yrs) )) ), 
+                     if(domestic > 0) paste(domestic, "domestic", 
+                                            ifelse(domestic == 1,
+                                                   "trial", "trials"), 
+                                            "starting", 
+                                            ifelse(min(domestic_yrs) == max(domestic_yrs), 
+                                                   paste("in", unique(domestic_yrs)), 
+                                                   paste("between", 
+                                                         min(domestic_yrs), 
+                                                         "and", 
+                                                         max(domestic_yrs) ))), 
+                     if(foreign > 0) paste(foreign, "foreign", 
+                                           ifelse(foreign == 1,
+                                                  "trial", "trials"), 
+                                           "starting", 
+                                           ifelse(min(foreign_yrs) == max(foreign_yrs), 
+                                                  paste("in", unique(foreign_yrs)), 
+                                                  paste("between", 
+                                                        min(foreign_yrs), 
+                                                        "and", 
+                                                        max(foreign_yrs) ))),
+                     if(intl > 0) paste(intl, "international", 
+                                        ifelse(intl == 1,
+                                               "trial", "trials"), 
+                                        "starting", 
+                                        ifelse(min(intl_yrs) == max(intl_yrs), 
+                                               paste("in", unique(intl_yrs)), 
+                                               paste("between", 
+                                                     min(intl_yrs), 
+                                                     "and", 
+                                                     max(intl_yrs) ))),
+                     if(reparations > 0) paste(reparations, "reparations", 
+                                               ifelse(reparations == 1,
+                                                      "policy", "policies"), 
+                                               "created", 
+                                               ifelse(min(reparations_yrs) == max(reparations_yrs), 
+                                                      paste("in", unique(reparations_yrs)), 
+                                                      paste("between", 
+                                                            min(reparations_yrs), 
+                                                            "and", 
+                                                            max(reparations_yrs) )) ), 
+                     if(tcs > 0) paste(tcs, "truth", 
+                                       ifelse(tcs == 1,
+                                              "commission", "commissions"), 
+                                       "mandated", 
+                                       ifelse(min(tcs_yrs) == max(tcs_yrs), 
+                                              paste("in", unique(tcs_yrs)), 
+                                              paste("between", 
+                                                    min(tcs_yrs), 
+                                                    "and", 
+                                                    max(tcs_yrs) )) ),
+                     if(vettings > 0) paste(vettings, "vetting", 
+                                            ifelse(vettings == 1,
+                                                   "policy", "policies"), 
+                                            "starting", 
+                                            ifelse(min(vettings_yrs) == max(vettings_yrs), 
+                                                   paste("in", unique(vettings_yrs)), 
+                                                   paste("between", 
+                                                         min(vettings_yrs), 
+                                                         "and", 
+                                                         max(vettings_yrs) )) )
+                   ), 
+                   collapse = "; ", last = "; and "), 
+                 ".", sep = "") %>% 
+      n_transform(), 
+    text = str_flatten(text, " ") %>%
+      str_trim()
+  ) %>%
+  ungroup() %>% 
+  select(country_case, ccode_case, text) 
+
+### transitions 
+
+autotxt[["Transitions"]] <- autoprep[["transitions"]] %>%
+  rowwise() %>%
+  mutate(
+    text = paste("Based on well-known democracy data, TJET records ", 
+                 length(trans_year_begin), 
+                 " democratic ", 
+                 ifelse(length(trans_year_begin) == 1,
+                        "transition", "transitions"), 
+                 " starting in ", 
+                 str_flatten_comma(trans_year_begin, ", and "), 
+                 ".", sep = "") %>% 
+      n_transform(), 
+    text = str_flatten(text, " ") %>%
+      str_trim()
+  ) %>%
+  ungroup() %>%
+  select(country_case, ccode_case, text) 
+
+### violent intrastate conflict episodes
+
+autotxt[["Conflicts"]] <- autoprep[["conflicts"]] %>%
+  rowwise() %>%
+  mutate(text = "", 
+         text = paste("Based on the Uppsala Conflict Data Program, TJET records ",
+                      episodes,
+                      " violent intrastate conflict ",
+                      ifelse(episodes == 1, "episode ", "episodes "),
+                      ifelse(min(years) == max(years),
+                             paste("in", unique(years)),
+                             paste("between",
+                                   min(years),
+                                   "and",
+                                   max(years) )),
+                      ifelse(length(years) > 1 & length(years) < max(years) - min(years) + 1, 
+                             paste(" (during ", 
+                                   length(years), 
+                                   " calendar years)", 
+                                   sep = ""), 
+                             ""), 
+                      ", involving ",
+                      dyads,
+                      ifelse(dyads == 1,
+                             " armed opposition group",
+                             " distinct armed opposition groups"),
+                      " fighting against the government.",
+                      sep = "") %>%
+           n_transform(),
+         text = list(c(text, 
+                       if(int_ep > 0) 
+                         paste(int_ep, 
+                               "conflict", 
+                               ifelse(int_ep == 1, "episode was", "episodes were"), 
+                               "internationalized by involvement of external state actors.") %>% 
+                         n_transform() %>% 
+                         str_to_sentence() )), 
+         text = str_flatten(text, " ") %>%
+           str_trim()
+  ) %>%
+  ungroup() %>%
+  select(country_case, ccode_case, text)
+
+autotxt[["Amnesties"]] <- data[["Amnesties"]] %>% 
+  rowwise() %>%
+  mutate(
+    text = list(paste(country_case, 
+                      " had ", 
+                      count_all, 
+                      ifelse(count_all == 1, " amnesty ", " amnesties "), 
+                      ifelse(beg == end, 
+                             paste("in", beg), 
+                             paste("between", beg, "and", end)), 
+                      ".", sep = "") %>% 
+                  n_transform() ), 
+    text = list(c(text, 
+                  if(count_demtrans > 0) 
+                    paste(count_demtrans, 
+                          "occurred in the context of democratic transition.") %>% 
+                    n_transform() %>% 
+                    str_to_sentence() )), 
+    text = list(c(text, 
+                  if(count_dcj > 0) 
+                    paste(count_dcj, 
+                          ifelse(count_dcj == 1, "was", "were"), 
+                          "passed during ongoing internal armed conflict.") %>% 
+                    n_transform() %>% 
+                    str_to_sentence() )), 
+    text = list(c(text, 
+                  if(count_pcj > 0) 
+                    paste(count_pcj, 
+                          ifelse(count_pcj == 1, "was", "were"), 
+                          "passed after internal armed conflict.") %>% 
+                    n_transform() %>% 
+                    str_to_sentence() )), 
+    text = list(c(text, 
+                  if(count_peaceagree > 0) 
+                    paste(count_peaceagree, 
+                          ifelse(count_peaceagree == 1, "was", "were"), 
+                          "part of a peace agreement.") %>% 
+                    n_transform() %>% 
+                    str_to_sentence() )), 
+    text = list(c(text, 
+                  if(count_prisoners > 0) 
+                    paste(count_prisoners, 
+                          ifelse(count_prisoners == 1, "amnesty", "amnesties"), 
+                          "released political prisoners.") %>% 
+                    n_transform() %>% 
+                    str_to_sentence() )),
+    text = list(c(text, 
+                  if(count_hrv > 0) 
+                    paste(count_hrv, 
+                          ifelse(count_hrv == 1, "amnesty", "amnesties"), 
+                          "forgave human rights violations.") %>% 
+                    n_transform() %>% 
+                    str_to_sentence() )), 
+    text = str_flatten(text, " ") %>% 
+      str_trim()
+  ) %>%
+  ungroup() %>% 
+  select(country_case, ccode_case, text)
+
+autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
+  rowwise() %>%
+  mutate(text = "", 
+         text = paste(country_case,
+                      ifelse(total == 1, "had", "had a total of"),
+                      total,
+                      "domestic human rights or conflict",
+                      ifelse(total == 1, "prosecution", "prosecutions"),
+                      ifelse(beg == end,
+                             paste("in ", beg, ".", sep = ""),
+                             paste("between ", beg, " and ", end, ".", sep = "")
+                      )
+         ) %>%
+           n_transform(),
+         text = list(c(text,
+                       if(tran_trs_dom_dtj_sta > 0)
+                         paste("There",
+                               ifelse(tran_trs_dom_dtj_sta == 1, "was", "were"),
+                               tran_trs_dom_dtj_sta,
+                               "transitional",
+                               ifelse(tran_trs_dom_dtj_sta == 1,
+                                      "prosecution of state agents in a democratic transition context.",
+                                      "prosecutions of state agents in democratic transition contexts.")
+                         ) %>%
+                         n_transform())),
+         text = list(c(text,
+                       if(tran_trs_dom_ctj_sta > 0)
+                         paste("There",
+                               ifelse(tran_trs_dom_ctj_sta == 1, "was", "were"),
+                               tran_trs_dom_ctj_sta,
+                               "transitional",
+                               ifelse(tran_trs_dom_ctj_sta == 1,
+                                      "prosecution of state agents in a conflict context.",
+                                      "prosecutions of state agents in conflict contexts.")
+                         ) %>%
+                         n_transform())),
+         text = list(c(text,
+                       if(tran_tfc_dom_dtj_ctj_sta > 0)
+                         paste("There",
+                               ifelse(tran_tfc_dom_dtj_ctj_sta == 1, "was", "were"),
+                               tran_tfc_dom_dtj_ctj_sta,
+                               ifelse(tran_tfc_dom_dtj_ctj_sta == 1,
+                                      "final conviction of a state agent in an transitional prosecution.",
+                                      "final convictions of state agents in transitional prosecutions.")) %>%
+                         n_transform())),
+         text = list(c(text,
+                       if(tran_trs_dom_dtj_ctj_sta_hi > 0)
+                         paste("Of",
+                               tran_trs_dom_dtj_ctj_sta_hi,
+                               ifelse(tran_trs_dom_dtj_ctj_sta_hi == 1,
+                                      "transitional prosecution of high-ranking state agents,",
+                                      "transitional prosecutions of high-ranking state agents,"),
+                               tran_tfc_dom_dtj_ctj_sta_hi,
+                               ifelse(tran_tfc_dom_dtj_ctj_sta_hi == 1,
+                                      "led to a final conviction.",
+                                      "led to final convictions.")
+                         ) %>%
+                         n_transform())),
+         text = list(c(text,
+                       if(regu_trs_dom_sta > 0)
+                         paste("There",
+                               ifelse(regu_trs_dom_sta == 1, "was", "were"),
+                               regu_trs_dom_sta,
+                               ifelse(regu_trs_dom_sta == 1,
+                                      "regular human rights prosecution of state agents;",
+                                      "regular human rights prosecutions of state agents;"),
+                               regu_tfc_dom_sta,
+                               ifelse(regu_tfc_dom_sta <= 1,
+                                      "led to a final conviction.",
+                                      "led to final convictions.")
+                         ) %>%
+                         n_transform())),
+         text = list(c(text,
+                       if(tran_trs_dom_ctj_opp > 0)
+                         paste("There",
+                               ifelse(tran_trs_dom_ctj_opp == 1, "was", "were"),
+                               tran_trs_dom_ctj_opp,
+                               ifelse(tran_trs_dom_ctj_opp == 1,
+                                      "transitional prosecution of opposition members in a conflict context;",
+                                      "transitional prosecutions of opposition members in conflict contexts;"),
+                               tran_tfc_dom_ctj_opp,
+                               ifelse(tran_tfc_dom_ctj_opp <= 1,
+                                      "led to a final conviction.",
+                                      "led to final convictions.")
+                         ) %>%
+                         n_transform())),
+         text = list(c(text,
+                       if(lcon_trs_dom_sta_opp > 0)
+                         paste("There",
+                               ifelse(lcon_trs_dom_sta_opp == 1, "was", "were"),
+                               lcon_trs_dom_sta_opp,
+                               ifelse(lcon_trs_dom_sta_opp == 1,
+                                      "prosecution of opposition members in a low-level conflict context;",
+                                      "prosecutions of opposition members in low-level conflict contexts;"), 
+                               lcon_tfc_dom_sta_opp,
+                               ifelse(lcon_tfc_dom_sta_opp <= 1,
+                                      "led to a final conviction.",
+                                      "led to final convictions.")
+                         ) %>%
+                         n_transform())),
+         text = str_flatten(text, " ") %>% 
+           str_trim()
+  ) %>%
+  ungroup() %>% 
+  select(country_case, ccode_case, 
+         # beg, end, total, # total domestic trials between beg and end
+         # tran_trs_dom_dtj_sta, # transitional prosecutions of state agents in democratic transition context
+         # tran_trs_dom_ctj_sta, # transitional prosecutions of state agents in conflict or post-conflict context
+         # tran_trs_dom_dtj_ctj_sta, # transitional prosecutions of state agents
+         # tran_tfc_dom_dtj_ctj_sta, # total final convictions in transitional prosecutions of state agents
+         # tran_trs_dom_dtj_ctj_sta_hi, # transitional prosecutions of high-ranking state agents
+         # tran_tfc_dom_dtj_ctj_sta_hi, # total final convictions in transitional prosecutions of high-ranking state agents
+         # regu_trs_dom_sta, # regular human rights prosecutions of state agents
+         # regu_tfc_dom_sta, # total final convictions in regular human rights prosecutions of state agents
+         # tran_trs_dom_ctj_opp, # transitional prosecutions of opposition members in conflict or post-conflict context
+         # tran_tfc_dom_ctj_opp, # total final convictions in transitional prosecutions of opposition members in conflict or post-conflict context
+         # lcon_trs_dom_sta_opp, # prosecutions of state agents or opposition members in low-level conflict context
+         # lcon_tfc_dom_sta_opp, # total final convictions in prosecutions of state agents or opposition members in low-level conflict context
+         text)
+
+autotxt[["Foreign"]] <- data[["Foreign"]] %>% 
+  group_by(countryAccused) %>% 
+  mutate(count = n(), 
+         countryTrial = list(sort(unique(unlist(countryTrial)))),
+         yearStart = list(unlist(yearStart)),
+         yearEnd = list(unlist(yearEnd))) %>% 
+  select(countryAccused, ccode_Accused, count, countryTrial, yearStart, yearEnd) %>% 
+  distinct() %>% 
+  rowwise() %>% 
+  mutate(countryTrial = str_flatten_comma(countryTrial, last = ", and ") %>% 
+           str_replace(" Netherlands", " the Netherlands") %>% 
+           str_replace(" United Kingdom", " the United Kingdom") %>% 
+           str_replace(" United States of America", " the United States of America") , 
+         text = paste("Nationals of ", 
+                      countryAccused, 
+                      " were defendants in ", 
+                      count, 
+                      ifelse(count == 1, " foreign prosecution", " foreign prosecutions"), 
+                      " in ",
+                      countryTrial, 
+                      " beginning ", 
+                      ifelse(length(unique(yearStart)) == 1, 
+                             paste("in", unique(yearStart)), 
+                             paste("between", 
+                                   min(yearStart), 
+                                   "and", 
+                                   max(yearStart))), 
+                      ".", sep = "") %>% 
+           n_transform()
+  ) %>% 
+  ungroup() %>% 
+  select(countryAccused, ccode_Accused, text) %>% 
+  rename("country_case" = "countryAccused",
+         "ccode_case" = "ccode_Accused")
+
+autotxt[["Intl"]] <- data[["Intl_cy"]] %>%
+  rowwise() %>% 
+  mutate(text = paste("Nationals of ", 
+                      country_case, 
+                      " were subject to ", 
+                      trs_int_hrs_con_all, 
+                      " international ", 
+                      ifelse(trs_int_hrs_con_all == 1, 
+                             "prosecution ", "prosecutions "), 
+                      # " starting ",
+                      ifelse(beg == end, 
+                             paste("in", beg), 
+                             paste("between", 
+                                   beg, 
+                                   "and", 
+                                   end) 
+                      ), 
+                      ", ", 
+                      tfc_int_hrs_con_all, 
+                      " of which led to a final conviction.", 
+                      sep = "") %>% 
+           n_transform()
+  ) %>% 
+  ungroup() %>% 
+  select(country_case, ccode_case, text) 
+
+autotxt[["ICC"]] <- data[["ICC-interventions"]] %>% 
+  rowwise() %>%
+  mutate(
+    text = ifelse(is.na(ICC_prelimEnd), 
+                  paste("The ICC's Office of the Prosecutor opened a preliminary examination of the situation in ", 
+                        country_case, " in ", ICC_prelim_exam, ".", sep = ""), 
+                  paste("The ICC's Office of the Prosecutor carried out a preliminary examination of the situation in ", 
+                        country_case, " from ", ICC_prelim_exam, " until ", ICC_prelimEnd, ".", sep = "")), 
+    text = list(c(if(!is.na(ICC_referral))
+      paste(country_case, " was referred to the ICC in ", ICC_referral, ".", sep = ""), 
+      text)), 
+    text = list(c(text,
+                  if(!is.na(ICC_investigation))
+                    paste("The first investigation of a specific case began in ", ICC_investigation, ".", sep = ""))),
+    text = str_flatten(text, " ") %>% 
+      str_trim()
+  ) %>%
+  ungroup() %>% 
+  select(country_case, ccode_case, text)
+
+autotxt[["ICCaccused"]] <- data[["ICC-accused"]] %>% 
+  group_by(country_case) %>%
+  mutate(count = n(),
+         count_appear = sum(!is.na(ICC_arrestAppear)),
+         count_proceed = sum(!is.na(ICC_proceedings)),
+         ICC_arrest_warrant = list(unlist(ICC_arrest_warrant)),
+         ICC_arrestAppear = list(unlist(ICC_arrestAppear)),
+         ICC_proceedings = list(unlist(ICC_proceedings))) %>%
+  select(country_case, ccode_case, count, ICC_arrest_warrant, count_appear, ICC_arrestAppear, 
+         count_proceed, ICC_proceedings) %>% 
+  ungroup() %>% 
+  distinct() %>% 
+  rowwise() %>%
+  mutate(ICC_arrestAppear = list(ICC_arrestAppear[!is.na(ICC_arrestAppear)]),
+         ICC_proceedings = list(ICC_proceedings[!is.na(ICC_proceedings)]),
+         text = paste("Starting in ", 
+                      min(ICC_arrest_warrant), 
+                      ", the ICC issued ", 
+                      count, 
+                      " arrest warrants, ",
+                      count_appear, 
+                      " of which resulted in court appearances.", 
+                      sep = "") %>% 
+           n_transform(), 
+         text = list(c(text,
+                       if(count_proceed > 0)
+                         paste("Proceedings began in ",
+                               count_proceed, 
+                               ifelse(count_proceed == 1, " case ", " cases "), 
+                               ifelse(length(unique(ICC_proceedings)) == 1, 
+                                      paste("in", unique(ICC_proceedings)), 
+                                      paste("between", 
+                                            min(ICC_proceedings, na.rm = TRUE), 
+                                            "and", 
+                                            max(ICC_proceedings, na.rm = TRUE))), 
+                               ".", sep = "") %>% 
+                         n_transform()
+         )),
+         text = str_flatten(text, " ") %>% 
+           str_trim()
+  ) %>% 
+  ungroup() %>% 
+  select(country_case, ccode_case, text)
+
+autotxt[["UNinvestigations"]] <- data[["Investigations"]] %>%
+  mutate(country = ifelse(country == "Iran/Iraq" & ccode_case == 630, "Iran", country), 
+         country = ifelse(country == "Iran/Iraq" & ccode_case == 645, "Iraq", country)) %>%
+  select(country, country_case, ccode_case, mandate, beg, end, 
+         uninv_dompros, uninv_evcoll, uninv_intlpros) %>% 
+  arrange(country_case, mandate) %>% 
+  group_by(ccode_case, mandate) %>%
+  mutate(beg = ifelse(ccode_case == 437 & mandate == "Office of the UN High Commissioner for Human Rights", beg, min(beg)), 
+         end = ifelse(ccode_case == 437 & mandate == "Office of the UN High Commissioner for Human Rights", end, max(end)), 
+         uninv_dompros = max(uninv_dompros),
+         uninv_evcoll = max(uninv_evcoll),
+         uninv_intlpros = max(uninv_intlpros)) %>% 
+  distinct() %>% 
+  arrange(ccode_case, beg) %>% 
+  group_by(ccode_case) %>%
+  mutate(count = n(), 
+         beg = list(unlist(beg)),
+         end = list(unlist(end)),
+         uninv_dompros = sum(uninv_dompros),
+         uninv_evcoll = sum(uninv_evcoll),
+         uninv_intlpros = sum(uninv_intlpros)
+  ) %>% 
+  select(country, country_case, ccode_case, count, beg, end, uninv_dompros, uninv_evcoll, uninv_intlpros) %>%
+  distinct() %>% 
+  mutate(country = ifelse(country == "Yugoslavia", "Serbia and Montenegro", country)) %>% 
+  rowwise() %>%
+  mutate(text = paste(country, 
+                      " was subject to ", 
+                      count, 
+                      ifelse(count == 1, " UN investigation ", " UN investigations "), 
+                      ifelse(min(beg) == max(end), 
+                             paste("in", min(beg)),
+                             paste("between", min(beg), "and", max(end))), 
+                      ".", sep = "") %>% 
+           n_transform(), 
+         text = list(c(text,
+                       if(uninv_dompros > 0)
+                         paste(uninv_dompros, 
+                               ifelse(uninv_dompros == 1, "investigation", "investigations"), 
+                               "aimed to encourage domestic prosecutions.") %>% 
+                         n_transform() %>% 
+                         str_to_sentence() %>% 
+                         str_trim()
+         )),
+         text = list(c(text,
+                       if(uninv_intlpros > 0)
+                         paste(uninv_intlpros, 
+                               ifelse(uninv_intlpros == 1, "investigation", "investigations"), 
+                               "aimed to support international prosecutions.") %>% 
+                         n_transform() %>% 
+                         str_to_sentence()
+         )),
+         text = list(c(text,
+                       if(uninv_evcoll > 0)
+                         paste(uninv_evcoll, 
+                               ifelse(uninv_evcoll == 1, "investigation", "investigations"), 
+                               "aimed to collect evidence for prosecutions.") %>% 
+                         n_transform() %>% 
+                         str_to_sentence()
+         )),
+         text = str_flatten(text, " ") %>% 
+           str_trim()
+  ) %>%
+  ungroup() %>% 
+  select(country_case, ccode_case, text)
+
+autotxt[["Reparations"]] <- data[["Reparations"]] %>%
+  mutate(implemented = ifelse(!is.na(yearBegin) | !is.na(yearEnd) | !is.na(beneficiariesCount), 1, 0), 
+         individual = case_when(individualReparations == "yes" ~ 1, 
+                                TRUE ~ 0), 
+         collective = case_when(collectiveReparations == "yes" ~ 1, 
+                                TRUE ~ 0), 
+         beneficiariesCount = ifelse(is.na(beneficiariesCount), 0, beneficiariesCount) 
+  ) %>% 
+  group_by(country_case) %>% 
+  mutate(yearCreated = list(unlist(yearCreated)),
+         yearBegin = list(unlist(yearBegin)),
+         yearEnd = list(unlist(yearEnd)),
+         individual = sum(individual),
+         collective = sum(collective),
+         implemented = sum(implemented), 
+         beneficiariesCount = sum(beneficiariesCount) 
+  ) %>% 
+  select(country_case, ccode_case, count, yearCreated, yearBegin, yearEnd, 
+         individual, collective, beneficiariesCount, implemented) %>% 
+  distinct() %>% 
+  rowwise() %>% 
+  mutate(yearBegin = list(yearBegin[!is.na(yearBegin)]),
+         yearEnd = list(yearEnd[!is.na(yearEnd)]),
+         text = "", 
+         text = list(c(text, 
+                       if(length(yearBegin) == 0 & length(yearEnd) == 0)
+                         paste(country_case, 
+                               " mandated ", 
+                               count, 
+                               ifelse(count == 1, " reparations policy in ", " reparations policies in "), 
+                               str_flatten_comma(unique(yearCreated), last = ", and "),
+                               # ifelse(length(yearCreated) == 1, 
+                               #        paste("in", unique(yearCreated)), 
+                               #        paste("between", min(yearCreated), "and", max(yearCreated))
+                               # ), 
+                               ".", sep = "") %>% 
+                         n_transform()
+         )), 
+         text = list(c(text, 
+                       if(length(yearBegin) == 0 & length(yearEnd) == 1)
+                         paste(country_case, 
+                               " mandated ", 
+                               count, 
+                               ifelse(count == 1, " reparations policy ", " reparations policies "), 
+                               ifelse(length(unique(yearCreated)) == 1, 
+                                      paste("in", unique(yearCreated)), 
+                                      paste("between", min(yearCreated), "and", max(yearCreated))
+                               ), 
+                               ", which ended by ", 
+                               max(yearEnd),
+                               ".", sep = ""
+                         ) %>% 
+                         n_transform()
+         )), 
+         text = list(c(text, 
+                       if(length(yearBegin) > 0 & length(yearBegin) == length(yearEnd))
+                         paste(country_case, 
+                               " implemented ", 
+                               count, 
+                               ifelse(count == 1, " reparations policy ", " reparations policies "), 
+                               ifelse(min(yearBegin) == max(yearEnd), 
+                                      paste("in", min(yearBegin)), 
+                                      paste("between", min(yearBegin), "and", max(yearEnd))
+                               ), 
+                               ".", sep = ""
+                         ) %>% 
+                         n_transform()
+         )), 
+         text = list(c(text, 
+                       if(length(yearBegin) > 0 & length(yearBegin) > length(yearEnd))
+                         paste(country_case, 
+                               " implemented ", 
+                               count, 
+                               ifelse(count == 1, " reparations policy, ", " reparations policies, "), 
+                               "starting in ", 
+                               min(yearBegin),
+                               ".", sep = ""
+                         ) %>% 
+                         n_transform()
+         )), 
+         text = list(c(text, 
+                       if(beneficiariesCount > 0)
+                         paste("According to available information, there was a total of", 
+                               beneficiariesCount, 
+                               "individual beneficiaries."
+                         ) %>% 
+                         n_transform() %>% 
+                         str_to_sentence()
+         )),
+         text = list(c(text, 
+                       if(beneficiariesCount == 0)
+                         paste("TJET found no information on the total number of beneficiaries.")
+         )),
+         text = list(c(text, 
+                       if(collective > 0)
+                         paste(collective, 
+                               ifelse(collective == 1, " reparations policy ", " reparations policies "), 
+                               "provided collective benefits.", 
+                               sep = ""
+                         ) %>% 
+                         n_transform() %>% 
+                         str_to_sentence() %>% 
+                         str_trim()
+         )),
+         text = list(c(text, 
+                       if(implemented > 0 & implemented < count)
+                         paste("TJET found evidence on implementation only for", 
+                               implemented, 
+                               ifelse(implemented == 1, " reparations policy.", " reparations policies.")) %>% 
+                         n_transform()
+         )), 
+         text = list(c(text, 
+                       if(implemented == 0)
+                         paste("TJET found no evidence on implementation.")
+         )), 
+         text = str_flatten(text, " ") %>% 
+           str_trim()
+  ) %>%
+  ungroup() %>% 
+  select(country_case, ccode_case, text)
+
+autotxt[["TruthCommissions"]] <- data[["TruthCommissions"]] %>%
+  mutate(finalReportIssued = case_when(finalReportIssued == "Yes" ~ 1,
+                                       TRUE ~ 0),
+         reportPubliclyAvailable = case_when(reportPubliclyAvailable == "Yes" ~ 1,
+                                             TRUE ~ 0),
+         victims = case_when(consultedVictims == 1 | 
+                               commissionersVictimGroups == "Yes" | 
+                               encourageVictimTestimony == "Yes" ~ 1,
+                             TRUE ~ 0), 
+         yearBeginOperation = ifelse(is.na(yearBeginOperation) & !is.na(yearCompleteOperation), 
+                                     yearPassed, yearBeginOperation) 
+  ) %>% 
+  group_by(country_case) %>% 
+  mutate(yearPassed = list(unlist(yearPassed)),
+         yearBeginOperation = list(unlist(yearBeginOperation)),
+         yearCompleteOperation = list(unlist(yearCompleteOperation)),
+         finalReportIssued = sum(finalReportIssued),
+         reportPubliclyAvailable = sum(reportPubliclyAvailable),
+         rec_prosecutions = sum(rec_prosecutions),
+         rec_reparations = sum(rec_reparations),
+         rec_reforms = sum(rec_reforms),
+         victims = sum(victims)
+  ) %>%
+  select(country_case, ccode_case, count, yearPassed, yearBeginOperation, yearCompleteOperation, 
+         finalReportIssued, reportPubliclyAvailable, rec_prosecutions,
+         rec_reparations, rec_reforms, victims) %>% 
+  distinct() %>% 
+  rowwise() %>% 
+  mutate(yearBeginOperation = list(yearBeginOperation[!is.na(yearBeginOperation)]),
+         yearCompleteOperation = list(yearCompleteOperation[!is.na(yearCompleteOperation)]),
+         text = paste(country_case,
+                      " mandated ",
+                      count,
+                      " truth ",
+                      ifelse(count == 1, "commission", "commissions"),
+                      " in ",
+                      str_flatten_comma(unique(yearPassed), last = ", and "),
+                      ".", sep = "") %>%
+           n_transform(),
+         ### one but not completed
+         text = list(c(text,
+                       if(length(yearBeginOperation) == count & length(yearCompleteOperation) == 0 & count == 1)
+                         paste("The commission began its operations in ",
+                               min(yearBeginOperation),
+                               "; TJET has found no evidence of completion.", sep = "")
+         )),
+         ### all started but not all completed
+         text = list(c(text,
+                       if(length(yearBeginOperation) == count & length(yearCompleteOperation) != 0 & length(yearCompleteOperation) < count)
+                         paste(length(yearCompleteOperation), 
+                               " completed ",
+                               ifelse(length(yearCompleteOperation) == 1, "its", "their"), 
+                               " operations by ", 
+                               max(yearCompleteOperation), 
+                               ".", sep = "") %>% 
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         ### not all started, but all that started also completed
+         text = list(c(text,
+                       if(length(yearBeginOperation) < count & length(yearCompleteOperation) == length(yearBeginOperation))
+                         paste(length(yearBeginOperation),
+                               " of these operated between ",
+                               min(yearBeginOperation),
+                               " and ",
+                               max(yearCompleteOperation),
+                               ".", sep = "") %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         ### not all started, and none completed
+         text = list(c(text,
+                       if(length(yearBeginOperation) < count & length(yearCompleteOperation) == 0)
+                         paste(length(yearBeginOperation), 
+                               "began operations but TJET has found no evidence of completion.") %>% 
+                         n_transform() %>%
+                         str_to_sentence() %>%
+                         str_replace("tjet", "TJET")
+         )),
+         ### all completed
+         text = list(c(text,
+                       if(length(yearCompleteOperation) == count)
+                         paste(ifelse(count == 1, 
+                                      "The commission completed its", 
+                                      "The commissions completed their"),
+                               " operations in ",
+                               str_flatten_comma(unique(yearCompleteOperation), last = ", and "),
+                               ".", sep = "") %>%
+                         n_transform()
+         )),
+         text = list(c(text,
+                       if(finalReportIssued > 0)
+                         paste(ifelse(finalReportIssued == count,
+                                      ifelse(count == 1,
+                                             "The commission issued",
+                                             "The commissions issued"),
+                                      paste(finalReportIssued, "of the commissions issued")),
+                               ifelse(finalReportIssued == 1, " a ", " "),
+                               ifelse(finalReportIssued == 1, "final report", "final reports"),
+                               ifelse(reportPubliclyAvailable > 0 & reportPubliclyAvailable < finalReportIssued,
+                                      paste(",",
+                                            reportPubliclyAvailable,
+                                            "of which"),
+                                      ", which"),
+                               ifelse(reportPubliclyAvailable == 1,
+                                      " is", " are"),
+                               " publicly available.",
+                               sep = ""
+                         ) %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         text = list(c(text,
+                       if(finalReportIssued > 0 &
+                          (rec_prosecutions > 0 | rec_reparations > 0 | rec_reforms > 0))
+                         paste("The ",
+                               ifelse(finalReportIssued == 1, "report", "reports"),
+                               " included recommendations for ",
+                               str_flatten_comma(
+                                 c(if(rec_prosecutions > 0) "prosecutions",
+                                   if(rec_reparations > 0) "reparations",
+                                   if(rec_reforms > 0) "institutional reforms"
+                                 ),
+                                 last = ", and ", na.rm = TRUE
+                               ),
+                               ".", sep = ""
+                         ) %>%
+                         n_transform() %>%
+                         str_to_sentence() %>%
+                         str_trim()
+         )),
+         text = str_flatten(text, " ") %>% 
+           str_trim()
+  ) %>%
+  ungroup() %>% 
+  select(country_case, ccode_case, text)
+
+autotxt[["Vettings"]] <- data[["Vettings"]] %>% 
+  mutate(alterationOf = ifelse(is.na(alterationOf), vettingID, alterationOf), 
+         alterationOf = str_replace(alterationOf, fixed("?"), "")) %>% 
+  select(-vettingID) %>%  
+  rename("vettingID" = "alterationOf") %>%
+  group_by(vettingID) %>% 
+  mutate(yearStart = min(yearStart), 
+         yearEnd = max(yearEnd),
+         individual_conduct = max(individual_conduct), 
+         type_dismissal = max(type_dismissal), 
+         type_ban = max(type_ban), 
+         type_declassification = max(type_declassification), 
+         type_perjury = max(type_perjury)) %>% 
+  select(country_case, ccode_case, vettingID, yearStart, yearEnd, individual_conduct, 
+         type_dismissal, type_ban, type_declassification, type_perjury) %>% 
+  distinct() %>% 
+  group_by(country_case) %>% 
+  mutate(count = n(), 
+         yearStart = list(unlist(yearStart)),
+         yearEnd = list(unlist(yearEnd)),
+         individual_conduct = sum(individual_conduct), 
+         type_dismissal = sum(type_dismissal), 
+         type_ban = sum(type_ban), 
+         type_declassification = sum(type_declassification), 
+         type_perjury = sum(type_perjury)
+  ) %>% 
+  ungroup() %>% 
+  select(country_case, ccode_case, count, yearStart, yearEnd, individual_conduct, 
+         type_dismissal, type_ban, type_declassification, type_perjury) %>% 
+  distinct() %>% 
+  rowwise() %>% 
+  mutate(yearStart = list(yearStart[!is.na(yearStart)]),
+         yearEnd = list(yearEnd[!is.na(yearEnd)]),
+         text = "",
+         text = list(c(text,
+                       if(length(yearStart) == count & 
+                          length(yearEnd) == count)
+                         paste(country_case, 
+                               " had ", 
+                               count, 
+                               " vetting ", 
+                               ifelse(count == 1, "policy ", "policies "), 
+                               ifelse(min(yearStart) == max(yearEnd),
+                                      paste("in", max(yearEnd)),
+                                      paste("between", min(yearStart), "and", max(yearEnd))
+                               ),
+                               ".", sep = "") %>%
+                         n_transform()
+         )),
+         text = list(c(text,
+                       if(length(yearStart) == count & 
+                          length(yearEnd) > 0 & 
+                          length(yearEnd) < count)
+                         paste(country_case, 
+                               " had ", 
+                               count, 
+                               " vetting ", 
+                               ifelse(count == 1, "policy,", "policies,"), 
+                               " starting in ", 
+                               min(yearStart), 
+                               "; ", 
+                               length(yearEnd), 
+                               " of these ended by ", 
+                               max(yearEnd), 
+                               ".", sep = "") %>%
+                         n_transform()
+         )),
+         text = list(c(text,
+                       if(length(yearStart) == count & 
+                          length(yearEnd) == 0)
+                         paste(country_case, 
+                               " had ", 
+                               count, 
+                               " vetting ", 
+                               ifelse(count == 1, "policy,", "policies,"), 
+                               " starting in ", 
+                               min(yearStart), 
+                               "; TJET found no information on whether or when the ",
+                               ifelse(count == 1, "policy", "policies"), 
+                               " ended.",
+                               sep = "") %>%
+                         n_transform()
+         )),
+         text = list(c(text,
+                       if(individual_conduct == count)
+                         paste(ifelse(individual_conduct == 1, "This policy", "These policies"),
+                               "provided sanctions based on past individual conduct.") %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         text = list(c(text,
+                       if(individual_conduct > 0 & individual_conduct < count)
+                         paste(individual_conduct,
+                               ifelse(individual_conduct == 1, "policy", "policies"),
+                               "provided sanctions based on past individual conduct.") %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         # don't use next
+         # text = list(c(text,
+         #               if(type_dismissal == count &
+         #                  type_dismissal == type_ban)
+         #                 paste(ifelse(type_dismissal == 1, "This policy", "These policies"),
+         #                       "prescribed both dismissals from current employment and bans from holding future office.") %>%
+         #                 n_transform() %>%
+         #                 str_to_sentence()
+         # )),
+         text = list(c(text,
+                       if(type_dismissal > 0 &
+                          # type_dismissal != count &
+                          type_dismissal == type_ban)
+                         paste(type_dismissal,
+                               ifelse(type_dismissal == 1, "policy", "policies"),
+                               "prescribed both dismissals from current employment and bans from holding future office.") %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         text = list(c(text,
+                       if(type_dismissal > 0 &
+                          type_dismissal != type_ban)
+                         paste(type_dismissal,
+                               ifelse(type_dismissal == 1, "policy", "policies"),
+                               "prescribed dismissals from current employment.") %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         text = list(c(text,
+                       if(type_ban > 0 &
+                          type_dismissal != type_ban)
+                         paste(type_ban,
+                               ifelse(type_ban == 1, "policy", "policies"),
+                               "prescribed bans from holding future office.") %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         text = list(c(text,
+                       if(type_declassification > 0)
+                         paste(type_declassification,
+                               ifelse(type_declassification == 1, "policy", "policies"),
+                               "aimed to declassify the records of former state security agents.") %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         text = list(c(text,
+                       if(type_perjury > 0)
+                         paste(type_perjury,
+                               ifelse(type_perjury == 1, "policy", "policies"),
+                               "included legal consequences for non-disclosure of relevant past activities.") %>%
+                         n_transform() %>%
+                         str_to_sentence()
+         )),
+         text = str_flatten(text, " ") %>% 
+           str_trim()
+  ) %>% 
+  ungroup() %>% 
+  select(country_case, ccode_case, text)
+
+### print 10 focus country profiles to Quarto files 
+
+df <- db[["Countries"]] %>%
+  filter(include) %>%
+  select(country, country_case, ccode, ccode_case, ccode_ksg, beg, end, tjet_focus, 
+         txt_intro, txt_regime, txt_conflict, txt_TJ) %>%
+  arrange(country)
+
+dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/")
+
+df %>% 
+  filter(tjet_focus == 1 | country == "Uganda") %>%  
+  select(country) %>%
+  unlist(use.names = FALSE) %>%  
+  map(., function(ctry) {
+    temp <- df %>% 
+      filter(country == ctry) %>%
+      mutate(txt_intro = str_replace_all(str_trim(txt_intro), "\n", "\n\n"),
+             txt_regime = str_replace_all(str_trim(txt_regime), "\n", "\n\n"),
+             txt_conflict = str_replace_all(str_trim(txt_conflict), "\n", "\n\n"),
+             txt_TJ = str_replace_all(str_trim(txt_TJ), "\n", "\n\n")) %>%
+      select(txt_intro, txt_regime, txt_conflict, txt_TJ) %>% 
+      unlist()
+    paste("---\ntitle: ", ctry, "\nformat: docx\n---", 
+          "\n\n## Introduction\n\n", 
+          temp[["txt_intro"]], 
+          "\n\n## Regime Background\n\n", 
+          temp[["txt_regime"]], 
+          "\n\n## Conflict Background\n\n", 
+          temp[["txt_conflict"]], 
+          "\n\n## Transitional Justice\n\n", 
+          temp[["txt_TJ"]], 
+          sep = "") %>% 
+      write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/", ctry, ".qmd", sep = ""))
+    invisible()
+  })
+
+### for integrating into Airtable
+
+autotxt <- df %>%
+  select(country_case, ccode_case) %>%
+  left_join(autotxt[["summary"]] %>%
+              rename("summary" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  mutate(summary = ifelse(is.na(summary),
+                          paste("TJET has found no information on transitional justice in ",
+                                country_case, ".", sep = ""),
+                          summary) ) %>%
+  left_join(autotxt[["Transitions"]] %>%
+              rename("regime" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  mutate(regime = ifelse(is.na(regime),
+                         paste("TJET records no democratic transitions in",
+                               country_case, 
+                               "between 1970 and 2020."),
+                         regime) ) %>%
+  left_join(autotxt[["Conflicts"]] %>%
+              rename("conflict" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  mutate(conflict = ifelse(is.na(conflict),
+                           paste("Based on the Uppsala Conflict Data Program, TJET records no episodes of violent intrastate conflict in",
+                                 country_case,
+                                 "between 1970 and 2020."),
+                           conflict) ) %>%
+  left_join(autotxt[["Amnesties"]] %>%
+              rename("amnesties" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  left_join(autotxt[["Domestic_cy"]] %>%
+              rename("domestic" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  left_join(autotxt[["Foreign"]] %>%
+              rename("foreign" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  left_join(autotxt[["Intl"]] %>%
+              rename("intl" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  left_join(autotxt[["ICC"]] %>%
+              rename("intl2" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  left_join(autotxt[["ICCaccused"]] %>%
+              rename("intl3" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  rowwise() %>%
+  mutate(intl = str_flatten(c(intl, intl2, intl3), collapse = " ", na.rm = TRUE), 
+         intl = ifelse(intl == "", NA, intl) ) %>%
+  ungroup() %>%
+  select(-intl2, -intl3) %>%
+  left_join(autotxt[["Reparations"]] %>%
+              rename("reparations" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  left_join(autotxt[["TruthCommissions"]] %>%
+              rename("tcs" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  left_join(autotxt[["Vettings"]] %>%
+              rename("vetting" = "text"),
+            by = c("country_case", "ccode_case")) %>%
+  left_join(autotxt[["UNinvestigations"]] %>%
+              rename("un" = "text"),
+            by = c("country_case", "ccode_case"))
+# write_csv(file = "~/Desktop/temp.csv", na = "")
+
+### auto-text fields check 
+### 'auto_' fields are generated here and need to be transfered to Airtable
+### 'txt_' fields are manually adjusted in Airtable 
+check_vars <- paste("chk_", c("summary", "regime", "conflict", "amnesties", "domestic", "foreign", "intl", "reparations", "tcs", "vetting", "un"), sep = "")
+db[["Countries"]] %>% 
+  filter(include) %>% 
+  full_join(autotxt, 
+            by = c("country_case", "ccode_case")) %>% 
+  mutate(chk_summary = ifelse(auto_summary != summary, 1, 0), 
+         chk_regime = ifelse(auto_regime != regime, 1, 0), 
+         chk_conflict = ifelse(auto_conflict != conflict, 1, 0), 
+         chk_amnesties = ifelse(auto_amnesties != amnesties, 1, 0), 
+         chk_domestic = ifelse(auto_domestic != domestic, 1, 0), 
+         chk_foreign = ifelse(auto_foreign != foreign, 1, 0), 
+         chk_intl = ifelse(auto_intl != intl, 1, 0), 
+         chk_reparations = ifelse(auto_reparations != reparations, 1, 0), 
+         chk_tcs = ifelse(auto_tcs != tcs, 1, 0), 
+         chk_vetting = ifelse(auto_vetting != vetting, 1, 0), 
+         chk_un = ifelse(auto_un != un, 1, 0), ) %>%
+  select(country_case, all_of(check_vars), summary, regime, conflict, amnesties, 
+         domestic, intl, foreign, reparations, tcs, vetting, un) %>% 
+  filter(if_any(all_of(check_vars), ~ . == 1)) %>% 
+  write_csv("~/Desktop/temp.csv", na = "") %>%
+  print(n = Inf)
+
+### print all country profiles with auto summaries to Quarto files 
+
+dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/")
+dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/original/")
+# dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/edits/")
+dir("~/Dropbox/TJLab/TimoDataWork/country_profiles")
+
+map(df$country_case, function(ctry) {
+  
+  df1 <- df %>%
+    filter(country_case == ctry) %>%
+    mutate(txt_intro = str_replace_all(str_trim(txt_intro), "\n", "\n\n"),
+           txt_regime = str_replace_all(str_trim(txt_regime), "\n", "\n\n"),
+           txt_conflict = str_replace_all(str_trim(txt_conflict), "\n", "\n\n"),
+           txt_TJ = str_replace_all(str_trim(txt_TJ), "\n", "\n\n")) %>%
+    select(txt_intro, txt_regime, txt_conflict, txt_TJ) %>%
+    unlist()
+  
+  new <- autotxt %>% 
+    filter(country_case == ctry) %>%
+    select(-country_case, -ccode_case) %>%
+    unlist()
+  
+  # new <- map(autotxt, function(df2) {
+  #   df2 %>%
+  #     filter(country_case == ctry) %>%
+  #     select(text) %>%
+  #     unlist(use.names = FALSE)
+  # })
+  
+  paste("---\ntitle: ", ctry, "\nformat: docx\n---\n\n",
+        new[["summary"]],
+        "\n\n## Country Background", 
+        "\n\n### Democratic Transition\n\n",
+        new[["regime"]], "\n\n", 
+        df1[["txt_regime"]],
+        "\n\n### Violent Conflict\n\n",
+        new[["conflict"]],
+        df1[["txt_conflict"]],
+        "\n\n## Transitional Justice\n\n",
+        df1[["txt_intro"]], "\n\n",
+        df1[["txt_TJ"]], "\n\n",
+        ifelse(!is.na(new[["amnesties"]]),
+               paste("### Amnesties\n\n", new[["amnesties"]], "\n\n", sep = ""),
+               ""),
+        ifelse(!is.na(new[["domestic"]]),
+               paste("### Domestic Trials\n\n", new[["domestic"]], "\n\n", sep = ""),
+               ""),
+        ifelse(!is.na(new[["intl"]]),
+               paste("### International Trials\n\n", new[["intl"]], "\n\n", sep = ""),
+               ""),
+        ifelse(!is.na(new[["foreign"]]),
+               paste("### Foreign Trials\n\n", new[["foreign"]], "\n\n", sep = ""),
+               ""),
+        ifelse(!is.na(new[["reparations"]]),
+               paste("### Reparations\n\n", new[["reparations"]], "\n\n", sep = ""),
+               ""),
+        ifelse(!is.na(new[["tcs"]]),
+               paste("### Truth Commissions\n\n", new[["tcs"]], "\n\n", sep = ""),
+               ""),
+        ifelse(!is.na(new[["un"]]),
+               paste("### UN Investigations\n\n", new[["un"]], "\n\n", sep = ""),
+               ""),
+        ifelse(!is.na(new[["vetting"]]),
+               paste("### Vetting\n\n", new[["vetting"]], "\n\n", sep = ""),
+               ""),
+        sep = "") %>% 
+    write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/original/", ctry, ".qmd", sep = ""))
+})
+
+# file.copy(from = list.files("~/Dropbox/TJLab/TimoDataWork/country_profiles/original", full.names = TRUE),
+#           to = "~/Dropbox/TJLab/TimoDataWork/country_profiles/edits/",
+#           overwrite = FALSE, recursive = TRUE, copy.mode = FALSE)
+

@@ -94,15 +94,16 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
       memb_opts, rank_opts, charges_opts), 
     collapse = "_") %>% 
     str_replace("_hrs", "") %>% 
-    str_replace("_con", "")
+    str_replace("_con", "") %>% 
+    str_replace("_all", "")
   
   var_name <- ifelse(str_detect(var_name, "lcon_"),
                     str_replace(var_name, "_Xctj", ""), 
                     var_name)
-  var_name <- ifelse(str_detect(var_name, "ordy_"),
+  var_name <- ifelse(str_detect(var_name, "regu_"),
                     str_replace(var_name, "_Xctj", ""), 
                     var_name)
-  var_name <- ifelse(str_detect(var_name, "ordy_"),
+  var_name <- ifelse(str_detect(var_name, "regu_"),
                     str_replace(var_name, "_Xdtj", ""), 
                     var_name)
 

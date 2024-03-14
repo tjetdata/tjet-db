@@ -15,10 +15,10 @@ require(rairtable)
 to_download <- 
   list(
     "appHsoHAemKITZgMF" = c(
-      "Amnesties", "Reparations", "TruthCommissions", "Vettings",
-      "Countries", "Transitions", "ConflictDyadSpells", "Conflicts", "Dyads", 
-      "select_options", "metadata", "UCDPcountries", "TJETmembers", 
-      "Experts", "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges", 
+      "Amnesties", "Reparations", "TruthCommissions", "Vettings", "Countries", 
+      "Transitions", "ConflictDyadSpells", "Conflicts", "Dyads", 
+      "select_options", "metadata", "UCDPcountries", "TJETmembers", "Experts", 
+      "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges", 
       "VettingComparison", "BIcomparison", "ICC", "Investigations", 
       "AdHocHybrid", "SurveysMeta", "Ethiopia"),
     "appF8HAH7SN7C09cU" = c(
@@ -50,5 +50,6 @@ tjet[["db_timestamp"]] <- Sys.time()
 save(tjet, to_download, file = here::here("data", "tjet.RData"))
 
 map(tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]], function(x) {
-  download.file(url = x$url, destfile = here::here("data", "downloads", x$filename))
+  download.file(url = x$url, 
+                destfile = here::here("data", "downloads", x$filename))
 })
