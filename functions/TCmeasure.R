@@ -238,8 +238,8 @@ TCmeasure <- function(cy, new_col_name,
          binary, 
          .direction = "down") %>%
     ungroup() %>% 
-    mutate(scale = ifelse(year %in% 1970:2020 & is.na(scale), 0, scale), 
-           binary = ifelse(year %in% 1970:2020 & is.na(binary), 0, binary)) %>%
+    mutate(scale = ifelse(year %in% 1970:2023 & is.na(scale), 0, scale),
+           binary = ifelse(year %in% 1970:2023 & is.na(binary), 0, binary)) %>%
     rename_with(.fn = ~ new_col_name, .cols = scale) %>%
     rename_with(.fn = ~ paste(new_col_name, "binary", sep = "_"), .cols = binary) %>%
     return()

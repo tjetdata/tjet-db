@@ -457,6 +457,8 @@ ifit <- read_csv(here::here("transitions/original_data/Freeman.csv"),
          tr_new_ifit = trans_new,
          tr_descr_ifit = tr_descr)
 
+# unique(ifit$country)[!unique(ifit$country) %in% unique(df$country_name)]
+
 ### loading previous version for comparison to new
 
 # prev <- drive_get("TJET_transitions") %>%
@@ -485,9 +487,7 @@ df <- df %>%
          dem_ep_end_year, dem_ep_outcome, dem_founding_elec, v2x_polyarchy, 
          regime_gwf, reg_fail_gwf)
 
-# unique(ifit$country)[!unique(ifit$country) %in% unique(df$country_name)]
-
-transitions <- df %>% 
+transitions <- df %>%
   left_join(v6 %>% 
               select(ccode, vdem_id, country, year, tjet_dtrid, isq_dtrid, 
                      tjrc_dtrid, tjrc_rupture, tjrc_negotiated, tjrc_newstate),
@@ -524,10 +524,10 @@ transitions <- df %>%
          dem_bmr, dem_trans_bmr, polity_p5, polity2_p5, change_p5, regtrans_p5, 
          v2x_regime_amb, v2x_polyarchy, dem_ep_start_year, dem_ep_end_year, 
          dem_founding_elec, dem_ep_outcome, regime_gwf, reg_fail_gwf) %>% 
-  rename(country_id_vdem = country_id) %>%
+  rename(country_id_vdem = country_id) %>% 
   write_csv(here::here("transitions", "transitions_new_revised.csv"), na = "")
   # sheet_write(ss = drive_get("TJET_transitions"), sheet = "new")
-
+  
 ### at this point, the trans_year field was coded based on our rules
 ### OR after a data update, new was checked against old, and trans_year and 
 ### trans_note adjusted (this script does not automatically code these fields)
