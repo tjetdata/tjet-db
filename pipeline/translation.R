@@ -301,6 +301,16 @@ if(translations$surveys) { # about 11 min / 67,000 characters
   cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
 }
 
+# if(translations$focus) { 
+#   usage_last <- usage(key_get("DeepL"))[["character_count"]]
+#   start <- Sys.time()
+#   read_file("focus/SriLanka.qmd") %>% 
+#     translate() %>% 
+#     write_file("focus/SriLanka-fr.qmd")
+#   print(Sys.time() - start)
+#   cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
+# }
+
 ### saving locally 
 str(db[sort(names(db))], 1)
 save(db, file = here::here("data", "tjetdb.RData"))
