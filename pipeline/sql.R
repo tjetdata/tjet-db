@@ -22,13 +22,14 @@ fr <- fr[!fr %in% surveytabs] %>%
   print()
 
 tabs <- c(
-  "Accused", "Amnesties", "Amnesties_whoWasAmnestied",
-  "ConflictDyads", "ConflictDyads_fr", "Countries", "CountryYears",
-  "CourtLevels", "dl_tjet_codebook", "dl_tjet_codebook_fr", "dl_tjet_cy",
-  "fields_meta", "ICC", "ICCaccused", "Investigations", "labels", "labels_fr",
+  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "ConflictDyads", 
+  "ConflictDyads_fr", "Countries", "CountryYears", "CourtLevels", 
+  "dl_tjet_codebook", "dl_tjet_codebook_fr", "dl_tjet_cy", "fields_meta", 
+  "ICC", "ICCaccused", "Investigations", "labels", "labels_fr",
   "Reparations", "Reparations_collectiveReparationsEligibility",
-  "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions", 
-  "Trials", "TruthCommissions", "Vettings", "Vettings_targetingAffiliation"
+  "Reparations_individualReparationsEligible", "SurveysMeta", "SurveysMeta_fr",
+  "Transitions", "Trials", "TruthCommissions", "Vettings", 
+  "Vettings_targetingAffiliation"
   ) %>% 
   print()
   
