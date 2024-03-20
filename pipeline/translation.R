@@ -322,3 +322,6 @@ tabs <- paste(to_save, "_fr", sep = "")
 tabs <- tabs[tabs %in% names(db)]
 db[tabs] %>% 
   saveRDS(file = here::here("data", "tjetdb_fr.rds"))
+
+### NEED TO DELETE TABLES FROM THIS OBJECT THAT ARE NO LONGER NEEDED WITH THE NEW DB SETUP
+### COULD ALSO INTEGRATE THE REMAINING FR TABLES IN THE SAME WAY

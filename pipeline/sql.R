@@ -22,10 +22,10 @@ fr <- fr[!fr %in% surveytabs] %>%
   print()
 
 tabs <- c(
-  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "codebook", 
-  "ConflictDyads", "ConflictDyads_fr", "Countries", "CountryYears", 
-  "CourtLevels", "dl_tjet_codebook", "dl_tjet_codebook_fr", "dl_tjet_cy", 
-  "fields_meta", "ICC", "ICCaccused", "Investigations", "labels", "labels_fr", 
+  "Accused", "Amnesties", "Amnesties_whoWasAmnestied",
+  "ConflictDyads", "ConflictDyads_fr", "Countries", "CountryYears",
+  "CourtLevels", "dl_tjet_codebook", "dl_tjet_codebook_fr", "dl_tjet_cy",
+  "fields_meta", "ICC", "ICCaccused", "Investigations", "labels", "labels_fr",
   "Reparations", "Reparations_collectiveReparationsEligibility",
   "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions", 
   "Trials", "TruthCommissions", "Vettings", "Vettings_targetingAffiliation"
@@ -51,10 +51,10 @@ dbListTables(con) %>%
 
 ### reading specific table
 # dbWriteTable(conn = con,
-#              name = "Transitions",
-#              value = db[["Transitions"]],
+#              name = "dl_tjet_cy",
+#              value = db[["dl_tjet_cy"]],
 #              overwrite = TRUE)
-# dbReadTable(con, "Transitions") %>% tibble()
+# dbReadTable(con, "dl_tjet_cy") %>% tibble()
 
 ### write all tables to the database 
 ### (this overwrites existing tables by first truncating and then appending)
@@ -68,22 +68,22 @@ map(tabs, function(table_name) {
 })
 
 ### write survey data 
-surveytabs %>%
-  map(function(table_name) {
-    print(table_name)
-    dbWriteTable(conn = con,
-                 name = table_name,
-                 value = db[[table_name]],
-                 overwrite = TRUE)
-  })
+# surveytabs %>%
+#   map(function(table_name) {
+#     print(table_name)
+#     dbWriteTable(conn = con,
+#                  name = table_name,
+#                  value = db[[table_name]],
+#                  overwrite = TRUE)
+#   })
 
 ### translations
 translations <- dbReadTable(con, "Translations") %>% tibble()
-newtrans <- translations %>% 
-  rename(Translation_exists = Translation) %>% 
+newtrans <- translations %>%
+  rename(Translation_exists = Translation) %>%
   full_join(db[["translations"]], by = "Source") %>%
-  filter(is.na(Translation_exists)) %>% 
-  select(id, Source, Translation) 
+  filter(is.na(Translation_exists)) %>%
+  select(id, Source, Translation)
 if(nrow(newtrans) > 0) {
   dbWriteTable(conn = con,
                name = "Translations",
