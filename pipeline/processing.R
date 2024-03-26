@@ -2278,7 +2278,9 @@ data[["Domestic_cy"]] <- db[["dl_tjet_cy"]] %>%
           end = max(year),
           total = sum(trials_domestic), 
           tran_trs_dom_dtj_sta = sum(tran_trs_dom_dtj_sta), 
+          tran_tfc_dom_dtj_sta = sum(tran_tfc_dom_dtj_sta),
           tran_trs_dom_ctj_sta = sum(tran_trs_dom_ctj_sta), 
+          tran_tfc_dom_ctj_sta = sum(tran_tfc_dom_ctj_sta),
           tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta), 
           tran_tfc_dom_dtj_ctj_sta = sum(tran_tfc_dom_dtj_ctj_sta), 
           tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi), 
@@ -2684,104 +2686,92 @@ autotxt[["Amnesties"]] <- data[["Amnesties"]] %>%
 
 autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
   rowwise() %>%
-  mutate(text = "", 
-         text = paste(country_case,
-                      ifelse(total == 1, "had", "had a total of"),
-                      total,
-                      "domestic human rights or conflict",
-                      ifelse(total == 1, "prosecution", "prosecutions"),
-                      ifelse(beg == end,
-                             paste("in ", beg, ".", sep = ""),
-                             paste("between ", beg, " and ", end, ".", sep = "")
-                      )
+  mutate(text = list(c("", 
+                       if(total > 0)
+                         paste("TJET has compiled data on",
+                               total,
+                               "domestic",
+                               ifelse(total == 1, "prosecution", "prosecutions"),
+                               ifelse(beg == end,
+                                      paste("in ", beg, ".", sep = ""),
+                                      paste("between ", beg, " and ", end, ".", sep = ""))
          ) %>%
-           n_transform(),
+           n_transform())),
          text = list(c(text,
-                       if(tran_trs_dom_dtj_sta > 0)
-                         paste("There",
-                               ifelse(tran_trs_dom_dtj_sta == 1, "was", "were"),
-                               tran_trs_dom_dtj_sta,
-                               "transitional",
-                               ifelse(tran_trs_dom_dtj_sta == 1,
-                                      "prosecution of state agents in a democratic transition context.",
-                                      "prosecutions of state agents in democratic transition contexts.")
+                       paste("These include ",
+                             str_flatten(c(
+                               if(tran_trs_dom_dtj_sta > 0)
+                                 paste(tran_trs_dom_dtj_sta,
+                                       "transitional human rights",
+                                       ifelse(tran_trs_dom_dtj_sta == 1,
+                                              "prosecution", "prosecutions"),
+                                       "of state agents, in which",
+                                       tran_tfc_dom_dtj_sta,
+                                       ifelse(tran_tfc_dom_dtj_sta == 1,
+                                              "person was", "persons were"),
+                                       "convicted"),
+                               if(regu_trs_dom_sta > 0)
+                                 paste(regu_trs_dom_sta,
+                                       "regular human rights",
+                                       ifelse(regu_trs_dom_sta == 1,
+                                              "prosecution", "prosecutions"),
+                                       "of state agents, in which",
+                                       regu_tfc_dom_sta,
+                                       ifelse(regu_tfc_dom_sta == 1,
+                                              "person was", "persons were"),
+                                       "convicted"),
+                               if(tran_trs_dom_ctj_sta > 0)
+                                 paste(tran_trs_dom_ctj_sta,
+                                       "intrastate conflict",
+                                       ifelse(tran_trs_dom_ctj_sta == 1,
+                                              "prosecution", "prosecutions"),
+                                       "of state agents, in which",
+                                       tran_tfc_dom_ctj_sta,
+                                       ifelse(tran_tfc_dom_ctj_sta == 1,
+                                              "person was", "persons were"),
+                                       "convicted"),
+                               if(tran_trs_dom_ctj_opp > 0)
+                                 paste(tran_trs_dom_ctj_opp,
+                                       "intrastate conflict",
+                                       ifelse(tran_trs_dom_ctj_opp == 1,
+                                              "prosecution", "prosecutions"),
+                                       "of opposition members, in which",
+                                       tran_tfc_dom_ctj_opp,
+                                       ifelse(tran_tfc_dom_ctj_opp == 1,
+                                              "person was", "persons were"),
+                                       "convicted"),
+                               if(lcon_trs_dom_sta_opp > 0)
+                                 paste(lcon_trs_dom_sta_opp,
+                                       "low-level conflict",
+                                       ifelse(lcon_trs_dom_sta_opp == 1,
+                                              "prosecution", "prosecutions"),
+                                       "of state agents or opposition members, in which",
+                                       lcon_tfc_dom_sta_opp,
+                                       ifelse(lcon_tfc_dom_sta_opp == 1,
+                                              "person was", "persons were"),
+                                       "convicted")), 
+                               collapse = "; ", last = "; and ", na.rm = TRUE), 
+                             ".", sep = ""
                          ) %>%
-                         n_transform())),
-         text = list(c(text,
-                       if(tran_trs_dom_ctj_sta > 0)
-                         paste("There",
-                               ifelse(tran_trs_dom_ctj_sta == 1, "was", "were"),
-                               tran_trs_dom_ctj_sta,
-                               "transitional",
-                               ifelse(tran_trs_dom_ctj_sta == 1,
-                                      "prosecution of state agents in a conflict context.",
-                                      "prosecutions of state agents in conflict contexts.")
-                         ) %>%
-                         n_transform())),
-         text = list(c(text,
-                       if(tran_tfc_dom_dtj_ctj_sta > 0)
-                         paste("There",
-                               ifelse(tran_tfc_dom_dtj_ctj_sta == 1, "was", "were"),
-                               tran_tfc_dom_dtj_ctj_sta,
-                               ifelse(tran_tfc_dom_dtj_ctj_sta == 1,
-                                      "final conviction of a state agent in an transitional prosecution.",
-                                      "final convictions of state agents in transitional prosecutions.")) %>%
-                         n_transform())),
+                         n_transform() %>%
+                         str_replace_all("none persons were", "noone was") 
+                       )),
+         # "Of XX trials that involved high-ranking state agents, XX were convicted."
          text = list(c(text,
                        if(tran_trs_dom_dtj_ctj_sta_hi > 0)
-                         paste("Of",
+                         paste("In",
                                tran_trs_dom_dtj_ctj_sta_hi,
                                ifelse(tran_trs_dom_dtj_ctj_sta_hi == 1,
-                                      "transitional prosecution of high-ranking state agents,",
-                                      "transitional prosecutions of high-ranking state agents,"),
+                                      "trial", "trials"),
+                               "that involved high-ranking state agents,", 
                                tran_tfc_dom_dtj_ctj_sta_hi,
                                ifelse(tran_tfc_dom_dtj_ctj_sta_hi == 1,
-                                      "led to a final conviction.",
-                                      "led to final convictions.")
+                                      "person was", "persons were"),
+                               "convicted."
                          ) %>%
-                         n_transform())),
-         text = list(c(text,
-                       if(regu_trs_dom_sta > 0)
-                         paste("There",
-                               ifelse(regu_trs_dom_sta == 1, "was", "were"),
-                               regu_trs_dom_sta,
-                               ifelse(regu_trs_dom_sta == 1,
-                                      "regular human rights prosecution of state agents;",
-                                      "regular human rights prosecutions of state agents;"),
-                               regu_tfc_dom_sta,
-                               ifelse(regu_tfc_dom_sta <= 1,
-                                      "led to a final conviction.",
-                                      "led to final convictions.")
-                         ) %>%
-                         n_transform())),
-         text = list(c(text,
-                       if(tran_trs_dom_ctj_opp > 0)
-                         paste("There",
-                               ifelse(tran_trs_dom_ctj_opp == 1, "was", "were"),
-                               tran_trs_dom_ctj_opp,
-                               ifelse(tran_trs_dom_ctj_opp == 1,
-                                      "transitional prosecution of opposition members in a conflict context;",
-                                      "transitional prosecutions of opposition members in conflict contexts;"),
-                               tran_tfc_dom_ctj_opp,
-                               ifelse(tran_tfc_dom_ctj_opp <= 1,
-                                      "led to a final conviction.",
-                                      "led to final convictions.")
-                         ) %>%
-                         n_transform())),
-         text = list(c(text,
-                       if(lcon_trs_dom_sta_opp > 0)
-                         paste("There",
-                               ifelse(lcon_trs_dom_sta_opp == 1, "was", "were"),
-                               lcon_trs_dom_sta_opp,
-                               ifelse(lcon_trs_dom_sta_opp == 1,
-                                      "prosecution of opposition members in a low-level conflict context;",
-                                      "prosecutions of opposition members in low-level conflict contexts;"), 
-                               lcon_tfc_dom_sta_opp,
-                               ifelse(lcon_tfc_dom_sta_opp <= 1,
-                                      "led to a final conviction.",
-                                      "led to final convictions.")
-                         ) %>%
-                         n_transform())),
+                         n_transform() %>%
+                         str_replace("none persons were", "noone was")
+                       )),
          text = str_flatten(text, " ") %>% 
            str_trim()
   ) %>%
