@@ -3602,9 +3602,10 @@ map(df$country_case, function(ctry) {
                ""),
         sep = "") %>% 
     write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/original/", ctry, ".qmd", sep = ""))
+  
+  invisible()
 })
 
 # file.copy(from = list.files("~/Dropbox/TJLab/TimoDataWork/country_profiles/original", full.names = TRUE),
 #           to = "~/Dropbox/TJLab/TimoDataWork/country_profiles/edits/",
 #           overwrite = FALSE, recursive = TRUE, copy.mode = FALSE)
-
