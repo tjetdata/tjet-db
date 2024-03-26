@@ -1499,21 +1499,21 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom"
 #### regular HRs prosecutions (prefix: regu)
 
 ## trials of state agents that are not dtj or ctj: [_hrs_con]_Xdtj_Xctj_sta
-df <- TrialsMeasure(cy = df, prefix = "regu", measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") %>% 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "trs", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") %>% 
   mutate(regu_trs_dom_sta_binary = ifelse(regu_trs_dom_sta > 0, 1, 0), 
          regu_trs_dom_sta_scale = case_when(regu_trs_dom_sta == 0 ~ 0, 
                                             regu_trs_dom_sta %in% 1:2 ~ 1, 
                                             regu_trs_dom_sta > 2 ~ 2)) 
-df <- TrialsMeasure(cy = df, prefix = "regu", measure = "tro", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "regu", measure = "tfc", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "regu", measure = "cct", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "regu", measure = "crt", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
-df <- TrialsMeasure(cy = df, prefix = "regu", measure = "sen", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "tro", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "tfc", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "cct", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "crt", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "sen", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 
 # TrialsMeasure(cy = df, prefix = "regu", measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "opp") %>% 
 #   select(regu_trs_dom_opp) %>% summary 
 
-#### low level conflict prosecutions: (prefix: lcon)
+#### low level conflict-related prosecutions: (prefix: lcon)
 
 ## conflict trials which are not ctj (i.e. not matched to UCDP conflict codes) of state agents and opposition: [_con]_Xctj_sta_opp
 df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "trs", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
