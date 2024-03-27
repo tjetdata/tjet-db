@@ -1418,9 +1418,6 @@ df %>%
 #   select(country, ccode_cow, year, trials_domestic)
 
 ### trials 
-# measures <- c(trs = "trials started", tro = "trials ongoing", 
-#               tfc = "trials with final convictions", cct = "conviction count", 
-#               crt = "conviction rate by all accused", sen = "sentence totals")
 
 ### tested with confirmation that all_trs_dom_ctj_dtj_dcj_pcj_all == trials_domestic == all_trs_dom
 # df <- TrialsMeasure(cy = df, prefix = "all", measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con", "ctj", "dtj", "dcj", "pcj"), memb_opts = "all") %>% 

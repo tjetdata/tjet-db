@@ -297,20 +297,28 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
       mutate(year = list(yearStart:yearEnd)) %>% 
       ungroup() %>% 
       unnest_longer(year) %>% 
-      select(ccode_Accused, year, yearStart, yearEnd) %>%
+      mutate(duration = ifelse(year <= yearEnd & yearStart <= yearEnd, year - yearStart + 1, 0)) %>%
+      select(ccode_Accused, year, yearStart, yearEnd, duration) %>%
       arrange(ccode_Accused, year) %>% 
       group_by(ccode_Accused, year) %>% 
-      mutate(trials_ongoing = n()) %>% 
-      ungroup() %>%
-      select(ccode_Accused, year, trials_ongoing) %>% 
-      distinct()
+      reframe(trials_ongoing = n(), 
+              duration = mean(duration))
+    
+    # ado = "average duration of ongoing trials"
+    ado_var_name <- var_name %>% 
+      str_replace(fixed("tro_"), "ado_")
+    
     cy <- cy %>%
       left_join(trials_ongoing, by = c("ccode_cow" = "ccode_Accused", 
                                        "year" = "year")) %>% 
       mutate(trials_ongoing = 
                ifelse(year %in% 1970:2020 & is.na(trials_ongoing), 
-                      0, trials_ongoing)) %>% 
-      rename_with(.fn = ~ var_name, .cols = trials_ongoing)
+                      0, trials_ongoing), 
+             duration = 
+               ifelse(year %in% 1970:2020 & is.na(duration), 0, duration) ) %>% 
+      rename_with(.fn = ~ var_name, .cols = trials_ongoing) %>% 
+      rename_with(.fn = ~ ado_var_name, .cols = duration)
+    
   }
   
   if(measure == "tfc") { ## tfc = "trials with final convictions": count of trials with final outcome a conviction by endYear
@@ -370,10 +378,6 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
     }
     
     if(measure == "crt") { ## "conviction rate by all accused": yearly count of convictions as percentage of all accused on trial
-      # acc_var_name <- str_flatten(c("acc", type_opts, nexus_vars, excl,
-      #                               memb_opts, rank_opts, charges_opts), collapse = "_")
-      acc_var_name <- var_name %>% 
-        str_replace(fixed("crt_"), "acc_")
       
       accused_ongoing <- subset_accused %>%
         left_join(accused_ended, by = "accusedID") %>%
@@ -390,6 +394,10 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
         arrange(ccode_Accused, year) %>% 
         group_by(ccode_Accused, year) %>% 
         reframe(accused_n = n())
+      
+      acc_var_name <- var_name %>% 
+        str_replace(fixed("crt_"), "acc_")
+      
       cy <- cy %>%
         left_join(accused_ongoing, by = c("ccode_cow" = "ccode_Accused", 
                                           "year" = "year")) %>% 
@@ -422,7 +430,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
                                    0, prison_scale)) %>% 
       rename_with(.fn = ~ var_name, .cols = prison_scale)
   }
-
+  
   return(cy)
 }
 #  - then same vars for trials of gender crimes
