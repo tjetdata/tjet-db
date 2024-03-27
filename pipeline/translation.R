@@ -116,7 +116,7 @@ if(translations$labels) { # about 0.5 min / 5000 characters
 }
 db[["labels_fr"]]
 
-if(translations$dl_codebook) { # about 1 min / 23000 characters 
+if(translations$dl_codebook) { # about 1.5 min / 26000 characters 
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
   start <- Sys.time()
   db[["dl_tjet_codebook_fr"]] <- db[["dl_tjet_codebook"]] %>% 
@@ -343,3 +343,9 @@ db[tabs] %>%
 
 ### NEED TO DELETE TABLES FROM THIS OBJECT THAT ARE NO LONGER NEEDED WITH THE NEW DB SETUP
 ### COULD ALSO INTEGRATE THE REMAINING FR TABLES IN THE SAME WAY
+
+# read_csv("~/Desktop/temp.csv") %>% 
+#   rowwise() %>%
+#   mutate(domestic_fr = translate(domestic)) %>%
+#   ungroup() %>% 
+#   write_csv("~/Desktop/new.csv")

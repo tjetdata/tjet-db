@@ -1,49 +1,49 @@
 trialID,accusedID,country,ccode_Accused,nameOrDesc,ICC_arrest_warrant,ICC_arrestAppear,ICC_confirm_charges,ICC_proceedings,ICC_withdrawnDismissed,tjet_version
-6906,11188,Mali,432,Ahmad al-Faqi al-Mahdi,2015,2015,2016,2016,,2024-03-26
-6907,11193,Mali,432,Al Hassan Ag Abdoul Aziz Ag Mohamed Ag Mahmoud,2018,2018,2019,2020,,2024-03-26
-6732,10832,Cote d'Ivoire,437,"Charles Blé Goudé, a close ally of ex-President Laurent Gbagbo, was the youth and employment minister in Gbago's government and the leader of the Young Patriots, a pro-Gbagbo militia group",2011,2014,2014,2016,,2024-03-26
-6732,10831,Cote d'Ivoire,437,Laurent Gbagbo is the former president of Côte D'Ivoire,2011,2011,2013,2016,,2024-03-26
-4751,7760,Cote d'Ivoire,437,"Simone Gbagbo, former first lady",2012,,,,2021,2024-03-26
-6667,10692,Central African Republic,482,Jean-Pierre Bemba Gombo,2008,2008,2009,2010,,2024-03-26
-9783,17961,Central African Republic,482,Narcisse Arido,2013,2013,2014,2015,,2024-03-26
-9783,17960,Central African Republic,482,Jean-Jacques Mangenda Kabongo,2013,2013,2014,2015,,2024-03-26
-9783,17957,Central African Republic,482,Jean-Pierre Bemba Gombo,2013,2013,2014,2015,,2024-03-26
-9783,17959,Central African Republic,482,Fidèle Babala Wandu,2013,2013,2014,2015,,2024-03-26
-9783,17958,Central African Republic,482,Aimé Kilolo Musamba,2013,2013,2014,2015,,2024-03-26
-9785,17963,Central African Republic,482,Mahamat Said Abdel Kani,2018,2021,2021,2022,,2024-03-26
-9786,17964,Central African Republic,482,"Alfred Yekatom, former caporal-chef in the Forces Armées Centrafricaines, and a member of parliament in the CAR",2018,2018,,,,2024-03-26
-9784,17962,Central African Republic,482,"Maxime Jeoffroy Eli Mokom Gawaka, former National Coordinator of Operations of the Anti-Balaka",2018,2022,,,,2024-03-26
-9786,17965,Central African Republic,482,"Patrice-Edouard Ngaïssona, ""National General Coordinator"" of the Anti-Balaka",2018,2018,2019,2021,,2024-03-26
-9787,17966,Central African Republic,482,"Nouradine Adam, former Minister of Security, Emigration, Immigration and Public Order",2019,,,,,2024-03-26
-6863,11090,Democratic Republic of the Congo,490,"Bosco Ntaganda, former Deputy Chief of Staff and commoander of operations of the Froces Patriotiques pour la Liberation du Congo (FPLC)",2006,2006,2007,2009,,2024-03-26
-319,468,Democratic Republic of the Congo,490,"Thomas Lubanga, former President of the Union des Patriotes Congolais / Forces Patriotique pour la Liberlation du Congo (UPC/FPLC)",2006,2006,2007,2009,,2024-03-26
-6860,11083,Democratic Republic of the Congo,490,Mathieu Ngudjolo Chui,2007,2008,2008,2009,,2024-03-26
-6861,11084,Democratic Republic of the Congo,490,"Germain Katanga, Alleged commander of the Force de résistance patriotique en Ituri (FRPI)",2007,2007,2008,2009,,2024-03-26
-4112,5166,Democratic Republic of the Congo,490,Callixte Mbarushimana,2010,2011,2011,,2011,2024-03-26
-4750,7756,Democratic Republic of the Congo,490,Sylvestre Mudacumura,2012,,,,,2024-03-26
-4113,5167,Uganda,500,Joseph Kony,2005,,,,,2024-03-26
-4113,5169,Uganda,500,Okot Odhiambo,2005,,,,2015,2024-03-26
-9770,5170,Uganda,500,Dominic Ongwen,2005,2015,2016,2016,,2024-03-26
-4113,5168,Uganda,500,Vincent Otti,2005,,,,,2024-03-26
-4113,17971,Uganda,500,"Raska Lukwiya, third-highest ranking member of the LRA",2005,,,,2007,2024-03-26
-4118,7758,Kenya,501,Mohammed Hussein Ali,2011,2011,2011,,2011,2024-03-26
-4117,5177,Kenya,501,Joshua Arap Sang,2011,2011,2012,2013,2016,2024-03-26
-4118,5179,Kenya,501,Uhuru Muigai Kenyatta,2011,2011,2012,,2014,2024-03-26
-4118,5178,Kenya,501,Francis Kirimi Muthaura,2011,2011,2012,,2013,2024-03-26
-4117,7757,Kenya,501,Henry Kiprono Kosgey,2011,2011,2012,,,2024-03-26
-4117,5176,Kenya,501,William Samouei Ruto,2011,2011,2012,2013,2016,2024-03-26
-9788,17967,Kenya,501,"Walter Osapiri Barasa, journalist",2013,,,,,2024-03-26
-9789,17969,Kenya,501,Philip Kipkoech Bett,2015,,,,,2024-03-26
-9789,17968,Kenya,501,"Paul Gicheru, Kenyan lawyer and qualified advocate of the High Court",2015,2020,2021,2022,2022,2024-03-26
-4119,5181,Libya,620,Abdullah Al-Senussi,2011,,,,2013,2024-03-26
-4119,5180,Libya,620,Saif Al-Islam Gaddafi,2011,,,,,2024-03-26
-4119,7759,Libya,620,Muammar Gaddafi,2011,,,,2011,2024-03-26
-9790,17970,Libya,620,"Al-Tuhamy Mohamed Khaled, former Lieutenant General of the Libyan army and former head of hte Libyan Internal Security Agency",2013,,,,2022,2024-03-26
-8239,14421,Libya,620,"Mahmoud al-Werfalli, Libya National Army commander",2017,,,,2022,2024-03-26
-4455,5667,Sudan,625,Ahmad Harun,2007,,,,,2024-03-26
-8253,14442,Sudan,625,"Ali Abd-Al-Rahman, senior commander of the Janjaweed militia",2007,2020,2021,2022,,2024-03-26
-4456,6163,Sudan,625,Saleh Jerbo Jamus,2009,2010,2011,,2013,2024-03-26
-4456,5668,Sudan,625,Abdallah Banda Abakaer Nourain,2009,2010,2011,,,2024-03-26
-4454,5666,Sudan,625,President Omar Al-Bashir,2009,,,,,2024-03-26
-4114,5172,Sudan,625,Bahar Idriss Abu Garda,2009,2009,2010,,2010,2024-03-26
-4116,5175,Sudan,625,Abdel Raheem Muhammad Hussein,2012,,,,,2024-03-26
+6906,11188,Mali,432,Ahmad al-Faqi al-Mahdi,2015,2015,2016,2016,,2024-03-27
+6907,11193,Mali,432,Al Hassan Ag Abdoul Aziz Ag Mohamed Ag Mahmoud,2018,2018,2019,2020,,2024-03-27
+6732,10832,Cote d'Ivoire,437,"Charles Blé Goudé, a close ally of ex-President Laurent Gbagbo, was the youth and employment minister in Gbago's government and the leader of the Young Patriots, a pro-Gbagbo militia group",2011,2014,2014,2016,,2024-03-27
+6732,10831,Cote d'Ivoire,437,Laurent Gbagbo is the former president of Côte D'Ivoire,2011,2011,2013,2016,,2024-03-27
+4751,7760,Cote d'Ivoire,437,"Simone Gbagbo, former first lady",2012,,,,2021,2024-03-27
+6667,10692,Central African Republic,482,Jean-Pierre Bemba Gombo,2008,2008,2009,2010,,2024-03-27
+9783,17961,Central African Republic,482,Narcisse Arido,2013,2013,2014,2015,,2024-03-27
+9783,17960,Central African Republic,482,Jean-Jacques Mangenda Kabongo,2013,2013,2014,2015,,2024-03-27
+9783,17957,Central African Republic,482,Jean-Pierre Bemba Gombo,2013,2013,2014,2015,,2024-03-27
+9783,17959,Central African Republic,482,Fidèle Babala Wandu,2013,2013,2014,2015,,2024-03-27
+9783,17958,Central African Republic,482,Aimé Kilolo Musamba,2013,2013,2014,2015,,2024-03-27
+9785,17963,Central African Republic,482,Mahamat Said Abdel Kani,2018,2021,2021,2022,,2024-03-27
+9786,17964,Central African Republic,482,"Alfred Yekatom, former caporal-chef in the Forces Armées Centrafricaines, and a member of parliament in the CAR",2018,2018,,,,2024-03-27
+9784,17962,Central African Republic,482,"Maxime Jeoffroy Eli Mokom Gawaka, former National Coordinator of Operations of the Anti-Balaka",2018,2022,,,,2024-03-27
+9786,17965,Central African Republic,482,"Patrice-Edouard Ngaïssona, ""National General Coordinator"" of the Anti-Balaka",2018,2018,2019,2021,,2024-03-27
+9787,17966,Central African Republic,482,"Nouradine Adam, former Minister of Security, Emigration, Immigration and Public Order",2019,,,,,2024-03-27
+6863,11090,Democratic Republic of the Congo,490,"Bosco Ntaganda, former Deputy Chief of Staff and commoander of operations of the Froces Patriotiques pour la Liberation du Congo (FPLC)",2006,2006,2007,2009,,2024-03-27
+319,468,Democratic Republic of the Congo,490,"Thomas Lubanga, former President of the Union des Patriotes Congolais / Forces Patriotique pour la Liberlation du Congo (UPC/FPLC)",2006,2006,2007,2009,,2024-03-27
+6860,11083,Democratic Republic of the Congo,490,Mathieu Ngudjolo Chui,2007,2008,2008,2009,,2024-03-27
+6861,11084,Democratic Republic of the Congo,490,"Germain Katanga, Alleged commander of the Force de résistance patriotique en Ituri (FRPI)",2007,2007,2008,2009,,2024-03-27
+4112,5166,Democratic Republic of the Congo,490,Callixte Mbarushimana,2010,2011,2011,,2011,2024-03-27
+4750,7756,Democratic Republic of the Congo,490,Sylvestre Mudacumura,2012,,,,,2024-03-27
+4113,5167,Uganda,500,Joseph Kony,2005,,,,,2024-03-27
+4113,5169,Uganda,500,Okot Odhiambo,2005,,,,2015,2024-03-27
+9770,5170,Uganda,500,Dominic Ongwen,2005,2015,2016,2016,,2024-03-27
+4113,5168,Uganda,500,Vincent Otti,2005,,,,,2024-03-27
+4113,17971,Uganda,500,"Raska Lukwiya, third-highest ranking member of the LRA",2005,,,,2007,2024-03-27
+4118,7758,Kenya,501,Mohammed Hussein Ali,2011,2011,2011,,2011,2024-03-27
+4117,5177,Kenya,501,Joshua Arap Sang,2011,2011,2012,2013,2016,2024-03-27
+4118,5179,Kenya,501,Uhuru Muigai Kenyatta,2011,2011,2012,,2014,2024-03-27
+4118,5178,Kenya,501,Francis Kirimi Muthaura,2011,2011,2012,,2013,2024-03-27
+4117,7757,Kenya,501,Henry Kiprono Kosgey,2011,2011,2012,,,2024-03-27
+4117,5176,Kenya,501,William Samouei Ruto,2011,2011,2012,2013,2016,2024-03-27
+9788,17967,Kenya,501,"Walter Osapiri Barasa, journalist",2013,,,,,2024-03-27
+9789,17969,Kenya,501,Philip Kipkoech Bett,2015,,,,,2024-03-27
+9789,17968,Kenya,501,"Paul Gicheru, Kenyan lawyer and qualified advocate of the High Court",2015,2020,2021,2022,2022,2024-03-27
+4119,5181,Libya,620,Abdullah Al-Senussi,2011,,,,2013,2024-03-27
+4119,5180,Libya,620,Saif Al-Islam Gaddafi,2011,,,,,2024-03-27
+4119,7759,Libya,620,Muammar Gaddafi,2011,,,,2011,2024-03-27
+9790,17970,Libya,620,"Al-Tuhamy Mohamed Khaled, former Lieutenant General of the Libyan army and former head of hte Libyan Internal Security Agency",2013,,,,2022,2024-03-27
+8239,14421,Libya,620,"Mahmoud al-Werfalli, Libya National Army commander",2017,,,,2022,2024-03-27
+4455,5667,Sudan,625,Ahmad Harun,2007,,,,,2024-03-27
+8253,14442,Sudan,625,"Ali Abd-Al-Rahman, senior commander of the Janjaweed militia",2007,2020,2021,2022,,2024-03-27
+4456,6163,Sudan,625,Saleh Jerbo Jamus,2009,2010,2011,,2013,2024-03-27
+4456,5668,Sudan,625,Abdallah Banda Abakaer Nourain,2009,2010,2011,,,2024-03-27
+4454,5666,Sudan,625,President Omar Al-Bashir,2009,,,,,2024-03-27
+4114,5172,Sudan,625,Bahar Idriss Abu Garda,2009,2009,2010,,2010,2024-03-27
+4116,5175,Sudan,625,Abdel Raheem Muhammad Hussein,2012,,,,,2024-03-27
