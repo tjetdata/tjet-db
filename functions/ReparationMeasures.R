@@ -69,7 +69,8 @@ ReparationMeasures <- function(cy = df,
             services = max(services), 
             victim_centered = max(victim_centered), 
             diffAmount = max(diffAmount), 
-            outreach = max(outreach), alterationEffect = max(alterationEffect), 
+            outreach = max(outreach), 
+            alterationEffect = max(alterationEffect), 
             foreclose = max(foreclose), 
             accessibility = max(accessibility),
             scope = max(scope)) %>% 
@@ -107,6 +108,11 @@ ReparationMeasures <- function(cy = df,
       services = ifelse(year %in% 1970:2020 & is.na(services), 0, services),
       victim_centered = ifelse(year %in% 1970:2020 & is.na(victim_centered), 0, victim_centered),
       scope = ifelse(year %in% 1970:2020 & is.na(scope), 0, scope),
+      diffamount = ifelse(year %in% 1970:2020 & is.na(diffamount), 0, diffamount),
+      outreach = ifelse(year %in% 1970:2020 & is.na(outreach), 0, outreach),
+      alteration = ifelse(year %in% 1970:2020 & is.na(alteration), 0, alteration),
+      foreclose  = ifelse(year %in% 1970:2020 & is.na(foreclose), 0, foreclose),
+      accessibility  = ifelse(year %in% 1970:2020 & is.na(accessibility), 0, accessibility)
     ) %>%
     rename_with(.fn = ~ paste(prefix, .x, sep = "_"), .cols = all_of(vars)) %>% 
     return()
