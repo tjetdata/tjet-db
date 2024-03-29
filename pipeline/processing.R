@@ -1426,7 +1426,11 @@ df %>%
 #### transitional prosecutions (prefix: tran)
 
 ## dtj trials of state agents: _dtj_sta
-df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") %>% 
+  mutate(tran_trs_dom_dtj_sta_binary = ifelse(tran_trs_dom_dtj_sta > 0, 1, 0), 
+         tran_trs_dom_dtj_sta_scale = case_when(tran_trs_dom_dtj_sta == 0 ~ 0, 
+                                                tran_trs_dom_dtj_sta %in% 1:2 ~ 1, 
+                                                tran_trs_dom_dtj_sta > 2 ~ 2) )
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta")
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
@@ -1440,7 +1444,11 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom"
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
 
 ## ctj trials of state agents: _ctj_sta
-df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") %>% 
+  mutate(tran_trs_dom_ctj_sta_binary = ifelse(tran_trs_dom_ctj_sta > 0, 1, 0), 
+         tran_trs_dom_ctj_sta_scale = case_when(tran_trs_dom_ctj_sta == 0 ~ 0, 
+                                                tran_trs_dom_ctj_sta %in% 1:2 ~ 1, 
+                                                tran_trs_dom_ctj_sta > 2 ~ 2) )
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tro", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
@@ -2694,62 +2702,65 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                       paste("between ", beg, " and ", end, ".", sep = ""))
          ) %>%
            n_transform())),
-         text = list(c(text,
-                       paste("These include ",
-                             str_flatten(c(
-                               if(tran_trs_dom_dtj_sta > 0)
-                                 paste(tran_trs_dom_dtj_sta,
-                                       "transitional human rights",
-                                       ifelse(tran_trs_dom_dtj_sta == 1,
-                                              "prosecution", "prosecutions"),
-                                       "of state agents, in which",
-                                       tran_tfc_dom_dtj_sta,
-                                       ifelse(tran_tfc_dom_dtj_sta == 1,
-                                              "person was", "persons were"),
-                                       "convicted"),
-                               if(regu_trs_dom_sta > 0)
-                                 paste(regu_trs_dom_sta,
-                                       "regular human rights",
-                                       ifelse(regu_trs_dom_sta == 1,
-                                              "prosecution", "prosecutions"),
-                                       "of state agents, in which",
-                                       regu_tfc_dom_sta,
-                                       ifelse(regu_tfc_dom_sta == 1,
-                                              "person was", "persons were"),
-                                       "convicted"),
-                               if(tran_trs_dom_ctj_sta > 0)
-                                 paste(tran_trs_dom_ctj_sta,
-                                       "intrastate conflict",
-                                       ifelse(tran_trs_dom_ctj_sta == 1,
-                                              "prosecution", "prosecutions"),
-                                       "of state agents, in which",
-                                       tran_tfc_dom_ctj_sta,
-                                       ifelse(tran_tfc_dom_ctj_sta == 1,
-                                              "person was", "persons were"),
-                                       "convicted"),
-                               if(tran_trs_dom_ctj_opp > 0)
-                                 paste(tran_trs_dom_ctj_opp,
-                                       "intrastate conflict",
-                                       ifelse(tran_trs_dom_ctj_opp == 1,
-                                              "prosecution", "prosecutions"),
-                                       "of opposition members, in which",
-                                       tran_tfc_dom_ctj_opp,
-                                       ifelse(tran_tfc_dom_ctj_opp == 1,
-                                              "person was", "persons were"),
-                                       "convicted"),
-                               if(lcon_trs_dom_sta_opp > 0)
-                                 paste(lcon_trs_dom_sta_opp,
-                                       "low-level conflict",
-                                       ifelse(lcon_trs_dom_sta_opp == 1,
-                                              "prosecution", "prosecutions"),
-                                       "of state agents or opposition members, in which",
-                                       lcon_tfc_dom_sta_opp,
-                                       ifelse(lcon_tfc_dom_sta_opp == 1,
-                                              "person was", "persons were"),
-                                       "convicted")), 
-                               collapse = "; ", last = "; and ", na.rm = TRUE), 
-                             ".", sep = ""
-                         ) %>%
+         text = list(c(text, 
+                       if(tran_trs_dom_dtj_sta > 0 | regu_trs_dom_sta > 0 | 
+                          tran_trs_dom_ctj_sta > 0 | tran_trs_dom_ctj_opp > 0 | 
+                          lcon_trs_dom_sta_opp > 0)
+                         paste("These include ",
+                               str_flatten(c(
+                                 if(tran_trs_dom_dtj_sta > 0)
+                                   paste(tran_trs_dom_dtj_sta,
+                                         "transitional human rights",
+                                         ifelse(tran_trs_dom_dtj_sta == 1,
+                                                "prosecution", "prosecutions"),
+                                         "of state agents, in which",
+                                         tran_tfc_dom_dtj_sta,
+                                         ifelse(tran_tfc_dom_dtj_sta == 1,
+                                                "person was", "persons were"),
+                                         "convicted"),
+                                 if(regu_trs_dom_sta > 0)
+                                   paste(regu_trs_dom_sta,
+                                         "regular human rights",
+                                         ifelse(regu_trs_dom_sta == 1,
+                                                "prosecution", "prosecutions"),
+                                         "of state agents, in which",
+                                         regu_tfc_dom_sta,
+                                         ifelse(regu_tfc_dom_sta == 1,
+                                                "person was", "persons were"),
+                                         "convicted"),
+                                 if(tran_trs_dom_ctj_sta > 0)
+                                   paste(tran_trs_dom_ctj_sta,
+                                         "intrastate conflict",
+                                         ifelse(tran_trs_dom_ctj_sta == 1,
+                                                "prosecution", "prosecutions"),
+                                         "of state agents, in which",
+                                         tran_tfc_dom_ctj_sta,
+                                         ifelse(tran_tfc_dom_ctj_sta == 1,
+                                                "person was", "persons were"),
+                                         "convicted"),
+                                 if(tran_trs_dom_ctj_opp > 0)
+                                   paste(tran_trs_dom_ctj_opp,
+                                         "intrastate conflict",
+                                         ifelse(tran_trs_dom_ctj_opp == 1,
+                                                "prosecution", "prosecutions"),
+                                         "of opposition members, in which",
+                                         tran_tfc_dom_ctj_opp,
+                                         ifelse(tran_tfc_dom_ctj_opp == 1,
+                                                "person was", "persons were"),
+                                         "convicted"),
+                                 if(lcon_trs_dom_sta_opp > 0)
+                                   paste(lcon_trs_dom_sta_opp,
+                                         "low-level conflict",
+                                         ifelse(lcon_trs_dom_sta_opp == 1,
+                                                "prosecution", "prosecutions"),
+                                         "of state agents or opposition members, in which",
+                                         lcon_tfc_dom_sta_opp,
+                                         ifelse(lcon_tfc_dom_sta_opp == 1,
+                                                "person was", "persons were"),
+                                         "convicted")), 
+                                 collapse = "; ", last = "; and ", na.rm = TRUE), 
+                               ".", sep = ""
+                           ) %>%
                          n_transform() %>%
                          str_replace_all("none persons were", "noone was") 
                        )),
@@ -3504,17 +3515,28 @@ db[["Countries"]] %>%
   filter(include) %>% 
   full_join(autotxt, 
             by = c("country_case", "ccode_case")) %>% 
-  mutate(chk_summary = ifelse(auto_summary != summary, 1, 0), 
-         chk_regime = ifelse(auto_regime != regime, 1, 0), 
-         chk_conflict = ifelse(auto_conflict != conflict, 1, 0), 
-         chk_amnesties = ifelse(auto_amnesties != amnesties, 1, 0), 
-         chk_domestic = ifelse(auto_domestic != domestic, 1, 0), 
-         chk_foreign = ifelse(auto_foreign != foreign, 1, 0), 
-         chk_intl = ifelse(auto_intl != intl, 1, 0), 
-         chk_reparations = ifelse(auto_reparations != reparations, 1, 0), 
-         chk_tcs = ifelse(auto_tcs != tcs, 1, 0), 
-         chk_vetting = ifelse(auto_vetting != vetting, 1, 0), 
-         chk_un = ifelse(auto_un != un, 1, 0), ) %>%
+  mutate(chk_summary = ifelse(
+    auto_summary != summary | (!is.na(summary) & is.na(auto_summary)), 1, 0), 
+         chk_regime = ifelse(
+           auto_regime != regime | (!is.na(regime) & is.na(auto_regime)), 1, 0), 
+         chk_conflict = ifelse(
+           auto_conflict != conflict | (!is.na(conflict) & is.na(auto_conflict)), 1, 0), 
+         chk_amnesties = ifelse(
+           auto_amnesties != amnesties | (!is.na(amnesties) & is.na(auto_amnesties)), 1, 0), 
+         chk_domestic = ifelse(
+           auto_domestic != domestic | (!is.na(domestic) & is.na(auto_domestic)), 1, 0), 
+         chk_foreign = ifelse(
+           auto_foreign != foreign | (!is.na(foreign) & is.na(auto_foreign)), 1, 0), 
+         chk_intl = ifelse(
+           auto_intl != intl | (!is.na(intl) & is.na(auto_intl)), 1, 0), 
+         chk_reparations = ifelse(
+           auto_reparations != reparations | (!is.na(reparations) & is.na(auto_reparations)), 1, 0), 
+         chk_tcs = ifelse(
+           auto_tcs != tcs | (!is.na(tcs) & is.na(auto_tcs)), 1, 0), 
+         chk_vetting = ifelse(
+           auto_vetting != vetting | (!is.na(vetting) & is.na(auto_vetting)), 1, 0), 
+         chk_un = ifelse(
+           auto_un != un | (!is.na(un) & is.na(auto_un)), 1, 0), ) %>%
   select(country_case, all_of(check_vars), summary, regime, conflict, amnesties, 
          domestic, intl, foreign, reparations, tcs, vetting, un) %>% 
   filter(if_any(all_of(check_vars), ~ . == 1)) %>% 
