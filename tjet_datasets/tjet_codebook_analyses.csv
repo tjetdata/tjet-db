@@ -130,6 +130,8 @@ acc_for_opp_hi,"foreign trials of high-ranking opposition members, count of accu
 crt_for_opp_hi,"foreign trials of high-ranking opposition members, conviction rate, cct/acc",TJET,2024-03-29
 sen_for_opp_hi,"foreign trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-29
 tran_trs_dom_dtj_sta,"domestic transitional human rights prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-29
+tran_trs_dom_dtj_sta_binary,binary version of tran_trs_dom_dtj_sta,TJET,2024-03-29
+tran_trs_dom_dtj_sta_scale,scale version of tran_trs_dom_dtj_sta,TJET,2024-03-29
 tran_tro_dom_dtj_sta,"domestic transitional human rights prosecutions of state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-29
 tran_ado_dom_dtj_sta,"domestic transitional human rights prosecutions of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,2024-03-29
 tran_tfc_dom_dtj_sta,"domestic transitional human rights prosecutions of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-29
@@ -146,6 +148,8 @@ tran_acc_dom_dtj_sta_hi,"domestic transitional human rights prosecutions of high
 tran_crt_dom_dtj_sta_hi,"domestic transitional human rights prosecutions of high-ranking state agents, conviction rate, cct/acc",TJET,2024-03-29
 tran_sen_dom_dtj_sta_hi,"domestic transitional human rights prosecutions of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,2024-03-29
 tran_trs_dom_ctj_sta,"domestic intrastate conflict prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,2024-03-29
+tran_trs_dom_ctj_sta_binary,binary version of tran_trs_dom_ctj_sta,TJET,2024-03-29
+tran_trs_dom_ctj_sta_scale,scale version of tran_trs_dom_ctj_sta,TJET,2024-03-29
 tran_tro_dom_ctj_sta,"domestic intrastate conflict prosecutions of state agents, count of trials ongoing, by nationality of the accused",TJET,2024-03-29
 tran_ado_dom_ctj_sta,"domestic intrastate conflict prosecutions of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,2024-03-29
 tran_tfc_dom_ctj_sta,"domestic intrastate conflict prosecutions of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,2024-03-29
