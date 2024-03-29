@@ -32,7 +32,7 @@ Count of foreign and universal jurisdiction criminal trials in selected data sam
 Count of international or hybrid criminal trials in selected data sample by nationality of the accused individuals,"Nombre de procès pénaux internationaux ou hybrides dans l'échantillon de données sélectionné, par nationalité des accusés"
 Count of reparations policies in selected data sample,Nombre de politiques de réparation dans l'échantillon de données sélectionné
 Count of truth commissions in selected data sample,Nombre de commissions de vérité dans l'échantillon de données sélectionné
-Count of vetting policies in selected data sample,Nombre de politiques de vérification dans l'échantillon de données sélectionné
+Count of vetting policies in selected data sample,Nombre de politiques de filtrage dans l'échantillon de données sélectionné
 Countries,Pays
 Country,Pays
 Country in selected data sample,Pays dans l'échantillon de données sélectionné
@@ -98,7 +98,7 @@ Name or Description,Nom ou description
 Name or description of the accused,Nom ou description de l'accusé
 Name or description of the reparations policy,Nom ou description de la politique de réparation
 Name or description of the truth commission,Nom ou description de la commission de vérité
-Name or description of the vetting policy,Nom ou description de la politique de vérification
+Name or description of the vetting policy,Nom ou description de la politique de filtrage
 Non-Transitional Autocracy,Autocratie non transitoire
 Non-Transitional Democracy,Démocratie non transitoire
 Number,Nombre
@@ -156,7 +156,7 @@ TJET Reparation ID,Numéro d'identification de la réparation TJET
 TJET Transition ID,Numéro d'identification de la transition TJET
 TJET Trial ID,Numéro d'identification du procès TJET
 TJET Truth Commission ID,Numéro d'identification de la commission de vérité TJET
-TJET Vetting ID,Numéro d'identification de la politique de vérification des antécédents TJET
+TJET Vetting ID,Numéro d'identification de la politique de filtrage TJET
 To,À
 Transitional Justice,Justice transitionnelle
 Transitional Justice Evaluation Tools,Outils d'évaluation de la justice transitionnelle
@@ -174,10 +174,10 @@ UCDP Dyad ID,UCDP Identifiant de la dyade
 UCDP Dyadic Dataset version 23.1,UCDP Dyadic Dataset version 23.1
 UCDP intensity classification: conflict (at least 25 battle-related deaths per year) or war (at least 1000 battle-related deaths per year),Classification de l'intensité du UCDP: conflit (au moins 25 morts au combat par an) ou guerre (au moins 1000 morts au combat par an)
 undefined,non défini
-Vetting,Vérification des antécédents
-Vetting Policies,Politiques de vérification des antécédents
-Vetting Policy,Politique de vérification des antécédents
-Vettings,Politique de vérification des antécédents
+Vetting,Procédure de filtrage
+Vetting Policies,Politiques de filtrage
+Vetting Policy,Politique de filtrage
+Vettings,Procédures de filtrage
 View Country Profile,Voir le profil du pays
 View TJET Focus Countries,Voir les pays cibles de TJET
 Was the accused a state agent?,L'accusé était-il un agent de l'État?
@@ -186,7 +186,7 @@ Was the accused of high rank?,L'accusé était-il de haut rang?
 Was this amnesty passed in a context of democratic transition or conflict?,Cette amnistie a-t-elle été adoptée dans un contexte de transition démocratique ou de conflit?
 Was this post-autocratic transitional justice or conflict justice?,S'agit-il d'une justice transitionnelle post-autocratique ou d'une justice de conflit?
 Was this truth commission mandated to address sexual or gender-based violence?,Cette commission de vérité a-t-elle été mandatée pour s'occuper des violences sexuelles ou sexistes?
-Which institutional actors were targeted in the vetting policy?,Quels sont les acteurs institutionnels visés par la politique de vérification?
+Which institutional actors were targeted in the vetting policy?,Quels sont les acteurs institutionnels visés par la politique de filtrage?
 Who were the intended recipients of the reparations policy?,Qui étaient les destinataires de la politique de réparation?
 Who were the intended recipients of this reparations policy?,Qui étaient les destinataires de cette politique de réparation?
 Year,Année
@@ -195,7 +195,7 @@ Year the amnesty was passed or announced,Année de l'adoption ou de l'annonce de
 Year the reparation policy was passed,Année d'adoption de la politique de réparation
 Year the trial began,Année du début du procès
 Year the truth commission was mandated,Année du mandat de la commission de vérité
-Year the vetting policy was initiated,Année de mise en place de la politique de vérification
+Year the vetting policy was initiated,Année de mise en place de la politique de filtrage
 Year transition began,Année du début de la transition
 Years,Années
 Years of Activity,Années d'activité
