@@ -2,15 +2,17 @@ table,field,label,description
 amnesties,amnestyID,ID,TJET Amnesty ID
 amnesties,mechanismDescription,Description,Name and/or description of the amnesty
 amnesties,amnestyYear,Year,Year the amnesty was passed or announced
-amnesties,Context,Context,Was this amnesty passed in a context of democratic transition or conflict?
+amnesties,Type,Type,Was this amnesty passed to address democratic transition or conflict?
 amnesties,Recipients,Recipients,Who were the intended recipients of the reparations policy?
 trials,trialID,ID,TJET Trial ID
 trials,trialType,Trial Type,"Type of trial (domestic, international, hybrid, or foreign)"
 trials,caseDescription,Description,Trial description
 trials,numberAccusedRecords,Accused Records,Number of accused records for trial (expand for more detail)
 trials,yearStart,Year,Year the trial began
-trials,Context,Context,Was this post-autocratic transitional justice or conflict justice?
 trials,SGBV,SGBV,Did this trial involve charges of sexual or gender-based violence?
+trials,Subtype,Subtype,Was this post-autocratic transitional justice or conflict justice?
+foreign,Subtype,Subtype,What was the basis for jurisdiction of this foreign prosecution?
+intl,Subtype,Subtype,Legal system in which this trial was held 
 accused,accusedID,Accused ID,TJET Accused ID
 accused,trialID,ID,TJET Trial ID
 accused,trialType,Trial Type,"Type of trial (domestic, international, hybrid, or foreign)"
@@ -21,19 +23,19 @@ accused,everGuilty,Ever Convicted,Was the accused ever convicted in this trial?
 reparations,reparationID,ID,TJET Reparation ID
 reparations,officialName,Name,Name or description of the reparations policy
 reparations,yearCreated,Year,Year the reparation policy was passed
-reparations,Context,Context,Was this post-autocratic transitional justice or conflict justice?
+reparations,Type,Type,Was this post-autocratic transitional justice or conflict justice?
 reparations,SGBV,SGBV,Did this reparation policy specifically address sexual or gender-based justice?
 reparations,recipients,Indended Recipients,Who were the intended recipients of this reparations policy?
 tcs,truthcommissionID,ID,TJET Truth Commission ID
 tcs,officialName,Name,Name or description of the truth commission
 tcs,yearPassed,Year,Year the truth commission was mandated
-tcs,Context,Context,Was this post-autocratic transitional justice or conflict justice?
+tcs,Type,Type,Was this post-autocratic transitional justice or conflict justice?
 tcs,SGBV,SGBV,Was this truth commission mandated to address sexual or gender-based violence?
 tcs,finalReportIssued,Report,"Did the truth commission issue a final report? If available, an electronic copy is hyperlinked"
 vettings,vettingID,ID,TJET Vetting ID
 vettings,policyName,Name,Name or description of the vetting policy
 vettings,yearStart,Year,Year the vetting policy was initiated
-vettings,Context,Context,Was this post-autocratic transitional justice or conflict justice?
+vettings,Type,Type,Was this post-autocratic transitional justice or conflict justice?
 vettings,Targets,Targets,Which institutional actors were targeted in the vetting policy?
 investigations,mandate,Mandate,Mandating Authority/Document 
 investigations,years,Years,Years when investigation was ongoing
