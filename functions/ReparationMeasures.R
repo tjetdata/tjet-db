@@ -87,8 +87,8 @@ ReparationMeasures <- function(cy = df,
   ## merging 
   cy %>%
     left_join(reps, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
-    arrange(ccode_cow, year) %>% 
-    group_by(ccode_cow) %>% 
+    arrange(country_case, year) %>% 
+    group_by(country_case) %>% 
     fill(binary, 
          peaceagree, 
          collective, 

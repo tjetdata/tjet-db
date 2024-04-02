@@ -103,8 +103,8 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
   
   cy %>%
     left_join(vet, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
-    arrange(ccode_cow, year) %>%
-    group_by(ccode_cow) %>%
+    arrange(country_case, year) %>%
+    group_by(country_case) %>%
     fill(type_dismissal, 
          type_ban, 
          type_declass, 

@@ -232,8 +232,8 @@ TCmeasure <- function(cy, new_col_name,
 
   cy %>% 
     left_join(new, by = c("ccode_cow" = "ccode", "year" = "year_start")) %>% 
-    arrange(ccode_cow, year) %>% 
-    group_by(ccode_cow) %>% 
+    arrange(country_case, year) %>% 
+    group_by(country_case) %>% 
     fill(scale, 
          binary, 
          .direction = "down") %>%
