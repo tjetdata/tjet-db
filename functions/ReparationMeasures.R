@@ -112,7 +112,20 @@ ReparationMeasures <- function(cy = df,
       outreach = ifelse(year %in% 1970:2020 & is.na(outreach), 0, outreach),
       alteration = ifelse(year %in% 1970:2020 & is.na(alteration), 0, alteration),
       foreclose  = ifelse(year %in% 1970:2020 & is.na(foreclose), 0, foreclose),
-      accessibility  = ifelse(year %in% 1970:2020 & is.na(accessibility), 0, accessibility)
+      accessibility  = ifelse(year %in% 1970:2020 & is.na(accessibility), 0, accessibility), 
+      binary = ifelse(year > 2020, NA, binary), 
+      peaceagree = ifelse(year > 2020, NA, peaceagree), 
+      collective = ifelse(year > 2020, NA, collective), 
+      symbolic = ifelse(year > 2020, NA, symbolic), 
+      compensation = ifelse(year > 2020, NA, compensation), 
+      services = ifelse(year > 2020, NA, services), 
+      victim_centered = ifelse(year > 2020, NA, victim_centered), 
+      scope = ifelse(year > 2020, NA, scope), 
+      diffamount = ifelse(year > 2020, NA, diffamount), 
+      outreach = ifelse(year > 2020, NA, outreach), 
+      alteration = ifelse(year > 2020, NA, alteration), 
+      foreclose = ifelse(year > 2020, NA, foreclose), 
+      accessibility = ifelse(year > 2020, NA, accessibility)
     ) %>%
     rename_with(.fn = ~ paste(prefix, .x, sep = "_"), .cols = all_of(vars)) %>% 
     return()

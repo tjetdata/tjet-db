@@ -1345,7 +1345,7 @@ df <- df %>%
     icc_sp = ifelse(is.na(icc_sp) & country ==  "Vanuatu" & year >= 2011, 1, icc_sp),
     icc_sp = ifelse(is.na(icc_sp) & country ==  "Burundi" & year >= 2017, 0, icc_sp),
     icc_sp = ifelse(is.na(icc_sp) & country ==  "Philippines" & year >= 2019, 0, icc_sp),
-    icc_sp = ifelse(is.na(icc_sp) & year != 2022, 0, icc_sp)
+    icc_sp = ifelse(is.na(icc_sp) & year <= 2021, 0, icc_sp)
     # icc_sp = ifelse(year < 1998, NA, icc_sp)
     ) %>% 
   group_by(region, year) %>% 
@@ -2065,7 +2065,7 @@ rm(codebook)
 
 db[["dl_tjet_cy"]] <- df %>%
   select(all_of(db[["dl_tjet_codebook"]]$colname)) %>% 
-  filter(year >= 1970 & year <= 2020) %>% 
+  filter(year >= 1970 & year <= 2023) %>% 
   filter(!(country == "Andorra" & year < 1994)) %>% 
   filter(!(country == "Antigua and Barbuda" & year == 1981)) %>%
   filter(!(country == "Brunei" & year == 1984)) %>% 
@@ -2311,21 +2311,21 @@ data[["Domestic_cy"]] <- db[["dl_tjet_cy"]] %>%
   reframe(ccode_case = unique(ccode_case), 
           beg = min(year), 
           end = max(year),
-          total = sum(trials_domestic), 
-          tran_trs_dom_dtj_sta = sum(tran_trs_dom_dtj_sta), 
-          tran_tfc_dom_dtj_sta = sum(tran_tfc_dom_dtj_sta),
-          tran_trs_dom_ctj_sta = sum(tran_trs_dom_ctj_sta), 
-          tran_tfc_dom_ctj_sta = sum(tran_tfc_dom_ctj_sta),
-          tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta), 
-          tran_tfc_dom_dtj_ctj_sta = sum(tran_tfc_dom_dtj_ctj_sta), 
-          tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi), 
-          tran_tfc_dom_dtj_ctj_sta_hi = sum(tran_tfc_dom_dtj_ctj_sta_hi), 
-          regu_trs_dom_sta = sum(regu_trs_dom_sta), 
-          regu_tfc_dom_sta = sum(regu_tfc_dom_sta), 
-          tran_trs_dom_ctj_opp = sum(tran_trs_dom_ctj_opp), 
-          tran_tfc_dom_ctj_opp = sum(tran_tfc_dom_ctj_opp), 
-          lcon_trs_dom_sta_opp = sum(lcon_trs_dom_sta_opp), 
-          lcon_tfc_dom_sta_opp = sum(lcon_tfc_dom_sta_opp))
+          total = sum(trials_domestic, na.rm = TRUE), 
+          tran_trs_dom_dtj_sta = sum(tran_trs_dom_dtj_sta, na.rm = TRUE), 
+          tran_tfc_dom_dtj_sta = sum(tran_tfc_dom_dtj_sta, na.rm = TRUE),
+          tran_trs_dom_ctj_sta = sum(tran_trs_dom_ctj_sta, na.rm = TRUE), 
+          tran_tfc_dom_ctj_sta = sum(tran_tfc_dom_ctj_sta, na.rm = TRUE),
+          tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta, na.rm = TRUE), 
+          tran_tfc_dom_dtj_ctj_sta = sum(tran_tfc_dom_dtj_ctj_sta, na.rm = TRUE), 
+          tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi, na.rm = TRUE), 
+          tran_tfc_dom_dtj_ctj_sta_hi = sum(tran_tfc_dom_dtj_ctj_sta_hi, na.rm = TRUE), 
+          regu_trs_dom_sta = sum(regu_trs_dom_sta, na.rm = TRUE), 
+          regu_tfc_dom_sta = sum(regu_tfc_dom_sta, na.rm = TRUE), 
+          tran_trs_dom_ctj_opp = sum(tran_trs_dom_ctj_opp, na.rm = TRUE), 
+          tran_tfc_dom_ctj_opp = sum(tran_tfc_dom_ctj_opp, na.rm = TRUE), 
+          lcon_trs_dom_sta_opp = sum(lcon_trs_dom_sta_opp, na.rm = TRUE), 
+          lcon_tfc_dom_sta_opp = sum(lcon_tfc_dom_sta_opp, na.rm = TRUE))
 
 data[["Intl_cy"]] <- db[["dl_tjet_cy"]] %>% 
   select(-country_case) %>% 
@@ -2338,9 +2338,9 @@ data[["Intl_cy"]] <- db[["dl_tjet_cy"]] %>%
   reframe(ccode_case = unique(ccode_case), 
           beg = min(year), 
           end = max(year),
-          trials_intl = sum(trials_intl),
-          trs_int_hrs_con_all = sum(trs_int_sta + trs_int_opp), 
-          tfc_int_hrs_con_all = sum(tfc_int_sta + tfc_int_opp))
+          trials_intl = sum(trials_intl, na.rm = TRUE),
+          trs_int_hrs_con_all = sum(trs_int_sta + trs_int_opp, na.rm = TRUE), 
+          tfc_int_hrs_con_all = sum(tfc_int_sta + tfc_int_opp, na.rm = TRUE))
 
 data[["Foreign_cy"]] <- db[["dl_tjet_cy"]] %>% 
   select(-country_case) %>% 
@@ -2353,9 +2353,9 @@ data[["Foreign_cy"]] <- db[["dl_tjet_cy"]] %>%
   reframe(ccode_case = unique(ccode_case), 
           beg = min(year), 
           end = max(year), 
-          trials_foreign = sum(trials_foreign),
-          trs_for_hrs_con_all = sum(trs_for_sta + trs_for_opp), 
-          tfc_for_hrs_con_all = sum(tfc_for_sta + tfc_for_opp)) 
+          trials_foreign = sum(trials_foreign, na.rm = TRUE),
+          trs_for_hrs_con_all = sum(trs_for_sta + trs_for_opp, na.rm = TRUE), 
+          tfc_for_hrs_con_all = sum(tfc_for_sta + tfc_for_opp, na.rm = TRUE)) 
 
 data[["Foreign"]] <- db[["Trials"]] %>%
   left_join(countries %>% 

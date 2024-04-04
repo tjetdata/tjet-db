@@ -124,7 +124,16 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
            conduct = ifelse(eval(non_na) & is.na(conduct), 0, conduct), 
            implementation = ifelse(eval(non_na) & is.na(implementation), 0, implementation), 
            public = ifelse(eval(non_na) & is.na(public), 0, public), 
-           fairness = ifelse(eval(non_na) & is.na(fairness), 0, fairness) 
+           fairness = ifelse(eval(non_na) & is.na(fairness), 0, fairness), 
+           type_dismissal = ifelse(year > 2020, NA, type_dismissal), 
+           type_ban = ifelse(year > 2020, NA, type_ban), 
+           type_declass = ifelse(year > 2020, NA, type_declass), 
+           type_perjury = ifelse(year > 2020, NA, type_perjury), 
+           ban_from_elected = ifelse(year > 2020, NA, ban_from_elected), 
+           conduct = ifelse(year > 2020, NA, conduct), 
+           implementation = ifelse(year > 2020, NA, implementation), 
+           public = ifelse(year > 2020, NA, public), 
+           fairness = ifelse(year > 2020, NA, fairness)
            ) %>%
     rename("vet_dismiss" = "type_dismissal", 
            "vet_ban" = "type_ban", 

@@ -106,7 +106,9 @@ AmnestyMeasure <- function(cy,
     
   cy %>%
     left_join(amn, by = c("ccode_cow" = "ccode", "year" = "amnestyYear")) %>%
-    mutate(binary = ifelse(year %in% 1970:2020 & is.na(binary), 0, binary)) %>%
+    mutate(binary = ifelse(year %in% 1970:2020 & is.na(binary), 0, binary), 
+           binary = ifelse(year > 2020, NA, binary)
+           ) %>%
     rename_with(.fn = ~ var_name, .cols = binary) %>%
     return()
 }
