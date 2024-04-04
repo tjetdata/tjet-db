@@ -1988,6 +1988,29 @@ rm(vet_ctry_incl, vet_spells)
 #   filter(diff != 0) %>% 
 #   print(n = Inf)
 
+### integrate HRA indices
+
+# hra <- read_csv("../tjet-hra/tjet-hra.csv")
+# unique(hra$country)[!unique(hra$country) %in% unique(df$country_case)]
+# unique(df$country_case)[!unique(df$country_case) %in% unique(hra$country)]
+
+# df %>% 
+#   select(country, country_case, year, country_id_vdem) %>% 
+#   filter(year < 2021) %>%  
+#   mutate(df = TRUE) %>% 
+#   full_join(read_csv("../tjet-hra/tjet-hra.csv") %>% 
+#               select(country, cid_vdem, year) %>% 
+#               mutate(hra = TRUE), 
+#             by = c("country_case" = "country", "year" = "year")) %>% 
+#   filter(country_id_vdem != cid_vdem)
+
+df <- df %>% 
+  left_join(read_csv("../tjet-hra/tjet-hra.csv") %>% 
+              select(country, year, access_mean, access_low95, access_upp95, 
+                     access_rank, legacy_mean, legacy_low95, legacy_upp95, 
+                     legacy_rank), 
+            by = c("country_case" = "country", "year" = "year"))
+
 ### cleanup
 
 first <- c(first, "dtr", "aco", "dco", "pco")

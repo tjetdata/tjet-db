@@ -35,6 +35,14 @@ trials_intl,"count of international and hydrid trials per country and start year
 trials_intl_SGBV,"binary for whether international and hydrid trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
 trials_foreign,"count of foreign trials per country and start year, by country of the accused",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
 trials_foreign_SGBV,"binary for whether foreign trials for country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
+access_mean,preliminary access to regular human rights accountability index (cumulative and discounted average of several VDem measures related to justice),TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
+access_low95,lower limit of 95% confidence interval for access_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
+access_upp95,upper limit of 95% confidence interval for access_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
+access_rank,annual global ranking of access_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
+legacy_mean,"preliminary legacy of violence index (cumulative and discounted average of latent physical integrity data from Fariss, Kenwick, & Reuning)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
+legacy_low95,lower limit of 95% confidence interval for legacy_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
+legacy_upp95,upper limit of 95% confidence interval for legacy_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
+legacy_rank,annual global ranking of legacy_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
 ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
 ICC_prelim_exam,"ongoing ICC preliminary examination by OTP, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
 ICC_prelim_exam_cumu,cumulative country-year count of ICC preliminary examination,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-04-03
