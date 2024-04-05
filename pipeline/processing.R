@@ -2283,6 +2283,16 @@ autoprep$conflicts <- db[["ConflictDyads"]] %>%
           years = list(unlist(years)[unlist(years) %in% 1970:2020]),
           int_ep = sum(internationalized))
 
+autoprep[["rankings"]] <- db[["dl_tjet_cy"]] %>%
+  select(-country_case) %>%
+  left_join(countries %>%
+              select(country_case, ccode, ccode_case),
+            by = c(ccode_cow = "ccode")) %>%
+  filter(year == 2020) %>%
+  filter(!is.na(access_rank) | !is.na(legacy_rank)) %>%
+  arrange(desc(legacy_rank)) %>%  
+  select(country_case, ccode_case, country_fr, access_mean, access_rank, legacy_mean, legacy_rank) 
+
 ### data for summary spreadsheet
 
 data[["Amnesties"]] <- db[["Amnesties"]] %>%
@@ -2531,6 +2541,23 @@ n_transform <- function(x) {
     return() 
 }
 
+n_transform_nth <- function(x) {
+  x %>% 
+    paste(" ", ., sep = "") %>%  
+    str_replace_all("1 ", "1st ") %>% 
+    str_replace_all("2 ", "2nd ") %>% 
+    str_replace_all("3 ", "3rd ") %>% 
+    str_replace_all("4 ", "4th ") %>% 
+    str_replace_all("5 ", "5th ") %>% 
+    str_replace_all("6 ", "6th ") %>% 
+    str_replace_all("7 ", "7th ") %>% 
+    str_replace_all("8 ", "8th ") %>% 
+    str_replace_all("9 ", "9th ") %>% 
+    str_replace_all("0 ", "0th ") %>%
+    str_trim() %>%
+    return() 
+}
+
 ### summary 
 
 autotxt[["summary"]] <- autoprep[["summary"]] %>%
@@ -2682,6 +2709,52 @@ autotxt[["Conflicts"]] <- autoprep[["conflicts"]] %>%
   ) %>%
   ungroup() %>%
   select(country_case, ccode_case, text)
+
+### indices 
+
+pluriel <- c("Philippines", "United States of America", "Maldives", "Fiji", 
+             "Comoros", "Netherlands", "Solomon Islands", "Seychelles", "United Arab Emirates") 
+  
+autoprep[["rankings"]] %>% 
+  rowwise() %>%
+  mutate(
+    legacy = paste(country_case,
+                 "ranks",
+                 n_transform_nth(paste(legacy_rank, " ", sep = "")),
+                 "on our legacy of violence index in 2020."),
+    legacy = str_flatten(legacy, " ") %>%
+      str_trim(),
+    legacy_fr = paste(country_fr, 
+                   "se classe au",
+                   paste(legacy_rank, "e", sep = ""), 
+                   "rang de notre indice d'héritage de la violence en 2020."),
+    legacy_fr = str_flatten(legacy_fr, " ") %>%
+      str_trim(), 
+    legacy_fr = ifelse(country_case %in% pluriel, 
+                       str_replace(legacy_fr, "se classe", "se classent"), 
+                       legacy_fr), 
+    access = paste(country_case,
+                   "ranks",
+                   n_transform_nth(paste(access_rank, " ", sep = "")),
+                   "on our access to regular justice index in 2020."),
+    access_fr = str_flatten(access, " ") %>%
+      str_trim(),
+    access_fr = paste(country_fr, 
+                   "se classe au",
+                   n_transform_nth(paste(access_rank, " ", sep = "")), 
+                   "rang de notre indice d'accès à la justice régulière en 2020."),
+    access_fr = ifelse(country_case %in% pluriel, 
+                       str_replace(access_fr, "se classe", "se classent"), 
+                       access_fr), 
+    access_fr = str_flatten(access_fr, " ") %>%
+      str_trim()
+  ) %>%
+  ungroup() %>%
+  select(country_case, country_fr, ccode_case, legacy_fr, access_fr, 
+         access_mean, access_rank, legacy_mean, legacy_rank) %>% 
+  saveRDS(here::here("data", "rankings.rds")) 
+
+### TJ mechanisms
 
 autotxt[["Amnesties"]] <- data[["Amnesties"]] %>% 
   rowwise() %>%

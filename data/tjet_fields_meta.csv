@@ -50,3 +50,11 @@ conflicts,conflict_id,Conflict ID,UCDP Conflict ID
 conflicts,side_b,Armed Opposition,Organized armed group fighting against the government
 conflicts,ep_years,Episode Years,Years of ongoing violence (25 battle-related deaths or more)
 conflicts,intensity,Scale of Intra-State Violence,UCDP intensity classification: conflict (at least 25 battle-related deaths per year) or war (at least 1000 battle-related deaths per year)
+hra,country,Country,Country
+hra,year,Year,Year
+hra,legacy_rank,Rank,Legacy of Violence Index Rank
+hra,legacy_mean,Index,Legacy of Violence Index
+hra,legacy_ci,Confidence Interval,95% Confidence Interval
+hra,access_rank,Rank,Access to Regular Accountability Index Rank
+hra,access_mean,Index,Access to Regular Accountability Index
+hra,access_ci,Confidence Interval,95% Confidence Interval

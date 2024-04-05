@@ -76,7 +76,7 @@ tjet_cy,trials_intl,"count of international and hydrid trials per country and st
 tjet_cy,trials_intl_SGBV,"binary for whether international and hydrid trials for country-year included any that addressed SGBV (1 = yes, 0 = no) ",TJET,
 tjet_cy,trials_foreign,"count of foreign trials per country and start year, by country of the accused",TJET,
 tjet_cy,trials_foreign_SGBV,"binary for whether foreign trials for country-year included any that addressed SGBV (1 = yes, 0 = no) ",TJET,
-tjet_cy,access_mean,preliminary access to regular human rights accountability index (cumulative and discounted average of several VDem measures related to justice),TJET,
+tjet_cy,access_mean,preliminary access to regular accountability index (cumulative and discounted average of several VDem measures related to justice),TJET,
 tjet_cy,access_low95,lower limit of 95% confidence interval for access_mean,TJET,
 tjet_cy,access_upp95,upper limit of 95% confidence interval for access_mean,TJET,
 tjet_cy,access_rank,annual global ranking of access_mean,TJET,

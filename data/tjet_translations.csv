@@ -1,5 +1,9 @@
 Source,Translation
+95% Confidence Interval,Intervalle de confiance à 95
 About,À propos
+Access to Regular Accountability,Accès à une responsabilisation régulière
+Access to Regular Accountability Index,Indice de l'accès à une responsabilisation régulière
+Access to Regular Accountability Index Rank,Classement de l'indice de l'accès à une responsabilisation régulière
 Accessibility,Accessibilité
 Accused,Accusés
 Accused ID,Identifiant de l'accusé
@@ -18,8 +22,10 @@ Autocracy,Autocratie
 Brief,Synthèse
 Clear All Filters,Effacer tous les filtres
 Click,Cliquez
+Click on accused records for data on convictions,Cliquez sur les dossiers d'accusés pour obtenir des données sur les condamnations
 Coding Sources,Sources de codage
 Collect Evidence,Recueillir des éléments de preuve
+Confidence Interval,Intervalle de confiance
 Conflict,Conflit
 Conflict Background,Contexte du conflit
 Conflict ID,Identifiant du conflit
@@ -78,9 +84,13 @@ Human Rights,Droits de la personne
 ID,Identifiant
 identification number,numéro d'identification
 Indended Recipients,Bénéficiaires désignés
+Index,Indice
 International Trial,Procès international
 International Trials,Procès internationaux
 Intra-State Conflict,Conflit intra-étatique
+Legacy of Violence,Héritage de la violence
+Legacy of Violence Index,Indice de l'héritage de la violence
+Legacy of Violence Index Rank,Classement de l'indice de l'héritage de la violence
 Legal,Droits
 light,clair
 Limit to Mechanisms Addressing SGBV,Limite des mécanismes de lutte contre la violence sexuelle et sexiste
@@ -99,6 +109,7 @@ Name or description of the accused,Nom ou description de l'accusé
 Name or description of the reparations policy,Nom ou description de la politique de réparation
 Name or description of the truth commission,Nom ou description de la commission de vérité
 Name or description of the vetting policy,Nom ou description de la politique de filtrage
+Navigate the front page to explore key country-level transitional justice information,Naviguer sur la page d'accueil pour explorer les informations clés sur la justice transitionnelle au niveau des pays
 Non-Transitional Autocracy,Autocratie non transitoire
 Non-Transitional Democracy,Démocratie non transitoire
 Number,Nombre
@@ -119,6 +130,7 @@ Project,Projet
 Publications,Publications
 Question,Question
 Range of years when mechanism was initiated,Période d'années pour la mise en place du mécanisme
+Rank,Classement
 Recipients,Bénéficiaires
 Reference Library,Bibliothèque de référence
 Regime Background,Contexte du régime
@@ -160,6 +172,8 @@ TJET Vetting ID,Numéro d'identification de la politique de filtrage TJET
 To,À
 Transitional Justice,Justice transitionnelle
 Transitional Justice Evaluation Tools,Outils d'évaluation de la justice transitionnelle
+Transitional Justice Evaluation Tools Homepage,Page d'accueil de Transitional Justice Evaluation Tools
+Transitional Justice Evaluation Tools Homepage: navigate this page to explore key country-level transitional justice information,Page d'accueil de Transitional Justice Evaluation Tools: naviguer sur cette page pour explorer les informations clés sur la justice transitionnelle au niveau des pays
 Transitional justice mechanism or policy (Click to show timeline),Mécanisme ou politique de justice transitionnelle (Cliquer pour afficher la chronologie)
 Transitional Justice Perception Survey Data,Données des enquêtes sur la perception de la justice transitionnelle
 Transitional Justice Perception Surveys,Enquêtes sur la perception de la justice transitionnelle
@@ -191,8 +205,8 @@ Who were the intended recipients of the reparations policy?,Qui étaient les des
 Who were the intended recipients of this reparations policy?,Qui étaient les destinataires de cette politique de réparation?
 Year,Année
 Year democratic transition began,Année du début de la transition démocratique
-Year the amnesty was passed or announced,Année de l'adoption ou de l'annonce de l'amnistie
-Year the reparation policy was passed,Année d'adoption de la politique de réparation
+Year the amnesty was passed or announced,Année d'adoption de la politique de réparation
+Year the reparation policy was passed,Année de l'adoption ou de l'annonce de l'amnistie
 Year the trial began,Année du début du procès
 Year the truth commission was mandated,Année du mandat de la commission de vérité
 Year the vetting policy was initiated,Année de mise en place de la politique de filtrage
@@ -204,7 +218,3 @@ Years when investigation was ongoing,Années où l'enquête était en cours
 Zoom In,Effectuer un zoom avant
 Zoom Out,Effectuer un zoom arrière
 © 2023 Transitional Justice Evaluation Tools. All rights reserved.,© 2023 Transitional Justice Evaluation Tools. Tous droits réservés.
-Transitional Justice Evaluation Tools Homepage,Page d'accueil de Transitional Justice Evaluation Tools
-Navigate the front page to explore key country-level transitional justice information,Naviguer sur la page d'accueil pour explorer les informations clés sur la justice transitionnelle au niveau des pays
-Transitional Justice Evaluation Tools Homepage: navigate this page to explore key country-level transitional justice information,Page d'accueil de Transitional Justice Evaluation Tools: naviguer sur cette page pour explorer les informations clés sur la justice transitionnelle au niveau des pays
-Click on accused records for data on convictions,Cliquez sur les dossiers d'accusés pour obtenir des données sur les condamnations
