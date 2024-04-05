@@ -21,15 +21,54 @@ surveytabs <- db[["SurveysMeta"]] %>%
 fr <- fr[!fr %in% surveytabs] %>% 
   print()
 
+db[["labels"]] <- db[["labels"]] %>% 
+  rename(label_en = label) %>% 
+  full_join(db_fr[["labels_fr"]], 
+            by = "labelID") %>% 
+  rename(label_fr = label)
+
+db[["ConflictDyads"]] <- db[["ConflictDyads"]] %>% 
+  rename(side_b_en = side_b) %>% 
+  left_join(db_fr[["ConflictDyads_fr"]], 
+            by = c("dyad_id", "conflict_id", "gwno_loc", "ep_start_date")) %>% 
+  rename(side_b_fr = side_b) %>% 
+  select(dyad_id, conflict_id, location, gwno_loc, side_b_en, side_b_fr, 
+         ep_years, intensity, ep_start_date, ep_start_year, ep_end_year, 
+         confl_start, confl_end) 
+
+db[["dl_tjet_codebook"]] <- db[["dl_tjet_codebook"]] %>%
+  rename(definition_en = definition) %>% 
+  left_join(db_fr[["dl_tjet_codebook_fr"]] %>% 
+              select(colname, definition), 
+            by = "colname") %>% 
+  rename(definition_fr = definition) %>% 
+  select(colname, definition_en, definition_fr, source, source_description, 
+         source_url, tjet_version) 
+
+db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>% 
+  rename(section_title_en = section_title, 
+         text_context_en = text_context, 
+         text_results_en = text_results, 
+         text_methods_en = text_methods, 
+         survey_design_en = survey_design) %>% 
+  left_join(db_fr[["SurveysMeta_fr"]] %>% 
+              select(country, year, date_start, date_end, 
+                     section_title, text_context, text_results, 
+                     text_methods, survey_design), 
+            by = c("country", "year", "date_start", "date_end")) %>% 
+  rename(section_title_fr = section_title, 
+         text_context_fr = text_context, 
+         text_results_fr = text_results, 
+         text_methods_fr = text_methods, 
+         survey_design_fr = survey_design)
+
 tabs <- c(
-  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "ConflictDyads", 
-  "ConflictDyads_fr", "Countries", "CountryYears", "CourtLevels", 
-  "dl_tjet_codebook", "dl_tjet_codebook_fr", "dl_tjet_cy", "fields_meta", 
-  "ICC", "ICCaccused", "Investigations", "labels", "labels_fr",
-  "Reparations", "Reparations_collectiveReparationsEligibility",
-  "Reparations_individualReparationsEligible", "SurveysMeta", "SurveysMeta_fr",
-  "Transitions", "Trials", "TruthCommissions", "Vettings", 
-  "Vettings_targetingAffiliation"
+  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "ConflictDyads",
+  "Countries", "CountryYears", "CourtLevels", "dl_tjet_codebook", "dl_tjet_cy", 
+  "fields_meta", "ICC", "ICCaccused", "Investigations", "labels", "Reparations", 
+  "Reparations_collectiveReparationsEligibility",
+  "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions", 
+  "Trials", "TruthCommissions", "Vettings", "Vettings_targetingAffiliation"
   ) %>% 
   print()
   
@@ -50,12 +89,12 @@ con <- dbConnect(RMariaDB::MariaDB(),
 dbListTables(con) %>% 
   sort()
 
-### reading specific table
+### writing & reading specific table
 # dbWriteTable(conn = con,
-#              name = "dl_tjet_cy",
-#              value = db[["dl_tjet_cy"]],
+#              name = "SurveysMeta",
+#              value = db[["SurveysMeta"]],
 #              overwrite = TRUE)
-# dbReadTable(con, "dl_tjet_cy") %>% tibble()
+# dbReadTable(con, "SurveysMeta") %>% tibble()
 
 ### write all tables to the database 
 ### (this overwrites existing tables by first truncating and then appending)
@@ -98,6 +137,14 @@ dbWriteTable(conn = con,
              name = "tjet_timestamp",
              value = db[["db_timestamp"]],
              append = TRUE)
+
+### rankings (not fully integrated yet, just for trying out on the site for now)
+# rankings <- readRDS(here::here("data", "rankings.rds"))
+# dbWriteTable(conn = con,
+#              name = "rankings",
+#              value = rankings,
+#              overwrite = TRUE)
+# dbReadTable(con, "rankings") %>% tibble()
 
 ### when done always disconnect
 dbDisconnect(con)

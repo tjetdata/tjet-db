@@ -84,8 +84,8 @@ if(translations$country_profiles) { # about 10 min, 812,000 characters
   print(Sys.time() - start)
   cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
 }
-db[["Countries_fr"]] %>%
-  select(country, txt_intro, txt_regime, txt_conflict, txt_TJ)
+# db[["Countries_fr"]] %>%
+#   select(country, txt_intro, txt_regime, txt_conflict, txt_TJ)
 
 if(translations$country_auto) { # about 2.5 min, 54,000 characters
   ## do not translate the country field; this is used in the website structure
@@ -101,8 +101,8 @@ if(translations$country_auto) { # about 2.5 min, 54,000 characters
   print(Sys.time() - start)
   cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
 }
-db[["auto_fr"]] %>%
-  select(country, auto_regime, auto_conflict)
+# db[["auto_fr"]] %>%
+#   select(country, auto_regime, auto_conflict)
 
 if(translations$labels) { # about 0.5 min / 5000 characters 
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
@@ -331,21 +331,24 @@ if(translations$surveys) { # about 11 min / 67,000 characters
 
 ### saving locally 
 str(db[sort(names(db))], 1)
+
 save(db, file = here::here("data", "tjetdb.RData"))
 
 to_save <- c("Countries", "ConflictDyads", "dl_tjet_codebook", "Amnesties", 
              "Reparations", "TruthCommissions", "Trials", "Accused", "Vettings", 
-             "SurveysMeta", surveytabs, "labels", "TJETmembers", "auto") 
+             "SurveysMeta", surveytabs, "labels", "TJETmembers") 
 tabs <- paste(to_save, "_fr", sep = "")
 tabs <- tabs[tabs %in% names(db)]
+
 db[tabs] %>% 
   saveRDS(file = here::here("data", "tjetdb_fr.rds"))
 
 ### NEED TO DELETE TABLES FROM THIS OBJECT THAT ARE NO LONGER NEEDED WITH THE NEW DB SETUP
 ### COULD ALSO INTEGRATE THE REMAINING FR TABLES IN THE SAME WAY
 
-# read_csv("~/Desktop/temp.csv") %>% 
+# read_csv("~/Desktop/temp.csv") %>%
 #   rowwise() %>%
-#   mutate(domestic_fr = translate(domestic)) %>%
-#   ungroup() %>% 
+#   mutate(legacy_fr = translate(legacy), 
+#          access_fr = translate(access)) %>%
+#   ungroup() %>%
 #   write_csv("~/Desktop/new.csv")
