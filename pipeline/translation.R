@@ -66,8 +66,10 @@ if(translations$country_profiles) { # about 10 min, 812,000 characters
   db[["Countries_fr"]] <- db[["Countries"]] %>% 
     rowwise() %>% ### deeplr does not handle NAs well; this seems to be a simple work-around
     mutate(txt_intro = translate(txt_intro), 
+           auto_regime = translate(auto_regime), 
            txt_regime = translate(txt_regime), 
            txt_conflict = translate(txt_conflict), 
+           auto_conflict = translate(auto_conflict), 
            txt_TJ = translate(txt_TJ), 
            txt_summary = translate(txt_summary), 
            txt_amnesties = translate(txt_amnesties), 
@@ -86,23 +88,6 @@ if(translations$country_profiles) { # about 10 min, 812,000 characters
 }
 # db[["Countries_fr"]] %>%
 #   select(country, txt_intro, txt_regime, txt_conflict, txt_TJ)
-
-if(translations$country_auto) { # about 2.5 min, 54,000 characters
-  ## do not translate the country field; this is used in the website structure
-  usage_last <- usage(key_get("DeepL"))[["character_count"]]
-  start <- Sys.time()
-  db[["auto_fr"]] <- db[["Countries"]] %>% 
-    select(country, country_case, ccode, ccode_case, beg, end, auto_regime, auto_conflict) %>%
-    rowwise() %>% ### deeplr does not handle NAs well; this seems to be a simple work-around
-    mutate(auto_regime = translate(auto_regime), 
-           auto_conflict = translate(auto_conflict)
-           ) %>%
-    ungroup()
-  print(Sys.time() - start)
-  cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
-}
-# db[["auto_fr"]] %>%
-#   select(country, auto_regime, auto_conflict)
 
 if(translations$labels) { # about 0.5 min / 5000 characters 
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
