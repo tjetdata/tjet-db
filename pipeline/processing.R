@@ -2006,8 +2006,7 @@ rm(vet_ctry_incl, vet_spells)
 
 df <- df %>% 
   left_join(read_csv("../tjet-hra/tjet-hra.csv") %>% 
-              select(country, year, access_mean, access_low95, access_upp95, 
-                     access_rank, legacy_mean, legacy_low95, legacy_upp95, 
+              select(country, year, legacy_mean, legacy_low95, legacy_upp95, 
                      legacy_rank), 
             by = c("country_case" = "country", "year" = "year"))
 
@@ -2026,7 +2025,8 @@ rm(first, not, then)
 ### var order
 codebook <- db[["codebook"]] %>% 
   filter(tables == "tjet_cy") %>% 
-  filter(colname != "lag_*")
+  filter(colname != "lag_*") %>% 
+  filter(!str_detect(colname, "access_"))
 
 ## these are in the codebook but not in the dataset 
 codebook$colname[!codebook$colname %in% names(df)]
@@ -2289,9 +2289,11 @@ autoprep[["rankings"]] <- db[["dl_tjet_cy"]] %>%
               select(country_case, ccode, ccode_case),
             by = c(ccode_cow = "ccode")) %>%
   filter(year == 2020) %>%
-  filter(!is.na(access_rank) | !is.na(legacy_rank)) %>%
+  # filter(!is.na(access_rank) | !is.na(legacy_rank)) %>%
+  filter(!is.na(legacy_rank)) %>%
   arrange(desc(legacy_rank)) %>%  
-  select(country_case, ccode_case, country_fr, access_mean, access_rank, legacy_mean, legacy_rank) 
+  # select(country_case, ccode_case, country_fr, access_mean, access_rank, legacy_mean, legacy_rank) 
+  select(country_case, ccode_case, country_fr, legacy_mean, legacy_rank) 
 
 ### data for summary spreadsheet
 
@@ -2733,25 +2735,26 @@ autoprep[["rankings"]] %>%
     legacy_fr = ifelse(country_case %in% pluriel, 
                        str_replace(legacy_fr, "se classe", "se classent"), 
                        legacy_fr), 
-    access = paste(country_case,
-                   "ranks",
-                   n_transform_nth(paste(access_rank, " ", sep = "")),
-                   "on our access to regular justice index in 2020."),
-    access_fr = str_flatten(access, " ") %>%
-      str_trim(),
-    access_fr = paste(country_fr, 
-                   "se classe au",
-                   n_transform_nth(paste(access_rank, " ", sep = "")), 
-                   "rang de notre indice d'accès à la justice régulière en 2020."),
-    access_fr = ifelse(country_case %in% pluriel, 
-                       str_replace(access_fr, "se classe", "se classent"), 
-                       access_fr), 
-    access_fr = str_flatten(access_fr, " ") %>%
-      str_trim()
+    # access = paste(country_case,
+    #                "ranks",
+    #                n_transform_nth(paste(access_rank, " ", sep = "")),
+    #                "on our access to regular justice index in 2020."),
+    # access_fr = str_flatten(access, " ") %>%
+    #   str_trim(),
+    # access_fr = paste(country_fr, 
+    #                "se classe au",
+    #                n_transform_nth(paste(access_rank, " ", sep = "")), 
+    #                "rang de notre indice d'accès à la justice régulière en 2020."),
+    # access_fr = ifelse(country_case %in% pluriel, 
+    #                    str_replace(access_fr, "se classe", "se classent"), 
+    #                    access_fr), 
+    # access_fr = str_flatten(access_fr, " ") %>%
+    #   str_trim()
   ) %>%
   ungroup() %>%
-  select(country_case, country_fr, ccode_case, legacy_fr, access_fr, 
-         access_mean, access_rank, legacy_mean, legacy_rank) %>% 
+  select(country_case, country_fr, ccode_case, 
+         # access_fr, access_mean, access_rank,
+         legacy, legacy_fr, legacy_mean, legacy_rank) %>% 
   saveRDS(here::here("data", "rankings.rds")) 
 
 ### TJ mechanisms
