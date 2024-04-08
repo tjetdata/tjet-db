@@ -2293,7 +2293,8 @@ autoprep[["rankings"]] <- db[["dl_tjet_cy"]] %>%
   filter(!is.na(legacy_rank)) %>%
   arrange(desc(legacy_rank)) %>%  
   # select(country_case, ccode_case, country_fr, access_mean, access_rank, legacy_mean, legacy_rank) 
-  select(country_case, ccode_case, country_fr, legacy_mean, legacy_rank) 
+  select(country_case, ccode_case, country_fr, legacy_mean, legacy_rank) %>% 
+  mutate(n = max(legacy_rank)) 
 
 ### data for summary spreadsheet
 
@@ -2717,19 +2718,19 @@ autotxt[["Conflicts"]] <- autoprep[["conflicts"]] %>%
 pluriel <- c("Philippines", "United States of America", "Maldives", "Fiji", 
              "Comoros", "Netherlands", "Solomon Islands", "Seychelles", "United Arab Emirates") 
   
+"ranked 135th out of 178 on TJET's legacy of violence index."
+
 autoprep[["rankings"]] %>% 
   rowwise() %>%
   mutate(
-    legacy = paste(country_case,
-                 "ranks",
-                 n_transform_nth(paste(legacy_rank, " ", sep = "")),
-                 "on our legacy of violence index in 2020."),
+    legacy = paste("As of 2020,", country_case, "ranks",
+                   n_transform_nth(paste(legacy_rank, " ", sep = "")),
+                   "out of", n, "on TJET's legacy of violence index"),
     legacy = str_flatten(legacy, " ") %>%
       str_trim(),
-    legacy_fr = paste(country_fr, 
-                   "se classe au",
-                   paste(legacy_rank, "e", sep = ""), 
-                   "rang de notre indice d'héritage de la violence en 2020."),
+    legacy_fr = paste("En 2020,", country_fr, "se classe",
+                      paste(legacy_rank, "e", sep = ""), "sur", n, 
+                      "dans l'indice d'héritage de la violence de TJET."),
     legacy_fr = str_flatten(legacy_fr, " ") %>%
       str_trim(), 
     legacy_fr = ifelse(country_case %in% pluriel, 
@@ -2755,6 +2756,7 @@ autoprep[["rankings"]] %>%
   select(country_case, country_fr, ccode_case, 
          # access_fr, access_mean, access_rank,
          legacy, legacy_fr, legacy_mean, legacy_rank) %>% 
+  # write_csv("~/Desktop/temp.csv")
   saveRDS(here::here("data", "rankings.rds")) 
 
 ### TJ mechanisms
