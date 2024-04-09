@@ -2291,9 +2291,8 @@ autoprep[["rankings"]] <- db[["dl_tjet_cy"]] %>%
   filter(year == 2020) %>%
   # filter(!is.na(access_rank) | !is.na(legacy_rank)) %>%
   filter(!is.na(legacy_rank)) %>%
-  arrange(desc(legacy_rank)) %>%  
-  # select(country_case, ccode_case, country_fr, access_mean, access_rank, legacy_mean, legacy_rank) 
-  select(country_case, ccode_case, country_fr, legacy_mean, legacy_rank) %>% 
+  arrange(desc(legacy_rank)) %>%
+  select(country_case, ccode_case, country_fr, legacy_rank) %>% 
   mutate(n = max(legacy_rank)) 
 
 ### data for summary spreadsheet
@@ -2717,8 +2716,6 @@ autotxt[["Conflicts"]] <- autoprep[["conflicts"]] %>%
 
 pluriel <- c("Philippines", "United States of America", "Maldives", "Fiji", 
              "Comoros", "Netherlands", "Solomon Islands", "Seychelles", "United Arab Emirates") 
-  
-"ranked 135th out of 178 on TJET's legacy of violence index."
 
 autoprep[["rankings"]] %>% 
   rowwise() %>%
@@ -2736,14 +2733,12 @@ autoprep[["rankings"]] %>%
     legacy_fr = ifelse(country_case %in% pluriel, 
                        str_replace(legacy_fr, "se classe", "se classent"), 
                        legacy_fr), 
-    # access = paste(country_case,
-    #                "ranks",
+    # access = paste(country_case, "ranks",
     #                n_transform_nth(paste(access_rank, " ", sep = "")),
     #                "on our access to regular justice index in 2020."),
     # access_fr = str_flatten(access, " ") %>%
     #   str_trim(),
-    # access_fr = paste(country_fr, 
-    #                "se classe au",
+    # access_fr = paste(country_fr, "se classe au",
     #                n_transform_nth(paste(access_rank, " ", sep = "")), 
     #                "rang de notre indice d'accès à la justice régulière en 2020."),
     # access_fr = ifelse(country_case %in% pluriel, 
@@ -2753,9 +2748,6 @@ autoprep[["rankings"]] %>%
     #   str_trim()
   ) %>%
   ungroup() %>%
-  select(country_case, country_fr, ccode_case, 
-         # access_fr, access_mean, access_rank,
-         legacy, legacy_fr, legacy_mean, legacy_rank) %>% 
   # write_csv("~/Desktop/temp.csv")
   saveRDS(here::here("data", "rankings.rds")) 
 
