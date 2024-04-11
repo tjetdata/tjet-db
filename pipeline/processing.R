@@ -2291,7 +2291,7 @@ autoprep[["rankings"]] <- db[["dl_tjet_cy"]] %>%
   filter(year == 2020) %>%
   # filter(!is.na(access_rank) | !is.na(legacy_rank)) %>%
   filter(!is.na(legacy_rank)) %>%
-  arrange(desc(legacy_rank)) %>%
+  arrange(legacy_rank) %>%
   select(country_case, ccode_case, country_fr, legacy_rank) %>% 
   mutate(n = max(legacy_rank)) 
 
@@ -2733,19 +2733,6 @@ autoprep[["rankings"]] %>%
     legacy_fr = ifelse(country_case %in% pluriel, 
                        str_replace(legacy_fr, "se classe", "se classent"), 
                        legacy_fr), 
-    # access = paste(country_case, "ranks",
-    #                n_transform_nth(paste(access_rank, " ", sep = "")),
-    #                "on our access to regular justice index in 2020."),
-    # access_fr = str_flatten(access, " ") %>%
-    #   str_trim(),
-    # access_fr = paste(country_fr, "se classe au",
-    #                n_transform_nth(paste(access_rank, " ", sep = "")), 
-    #                "rang de notre indice d'accès à la justice régulière en 2020."),
-    # access_fr = ifelse(country_case %in% pluriel, 
-    #                    str_replace(access_fr, "se classe", "se classent"), 
-    #                    access_fr), 
-    # access_fr = str_flatten(access_fr, " ") %>%
-    #   str_trim()
   ) %>%
   ungroup() %>%
   # write_csv("~/Desktop/temp.csv")
