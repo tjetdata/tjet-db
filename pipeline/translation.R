@@ -337,3 +337,12 @@ db[tabs] %>%
 #          access_fr = translate(access)) %>%
 #   ungroup() %>%
 #   write_csv("~/Desktop/new.csv")
+
+# usage(key_get("DeepL"))
+# base <- "~/Documents/GitHub/tjetFI/quarto-site-generator/_focus"
+# base %>% 
+#   dir() 
+# here::here(base, "CotedIvoire.qmd") %>% 
+#   read_file() %>%
+#   translate() %>%
+#   write_file(file = here::here(base, "CotedIvoire-fr.qmd"))
