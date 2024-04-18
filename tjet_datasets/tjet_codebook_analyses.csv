@@ -372,6 +372,8 @@ v2xel_frefair,Clean elections index,VDem,2024-04-08
 v2xel_frefair_sd,"Clean elections index, standard deviation",VDem,2024-04-08
 v2x_frassoc_thick,Freedom of association thick index,VDem,2024-04-08
 v2x_frassoc_thick_sd,"Freedom of association thick index, standard deviation",VDem,2024-04-08
+v2x_freexp,Freedom of expression index,VDem,2024-04-08
+v2x_freexp_sd,"Freedom of expression index, standard deviation",VDem,2024-04-08
 v2x_freexp_altinf,Freedom of Expression and Alternative Sources of Information index,VDem,2024-04-08
 v2x_freexp_altinf_sd,"Freedom of Expression and Alternative Sources of Information index, standard deviation",VDem,2024-04-08
 v2x_elecoff,Elected officials index,VDem,2024-04-08
@@ -457,6 +459,34 @@ v2csstruc_1,"CSO structure, binary: Large encompassing organizations dominate. T
 v2csstruc_2,"CSO structure, binary: Neither large encompassing nor small CSOs dominate. Influence is contingent on circumstances. Organizations, both large and small, contend with one another to have their voice considered by policymakers",VDem,2024-04-08
 v2csstruc_3,"CSO structure, binary: Small CSOs dominate. Many small organizations contend with one another to have their voices heard by policymakers",VDem,2024-04-08
 v2csstruc_nr,"CSO structure, count of expert ratings",VDem,2024-04-08
+v2elirreg,Election other voting irregularities,VDem,2024-04-08
+v2elirreg_sd,"Election other voting irregularities, standard deviation",VDem,2024-04-08
+v2elfrfair,Election free and fair,VDem,2024-04-08
+v2elfrfair_sd,"Election free and fair, standard deviation",VDem,2024-04-08
+v2elaccept,Election losers accept results,VDem,2024-04-08
+v2elaccept_sd,"Election losers accept results, standard deviation",VDem,2024-04-08
+v2elasmoff,Election assume office,VDem,2024-04-08
+v2elasmoff_sd,"Election assume office, standard deviation",VDem,2024-04-08
+v2eltrnout,Election turnout,VDem,2024-04-08
+v2elvaptrn,Election VAP turnout,VDem,2024-04-08
+v2psparban,Party ban,VDem,2024-04-08
+v2exrescon,Executive respects constitution,VDem,2024-04-08
+v2exrescon_sd,"Executive respects constitution, standard deviation",VDem,2024-04-08
+v2exbribe,Executive bribery and corrupt exchanges,VDem,2024-04-08
+v2exbribe_sd,"Executive bribery and corrupt exchanges, standard deviation",VDem,2024-04-08
+v2cacamps,Political polarization,VDem,2024-04-08
+v2cacamps_sd,"Political polarization, standard deviation",VDem,2024-04-08
+v2cademmob,Mobilization for democracy,VDem,2024-04-08
+v2cademmob_sd,"Mobilization for democracy, standard deviation",VDem,2024-04-08
+v2caautmob,Mobilization for autocracy,VDem,2024-04-08
+v2caautmob_sd,"Mobilization for autocracy, standard deviation",VDem,2024-04-08
+v2capolit,Engagement in independent political associations,VDem,2024-04-08
+v2capolit_sd,"Engagement in independent political associations, standard deviation",VDem,2024-04-08
+v2xnp_client,Clientelism Index,VDem,2024-04-08
+v2xnp_client_sd,"Clientelism Index, standard deviation",VDem,2024-04-08
+v2xpas_democracy_opposition,Opposition Parties Democracy Index,VDem,2024-04-08
+v2xpas_economic_government,"Government Coalition Left-Right (v2xpas_economic_government)
+Index",VDem,2024-04-08
 conf_intra,"count of minor internal (incl. internationalized) conflicts (25-999 BRDs, from ACD)",UCDP,2024-04-08
 wars_intra,"count of internal (incl. internationalized) wars (1000+ BRDs, from ACD)",UCDP,2024-04-08
 conf_intra_strict,"count of minor internal (excl. internationalized) conflicts (25-999 BRDs, from ACD)",UCDP,2024-04-08
