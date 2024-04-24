@@ -2126,6 +2126,74 @@ db[["dl_tjet_cy"]] <- df %>%
   write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_cy.csv"), na = "")
 
+### translations checks 
+
+db[["Amnesties"]] <- db[["Amnesties"]] %>% 
+  mutate(mechanismDescription_fr = str_replace_all(mechanismDescription_fr, 
+                                                   "droits de l'homme", 
+                                                   "droits de la personne")) 
+db[["Amnesties"]] %>% 
+  filter(amnestyYear <= 2020 & amnestyYear >= 1970) %>%  
+  select(amnestyID, invalid, amnestyYear, mechanismDescription_fr) %>% 
+  filter(str_detect(mechanismDescription_fr, "droits de l'homme") | 
+           is.na(mechanismDescription_fr)) 
+
+db[["Reparations"]] <- db[["Reparations"]] %>% 
+  mutate(officialName_en_fr = str_replace_all(officialName_en_fr, 
+                                                   "droits de l'homme", 
+                                                   "droits de la personne")) 
+db[["Reparations"]] %>% 
+  filter(yearCreated <= 2020 & yearCreated >= 1970) %>%  
+  select(reparationID, invalid, yearCreated, officialName_en_fr) %>% 
+  filter(str_detect(officialName_en_fr, "droits de l'homme") | 
+           is.na(officialName_en_fr)) 
+
+db[["Trials"]] <- db[["Trials"]] %>% 
+  mutate(caseDescription_fr = str_replace_all(caseDescription_fr, 
+                                              "droits de l'homme", 
+                                              "droits de la personne")) 
+db[["Trials"]] %>% 
+  filter(yearStart <= 2020 & yearStart >= 1970) %>%  
+  select(trialID, invalid, yearStart, caseDescription_fr) %>% 
+  filter(str_detect(caseDescription_fr, "droits de l'homme") | 
+           is.na(caseDescription_fr)) 
+
+db[["Accused"]] <- db[["Accused"]] %>% 
+  mutate(nameOrDesc_fr = str_replace_all(nameOrDesc_fr, 
+                                              "droits de l'homme", 
+                                              "droits de la personne"))
+db[["Accused"]] %>% 
+  select(accusedID, invalid, nameOrDesc_fr) %>% 
+  filter(str_detect(nameOrDesc_fr, "droits de l'homme") | 
+           is.na(nameOrDesc_fr)) 
+
+db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>% 
+  mutate(officialName_en_fr = str_replace_all(officialName_en_fr, 
+                                         "droits de l'homme", 
+                                         "droits de la personne"))
+db[["TruthCommissions"]] %>% 
+  filter(yearPassed <= 2020 & yearPassed >= 1970) %>%  
+  select(truthcommissionID, yearPassed, officialName_en_fr) %>% 
+  filter(str_detect(officialName_en_fr, "droits de l'homme") | 
+           is.na(officialName_en_fr)) 
+
+db[["Vettings"]] %>% 
+  select(vettingID, invalid, yearStart, policyName, policyName_fr) %>% 
+  filter(str_detect(policyName_fr, "droits de l'homme") | 
+           is.na(policyName_fr)) 
+
+txt_fields <- c("auto_conflict_fr", "auto_regime_fr", "txt_amnesties_fr", 
+                "txt_conflict_fr", "txt_domestic_fr", "txt_foreign_fr", 
+                "txt_intl_fr", "txt_intro_fr", "txt_regime_fr", 
+                "txt_reparations_fr", "txt_summary_fr", "txt_tcs_fr", 
+                "txt_TJ", "txt_TJ_fr", "txt_un_fr", "txt_vetting_fr") 
+
+db[["Countries"]] <- db[["Countries"]] %>%
+  mutate(across(all_of(txt_fields), 
+                ~ str_replace_all(.x, "droits de l'homme", 
+                                  "droits de la personne")) 
+         )
+
 ### saving individual mechanism tables for local analyses & repo
 ### these will also be written to the database for downloads
 
