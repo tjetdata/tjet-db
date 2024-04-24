@@ -485,6 +485,23 @@ db[["Prosecutions"]][["Trials"]] <-
                                   caseDescription)) %>% 
   select(-charnum) 
 
+fair_trials <- db[["MegaBase"]][["Transitions"]] %>%
+  filter(!is.na(fairFlawed)) %>% 
+  mutate(fair_postautocratic_trials = ifelse(fairFlawed == "fair", 1, 0)) %>%
+  select(ccode, year, fair_postautocratic_trials) %>% 
+  arrange(ccode, year) %>% 
+  mutate(before = ifelse(year < 1970, 1, 0)) %>%  
+  group_by(ccode, before) %>%
+  mutate(year_max = max(year)) %>%
+  ungroup() %>% 
+  filter(before == 0 | (before == 1 & year == year_max)) %>% 
+  mutate(year = ifelse(before == 1, 1970, year), 
+         year = ifelse(ccode == 115, 1975, year), 
+         year = ifelse(ccode == 349, 1992, year), 
+         year = ifelse(ccode == 591, 1976, year)
+         ) %>% 
+  select(ccode, year, fair_postautocratic_trials)
+
 ### formatting transitions table for website 
 db[["MegaBase"]][["Transitions"]] <-
   db[["MegaBase"]][["Transitions"]] %>%
@@ -1083,10 +1100,10 @@ map(db[["SurveysMeta"]]$results_tables, function(filename) { # for dev: filename
 #    trials, domestic, intl, foreign) 
 rm(countrylist, translist, confllist, gl) 
 
-db[["TJETmembers"]] <- db[["TJETmembers"]] %>% 
-  filter(TJET_website_add == 1 & !is.na(bio_text) ) %>% 
-  select(last_name, given_name, institution, position, TJET_role, 
-         email, email_public, url, url_public, bio_text)
+# db[["TJETmembers"]] <- db[["TJETmembers"]] %>% 
+#   filter(TJET_website_add == 1 & !is.na(bio_text) ) %>% 
+#   select(last_name, given_name, institution, position, TJET_role, 
+#          email, email_public, url, url_public, bio_text)
 
 ### database version 
 db[["db_timestamp"]] <- tjet[["db_timestamp"]] %>% tibble(tjet_timestamp = .)
@@ -1383,6 +1400,12 @@ df <- df %>%
                                   year >= sample_confl ~ 1), 
          aco = sample_confl ## "all conflicts"
   ) %>% 
+  left_join(fair_trials, 
+            by = c("ccode_cow" = "ccode", "year" = "year")) %>%
+  group_by(country_case) %>%
+  fill(fair_postautocratic_trials, .direction = "down") %>%
+  mutate(fair_postautocratic_trials = ifelse(is.na(fair_postautocratic_trials), 0, fair_postautocratic_trials)) %>% 
+  ungroup() %>% 
   arrange(country_case, year) %>%
   group_by(country_case, isna = is.na(theta_mean_fariss) ) %>%
   mutate(cum_theta_mean_fariss = ifelse(isna, NA, cummean(theta_mean_fariss)),
