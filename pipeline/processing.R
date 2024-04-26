@@ -2963,7 +2963,7 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                ".", sep = ""
                            ) %>%
                          n_transform() %>%
-                         str_replace_all("none persons were", "noone was") 
+                         str_replace_all("none persons were", "no one was") 
                        )),
          # "Of XX trials that involved high-ranking state agents, XX were convicted."
          text = list(c(text,
@@ -2979,7 +2979,7 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                "convicted."
                          ) %>%
                          n_transform() %>%
-                         str_replace("none persons were", "noone was")
+                         str_replace("none persons were", "no one was")
                        )),
          text = str_flatten(text, " ") %>% 
            str_trim()
