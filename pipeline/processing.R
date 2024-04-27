@@ -500,7 +500,8 @@ fair_trials <- db[["MegaBase"]][["Transitions"]] %>%
          year = ifelse(ccode == 349, 1992, year), 
          year = ifelse(ccode == 591, 1976, year)
          ) %>% 
-  select(ccode, year, fair_postautocratic_trials)
+  select(ccode, year, fair_postautocratic_trials) %>% 
+  distinct() 
 
 ### formatting transitions table for website 
 db[["MegaBase"]][["Transitions"]] <-
