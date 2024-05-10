@@ -257,6 +257,11 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
     select(trialID, ccode_Accused, yearStart, yearEnd) %>% 
     distinct()
 
+  # subset_accused %>% 
+  #   group_by(accusedID) %>% 
+  #   mutate(n = n()) %>% 
+  #   filter(n > 1) 
+  
   ## combining with guilty verdicts; makes unit accused-year
   subset_accused_convictions <- subset_accused %>%
     left_join(guilty %>% select(accusedID, year, last_fx, guilty),  
