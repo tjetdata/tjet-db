@@ -27,6 +27,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
                 tfc = "trials with final convictions", 
                 cct = "conviction count", 
                 crt = "conviction rate by all accused", 
+                cce = "count of first convictions", # for use to get "ever convicted" per accused and trial
                 sen = "sentence totals")
 
   ## input errors
@@ -210,7 +211,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
     filter(if_any(all_of(rank_acc[rank_opts]), ~ . == 1)) %>%
     filter(if_any(all_of(charges_acc[charges_opts]), ~ . == 1)) %>% 
     arrange(accusedID) %>% 
-    select(accusedID, trialID)
+    select(accusedID, trialID, everGuilty, firstGuiltyYear)
            # everGuilty, firstGuiltyYear, lastGuilty, lastGuiltyYear
   
   final_convictions <- guilty %>%
@@ -251,6 +252,14 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
     inner_join(accused, by = "trialID") %>% 
     left_join(final_convictions, by = "accusedID") %>% 
     arrange(accusedID)
+  
+  subset_ever <- subset_accused %>% 
+    filter(everGuilty == 1) %>% 
+    mutate(firstGuiltyYear = ifelse(is.na(firstGuiltyYear), yearEnd, firstGuiltyYear)) %>% 
+    select(trialID, ccode_Accused, accusedID, everGuilty, firstGuiltyYear)
+    
+  subset_accused <- subset_accused %>% 
+    select(-everGuilty, -firstGuiltyYear) 
   
   ## subset trials; unit is trial 
   subset_trials <- subset_accused %>%
@@ -428,6 +437,27 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
         rename_with(.fn = ~ acc_var_name, .cols = accused_n)
     }
 
+  }
+  
+  if(measure == "cce") { ## "count of first convictions per accused": count by countryAccused & startYear
+
+    first_convictions <- subset_ever %>% 
+      # arrange(ccode_Accused, trialID, accusedID) %>%
+      rename(year = firstGuiltyYear) %>%
+      # filter(year <= 2020) %>%
+      group_by(ccode_Accused, year) %>% 
+      reframe(first_conv = sum(everGuilty))
+    
+    cy <- cy %>%
+      left_join(first_convictions, 
+                by = c("ccode_cow" = "ccode_Accused",
+                       "year" = "year")) %>% 
+      mutate(
+        first_conv = ifelse(year %in% 1970:2020 & is.na(first_conv),
+                                  0, first_conv),
+        first_conv = ifelse(year > 2020, NA, first_conv)
+      ) %>%
+      rename_with(.fn = ~ var_name, .cols = first_conv)
   }
   
   if(measure == "sen") { ## sen = "sentence totals"

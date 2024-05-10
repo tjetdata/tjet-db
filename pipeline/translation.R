@@ -333,8 +333,7 @@ db[tabs] %>%
 
 # read_csv("~/Desktop/temp.csv") %>%
 #   rowwise() %>%
-#   mutate(legacy_fr = translate(legacy), 
-#          access_fr = translate(access)) %>%
+#   mutate(domestic_fr = translate(domestic)) %>%
 #   ungroup() %>%
 #   write_csv("~/Desktop/new.csv")
 

@@ -1461,6 +1461,7 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(tran_tfc_dom_dtj_sta_cumu = cumsum(tran_tfc_dom_dtj_sta))
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
@@ -1470,6 +1471,7 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(tran_tfc_dom_dtj_sta_hi_cumu = cumsum(tran_tfc_dom_dtj_sta_hi))
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta", rank_opts = "hi") 
 
@@ -1485,6 +1487,7 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(tran_tfc_dom_ctj_sta_cumu = cumsum(tran_tfc_dom_ctj_sta))
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
@@ -1494,6 +1497,7 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(tran_tfc_dom_ctj_sta_hi_cumu = cumsum(tran_tfc_dom_ctj_sta_hi))
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "sta", rank_opts = "hi") 
 
@@ -1509,6 +1513,7 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(tran_tfc_dom_dtj_ctj_sta_cumu = cumsum(tran_tfc_dom_dtj_ctj_sta))
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
@@ -1518,6 +1523,7 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(tran_tfc_dom_dtj_ctj_sta_hi_cumu = cumsum(tran_tfc_dom_dtj_ctj_sta_hi))
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
 
@@ -1533,6 +1539,7 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(tran_tfc_dom_ctj_opp_cumu = cumsum(tran_tfc_dom_ctj_opp))
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
@@ -1542,6 +1549,7 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(tran_tfc_dom_ctj_opp_hi_cumu = cumsum(tran_tfc_dom_ctj_opp_hi))
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cct", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp", rank_opts = "hi") 
 
@@ -1563,6 +1571,7 @@ df <- TrialsMeasure(cy = df, prefix = "regu", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(regu_tfc_dom_sta_cumu = cumsum(regu_tfc_dom_sta))
 df <- TrialsMeasure(cy = df, prefix = "regu", measure = "cct", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, prefix = "regu", measure = "cce", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "regu", measure = "crt", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, prefix = "regu", measure = "sen", type_opts = "dom", nexus_vars = "hrs", excl_nexus_vars = c("dtj", "ctj"), memb_opts = "sta") 
 
@@ -1579,6 +1588,7 @@ df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "tfc", type_opts = "dom"
   group_by(country_case) %>%  
   mutate(lcon_tfc_dom_sta_opp_cumu = cumsum(lcon_tfc_dom_sta_opp))
 df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "cct", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
+df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "cce", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
 df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "crt", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
 df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "sen", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
 
@@ -1588,12 +1598,14 @@ df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c(
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi")
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi")
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 
@@ -1601,12 +1613,14 @@ df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c(
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 
@@ -1614,12 +1628,14 @@ df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c(
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta") 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta", rank_opts = "hi") 
 
@@ -1627,12 +1643,14 @@ df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c(
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp") 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
 
@@ -2417,14 +2435,14 @@ data[["Amnesties"]] <- db[["Amnesties"]] %>%
 
 vars_dom <- c("trials_domestic", "tran_trs_dom_dtj_sta", "tran_trs_dom_ctj_sta", 
               "tran_trs_dom_dtj_ctj_sta", "regu_trs_dom_sta", 
-              "tran_tfc_dom_dtj_ctj_sta", "regu_tfc_dom_sta", 
-              "tran_trs_dom_dtj_ctj_sta_hi", "tran_tfc_dom_dtj_ctj_sta_hi", 
-              "tran_trs_dom_ctj_opp", "tran_tfc_dom_ctj_opp", 
-              "lcon_trs_dom_sta_opp", "lcon_tfc_dom_sta_opp")
+              "tran_cce_dom_dtj_ctj_sta", "regu_cce_dom_sta", 
+              "tran_trs_dom_dtj_ctj_sta_hi", "tran_cce_dom_dtj_ctj_sta_hi", 
+              "tran_trs_dom_ctj_opp", "tran_cce_dom_ctj_opp", 
+              "lcon_trs_dom_sta_opp", "lcon_cce_dom_sta_opp")
 vars_int <- c("trials_intl", "trs_int_sta", "trs_int_opp", 
-              "tfc_int_sta", "tfc_int_opp") 
+              "cce_int_sta", "cce_int_opp") 
 vars_for <- c("trials_foreign", "trs_for_sta", "trs_for_opp", 
-              "tfc_for_sta", "tfc_for_opp") 
+              "cce_for_sta", "cce_for_opp") 
 
 data[["Domestic_cy"]] <- db[["dl_tjet_cy"]] %>% 
   select(-country_case) %>% 
@@ -2440,19 +2458,19 @@ data[["Domestic_cy"]] <- db[["dl_tjet_cy"]] %>%
           end = max(year),
           total = sum(trials_domestic, na.rm = TRUE), 
           tran_trs_dom_dtj_sta = sum(tran_trs_dom_dtj_sta, na.rm = TRUE), 
-          tran_tfc_dom_dtj_sta = sum(tran_tfc_dom_dtj_sta, na.rm = TRUE),
+          tran_cce_dom_dtj_sta = sum(tran_cce_dom_dtj_sta, na.rm = TRUE),
           tran_trs_dom_ctj_sta = sum(tran_trs_dom_ctj_sta, na.rm = TRUE), 
-          tran_tfc_dom_ctj_sta = sum(tran_tfc_dom_ctj_sta, na.rm = TRUE),
+          tran_cce_dom_ctj_sta = sum(tran_cce_dom_ctj_sta, na.rm = TRUE),
           tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta, na.rm = TRUE), 
-          tran_tfc_dom_dtj_ctj_sta = sum(tran_tfc_dom_dtj_ctj_sta, na.rm = TRUE), 
+          tran_cce_dom_dtj_ctj_sta = sum(tran_cce_dom_dtj_ctj_sta, na.rm = TRUE), 
           tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi, na.rm = TRUE), 
-          tran_tfc_dom_dtj_ctj_sta_hi = sum(tran_tfc_dom_dtj_ctj_sta_hi, na.rm = TRUE), 
+          tran_cce_dom_dtj_ctj_sta_hi = sum(tran_cce_dom_dtj_ctj_sta_hi, na.rm = TRUE), 
           regu_trs_dom_sta = sum(regu_trs_dom_sta, na.rm = TRUE), 
-          regu_tfc_dom_sta = sum(regu_tfc_dom_sta, na.rm = TRUE), 
+          regu_cce_dom_sta = sum(regu_cce_dom_sta, na.rm = TRUE), 
           tran_trs_dom_ctj_opp = sum(tran_trs_dom_ctj_opp, na.rm = TRUE), 
-          tran_tfc_dom_ctj_opp = sum(tran_tfc_dom_ctj_opp, na.rm = TRUE), 
+          tran_cce_dom_ctj_opp = sum(tran_cce_dom_ctj_opp, na.rm = TRUE), 
           lcon_trs_dom_sta_opp = sum(lcon_trs_dom_sta_opp, na.rm = TRUE), 
-          lcon_tfc_dom_sta_opp = sum(lcon_tfc_dom_sta_opp, na.rm = TRUE))
+          lcon_cce_dom_sta_opp = sum(lcon_cce_dom_sta_opp, na.rm = TRUE))
 
 data[["Intl_cy"]] <- db[["dl_tjet_cy"]] %>% 
   select(-country_case) %>% 
@@ -2467,7 +2485,7 @@ data[["Intl_cy"]] <- db[["dl_tjet_cy"]] %>%
           end = max(year),
           trials_intl = sum(trials_intl, na.rm = TRUE),
           trs_int_hrs_con_all = sum(trs_int_sta + trs_int_opp, na.rm = TRUE), 
-          tfc_int_hrs_con_all = sum(tfc_int_sta + tfc_int_opp, na.rm = TRUE))
+          cce_int_hrs_con_all = sum(cce_int_sta + cce_int_opp, na.rm = TRUE))
 
 data[["Foreign_cy"]] <- db[["dl_tjet_cy"]] %>% 
   select(-country_case) %>% 
@@ -2482,7 +2500,7 @@ data[["Foreign_cy"]] <- db[["dl_tjet_cy"]] %>%
           end = max(year), 
           trials_foreign = sum(trials_foreign, na.rm = TRUE),
           trs_for_hrs_con_all = sum(trs_for_sta + trs_for_opp, na.rm = TRUE), 
-          tfc_for_hrs_con_all = sum(tfc_for_sta + tfc_for_opp, na.rm = TRUE)) 
+          cce_for_hrs_con_all = sum(cce_for_sta + cce_for_opp, na.rm = TRUE)) 
 
 data[["Foreign"]] <- db[["Trials"]] %>%
   left_join(countries %>% 
@@ -2916,8 +2934,8 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                          ifelse(tran_trs_dom_dtj_sta == 1,
                                                 "prosecution", "prosecutions"),
                                          "of state agents, in which",
-                                         tran_tfc_dom_dtj_sta,
-                                         ifelse(tran_tfc_dom_dtj_sta == 1,
+                                         tran_cce_dom_dtj_sta,
+                                         ifelse(tran_cce_dom_dtj_sta == 1,
                                                 "person was", "persons were"),
                                          "convicted"),
                                  if(regu_trs_dom_sta > 0)
@@ -2926,8 +2944,8 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                          ifelse(regu_trs_dom_sta == 1,
                                                 "prosecution", "prosecutions"),
                                          "of state agents, in which",
-                                         regu_tfc_dom_sta,
-                                         ifelse(regu_tfc_dom_sta == 1,
+                                         regu_cce_dom_sta,
+                                         ifelse(regu_cce_dom_sta == 1,
                                                 "person was", "persons were"),
                                          "convicted"),
                                  if(tran_trs_dom_ctj_sta > 0)
@@ -2936,8 +2954,8 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                          ifelse(tran_trs_dom_ctj_sta == 1,
                                                 "prosecution", "prosecutions"),
                                          "of state agents, in which",
-                                         tran_tfc_dom_ctj_sta,
-                                         ifelse(tran_tfc_dom_ctj_sta == 1,
+                                         tran_cce_dom_ctj_sta,
+                                         ifelse(tran_cce_dom_ctj_sta == 1,
                                                 "person was", "persons were"),
                                          "convicted"),
                                  if(tran_trs_dom_ctj_opp > 0)
@@ -2946,8 +2964,8 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                          ifelse(tran_trs_dom_ctj_opp == 1,
                                                 "prosecution", "prosecutions"),
                                          "of opposition members, in which",
-                                         tran_tfc_dom_ctj_opp,
-                                         ifelse(tran_tfc_dom_ctj_opp == 1,
+                                         tran_cce_dom_ctj_opp,
+                                         ifelse(tran_cce_dom_ctj_opp == 1,
                                                 "person was", "persons were"),
                                          "convicted"),
                                  if(lcon_trs_dom_sta_opp > 0)
@@ -2956,8 +2974,8 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                          ifelse(lcon_trs_dom_sta_opp == 1,
                                                 "prosecution", "prosecutions"),
                                          "of state agents or opposition members, in which",
-                                         lcon_tfc_dom_sta_opp,
-                                         ifelse(lcon_tfc_dom_sta_opp == 1,
+                                         lcon_cce_dom_sta_opp,
+                                         ifelse(lcon_cce_dom_sta_opp == 1,
                                                 "person was", "persons were"),
                                          "convicted")), 
                                  collapse = "; ", last = "; and ", na.rm = TRUE), 
@@ -2974,8 +2992,8 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                ifelse(tran_trs_dom_dtj_ctj_sta_hi == 1,
                                       "trial", "trials"),
                                "that involved high-ranking state agents,", 
-                               tran_tfc_dom_dtj_ctj_sta_hi,
-                               ifelse(tran_tfc_dom_dtj_ctj_sta_hi == 1,
+                               tran_cce_dom_dtj_ctj_sta_hi,
+                               ifelse(tran_cce_dom_dtj_ctj_sta_hi == 1,
                                       "person was", "persons were"),
                                "convicted."
                          ) %>%
@@ -2991,15 +3009,15 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
          # tran_trs_dom_dtj_sta, # transitional prosecutions of state agents in democratic transition context
          # tran_trs_dom_ctj_sta, # transitional prosecutions of state agents in conflict or post-conflict context
          # tran_trs_dom_dtj_ctj_sta, # transitional prosecutions of state agents
-         # tran_tfc_dom_dtj_ctj_sta, # total final convictions in transitional prosecutions of state agents
+         # tran_cce_dom_dtj_ctj_sta, # convictions in transitional prosecutions of state agents
          # tran_trs_dom_dtj_ctj_sta_hi, # transitional prosecutions of high-ranking state agents
-         # tran_tfc_dom_dtj_ctj_sta_hi, # total final convictions in transitional prosecutions of high-ranking state agents
+         # tran_cce_dom_dtj_ctj_sta_hi, # convictions in transitional prosecutions of high-ranking state agents
          # regu_trs_dom_sta, # regular human rights prosecutions of state agents
-         # regu_tfc_dom_sta, # total final convictions in regular human rights prosecutions of state agents
+         # regu_cce_dom_sta, # convictions in regular human rights prosecutions of state agents
          # tran_trs_dom_ctj_opp, # transitional prosecutions of opposition members in conflict or post-conflict context
-         # tran_tfc_dom_ctj_opp, # total final convictions in transitional prosecutions of opposition members in conflict or post-conflict context
+         # tran_cce_dom_ctj_opp, # convictions in transitional prosecutions of opposition members in conflict or post-conflict context
          # lcon_trs_dom_sta_opp, # prosecutions of state agents or opposition members in low-level conflict context
-         # lcon_tfc_dom_sta_opp, # total final convictions in prosecutions of state agents or opposition members in low-level conflict context
+         # lcon_cce_dom_sta_opp, # convictions in prosecutions of state agents or opposition members in low-level conflict context
          text)
 
 autotxt[["Foreign"]] <- data[["Foreign"]] %>% 
@@ -3054,12 +3072,13 @@ autotxt[["Intl"]] <- data[["Intl_cy"]] %>%
                                    "and", 
                                    end) 
                       ), 
-                      ", ", 
-                      tfc_int_hrs_con_all, 
-                      " of which led to a final conviction.", 
+                      ", which led to ", 
+                      cce_int_hrs_con_all, 
+                      ifelse(cce_int_hrs_con_all == 1, 
+                             " conviction. ", " convictions. "), 
                       sep = "") %>% 
-           n_transform()
-  ) %>% 
+           n_transform(), 
+         text = str_replace_all(text, "none convictions.", "no convictions.") ) %>% 
   ungroup() %>% 
   select(country_case, ccode_case, text) 
 
