@@ -26,13 +26,13 @@ to_download <-
       "Conflicts", "Dyads", "metadata")
   )
 
-### the countries and conflicts tables are currently not synced between 
-### the two bases but were the same when first added
-### the only difference should be due to linked table fields
-### we could build in a check to ensure the data in these tables are consistent
-### but ideally all tables would be in the same base
+### the countries and conflicts tables are currently not synced between the 
+### two bases but were the same when first added; the only differences are the 
+### linked table fields; we could build in a check to ensure the data in these 
+### tables are consistent but ideally all tables would be in the same base
 
-### downloading all data via Airtable API and saving the raw data locally
+### downloading data via Airtable API and saving the raw data locally
+
 tjet <- map(names(to_download), function(base_id) {
   cat("base ID:", base_id, "\n")
   names(tab) <- tab <- to_download[[base_id]] 

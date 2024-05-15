@@ -13,7 +13,7 @@ conflicted::conflict_prefer("fixed", "stringr")
 ### there is potential for damage to the production database
 ### caution: the translation script is potentially expensive
 
-### downloading all data from Airtable MegaBase
+### downloading data from Airtable MegaBase
 source(here::here("pipeline", "downloads.R"))
 ### processing raw data into production database & creating the TJET datasets 
 source(here::here("pipeline", "processing.R"))
@@ -21,8 +21,3 @@ source(here::here("pipeline", "processing.R"))
 source(here::here("pipeline", "translation.R"))
 ### writing the production database to the Cloudways server
 source(here::here("pipeline", "sql.R"))
-
-### one-offs NEED TO ADD EXPLANATORY COMMENTS
-## transitions 
-## conflicts 
-
