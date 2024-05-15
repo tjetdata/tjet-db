@@ -17,6 +17,9 @@ dtr,"democratic transition sample, binary",TJET,Transitional Justice Evaluation 
 aco,"conflict & post-conflict, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
 dco,"during conflict, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
 pco,"after conflict, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
+reg_age_vdem,regime age based on VDem ERT regime type,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
+dem_spell_id_vdem,demoracy spell ID based on VDem ERT regime type,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
+dem_reversion,categorical democratic reversion measure coded by TJET based on VDem ERT transitions and changes in the Regimes of the World measure,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
 amnesties_sample,country-years from first year with any amnesties,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
 reparations_sample,country-years from first year with any reparations policies,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
 tcs_sample,country-years from first year with any truth commissions,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-05-13
