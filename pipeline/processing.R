@@ -884,8 +884,7 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
                                       "democracy"), 1, 0), 
          dem_all = rowSums(across(all_of(c("dem_bmr", "dem_polity", 
                                            "dem_vdem"))), na.rm = TRUE)/3) %>% 
-  select(country, ccode, year, transition, 
-         dem_bmr, dem_polity, dem_vdem, dem_all) %>% 
+  select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, dem_all) %>%
   group_by(ccode) %>% 
   mutate(finite_check = sum(!is.na(dem_polity)), 
          dem_polity_min = ifelse(finite_check > 0, 
@@ -931,6 +930,14 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
   rename(regime_sample = regime) %>% 
   select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, 
          regime_sample, reg_democ, reg_autoc, reg_trans)
+
+reversions <- read_csv("transitions/transitions_new_revised.csv",
+         show_col_types = FALSE) %>% 
+  select(country, country_id_vdem, year, reg_type, reg_age, dem_spell_id, dem_reversion) %>% 
+  rename(reg_type_vdem = reg_type,
+         reg_age_vdem = reg_age,
+         dem_spell_id_vdem = dem_spell_id) %>% 
+  filter(!is.na(country_id_vdem)) 
 
 ### creating country-year dataset and merging in mechanisms count measures
   
@@ -1401,8 +1408,8 @@ df <- df %>%
                                   year >= sample_confl ~ 1), 
          aco = sample_confl ## "all conflicts"
   ) %>% 
-  left_join(fair_trials, 
-            by = c("ccode_cow" = "ccode", "year" = "year")) %>%
+  left_join(reversions, by = c("country", "country_id_vdem", "year")) %>% 
+  left_join(fair_trials, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
   group_by(country_case) %>%
   fill(fair_postautocratic_trials, .direction = "down") %>%
   mutate(fair_postautocratic_trials = ifelse(is.na(fair_postautocratic_trials), 0, fair_postautocratic_trials)) %>% 

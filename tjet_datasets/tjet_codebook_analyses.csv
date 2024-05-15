@@ -24,6 +24,10 @@ dtr,"democratic transition sample, binary",TJET,2024-05-13
 aco,"conflict & post-conflict, binary",TJET,2024-05-13
 dco,"during conflict, binary",TJET,2024-05-13
 pco,"after conflict, binary",TJET,2024-05-13
+reg_type_vdem,VDem ERT regime type,VDem ERT,2024-05-13
+reg_age_vdem,regime age based on VDem ERT regime type,TJET,2024-05-13
+dem_spell_id_vdem,demoracy spell ID based on VDem ERT regime type,TJET,2024-05-13
+dem_reversion,categorical democratic reversion measure coded by TJET based on VDem ERT transitions and changes in the Regimes of the World measure,TJET,2024-05-13
 amnesties_sample,country-years from first year with any amnesties,TJET,2024-05-13
 reparations_sample,country-years from first year with any reparations policies,TJET,2024-05-13
 tcs_sample,country-years from first year with any truth commissions,TJET,2024-05-13
