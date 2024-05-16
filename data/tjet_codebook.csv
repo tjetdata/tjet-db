@@ -325,6 +325,7 @@ tjet_cy,tcs_ctj_reform_process,"reform-oriented TC process scale, conflict TJ",T
 tjet_cy,tcs_ctj_reform_outcome,"reform-oriented TC outcome scale, conflict TJ",TJET,
 tjet_cy,amnesty_dtj_ctj_sta,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents)",TJET,
 tjet_cy,amnesty_dtj_ctj_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, opposition members)",TJET,
+tjet_cy,amnesty_dtj_ctj_sta_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents and opposition members)",TJET,
 tjet_cy,amnesty_ctj_sta_opp,"amnesty, binary (conflict transitional justice nexus, state agents and opposition members)",TJET,
 tjet_cy,amnesty_ctj,"amnesty, binary (conflict transitional justice nexus)",TJET,
 tjet_cy,amnesty_sta,"amnesty, binary (state agents)",TJET,

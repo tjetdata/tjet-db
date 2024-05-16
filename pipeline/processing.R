@@ -1039,9 +1039,9 @@ attr(db$fields_meta, "problems") <- NULL
 
 db[["translations"]] <- read_csv(here::here("data", "tjet_translations.csv"), 
                                 show_col_types = FALSE) %>% tibble()
-attr(db$tjet_translations, "spec") <- NULL
-attr(db$tjet_translations, "problems") <- NULL
-# attributes(db$tjet_translations) 
+attr(db$translations, "spec") <- NULL
+attr(db$translations, "problems") <- NULL
+# attributes(db$translations) 
 
 ### conflict dyads lookup table for database
 db$ConflictDyads <- read_csv(here::here("conflicts", "confl_dyads.csv"), 
@@ -2005,6 +2005,7 @@ df <- ReparationMeasures(cy = df)
 
 df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "sta")
 df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "opp") 
+df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = c("sta", "opp")) 
 df <- AmnestyMeasure(cy = df, nexus_vars = "ctj", who_opts = c("sta", "opp")) 
 df <- AmnestyMeasure(cy = df, nexus_vars = "ctj", who_opts = "all") 
 df <- AmnestyMeasure(cy = df, who_opts = "sta")
