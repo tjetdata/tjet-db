@@ -1395,7 +1395,8 @@ df <- df %>%
                                   year >= sample_confl ~ 1), 
          aco = sample_confl ## "all conflicts"
   ) %>% 
-  left_join(reversions, by = c("country", "country_id_vdem", "year")) %>% 
+  left_join(reversions %>% select(-country), 
+            by = c("country_id_vdem", "year")) %>% 
   left_join(fair_trials, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
   group_by(country_case) %>%
   fill(fair_postautocratic_trials, .direction = "down") %>%

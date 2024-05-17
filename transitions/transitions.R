@@ -434,6 +434,12 @@ countries_trans <- trans %>%
   arrange(country_name) %>% 
   distinct()
 
+# trans %>% 
+#   filter(str_detect(country_name, "Serbia")) %>% 
+#   select(country_id, country_name, year, reg_trans, reg_type, reg_start_year, 
+#          reg_end_year, dem_spell_id, dem_reversion, reg_age) %>% 
+#   print(n = Inf) 
+
 df <- df %>% 
   full_join(trans, by = c("country_id", "country_name", "year")) %>% 
   mutate(country_name = if_else(country_name == "Ivory Coast", 
