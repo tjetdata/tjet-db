@@ -25,14 +25,14 @@ pkeys <- c(
   "TJETmembers" = "pkey")
 
 ### note that both bases have Countries, Transitions, Conflicts and Dyads tables
-### but these should be the same
-### ideally the two bases should be combined and using only one version each
+### but these should be the same; ideally the two bases should be combined and 
+### using only one version each but Airtable makes this difficult
 
 ### exclude these tables from the production database
 exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
              "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
              "Challenges", "VettingComparison", "ICDB", "BIcomparison", 
-             "AdHocHybrid", "Ethiopia")
+             "AdHocHybrid", "Ethiopia", "ArgCausas", "ArgAccused", "ArgCLs")
 
 ### check metadata table for non-existing fields
 ### can use this to determine which fields can be deleted from dev DB
@@ -85,12 +85,12 @@ db <- map(names(to_download), function(basename) { # basename = "MegaBase"
 })
 
 names(db) <- names(to_download)
-### for later checking
+### for tracking valid rows in data tables
 dim_orig <- map(db, function(dat) {
   map_vec(dat, nrow)
 })
 
-### filtering out invalid records (more removal below)
+### filtering out invalid records (more removal for other reasons below)
 drop_invalids <- c("Amnesties", "Trials", "Accused", 
                    "TruthCommissions", "Reparations", "Vettings")
 db <- map(names(to_download), function(basename) {
@@ -267,7 +267,7 @@ cbind(orig = dim_orig[[2]], drop = dim_drop[[2]],
 
 ### recoding keys in multipleRecordLinks (from Airtable record IDs)
 ### approaches differ by whether the relationship is one-to-one or one-to-many
-### SHOULD simplify code below with functions
+### could simplify code below with functions
 
 db[["MegaBase"]][["Reparations"]] <- 
   db[["MegaBase"]][["Reparations"]] %>%
@@ -314,7 +314,7 @@ db[["MegaBase"]][["Vettings"]] <-
          ucdpDyadID = "dyad_id")
 
 ### the trial-accused link is one-to-many 
-### (it should be many-to-many but the DB was not built to accomodate this)
+### (it should be many-to-many but the original DB was not designed to accomodate this)
 
 db[["Prosecutions"]][["Accused"]] <- 
   db[["Prosecutions"]][["Accused"]] %>%
@@ -419,32 +419,9 @@ db[["Prosecutions"]][["Accused"]] <-
   unnest_longer(all_of(c("lastGuiltyYear", "lastVerdictYear", 
                          "lastVerdict", "lastSentencingTime", 
                          "lastSentencingArrangement")), keep_empty = TRUE) %>%
-  distinct() %>% 
-  filter(!(accusedID == 20968 & lastVerdictYear == 2015 & lastVerdict == "Guilty")) 
-  ## taking out duplicates that were missed in Airtable -- look at this again
-
-### need to figure out a better way to deal with the multi-select field 
-### because this now defunct code below created duplicates 
-
-# db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
-#   unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE )
-# db[["Prosecutions"]][["Trials"]] %>%
-#   unnest_longer(all_of(c("oppositionType")), keep_empty = TRUE ) %>%
-#   group_by(trialID) %>%
-#   mutate(n = n()) %>%
-#   filter(n > 1) %>% select(trialID, oppositionType)
-# db[["Prosecutions"]][["Trials"]] %>% 
-#   select(trialID, oppositionType) %>% 
-#   rowwise() %>% 
-#   mutate(n = length(oppositionType), 
-#          check = sum(is.na(oppositionType)), 
-#          new = list(oppositionType[!is.na(oppositionType)]) ) %>% 
-#   filter(n > 1) %>% 
-#   unnest_longer(all_of(c("new")), keep_empty = TRUE ) %>% 
-#   print(n = Inf )
-# db[["Prosecutions"]][["Trials"]] <- db[["Prosecutions"]][["Trials"]] %>%
-#   rowwise() %>%
-#   mutate(oppositionType = ifelse(length(oppositionType) > 0, str_c(), ""))
+  distinct() 
+  ## filter(!(accusedID == 20968 & lastVerdictYear == 2015 & lastVerdict == "Guilty")) 
+  ## taking out duplicate that were missed in Airtable -- resolved now
 
 ### other multi-select fields: 
 ### lookup fields as list columns of length greater than one
@@ -485,6 +462,7 @@ db[["Prosecutions"]][["Trials"]] <-
                                   caseDescription)) %>% 
   select(-charnum) 
 
+### fair trials measure for later 
 fair_trials <- db[["MegaBase"]][["Transitions"]] %>%
   filter(!is.na(fairFlawed)) %>% 
   mutate(fair_postautocratic_trials = ifelse(fairFlawed == "fair", 1, 0)) %>%
@@ -533,9 +511,9 @@ db[["MegaBase"]][["Transitions"]] <-
          nsupport, sources, p5_year, ert_year, bmr_year) %>%
   arrange(trans_year_begin, ccode)
 
-### need to filter out non-HRs policies & events, 
+### filter out non-HRs policies & events, 
 ### state agents and opposition members only for domestic trials
-### check again: amnesties, TCs, reparations, vettings
+### check again?: amnesties, TCs, reparations, vettings
 
 db[["Prosecutions"]][["Trials"]] <- 
   db[["Prosecutions"]][["Trials"]] %>% 
@@ -597,6 +575,8 @@ rm(keep_amnesties)
 #            torture == 1 | disappearance == 1 | 
 #            focusedPast == 1 | investigatePatternAbuse == 1)
 
+### UN investigations
+
 dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
   rename(beg = year_beg, 
          end = year_end) %>% 
@@ -656,9 +636,9 @@ dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
   # filter(n > 1) %>% 
   # print(n = Inf)
 
-### any where mandate differs?
-dl_invest %>% 
-  filter(mandate != mandate_en | is.na(mandate_en))
+### investigations where mandate differs
+# dl_invest %>% 
+#   filter(mandate != mandate_en | is.na(mandate_en))
   
 db[["MegaBase"]][["Investigations"]] <- dl_invest %>% 
   rowwise() %>% 
@@ -683,7 +663,7 @@ cbind(orig = dim_orig[[2]],
       now = dim_now[[2]][names(dim_orig[[2]])],
       last = dim_last[[2]][names(dim_orig[[2]])])
 
-### combining the relevant tables from MegaBase and Prosecutions into one DB 
+### combining the relevant tables from MegaBase and Prosecutions into one list 
 db <- c(db[["MegaBase"]], 
         db[["Prosecutions"]][c("Trials", "Accused", "CourtLevels", 
                                "Trials_Crimes", "Trials_Victims", 
@@ -724,6 +704,7 @@ countrylist <- db$Countries %>%
   rename("tjet_focus" = "focus") %>% 
   arrange(country)
 
+### duplicate ccodes
 countrylist %>%
   select(country, beg, end, ccode, ccode_case) %>%
   rename("country_case" = "country") %>%
@@ -743,7 +724,7 @@ countrylist <- countrylist %>%
          country_id_vdem, beg, end, micro_ksg, region, region_sub_un, region_wb, 
          tjet_focus, factsheet, starts_with("txt_"), starts_with("auto_")) 
 
-## ccode_case / country_case for the countries on the 2020 map that data are matched to
+### ccode_case / country_case for the countries on the 2020 map that data are matched to
 countrylist %>%
   filter(country != country_case | ccode != ccode_case |
            ccode %in% c(255, 260, 265, 315, 316, 345, 365, 678, 679, 680, 816, 817)) %>%
@@ -804,7 +785,6 @@ vettings <- db[["Vettings"]] %>%
   filter(year >= 1970 & year <= 2020)
 
 ### preparing trials list for merging into country-year dataset
-
 trials <- db[["Trials"]] %>%
   rename("ccode" = "ccode_Accused") %>% 
   arrange(ccode, yearStart) %>%
@@ -849,7 +829,6 @@ confllist <- read_csv("conflicts/confl_dyads.csv", show_col_types = FALSE) %>%
   filter(year >= 1970 & year <= 2020)
 
 ### transitions dataset in country-year format
-
 translist <- read_csv("transitions/transitions_new_revised.csv",
                       show_col_types = FALSE) %>% 
   mutate(country = ifelse(country == "Congo (Brazzaville)", "Congo", country),
@@ -931,6 +910,7 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
   select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, 
          regime_sample, reg_democ, reg_autoc, reg_trans)
 
+### democratic reversions data for merging 
 reversions <- read_csv("transitions/transitions_new_revised.csv",
          show_col_types = FALSE) %>% 
   select(country, country_id_vdem, year, reg_type, reg_age, dem_spell_id, dem_reversion) %>% 
@@ -940,7 +920,6 @@ reversions <- read_csv("transitions/transitions_new_revised.csv",
   filter(!is.na(country_id_vdem)) 
 
 ### creating country-year dataset and merging in mechanisms count measures
-  
 db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   beg <- countrylist %>%
     filter(country == ctry) %>%
@@ -1024,19 +1003,21 @@ db[["Countries"]] <- countrylist %>%
          ccode_ksg, beg, end, m49, isoa3, micro_ksg, region, region_sub_un, 
          region_wb, tjet_focus, starts_with("txt_"), starts_with("auto_"))
 
-### data definition codebook
+### data definitions codebook
 db$codebook <- read_csv(here::here("data", "tjet_codebook.csv"), 
                           show_col_types = FALSE) %>% tibble()
 attr(db$codebook, "spec") <- NULL
 attr(db$codebook, "problems") <- NULL
 # attributes(db$codebook) 
 
+### field meta data for website tables
 db[["fields_meta"]] <- read_csv(here::here("data", "tjet_fields_meta.csv"), 
                                 show_col_types = FALSE) %>% tibble()
 attr(db$fields_meta, "spec") <- NULL
 attr(db$fields_meta, "problems") <- NULL
 # attributes(db$fields_meta) 
 
+### translations table for website 
 db[["translations"]] <- read_csv(here::here("data", "tjet_translations.csv"), 
                                 show_col_types = FALSE) %>% tibble()
 attr(db$translations, "spec") <- NULL
@@ -1053,6 +1034,7 @@ attr(db$ConflictDyads, "spec") <- NULL
 attr(db$ConflictDyads, "problems") <- NULL
 # attributes(db$ConflictDyads) 
 
+### surveys metadata 
 db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
   select(-country_fr) %>% 
   unnest(country) %>% 
@@ -1073,9 +1055,9 @@ gloss <- read_csv(here::here("data", "HHI_surveys_glossary.csv")) %>%
   distinct()
 gl <- gloss$to
 names(gl) <- gloss$from
-
 rm(gloss) 
 
+### survey data tables
 map(db[["SurveysMeta"]]$results_tables, function(filename) { # for dev: filename = "Uganda_2005_Submission.xlsx" 
   surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename))
   tooltips <- names(surveytab)
@@ -1120,7 +1102,6 @@ timestamp <- db[["db_timestamp"]] %>%
   unlist(use.names = FALSE)
 
 ### dealing with multi-select fields
-
 tabs <- c("Amnesties" = "amnestyID", 
           "Reparations" = "reparationID", 
           "Trials" = "trialID", 
@@ -1166,6 +1147,7 @@ db[["Vettings"]] <- db[["Vettings"]] %>%
 
 rm(tabs, multies)
 
+### ICC data 
 db[["ICC"]] <- db[["ICC"]] %>%  
   select(country, ccode_cow, 
          ICC_referral, ICC_prelim_exam, ICC_prelimEnd, ICC_investigation)
@@ -1211,6 +1193,7 @@ source("functions/VettingMeasures.R")
 #     Authorization = "Authorization: token INSERT TOKEN HERE",
 #     Accept = "Accept: application/vnd.github.v3.raw"))
 
+### cy dataset assembled in other repo
 df <- readRDS(here::here("data", "cy_covariates.rds"))
 not <- c("histname", "cid_who", "ldc", "lldc", "sids", "income_wb", 
          "iso3c_wb", "region_wb2")
@@ -1223,6 +1206,7 @@ df <- df %>%
   mutate(country = ifelse(country == "Ethiopia, FDR", "Ethiopia", country),
          country_case = ifelse(country_case == "Ethiopia, FDR", "Ethiopia", country_case)) 
 
+### special country cases 
 df %>% 
   filter(country != country_case) %>%
   group_by(country) %>%
@@ -1233,6 +1217,9 @@ df %>%
 
 # unique(df$country)[!unique(df$country) %in% unique(db[["CountryYears"]]$country) ]
 # unique(db[["CountryYears"]]$country)[!unique(db[["CountryYears"]]$country) %in% unique(df$country) ]
+
+
+### assembling dataset for website and analyses
 
 df <- df %>%
   mutate(ruler_exit = ifelse(year(lead_enddate_beg) == year, 1, 0), 
@@ -2021,7 +2008,7 @@ df <- VettingMeasures(cy = df)
 
 rm(vet_ctry_incl, vet_spells)
 
-### domestic trials sample indicator
+### checking domestic trials sample indicator
 
 # df %>% 
 #   filter(year < 2021) %>%
@@ -2081,12 +2068,17 @@ codebook <- db[["codebook"]] %>%
 ## these are in the codebook but not in the dataset 
 codebook$colname[!codebook$colname %in% names(df)]
 ## these are in the dataset but not in the codebook
-names(df)[!names(df) %in% codebook$colname]
+if(length(names(df)[!names(df) %in% codebook$colname]) > 0) {
+  print(names(df)[!names(df) %in% codebook$colname])
+  stop("Not all dataset variable names are included in the codebook; add these to the codebook first!") 
+}
 
 df <- df %>% 
   select(all_of(codebook$colname[codebook$colname %in% names(df)]))
 
-### last step, created lags and saving the analyses dataset
+### create lags and saving the analyses dataset
+### saving to Dropbox only works locally 
+### NEED TO DISABLE THIS FOR GITHUB ACTIONS 
 
 lags <- df %>%
   select(!any_of(c("country", "country_label", "country_name", "country_fr", 
@@ -2218,8 +2210,7 @@ txt_fields <- c("auto_conflict_fr", "auto_regime_fr", "txt_amnesties_fr",
 db[["Countries"]] <- db[["Countries"]] %>%
   mutate(across(all_of(txt_fields), 
                 ~ str_replace_all(.x, "droits de l'homme", 
-                                  "droits de la personne")) 
-         )
+                                  "droits de la personne")))
 
 ### saving individual mechanism tables for local analyses & repo
 ### these will also be written to the database for downloads
@@ -2286,7 +2277,7 @@ save(db, file = here::here("data", "tjetdb.RData"))
 
 rm(dl_invest, timestamp)
 
-### country profiles
+### auto-texts for country profiles
 
 options(scipen = 999) 
 
@@ -2413,7 +2404,7 @@ autoprep[["rankings"]] <- db[["dl_tjet_cy"]] %>%
   select(country_case, ccode_case, country_fr, legacy_rank) %>% 
   mutate(n = max(legacy_rank)) 
 
-### data for summary spreadsheet
+### data for summary spreadsheet & auto texts 
 
 data[["Amnesties"]] <- db[["Amnesties"]] %>%
   left_join(countries %>% 
@@ -2635,7 +2626,8 @@ data[["PAX"]] <- read_csv("data/pax_all_agreements_data_v6.csv") %>%
          Loc2GWNO, UcdpCon, UcdpAgr, PamAgr, all_of(tj_vars)) 
 
 ### write to file 
-write_xlsx(data, path = "~/Dropbox/TJLab/TimoDataWork/country_profiles/summary_data.xlsx")
+### WE DON'T NEED THIS ANYMORE
+# write_xlsx(data, path = "~/Dropbox/TJLab/TimoDataWork/country_profiles/summary_data.xlsx")
 
 rm(tj_vars, vars_dom, vars_for, vars_int) 
 
@@ -3636,46 +3628,49 @@ autotxt[["Vettings"]] <- data[["Vettings"]] %>%
   select(country_case, ccode_case, text)
 
 ### print 10 focus country profiles to Quarto files 
+### NOT NEEDED ANYMORE 
 
-df <- db[["Countries"]] %>%
-  filter(include) %>%
-  select(country, country_case, ccode, ccode_case, ccode_ksg, beg, end, tjet_focus, 
-         txt_intro, txt_regime, txt_conflict, txt_TJ) %>%
-  arrange(country)
-
-dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/")
-
-df %>% 
-  filter(tjet_focus == 1 | country == "Uganda") %>%  
-  select(country) %>%
-  unlist(use.names = FALSE) %>%  
-  map(., function(ctry) {
-    temp <- df %>% 
-      filter(country == ctry) %>%
-      mutate(txt_intro = str_replace_all(str_trim(txt_intro), "\n", "\n\n"),
-             txt_regime = str_replace_all(str_trim(txt_regime), "\n", "\n\n"),
-             txt_conflict = str_replace_all(str_trim(txt_conflict), "\n", "\n\n"),
-             txt_TJ = str_replace_all(str_trim(txt_TJ), "\n", "\n\n")) %>%
-      select(txt_intro, txt_regime, txt_conflict, txt_TJ) %>% 
-      unlist()
-    paste("---\ntitle: ", ctry, "\nformat: docx\n---", 
-          "\n\n## Introduction\n\n", 
-          temp[["txt_intro"]], 
-          "\n\n## Regime Background\n\n", 
-          temp[["txt_regime"]], 
-          "\n\n## Conflict Background\n\n", 
-          temp[["txt_conflict"]], 
-          "\n\n## Transitional Justice\n\n", 
-          temp[["txt_TJ"]], 
-          sep = "") %>% 
-      write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/", ctry, ".qmd", sep = ""))
-    invisible()
-  })
+# df <- db[["Countries"]] %>%
+#   filter(include) %>%
+#   select(country, country_case, ccode, ccode_case, ccode_ksg, beg, end, tjet_focus, 
+#          txt_intro, txt_regime, txt_conflict, txt_TJ) %>%
+#   arrange(country)
+# 
+# dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/")
+# 
+# df %>% 
+#   filter(tjet_focus == 1 | country == "Uganda") %>%  
+#   select(country) %>%
+#   unlist(use.names = FALSE) %>%  
+#   map(., function(ctry) {
+#     temp <- df %>% 
+#       filter(country == ctry) %>%
+#       mutate(txt_intro = str_replace_all(str_trim(txt_intro), "\n", "\n\n"),
+#              txt_regime = str_replace_all(str_trim(txt_regime), "\n", "\n\n"),
+#              txt_conflict = str_replace_all(str_trim(txt_conflict), "\n", "\n\n"),
+#              txt_TJ = str_replace_all(str_trim(txt_TJ), "\n", "\n\n")) %>%
+#       select(txt_intro, txt_regime, txt_conflict, txt_TJ) %>% 
+#       unlist()
+#     paste("---\ntitle: ", ctry, "\nformat: docx\n---", 
+#           "\n\n## Introduction\n\n", 
+#           temp[["txt_intro"]], 
+#           "\n\n## Regime Background\n\n", 
+#           temp[["txt_regime"]], 
+#           "\n\n## Conflict Background\n\n", 
+#           temp[["txt_conflict"]], 
+#           "\n\n## Transitional Justice\n\n", 
+#           temp[["txt_TJ"]], 
+#           sep = "") %>% 
+#       write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/focus/", ctry, ".qmd", sep = ""))
+#     invisible()
+#   })
 
 ### for integrating into Airtable
 
-autotxt <- df %>%
+autotxt <- db[["Countries"]] %>%
+  filter(include) %>%
   select(country_case, ccode_case) %>%
+  arrange(country_case) %>%
   left_join(autotxt[["summary"]] %>%
               rename("summary" = "text"),
             by = c("country_case", "ccode_case")) %>%
@@ -3740,7 +3735,7 @@ autotxt <- df %>%
 ### 'auto_' fields are generated here and need to be transfered to Airtable
 ### 'txt_' fields are manually adjusted in Airtable 
 check_vars <- paste("chk_", c("summary", "regime", "conflict", "amnesties", "domestic", "foreign", "intl", "reparations", "tcs", "vetting", "un"), sep = "")
-db[["Countries"]] %>% 
+chk <- db[["Countries"]] %>% 
   filter(include) %>% 
   full_join(autotxt, 
             by = c("country_case", "ccode_case")) %>% 
@@ -3769,81 +3764,84 @@ db[["Countries"]] %>%
   select(country_case, all_of(check_vars), summary, regime, conflict, amnesties, 
          domestic, intl, foreign, reparations, tcs, vetting, un) %>% 
   filter(if_any(all_of(check_vars), ~ . == 1)) %>% 
-  write_csv("~/Desktop/temp.csv", na = "") %>%
+  # write_csv("~/Desktop/temp.csv", na = "") %>%
   print(n = Inf)
 
+if(nrow(chk) > 0) warning("Some auto-texts in Airtable do not match the current data!")
+
 ### print all country profiles with auto summaries to Quarto files 
+### NO LONGER NEEDED 
 
-dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/")
-dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/original/")
-# dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/edits/")
-dir("~/Dropbox/TJLab/TimoDataWork/country_profiles")
-
-map(df$country_case, function(ctry) {
-  
-  df1 <- df %>%
-    filter(country_case == ctry) %>%
-    mutate(txt_intro = str_replace_all(str_trim(txt_intro), "\n", "\n\n"),
-           txt_regime = str_replace_all(str_trim(txt_regime), "\n", "\n\n"),
-           txt_conflict = str_replace_all(str_trim(txt_conflict), "\n", "\n\n"),
-           txt_TJ = str_replace_all(str_trim(txt_TJ), "\n", "\n\n")) %>%
-    select(txt_intro, txt_regime, txt_conflict, txt_TJ) %>%
-    unlist()
-  
-  new <- autotxt %>% 
-    filter(country_case == ctry) %>%
-    select(-country_case, -ccode_case) %>%
-    unlist()
-  
-  # new <- map(autotxt, function(df2) {
-  #   df2 %>%
-  #     filter(country_case == ctry) %>%
-  #     select(text) %>%
-  #     unlist(use.names = FALSE)
-  # })
-  
-  paste("---\ntitle: ", ctry, "\nformat: docx\n---\n\n",
-        new[["summary"]],
-        "\n\n## Country Background", 
-        "\n\n### Democratic Transition\n\n",
-        new[["regime"]], "\n\n", 
-        df1[["txt_regime"]],
-        "\n\n### Violent Conflict\n\n",
-        new[["conflict"]],
-        df1[["txt_conflict"]],
-        "\n\n## Transitional Justice\n\n",
-        df1[["txt_intro"]], "\n\n",
-        df1[["txt_TJ"]], "\n\n",
-        ifelse(!is.na(new[["amnesties"]]),
-               paste("### Amnesties\n\n", new[["amnesties"]], "\n\n", sep = ""),
-               ""),
-        ifelse(!is.na(new[["domestic"]]),
-               paste("### Domestic Trials\n\n", new[["domestic"]], "\n\n", sep = ""),
-               ""),
-        ifelse(!is.na(new[["intl"]]),
-               paste("### International Trials\n\n", new[["intl"]], "\n\n", sep = ""),
-               ""),
-        ifelse(!is.na(new[["foreign"]]),
-               paste("### Foreign Trials\n\n", new[["foreign"]], "\n\n", sep = ""),
-               ""),
-        ifelse(!is.na(new[["reparations"]]),
-               paste("### Reparations\n\n", new[["reparations"]], "\n\n", sep = ""),
-               ""),
-        ifelse(!is.na(new[["tcs"]]),
-               paste("### Truth Commissions\n\n", new[["tcs"]], "\n\n", sep = ""),
-               ""),
-        ifelse(!is.na(new[["un"]]),
-               paste("### UN Investigations\n\n", new[["un"]], "\n\n", sep = ""),
-               ""),
-        ifelse(!is.na(new[["vetting"]]),
-               paste("### Vetting\n\n", new[["vetting"]], "\n\n", sep = ""),
-               ""),
-        sep = "") %>% 
-    write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/original/", ctry, ".qmd", sep = ""))
-  
-  invisible()
-})
-
+# dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/")
+# dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/original/")
+# # dir.create("~/Dropbox/TJLab/TimoDataWork/country_profiles/edits/")
+# dir("~/Dropbox/TJLab/TimoDataWork/country_profiles")
+# 
+# map(df$country_case, function(ctry) {
+#   
+#   df1 <- df %>%
+#     filter(country_case == ctry) %>%
+#     mutate(txt_intro = str_replace_all(str_trim(txt_intro), "\n", "\n\n"),
+#            txt_regime = str_replace_all(str_trim(txt_regime), "\n", "\n\n"),
+#            txt_conflict = str_replace_all(str_trim(txt_conflict), "\n", "\n\n"),
+#            txt_TJ = str_replace_all(str_trim(txt_TJ), "\n", "\n\n")) %>%
+#     select(txt_intro, txt_regime, txt_conflict, txt_TJ) %>%
+#     unlist()
+#   
+#   new <- autotxt %>% 
+#     filter(country_case == ctry) %>%
+#     select(-country_case, -ccode_case) %>%
+#     unlist()
+#   
+#   # new <- map(autotxt, function(df2) {
+#   #   df2 %>%
+#   #     filter(country_case == ctry) %>%
+#   #     select(text) %>%
+#   #     unlist(use.names = FALSE)
+#   # })
+#   
+#   paste("---\ntitle: ", ctry, "\nformat: docx\n---\n\n",
+#         new[["summary"]],
+#         "\n\n## Country Background", 
+#         "\n\n### Democratic Transition\n\n",
+#         new[["regime"]], "\n\n", 
+#         df1[["txt_regime"]],
+#         "\n\n### Violent Conflict\n\n",
+#         new[["conflict"]],
+#         df1[["txt_conflict"]],
+#         "\n\n## Transitional Justice\n\n",
+#         df1[["txt_intro"]], "\n\n",
+#         df1[["txt_TJ"]], "\n\n",
+#         ifelse(!is.na(new[["amnesties"]]),
+#                paste("### Amnesties\n\n", new[["amnesties"]], "\n\n", sep = ""),
+#                ""),
+#         ifelse(!is.na(new[["domestic"]]),
+#                paste("### Domestic Trials\n\n", new[["domestic"]], "\n\n", sep = ""),
+#                ""),
+#         ifelse(!is.na(new[["intl"]]),
+#                paste("### International Trials\n\n", new[["intl"]], "\n\n", sep = ""),
+#                ""),
+#         ifelse(!is.na(new[["foreign"]]),
+#                paste("### Foreign Trials\n\n", new[["foreign"]], "\n\n", sep = ""),
+#                ""),
+#         ifelse(!is.na(new[["reparations"]]),
+#                paste("### Reparations\n\n", new[["reparations"]], "\n\n", sep = ""),
+#                ""),
+#         ifelse(!is.na(new[["tcs"]]),
+#                paste("### Truth Commissions\n\n", new[["tcs"]], "\n\n", sep = ""),
+#                ""),
+#         ifelse(!is.na(new[["un"]]),
+#                paste("### UN Investigations\n\n", new[["un"]], "\n\n", sep = ""),
+#                ""),
+#         ifelse(!is.na(new[["vetting"]]),
+#                paste("### Vetting\n\n", new[["vetting"]], "\n\n", sep = ""),
+#                ""),
+#         sep = "") %>% 
+#     write_file(., file = paste("~/Dropbox/TJLab/TimoDataWork/country_profiles/original/", ctry, ".qmd", sep = ""))
+#   
+#   invisible()
+# })
+# 
 # file.copy(from = list.files("~/Dropbox/TJLab/TimoDataWork/country_profiles/original", full.names = TRUE),
 #           to = "~/Dropbox/TJLab/TimoDataWork/country_profiles/edits/",
 #           overwrite = FALSE, recursive = TRUE, copy.mode = FALSE)
