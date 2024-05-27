@@ -183,9 +183,9 @@ df <- vdem %>%
                                     "Czech Republic")) %>% 
   select(country_id, COWcode, country_name, year, 
          v2x_regime, v2x_regime_amb, e_boix_regime, e_democracy_trans, 
-         e_p_polity, e_polity2, 
-         # e_pt_coup, 
-         e_coups
+         # e_p_polity, e_polity2, 
+         # v2regendtype, v2regendtypems_0,
+         # v2regendtypems_1, v2regendtypems_2, v2regidnr, v2regdur
          ) %>% 
   mutate(v2x_regime = recode_factor(v2x_regime, 
            '0' = "Closed autocracy", 
@@ -214,7 +214,6 @@ df <- vdem %>%
          bmr_trans_vdem = e_democracy_trans,
          polity_vdem = e_p_polity, 
          polity2_vdem = e_polity2, 
-         coups_pipe_vdem = e_coups, 
          # coup_pt_vdem = e_pt_coup
          ) %>% 
   full_join(read_delim(here::here("transitions/original_data", 
@@ -449,6 +448,19 @@ df <- df %>%
          country_name = if_else(country_name == "Czech Republic" & year <= 1992, 
                                 "Czechoslovakia", country_name))
 
+# df %>% 
+#   mutate(decline_coup = case_when(
+#     v2regendtypems_0 == 1 ~ 1,
+#     v2regendtypems_1 == 1 ~ 1,
+#     v2regendtypems_2 == 1 ~ 1,
+#     !is.na(reg_type) ~ 0,
+#     TRUE ~ NA
+#   ) ) %>% 
+#   filter(!is.na(dem_reversion)) %>%
+#   select(country_name, year, v2x_regime_ert, reg_trans, reg_type, 
+#          reg_start_year, reg_end_year, dem_reversion, decline_coup) %>% 
+#   print(n = 200)
+  
 ### merge by country names and check carefully
 
 ### initial check 

@@ -619,6 +619,8 @@ tjet_cy,theta_mean_fariss,"estimated latent physical integrity (formerly latent 
 tjet_cy,theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",
 tjet_cy,killing_estimate_mean_fariss,posterior mean of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",
 tjet_cy,killing_estimate_median_fariss,posterior median of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",
+tjet_cy,coups,number of successful coups,Powell & Thyne,
+tjet_cy,attempted_coups,number of coup attempts,Powell & Thyne,
 tjet_cy,leaders_n,number of consecutive effective political rulers,Archigos,
 tjet_cy,irregentry,"irregular ruler entry, binary",Archigos,
 tjet_cy,ruler_exit,"ruler exit, binary",Archigos,

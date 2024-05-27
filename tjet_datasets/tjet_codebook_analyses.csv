@@ -581,6 +581,8 @@ theta_mean_fariss,"estimated latent physical integrity (formerly latent mean, th
 theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",2024-05-13
 killing_estimate_mean_fariss,posterior mean of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",2024-05-13
 killing_estimate_median_fariss,posterior median of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",2024-05-13
+coups,number of successful coups,Powell & Thyne,2024-05-13
+attempted_coups,number of coup attempts,Powell & Thyne,2024-05-13
 leaders_n,number of consecutive effective political rulers,Archigos,2024-05-13
 irregentry,"irregular ruler entry, binary",Archigos,2024-05-13
 ruler_exit,"ruler exit, binary",Archigos,2024-05-13
