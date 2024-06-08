@@ -64,11 +64,12 @@ db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
 
 tabs <- c(
   "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "ConflictDyads",
-  "Countries", "CountryYears", "CourtLevels", "dl_tjet_codebook", "dl_tjet_cy", 
-  "fields_meta", "ICC", "ICCaccused", "Investigations", "labels", "Reparations", 
+  "Countries", "CountryYears", "CourtLevels", "dl_tjet_codebook", "dl_tjet_cy",
+  "fields_meta", "ICC", "ICCaccused", "Investigations", "labels", "Reparations",
   "Reparations_collectiveReparationsEligibility",
-  "Reparations_individualReparationsEligible", "SurveysMeta", "Transitions", 
-  "Trials", "TruthCommissions", "Vettings", "Vettings_targetingAffiliation"
+  "Reparations_individualReparationsEligible", "SurveysMeta", "TJETversions", 
+  "Transitions", "Trials", "TruthCommissions", "Vettings", 
+  "Vettings_targetingAffiliation"
   ) %>% 
   print()
   

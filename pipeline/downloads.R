@@ -20,7 +20,7 @@ to_download <-
       "select_options", "metadata", "UCDPcountries", "TJETmembers", "Experts", 
       "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges", 
       "VettingComparison", "BIcomparison", "ICC", "Investigations", 
-      "AdHocHybrid", "SurveysMeta", "Ethiopia"),
+      "AdHocHybrid", "SurveysMeta", "Ethiopia", "TJETversions"),
     "appF8HAH7SN7C09cU" = c(
       "Trials", "Accused", "CourtLevels", "Countries", 
       "Conflicts", "Dyads", "metadata")

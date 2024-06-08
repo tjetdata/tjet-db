@@ -3765,7 +3765,7 @@ chk <- db[["Countries"]] %>%
   select(country_case, all_of(check_vars), summary, regime, conflict, amnesties, 
          domestic, intl, foreign, reparations, tcs, vetting, un) %>% 
   filter(if_any(all_of(check_vars), ~ . == 1)) %>% 
-  # write_csv("~/Desktop/temp.csv", na = "") %>%
+  write_csv("~/Desktop/temp.csv", na = "") %>%
   print(n = Inf)
 
 if(nrow(chk) > 0) warning("Some auto-texts in Airtable do not match the current data!")
