@@ -760,7 +760,8 @@ reparations <- db[["Reparations"]] %>%
                          lgbtqCrimes == "yes", 1, 0) ) %>%    
   group_by(ccode, yearCreated) %>%
   reframe(reparations = n(),
-          SGBV = max(SGBV)) %>% 
+          SGBV = max(SGBV), 
+          genderAttentive = max(genderAttentive)) %>% 
   rename("year" = "yearCreated",
          "reparations_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
@@ -2222,18 +2223,40 @@ db[["Transitions"]] <- db[["Transitions"]] %>%
   write_csv(here::here("tjet_datasets", "tjet_transitions.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_transitions.csv"), na = "")
 db[["Amnesties"]] <- db[["Amnesties"]] %>% 
+  left_join(db[["Countries"]] %>%
+              select(country_case, ccode) %>% 
+              rename(country = country_case) %>% 
+              distinct(),
+            by = "ccode") %>% 
   filter(amnestyYear >= 1970 & amnestyYear <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
 db[["Reparations"]] <- db[["Reparations"]] %>% 
+  left_join(db[["Countries"]] %>%
+              select(country_case, ccode) %>% 
+              rename(country = country_case) %>% 
+              distinct(),
+            by = "ccode") %>% 
   filter(yearCreated >= 1970 & yearCreated <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_reparations.csv"), na = "")
 db[["Trials"]] <- db[["Trials"]] %>%
+  left_join(db[["Countries"]] %>%
+              select(country_case, ccode) %>% 
+              rename(country = country_case) %>% 
+              distinct(),
+            by = c("ccode_Accused" = "ccode")) %>% 
+  rename(country_Accused = country) %>% 
+  left_join(db[["Countries"]] %>%
+              select(country_case, ccode) %>% 
+              rename(country = country_case) %>% 
+              distinct(),
+            by = c("ccode_Trial" = "ccode")) %>% 
+  rename(country_Trial = country) %>% 
   filter(yearStart >= 1970 & yearStart <= 2020) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "") %>% 
@@ -2250,12 +2273,22 @@ db[["CourtLevels"]] <- db[["CourtLevels"]] %>%
   write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
 db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
+  left_join(db[["Countries"]] %>%
+              select(country_case, ccode) %>% 
+              rename(country = country_case) %>% 
+              distinct(),
+            by = "ccode") %>% 
   filter(yearPassed >= 1970 & yearPassed <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
 db[["Vettings"]] <- db[["Vettings"]] %>% 
+  left_join(db[["Countries"]] %>%
+              select(country_case, ccode) %>% 
+              rename(country = country_case) %>% 
+              distinct(),
+            by = "ccode") %>% 
   filter(yearStart >= 1970 & yearStart <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
   mutate(tjet_version = timestamp) %>% 
