@@ -763,7 +763,8 @@ reparations <- db[["Reparations"]] %>%
           SGBV = max(SGBV), 
           genderAttentive = max(genderAttentive)) %>% 
   rename("year" = "yearCreated",
-         "reparations_SGBV" = "SGBV") %>% 
+         "reparations_SGBV" = "SGBV",
+         "reparations_gaTJ" = "genderAttentive") %>% 
   filter(year >= 1970 & year <= 2020)
 
 ### preparing TCs list for merging into country-year dataset
@@ -962,7 +963,10 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   mutate(reparations = ifelse(is.na(reparations), 
                               0, reparations),
          reparations_SGBV = ifelse(is.na(reparations_SGBV), 
-                                   0, reparations_SGBV)) %>% 
+                                   0, reparations_SGBV),
+         reparations_gaTJ = ifelse(is.na(reparations_gaTJ), 
+                                   0, reparations_gaTJ)
+         ) %>% 
   left_join(tcs, by = c("ccode", "year") ) %>% 
   mutate(tcs = ifelse(is.na(tcs), 0, tcs),
          tcs_SGBV = ifelse(is.na(tcs_SGBV), 
