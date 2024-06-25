@@ -7,19 +7,14 @@ ccode_cow,Correlates of War country code,COW,2024-06-10
 ccode_ksg,Gleditsch & Ward country code,Kristian S. Gleditsch,2024-06-10
 country_id_vdem,VDem country code,VDem,2024-06-10
 country_name,VDem country name,VDem,2024-06-10
-histname,VDem historical country name,VDem,2024-06-10
 m49,M49 / ISO 3166 numeric country code,UN Statistics Division,2024-06-10
 isoa3,ISO 3166 alpha3 country code,UN Statistics Division,2024-06-10
 cid_wb,World Bank alpha3 country code,World Bank,2024-06-10
-iso3c_wb,World Bank alpha3 country code,World Bank,2024-06-10
 region,United Nations region,UN Statistics Division,2024-06-10
 subregion,United Nations sub-region,UN Statistics Division,2024-06-10
 intregion,United Nations intermediate region,UN Statistics Division,2024-06-10
 region_wb,World Bank region,World Bank,2024-06-10
 micro_ksg,Gleditsch micro-state,Kristian S. Gleditsch,2024-06-10
-sample_trans,"democratic transition sample, binary",TJET,2024-06-10
-sample_confl,"conflict sample, binary",TJET,2024-06-10
-sample_combi,combined sample (democratic transition & conflict),TJET,2024-06-10
 dtr,"democratic transition sample, binary",TJET,2024-06-10
 aco,"conflict & post-conflict, binary",TJET,2024-06-10
 dco,"during conflict, binary",TJET,2024-06-10
@@ -38,7 +33,6 @@ amnesties,count of amnesties per country and year of passing,TJET,2024-06-10
 amnesties_SGBV,"binary for whether amnesties in country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-06-10
 reparations,count of reparations polices per country and year of creation,TJET,2024-06-10
 reparations_SGBV,"binary for whether reparations in country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-06-10
-reparations_gaTJ,"binary for whether reparations in country-year included any that was gender-attentive (1 = yes, 0 = no)",TJET,2024-06-10
 tcs,count of truth commissions per country and year of creation,TJET,2024-06-10
 tcs_SGBV,"binary for whether truth commissions in country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,2024-06-10
 vettings,count of vetting policies per country and year of creation,TJET,2024-06-10

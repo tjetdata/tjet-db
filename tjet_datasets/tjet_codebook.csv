@@ -30,7 +30,6 @@ amnesties,count of amnesties per country and year of passing,TJET,Transitional J
 amnesties_SGBV,"binary for whether amnesties in country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-06-10
 reparations,count of reparations polices per country and year of creation,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-06-10
 reparations_SGBV,"binary for whether reparations in country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-06-10
-reparations_gaTJ,"binary for whether reparations in country-year included any that was gender-attentive (1 = yes, 0 = no)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-06-10
 tcs,count of truth commissions per country and year of creation,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-06-10
 tcs_SGBV,"binary for whether truth commissions in country-year included any that addressed SGBV (1 = yes, 0 = no)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-06-10
 vettings,count of vetting policies per country and year of creation,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-06-10

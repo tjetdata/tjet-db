@@ -2114,13 +2114,17 @@ rm(lags, exclude)
 # - variables that should not be in public CY downloads file?
 #   - regime_sample, reg_democ, reg_autoc, reg_trans, conflict, transition
 
+included <- codebook$colname[codebook$colname %in% names(df)]
+
 codebook %>% 
+  filter(colname %in% included) %>% 
   select(colname, definition, source) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_codebook_analyses.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_codebook_analyses.csv"), na = "")
 
 db[["dl_tjet_codebook"]] <- codebook %>% 
+  filter(colname %in% included) %>% 
   filter(is.na(source) | 
            source %in% c("TJET", "COW", "Kristian S. Gleditsch", 
                          "UN Statistics Division", "World Bank") | 
