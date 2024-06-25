@@ -760,11 +760,11 @@ reparations <- db[["Reparations"]] %>%
                          lgbtqCrimes == "yes", 1, 0) ) %>%    
   group_by(ccode, yearCreated) %>%
   reframe(reparations = n(),
-          SGBV = max(SGBV), 
-          genderAttentive = max(genderAttentive)) %>% 
+          # genderAttentive = max(genderAttentive), 
+          SGBV = max(SGBV)) %>% 
   rename("year" = "yearCreated",
-         "reparations_SGBV" = "SGBV",
-         "reparations_gaTJ" = "genderAttentive") %>% 
+         # "reparations_gaTJ" = "genderAttentive", 
+         "reparations_SGBV" = "SGBV") %>% 
   filter(year >= 1970 & year <= 2020)
 
 ### preparing TCs list for merging into country-year dataset
@@ -962,10 +962,10 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   left_join(reparations, by = c("ccode", "year") ) %>% 
   mutate(reparations = ifelse(is.na(reparations), 
                               0, reparations),
+         # reparations_gaTJ = ifelse(is.na(reparations_gaTJ), 
+         #                           0, reparations_gaTJ),
          reparations_SGBV = ifelse(is.na(reparations_SGBV), 
-                                   0, reparations_SGBV),
-         reparations_gaTJ = ifelse(is.na(reparations_gaTJ), 
-                                   0, reparations_gaTJ)
+                                   0, reparations_SGBV)
          ) %>% 
   left_join(tcs, by = c("ccode", "year") ) %>% 
   mutate(tcs = ifelse(is.na(tcs), 0, tcs),
@@ -2134,8 +2134,10 @@ db[["dl_tjet_codebook"]] <- codebook %>%
 
 rm(codebook) 
 
+vars <- db[["dl_tjet_codebook"]]$colname[db[["dl_tjet_codebook"]]$colname %in% names(df)]
+
 db[["dl_tjet_cy"]] <- df %>%
-  select(all_of(db[["dl_tjet_codebook"]]$colname)) %>% 
+  select(all_of(vars)) %>% 
   filter(year >= 1970 & year <= 2023) %>% 
   filter(!(country == "Andorra" & year < 1994)) %>% 
   filter(!(country == "Antigua and Barbuda" & year == 1981)) %>%
