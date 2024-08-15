@@ -90,7 +90,7 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
     stop("Missing or invalid argument for 'nexus_vars', select one or more of:", 
          "\n  ", paste(names(nexus), collapse = "; "), suffix) )
   if(sum(!nexus_vars %in% names(nexus)) > 0) eval(error)
-   
+  
   ## subsetting 
   vet <- vet_spells %>% 
     mutate(all = 1) %>% 
@@ -100,9 +100,20 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
            ban_from_elected, conduct, implementation, public, fairness)
 
   non_na <- expr(ccode_cow %in% vet_ctry_incl & year %in% 1970:2020)
+  vars <- c("type_dismissal", "vet_dismiss_created", "type_ban", 
+            "vet_ban_created", "type_declass", "vet_declass_created", 
+            "type_perjury", "vet_perjury_created", "ban_from_elected", 
+            "conduct", "vet_conduct_created", "implementation", "public", "fairness")
   
   cy %>%
     left_join(vet, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
+    mutate(
+      vet_dismiss_created = type_dismissal, 
+      vet_ban_created = type_ban, 
+      vet_declass_created = type_declass, 
+      vet_perjury_created = type_perjury, 
+      vet_conduct_created = conduct
+    ) %>% 
     arrange(country_case, year) %>%
     group_by(country_case) %>%
     fill(type_dismissal, 
@@ -116,25 +127,8 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
          fairness, 
          .direction = "down") %>%
     ungroup() %>% 
-    mutate(type_dismissal = ifelse(eval(non_na) & is.na(type_dismissal), 0, type_dismissal), 
-           type_ban = ifelse(eval(non_na) & is.na(type_ban), 0, type_ban), 
-           type_declass = ifelse(eval(non_na) & is.na(type_declass), 0, type_declass), 
-           type_perjury = ifelse(eval(non_na) & is.na(type_perjury), 0, type_perjury), 
-           ban_from_elected = ifelse(eval(non_na) & is.na(ban_from_elected), 0, ban_from_elected), 
-           conduct = ifelse(eval(non_na) & is.na(conduct), 0, conduct), 
-           implementation = ifelse(eval(non_na) & is.na(implementation), 0, implementation), 
-           public = ifelse(eval(non_na) & is.na(public), 0, public), 
-           fairness = ifelse(eval(non_na) & is.na(fairness), 0, fairness), 
-           type_dismissal = ifelse(year > 2020, NA, type_dismissal), 
-           type_ban = ifelse(year > 2020, NA, type_ban), 
-           type_declass = ifelse(year > 2020, NA, type_declass), 
-           type_perjury = ifelse(year > 2020, NA, type_perjury), 
-           ban_from_elected = ifelse(year > 2020, NA, ban_from_elected), 
-           conduct = ifelse(year > 2020, NA, conduct), 
-           implementation = ifelse(year > 2020, NA, implementation), 
-           public = ifelse(year > 2020, NA, public), 
-           fairness = ifelse(year > 2020, NA, fairness)
-           ) %>%
+    mutate(across(all_of(vars), 
+                  ~ ifelse(eval(non_na) & is.na(.x), 0, ifelse(year > 2020, NA, .x)))) %>%
     rename("vet_dismiss" = "type_dismissal", 
            "vet_ban" = "type_ban", 
            "vet_declass" = "type_declass", 
@@ -143,6 +137,6 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
            "vet_conduct" = "conduct", 
            "vet_implemented" = "implementation", 
            "vet_public" = "public", 
-           "vet_fairness" = "fairness") %>% 
+           "vet_fairness" = "fairness") %>%  
     return()
 }

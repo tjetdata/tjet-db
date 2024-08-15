@@ -1379,6 +1379,15 @@ df <- df %>%
          uninv_dompros = ifelse(is.na(uninv_dompros), 0, uninv_dompros),
          uninv_evcoll = ifelse(is.na(uninv_evcoll), 0, uninv_evcoll),
          uninv_intlpros = ifelse(is.na(uninv_intlpros), 0, uninv_intlpros)) %>% 
+  left_join(dl_invest %>% 
+              select(ccode_cow, beg, uninv_dompros, uninv_evcoll, uninv_intlpros) %>% 
+              rename(uninv_dompros_created = uninv_dompros, 
+                     uninv_evcoll_created = uninv_evcoll, 
+                     uninv_intlpros_created = uninv_intlpros), 
+            by = c("ccode_cow" = "ccode_cow", "year" = "beg")) %>% 
+  mutate(uninv_dompros_created = ifelse(is.na(uninv_dompros_created), 0, uninv_dompros_created),
+         uninv_evcoll_created = ifelse(is.na(uninv_evcoll_created), 0, uninv_evcoll_created),
+         uninv_intlpros_created = ifelse(is.na(uninv_intlpros_created), 0, uninv_intlpros_created)) %>% 
   mutate(sample_trans = ifelse(transition == 1, year, NA),
          sample_confl = ifelse(conflict_active == 1, year, NA), 
          dco = ifelse(!is.na(sample_confl) & year == sample_confl, 1, 0) # dco = "during conflict", ### binary, when conflict active
@@ -1413,6 +1422,11 @@ df <- df %>%
          sample_combi = ifelse(sample_trans + sample_confl > 0, 1, 0) ) %>%
   ungroup() %>%
   select(-isna)
+
+# df %>% 
+#   filter(uninv == 1) %>% 
+#   select(country, year, uninv_dompros_created, uninv_dompros, uninv_evcoll_created, uninv_evcoll, uninv_intlpros_created, uninv_intlpros) %>% 
+#   print(n = Inf)
 
 ### these CYs are included in analyses data but not in TJET CountryYears
 ### this is ok because CountryYears is for mapping purposes and 
@@ -1967,6 +1981,7 @@ df <- TCmeasure(cy = df, new_col_name = "tcs_public_outcome",
                 recommend_vars = NULL, monitor_vars = NULL) %>% 
   select(-tcs_public_outcome_binary)
 
+### this should be called reform recommendations & change in codebook
 df <- TCmeasure(cy = df, new_col_name = "tcs_recommendations",
                 start_year_var = "yearCompleteOperation",
                 filter_nexus_vars = NULL,
