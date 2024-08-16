@@ -283,6 +283,25 @@ tcs_ctj_peace_process,"peace-oriented TC process scale, conflict TJ",TJET,2024-0
 tcs_ctj_peace_outcome,"peace-oriented TC outcome scale, conflict TJ",TJET,2024-08-15
 tcs_ctj_reform_process,"reform-oriented TC process scale, conflict TJ",TJET,2024-08-15
 tcs_ctj_reform_outcome,"reform-oriented TC outcome scale, conflict TJ",TJET,2024-08-15
+tcs_dtj_binary,"TCs, binary, conflict TJ",TJET,2024-08-15
+tcs_dtj_victim_process,"victim-centered TC process scale, post-autocratic TJ",TJET,2024-08-15
+tcs_dtj_victim_outcome,"victim-centered TC outcome scale, post-autocratic TJ",TJET,2024-08-15
+tcs_dtj_account_process,"accountability-oriented TC process scale, post-autocratic TJ",TJET,2024-08-15
+tcs_dtj_account_outcome,"accountability-oriented TC outcome scale, post-autocratic TJ",TJET,2024-08-15
+tcs_dtj_peace_process,"peace-oriented TC process scale, post-autocratic TJ",TJET,2024-08-15
+tcs_dtj_peace_outcome,"peace-oriented TC outcome scale, post-autocratic TJ",TJET,2024-08-15
+tcs_dtj_reform_process,"reform-oriented TC process scale, post-autocratic TJ",TJET,2024-08-15
+tcs_dtj_reform_outcome,"reform-oriented TC outcome scale, post-autocratic TJ",TJET,2024-08-15
+tcs_dtj_ctj_binary,"TCs, binary, conflict TJ",TJET,2024-08-15
+tcs_dtj_ctj_victim_process,"victim-centered TC process scale, post-autocratic & conflict TJ",TJET,2024-08-15
+tcs_dtj_ctj_victim_outcome,"victim-centered TC outcome scale, post-autocratic & conflict TJ",TJET,2024-08-15
+tcs_dtj_ctj_account_process,"accountability-oriented TC process scale, post-autocratic & conflict TJ",TJET,2024-08-15
+tcs_dtj_ctj_account_outcome,"accountability-oriented TC outcome scale, post-autocratic & conflict TJ",TJET,2024-08-15
+tcs_dtj_ctj_peace_process,"peace-oriented TC process scale, post-autocratic & conflict TJ",TJET,2024-08-15
+tcs_dtj_ctj_peace_outcome,"peace-oriented TC outcome scale, post-autocratic & conflict TJ",TJET,2024-08-15
+tcs_dtj_ctj_reform_process,"reform-oriented TC process scale, post-autocratic & conflict TJ",TJET,2024-08-15
+tcs_dtj_ctj_reform_outcome,"reform-oriented TC outcome scale, post-autocratic & conflict TJ",TJET,2024-08-15
+amnesty_dtj_sta,"amnesty, binary (post-autocratic transitional justice nexus, state agents)",TJET,2024-08-15
 amnesty_dtj_ctj_sta,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents)",TJET,2024-08-15
 amnesty_dtj_ctj_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, opposition members)",TJET,2024-08-15
 amnesty_dtj_ctj_sta_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents and opposition members)",TJET,2024-08-15
