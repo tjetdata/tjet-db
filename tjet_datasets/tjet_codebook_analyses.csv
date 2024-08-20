@@ -324,6 +324,7 @@ rep_symbolic_created,"reparations policy providing symbolic investments, binary 
 rep_compensation,"reparations policy providing compensation, binary",TJET,2024-08-15
 rep_compensation_created,"reparations policy providing compensation, binary for year of creation only",TJET,2024-08-15
 rep_services,"reparations policy providing services for rehabilitation and restitution, binary",TJET,2024-08-15
+rep_services_created,"reparations policy providing services for rehabilitation and restitution, binary for year of creation only",TJET,2024-08-15
 rep_victim_centered,"victims-centered reparations policy, scale",TJET,2024-08-15
 rep_diffamount,reparations policy providing different types or amounts based on type of victim or type of harm,TJET,2024-08-15
 rep_outreach,"reparations policy with outreach activities, binary",TJET,2024-08-15
@@ -333,17 +334,13 @@ rep_accessibility,"reparations policy with at least one accessibility or inclusi
 rep_scope,"reparations policy scope, scale based on reported number of beneficiaries (0-2; 1: 1 to 6163 beneficiaries, 2: greater than 6163 beneficiaries)",TJET,2024-08-15
 rep_paidout,"reparations policy which paid out, binary (coded to policy existence, not actual years of disbursements)",TJET,2024-08-15
 rep_paidout_created,"reparations policy which paid out, binary for year of creation only (coded to policy existence, not actual years of disbursements)",TJET,2024-08-15
+rep_harms,"reparations policy harms, scale",TJET,2024-08-15
 vet_dismiss,"vetting policy, type dimissal, binary",TJET,2024-08-15
-vet_dismiss_created,"vetting policy, type dimissal, binary for year of creation only",TJET,2024-08-15
 vet_ban,"vetting policy, type ban, binary",TJET,2024-08-15
-vet_ban_created,"vetting policy, type ban, binary for year of creation only",TJET,2024-08-15
 vet_declass,"vetting policy, type declassification, binary",TJET,2024-08-15
-vet_declass_created,"vetting policy, type declassification, binary for year of creation only",TJET,2024-08-15
 vet_perjury,"vetting policy, type perjury, binary",TJET,2024-08-15
-vet_perjury_created,"vetting policy, type perjury, binary for year of creation only",TJET,2024-08-15
 vet_ban_from_elected,"vetting policy, ban from elected office, binary",TJET,2024-08-15
 vet_conduct,"vetting policy targeting specific individual conduct, binary",TJET,2024-08-15
-vet_conduct_created,"vetting policy targeting specific individual conduct, binary for year of creation only",TJET,2024-08-15
 vet_implemented,was vetting policy implemented?,TJET,2024-08-15
 vet_public,"vetting policy involving public hearings, binary",TJET,2024-08-15
 vet_fairness,vetting policy fairness scale,TJET,2024-08-15
