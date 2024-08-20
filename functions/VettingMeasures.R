@@ -19,8 +19,7 @@ vet_cols <- c(
   "type_perjury", "groups_targeted", "grp_police", "grp_judiciary", "grp_public", 
   "grp_exe", "grp_legis", "grp_parties", "grp_military", "grp_other", 
   "inst_targeted", "inst_exe", "inst_legis", "inst_parties", "inst_judiciary", 
-  "inst_police", "inst_public", "inst_military", "inst_other", 
-  # "inst_education", "inst_business", 
+  "inst_police", "inst_public", "inst_military", "inst_other", # "inst_education", "inst_business", 
   "conduct", "implementation", "public", "fairness", "ban_from_elected")
 
 vet_incl <- vet_ctry %>% select(ccode) %>% 
@@ -37,13 +36,18 @@ vet_spells <- db[["Vettings"]] %>%
   rowwise() %>%
   mutate(year = map2(yearStart, yearEnd, seq)) %>% 
   unnest(cols = c(year)) %>%
+  # mutate(type_dismissal_created = ifelse(is.na(alterationOf) & year == yearStart, type_dismissal, 0), #
+  #        type_ban_created = ifelse(is.na(alterationOf) & year == yearStart, type_ban, 0), 
+  #        type_declass_created = ifelse(is.na(alterationOf) & year == yearStart, type_declass, 0), 
+  #        type_perjury_created = ifelse(is.na(alterationOf) & year == yearStart, type_perjury, 0), 
+  #        conduct_created = ifelse(is.na(alterationOf) & year == yearStart, conduct, 0)) %>% # 
   select(ccode, year, implemented, fitsPostAutocraticTJ, fitsConflictTJ, 
          type_dismissal, type_ban, type_declassification, type_perjury, 
          policy_type, grp_exe, grp_legis, grp_judiciary, grp_public, grp_police, 
          grp_military, grp_parties, grp_other, groups_targeted, inst_exe, 
          inst_legis, inst_judiciary, inst_public, inst_police, inst_military, 
          inst_parties, inst_other, inst_targeted, sum_inst, ban_from_elected, 
-         conduct, implementation, public, var_fairness, 
+         conduct, implementation, public, var_fairness
          # targetingWhy, targetingAffiliationRank, targetingPositionSought, 
          # targetingAffiliation, targetingPositionsRank, sanctions
          ) %>% 
@@ -100,20 +104,20 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
            ban_from_elected, conduct, implementation, public, fairness)
 
   non_na <- expr(ccode_cow %in% vet_ctry_incl & year %in% 1970:2020)
-  vars <- c("type_dismissal", "vet_dismiss_created", "type_ban", 
-            "vet_ban_created", "type_declass", "vet_declass_created", 
-            "type_perjury", "vet_perjury_created", "ban_from_elected", 
-            "conduct", "vet_conduct_created", "implementation", "public", "fairness")
+  vars <- c("type_dismissal", "type_ban", "type_declass", "type_perjury", 
+            "ban_from_elected", "conduct", "implementation", "public", "fairness"
+            # "vet_dismiss_created", "vet_ban_created", "vet_declass_created", "vet_perjury_created", "vet_conduct_created"
+            )
   
   cy %>%
     left_join(vet, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
-    mutate(
-      vet_dismiss_created = type_dismissal, 
-      vet_ban_created = type_ban, 
-      vet_declass_created = type_declass, 
-      vet_perjury_created = type_perjury, 
-      vet_conduct_created = conduct
-    ) %>% 
+    # mutate(
+    #   vet_dismiss_created = type_dismissal, 
+    #   vet_ban_created = type_ban, 
+    #   vet_declass_created = type_declass, 
+    #   vet_perjury_created = type_perjury, 
+    #   vet_conduct_created = conduct
+    # ) %>% 
     arrange(country_case, year) %>%
     group_by(country_case) %>%
     fill(type_dismissal, 

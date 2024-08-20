@@ -21,7 +21,7 @@ ReparationMeasures <- function(cy = df,
   
   ## subsetting & new measures
 
-  reps <- db[["Reparations"]] %>%
+  reps <- db[["Reparations"]] %>% 
     mutate(
       all = 1, 
       peaceagree = case_when(str_detect(legalBasis, "peace agreement") ~ 1, 
@@ -57,8 +57,10 @@ ReparationMeasures <- function(cy = df,
                         # beneficiariesCount >= 6164 & beneficiariesCount < 28778 ~ 3, 
                         # beneficiariesCount >= 28778 ~ 4, 
                         beneficiariesCount > 0 & beneficiariesCount < 6164 ~ 1, 
-                        beneficiariesCount >= 6164 ~ 2)
-    ) %>% 
+                        beneficiariesCount >= 6164 ~ 2), 
+      harms = harmsMurder + harmsTorture + harmsDetention + harmsDisappearance + 
+        harmsChildRecruitment + harmsDisplacement + harmsSexualViolence + harmsOther
+      ) %>% 
     filter(if_any(all_of(nexus[[nexus_vars]]), ~ . == 1)) %>% 
     rename(year = .env$start_year_var) %>% 
     arrange(ccode, year) %>%
@@ -77,7 +79,8 @@ ReparationMeasures <- function(cy = df,
             foreclose = max(foreclose), 
             accessibility = max(accessibility),
             scope = max(scope), 
-            paidout = max(rep_paid)) %>% 
+            paidout = max(rep_paid), 
+            harms = max(harms)) %>% 
     rename(diffamount = diffAmount, 
            alteration = alterationEffect)
   
@@ -86,9 +89,9 @@ ReparationMeasures <- function(cy = df,
   
   vars <- c("binary", "peaceagree", "individual", "individual_created", 
             "collective", "collective_created", "symbolic", "symbolic_created",
-            "compensation", "compensation_created", "services", 
-            "victim_centered", "diffamount", "outreach", "alteration", 
-            "foreclose", "accessibility", "scope", "paidout", "paidout_created") 
+            "compensation", "compensation_created", "services", "services_created",
+            "victim_centered", "diffamount", "outreach", "alteration", "foreclose", 
+            "accessibility", "scope", "paidout", "paidout_created", "harms") 
   
   ## merging 
   cy %>%
@@ -98,7 +101,8 @@ ReparationMeasures <- function(cy = df,
       collective_created = collective, 
       compensation_created = compensation, 
       symbolic_created = symbolic, 
-      paidout_created = paidout
+      paidout_created = paidout, 
+      services_created = services
     ) %>% 
     arrange(country_case, year) %>% 
     group_by(country_case) %>% 
