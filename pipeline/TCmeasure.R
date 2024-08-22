@@ -216,8 +216,7 @@ TCmeasure <- function(cy, new_col_name,
                             if_any(all_of(monitor_vars), ~ . == 1), 1, 0), 
            scale = goals + indep + consl + harms + power + testi + repor + recom + monit) %>%
     rename(year_start = .env$start_year_var) %>%
-    select(ccode, year_start, 
-           # yearPassed, yearBeginOperation, yearCompleteOperation,
+    select(ccode, year_start, # yearPassed, yearBeginOperation, yearCompleteOperation,
            scale, goals, indep, consl, harms, power, testi, repor, recom, monit) %>%
     filter(!is.na(year_start)) %>%
     arrange(ccode, year_start) %>%
@@ -234,13 +233,16 @@ TCmeasure <- function(cy, new_col_name,
     left_join(new, by = c("ccode_cow" = "ccode", "year" = "year_start")) %>% 
     arrange(country_case, year) %>% 
     group_by(country_case) %>% 
+    mutate(created = binary) %>% 
     fill(scale, 
          binary, 
          .direction = "down") %>%
     ungroup() %>% 
     mutate(scale = ifelse(year %in% 1970:2023 & is.na(scale), 0, scale),
-           binary = ifelse(year %in% 1970:2023 & is.na(binary), 0, binary)) %>%
+           binary = ifelse(year %in% 1970:2023 & is.na(binary), 0, binary), 
+           created = ifelse(year %in% 1970:2023 & is.na(created), 0, created)) %>%
     rename_with(.fn = ~ new_col_name, .cols = scale) %>%
     rename_with(.fn = ~ paste(new_col_name, "binary", sep = "_"), .cols = binary) %>%
+    rename_with(.fn = ~ paste(new_col_name, "created", sep = "_"), .cols = created) %>%
     return()
 }

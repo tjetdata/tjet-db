@@ -87,7 +87,7 @@ ReparationMeasures <- function(cy = df,
   prefix <- paste("rep", nexus_vars, sep = "_") %>% 
     str_replace(fixed("_all"), "") 
   
-  vars <- c("binary", "peaceagree", "individual", "individual_created", 
+  vars <- c("binary", "created", "peaceagree", "individual", "individual_created", 
             "collective", "collective_created", "symbolic", "symbolic_created",
             "compensation", "compensation_created", "services", "services_created",
             "victim_centered", "diffamount", "outreach", "alteration", "foreclose", 
@@ -97,6 +97,7 @@ ReparationMeasures <- function(cy = df,
   cy %>%
     left_join(reps, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
     mutate(
+      created = binary, 
       individual_created = individual, 
       collective_created = collective, 
       compensation_created = compensation, 
