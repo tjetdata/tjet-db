@@ -258,7 +258,9 @@ tcs_victim_process,victim-centered TC process scale,TJET,2024-08-20
 tcs_victim_outcome,victim-centered TC outcome scale,TJET,2024-08-20
 tcs_recreparations,"truth commission reparations recommendation, binary",TJET,2024-08-20
 tcs_metcriteria,truth commission met all definitional criteria (but may not have operated),TJET,2024-08-20
+tcs_metcriteria_created,"truth commission met all definitional criteria (but may not have operated), binary for year of creation only",TJET,2024-08-20
 tcs_operated,"truth commission operated, binary",TJET,2024-08-20
+tcs_operated_created,"truth commission operated, binary for year of creation only",TJET,2024-08-20
 tcs_goalstruth,"truth commission with explicit goal of truth-finding, binary",TJET,2024-08-20
 tcs_independent,"truth commission was at least partially independent, binary",TJET,2024-08-20
 tcs_independent_scale,"truth commission independence scale (not, partially, and fully independent)",TJET,2024-08-20
@@ -275,6 +277,7 @@ tcs_public_outcome,"truth commission publicness, outcome scale",TJET,2024-08-20
 tcs_recommendations,"truth commission recommendations in final report, scale",TJET,2024-08-20
 tcs_monitoring,"truth commission with mandated implementation monitoring, binary",TJET,2024-08-20
 tcs_ctj_binary,"TCs, binary, conflict TJ",TJET,2024-08-20
+tcs_ctj_created,"TCs, binary for year of creation only, conflict TJ",TJET,2024-08-20
 tcs_ctj_victim_process,"victim-centered TC process scale, conflict TJ",TJET,2024-08-20
 tcs_ctj_victim_outcome,"victim-centered TC outcome scale, conflict TJ",TJET,2024-08-20
 tcs_ctj_account_process,"accountability-oriented TC process scale, conflict TJ",TJET,2024-08-20
@@ -283,7 +286,8 @@ tcs_ctj_peace_process,"peace-oriented TC process scale, conflict TJ",TJET,2024-0
 tcs_ctj_peace_outcome,"peace-oriented TC outcome scale, conflict TJ",TJET,2024-08-20
 tcs_ctj_reform_process,"reform-oriented TC process scale, conflict TJ",TJET,2024-08-20
 tcs_ctj_reform_outcome,"reform-oriented TC outcome scale, conflict TJ",TJET,2024-08-20
-tcs_dtj_binary,"TCs, binary, conflict TJ",TJET,2024-08-20
+tcs_dtj_binary,"TCs, binary, post-autocratic TJ",TJET,2024-08-20
+tcs_dtj_created,"TCs, binary for year of creation only, post-autocratic TJ",TJET,2024-08-20
 tcs_dtj_victim_process,"victim-centered TC process scale, post-autocratic TJ",TJET,2024-08-20
 tcs_dtj_victim_outcome,"victim-centered TC outcome scale, post-autocratic TJ",TJET,2024-08-20
 tcs_dtj_account_process,"accountability-oriented TC process scale, post-autocratic TJ",TJET,2024-08-20
@@ -292,7 +296,8 @@ tcs_dtj_peace_process,"peace-oriented TC process scale, post-autocratic TJ",TJET
 tcs_dtj_peace_outcome,"peace-oriented TC outcome scale, post-autocratic TJ",TJET,2024-08-20
 tcs_dtj_reform_process,"reform-oriented TC process scale, post-autocratic TJ",TJET,2024-08-20
 tcs_dtj_reform_outcome,"reform-oriented TC outcome scale, post-autocratic TJ",TJET,2024-08-20
-tcs_dtj_ctj_binary,"TCs, binary, conflict TJ",TJET,2024-08-20
+tcs_dtj_ctj_binary,"TCs, binary, post-autocratic & conflict TJ",TJET,2024-08-20
+tcs_dtj_ctj_created,"TCs, binary for year of creation only, post-autocratic & conflict TJ",TJET,2024-08-20
 tcs_dtj_ctj_victim_process,"victim-centered TC process scale, post-autocratic & conflict TJ",TJET,2024-08-20
 tcs_dtj_ctj_victim_outcome,"victim-centered TC outcome scale, post-autocratic & conflict TJ",TJET,2024-08-20
 tcs_dtj_ctj_account_process,"accountability-oriented TC process scale, post-autocratic & conflict TJ",TJET,2024-08-20
@@ -314,6 +319,7 @@ amnesty_opp_hrv,"amnesty, binary (opposition members for human rights violations
 amnesty_pol,"amnesty, binary (political prisoners and protestors)",TJET,2024-08-20
 amnesty_peaceagree,"amnesty included in peace agreement, binary",TJET,2024-08-20
 rep_binary,"reparations policy, binary",TJET,2024-08-20
+rep_created,"reparations policy, binary for year of creation only",TJET,2024-08-20
 rep_peaceagree,"reparations policy included in peace agreement, binary",TJET,2024-08-20
 rep_collective,"reparations policy with collective component, binary",TJET,2024-08-20
 rep_collective_created,"reparations policy with collective component, binary for year of creation only",TJET,2024-08-20
