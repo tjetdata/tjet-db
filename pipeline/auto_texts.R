@@ -293,7 +293,7 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
          text = list(c(text, 
                        if(tran_trs_dom_dtj_sta > 0 | regu_trs_dom_sta > 0 | 
                           tran_trs_dom_ctj_sta > 0 | tran_trs_dom_ctj_opp > 0 | 
-                          lcon_trs_dom_sta_opp > 0)
+                          oppo_trs_dom_sta_opp > 0)
                          paste("These include ",
                                str_flatten(c(
                                  if(tran_trs_dom_dtj_sta > 0)
@@ -336,14 +336,14 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
                                          ifelse(tran_cce_dom_ctj_opp == 1,
                                                 "person was", "persons were"),
                                          "convicted"),
-                                 if(lcon_trs_dom_sta_opp > 0)
-                                   paste(lcon_trs_dom_sta_opp,
-                                         "low-level conflict",
-                                         ifelse(lcon_trs_dom_sta_opp == 1,
+                                 if(oppo_trs_dom_sta_opp > 0)
+                                   paste(oppo_trs_dom_sta_opp,
+                                         "opposition",
+                                         ifelse(oppo_trs_dom_sta_opp == 1,
                                                 "prosecution", "prosecutions"),
                                          "of state agents or opposition members, in which",
-                                         lcon_cce_dom_sta_opp,
-                                         ifelse(lcon_cce_dom_sta_opp == 1,
+                                         oppo_cce_dom_sta_opp,
+                                         ifelse(oppo_cce_dom_sta_opp == 1,
                                                 "person was", "persons were"),
                                          "convicted")), 
                                  collapse = "; ", last = "; and ", na.rm = TRUE), 
@@ -384,8 +384,8 @@ autotxt[["Domestic_cy"]] <- data[["Domestic_cy"]] %>%
          # regu_cce_dom_sta, # convictions in regular human rights prosecutions of state agents
          # tran_trs_dom_ctj_opp, # transitional prosecutions of opposition members in conflict or post-conflict context
          # tran_cce_dom_ctj_opp, # convictions in transitional prosecutions of opposition members in conflict or post-conflict context
-         # lcon_trs_dom_sta_opp, # prosecutions of state agents or opposition members in low-level conflict context
-         # lcon_cce_dom_sta_opp, # convictions in prosecutions of state agents or opposition members in low-level conflict context
+         # oppo_trs_dom_sta_opp, # prosecutions of state agents or opposition members in opposition context
+         # oppo_cce_dom_sta_opp, # convictions in prosecutions of state agents or opposition members in opposition context
          text)
 
 autotxt[["Foreign"]] <- data[["Foreign"]] %>% 

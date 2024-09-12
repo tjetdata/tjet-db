@@ -63,16 +63,19 @@ db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
          survey_design_fr = survey_design)
 
 tabs <- c(
-  "Accused", "Amnesties", "Amnesties_whoWasAmnestied", "ConflictDyads",
-  "Countries", "CountryYears", "CourtLevels", "dl_tjet_codebook", "dl_tjet_cy",
-  "fields_meta", "ICC", "ICCaccused", "Investigations", "labels", "Reparations",
-  "Reparations_collectiveReparationsEligibility",
-  "Reparations_individualReparationsEligible", "SurveysMeta", "TJETversions", 
-  "Transitions", "Trials", "TruthCommissions", "Vettings", 
+  "Accused", "AccusedCodebook", "Amnesties", "AmnestiesCodebook",
+  "Amnesties_whoWasAmnestied", "ConflictDyads", "Countries", "CountryYears",
+  "CourtLevels", "CourtLevelsCodebook", "dl_tjet_codebook", "dl_tjet_cy",
+  "fields_meta", "ICC", "ICCcodebook", "ICCaccused", "ICCaccusedCodebook",
+  "Investigations", "InvestigationsCodebook", "labels", "Reparations",
+  "ReparationsCodebook", "Reparations_collectiveReparationsEligibility",
+  "Reparations_individualReparationsEligible", "SurveysMeta", "TJETversions",
+  "Transitions", "Trials", "TrialsCodebook", "TruthCommissions", 
+  "TruthCommissionsCodebook", "Vettings", "VettingsCodebook", 
   "Vettings_targetingAffiliation"
   ) %>% 
   print()
-  
+
 ### two different ways of establishing the same database connection
 ### (note that cloudways requires the local IP address to be added)
 con <- dbConnect(RMariaDB::MariaDB(),

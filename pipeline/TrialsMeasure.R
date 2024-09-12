@@ -98,7 +98,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
     str_replace("_con", "") %>% 
     str_replace("_all", "")
   
-  var_name <- ifelse(str_detect(var_name, "lcon_"),
+  var_name <- ifelse(str_detect(var_name, "oppo_"),
                     str_replace(var_name, "_Xctj", ""), 
                     var_name)
   var_name <- ifelse(str_detect(var_name, "regu_"),

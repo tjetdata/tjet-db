@@ -192,3 +192,9 @@ db[tabs] %>%
 #   read_file() %>%
 #   translate() %>%
 #   write_file(file = here::here(base, "CotedIvoire-fr.qmd"))
+
+# read_csv("~/Desktop/Trials-search.csv") %>% 
+#   rowwise() %>%
+#   mutate(caseDescription_fr = translate(caseDescription)) %>%
+#   ungroup() %>% 
+#   write_csv("~/Desktop/Trials-search-new.csv")

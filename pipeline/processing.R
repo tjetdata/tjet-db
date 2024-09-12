@@ -640,7 +640,6 @@ dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
 # dl_invest %>% 
 #   filter(mandate != mandate_en | is.na(mandate_en))
 
-
 dl_invest %>%
   select(ccode_cow, beg, uninv_dompros, uninv_evcoll, uninv_intlpros) %>%
   group_by(ccode_cow, beg) %>%
@@ -1477,10 +1476,10 @@ rm(vet_ctry_incl, vet_spells)
 #   #          is.na(tran_trs_dom_dtj_ctj_sta) |
 #   #          is.na(tran_trs_dom_ctj_opp) |
 #   #          is.na(regu_trs_dom_sta) |
-#   #          is.na(lcon_trs_dom_sta_opp))  %>% 
+#   #          is.na(oppo_trs_dom_sta_opp))  %>% 
 #   arrange(country, year) %>%
-#   select(country, year, trials_domestic, tran_trs_dom_dtj_ctj_sta, tran_trs_dom_ctj_opp, regu_trs_dom_sta, lcon_trs_dom_sta_opp) %>%
-#   mutate(new = tran_trs_dom_dtj_ctj_sta + regu_trs_dom_sta + tran_trs_dom_ctj_opp + lcon_trs_dom_sta_opp, 
+#   select(country, year, trials_domestic, tran_trs_dom_dtj_ctj_sta, tran_trs_dom_ctj_opp, regu_trs_dom_sta, oppo_trs_dom_sta_opp) %>%
+#   mutate(new = tran_trs_dom_dtj_ctj_sta + regu_trs_dom_sta + tran_trs_dom_ctj_opp + oppo_trs_dom_sta_opp, 
 #          diff = new - trials_domestic) %>% 
 #   filter(diff != 0) %>% 
 #   print(n = Inf)
@@ -1537,8 +1536,7 @@ df <- df %>%
   select(all_of(codebook$colname[codebook$colname %in% names(df)]))
 
 ### create lags and saving the analyses dataset
-### saving to Dropbox only works locally 
-### NEED TO DISABLE THIS FOR GITHUB ACTIONS 
+### saving to Dropbox only works locally NEED TO DISABLE THIS FOR GITHUB ACTIONS 
 
 lags <- df %>%
   select(!any_of(c("country", "country_label", "country_name", "country_fr", 
@@ -1686,6 +1684,7 @@ db[["Transitions"]] <- db[["Transitions"]] %>%
   mutate(tjet_version = timestamp) %>%
   write_csv(here::here("tjet_datasets", "tjet_transitions.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_transitions.csv"), na = "")
+
 db[["Amnesties"]] <- db[["Amnesties"]] %>% 
   left_join(db[["Countries"]] %>%
               select(country_case, ccode) %>% 
@@ -1694,9 +1693,18 @@ db[["Amnesties"]] <- db[["Amnesties"]] %>%
             by = "ccode") %>% 
   filter(amnestyYear >= 1970 & amnestyYear <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
+  select(-invalid) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_amnesties.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_amnesties.csv"), na = "")
+db[["AmnestiesCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_amnesties.csv") %>% 
+  filter(colname %in% names(db[["Amnesties"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_amnesties_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_amnesties_codebook.csv"), na = "")
+
 db[["Reparations"]] <- db[["Reparations"]] %>% 
   left_join(db[["Countries"]] %>%
               select(country_case, ccode) %>% 
@@ -1705,9 +1713,18 @@ db[["Reparations"]] <- db[["Reparations"]] %>%
             by = "ccode") %>% 
   filter(yearCreated >= 1970 & yearCreated <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
+  select(-invalid) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_reparations.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_reparations.csv"), na = "")
+db[["ReparationsCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_reparations.csv") %>% 
+  filter(colname %in% names(db[["Reparations"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_reparations_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_reparations_codebook.csv"), na = "")
+
 db[["Trials"]] <- db[["Trials"]] %>%
   left_join(db[["Countries"]] %>%
               select(country_case, ccode) %>% 
@@ -1722,13 +1739,31 @@ db[["Trials"]] <- db[["Trials"]] %>%
             by = c("ccode_Trial" = "ccode")) %>% 
   rename(country_Trial = country) %>% 
   filter(yearStart >= 1970 & yearStart <= 2020) %>% 
+  select(-invalid) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_trials.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_trials.csv"), na = "")
+db[["TrialsCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_trials.csv") %>% 
+  filter(colname %in% names(db[["Trials"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_trials_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_trials_codebook.csv"), na = "")
+
 db[["Accused"]] <- db[["Accused"]] %>%
+  select(-invalid) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_accused.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_accused.csv"), na = "")
+db[["AccusedCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_accused.csv") %>% 
+  filter(colname %in% names(db[["Accused"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_accused_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_accused_codebook.csv"), na = "")
+
 db[["CourtLevels"]] <- db[["CourtLevels"]] %>%
   select(CLID, accusedID, courtLevel, courtName, day, month, year, date, 
          last_fx, verdict, guilty, sentence, sentencingTime, 
@@ -1736,6 +1771,14 @@ db[["CourtLevels"]] <- db[["CourtLevels"]] %>%
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
+db[["CourtLevelsCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_courtlevels.csv") %>% 
+  filter(colname %in% names(db[["CourtLevels"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_courtlevels_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_courtlevels_codebook.csv"), na = "")
+
 db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
   left_join(db[["Countries"]] %>%
               select(country_case, ccode) %>% 
@@ -1744,9 +1787,18 @@ db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>%
             by = "ccode") %>% 
   filter(yearPassed >= 1970 & yearPassed <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
+  select(-invalid) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_tcs.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_tcs.csv"), na = "")
+db[["TruthCommissionsCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_tcs.csv") %>% 
+  filter(colname %in% names(db[["TruthCommissions"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_tcs_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_tcs_codebook.csv"), na = "")
+
 db[["Vettings"]] <- db[["Vettings"]] %>% 
   left_join(db[["Countries"]] %>%
               select(country_case, ccode) %>% 
@@ -1755,21 +1807,53 @@ db[["Vettings"]] <- db[["Vettings"]] %>%
             by = "ccode") %>% 
   filter(yearStart >= 1970 & yearStart <= 2020) %>%
   rename(ccode_cow = ccode) %>% 
+  select(-invalid) %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_vettings.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_vettings.csv"), na = "")
+db[["VettingsCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_vettings.csv") %>% 
+  filter(colname %in% names(db[["Vettings"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_vettings_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_vettings_codebook.csv"), na = "")
+
 db[["Investigations"]] <- dl_invest %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_un_investigations.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_un_investigations.csv"), na = "")
+db[["InvestigationsCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_un_investigations.csv") %>% 
+  filter(colname %in% names(db[["Investigations"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_un_investigations_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_un_investigations_codebook.csv"), na = "")
+
 db[["ICC"]] <- db[["ICC"]] %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_icc_interventions.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_icc_interventions.csv"), na = "")
+db[["ICCcodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_icc_interventions.csv") %>% 
+  filter(colname %in% names(db[["ICC"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_icc_interventions_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_icc_interventions_codebook.csv"), na = "")
+
 db[["ICCaccused"]] <- db[["ICCaccused"]] %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_icc_accused.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_icc_accused.csv"), na = "")
+db[["ICCaccusedCodebook"]] <- db[["codebook"]] %>% 
+  filter(tables == "tjet_icc_accused.csv") %>% 
+  filter(colname %in% names(db[["ICCaccused"]])) %>% 
+  select(colname, definition) %>% 
+  arrange(str_to_lower(colname)) %>% 
+  write_csv(here::here("tjet_datasets", "tjet_icc_accused_codebook.csv"), na = "") %>% 
+  write_csv(here::here(dropbox_path, "tjet_icc_accused_codebook.csv"), na = "")
 
 save(db, file = here::here("data", "tjetdb.RData"))
 
@@ -1935,7 +2019,7 @@ vars_dom <- c("trials_domestic", "tran_trs_dom_dtj_sta", "tran_trs_dom_ctj_sta",
               "tran_cce_dom_dtj_ctj_sta", "regu_cce_dom_sta", 
               "tran_trs_dom_dtj_ctj_sta_hi", "tran_cce_dom_dtj_ctj_sta_hi", 
               "tran_trs_dom_ctj_opp", "tran_cce_dom_ctj_opp", 
-              "lcon_trs_dom_sta_opp", "lcon_cce_dom_sta_opp")
+              "oppo_trs_dom_sta_opp", "oppo_cce_dom_sta_opp")
 vars_int <- c("trials_intl", "trs_int_sta", "trs_int_opp", 
               "cce_int_sta", "cce_int_opp") 
 vars_for <- c("trials_foreign", "trs_for_sta", "trs_for_opp", 
@@ -1966,8 +2050,8 @@ data[["Domestic_cy"]] <- db[["dl_tjet_cy"]] %>%
           regu_cce_dom_sta = sum(regu_cce_dom_sta, na.rm = TRUE), 
           tran_trs_dom_ctj_opp = sum(tran_trs_dom_ctj_opp, na.rm = TRUE), 
           tran_cce_dom_ctj_opp = sum(tran_cce_dom_ctj_opp, na.rm = TRUE), 
-          lcon_trs_dom_sta_opp = sum(lcon_trs_dom_sta_opp, na.rm = TRUE), 
-          lcon_cce_dom_sta_opp = sum(lcon_cce_dom_sta_opp, na.rm = TRUE))
+          oppo_trs_dom_sta_opp = sum(oppo_trs_dom_sta_opp, na.rm = TRUE), 
+          oppo_cce_dom_sta_opp = sum(oppo_cce_dom_sta_opp, na.rm = TRUE))
 
 data[["Intl_cy"]] <- db[["dl_tjet_cy"]] %>% 
   select(-country_case) %>% 

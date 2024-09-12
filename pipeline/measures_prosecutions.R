@@ -136,19 +136,19 @@ df <- TrialsMeasure(cy = df, prefix = "regu", measure = "sen", type_opts = "dom"
 # TrialsMeasure(cy = df, prefix = "regu", measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), excl_nexus_vars = c("dtj", "ctj"), memb_opts = "opp") %>% 
 #   select(regu_trs_dom_opp) %>% summary 
 
-#### low level conflict-related prosecutions: (prefix: lcon)
+#### low level conflict-related prosecutions: (prefix: oppo)
 
 ## conflict trials which are not ctj (i.e. not matched to UCDP conflict codes) of state agents and opposition: [_con]_Xctj_sta_opp
-df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "trs", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
-df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "tro", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
-df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "tfc", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) %>% 
+df <- TrialsMeasure(cy = df, prefix = "oppo", measure = "trs", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
+df <- TrialsMeasure(cy = df, prefix = "oppo", measure = "tro", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
+df <- TrialsMeasure(cy = df, prefix = "oppo", measure = "tfc", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) %>% 
   arrange(country_case, year) %>% 
   group_by(country_case) %>%  
-  mutate(lcon_tfc_dom_sta_opp_cumu = cumsum(lcon_tfc_dom_sta_opp))
-df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "cct", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
-df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "cce", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
-df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "crt", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
-df <- TrialsMeasure(cy = df, prefix = "lcon", measure = "sen", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
+  mutate(oppo_tfc_dom_sta_opp_cumu = cumsum(oppo_tfc_dom_sta_opp))
+df <- TrialsMeasure(cy = df, prefix = "oppo", measure = "cct", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
+df <- TrialsMeasure(cy = df, prefix = "oppo", measure = "cce", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
+df <- TrialsMeasure(cy = df, prefix = "oppo", measure = "crt", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
+df <- TrialsMeasure(cy = df, prefix = "oppo", measure = "sen", type_opts = "dom", nexus_vars = "con", excl_nexus_vars = "ctj", memb_opts = c("sta", "opp")) 
 
 #### intl & foreign 
 
