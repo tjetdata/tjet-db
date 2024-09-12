@@ -1,0 +1,68 @@
+colname,definition
+accessibility,Did the reparations program have any of the following accessibility / inclusivity provisions?
+alteration,"Was the policy ever altered, either by legislation or court interpretation, to change the eligibility requirements for receiving reparations (e.g., timeframe, type of violation)?"
+alterationEffect,What was the effect of the policy alteration? (see alterationName)
+alterationName,What is the name of the legislation or court ruling altering the policy?
+alterationYear,What year did the alteration occur? (see alterationName)
+beneficiariesCount,Approximately how many potential beneficiaries were recognized by any of the above means?
+beneficiariesIdentified,How does the policy recognize potential beneficiaries?
+ccode_cow,COW numeric country code
+collectiveReparations,Did the policy offer collective or community reparations?
+collectiveReparationsEligibility,Which types of communities are eligible to receive collective or community reparations under the policy?
+collectiveReparationsForm,Which forms of collective or community reparations does the policy offer?
+costEstimate,What is the estimated total cost of the reparations awarded?
+country,country name
+dateBegin,date the policy began operating
+dateCreated,date the policy was created
+dateEnd,date the policy ended
+democraticTransitionStarted,Did this country start a democratic transition at some point before the reparations policy was enacted?
+departmentName,What is the responsible department called?
+departmentStaff,Did the responsible department have staff?
+diffAmount,Did the policy award different types or amounts of reparations to victims based on either the type of victim or the type of harm?
+fitsConflictTJ,Did this case fit the definition of conflict reparation?
+fitsPostAutocraticTJ,Did this case fit the definition of transitional human rights reparation?
+foreclose,Did the acceptance of reparations benefits foreclose victims from resorting to the justice system for criminal prosecution and/or civil damages?
+funding,What is the primary funding source for the reparations?
+genderAttentive,Was the policy gender attentive?
+genderCrimes,"Did the policy include reparations for gender-based crimes, other than the sexual violence crimes listed under sexualViolenceType?"
+genderMen,Did the policy reparations for gender-based crimes against men and boys?
+genderWomen,Did the policy include reparations for gender-based crimes against women and girls?
+harmsChildRecruitment,violations covered: forced recruitment or conscription of children in armed conflict
+harmsDetention,violations covered: arbitrary arrest and detention
+harmsDisappearance,violations covered: kidnapping and enforced disappearance
+harmsDisplacement,violations covered: displacement
+harmsMurder,"violations covered: Murder, homicide, massacres, or other deprivation of life"
+harmsOther,violations covered: other
+harmsSexualViolence,violations covered: sexual violence
+harmsTorture,violations covered: torture
+individualReparations,Did the policy offer individual reparations?
+individualReparationsEligible,Which individuals are eligible to receive reparations under the policy?
+individualReparationsForm,Which forms of individual reparations does the policy offer?
+legalBasis,legal basis of the reparations policy
+legalBranches,Which branch(es) of government recommended or initiated the reparations policy?
+legalInternationalBody,Which international body initiated the reparations policy?
+lgbtqCrimes,"Did the policy include reparations for crimes against sexual and gender minorities (lesbian, gay, bisexual, transgender, queer, etc.)?"
+narrative,narrative description of the reparations policy
+officialName,name or description of the reparations policy
+officialName_en,name or description of the reparations policy (English)
+officialName_en_fr,name or description of the reparations policy (French translation)
+outreach,Did the policy include a plan for outreach activities?
+policyURL,policy URL
+rep_paid,Did the reparations policy actually pay out?
+reparationConflictAfter,Was the reparations policy enacted after the conflict?
+reparationConflictDuring,Was the reparations policy enacted during the conflict?
+reparationID,TJET Reparation ID
+requirementsRegistration,"Are there requirements to register to receive payments? Examples: citizenship, residency, identification, payment of a fee, proof of crime, witnesses, etc."
+responsibleDepartment,Was there a department or unit responsible for administering reparations?
+sexualViolenceType,types of sexual violence covered
+staffCount,How many staff members does the responsible department have (if known)?
+startedIntraConfl,Did this country start an intra-state conflict at some point before the reparations policy was enacted?
+statedAims,What are the stated goals or aims of the policy?
+subnational,Was the reparations policy created by a subnational government?
+timeframeCovered,What timeframe does the policy cover?
+tjet_version,TJET database version: date on which data was extracted from the database
+typeInjury,What types of injury does the reparations policy cover?
+ucdpConflictID,UCDP conflict ID
+yearBegin,year the policy began operating
+yearCreated,year the reparation policy was created
+yearEnd,year the policy ended

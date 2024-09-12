@@ -1,0 +1,63 @@
+colname,definition
+alterationOf,vettingID of the policy which is altered by this record
+appealJudgment,Is there evidence that any individual successfully appealed their specific judgment?
+ban_from_elected,ban from candidacy for office in legislature
+beganAfterIntraConfl,Did this vetting policy begin after an intra-state conflict?
+beganDuringIntraConfl,Did this vetting policy begin during an intra-state conflict?
+ccode_cow,COW numeric country code
+country,country name
+courtChallenge,"Was the entire policy challenged in court, and if so with what outcome?"
+dateLaw,date of the law or decree
+enactment,How was the policy enacted?
+fairness,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc)"
+fitsConflictTJ,Did this case fit the definition of conflict transitional justice?
+fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?
+groups_targeted,"scaled number of targeted affiliations (1 => 1, 2 => 2, > 2 => 3)"
+grp_exe,targeted affiliation: executive (see also targetingAffiliation)
+grp_judiciary,targeted affiliation: judiciary (see also targetingAffiliation)
+grp_legis,targeted affiliation: legislature (see also targetingAffiliation)
+grp_military,targeted affiliation: armed forces (see also targetingAffiliation)
+grp_other,targeted affiliation: other (see also targetingAffiliation)
+grp_parties,targeted affiliation: political parties (see also targetingAffiliation)
+grp_police,targeted affiliation: police (includes ordinary police and secret police informants) (see also targetingPositionSought)
+grp_public,"targeted affiliation: public sector (bureaucrats, low-rank nominated or elected officials) (see also targetingPositionSought)"
+hearingsPublic,Were investigations transparent and publicly accessible?
+implementation,binary version of implemented
+implementationNotes,implementation notes
+implemented,Was the policy implemented?
+inst_exe,specific institution targeted: executive (see also targetingPositionSought)
+inst_judiciary,specific institution targeted: judiciary (see also targetingPositionSought)
+inst_legis,specific institution targeted: legislature (see also targetingPositionSought)
+inst_military,specific institution targeted: armed forces (see also targetingPositionSought)
+inst_other,specific institution targeted: other (see also targetingPositionSought)
+inst_parties,specific institution targeted: political parties (see also targetingPositionSought)
+inst_police,specific institution targeted: police (includes ordinary police and secret police informants) (see also targetingPositionSought)
+inst_public,"specific institution targeted: public sector (bureaucrats, low-rank nominated or elected officials) (see also targetingPositionSought)"
+inst_targeted,"scaled version of sum_inst (0 => 0, 1 => 1, 2-5 => 2, > 5 => 3)"
+narrative,narrative description of the policy and its implementation
+numberInvestigated,Approximately how many people were investigated under the policy?
+policy_type,number of combined policy types (1-3)
+policyName,name or description of the vetting policy
+policyName_fr,name or description of the vetting policy (French translation)
+policyProcedure,How was the policy enacted?
+policySource,policy source
+sanctions,What are the sanctions prescribed by the policy?
+startedDemocraticTransition,Did this country start a democratic transition at some point before this vetting policy?
+startedIntraConflBefore,Did this country start an intrastate conflict at some point before this vetting policy?
+sum_inst,number of specific institutions targeted (0-8)
+targetingAffiliation,Individuals were targeted for their affiliation with which institutional actor at the time of their abuse or transgression?
+targetingAffiliationRank,targeting affiliation: rank
+targetingPositionSought,Which institutional positions were those targeted by this policy prevented from holding?
+targetingPositionsRank,targeting positions sought: rank
+targetingWhy,Why were individuals targeted?
+tjet_version,TJET database version: date on which data was extracted from the database
+type_ban,policy type: ban from future employment
+type_declassification,policy type: declassification
+type_dismissal,policy type: dismissal from current employment
+type_perjury,policy type: dismissal and ban upon lustration lie
+ucdpConflictID,UCDP Conflict ID
+ucdpDyadID,UCDP Dyad ID
+var_fairness,"index adding binary variables for individual conduct or appeals, public, and any court challenges (0-3)"
+vettingID,TJET Vetting ID
+yearEnd,year vetting policy spell ended
+yearStart,"year vetting policy spell was in effect, not the date of the law"

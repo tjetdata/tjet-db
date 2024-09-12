@@ -1,0 +1,12 @@
+colname,definition
+accusedID,TJET Accused ID
+ccode_Accused,COW numeric country code of country of the accused
+country,country name
+ICC_arrest_warrant,year in which ICC arrest warrant was issued
+ICC_arrestAppear,year of court appearance of accused
+ICC_confirm_charges,year in which ICC trial chamber confirmed charges
+ICC_proceedings,year in which ICC proceedings began
+ICC_withdrawnDismissed,year in which ICC charges were dismissed or withdrawn
+nameOrDesc,name or description of the accused
+tjet_version,TJET database version: date on which data was extracted from the database
+trialID,TJET Trial ID

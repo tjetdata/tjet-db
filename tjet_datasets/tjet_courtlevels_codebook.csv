@@ -1,0 +1,17 @@
+colname,definition
+accusedID,TJET Accused ID
+CLID,TJET court level record ID
+courtLevel,court level at which outcome occurred
+courtName,name of the court at which outcome occurred
+date,date of court level event
+day,day of month
+guilty,Was it a guilty verdict?
+last_fx,Was this the last relevant trial event of these proceedings for the purpose of identifying outcomes/rulings?
+month,month
+sentence,sentence of the verdict
+sentenceNotes,sentencing notes
+sentencingArrangement,sentencing arrangement
+sentencingTime,sentencing time
+tjet_version,TJET database version: date on which data was extracted from the database
+verdict,verdict or trial outcome
+year,year
