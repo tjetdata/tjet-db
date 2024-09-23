@@ -24,7 +24,7 @@ CountryYears,reparations_SGBV,"binary for whether reparations for country-year i
 CountryYears,tcs,count of truth commissions per country and year of creation,TJET
 CountryYears,tcs_SGBV,"binary for whether truth commissions for country-year included any that addressed SGBV (1 = yes, 0 = no) ",TJET
 CountryYears,vettings,count of vetting policies per country and year of creation,TJET
-"CountryYears, Countries",tjet_focus,"TJET focus country (i.e. there will be a more detailed country case study) ",TJET
+"CountryYears, Countries",tjet_focus,TJET focus country (i.e. there will be a more detailed country case study) ,TJET
 Countries,beg,first year in TJET dataset,
 Countries,end,last year in TJET dataset,
 Countries,region_sub_un,United Nations detailed regions identifier; combination of intermediate and sub-region categories,
@@ -47,7 +47,7 @@ tjet_cy,region,United Nations region,UN Statistics Division
 tjet_cy,subregion,United Nations sub-region,UN Statistics Division
 tjet_cy,intregion,United Nations intermediate region,UN Statistics Division
 tjet_cy,region_wb,World Bank region,World Bank
-tjet_cy,micro_ksg,"Gleditsch micro-state ",Kristian S. Gleditsch
+tjet_cy,micro_ksg,Gleditsch micro-state ,Kristian S. Gleditsch
 tjet_cy,sample_trans,"democratic transition sample, binary",TJET
 tjet_cy,sample_confl,"conflict sample, binary",TJET
 tjet_cy,sample_combi,combined sample (democratic transition & conflict),TJET
@@ -700,6 +700,7 @@ tjet_cy,pop_fem_wdi,"population size, female",WDI
 tjet_cy,pop_density_wdi,population density,WDI
 tjet_cy,land_area_sqkm_wdi,"country land area, square kilometers",WDI
 tjet_cy,gini_wdi,GINI,WDI
+tjet_cy,aidall_const_wdi,Net official development assistance and official aid received (constant USD),WDI
 tjet_cy,pop_pwt,population size,PWT
 tjet_cy,rgdpna_pwt,"Real GDP using national-accounts growth rates, for studies comparing (output-based) growth rates across countries",PWT
 tjet_cy,rgdpe_pwt,"Expenditure-side real GDP at chained PPPs, to compare relative living standards across countries over time",PWT
@@ -709,7 +710,7 @@ tjet_accused.csv,accusedID,TJET Accused ID,TJET
 tjet_accused.csv,accusedNotes,notes on the accused,TJET
 tjet_accused.csv,arrests,preliminary trial process: arrests,TJET
 tjet_accused.csv,atrocity,charges: atrocity,TJET
-tjet_accused.csv,certainty,"How much certainty did coders have in coding this accused? ",TJET
+tjet_accused.csv,certainty,How much certainty did coders have in coding this accused? ,TJET
 tjet_accused.csv,charges,charges description,TJET
 tjet_accused.csv,chargesOther,charges: other,TJET
 tjet_accused.csv,chargesUnknown,charges: none reported,TJET
@@ -751,7 +752,7 @@ tjet_accused.csv,murderKilling,charges: murder or killing,TJET
 tjet_accused.csv,nameOrDesc,name or description of the accused,TJET
 tjet_accused.csv,nameOrDesc_fr,name or description of the accused (French),TJET
 tjet_accused.csv,ongoing,trial is ongoing for the accused at time of coding,TJET
-tjet_accused.csv,opposedToGovernment,"Was this person opposed to the government? ",TJET
+tjet_accused.csv,opposedToGovernment,Was this person opposed to the government? ,TJET
 tjet_accused.csv,oppositionType,opposition type,TJET
 tjet_accused.csv,other,preliminary trial process: other,TJET
 tjet_accused.csv,otherSGBV,other SGBV,TJET
@@ -809,7 +810,7 @@ tjet_courtlevels.csv,courtName,name of the court at which outcome occurred,TJET
 tjet_courtlevels.csv,date,date of court level event,TJET
 tjet_courtlevels.csv,day,day of month,TJET
 tjet_courtlevels.csv,guilty,Was it a guilty verdict?,TJET
-tjet_courtlevels.csv,last_fx,"Was this the last relevant trial event of these proceedings for the purpose of identifying outcomes/rulings? ",TJET
+tjet_courtlevels.csv,last_fx,Was this the last relevant trial event of these proceedings for the purpose of identifying outcomes/rulings? ,TJET
 tjet_courtlevels.csv,month,month,TJET
 tjet_courtlevels.csv,sentence,sentence of the verdict,TJET
 tjet_courtlevels.csv,sentenceNotes,sentencing notes,TJET
@@ -846,9 +847,9 @@ tjet_reparations.csv,beneficiariesCount,Approximately how many potential benefic
 tjet_reparations.csv,beneficiariesIdentified,How does the policy recognize potential beneficiaries?,TJET
 tjet_reparations.csv,ccode_cow,COW numeric country code,TJET
 tjet_reparations.csv,collectiveReparations,Did the policy offer collective or community reparations?,TJET
-tjet_reparations.csv,collectiveReparationsEligibility,"Which types of communities are eligible to receive collective or community reparations under the policy? ",TJET
-tjet_reparations.csv,collectiveReparationsForm,"Which forms of collective or community reparations does the policy offer? ",TJET
-tjet_reparations.csv,costEstimate,"What is the estimated total cost of the reparations awarded? ",TJET
+tjet_reparations.csv,collectiveReparationsEligibility,Which types of communities are eligible to receive collective or community reparations under the policy? ,TJET
+tjet_reparations.csv,collectiveReparationsForm,Which forms of collective or community reparations does the policy offer? ,TJET
+tjet_reparations.csv,costEstimate,What is the estimated total cost of the reparations awarded? ,TJET
 tjet_reparations.csv,country,country name,TJET
 tjet_reparations.csv,dateBegin,date the policy began operating,TJET
 tjet_reparations.csv,dateCreated,date the policy was created,TJET
@@ -856,7 +857,7 @@ tjet_reparations.csv,dateEnd,date the policy ended,TJET
 tjet_reparations.csv,democraticTransitionStarted,Did this country start a democratic transition at some point before the reparations policy was enacted?,TJET
 tjet_reparations.csv,departmentName,What is the responsible department called?,TJET
 tjet_reparations.csv,departmentStaff,Did the responsible department have staff?,TJET
-tjet_reparations.csv,diffAmount,"Did the policy award different types or amounts of reparations to victims based on either the type of victim or the type of harm? ",TJET
+tjet_reparations.csv,diffAmount,Did the policy award different types or amounts of reparations to victims based on either the type of victim or the type of harm? ,TJET
 tjet_reparations.csv,fitsConflictTJ,Did this case fit the definition of conflict reparation?,TJET
 tjet_reparations.csv,fitsPostAutocraticTJ,Did this case fit the definition of transitional human rights reparation?,TJET
 tjet_reparations.csv,foreclose,Did the acceptance of reparations benefits foreclose victims from resorting to the justice system for criminal prosecution and/or civil damages?,TJET
@@ -864,7 +865,7 @@ tjet_reparations.csv,funding,What is the primary funding source for the reparati
 tjet_reparations.csv,genderAttentive,Was the policy gender attentive?,TJET
 tjet_reparations.csv,genderCrimes,"Did the policy include reparations for gender-based crimes, other than the sexual violence crimes listed under sexualViolenceType? ",TJET
 tjet_reparations.csv,genderMen,Did the policy reparations for gender-based crimes against men and boys?,TJET
-tjet_reparations.csv,genderWomen,"Did the policy include reparations for gender-based crimes against women and girls? ",TJET
+tjet_reparations.csv,genderWomen,Did the policy include reparations for gender-based crimes against women and girls? ,TJET
 tjet_reparations.csv,harmsChildRecruitment,violations covered: forced recruitment or conscription of children in armed conflict,TJET
 tjet_reparations.csv,harmsDetention,violations covered: arbitrary arrest and detention,TJET
 tjet_reparations.csv,harmsDisappearance,violations covered: kidnapping and enforced disappearance,TJET
@@ -875,11 +876,11 @@ tjet_reparations.csv,harmsSexualViolence,violations covered: sexual violence,TJE
 tjet_reparations.csv,harmsTorture,violations covered: torture,TJET
 tjet_reparations.csv,implementationSources,coding sources on policy implementation,TJET
 tjet_reparations.csv,individualReparations,Did the policy offer individual reparations?,TJET
-tjet_reparations.csv,individualReparationsEligible,"Which individuals are eligible to receive reparations under the policy? ",TJET
+tjet_reparations.csv,individualReparationsEligible,Which individuals are eligible to receive reparations under the policy? ,TJET
 tjet_reparations.csv,individualReparationsForm,Which forms of individual reparations does the policy offer?,TJET
 tjet_reparations.csv,invalid,"invalid observation, binary",TJET
 tjet_reparations.csv,legalBasis,legal basis of the reparations policy,TJET
-tjet_reparations.csv,legalBranches,"Which branch(es) of government recommended or initiated the reparations policy? ",TJET
+tjet_reparations.csv,legalBranches,Which branch(es) of government recommended or initiated the reparations policy? ,TJET
 tjet_reparations.csv,legalInternationalBody,Which international body initiated the reparations policy?,TJET
 tjet_reparations.csv,lgbtqCrimes,"Did the policy include reparations for crimes against sexual and gender minorities (lesbian, gay, bisexual, transgender, queer, etc.)? ",TJET
 tjet_reparations.csv,narrative,narrative description of the reparations policy,TJET
@@ -901,10 +902,10 @@ tjet_reparations.csv,sexualViolenceType,types of sexual violence covered,TJET
 tjet_reparations.csv,staffCount,How many staff members does the responsible department have (if known)?,TJET
 tjet_reparations.csv,startedIntraConfl,Did this country start an intra-state conflict at some point before the reparations policy was enacted?,TJET
 tjet_reparations.csv,statedAims,What are the stated goals or aims of the policy?,TJET
-tjet_reparations.csv,subnational,"Was the reparations policy created by a subnational government? ",TJET
-tjet_reparations.csv,timeframeCovered,"What timeframe does the policy cover? ",TJET
+tjet_reparations.csv,subnational,Was the reparations policy created by a subnational government? ,TJET
+tjet_reparations.csv,timeframeCovered,What timeframe does the policy cover? ,TJET
 tjet_reparations.csv,tjet_version,TJET database version: date on which data was extracted from the database,TJET
-tjet_reparations.csv,typeInjury,"What types of injury does the reparations policy cover? ",TJET
+tjet_reparations.csv,typeInjury,What types of injury does the reparations policy cover? ,TJET
 tjet_reparations.csv,ucdpConflictID,UCDP conflict ID,TJET
 tjet_reparations.csv,yearBegin,year the policy began operating,TJET
 tjet_reparations.csv,yearCreated,year the reparation policy was created,TJET
@@ -918,7 +919,7 @@ tjet_tcs.csv,beganOperatingDuringIntraConfl,Did this truth commission begin oper
 tjet_tcs.csv,branchCreated,Which branch(es) of government created the TC?,TJET
 tjet_tcs.csv,casesTestimoniesCount,What is the total number of testimonies taken?,TJET
 tjet_tcs.csv,ccode_cow,COW numeric country code,TJET
-tjet_tcs.csv,commissionerCount,"How many commissioners were on the truth commission? ",TJET
+tjet_tcs.csv,commissionerCount,How many commissioners were on the truth commission? ,TJET
 tjet_tcs.csv,commissioners,Did the truth commission have commissioners?,TJET
 tjet_tcs.csv,commissionersHowChosen,How were commissioners chosen?,TJET
 tjet_tcs.csv,commissionersVictimGroups,Did commissioners include representatives of victim groups?,TJET
@@ -936,7 +937,7 @@ tjet_tcs.csv,dayMonthPassed,day/month of the truth commission law,TJET
 tjet_tcs.csv,death,crimes covered: deaths,TJET
 tjet_tcs.csv,democraticTransitionBeforeTC,Did this country start a democratic transition at some point before this truth commission began operating?,TJET
 tjet_tcs.csv,disappearance,crimes covered: disappearance,TJET
-tjet_tcs.csv,domesticInitiatePerson,"Who specifically initiated the commission? ",TJET
+tjet_tcs.csv,domesticInitiatePerson,Who specifically initiated the commission? ,TJET
 tjet_tcs.csv,encourageVictimTestimony,Did the truth commission encourage victim testimony?,TJET
 tjet_tcs.csv,encourageVictimTestimonyHow,How did the truth commission encourage victim testimony?,TJET
 tjet_tcs.csv,estimatedCost,What was the estimated cost of the TC (in USD)?,TJET
@@ -944,7 +945,7 @@ tjet_tcs.csv,finalRecommendations,additional recommendations of the truth commis
 tjet_tcs.csv,finalReportIssued,Did the truth commission issue a final report?,TJET
 tjet_tcs.csv,finalReportRecommendations,Did the truth commission final report make final recommendations?,TJET
 tjet_tcs.csv,fitsConflictTJ,Did this case fit the definition of a conflict truth commission?,TJET
-tjet_tcs.csv,fitsPostAutocraticTJ,"Did this case fit the definition of a post-authoritarian truth commission? ",TJET
+tjet_tcs.csv,fitsPostAutocraticTJ,Did this case fit the definition of a post-authoritarian truth commission? ,TJET
 tjet_tcs.csv,focusedPast,Was the commission focused on past rather than ongoing events?,TJET
 tjet_tcs.csv,forcedDisplacement,crimes covered: forced displacement,TJET
 tjet_tcs.csv,formallyIndependent,Was the TC formally independent?,TJET
@@ -956,7 +957,7 @@ tjet_tcs.csv,humanRightsReforms,Did the final report recommend human rights refo
 tjet_tcs.csv,humanRightsReformType,What type of human rights reform did the final report recommend?,TJET
 tjet_tcs.csv,idiosyncratic,this commission did not strictly meet the TJET definition of a truth commission,TJET
 tjet_tcs.csv,implementationSources,coding sources on implementation,TJET
-tjet_tcs.csv,internationalBody,"Which international body initiated the commission?  ",TJET
+tjet_tcs.csv,internationalBody,Which international body initiated the commission?  ,TJET
 tjet_tcs.csv,intraConflictBeforeTC,Did this country start an intra-state conflict at some point before this truth commission began operating?,TJET
 tjet_tcs.csv,invalid,"invalid observation, binary",TJET
 tjet_tcs.csv,investigatePatternAbuse,Did the commission aim to investigates a pattern of abuse?,TJET
@@ -970,15 +971,15 @@ tjet_tcs.csv,mandatePeriodicMonitoringImplementation,Did the truth commission ma
 tjet_tcs.csv,mandateTimePeriodCovered,Did the mandate specify the time period that is covered by the truth commission?,TJET
 tjet_tcs.csv,namePerpetrators,truth commission powers: name perpetrators,TJET
 tjet_tcs.csv,narrative,narrative description,TJET
-tjet_tcs.csv,neverOperated,"Did the truth commission never operate?  ",TJET
+tjet_tcs.csv,neverOperated,Did the truth commission never operate?  ,TJET
 tjet_tcs.csv,officialName,name or description of the truth commission,TJET
 tjet_tcs.csv,officialName_en,name or description of the truth commission (English),TJET
 tjet_tcs.csv,officialName_en_fr,name or description of the truth commission (French translation),TJET
 tjet_tcs.csv,operationSources,coding sources on operations,TJET
 tjet_tcs.csv,pdf_file,Does TJET have a copy of the final report on the website?,TJET
-tjet_tcs.csv,penalizeIndividuals,"truth commission powers: penalize individuals for non-compliance or interference ",TJET
+tjet_tcs.csv,penalizeIndividuals,truth commission powers: penalize individuals for non-compliance or interference ,TJET
 tjet_tcs.csv,perpetratorNamesPublished,Were perpetrators' names published?,TJET
-tjet_tcs.csv,perpetratorPubliclyNamedTestimony,"Were perpetrators publicly named during testimony? ",TJET
+tjet_tcs.csv,perpetratorPubliclyNamedTestimony,Were perpetrators publicly named during testimony? ,TJET
 tjet_tcs.csv,perpetratorReceived,Did the perpetrator receive something in return for testimony?,TJET
 tjet_tcs.csv,perpetratorsWho,Who were the perpetrators?,TJET
 tjet_tcs.csv,perpetratorTestimony,Did the truth commission take perpetrator testimony?,TJET
@@ -988,11 +989,11 @@ tjet_tcs.csv,recommendInstitutionalReforms,truth commission powers: recommend in
 tjet_tcs.csv,recommendProsecutions,Did the final report recommend prosecutions?,TJET
 tjet_tcs.csv,recommendProsecutionsWho,Who did the report recommend prosecuting?,TJET
 tjet_tcs.csv,recommendReparations,Did the final report recommend reparations?,TJET
-tjet_tcs.csv,reparationsType,"What type of reparations did the final report recommend? ",TJET
+tjet_tcs.csv,reparationsType,What type of reparations did the final report recommend? ,TJET
 tjet_tcs.csv,reportEstablishResponsibility,Did the final report establish responsibility?,TJET
 tjet_tcs.csv,reportHighlightVictimGroups,Did the final report highlight specific victim groups?,TJET
 tjet_tcs.csv,reportPubliclyAvailable,Is the final report publicly available?,TJET
-tjet_tcs.csv,reportPublisher,"Who published the final report? ",TJET
+tjet_tcs.csv,reportPublisher,Who published the final report? ,TJET
 tjet_tcs.csv,reportRecommendInstitutionalReform,Did the final report recommend institutional reform?,TJET
 tjet_tcs.csv,reportSources,coding sources on final report,TJET
 tjet_tcs.csv,SecuritySectorReforms,Did the final report recommend security sector reform?,TJET
@@ -1003,7 +1004,7 @@ tjet_tcs.csv,staff,Did the truth commission have staff?,TJET
 tjet_tcs.csv,staffMemberCount,How many staff members did the truth commission have?,TJET
 tjet_tcs.csv,status,"What was the status of the truth commission at the time of coding? (ongoing; aborted, completed)",TJET
 tjet_tcs.csv,subnationalAuthorization,Was this truth commission created or authorized by a subnational government?,TJET
-tjet_tcs.csv,subnationalOperation,"Did this truth commission operate at the subnational level? ",TJET
+tjet_tcs.csv,subnationalOperation,Did this truth commission operate at the subnational level? ,TJET
 tjet_tcs.csv,supportProsecutions,truth commission powers: support prosecutions,TJET
 tjet_tcs.csv,tcAims,"How are the TC's aims or goals framed? Literally, what words do the establishing laws or report commonly make use of?",TJET
 tjet_tcs.csv,tclawOnline,URL of the truth commission law (if the law is online),TJET
@@ -1059,7 +1060,7 @@ tjet_trials.csv,finalConviction,Was any accused convicted by the end of this tri
 tjet_trials.csv,finalConvictionHighRank,Was any high-ranking accused convicted by the end of this trial?,TJET
 tjet_trials.csv,finalConvictionYear_min,year of first final conviction in this trial,TJET
 tjet_trials.csv,firstConvictionYear_min,year of first conviction in this trial,TJET
-tjet_trials.csv,fitsConflictTJ,"Did this case fit the definition of conflict transitional justice and can it be matched to a UCDP conflict ID? ",TJET
+tjet_trials.csv,fitsConflictTJ,Did this case fit the definition of conflict transitional justice and can it be matched to a UCDP conflict ID? ,TJET
 tjet_trials.csv,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?,TJET
 tjet_trials.csv,generalOrSpecific,Is this entry a general report or a specific event?,TJET
 tjet_trials.csv,HRs_charges,number of accused with human rights charges in this trial,TJET
@@ -1095,7 +1096,7 @@ tjet_un_investigations.csv,ccode_cow,COW numeric country code,TJET
 tjet_un_investigations.csv,country,country name,TJET
 tjet_un_investigations.csv,end,year the UN investigation ended,TJET
 tjet_un_investigations.csv,goals,"goals of the UN investigation (see also uninv_dompros, uninv_evcoll, and uninv_intlpros) ",TJET
-tjet_un_investigations.csv,mandate,"mandating authority/document ",TJET
+tjet_un_investigations.csv,mandate,mandating authority/document ,TJET
 tjet_un_investigations.csv,mandate_en,mandating authority/document (English),TJET
 tjet_un_investigations.csv,mandate_fr,mandating authority/document (French translation),TJET
 tjet_un_investigations.csv,source,Where was documentation on the UN investigation mandate found?,TJET
@@ -1152,10 +1153,10 @@ tjet_vettings.csv,startedDemocraticTransition,Did this country start a democrati
 tjet_vettings.csv,startedIntraConflBefore,Did this country start an intrastate conflict at some point before this vetting policy?,TJET
 tjet_vettings.csv,sum_inst,number of specific institutions targeted (0-8),TJET
 tjet_vettings.csv,targetingAffiliation,Individuals were targeted for their affiliation with which institutional actor at the time of their abuse or transgression?,TJET
-tjet_vettings.csv,targetingAffiliationRank,"targeting affiliation: rank ",TJET
-tjet_vettings.csv,targetingPositionSought,"Which institutional positions were those targeted by this policy prevented from holding?  ",TJET
+tjet_vettings.csv,targetingAffiliationRank,targeting affiliation: rank ,TJET
+tjet_vettings.csv,targetingPositionSought,Which institutional positions were those targeted by this policy prevented from holding?  ,TJET
 tjet_vettings.csv,targetingPositionsRank,targeting positions sought: rank,TJET
-tjet_vettings.csv,targetingWhy,"Why were individuals targeted? ",TJET
+tjet_vettings.csv,targetingWhy,Why were individuals targeted? ,TJET
 tjet_vettings.csv,tjet_version,TJET database version: date on which data was extracted from the database,TJET
 tjet_vettings.csv,type_ban,policy type: ban from future employment,TJET
 tjet_vettings.csv,type_declassification,policy type: declassification,TJET
