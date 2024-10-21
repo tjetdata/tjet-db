@@ -39,10 +39,14 @@ str(db[sort(names(db))], 1)
 
 ### fx
 translate <- function(col) {
-  ifelse(is.na(col), "", 
+  ifelse(is.na(col), "",
          toFrench(text = col,
-                  source_lang = "EN", 
+                  source_lang = "EN",
                   auth_key = key_get("DeepL")))
+  # ifelse(is.na(col), "", 
+  #        toEnglish(text = col,
+  #                 source_lang = "ES", 
+  #                 auth_key = key_get("DeepL")))
 }
 usage(key_get("DeepL"))
 
@@ -193,8 +197,10 @@ db[tabs] %>%
 #   translate() %>%
 #   write_file(file = here::here(base, "CotedIvoire-fr.qmd"))
 
-# read_csv("~/Desktop/Trials-search.csv") %>% 
+# read_csv("~/Desktop/ArgCausas.csv") %>%
 #   rowwise() %>%
-#   mutate(caseDescription_fr = translate(caseDescription)) %>%
-#   ungroup() %>% 
-#   write_csv("~/Desktop/Trials-search-new.csv")
+#   mutate(cover_proceedings = translate(cover_proceedings), 
+#          cover_tof = translate(cover_tof), 
+#          cover_cassation = translate(cover_cassation)) %>%
+#   ungroup() %>%
+#   write_csv("~/Desktop/ArgCausasNEW.csv")

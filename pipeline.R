@@ -17,6 +17,8 @@ conflicted::conflict_prefer("fixed", "stringr")
 source(here::here("pipeline", "downloads.R"))
 ### processing raw data into production database & creating the TJET datasets 
 source(here::here("pipeline", "processing.R"))
+### descriptives based on the current data
+source(here::here("pipeline", "descriptives.R"))
 ### translating necessary fields into French (only use as needed) 
 source(here::here("pipeline", "translation.R"))
 ### writing the production database to the Cloudways server
