@@ -1185,12 +1185,12 @@ db[["ICCaccused"]] <- db[["Accused"]] %>%
   arrange(ccode_Accused, ICC_arrest_warrant)
 
 ### helpers for CY measures
-source("pipeline/AmnestyMeasure.R", echo = TRUE)
-source("pipeline/ReparationMeasures.R", echo = TRUE)
-source("pipeline/TCgoals.R", echo = TRUE)
-source("pipeline/TCmeasure.R", echo = TRUE)
-source("pipeline/TrialsMeasure.R", echo = TRUE)
-source("pipeline/VettingMeasures.R", echo = TRUE)
+source("pipeline/fx/AmnestyMeasure.R", echo = TRUE)
+source("pipeline/fx/ReparationMeasures.R", echo = TRUE)
+source("pipeline/fx/TCgoals.R", echo = TRUE)
+source("pipeline/fx/TCmeasure.R", echo = TRUE)
+source("pipeline/fx/TrialsMeasure.R", echo = TRUE)
+source("pipeline/fx/VettingMeasures.R", echo = TRUE)
 
 # sample_cy <- c(
 #   glo = "global", ### all, all the time, i.e. full dataset
@@ -1213,7 +1213,8 @@ source("pipeline/VettingMeasures.R", echo = TRUE)
 #     Accept = "Accept: application/vnd.github.v3.raw"))
 
 ### cy dataset assembled in other repo
-df <- readRDS(here::here("data", "cy_covariates.rds"))
+df <- readRDS(here::here("data", "cy_covariates.rds")) %>% 
+  select(-beg, -end) 
 not <- c("histname", "cid_who", "ldc", "lldc", "sids", "income_wb", 
          "iso3c_wb", "region_wb2")
 first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", 
@@ -1459,9 +1460,9 @@ df %>%
 # df <- df %>%
 #   select(country, country_case, ccode_cow, year, trials_domestic)
 
-source("pipeline/measures_amnesties.R", echo = TRUE) 
-source("pipeline/measures_prosecutions.R", echo = TRUE) 
-source("pipeline/measures_tcs.R", echo = TRUE) 
+source("pipeline/go/measures_amnesties.R", echo = TRUE) 
+source("pipeline/go/measures_prosecutions.R", echo = TRUE) 
+source("pipeline/go/measures_tcs.R", echo = TRUE) 
 df <- ReparationMeasures(cy = df)
 df <- VettingMeasures(cy = df)
 
@@ -1507,6 +1508,9 @@ df <- df %>%
             by = c("country_case" = "country", "year" = "year"))
 
 ### cleanup
+
+# df %>%
+#   select(country_case, year, dtr, aco, dco, pco)
 
 first <- c(first, "dtr", "aco", "dco", "pco")
 not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", "transition", 
@@ -2213,7 +2217,7 @@ data[["PAX"]] <- read_csv("data/pax_all_agreements_data_v6.csv") %>%
 
 rm(tj_vars, vars_dom, vars_for, vars_int) 
 
-source("pipeline/auto_texts.R", echo = TRUE) 
+source("pipeline/go/auto_texts.R", echo = TRUE) 
 
 ### auto-text fields check 
 ### 'auto_' fields are generated here and need to be transfered to Airtable
