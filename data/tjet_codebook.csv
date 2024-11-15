@@ -756,6 +756,14 @@ tjet_cy,cumulative_total_deaths_unknown_in_orgvio_cy,The best estimate for cumul
 tjet_cy,cumulative_total_deaths_in_orgvio_best_cy,"The best estimate for fatalities in organized violence within the borders of a country in a given year. It covers fatality estimates from all three types of violence: state-based, non-state, one-sided",UCDP OVCY,1989,2023
 tjet_cy,cumulative_total_deaths_in_orgvio_high_cy,"The high estimate for fatalities in organized violence within the borders of a country in a given year. It covers fatality estimates from all three types of violence: state-based, non-state, one-sided",UCDP OVCY,1989,2023
 tjet_cy,cumulative_total_deaths_in_orgvio_low_cy,"The low estimate for fatalities in organized violence within the borders of a country in a given year. It covers fatality estimates from all three types of violence: state-based, non-state, one-sided",UCDP OVCY,1989,2023
+tjet_cy,area_csh,land area,CShapes,,
+tjet_cy,area_rugged,land area,Shaver et al,,
+tjet_cy,rugged_min,"ruggedness, min",Shaver et al,,
+tjet_cy,rugged_max,"ruggedness, max",Shaver et al,,
+tjet_cy,rugged_mean,"ruggedness, mean",Shaver et al,,
+tjet_cy,rugged_range,"ruggedness, range",Shaver et al,,
+tjet_cy,rugged_std,"ruggedness, standard deviation",Shaver et al,,
+tjet_cy,rugged_sum,"ruggedness, sum",Shaver et al,,
 tjet_cy,fl_mountainous,"mountainous terrain, %",Fearon & Laitin,1945,1999
 tjet_cy,fl_mountainous_log,"mountainous terrain, log of %",Fearon & Laitin,1945,1999
 tjet_cy,fl_elevation_diff,difference between highest and lowest elevation,Fearon & Laitin,1945,1999
