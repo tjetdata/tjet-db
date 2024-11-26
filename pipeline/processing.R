@@ -1664,6 +1664,11 @@ db[["TruthCommissions"]] %>%
   filter(str_detect(officialName_en_fr, "droits de l'homme") | 
            is.na(officialName_en_fr)) 
 
+db[["Vettings"]] <- db[["Vettings"]] %>%
+  mutate(policyName_fr = str_replace_all(policyName_fr,
+                                              "droits de l'homme",
+                                              "droits de la personne"))
+
 db[["Vettings"]] %>% 
   select(vettingID, invalid, yearStart, policyName, policyName_fr) %>% 
   filter(str_detect(policyName_fr, "droits de l'homme") | 
@@ -2151,7 +2156,9 @@ data[["Vettings"]] <- db[["Vettings"]] %>%
       TRUE ~ 0)) %>%
   select(country_case, ccode_case, vettingID, alterationOf, yearStart, yearEnd, 
          individual_conduct, type_dismissal, type_ban, type_declassification, 
-         type_perjury, numberInvestigated, dateLaw) %>%
+         type_perjury, 
+         # numberInvestigated, 
+         dateLaw) %>%
   arrange(country_case, ccode_case, yearStart)
 
 data[["ICC-interventions"]] <- db[["ICC"]] %>% 

@@ -15,12 +15,12 @@ vet_ctry <- read_csv("data/vetting_countries.csv") %>%
   arrange(country)
 
 vet_cols <- c(
-  "policy_type", "type_dismissal", "type_ban", "type_declass", 
-  "type_perjury", "groups_targeted", "grp_police", "grp_judiciary", "grp_public", 
-  "grp_exe", "grp_legis", "grp_parties", "grp_military", "grp_other", 
+  "policy_type", "type_dismissal", "type_ban", "type_declass", "type_perjury", 
   "inst_targeted", "inst_exe", "inst_legis", "inst_parties", "inst_judiciary", 
-  "inst_police", "inst_public", "inst_military", "inst_other", # "inst_education", "inst_business", 
-  "conduct", "implementation", "public", "fairness", "ban_from_elected")
+  "inst_police", "inst_public", "inst_military", "inst_other", 
+  "conduct", 
+  # "implementation", 
+  "public", "fairness", "ban_from_elected")
 
 vet_incl <- vet_ctry %>% select(ccode) %>% 
   distinct() %>% 
@@ -41,13 +41,15 @@ vet_spells <- db[["Vettings"]] %>%
   #        type_declass_created = ifelse(is.na(alterationOf) & year == yearStart, type_declass, 0), 
   #        type_perjury_created = ifelse(is.na(alterationOf) & year == yearStart, type_perjury, 0), 
   #        conduct_created = ifelse(is.na(alterationOf) & year == yearStart, conduct, 0)) %>% # 
-  select(ccode, year, implemented, fitsPostAutocraticTJ, fitsConflictTJ, 
-         type_dismissal, type_ban, type_declassification, type_perjury, 
-         policy_type, grp_exe, grp_legis, grp_judiciary, grp_public, grp_police, 
-         grp_military, grp_parties, grp_other, groups_targeted, inst_exe, 
+  select(ccode, year, 
+         # implemented, 
+         fitsPostAutocraticTJ, fitsConflictTJ, type_dismissal, type_ban, 
+         type_declassification, type_perjury, policy_type, inst_exe, 
          inst_legis, inst_judiciary, inst_public, inst_police, inst_military, 
          inst_parties, inst_other, inst_targeted, sum_inst, ban_from_elected, 
-         conduct, implementation, public, var_fairness
+         conduct, 
+         # implementation, 
+         public, var_fairness
          # targetingWhy, targetingAffiliationRank, targetingPositionSought, 
          # targetingAffiliation, targetingPositionsRank, sanctions
          ) %>% 
@@ -62,27 +64,6 @@ vet_ctry_incl <- vet_ctry %>%
   distinct() %>% 
   unlist(use.names = FALSE)
 rm(vet_ctry, vet_incl, vet_cols)
-
-### to country-year (no longer needed, was part of analysis for briefing)
-# new <- vet_spells %>%
-#   mutate(type_both = type_ban + type_dismissal, 
-#          type_both = ifelse(type_both > 0, 1, 0),
-#          type_all = type_ban + type_dismissal + type_declass + type_perjury,
-#          type_all = ifelse(type_all > 0, 1, 0),
-#          parties = inst_parties + grp_parties,
-#          parties = ifelse(parties > 0, 1, 0),
-#          inst_security = inst_police + inst_military,
-#          inst_security = ifelse(inst_security > 0, 1, 0),
-#          inst_private = inst_other + inst_parties,
-#          inst_private = ifelse(inst_private > 0, 1, 0),
-#          inst_public_all = inst_exe + inst_legis + inst_security + inst_public + inst_judiciary,
-#          inst_public_all = ifelse(inst_public_all > 0, 1, 0),
-#          vetting_cat = case_when(policy_type == 0 & implementation == 0 ~ "none",
-#                                      policy_type > 0 & implementation == 0 ~ "unimplemented",
-#                                      policy_type > 0 & implementation == 1 ~ "implemented"),
-#          vetting = case_when(vetting_cat == "none" ~ 0,
-#                                  vetting_cat == "unimplemented" ~ 1,
-#                                  vetting_cat == "implemented" ~ 2))
 
 VettingMeasures <- function(cy = df, nexus_vars = "all") {
   ## options
@@ -100,12 +81,16 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
     mutate(all = 1) %>% 
     filter(if_any(all_of(nexus[nexus_vars]), ~ . == 1)) %>%
     select(ccode, year, type_dismissal, type_ban, type_declass, type_perjury, 
-           # policy_type, groups_targeted, inst_targeted, sum_inst, 
-           ban_from_elected, conduct, implementation, public, fairness)
+           # policy_type, inst_targeted, sum_inst, 
+           ban_from_elected, conduct, 
+           # implementation, 
+           public, fairness)
 
   non_na <- expr(ccode_cow %in% vet_ctry_incl & year %in% 1970:2020)
   vars <- c("type_dismissal", "type_ban", "type_declass", "type_perjury", 
-            "ban_from_elected", "conduct", "implementation", "public", "fairness"
+            "ban_from_elected", "conduct", 
+            # "implementation", 
+            "public", "fairness"
             # "vet_dismiss_created", "vet_ban_created", "vet_declass_created", "vet_perjury_created", "vet_conduct_created"
             )
   
@@ -126,7 +111,7 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
          type_perjury, 
          ban_from_elected, 
          conduct, 
-         implementation, 
+         # implementation, 
          public, 
          fairness, 
          .direction = "down") %>%
@@ -139,7 +124,7 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
            "vet_perjury" = "type_perjury", 
            "vet_ban_from_elected" = "ban_from_elected",
            "vet_conduct" = "conduct", 
-           "vet_implemented" = "implementation", 
+           # "vet_implemented" = "implementation", 
            "vet_public" = "public", 
            "vet_fairness" = "fairness") %>%  
     return()
