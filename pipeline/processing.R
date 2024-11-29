@@ -1542,21 +1542,21 @@ df <- df %>%
 ### create lags and saving the analyses dataset
 ### saving to Dropbox only works locally NEED TO DISABLE THIS FOR GITHUB ACTIONS 
 
-lags <- df %>%
-  select(!any_of(c("country", "country_label", "country_name", "country_fr", 
-                   "country_label_fr", "ccode_cow", "ccode_ksg", "m49", "isoa3", 
-                   "country_id_vdem", "region", "subregion", "intregion", 
-                   "region_wb", "micro_ksg", "dtr", "aco", "dco", "pco"))) %>%
-  mutate(year = year + 1) %>%
-  rename_with(~ paste0("lag_", .x))
 
 dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
-
 exclude <- c("country_label", "country_name", "country_fr", "country_label_fr")
   
+# lags <- df %>%
+#   select(!any_of(c("country", "country_label", "country_name", "country_fr", 
+#                    "country_label_fr", "ccode_cow", "ccode_ksg", "m49", "isoa3", 
+#                    "country_id_vdem", "region", "subregion", "intregion", 
+#                    "region_wb", "micro_ksg", "dtr", "aco", "dco", "pco"))) %>%
+#   mutate(year = year + 1) %>%
+#   rename_with(~ paste0("lag_", .x))
+
 df %>% 
-  left_join(lags, by = c("country_case" = "lag_country_case",
-                         "year" = "lag_year")) %>%
+  # left_join(lags, by = c("country_case" = "lag_country_case",
+  #                        "year" = "lag_year")) %>%
   mutate(tjet_version = timestamp) %>% 
   select(!any_of(exclude)) %>% 
   write_csv(here::here("tjet_datasets", "tjet_cy_analyses.csv"), na = "") %>% 
