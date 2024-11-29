@@ -7,6 +7,12 @@
 
 #### transitional prosecutions (prefix: tran)
 
+## Transitional human rights prosecutions: tran_trs_dom_dtj
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "all")
+
+## Intrastate conflict prosecutions: tran_trs_dom_ctj
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "all")
+
 ## dtj trials of state agents: _dtj_sta
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "dtj", memb_opts = "sta") %>% 
   mutate(tran_trs_dom_dtj_sta_binary = ifelse(tran_trs_dom_dtj_sta > 0, 1, 0), 

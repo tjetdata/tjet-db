@@ -186,6 +186,8 @@ tjet_cy,cce_for_opp_hi,"foreign trials of high-ranking opposition members, count
 tjet_cy,acc_for_opp_hi,"foreign trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
 tjet_cy,crt_for_opp_hi,"foreign trials of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
 tjet_cy,sen_for_opp_hi,"foreign trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,tran_trs_dom_dtj,"domestic transitional human rights prosecutions, all",TJET,1970,2020
+tjet_cy,tran_trs_dom_ctj,"domestic intrastate conflict prosecutions, all",TJET,1970,2020
 tjet_cy,tran_trs_dom_dtj_sta,"domestic transitional human rights prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,tran_trs_dom_dtj_sta_binary,binary version of tran_trs_dom_dtj_sta,TJET,1970,2020
 tjet_cy,tran_trs_dom_dtj_sta_scale,scale version of tran_trs_dom_dtj_sta,TJET,1970,2020
@@ -656,16 +658,24 @@ tjet_cy,conflict_neighbours,number of neighboring countries with any internal (i
 tjet_cy,confl_new,number of new internal (incl. internationalized) conflicts starting,UCDP ACD,1946,2023
 tjet_cy,confl_new_ep,"number of new internal (incl. internationalized) conflict episodes starting, excl. new conflicts",UCDP ACD,1946,2023
 tjet_cy,confl_cont,"any conflict continuing from previous year, binary",UCDP ACD,1946,2023
+tjet_cy,confl_new_25,new conflict based on cumulative 25 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,confl_new_100,new conflict based on cumulative 100 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,confl_new_500,new conflict based on cumulative 500 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,confl_new_1000,new conflict based on cumulative 1000 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,confl_recur_25,conflict recurrence based on cumulative 25 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,confl_recur_100,conflict recurrence based on cumulative 100 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,confl_recur_500,conflict recurrence based on cumulative 500 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,confl_recur_1000,conflict recurrence based on cumulative 1000 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,yrs_since_confl,years since last conflict activity (or since 1945 for countries without conflict),UCDP ACD,1946,2023
 tjet_cy,territorial,"any internal armed conflict over territorial incompatibility, binary",UCDP ACD,1946,2023
-tjet_cy,confterm,"any internal conflict dyad episode terminated, binary",UCDP Termination,1946,2019
-tjet_cy,recur,"any internal conflict dyad recurrence after spell of non-conflict, binary",UCDP Termination,1946,2019
-tjet_cy,outcome_agreement,count of internal conflict terminations with peace agreement,UCDP Termination,1946,2019
-tjet_cy,outcome_ceasefire,count of internal conflict terminations with ceasefire,UCDP Termination,1946,2019
-tjet_cy,outcome_victory_gov,count of internal conflict terminations with government victory,UCDP Termination,1946,2019
-tjet_cy,outcome_victory_reb,count of internal conflict terminations with victory by non-state side,UCDP Termination,1946,2019
-tjet_cy,outcome_low_activity,count of internal conflict terminations due to low activity,UCDP Termination,1946,2019
-tjet_cy,outcome_actor_ceases,count of internal conflict terminations because an actor ceased to exist,UCDP Termination,1946,2019
+tjet_cy,confl_term,"any internal conflict dyad episode terminated, binary",UCDP Termination,1946,2020
+tjet_cy,recur_term,"any internal conflict dyad recurrence after spell of non-conflict, binary",UCDP Termination,1946,2020
+tjet_cy,outcome_agreement,count of internal conflict terminations with peace agreement,UCDP Termination,1946,2020
+tjet_cy,outcome_ceasefire,count of internal conflict terminations with ceasefire,UCDP Termination,1946,2020
+tjet_cy,outcome_victory_gov,count of internal conflict terminations with government victory,UCDP Termination,1946,2020
+tjet_cy,outcome_victory_reb,count of internal conflict terminations with victory by non-state side,UCDP Termination,1946,2020
+tjet_cy,outcome_low_activity,count of internal conflict terminations due to low activity,UCDP Termination,1946,2020
+tjet_cy,outcome_actor_ceases,count of internal conflict terminations because an actor ceased to exist,UCDP Termination,1946,2020
 tjet_cy,reb_claim,count of rebel groups in internal conflict dyads making exclusive ethnic claims,EPR (ACD2EPR),1946,2021
 tjet_cy,reb_recruit,count of rebel groups in internal conflict dyads recruiting from ethnic groups,EPR (ACD2EPR),1946,2021
 tjet_cy,gov_recruit,count of internal conflict dyads where governments recruit on the basis of ethnicity,EPR (ACD2EPR),1946,2021
@@ -688,6 +698,9 @@ tjet_cy,bd_hi_ucdp,high estimate for battle-related deaths,UCDP BRD,1989,2023
 tjet_cy,bd_lacina,best estimate of annual battle fatalities or low estimate where best estimate is missing,PRIO Lacina,1946,2008
 tjet_cy,bd_lo_lacina,low estimate of annual battle fatalities,PRIO Lacina,1946,2008
 tjet_cy,bd_hi_lacina,high estimate of annual battle fatalities,PRIO Lacina,1946,2008
+tjet_cy,bd_best,"best estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2008
+tjet_cy,bd_low,"low estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2008
+tjet_cy,bd_high,"high estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2008
 tjet_cy,sb_exist_cy,The existence of state-based violence within the borders of a country in a given year. It is 1 if state-based violence occurs.,UCDP OVCY,1989,2023
 tjet_cy,sb_dyad_count_cy,The number of state-based dyads engaging in organized violence within the borders of a country in a given year.,UCDP OVCY,1989,2023
 tjet_cy,sb_dyad_ids_cy,The IDs of state-based dyads engaging in organized violence within the borders of a country in a given year. NO_DYAD is coded when there was no relevant record in UCDP GED.,UCDP OVCY,1989,2023
