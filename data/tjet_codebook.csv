@@ -52,14 +52,31 @@ tjet_cy,micro_ksg,Gleditsch micro-state ,Kristian S. Gleditsch,,
 tjet_cy,sample_trans,"democratic transition sample, binary",TJET,,
 tjet_cy,sample_confl,"conflict sample, binary",TJET,,
 tjet_cy,sample_combi,combined sample (democratic transition & conflict),TJET,,
+tjet_cy,transition,first year of democratic transition,TJET,,
 tjet_cy,dtr,"democratic transition sample, binary",TJET,,
 tjet_cy,aco,"conflict & post-conflict sample, binary",TJET,,
 tjet_cy,dco,"during conflict sample, binary",TJET,,
 tjet_cy,pco,"after conflict sample, binary",TJET,,
-tjet_cy,reg_type_vdem,VDem ERT regime type,VDem ERT,,
+tjet_cy,aco_25,"conflict & post-conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,,
+tjet_cy,dco_25,"during conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,,
+tjet_cy,pco_25,"after conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,,
+tjet_cy,aco_100,"conflict & post-conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,,
+tjet_cy,dco_100,"during conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,,
+tjet_cy,pco_100,"after conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,,
+tjet_cy,aco_1000,"conflict & post-conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,,
+tjet_cy,dco_1000,"during conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,,
+tjet_cy,pco_1000,"after conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,,
+tjet_cy,state_age,state age,TJET,,
+tjet_cy,reg_type_vdem,"VDem ERT regime type (autocracy, democracy)",VDem ERT,,
 tjet_cy,reg_age_vdem,regime age based on VDem ERT regime type,TJET,,
+tjet_cy,reg_start_year_vdem,regime begin year,VDem ERT,,
+tjet_cy,reg_end_year_vdem,regine end year,VDem ERT,,
+tjet_cy,reg_trans_vdem,VDem regime transition,VDem ERT,,
 tjet_cy,dem_spell_id_vdem,demoracy spell ID based on VDem ERT regime type,TJET,,
 tjet_cy,dem_reversion,categorical democratic reversion measure coded by TJET based on VDem ERT transitions and changes in the Regimes of the World measure,TJET,,
+tjet_cy,v2x_regime_ert,"regime type (closed autocracy, electoral autocracy, electoral democracy, liberal democracy) ",VDem ERT,,
+tjet_cy,reg_anoc,anocracy (electoral autocracy or democracy),VDem ERT,,
+tjet_cy,reg_chg,regime change,VDem ERT & TJET,,
 tjet_cy,amnesties_sample,country-years from first year with any amnesties,TJET,,
 tjet_cy,reparations_sample,country-years from first year with any reparations policies,TJET,,
 tjet_cy,tcs_sample,country-years from first year with any truth commissions,TJET,,
@@ -657,7 +674,6 @@ tjet_cy,subreg_war_internationalized,number of countries in sub-region with any 
 tjet_cy,conflict_neighbours,number of neighboring countries with any internal (incl. internationalized) conflict,UCDP ACD & COW Contiguity,1946,2023
 tjet_cy,confl_new,number of new internal (incl. internationalized) conflicts starting,UCDP ACD,1946,2023
 tjet_cy,confl_new_ep,"number of new internal (incl. internationalized) conflict episodes starting, excl. new conflicts",UCDP ACD,1946,2023
-tjet_cy,confl_cont,"any conflict continuing from previous year, binary",UCDP ACD,1946,2023
 tjet_cy,confl_new_25,new conflict based on cumulative 25 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_new_100,new conflict based on cumulative 100 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_new_500,new conflict based on cumulative 500 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
@@ -666,7 +682,15 @@ tjet_cy,confl_recur_25,conflict recurrence based on cumulative 25 deaths thresho
 tjet_cy,confl_recur_100,conflict recurrence based on cumulative 100 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_recur_500,conflict recurrence based on cumulative 500 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_recur_1000,conflict recurrence based on cumulative 1000 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
-tjet_cy,yrs_since_confl,years since last conflict activity (or since 1945 for countries without conflict),UCDP ACD,1946,2023
+tjet_cy,confl_cont_25,"any conflict continuing from previous year, binary, 25 battle deaths or more over conflict episode",UCDP ACD,1946,2023
+tjet_cy,confl_cont_100,"any conflict continuing from previous year, binary, 100 battle deaths or more over conflict episode",UCDP ACD,1946,2023
+tjet_cy,confl_cont_1000,"any conflict continuing from previous year, binary, 1000 battle deaths or more over conflict episode",UCDP ACD,1946,2023
+tjet_cy,yrs_since_confl_25,years since last conflict activity (or since 1945 for countries without conflict) based on cumulative 25 deaths threshold during episode,UCDP ACD,1946,2023
+tjet_cy,yrs_since_confl_100,years since last conflict activity (or since 1945 for countries without conflict) based on cumulative 100 deaths threshold during episode,UCDP ACD,1946,2023
+tjet_cy,yrs_since_confl_1000,years since last conflict activity (or since 1945 for countries without conflict) based on cumulative 1000 deaths threshold during episode,UCDP ACD,1946,2023
+tjet_cy,peace_spell_25,"peace spell identifier, based on cumulative 25 deaths threshold during episode",TJET,,
+tjet_cy,peace_spell_100,"peace spell identifier, based on cumulative 100 deaths threshold during episode",TJET,,
+tjet_cy,peace_spell_1000,"peace spell identifier, based on cumulative 1000 deaths threshold during episode",TJET,,
 tjet_cy,territorial,"any internal armed conflict over territorial incompatibility, binary",UCDP ACD,1946,2023
 tjet_cy,confl_term,"any internal conflict dyad episode terminated, binary",UCDP Termination,1946,2020
 tjet_cy,recur_term,"any internal conflict dyad recurrence after spell of non-conflict, binary",UCDP Termination,1946,2020
@@ -682,6 +706,7 @@ tjet_cy,gov_recruit,count of internal conflict dyads where governments recruit o
 tjet_cy,grps_in_dyads,ethnic groups in internal conflict dyads in EPR dataset,EPR (ACD2EPR),1946,2021
 tjet_cy,dyads_active,count of active internal conflict dyads,UCDP DYAD,1946,2023
 tjet_cy,dyads_new,count of new conflict dyads of internal (incl. internationalized) conflict,UCDP DYAD,1946,2023
+tjet_cy,dyads_cumu,cumulative count of new conflict dyads of internal (incl. internationalized) conflict,UCDP DYAD,1946,2023
 tjet_cy,dyads_ep_new,count of new dyad episodes (incl. recurrence) of internal (incl. internationalized) conflict,UCDP DYAD,1946,2023
 tjet_cy,ethnic,"ethnic/communal orientation of any rebel group (""Does the group state, or is it clear in other ways/from other sources that the rebel group either represents or purports to represent a specific ethnic group?)",UCDP CID,1989,2017
 tjet_cy,sideb_regional,regional orientation of any rebel group,UCDP CID,1989,2017
@@ -698,9 +723,10 @@ tjet_cy,bd_hi_ucdp,high estimate for battle-related deaths,UCDP BRD,1989,2023
 tjet_cy,bd_lacina,best estimate of annual battle fatalities or low estimate where best estimate is missing,PRIO Lacina,1946,2008
 tjet_cy,bd_lo_lacina,low estimate of annual battle fatalities,PRIO Lacina,1946,2008
 tjet_cy,bd_hi_lacina,high estimate of annual battle fatalities,PRIO Lacina,1946,2008
-tjet_cy,bd_best,"best estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2008
-tjet_cy,bd_low,"low estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2008
-tjet_cy,bd_high,"high estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2008
+tjet_cy,bd_best,"best estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,bd_low,"low estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,bd_high,"high estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,1946,2023
+tjet_cy,bd_cumu,cumulative count of battle-related deaths (bd_best),UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,sb_exist_cy,The existence of state-based violence within the borders of a country in a given year. It is 1 if state-based violence occurs.,UCDP OVCY,1989,2023
 tjet_cy,sb_dyad_count_cy,The number of state-based dyads engaging in organized violence within the borders of a country in a given year.,UCDP OVCY,1989,2023
 tjet_cy,sb_dyad_ids_cy,The IDs of state-based dyads engaging in organized violence within the borders of a country in a given year. NO_DYAD is coded when there was no relevant record in UCDP GED.,UCDP OVCY,1989,2023
@@ -777,6 +803,8 @@ tjet_cy,rugged_mean,"ruggedness, mean",Shaver et al,,
 tjet_cy,rugged_range,"ruggedness, range",Shaver et al,,
 tjet_cy,rugged_std,"ruggedness, standard deviation",Shaver et al,,
 tjet_cy,rugged_sum,"ruggedness, sum",Shaver et al,,
+tjet_cy,ef,"ethnic fractionalization index, calculated from EPR",EPR,1946,2021
+tjet_cy,noncontig,"non-contiguous state, binary",Fearon & Laitin,,
 tjet_cy,fl_mountainous,"mountainous terrain, %",Fearon & Laitin,1945,1999
 tjet_cy,fl_mountainous_log,"mountainous terrain, log of %",Fearon & Laitin,1945,1999
 tjet_cy,fl_elevation_diff,difference between highest and lowest elevation,Fearon & Laitin,1945,1999

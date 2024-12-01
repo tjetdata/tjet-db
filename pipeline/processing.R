@@ -929,9 +929,13 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
 ### democratic reversions data for merging 
 reversions <- read_csv("transitions/transitions_new_revised.csv",
          show_col_types = FALSE) %>% 
-  select(country, country_id_vdem, year, reg_type, reg_age, dem_spell_id, dem_reversion) %>% 
+  select(country, country_id_vdem, year, reg_type, reg_start_year, reg_end_year, 
+         reg_age, reg_trans, dem_spell_id, dem_reversion, v2x_regime_ert) %>% 
   rename(reg_type_vdem = reg_type,
          reg_age_vdem = reg_age,
+         reg_start_year_vdem = reg_start_year,  
+         reg_end_year_vdem = reg_end_year,
+         reg_trans_vdem = reg_trans,
          dem_spell_id_vdem = dem_spell_id) %>% 
   filter(!is.na(country_id_vdem)) 
 
@@ -953,8 +957,7 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   mutate(cyID = paste(ccode, year, sep = "-")) %>% 
   full_join(translist, by = c("country", "ccode", "year") ) %>% 
   full_join(confllist, by = c("ccode_ksg" = "gwno_loc", "year" = "year") ) %>% 
-  mutate(conflict = ifelse(is.na(conflict), 0, 1), 
-         conflict_active = conflict) %>% 
+  mutate(conflict = ifelse(is.na(conflict), 0, 1)) %>% 
   group_by(ccode_case) %>%
   mutate(conflict = max(conflict) ) %>%
   ungroup() %>% 
@@ -968,7 +971,7 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   select(cyID, country, country_fr, country_label, country_label_fr, year, 
          beg, end, ccode, ccode_case, country_case, ccode_ksg, country_id_vdem, 
          tjet_focus, region, regime_sample, reg_democ, reg_autoc, reg_trans, 
-         conflict, transition, conflict_active) %>% 
+         conflict, transition) %>% 
   left_join(amnesties, by = c("ccode", "year") ) %>% 
   mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties),
          amnesties_SGBV = ifelse(is.na(amnesties_SGBV), 
@@ -1269,7 +1272,7 @@ df <- df %>%
          tcs_sample = ifelse(tcs > 0, 1, NA),
          trials_domestic_sample = ifelse(trials_domestic > 0, 1, NA),
          vettings_sample = ifelse(vettings > 0, 1, NA)) %>%
-  group_by(country_case) %>%
+  group_by(country_case) %>% 
   fill(amnesties_sample,
        reparations_sample,
        tcs_sample,
@@ -1394,28 +1397,60 @@ df <- df %>%
                   "uninv_intlpros_created", "uninv_intlpros"), 
                 ~ ifelse(is.na(.x), 0, .x))) %>% 
   mutate(sample_trans = ifelse(transition == 1, year, NA),
-         sample_confl = ifelse(conflict_active == 1, year, NA), 
-         dco = ifelse(!is.na(sample_confl) & year == sample_confl, 1, 0) # dco = "during conflict", ### binary, when conflict active
-  ) %>% 
+         confl_active_25 = ifelse(confl_new_25 == 1 | confl_recur_25 == 1 | confl_cont_25 == 1, 1, 0), 
+         confl_active_100 = ifelse(confl_new_100 == 1 | confl_recur_100 == 1 | confl_cont_100 == 1, 1, 0), 
+         confl_active_1000 = ifelse(confl_new_1000 == 1 | confl_recur_1000 == 1 | confl_cont_1000 == 1, 1, 0), 
+         sample_confl_25 = ifelse(confl_active_25 == 1, year, NA), 
+         sample_confl_100 = ifelse(confl_active_100 == 1, year, NA), 
+         sample_confl_1000 = ifelse(confl_active_1000 == 1, year, NA), 
+         dco_25 = ifelse(!is.na(sample_confl_25) & year == sample_confl_25, 1, 0), # dco = "during conflict", ### binary, when conflict active
+         dco_100 = ifelse(!is.na(sample_confl_100) & year == sample_confl_100, 1, 0),
+         dco_1000 = ifelse(!is.na(sample_confl_1000) & year == sample_confl_1000, 1, 0),
+         dco = dco_25
+  ) %>%
   group_by(country_case) %>% 
   mutate(sample_trans = min(sample_trans, na.rm = TRUE), 
-         sample_confl = min(sample_confl, na.rm = TRUE) ) %>% 
-  ## warning here that is addressed in next mutate
+         ## warnings here that is addressed in next mutate
+         sample_confl_25 = min(sample_confl_25, na.rm = TRUE), 
+         sample_confl_100 = min(sample_confl_100, na.rm = TRUE), 
+         sample_confl_1000 = min(sample_confl_1000, na.rm = TRUE), 
+         peace_spell_25 = ifelse(dco_25 == 0 & (lag(dco_25) == 1 | is.na(lag(dco_25))), paste(ccode_ksg, year, sep = "-"), NA), 
+         peace_spell_100 = ifelse(dco_100 == 0 & (lag(dco_100) == 1 | is.na(lag(dco_100))), paste(ccode_ksg, year, sep = "-"), NA), 
+         peace_spell_1000 = ifelse(dco_1000 == 0 & (lag(dco_1000) == 1 | is.na(lag(dco_1000))), paste(ccode_ksg, year, sep = "-"), NA) 
+         ) %>% 
+  fill(peace_spell_25, peace_spell_100, peace_spell_1000, .direction = "down") |> 
   ungroup() %>%
-  mutate(pco = ifelse(year > sample_confl & dco == 0, 1, 0), ## "post-conflict"
+  mutate(peace_spell_25 = ifelse(confl_cont_25 == 1, NA, peace_spell_25), 
+         peace_spell_100 = ifelse(confl_cont_100 == 1, NA, peace_spell_100), 
+         peace_spell_1000 = ifelse(confl_cont_1000 == 1, NA, peace_spell_1000), 
+         pco_25 = ifelse(year > sample_confl_25 & dco_25 == 0, 1, 0),
+         pco_100 = ifelse(year > sample_confl_100 & dco_100 == 0, 1, 0),
+         pco_1000 = ifelse(year > sample_confl_1000 & dco_1000 == 0, 1, 0),
+         pco = pco_25, 
+         sample_confl_25 = ifelse(is.infinite(sample_confl_25), NA, sample_confl_25),
+         sample_confl_100 = ifelse(is.infinite(sample_confl_100), NA, sample_confl_100),
+         sample_confl_1000 = ifelse(is.infinite(sample_confl_1000), NA, sample_confl_1000),
+         aco_25 = case_when(is.na(sample_confl_25) | year < sample_confl_25 ~ 0, 
+                            # year < sample_confl_25 ~ 0, 
+                            year >= sample_confl_25 ~ 1), 
+         aco_100 = case_when(is.na(sample_confl_100) | year < sample_confl_100 ~ 0, 
+                            year >= sample_confl_100 ~ 1), 
+         aco_1000 = case_when(is.na(sample_confl_1000) | year < sample_confl_1000 ~ 0, 
+                             year >= sample_confl_1000 ~ 1), 
+         aco = aco_25, 
          sample_trans = ifelse(is.infinite(sample_trans), NA, sample_trans),
-         sample_trans = case_when(is.na(sample_trans) ~ 0, 
-                                  year < sample_trans ~ 0, 
-                                  year >= sample_trans ~ 1), 
-         dtr = sample_trans, ## "democratic transition"
-         sample_confl = ifelse(is.infinite(sample_confl), NA, sample_confl),
-         sample_confl = case_when(is.na(sample_confl) ~ 0, 
-                                  year < sample_confl ~ 0, 
-                                  year >= sample_confl ~ 1), 
-         aco = sample_confl ## "all conflicts"
+         dtr = case_when(is.na(sample_trans) | year < sample_trans ~ 0, 
+                         # year < sample_trans ~ 0, 
+                         year >= sample_trans ~ 1), 
   ) %>% 
   left_join(reversions %>% select(-country), 
             by = c("country_id_vdem", "year")) %>% 
+  mutate(reg_chg = case_when(!is.na(dem_reversion) | transition == 1 ~ 1, 
+                             TRUE ~ 0), 
+         reg_anoc = case_when(v2x_regime_ert %in% c("Closed autocracy", "Liberal democracy") ~ 0, 
+                              # v2x_regime_ert %in% c("Electoral autocracy", "Electoral democracy") ~ 1
+                              str_detect(v2x_regime_ert, "Electoral") ~ 1)
+         ) |> 
   left_join(fair_trials, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
   group_by(country_case) %>%
   fill(fair_postautocratic_trials, .direction = "down") %>%
@@ -1424,9 +1459,14 @@ df <- df %>%
   arrange(country_case, year) %>%
   group_by(country_case, isna = is.na(theta_mean_fariss) ) %>%
   mutate(cum_theta_mean_fariss = ifelse(isna, NA, cummean(theta_mean_fariss)),
-         sample_combi = ifelse(sample_trans + sample_confl > 0, 1, 0) ) %>%
+         sample_combi = ifelse(sample_trans + sample_confl_25 > 0, 1, 0) ) %>%
   ungroup() %>%
-  select(-isna)
+  select(-isna) 
+
+# df |> 
+#   filter(country_case == "El Salvador") |> 
+#   select(country_case, year, dco, pco, peace_spell, confl_new_25, confl_recur_25, confl_new_1000, confl_recur_1000)  |> 
+#   print( n = 25)
 
 # df %>%
 #   filter(uninv == 1) %>%
@@ -1514,7 +1554,9 @@ df <- df %>%
 
 first <- c(first, "dtr", "aco", "dco", "pco")
 not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", "transition", 
-         "conflict", "conflict_active", "sample_trans", "sample_confl", "sample_combi") 
+         "conflict", "confl_active_25", "confl_active_100", "confl_active_1000", 
+         "sample_trans", "sample_confl_25", "sample_confl_100", "sample_confl_1000", 
+         "sample_combi") 
 then <- names(df)[!names(df) %in% c(first, not)]
 
 df <- df %>% 
@@ -1541,8 +1583,6 @@ df <- df %>%
 
 ### create lags and saving the analyses dataset
 ### saving to Dropbox only works locally NEED TO DISABLE THIS FOR GITHUB ACTIONS 
-
-
 dropbox_path <- "~/Dropbox/TJLab/TimoDataWork/analyses_datasets/"
 exclude <- c("country_label", "country_name", "country_fr", "country_label_fr")
   
