@@ -19,10 +19,26 @@ dtr,"democratic transition sample, binary",TJET,2024-11-26
 aco,"conflict & post-conflict sample, binary",TJET,2024-11-26
 dco,"during conflict sample, binary",TJET,2024-11-26
 pco,"after conflict sample, binary",TJET,2024-11-26
-reg_type_vdem,VDem ERT regime type,VDem ERT,2024-11-26
+aco_25,"conflict & post-conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,2024-11-26
+dco_25,"during conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,2024-11-26
+pco_25,"after conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,2024-11-26
+aco_100,"conflict & post-conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,2024-11-26
+dco_100,"during conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,2024-11-26
+pco_100,"after conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,2024-11-26
+aco_1000,"conflict & post-conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,2024-11-26
+dco_1000,"during conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,2024-11-26
+pco_1000,"after conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,2024-11-26
+state_age,state age,TJET,2024-11-26
+reg_type_vdem,"VDem ERT regime type (autocracy, democracy)",VDem ERT,2024-11-26
 reg_age_vdem,regime age based on VDem ERT regime type,TJET,2024-11-26
+reg_start_year_vdem,regime begin year,VDem ERT,2024-11-26
+reg_end_year_vdem,regine end year,VDem ERT,2024-11-26
+reg_trans_vdem,VDem regime transition,VDem ERT,2024-11-26
 dem_spell_id_vdem,demoracy spell ID based on VDem ERT regime type,TJET,2024-11-26
 dem_reversion,categorical democratic reversion measure coded by TJET based on VDem ERT transitions and changes in the Regimes of the World measure,TJET,2024-11-26
+v2x_regime_ert,"regime type (closed autocracy, electoral autocracy, electoral democracy, liberal democracy)",VDem ERT,2024-11-26
+reg_anoc,anocracy (electoral autocracy or democracy),VDem ERT,2024-11-26
+reg_chg,regime change,VDem ERT & TJET,2024-11-26
 amnesties_sample,country-years from first year with any amnesties,TJET,2024-11-26
 reparations_sample,country-years from first year with any reparations policies,TJET,2024-11-26
 tcs_sample,country-years from first year with any truth commissions,TJET,2024-11-26
@@ -607,16 +623,21 @@ subreg_war_internal,number of countries in sub-region with any internal (incl. i
 subreg_war_internal_strict,number of countries in sub-region with any internal (excl. internationalized) war,UCDP ACD & UNSD M49,2024-11-26
 subreg_war_internationalized,number of countries in sub-region with any internationalized war,UCDP ACD & UNSD M49,2024-11-26
 conflict_neighbours,number of neighboring countries with any internal (incl. internationalized) conflict,UCDP ACD & COW Contiguity,2024-11-26
-confl_cont,"any conflict continuing from previous year, binary",UCDP ACD,2024-11-26
 confl_new_25,new conflict based on cumulative 25 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,2024-11-26
 confl_new_100,new conflict based on cumulative 100 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,2024-11-26
-confl_new_500,new conflict based on cumulative 500 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,2024-11-26
 confl_new_1000,new conflict based on cumulative 1000 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,2024-11-26
 confl_recur_25,conflict recurrence based on cumulative 25 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,2024-11-26
 confl_recur_100,conflict recurrence based on cumulative 100 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,2024-11-26
-confl_recur_500,conflict recurrence based on cumulative 500 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,2024-11-26
 confl_recur_1000,conflict recurrence based on cumulative 1000 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,2024-11-26
-yrs_since_confl,years since last conflict activity (or since 1945 for countries without conflict),UCDP ACD,2024-11-26
+confl_cont_25,"any conflict continuing from previous year, binary, 25 battle deaths or more over conflict episode",UCDP ACD,2024-11-26
+confl_cont_100,"any conflict continuing from previous year, binary, 100 battle deaths or more over conflict episode",UCDP ACD,2024-11-26
+confl_cont_1000,"any conflict continuing from previous year, binary, 1000 battle deaths or more over conflict episode",UCDP ACD,2024-11-26
+yrs_since_confl_25,years since last conflict activity (or since 1945 for countries without conflict) based on cumulative 25 deaths threshold during episode,UCDP ACD,2024-11-26
+yrs_since_confl_100,years since last conflict activity (or since 1945 for countries without conflict) based on cumulative 100 deaths threshold during episode,UCDP ACD,2024-11-26
+yrs_since_confl_1000,years since last conflict activity (or since 1945 for countries without conflict) based on cumulative 1000 deaths threshold during episode,UCDP ACD,2024-11-26
+peace_spell_25,"peace spell identifier, based on cumulative 25 deaths threshold during episode",TJET,2024-11-26
+peace_spell_100,"peace spell identifier, based on cumulative 100 deaths threshold during episode",TJET,2024-11-26
+peace_spell_1000,"peace spell identifier, based on cumulative 1000 deaths threshold during episode",TJET,2024-11-26
 territorial,"any internal armed conflict over territorial incompatibility, binary",UCDP ACD,2024-11-26
 confl_term,"any internal conflict dyad episode terminated, binary",UCDP Termination,2024-11-26
 recur_term,"any internal conflict dyad recurrence after spell of non-conflict, binary",UCDP Termination,2024-11-26
@@ -631,6 +652,8 @@ reb_recruit,count of rebel groups in internal conflict dyads recruiting from eth
 gov_recruit,count of internal conflict dyads where governments recruit on the basis of ethnicity,EPR (ACD2EPR),2024-11-26
 grps_in_dyads,ethnic groups in internal conflict dyads in EPR dataset,EPR (ACD2EPR),2024-11-26
 dyads_active,count of active internal conflict dyads,UCDP DYAD,2024-11-26
+dyads_new,count of new conflict dyads of internal (incl. internationalized) conflict,UCDP DYAD,2024-11-26
+dyads_cumu,cumulative count of new conflict dyads of internal (incl. internationalized) conflict,UCDP DYAD,2024-11-26
 ethnic,"ethnic/communal orientation of any rebel group (""Does the group state, or is it clear in other ways/from other sources that the rebel group either represents or purports to represent a specific ethnic group?)",UCDP CID,2024-11-26
 sideb_regional,regional orientation of any rebel group,UCDP CID,2024-11-26
 sideb_national,national orientation of any rebel group,UCDP CID,2024-11-26
@@ -643,6 +666,7 @@ sideb_restoration,"rebel group demand for post-conflict justice: compensation/re
 bd_best,"best estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,2024-11-26
 bd_low,"low estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,2024-11-26
 bd_high,"high estimate for battle-related deaths, from UCDP, missing filled in with PRIO-Lacina first or conservative estimate based on UCDP intensity indicator",UCDP BRD & PRIO Lacina,2024-11-26
+bd_cumu,cumulative count of battle-related deaths (bd_best),UCDP BRD & PRIO Lacina,2024-11-26
 sb_exist_cy,The existence of state-based violence within the borders of a country in a given year. It is 1 if state-based violence occurs.,UCDP OVCY,2024-11-26
 sb_dyad_count_cy,The number of state-based dyads engaging in organized violence within the borders of a country in a given year.,UCDP OVCY,2024-11-26
 sb_dyad_ids_cy,The IDs of state-based dyads engaging in organized violence within the borders of a country in a given year. NO_DYAD is coded when there was no relevant record in UCDP GED.,UCDP OVCY,2024-11-26
@@ -719,6 +743,8 @@ rugged_mean,"ruggedness, mean",Shaver et al,2024-11-26
 rugged_range,"ruggedness, range",Shaver et al,2024-11-26
 rugged_std,"ruggedness, standard deviation",Shaver et al,2024-11-26
 rugged_sum,"ruggedness, sum",Shaver et al,2024-11-26
+ef,"ethnic fractionalization index, calculated from EPR",EPR,2024-11-26
+noncontig,"non-contiguous state, binary",Fearon & Laitin,2024-11-26
 fl_mountainous,"mountainous terrain, %",Fearon & Laitin,2024-11-26
 fl_mountainous_log,"mountainous terrain, log of %",Fearon & Laitin,2024-11-26
 fl_noncontiguous,"noncontiguous state (""countries with territory holding at least 10,000 people and separated from the land area containing the capital city either by land or by 100 km of water"")",Fearon & Laitin,2024-11-26

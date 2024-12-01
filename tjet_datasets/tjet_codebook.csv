@@ -12,6 +12,16 @@ dtr,"democratic transition sample, binary",TJET,Transitional Justice Evaluation 
 aco,"conflict & post-conflict sample, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 dco,"during conflict sample, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 pco,"after conflict sample, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+aco_25,"conflict & post-conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+dco_25,"during conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+pco_25,"after conflict sample, binary, 25 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+aco_100,"conflict & post-conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+dco_100,"during conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+pco_100,"after conflict sample, binary, 100 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+aco_1000,"conflict & post-conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+dco_1000,"during conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+pco_1000,"after conflict sample, binary, 1000 battle deaths or more over conflict episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+state_age,state age,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 reg_age_vdem,regime age based on VDem ERT regime type,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 dem_spell_id_vdem,demoracy spell ID based on VDem ERT regime type,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 dem_reversion,categorical democratic reversion measure coded by TJET based on VDem ERT transitions and changes in the Regimes of the World measure,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
@@ -342,3 +352,6 @@ vet_ban_from_elected,"vetting policy, ban from elected office, binary",TJET,Tran
 vet_conduct,"vetting policy targeting specific individual conduct, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 vet_public,"vetting policy involving public hearings, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 vet_fairness,vetting policy fairness scale,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+peace_spell_25,"peace spell identifier, based on cumulative 25 deaths threshold during episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+peace_spell_100,"peace spell identifier, based on cumulative 100 deaths threshold during episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+peace_spell_1000,"peace spell identifier, based on cumulative 1000 deaths threshold during episode",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
