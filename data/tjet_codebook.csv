@@ -271,6 +271,7 @@ tjet_cy,tran_cce_dom_dtj_ctj_sta_hi,"domestic transitional human rights or intra
 tjet_cy,tran_acc_dom_dtj_ctj_sta_hi,"domestic transitional human rights or intrastate conflict prosecutions of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
 tjet_cy,tran_crt_dom_dtj_ctj_sta_hi,"domestic transitional human rights or intrastate conflict prosecutions of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
 tjet_cy,tran_sen_dom_dtj_ctj_sta_hi,"domestic transitional human rights or intrastate conflict prosecutions of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,tran_trs_dom_dtj_ctj_opp,"domestic transitional human rights or intrastate conflict prosecutions of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,tran_trs_dom_ctj_opp,"domestic intrastate conflict prosecutions of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,tran_trs_dom_ctj_opp_binary,binary version of tran_trs_dom_ctj_opp,TJET,1970,2020
 tjet_cy,tran_trs_dom_ctj_opp_scale,scale version of tran_trs_dom_ctj_opp,TJET,1970,2020

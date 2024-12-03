@@ -91,6 +91,9 @@ df <- TrialsMeasure(cy = df, prefix = "tran", measure = "cce", type_opts = "dom"
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "crt", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "sen", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "sta", rank_opts = "hi") 
 
+## transitional trials of opposition members: _dtj_ctj_opp
+df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = c("dtj", "ctj"), memb_opts = "opp")
+
 ## ctj trials of opposition members: _ctj_opp 
 df <- TrialsMeasure(cy = df, prefix = "tran", measure = "trs", type_opts = "dom", nexus_vars = "ctj", memb_opts = "opp") %>% 
   mutate(tran_trs_dom_ctj_opp_binary = ifelse(tran_trs_dom_ctj_opp > 0, 1, 0), 
