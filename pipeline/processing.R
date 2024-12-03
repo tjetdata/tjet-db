@@ -1397,12 +1397,12 @@ df <- df %>%
                   "uninv_intlpros_created", "uninv_intlpros"), 
                 ~ ifelse(is.na(.x), 0, .x))) %>% 
   mutate(sample_trans = ifelse(transition == 1, year, NA),
-         confl_active_25 = ifelse(confl_new_25 == 1 | confl_recur_25 == 1 | confl_cont_25 == 1, 1, 0), 
-         confl_active_100 = ifelse(confl_new_100 == 1 | confl_recur_100 == 1 | confl_cont_100 == 1, 1, 0), 
-         confl_active_1000 = ifelse(confl_new_1000 == 1 | confl_recur_1000 == 1 | confl_cont_1000 == 1, 1, 0), 
-         sample_confl_25 = ifelse(confl_active_25 == 1, year, NA), 
-         sample_confl_100 = ifelse(confl_active_100 == 1, year, NA), 
-         sample_confl_1000 = ifelse(confl_active_1000 == 1, year, NA), 
+         # confl_active_25 = ifelse(confl_new_25 == 1 | confl_recur_25 == 1 | confl_cont_25 == 1, 1, 0), 
+         # confl_active_100 = ifelse(confl_new_100 == 1 | confl_recur_100 == 1 | confl_cont_100 == 1, 1, 0), 
+         # confl_active_1000 = ifelse(confl_new_1000 == 1 | confl_recur_1000 == 1 | confl_cont_1000 == 1, 1, 0), 
+         sample_confl_25 = ifelse(confl_new_25 == 1 | confl_recur_25 == 1 | confl_cont_25 == 1, year, NA), 
+         sample_confl_100 = ifelse(confl_new_100 == 1 | confl_recur_100 == 1 | confl_cont_100 == 1, year, NA), 
+         sample_confl_1000 = ifelse(confl_new_1000 == 1 | confl_recur_1000 == 1 | confl_cont_1000 == 1, year, NA), 
          dco_25 = ifelse(!is.na(sample_confl_25) & year == sample_confl_25, 1, 0), # dco = "during conflict", ### binary, when conflict active
          dco_100 = ifelse(!is.na(sample_confl_100) & year == sample_confl_100, 1, 0),
          dco_1000 = ifelse(!is.na(sample_confl_1000) & year == sample_confl_1000, 1, 0),
@@ -1554,7 +1554,8 @@ df <- df %>%
 
 first <- c(first, "dtr", "aco", "dco", "pco")
 not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", "transition", 
-         "conflict", "confl_active_25", "confl_active_100", "confl_active_1000", 
+         "conflict", 
+         # "confl_active_25", "confl_active_100", "confl_active_1000", 
          "sample_trans", "sample_confl_25", "sample_confl_100", "sample_confl_1000", 
          "sample_combi") 
 then <- names(df)[!names(df) %in% c(first, not)]
