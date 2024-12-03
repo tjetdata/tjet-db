@@ -3,16 +3,16 @@
 ## because the vetting measures were already constructed in Airtable 
 ## importantly, the data are only consistently coded for Eastern Europe and the Post-Soviet region
 
-vet_ctry <- read_csv("data/vetting_countries.csv") %>%
-  filter(include == 1) %>% 
-  mutate(begin_year = as.integer(str_sub(begin_date, 1, 4)),
-         end_year = as.integer(str_sub(end_date, 1, 4)), 
-         country_new = str_replace(country, " & ", " and "), 
-         country_new = ifelse(country_new == "Czech Republic", "Czechia", country_new), 
-         country_new = ifelse(country_new == "Macedonia", "North Macedonia", country_new)) %>% 
-  left_join(db[["Countries"]] %>% select(country, ccode, ccode_case), by = c("country_new" = "country")) %>% 
-  select(country, ccode, ccode_case, begin_year, end_year, post_Soviet, vetting, coded) %>% 
-  arrange(country)
+# vet_ctry <- read_csv("data/vetting_countries.csv") %>%
+#   filter(include == 1) %>% 
+#   mutate(begin_year = as.integer(str_sub(begin_date, 1, 4)),
+#          end_year = as.integer(str_sub(end_date, 1, 4)), 
+#          country_new = str_replace(country, " & ", " and "), 
+#          country_new = ifelse(country_new == "Czech Republic", "Czechia", country_new), 
+#          country_new = ifelse(country_new == "Macedonia", "North Macedonia", country_new)) %>% 
+#   left_join(db[["Countries"]] %>% select(country, ccode, ccode_case), by = c("country_new" = "country")) %>% 
+#   select(country, ccode, ccode_case, begin_year, end_year, post_Soviet, vetting, coded) %>% 
+#   arrange(country)
 
 vet_cols <- c(
   "policy_type", "type_dismissal", "type_ban", "type_declass", "type_perjury", 
@@ -22,13 +22,13 @@ vet_cols <- c(
   # "implementation", 
   "public", "fairness", "ban_from_elected")
 
-vet_incl <- vet_ctry %>% select(ccode) %>% 
-  distinct() %>% 
-  unlist(use.names = FALSE)
+# vet_incl <- vet_ctry %>% select(ccode) %>% 
+#   distinct() %>% 
+#   unlist(use.names = FALSE)
 
 vet_spells <- db[["Vettings"]] %>% 
-  filter(ccode %in% vet_incl) %>% 
-  mutate(public = case_when(hearingsPublic == "public" ~ 1,
+  # filter(ccode %in% vet_incl) %>% 
+  mutate(public = case_when(hearingsPublic == "yes" ~ 1,
                             TRUE ~ 0), 
          conduct = case_when(str_detect(targetingWhy, "specific individual conduct") ~ 1,
                             TRUE ~ 0),
@@ -59,11 +59,11 @@ vet_spells <- db[["Vettings"]] %>%
   mutate(across(everything(), .fns = ~ ifelse(is.infinite(.x), NA, .x)) ) %>% 
   mutate(across(all_of(vet_cols), .fns = ~ ifelse(is.na(.x), 0, .x)) ) 
 
-vet_ctry_incl <- vet_ctry %>% 
-  select(ccode) %>% 
-  distinct() %>% 
-  unlist(use.names = FALSE)
-rm(vet_ctry, vet_incl, vet_cols)
+# vet_ctry_incl <- vet_ctry %>% 
+#   select(ccode) %>% 
+#   distinct() %>% 
+#   unlist(use.names = FALSE)
+# rm(vet_ctry, vet_incl, vet_cols)
 
 VettingMeasures <- function(cy = df, nexus_vars = "all") {
   ## options
@@ -86,7 +86,7 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
            # implementation, 
            public, fairness)
 
-  non_na <- expr(ccode_cow %in% vet_ctry_incl & year %in% 1970:2020)
+  # non_na <- expr(ccode_cow %in% vet_ctry_incl & year %in% 1970:2020)
   vars <- c("type_dismissal", "type_ban", "type_declass", "type_perjury", 
             "ban_from_elected", "conduct", 
             # "implementation", 
@@ -116,8 +116,9 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
          fairness, 
          .direction = "down") %>%
     ungroup() %>% 
-    mutate(across(all_of(vars), 
-                  ~ ifelse(eval(non_na) & is.na(.x), 0, ifelse(year > 2020, NA, .x)))) %>%
+    # mutate(across(all_of(vars), 
+    #               ~ ifelse(eval(non_na) & is.na(.x), 0, ifelse(year > 2020, NA, .x)))) %>%
+    mutate(across(all_of(vars), ~ ifelse(is.na(.x), 0, ifelse(year > 2020, NA, .x)))) %>%
     rename("vet_dismiss" = "type_dismissal", 
            "vet_ban" = "type_ban", 
            "vet_declass" = "type_declass", 
