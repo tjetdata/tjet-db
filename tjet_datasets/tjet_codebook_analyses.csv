@@ -373,6 +373,8 @@ v2clkill_nr,"Freedom from political killings, count of expert ratings",VDem,2024
 v2cltort,Freedom from torture,VDem,2024-11-26
 v2cltort_sd,"Freedom from torture, standard deviation",VDem,2024-11-26
 v2cltort_nr,"Freedom from torture, count of expert ratings",VDem,2024-11-26
+v2x_clphy,Physical violence index,VDem,2024-11-26
+v2x_clphy_sd,"Physical violence index, standard deviation",VDem,2024-11-26
 v2caviol,Political violence,VDem,2024-11-26
 v2caviol_sd,"Political violence, standard deviation",VDem,2024-11-26
 v2caviol_nr,"Political violence, count of expert ratings",VDem,2024-11-26
