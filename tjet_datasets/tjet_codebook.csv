@@ -47,7 +47,8 @@ trials_foreign_SGBV,"binary for whether foreign trials in country-year included 
 legacy_mean,"preliminary legacy of violence index (cumulative and discounted average of latent physical integrity data from Fariss, Kenwick, & Reuning)",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 legacy_low95,lower limit of 95% confidence interval for legacy_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 legacy_upp95,upper limit of 95% confidence interval for legacy_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
-legacy_rank,annual global ranking of legacy_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+legacy_decile,decile rank of legacy_mean,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+legacy_rank,annual global ranking of legacy_mean (only comparable within same year),TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 ICC_prelim_exam,"ongoing ICC preliminary examination by OTP, binary",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 ICC_prelim_exam_cumu,cumulative country-year count of ICC preliminary examination,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
@@ -213,6 +214,7 @@ tran_cce_dom_dtj_ctj_sta_hi,"domestic transitional human rights or intrastate co
 tran_acc_dom_dtj_ctj_sta_hi,"domestic transitional human rights or intrastate conflict prosecutions of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 tran_crt_dom_dtj_ctj_sta_hi,"domestic transitional human rights or intrastate conflict prosecutions of high-ranking state agents, conviction rate, cct/acc",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 tran_sen_dom_dtj_ctj_sta_hi,"domestic transitional human rights or intrastate conflict prosecutions of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
+tran_trs_dom_dtj_ctj_opp,"domestic transitional human rights or intrastate conflict prosecutions of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 tran_trs_dom_ctj_opp,"domestic intrastate conflict prosecutions of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 tran_trs_dom_ctj_opp_binary,binary version of tran_trs_dom_ctj_opp,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
 tran_trs_dom_ctj_opp_scale,scale version of tran_trs_dom_ctj_opp,TJET,Transitional Justice Evaluation Tools Database,https://transitionaljusticedata.org,2024-11-26
