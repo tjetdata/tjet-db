@@ -1420,9 +1420,9 @@ df <- df %>%
          ) %>% 
   fill(peace_spell_25, peace_spell_100, peace_spell_1000, .direction = "down") |> 
   ungroup() %>%
-  mutate(peace_spell_25 = ifelse(confl_cont_25 == 1, NA, peace_spell_25), 
-         peace_spell_100 = ifelse(confl_cont_100 == 1, NA, peace_spell_100), 
-         peace_spell_1000 = ifelse(confl_cont_1000 == 1, NA, peace_spell_1000), 
+  mutate(peace_spell_25 = ifelse(confl_cont_25 > 0, NA, peace_spell_25), 
+         peace_spell_100 = ifelse(confl_cont_100 > 0, NA, peace_spell_100), 
+         peace_spell_1000 = ifelse(confl_cont_1000 > 0, NA, peace_spell_1000), 
          pco_25 = ifelse(year > sample_confl_25 & dco_25 == 0, 1, 0),
          pco_100 = ifelse(year > sample_confl_100 & dco_100 == 0, 1, 0),
          pco_1000 = ifelse(year > sample_confl_1000 & dco_1000 == 0, 1, 0),
