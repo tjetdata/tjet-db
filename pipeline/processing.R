@@ -1545,8 +1545,9 @@ df <- df %>%
   left_join(read_csv("../tjet-hra/tjet-hra.csv") %>% 
               select(country, year, legacy_mean, legacy_low95, legacy_upp95, 
                      legacy_rank), 
-            by = c("country_case" = "country", "year" = "year"))
-
+            by = c("country_case" = "country", "year" = "year")) |> 
+  mutate(legacy_decile = as.numeric(gtools::quantcut(legacy_mean, q = 10)))
+  
 ### cleanup
 
 # df %>%

@@ -104,7 +104,8 @@ tjet_cy,access_rank,annual global ranking of access_mean,TJET,,
 tjet_cy,legacy_mean,"preliminary legacy of violence index (cumulative and discounted average of latent physical integrity data from Fariss, Kenwick, & Reuning)",TJET,,
 tjet_cy,legacy_low95,lower limit of 95% confidence interval for legacy_mean,TJET,,
 tjet_cy,legacy_upp95,upper limit of 95% confidence interval for legacy_mean,TJET,,
-tjet_cy,legacy_rank,annual global ranking of legacy_mean,TJET,,
+tjet_cy,legacy_decile,decile rank of legacy_mean,TJET,,
+tjet_cy,legacy_rank,annual global ranking of legacy_mean (only comparable within same year),TJET,,
 tjet_cy,ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,,
 tjet_cy,ICC_prelim_exam,"ongoing ICC preliminary examination by OTP, binary",TJET,,
 tjet_cy,ICC_prelim_exam_cumu,cumulative country-year count of ICC preliminary examination,TJET,,
@@ -697,12 +698,12 @@ tjet_cy,peace_spell_1000,"peace spell identifier, based on cumulative 1000 death
 tjet_cy,territorial,"any internal armed conflict over territorial incompatibility, binary",UCDP ACD,1946,2023
 tjet_cy,confl_term,"any internal conflict dyad episode terminated, binary",UCDP Termination,1946,2020
 tjet_cy,recur_term,"any internal conflict dyad recurrence after spell of non-conflict, binary",UCDP Termination,1946,2020
-tjet_cy,outcome_agreement,count of internal conflict terminations with peace agreement,UCDP Termination,1946,2020
-tjet_cy,outcome_ceasefire,count of internal conflict terminations with ceasefire,UCDP Termination,1946,2020
-tjet_cy,outcome_victory_gov,count of internal conflict terminations with government victory,UCDP Termination,1946,2020
-tjet_cy,outcome_victory_reb,count of internal conflict terminations with victory by non-state side,UCDP Termination,1946,2020
-tjet_cy,outcome_low_activity,count of internal conflict terminations due to low activity,UCDP Termination,1946,2020
-tjet_cy,outcome_actor_ceases,count of internal conflict terminations because an actor ceased to exist,UCDP Termination,1946,2020
+tjet_cy,outcome_agreement,"internal conflict termination with peace agreement, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_ceasefire,"internal conflict termination with ceasefire, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_victory_gov,"internal conflict termination with government victory, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_victory_reb,"internal conflict termination with victory by non-state side, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_low_activity,"internal conflict termination due to low activity, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_actor_ceases,"internal conflict termination because an actor ceased to exist, binary, carried forward and lagged",UCDP Termination,1946,2020
 tjet_cy,reb_claim,count of rebel groups in internal conflict dyads making exclusive ethnic claims,EPR (ACD2EPR),1946,2021
 tjet_cy,reb_recruit,count of rebel groups in internal conflict dyads recruiting from ethnic groups,EPR (ACD2EPR),1946,2021
 tjet_cy,gov_recruit,count of internal conflict dyads where governments recruit on the basis of ethnicity,EPR (ACD2EPR),1946,2021
