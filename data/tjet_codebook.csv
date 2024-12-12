@@ -106,6 +106,17 @@ tjet_cy,legacy_low95,lower limit of 95% confidence interval for legacy_mean,TJET
 tjet_cy,legacy_upp95,upper limit of 95% confidence interval for legacy_mean,TJET,,
 tjet_cy,legacy_decile,decile rank of legacy_mean,TJET,,
 tjet_cy,legacy_rank,annual global ranking of legacy_mean (only comparable within same year),TJET,,
+tjet_cy,legacy_mean_lag1,"legacy_mean, lagged 1 year",TJET,,
+tjet_cy,legacy_mean_lag2,"legacy_mean, lagged 2 years",TJET,,
+tjet_cy,legacy_mean_lag3,"legacy_mean, lagged 3 years",TJET,,
+tjet_cy,legacy_mean_lag4,"legacy_mean, lagged 4 years",TJET,,
+tjet_cy,legacy_mean_lag5,"legacy_mean, lagged 5 years",TJET,,
+tjet_cy,legacy_mean_lag6,"legacy_mean, lagged 6 years",TJET,,
+tjet_cy,legacy_mean_lag7,"legacy_mean, lagged 7 years",TJET,,
+tjet_cy,legacy_mean_lag8,"legacy_mean, lagged 8 years",TJET,,
+tjet_cy,legacy_mean_lag9,"legacy_mean, lagged 9 years",TJET,,
+tjet_cy,legacy_mean_lag10,"legacy_mean, lagged 10 years",TJET,,
+tjet_cy,legacy_mean_lag20,"legacy_mean, lagged 20 years",TJET,,
 tjet_cy,ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,,
 tjet_cy,ICC_prelim_exam,"ongoing ICC preliminary examination by OTP, binary",TJET,,
 tjet_cy,ICC_prelim_exam_cumu,cumulative country-year count of ICC preliminary examination,TJET,,
@@ -124,13 +135,14 @@ tjet_cy,ICC_proceedings_region,"cumulative number of ICC proceedings in region (
 tjet_cy,ICC_withdrawnDismissed,number of accused who have charges withdrawn or proceedings dismissed by ICC during the year,TJET,,
 tjet_cy,icc_sp,"state party to Rome Statute, binary",TJET,,
 tjet_cy,icc_sp_region,"number of states party to Rome Statute in region (Africa, Asia, Europe, Americas, Oceania) ",TJET,,
-tjet_cy,uninv,"ongoing UN investigation, binary",TJET,,
-tjet_cy,uninv_dompros_created,"ongoing UN investigation which recommends domestic prosecutions, binary for year of creation only",TJET,,
-tjet_cy,uninv_dompros,"ongoing UN investigation which recommends domestic prosecutions, binary",TJET,,
-tjet_cy,uninv_evcoll_created,"ongoing UN investigation which collects evidence, binary for year of creation only",TJET,,
-tjet_cy,uninv_evcoll,"ongoing UN investigation which collects evidence, binary",TJET,,
-tjet_cy,uninv_intlpros_created,"ongoing UN investigation which collects evidence for international prosecutions, binary for year of creation only",TJET,,
-tjet_cy,uninv_intlpros,"ongoing UN investigation which collects evidence for international prosecutions, binary",TJET,,
+tjet_cy,uninv_beg,"UN investigations, count for year of initiation only",TJET,1970,2020
+tjet_cy,uninv,"ongoing UN investigations, count ",TJET,1970,2020
+tjet_cy,uninv_dompros_beg,"UN investigation which recommends domestic prosecutions, binary for year of initiation only",TJET,1970,2020
+tjet_cy,uninv_dompros,"ongoing UN investigation which recommends domestic prosecutions, binary",TJET,1970,2020
+tjet_cy,uninv_evcoll_beg,"UN investigation which collects evidence, binary for year of initiation only",TJET,1970,2020
+tjet_cy,uninv_evcoll,"ongoing UN investigation which collects evidence, binary",TJET,1970,2020
+tjet_cy,uninv_intlpros_beg,"UN investigation which collects evidence for international prosecutions, binary for year of initiation only",TJET,1970,2020
+tjet_cy,uninv_intlpros,"ongoing UN investigation which collects evidence for international prosecutions, binary",TJET,1970,2020
 tjet_cy,cum_theta_mean_fariss,cumulative average of latent physical integrity since 1970 (or entrance into dataset),"Fariss, Kenwick, & Reuning",,
 tjet_cy,trs_int_sta,"int'l & hybrid trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,tro_int_sta,"int'l & hybrid trials of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
@@ -206,6 +218,7 @@ tjet_cy,crt_for_opp_hi,"foreign trials of high-ranking opposition members, convi
 tjet_cy,sen_for_opp_hi,"foreign trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
 tjet_cy,tran_trs_dom_dtj,"domestic transitional human rights prosecutions, all",TJET,1970,2020
 tjet_cy,tran_trs_dom_ctj,"domestic intrastate conflict prosecutions, all",TJET,1970,2020
+tjet_cy,tran_trs_dom_dtj_ctj,"domestic transitional humman rights and conflict prosecutions, all",TJET,1970,2020
 tjet_cy,tran_trs_dom_dtj_sta,"domestic transitional human rights prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,tran_trs_dom_dtj_sta_binary,binary version of tran_trs_dom_dtj_sta,TJET,1970,2020
 tjet_cy,tran_trs_dom_dtj_sta_scale,scale version of tran_trs_dom_dtj_sta,TJET,1970,2020
@@ -317,8 +330,8 @@ tjet_cy,oppo_cce_dom_sta_opp,"domestic opposition prosecutions of state agents o
 tjet_cy,oppo_acc_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, count of accused in ongoing trials, by nationality of the accused (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,oppo_crt_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, conviction rate, cct/acc (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,oppo_sen_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, total sum of sentences scale, by nationality of the accused & conviction year (trials not matched to UCDP conflict IDs)",TJET,1970,2020
-tjet_cy,tcs_victim_process,victim-centered TC process scale,TJET,1970,2020
-tjet_cy,tcs_victim_outcome,victim-centered TC outcome scale,TJET,1970,2020
+tjet_cy,tcs_victim_process,victim-centered TC process index,TJET,1970,2020
+tjet_cy,tcs_victim_outcome,victim-centered TC outcome index,TJET,1970,2020
 tjet_cy,tcs_recreparations,"truth commission reparations recommendation, binary",TJET,1970,2020
 tjet_cy,tcs_metcriteria,truth commission met all definitional criteria (but may not have operated),TJET,1970,2020
 tjet_cy,tcs_metcriteria_created,"truth commission met all definitional criteria (but may not have operated), binary for year of creation only",TJET,1970,2020
@@ -328,47 +341,47 @@ tjet_cy,tcs_goalstruth,"truth commission with explicit goal of truth-finding, bi
 tjet_cy,tcs_independent,"truth commission was at least partially independent, binary",TJET,1970,2020
 tjet_cy,tcs_independent_scale,"truth commission independence scale (not, partially, and fully independent)",TJET,1970,2020
 tjet_cy,tcs_harms,"harms investigated by truth commission, scale",TJET,1970,2020
-tjet_cy,tcs_powers,"truth commission powers, scale",TJET,1970,2020
+tjet_cy,tcs_powers,truth commission powers index,TJET,1970,2020
 tjet_cy,tcs_power_investigate,"truth commission power to investigate state members, binary",TJET,1970,2020
 tjet_cy,tcs_power_compel,"truth commission power to compel testimony, binary",TJET,1970,2020
 tjet_cy,tcs_power_docs,"truth commission power to access official documents, binary",TJET,1970,2020
 tjet_cy,tcs_power_name,"truth commission power to name perpetrators, binary",TJET,1970,2020
 tjet_cy,tcs_power_reform,"truth commission power to recommend institutional reforms, binary",TJET,1970,2020
 tjet_cy,tcs_report,"truth commission issued final report, binary",TJET,1970,2020
-tjet_cy,tcs_public_process,"truth commission publicness, process scale",TJET,1970,2020
-tjet_cy,tcs_public_outcome,"truth commission publicness, outcome scale",TJET,1970,2020
-tjet_cy,tcs_recommendations,"truth commission recommendations in final report, scale",TJET,1970,2020
+tjet_cy,tcs_public_process,"truth commission publicness, process index",TJET,1970,2020
+tjet_cy,tcs_public_outcome,"truth commission publicness, outcome index",TJET,1970,2020
+tjet_cy,tcs_recommendations,truth commission recommendations in final report index,TJET,1970,2020
 tjet_cy,tcs_monitoring,"truth commission with mandated implementation monitoring, binary",TJET,1970,2020
 tjet_cy,tcs_ctj_binary,"TCs, binary, conflict TJ",TJET,1970,2020
 tjet_cy,tcs_ctj_created,"TCs, binary for year of creation only, conflict TJ",TJET,1970,2020
-tjet_cy,tcs_ctj_victim_process,"victim-centered TC process scale, conflict TJ",TJET,1970,2020
-tjet_cy,tcs_ctj_victim_outcome,"victim-centered TC outcome scale, conflict TJ",TJET,1970,2020
-tjet_cy,tcs_ctj_account_process,"accountability-oriented TC process scale, conflict TJ",TJET,1970,2020
-tjet_cy,tcs_ctj_account_outcome,"accountability-oriented TC outcome scale, conflict TJ",TJET,1970,2020
-tjet_cy,tcs_ctj_peace_process,"peace-oriented TC process scale, conflict TJ",TJET,1970,2020
-tjet_cy,tcs_ctj_peace_outcome,"peace-oriented TC outcome scale, conflict TJ",TJET,1970,2020
-tjet_cy,tcs_ctj_reform_process,"reform-oriented TC process scale, conflict TJ",TJET,1970,2020
-tjet_cy,tcs_ctj_reform_outcome,"reform-oriented TC outcome scale, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_victim_process,"victim-centered TC process index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_victim_outcome,"victim-centered TC outcome index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_account_process,"accountability-oriented TC process index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_account_outcome,"accountability-oriented TC outcome index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_peace_process,"peace-oriented TC process index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_peace_outcome,"peace-oriented TC outcome index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_reform_process,"reform-oriented TC process index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_reform_outcome,"reform-oriented TC outcome index, conflict TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_binary,"TCs, binary, post-autocratic TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_created,"TCs, binary for year of creation only, post-autocratic TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_victim_process,"victim-centered TC process scale, post-autocratic TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_victim_outcome,"victim-centered TC outcome scale, post-autocratic TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_account_process,"accountability-oriented TC process scale, post-autocratic TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_account_outcome,"accountability-oriented TC outcome scale, post-autocratic TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_peace_process,"peace-oriented TC process scale, post-autocratic TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_peace_outcome,"peace-oriented TC outcome scale, post-autocratic TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_reform_process,"reform-oriented TC process scale, post-autocratic TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_reform_outcome,"reform-oriented TC outcome scale, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_victim_process,"victim-centered TC process index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_victim_outcome,"victim-centered TC outcome index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_account_process,"accountability-oriented TC process index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_account_outcome,"accountability-oriented TC outcome index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_peace_process,"peace-oriented TC process index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_peace_outcome,"peace-oriented TC outcome index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_reform_process,"reform-oriented TC process index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_reform_outcome,"reform-oriented TC outcome index, post-autocratic TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_binary,"TCs, binary, post-autocratic & conflict TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_created,"TCs, binary for year of creation only, post-autocratic & conflict TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_ctj_victim_process,"victim-centered TC process scale, post-autocratic & conflict TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_ctj_victim_outcome,"victim-centered TC outcome scale, post-autocratic & conflict TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_ctj_account_process,"accountability-oriented TC process scale, post-autocratic & conflict TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_ctj_account_outcome,"accountability-oriented TC outcome scale, post-autocratic & conflict TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_ctj_peace_process,"peace-oriented TC process scale, post-autocratic & conflict TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_ctj_peace_outcome,"peace-oriented TC outcome scale, post-autocratic & conflict TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_ctj_reform_process,"reform-oriented TC process scale, post-autocratic & conflict TJ",TJET,1970,2020
-tjet_cy,tcs_dtj_ctj_reform_outcome,"reform-oriented TC outcome scale, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_victim_process,"victim-centered TC process index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_victim_outcome,"victim-centered TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_account_process,"accountability-oriented TC process index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_account_outcome,"accountability-oriented TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_peace_process,"peace-oriented TC process index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_peace_outcome,"peace-oriented TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_reform_process,"reform-oriented TC process index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_reform_outcome,"reform-oriented TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
 tjet_cy,amnesty_dtj_sta,"amnesty, binary (post-autocratic transitional justice nexus, state agents)",TJET,1970,2020
 tjet_cy,amnesty_dtj_ctj_sta,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents)",TJET,1970,2020
 tjet_cy,amnesty_dtj_ctj_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, opposition members)",TJET,1970,2020
@@ -394,7 +407,7 @@ tjet_cy,rep_compensation,"reparations policy providing compensation, binary",TJE
 tjet_cy,rep_compensation_created,"reparations policy providing compensation, binary for year of creation only",TJET,1970,2020
 tjet_cy,rep_services,"reparations policy providing services for rehabilitation and restitution, binary",TJET,1970,2020
 tjet_cy,rep_services_created,"reparations policy providing services for rehabilitation and restitution, binary for year of creation only",TJET,1970,2020
-tjet_cy,rep_victim_centered,"victims-centered reparations policy, scale",TJET,1970,2020
+tjet_cy,rep_victim_centered,"victims-centered reparations policy, index",TJET,1970,2020
 tjet_cy,rep_diffamount,reparations policy providing different types or amounts based on type of victim or type of harm,TJET,1970,2020
 tjet_cy,rep_outreach,"reparations policy with outreach activities, binary",TJET,1970,2020
 tjet_cy,rep_alteration,"reparations policy which was expanded through alteration, binary",TJET,1970,2020
@@ -403,7 +416,7 @@ tjet_cy,rep_accessibility,"reparations policy with at least one accessibility or
 tjet_cy,rep_scope,"reparations policy scope, scale based on reported number of beneficiaries (0-2; 1: 1 to 6163 beneficiaries, 2: greater than 6163 beneficiaries)",TJET,1970,2020
 tjet_cy,rep_paidout,"reparations policy which paid out, binary (coded to policy existence, not actual years of disbursements)",TJET,1970,2020
 tjet_cy,rep_paidout_created,"reparations policy which paid out, binary for year of creation only (coded to policy existence, not actual years of disbursements)",TJET,1970,2020
-tjet_cy,rep_harms,"reparations policy harms, scale",TJET,1970,2020
+tjet_cy,rep_harms,"reparations policy harms, index",TJET,1970,2020
 tjet_cy,vet_dismiss,"vetting policy, type dimissal, binary",TJET,1970,2020
 tjet_cy,vet_dismiss_created,"vetting policy, type dimissal, binary for year of creation only",TJET,1970,2020
 tjet_cy,vet_ban,"vetting policy, type ban, binary",TJET,1970,2020
@@ -417,157 +430,68 @@ tjet_cy,vet_conduct,"vetting policy targeting specific individual conduct, binar
 tjet_cy,vet_conduct_created,"vetting policy targeting specific individual conduct, binary for year of creation only",TJET,1970,2020
 tjet_cy,vet_implemented,was vetting policy implemented?,TJET,1970,2020
 tjet_cy,vet_public,"vetting policy involving public hearings, binary",TJET,1970,2020
-tjet_cy,vet_fairness,vetting policy fairness scale,TJET,1970,2020
-tjet_cy,v2clkill,"Freedom from political killings, estimate",VDem,1900,2023
-tjet_cy,v2clkill_sd,"Freedom from political killings, standard deviation",VDem,1900,2023
-tjet_cy,v2clkill_nr,"Freedom from political killings, count of expert ratings",VDem,1900,2023
-tjet_cy,v2cltort,Freedom from torture,VDem,1900,2023
-tjet_cy,v2cltort_sd,"Freedom from torture, standard deviation",VDem,1900,2023
-tjet_cy,v2cltort_nr,"Freedom from torture, count of expert ratings",VDem,1900,2023
-tjet_cy,v2x_clphy,Physical violence index,VDem,1900,2023
-tjet_cy,v2x_clphy_sd,"Physical violence index, standard deviation",VDem,1900,2023
+tjet_cy,vet_fairness,vetting policy fairness index,TJET,1970,2020
+tjet_cy,v2caautmob,Mobilization for autocracy,VDem,1900,2023
+tjet_cy,v2caautmob_nr,"Mobilization for autocracy, number of expert raters",VDem,1900,2023
+tjet_cy,v2caautmob_sd,"Mobilization for autocracy, standard deviation",VDem,1900,2023
+tjet_cy,v2cacamps,Political polarization,VDem,1900,2023
+tjet_cy,v2cacamps_nr,"Political polarization, number of expert raters",VDem,1900,2023
+tjet_cy,v2cacamps_sd,"Political polarization, standard deviation",VDem,1900,2023
+tjet_cy,v2cademmob,Mobilization for democracy,VDem,1900,2023
+tjet_cy,v2cademmob_nr,"Mobilization for democracy, number of expert raters",VDem,1900,2023
+tjet_cy,v2cademmob_sd,"Mobilization for democracy, standard deviation",VDem,1900,2023
+tjet_cy,v2cagenmob,Mass mobilization index,VDem,1900,2023
+tjet_cy,v2cagenmob_nr,"Mass mobilization, number of expert raters",VDem,1900,2023
+tjet_cy,v2cagenmob_sd,"Mass mobilization index, standard deviation",VDem,1900,2023
+tjet_cy,v2cagenmob_lag1,"Mass mobilization index, lagged 1 year",VDem,1900,2023
+tjet_cy,v2cagenmob_lag2,"Mass mobilization index, lagged 2 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag3,"Mass mobilization index, lagged 3 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag4,"Mass mobilization index, lagged 4 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag5,"Mass mobilization index, lagged 5 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag6,"Mass mobilization index, lagged 6 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag7,"Mass mobilization index, lagged 7 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag8,"Mass mobilization index, lagged 8 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag9,"Mass mobilization index, lagged 9 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag10,"Mass mobilization index, lagged 10 years",VDem,1900,2023
+tjet_cy,v2cagenmob_lag20,"Mass mobilization index, lagged 20 years",VDem,1900,2023
+tjet_cy,v2capolit,Engagement in independent political associations,VDem,1900,2023
+tjet_cy,v2capolit_nr,"Engagement in independent political associations, number of expert raters",VDem,1900,2023
+tjet_cy,v2capolit_sd,"Engagement in independent political associations, standard deviation",VDem,1900,2023
 tjet_cy,v2caviol,Political violence,VDem,1900,2023
+tjet_cy,v2caviol_nr,"Political violence, number of expert raters",VDem,1900,2023
 tjet_cy,v2caviol_sd,"Political violence, standard deviation",VDem,1900,2023
-tjet_cy,v2caviol_nr,"Political violence, count of expert ratings",VDem,1900,2023
-tjet_cy,v2x_regime,Regimes of the World categorical measure,VDem,1900,2023
-tjet_cy,v2x_regime_amb,"Regimes of the World categorical measure, with ambiguous edge cases",VDem,1900,2023
-tjet_cy,v2x_polyarchy,Electoral democracy index,VDem,1900,2023
-tjet_cy,v2x_polyarchy_sd,"Electoral democracy index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_api,Additive polyarchy index,VDem,1900,2023
-tjet_cy,v2x_api_sd,"Additive polyarchy index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_mpi,Multiplicative polyarchy index,VDem,1900,2023
-tjet_cy,v2x_mpi_sd,"Multiplicative polyarchy index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_libdem,Liberal democracy index,VDem,1900,2023
-tjet_cy,v2x_libdem_sd,"Liberal democracy index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_liberal,Liberal component index,VDem,1900,2023
-tjet_cy,v2x_liberal_sd,"Liberal component index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_partipdem,Participatory democracy index,VDem,1900,2023
-tjet_cy,v2x_partipdem_sd,"Participatory democracy index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_partip,Participatory component index,VDem,1900,2023
-tjet_cy,v2x_partip_sd,"Participatory component index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_delibdem,Deliberative democracy index,VDem,1900,2023
-tjet_cy,v2x_delibdem_sd,"Deliberative democracy index, standard deviation",VDem,1900,2023
-tjet_cy,v2xdl_delib,Deliberative component index,VDem,1900,2023
-tjet_cy,v2xdl_delib_sd,"Deliberative component index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_egaldem,Egalitarian democracy index,VDem,1900,2023
-tjet_cy,v2x_egaldem_sd,"Egalitarian democracy index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_egal,Egalitarian component index,VDem,1900,2023
-tjet_cy,v2x_egal_sd,"Egalitarian component index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_cspart,Civil society participation index,VDem,1900,2023
-tjet_cy,v2x_cspart_sd,"Civil society participation index, standard deviation",VDem,1900,2023
-tjet_cy,v2cseeorgs,CSO entry and exit,VDem,1900,2023
-tjet_cy,v2cseeorgs_sd,"CSO entry and exit, standard deviation",VDem,1900,2023
-tjet_cy,v2cseeorgs_nr,"CSO entry and exit, count of expert ratings",VDem,1900,2023
-tjet_cy,v2csreprss,CSO repression,VDem,1900,2023
-tjet_cy,v2csreprss_sd,"CSO repression, standard deviation",VDem,1900,2023
-tjet_cy,v2csreprss_nr,"CSO repression, count of expert ratings",VDem,1900,2023
-tjet_cy,v2csprtcpt,CSO participatory environment,VDem,1900,2023
-tjet_cy,v2csprtcpt_sd,"CSO participatory environment, standard deviation",VDem,1900,2023
-tjet_cy,v2csprtcpt_nr,"CSO participatory environment, count of expert ratings",VDem,1900,2023
-tjet_cy,v2xcs_ccsi,Core civil society index ordinal,VDem,1900,2023
-tjet_cy,v2xcs_ccsi_sd,"Core civil society index ordinal, standard deviation",VDem,1900,2023
-tjet_cy,v2juhcind,High court independence,VDem,1900,2023
-tjet_cy,v2juhcind_sd,"High court independence, standard deviation",VDem,1900,2023
-tjet_cy,v2juhcind_nr,"High court independence, count of expert ratings",VDem,1900,2023
-tjet_cy,v2juncind,Lower court independence,VDem,1900,2023
-tjet_cy,v2juncind_sd,"Lower court independence, standard deviation",VDem,1900,2023
-tjet_cy,v2juncind_nr,"Lower court independence, count of expert ratings",VDem,1900,2023
-tjet_cy,v2jureform,Judicial reform,VDem,1900,2023
-tjet_cy,v2jureform_sd,"Judicial reform, standard deviation",VDem,1900,2023
-tjet_cy,v2jureform_nr,"Judicial reform, count of expert ratings",VDem,1900,2023
-tjet_cy,v2jucomp,Compliance with judiciary,VDem,1900,2023
-tjet_cy,v2jucomp_sd,"Compliance with judiciary, standard deviation",VDem,1900,2023
-tjet_cy,v2jucomp_nr,"Compliance with judiciary, count of expert ratings",VDem,1900,2023
-tjet_cy,v2juhccomp,Compliance with high court,VDem,1900,2023
-tjet_cy,v2juhccomp_sd,"Compliance with high court, standard deviation",VDem,1900,2023
-tjet_cy,v2juhccomp_nr,"Compliance with high court, count of expert ratings",VDem,1900,2023
-tjet_cy,v2x_jucon,Judicial constraints on the executive index,VDem,1900,2023
-tjet_cy,v2x_jucon_sd,"Judicial constraints on the executive index, standard deviation",VDem,1900,2023
-tjet_cy,v2jureview,Judicial review,VDem,1900,2023
-tjet_cy,v2jureview_sd,"Judicial review, standard deviation",VDem,1900,2023
-tjet_cy,v2jureview_nr,"Judicial review, count of expert ratings",VDem,1900,2023
-tjet_cy,v2elmulpar,Elections multiparty,VDem,1900,2023
-tjet_cy,v2elmulpar_sd,"Elections multiparty, standard deviation",VDem,1900,2023
-tjet_cy,v2elmulpar_nr,"Elections multiparty, count of expert ratings",VDem,1900,2023
-tjet_cy,v2xdd_dd,Direct popular vote index,VDem,1900,2023
-tjet_cy,v2xel_locelec,Local government index,VDem,1900,2023
-tjet_cy,v2xel_locelec_sd,"Local government index, standard deviation",VDem,1900,2023
-tjet_cy,v2xel_regelec,Regional government index,VDem,1900,2023
-tjet_cy,v2xel_regelec_sd,"Regional government index, standard deviation",VDem,1900,2023
-tjet_cy,v2xel_frefair,Clean elections index,VDem,1900,2023
-tjet_cy,v2xel_frefair_sd,"Clean elections index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_frassoc_thick,Freedom of association thick index,VDem,1900,2023
-tjet_cy,v2x_frassoc_thick_sd,"Freedom of association thick index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_freexp,Freedom of expression index,VDem,1900,2023
-tjet_cy,v2x_freexp_sd,"Freedom of expression index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_freexp_altinf,Freedom of Expression and Alternative Sources of Information index,VDem,1900,2023
-tjet_cy,v2x_freexp_altinf_sd,"Freedom of Expression and Alternative Sources of Information index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_elecoff,Elected officials index,VDem,1900,2023
-tjet_cy,v2x_suffr,Share of population with suffrage,VDem,1900,2023
-tjet_cy,v2x_rule,Rule of law index,VDem,1900,2023
-tjet_cy,v2x_rule_sd,"Rule of law index, standard deviation",VDem,1900,2023
-tjet_cy,v2xcl_rol,Equality before the law and individual liberty index,VDem,1900,2023
-tjet_cy,v2xcl_rol_sd,"Equality before the law and individual liberty index, standard deviation",VDem,1900,2023
-tjet_cy,v2xcl_acjst,Access to justice,VDem,1900,2023
-tjet_cy,v2xcl_acjst_sd,"Access to justice, standard deviation",VDem,1900,2023
 tjet_cy,v2clacjstm,Access to justice for men,VDem,1900,2023
+tjet_cy,v2clacjstm_nr,"Access to justice for men, number of expert raters",VDem,1900,2023
 tjet_cy,v2clacjstm_sd,"Access to justice for men, standard deviation",VDem,1900,2023
-tjet_cy,v2clacjstm_nr,"Access to justice for men, count of expert ratings",VDem,1900,2023
 tjet_cy,v2clacjstw,Access to justice for women,VDem,1900,2023
+tjet_cy,v2clacjstw_nr,"Access to justice for women, number of expert raters",VDem,1900,2023
 tjet_cy,v2clacjstw_sd,"Access to justice for women, standard deviation",VDem,1900,2023
-tjet_cy,v2clacjstw_nr,"Access to justice for women, count of expert ratings",VDem,1900,2023
-tjet_cy,v2juaccnt,Judicial accountability,VDem,1900,2023
-tjet_cy,v2juaccnt_sd,"Judicial accountability, standard deviation",VDem,1900,2023
-tjet_cy,v2juaccnt_nr,"Judicial accountability, count of expert ratings",VDem,1900,2023
 tjet_cy,v2clacjust,Social class equality in respect for civil liberty,VDem,1900,2023
+tjet_cy,v2clacjust_nr,"Social class equality in respect for civil liberty, number of expert raters",VDem,1900,2023
 tjet_cy,v2clacjust_sd,"Social class equality in respect for civil liberty, standard deviation",VDem,1900,2023
-tjet_cy,v2clacjust_nr,"Social class equality in respect for civil liberty, count of expert ratings",VDem,1900,2023
-tjet_cy,v2clsocgrp,Social group equality in respect for civil liberties,VDem,1900,2023
-tjet_cy,v2clsocgrp_sd,"Social group equality in respect for civil liberties, standard deviation",VDem,1900,2023
-tjet_cy,v2clsocgrp_nr,"Social group equality in respect for civil liberties, count of expert ratings",VDem,1900,2023
 tjet_cy,v2clgencl,Gender equality in respect for civil liberties,VDem,1900,2023
+tjet_cy,v2clgencl_nr,"Gender equality in respect for civil liberties, number of expert raters",VDem,1900,2023
 tjet_cy,v2clgencl_sd,"Gender equality in respect for civil liberties, standard deviation",VDem,1900,2023
-tjet_cy,v2clgencl_nr,"Gender equality in respect for civil liberties, count of expert ratings",VDem,1900,2023
 tjet_cy,v2clgeocl,Urban-rural location equality in respect for civil liberties,VDem,1900,2023
+tjet_cy,v2clgeocl_nr,"Urban-rural location equality in respect for civil liberties, number of expert raters",VDem,1900,2023
 tjet_cy,v2clgeocl_sd,"Urban-rural location equality in respect for civil liberties, standard deviation",VDem,1900,2023
-tjet_cy,v2clgeocl_nr,"Urban-rural location equality in respect for civil liberties, count of expert ratings",VDem,1900,2023
+tjet_cy,v2clkill,"Freedom from political killings, estimate",VDem,1900,2023
+tjet_cy,v2clkill_nr,"Freedom from political killings, number of expert raters",VDem,1900,2023
+tjet_cy,v2clkill_sd,"Freedom from political killings, standard deviation",VDem,1900,2023
 tjet_cy,v2clpolcl,Political group equality in respect for civil liberties,VDem,1900,2023
+tjet_cy,v2clpolcl_nr,"Political group equality in respect for civil liberties, number of expert raters",VDem,1900,2023
 tjet_cy,v2clpolcl_sd,"Political group equality in respect for civil liberties, standard deviation",VDem,1900,2023
-tjet_cy,v2clpolcl_nr,"Political group equality in respect for civil liberties, count of expert ratings",VDem,1900,2023
-tjet_cy,v2x_gencl,Women civil liberties index,VDem,1900,2023
-tjet_cy,v2x_gencl_sd,"Women civil liberties index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_accountability,Accountability index,VDem,1900,2023
-tjet_cy,v2x_diagacc,Diagonal accountability index,VDem,1900,2023
-tjet_cy,v2x_veracc,Vertical accountability index,VDem,1900,2023
-tjet_cy,v2x_horacc,Horizontal accountability index,VDem,1900,2023
-tjet_cy,v2xnp_regcorr,Regime corruption,VDem,1900,2023
-tjet_cy,v2xnp_regcorr_sd,"Regime corruption, standard deviation",VDem,1900,2023
-tjet_cy,v2x_corr,Political corruption index,VDem,1900,2023
-tjet_cy,v2x_corr_sd,"Political corruption index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_execorr,Executive corruption index,VDem,1900,2023
-tjet_cy,v2x_execorr_sd,"Executive corruption index, standard deviation",VDem,1900,2023
-tjet_cy,v2x_pubcorr,Public sector corruption index,VDem,1900,2023
-tjet_cy,v2x_pubcorr_sd,"Public sector corruption index, standard deviation",VDem,1900,2023
-tjet_cy,v2jucorrdc,Judicial corruption decision,VDem,1900,2023
-tjet_cy,v2jucorrdc_sd,"Judicial corruption decision, standard deviation",VDem,1900,2023
-tjet_cy,v2jucorrdc_nr,"Judicial corruption decision, count of expert ratings",VDem,1900,2023
-tjet_cy,v2cscnsult,CSO consultation,VDem,1900,2023
-tjet_cy,v2cscnsult_sd,"CSO consultation, standard deviation",VDem,1900,2023
-tjet_cy,v2cscnsult_nr,"CSO consultation, count of expert ratings",VDem,1900,2023
-tjet_cy,v2csgender,CSO women’s participation,VDem,1900,2023
-tjet_cy,v2csgender_sd,"CSO women’s participation, standard deviation",VDem,1900,2023
-tjet_cy,v2csgender_nr,"CSO women’s participation, count of expert ratings",VDem,1900,2023
-tjet_cy,v2csantimv,CSO anti-system movements,VDem,1900,2023
-tjet_cy,v2csantimv_sd,"CSO anti-system movements, standard deviation",VDem,1900,2023
-tjet_cy,v2csantimv_nr,"CSO anti-system movements, count of expert ratings",VDem,1900,2023
-tjet_cy,v2csrlgrep,Religious organization repression,VDem,1900,2023
-tjet_cy,v2csrlgrep_sd,"Religious organization repression, standard deviation",VDem,1900,2023
-tjet_cy,v2csrlgrep_nr,"Religious organization repression, count of expert ratings",VDem,1900,2023
-tjet_cy,v2csrlgcon,Religious organization consultation,VDem,1900,2023
-tjet_cy,v2csrlgcon_sd,"Religious organization consultation, standard deviation",VDem,1900,2023
-tjet_cy,v2csrlgcon_nr,"Religious organization consultation, count of expert ratings",VDem,1900,2023
+tjet_cy,v2clsocgrp,Social group equality in respect for civil liberties,VDem,1900,2023
+tjet_cy,v2clsocgrp_nr,"Social group equality in respect for civil liberties, number of expert raters",VDem,1900,2023
+tjet_cy,v2clsocgrp_sd,"Social group equality in respect for civil liberties, standard deviation",VDem,1900,2023
+tjet_cy,v2cltort,Freedom from torture,VDem,1900,2023
+tjet_cy,v2cltort_nr,"Freedom from torture, number of expert raters",VDem,1900,2023
+tjet_cy,v2cltort_sd,"Freedom from torture, standard deviation",VDem,1900,2023
 tjet_cy,v2csanmvch_0,"CSO anti-system movement character, binary: Works through legal channels, for the most part",VDem,1900,2023
 tjet_cy,v2csanmvch_1,"CSO anti-system movement character, binary: Participates in elections",VDem,1900,2023
+tjet_cy,v2csanmvch_10,"CSO anti-system movement character, binary: Religious",VDem,1900,2023
+tjet_cy,v2csanmvch_11,"CSO anti-system movement character, binary: Paramilitary",VDem,1900,2023
+tjet_cy,v2csanmvch_12,"CSO anti-system movement character, binary: Heavily engaged in criminal activity, e.g., narcotics, bootlegging, illegal exploitation of natural resources, extortion, kidnapping",VDem,1900,2023
 tjet_cy,v2csanmvch_2,"CSO anti-system movement character, binary: Works through a mix of legal and extra-legal channels",VDem,1900,2023
 tjet_cy,v2csanmvch_3,"CSO anti-system movement character, binary: Insurrectionary",VDem,1900,2023
 tjet_cy,v2csanmvch_4,"CSO anti-system movement character, binary: Democratic. Perceived by most disinterested observers as willing to play by the rules of the democratic game, willing to respect constitutional provisions or electoral outcomes, and willing to relinquish power (under democratic auspices)",VDem,1900,2023
@@ -576,63 +500,240 @@ tjet_cy,v2csanmvch_6,"CSO anti-system movement character, binary: Leftist, socia
 tjet_cy,v2csanmvch_7,"CSO anti-system movement character, binary: Rightist, conservative, party of order",VDem,1900,2023
 tjet_cy,v2csanmvch_8,"CSO anti-system movement character, binary: Ethnolinguistic, tribe, kinship, clan",VDem,1900,2023
 tjet_cy,v2csanmvch_9,"CSO anti-system movement character, binary: Separatist or autonomist",VDem,1900,2023
-tjet_cy,v2csanmvch_10,"CSO anti-system movement character, binary: Religious",VDem,1900,2023
-tjet_cy,v2csanmvch_11,"CSO anti-system movement character, binary: Paramilitary",VDem,1900,2023
-tjet_cy,v2csanmvch_12,"CSO anti-system movement character, binary: Heavily engaged in criminal activity, e.g., narcotics, bootlegging, illegal exploitation of natural resources, extortion, kidnapping",VDem,1900,2023
-tjet_cy,v2csanmvch_nr,"CSO anti-system movement character, count of expert ratings",VDem,1900,2023
+tjet_cy,v2csanmvch_nr,"CSO anti-system movement character, number of expert raters",VDem,1900,2023
+tjet_cy,v2csantimv,CSO anti-system movements,VDem,1900,2023
+tjet_cy,v2csantimv_nr,"CSO anti-system movements, number of expert raters",VDem,1900,2023
+tjet_cy,v2csantimv_sd,"CSO anti-system movements, standard deviation",VDem,1900,2023
+tjet_cy,v2cscnsult,CSO consultation,VDem,1900,2023
+tjet_cy,v2cscnsult_nr,"CSO consultation, number of expert raters",VDem,1900,2023
+tjet_cy,v2cscnsult_sd,"CSO consultation, standard deviation",VDem,1900,2023
+tjet_cy,v2cseeorgs,CSO entry and exit,VDem,1900,2023
+tjet_cy,v2cseeorgs_nr,"CSO entry and exit, number of expert raters",VDem,1900,2023
+tjet_cy,v2cseeorgs_sd,"CSO entry and exit, standard deviation",VDem,1900,2023
+tjet_cy,v2csgender,CSO women’s participation,VDem,1900,2023
+tjet_cy,v2csgender_nr,"CSO women's participation, number of expert raters",VDem,1900,2023
+tjet_cy,v2csgender_sd,"CSO women’s participation, standard deviation",VDem,1900,2023
+tjet_cy,v2csprtcpt,CSO participatory environment,VDem,1900,2023
+tjet_cy,v2csprtcpt_nr,"CSO participatory environment, number of expert raters",VDem,1900,2023
+tjet_cy,v2csprtcpt_sd,"CSO participatory environment, standard deviation",VDem,1900,2023
+tjet_cy,v2csreprss,CSO repression,VDem,1900,2023
+tjet_cy,v2csreprss_nr,"CSO repression, number of expert raters",VDem,1900,2023
+tjet_cy,v2csreprss_sd,"CSO repression, standard deviation",VDem,1900,2023
+tjet_cy,v2csrlgcon,Religious organization consultation,VDem,1900,2023
+tjet_cy,v2csrlgcon_nr,"Religious organization consultation, number of expert raters",VDem,1900,2023
+tjet_cy,v2csrlgcon_sd,"Religious organization consultation, standard deviation",VDem,1900,2023
+tjet_cy,v2csrlgrep,Religious organization repression,VDem,1900,2023
+tjet_cy,v2csrlgrep_nr,"Religious organization repression, number of expert raters",VDem,1900,2023
+tjet_cy,v2csrlgrep_sd,"Religious organization repression, standard deviation",VDem,1900,2023
 tjet_cy,v2csstruc_0,"CSO structure, binary: The state does not allow autonomous CSOs",VDem,1900,2023
 tjet_cy,v2csstruc_1,"CSO structure, binary: Large encompassing organizations dominate. The government and CSOs are linked formally through a corporatist system of interest intermediation; or, due to historical circumstances, particular large CSOs are highly influential. The voice of such organizations is recognized by the government and is accorded special weight by policymakers",VDem,1900,2023
 tjet_cy,v2csstruc_2,"CSO structure, binary: Neither large encompassing nor small CSOs dominate. Influence is contingent on circumstances. Organizations, both large and small, contend with one another to have their voice considered by policymakers",VDem,1900,2023
 tjet_cy,v2csstruc_3,"CSO structure, binary: Small CSOs dominate. Many small organizations contend with one another to have their voices heard by policymakers",VDem,1900,2023
-tjet_cy,v2csstruc_nr,"CSO structure, count of expert ratings",VDem,1900,2023
-tjet_cy,v2elirreg,Election other voting irregularities,VDem,1900,2023
-tjet_cy,v2elirreg_sd,"Election other voting irregularities, standard deviation",VDem,1900,2023
-tjet_cy,v2elirreg_nr,"Election other voting irregularities, count of expert ratings",VDem,1900,2023
-tjet_cy,v2elfrfair,Election free and fair,VDem,1900,2023
-tjet_cy,v2elfrfair_sd,"Election free and fair, standard deviation",VDem,1900,2023
-tjet_cy,v2elfrfair_nr,"Election free and fair, count of expert ratings",VDem,1900,2023
+tjet_cy,v2csstruc_nr,"CSO structure, number of expert raters",VDem,1900,2023
 tjet_cy,v2elaccept,Election losers accept results,VDem,1900,2023
+tjet_cy,v2elaccept_nr,"Election losers accept results, number of expert raters",VDem,1900,2023
 tjet_cy,v2elaccept_sd,"Election losers accept results, standard deviation",VDem,1900,2023
-tjet_cy,v2elaccept_nr,"Election losers accept results, count of expert ratings",VDem,1900,2023
 tjet_cy,v2elasmoff,Election assume office,VDem,1900,2023
+tjet_cy,v2elasmoff_nr,"Election assume office, number of expert raters",VDem,1900,2023
 tjet_cy,v2elasmoff_sd,"Election assume office, standard deviation",VDem,1900,2023
-tjet_cy,v2elasmoff_nr,"Election assume office, count of expert ratings",VDem,1900,2023
+tjet_cy,v2elfrfair,Election free and fair,VDem,1900,2023
+tjet_cy,v2elfrfair_nr,"Election free and fair, number of expert raters",VDem,1900,2023
+tjet_cy,v2elfrfair_sd,"Election free and fair, standard deviation",VDem,1900,2023
+tjet_cy,v2elirreg,Election other voting irregularities,VDem,1900,2023
+tjet_cy,v2elirreg_nr,"Election other voting irregularities, number of expert raters",VDem,1900,2023
+tjet_cy,v2elirreg_sd,"Election other voting irregularities, standard deviation",VDem,1900,2023
+tjet_cy,v2elmulpar,Elections multiparty,VDem,1900,2023
+tjet_cy,v2elmulpar_nr,"Elections multiparty, number of expert raters",VDem,1900,2023
+tjet_cy,v2elmulpar_sd,"Elections multiparty, standard deviation",VDem,1900,2023
 tjet_cy,v2eltrnout,Election turnout,VDem,1900,2023
 tjet_cy,v2elvaptrn,Election VAP turnout,VDem,1900,2023
-tjet_cy,v2psparban,Party ban,VDem,1900,2023
-tjet_cy,v2psparban_sd,"Party ban, standard deviation",VDem,1900,2023
-tjet_cy,v2psparban_nr,"Party ban, count of expert ratings",VDem,1900,2023
-tjet_cy,v2exrescon,Executive respects constitution,VDem,1900,2023
-tjet_cy,v2exrescon_sd,"Executive respects constitution, standard deviation",VDem,1900,2023
-tjet_cy,v2exrescon_nr,"Executive respects constitution, count of expert ratings",VDem,1900,2023
 tjet_cy,v2exbribe,Executive bribery and corrupt exchanges,VDem,1900,2023
+tjet_cy,v2exbribe_nr,"Executive bribery and corrupt exchanges, number of expert raters",VDem,1900,2023
 tjet_cy,v2exbribe_sd,"Executive bribery and corrupt exchanges, standard deviation",VDem,1900,2023
-tjet_cy,v2exbribe_nr,"Executive bribery and corrupt exchanges, count of expert ratings",VDem,1900,2023
-tjet_cy,v2cacamps,Political polarization,VDem,1900,2023
-tjet_cy,v2cacamps_sd,"Political polarization, standard deviation",VDem,1900,2023
-tjet_cy,v2cacamps_nr,"Political polarization, count of expert ratings",VDem,1900,2023
-tjet_cy,v2cademmob,Mobilization for democracy,VDem,1900,2023
-tjet_cy,v2cademmob_sd,"Mobilization for democracy, standard deviation",VDem,1900,2023
-tjet_cy,v2cademmob_nr,"Mobilization for democracy, count of expert ratings",VDem,1900,2023
-tjet_cy,v2caautmob,Mobilization for autocracy,VDem,1900,2023
-tjet_cy,v2caautmob_sd,"Mobilization for autocracy, standard deviation",VDem,1900,2023
-tjet_cy,v2caautmob_nr,"Mobilization for autocracy, count of expert ratings",VDem,1900,2023
-tjet_cy,v2capolit,Engagement in independent political associations,VDem,1900,2023
-tjet_cy,v2capolit_sd,"Engagement in independent political associations, standard deviation",VDem,1900,2023
-tjet_cy,v2capolit_nr,"Engagement in independent political associations, count of expert ratings",VDem,1900,2023
+tjet_cy,v2exrescon,Executive respects constitution,VDem,1900,2023
+tjet_cy,v2exrescon_nr,"Executive respects constitution, number of expert raters",VDem,1900,2023
+tjet_cy,v2exrescon_sd,"Executive respects constitution, standard deviation",VDem,1900,2023
+tjet_cy,v2juaccnt,Judicial accountability,VDem,1900,2023
+tjet_cy,v2juaccnt_nr,"Judicial accountability, number of expert raters",VDem,1900,2023
+tjet_cy,v2juaccnt_sd,"Judicial accountability, standard deviation",VDem,1900,2023
+tjet_cy,v2jucomp,Compliance with judiciary,VDem,1900,2023
+tjet_cy,v2jucomp_nr,"Compliance with judiciary, number of expert raters",VDem,1900,2023
+tjet_cy,v2jucomp_sd,"Compliance with judiciary, standard deviation",VDem,1900,2023
+tjet_cy,v2jucorrdc,Judicial corruption decision,VDem,1900,2023
+tjet_cy,v2jucorrdc_nr,"Judicial corruption decision, number of expert raters",VDem,1900,2023
+tjet_cy,v2jucorrdc_sd,"Judicial corruption decision, standard deviation",VDem,1900,2023
+tjet_cy,v2juhccomp,Compliance with high court,VDem,1900,2023
+tjet_cy,v2juhccomp_nr,"Compliance with high court, number of expert raters",VDem,1900,2023
+tjet_cy,v2juhccomp_sd,"Compliance with high court, standard deviation",VDem,1900,2023
+tjet_cy,v2juhcind,High court independence,VDem,1900,2023
+tjet_cy,v2juhcind_nr,"High court independence, number of expert raters",VDem,1900,2023
+tjet_cy,v2juhcind_sd,"High court independence, standard deviation",VDem,1900,2023
+tjet_cy,v2juncind,Lower court independence,VDem,1900,2023
+tjet_cy,v2juncind_nr,"Lower court independence, number of expert raters",VDem,1900,2023
+tjet_cy,v2juncind_sd,"Lower court independence, standard deviation",VDem,1900,2023
+tjet_cy,v2jureform,Judicial reform,VDem,1900,2023
+tjet_cy,v2jureform_nr,"Judicial reform, number of expert raters",VDem,1900,2023
+tjet_cy,v2jureform_sd,"Judicial reform, standard deviation",VDem,1900,2023
+tjet_cy,v2jureview,Judicial review,VDem,1900,2023
+tjet_cy,v2jureview_nr,"Judicial review, number of expert raters",VDem,1900,2023
+tjet_cy,v2jureview_sd,"Judicial review, standard deviation",VDem,1900,2023
+tjet_cy,v2peapsecon,Access to public services distributed by socio-economic position,VDem,1900,2023
+tjet_cy,v2peapsecon_nr,"Access to public services distributed by socio-economic position, number of expert raters",VDem,1900,2023
+tjet_cy,v2peapsecon_sd,"Access to public services distributed by socio-economic position, standard deviation",VDem,1900,2023
+tjet_cy,v2peapsgen,Access to public services distributed by gender,VDem,1900,2023
+tjet_cy,v2peapsgen_nr,"Access to public services distributed by gender, number of expert raters",VDem,1900,2023
+tjet_cy,v2peapsgen_sd,"Access to public services distributed by gender, standard deviation",VDem,1900,2023
+tjet_cy,v2peapsgeo,Access to public services distributed by urban-rural location,VDem,1900,2023
+tjet_cy,v2peapsgeo_nr,"Access to public services distributed by urban-rural location, number of expert raters",VDem,1900,2023
+tjet_cy,v2peapsgeo_sd,"Access to public services distributed by urban-rural location, standard deviation",VDem,1900,2023
+tjet_cy,v2peapspol,Access to public services distributed by political group,VDem,1900,2023
+tjet_cy,v2peapspol_nr,"Access to public services distributed by political group, number of expert raters",VDem,1900,2023
+tjet_cy,v2peapspol_sd,"Access to public services distributed by political group, standard deviation",VDem,1900,2023
+tjet_cy,v2peapssoc,Access to public services distributed by social group,VDem,1900,2023
+tjet_cy,v2peapssoc_nr,"Access to public services distributed by social group, number of expert raters",VDem,1900,2023
+tjet_cy,v2peapssoc_sd,"Access to public services distributed by social group, standard deviation",VDem,1900,2023
+tjet_cy,exclusion_lag1,"social exclusion (inverse of v2peapssoc), lagged 1 year",VDem,1900,2023
+tjet_cy,exclusion_lag2,"social exclusion (inverse of v2peapssoc), lagged 2 years",VDem,1900,2023
+tjet_cy,exclusion_lag3,"social exclusion (inverse of v2peapssoc), lagged 3 years",VDem,1900,2023
+tjet_cy,exclusion_lag4,"social exclusion (inverse of v2peapssoc), lagged 4 years",VDem,1900,2023
+tjet_cy,exclusion_lag5,"social exclusion (inverse of v2peapssoc), lagged 5 years",VDem,1900,2023
+tjet_cy,exclusion_lag6,"social exclusion (inverse of v2peapssoc), lagged 6 years",VDem,1900,2023
+tjet_cy,exclusion_lag7,"social exclusion (inverse of v2peapssoc), lagged 7 years",VDem,1900,2023
+tjet_cy,exclusion_lag8,"social exclusion (inverse of v2peapssoc), lagged 8 years",VDem,1900,2023
+tjet_cy,exclusion_lag9,"social exclusion (inverse of v2peapssoc), lagged 9 years",VDem,1900,2023
+tjet_cy,exclusion_lag10,"social exclusion (inverse of v2peapssoc), lagged 10 years",VDem,1900,2023
+tjet_cy,exclusion_lag20,"social exclusion (inverse of v2peapssoc), lagged 20 years",VDem,1900,2023
+tjet_cy,v2peasbecon,Access to state business opportunities by socio-economic position,VDem,1900,2023
+tjet_cy,v2peasbecon_nr,"Access to state business opportunities by socio-economic position, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasbecon_sd,"Access to state business opportunities by socio-economic position, standard deviation",VDem,1900,2023
+tjet_cy,v2peasbegeo,Access to state business opportunities by urban-rural location,VDem,1900,2023
+tjet_cy,v2peasbegeo_nr,"Access to state business opportunities by urban-rural location, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasbegeo_sd,"Access to state business opportunities by urban-rural location, standard deviation",VDem,1900,2023
+tjet_cy,v2peasbepol,Access to state business opportunities by political group,VDem,1900,2023
+tjet_cy,v2peasbepol_nr,"Access to state business opportunities by political group, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasbepol_sd,"Access to state business opportunities by political group, standard deviation",VDem,1900,2023
+tjet_cy,v2peasbgen,Access to state business opportunities by gender,VDem,1900,2023
+tjet_cy,v2peasbgen_nr,"Access to state business opportunities by gender, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasbgen_sd,"Access to state business opportunities by gender, standard deviation",VDem,1900,2023
+tjet_cy,v2peasbsoc,Access to state business opportunities by social group,VDem,1900,2023
+tjet_cy,v2peasbsoc_nr,"Access to state business opportunities by social group, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasbsoc_sd,"Access to state business opportunities by social group, standard deviation",VDem,1900,2023
+tjet_cy,v2peasjgen,Access to state jobs by gender,VDem,1900,2023
+tjet_cy,v2peasjgen_nr,"Access to state jobs by gender, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasjgen_sd,"Access to state jobs by gender, standard deviation",VDem,1900,2023
+tjet_cy,v2peasjgeo,Access to state jobs by urban-rural location,VDem,1900,2023
+tjet_cy,v2peasjgeo_nr,"Access to state jobs by urban-rural location, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasjgeo_sd,"Access to state jobs by urban-rural location, standard deviation",VDem,1900,2023
+tjet_cy,v2peasjpol,Access to state jobs by political group,VDem,1900,2023
+tjet_cy,v2peasjpol_nr,"Access to state jobs by political group, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasjpol_sd,"Access to state jobs by political group, standard deviation",VDem,1900,2023
+tjet_cy,v2peasjsoc,Access to state jobs by social group,VDem,1900,2023
+tjet_cy,v2peasjsoc_nr,"Access to state jobs by social group, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasjsoc_sd,"Access to state jobs by social group, standard deviation",VDem,1900,2023
+tjet_cy,v2peasjsoecon,Access to state jobs by socio-economic position,VDem,1900,2023
+tjet_cy,v2peasjsoecon_nr,"Access to state jobs by socio-economic position, number of expert raters",VDem,1900,2023
+tjet_cy,v2peasjsoecon_sd,"Access to state jobs by socio-economic position, standard deviation",VDem,1900,2023
+tjet_cy,v2peedueq,Educational equality,VDem,1900,2023
+tjet_cy,v2peedueq_nr,"Educational equality, number of expert raters",VDem,1900,2023
+tjet_cy,v2peedueq_sd,"Educational equality, standard deviation",VDem,1900,2023
+tjet_cy,v2pehealth,Health equality,VDem,1900,2023
+tjet_cy,v2pehealth_nr,"Health equality, number of expert raters",VDem,1900,2023
+tjet_cy,v2pehealth_sd,"Health equality, standard deviation",VDem,1900,2023
+tjet_cy,v2pepwrgeo,Power distributed by urban-rural location,VDem,1900,2023
+tjet_cy,v2pepwrgeo_nr,"Power distributed by urban-rural location, number of expert raters",VDem,1900,2023
+tjet_cy,v2pepwrgeo_sd,"Power distributed by urban-rural location, standard deviation",VDem,1900,2023
+tjet_cy,v2psparban,Party ban,VDem,1900,2023
+tjet_cy,v2psparban_nr,"Party ban, number of expert raters",VDem,1900,2023
+tjet_cy,v2psparban_sd,"Party ban, standard deviation",VDem,1900,2023
+tjet_cy,v2regoppgroupssize,Regime opposition groups size,VDem,1900,2023
+tjet_cy,v2regoppgroupssize_nr,"Regime opposition groups size, number of expert raters",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_sd,"Regime opposition groups size, standard deviation",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag1,"v2regoppgroupssize, lagged 1 year",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag2,"v2regoppgroupssize, lagged 2 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag3,"v2regoppgroupssize, lagged 3 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag4,"v2regoppgroupssize, lagged 4 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag5,"v2regoppgroupssize, lagged 5 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag6,"v2regoppgroupssize, lagged 6 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag7,"v2regoppgroupssize, lagged 7 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag8,"v2regoppgroupssize, lagged 8 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag9,"v2regoppgroupssize, lagged 9 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag10,"v2regoppgroupssize, lagged 10 years",VDem,1900,2023
+tjet_cy,v2regoppgroupssize_lag20,"v2regoppgroupssize, lagged 20 years",VDem,1900,2023
+tjet_cy,v2x_accountability,Accountability index,VDem,1900,2023
+tjet_cy,v2x_api,Additive polyarchy index,VDem,1900,2023
+tjet_cy,v2x_api_sd,"Additive polyarchy index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_clphy,Physical violence index,VDem,1900,2023
+tjet_cy,v2x_clphy_sd,"Physical violence index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_corr,Political corruption index,VDem,1900,2023
+tjet_cy,v2x_corr_sd,"Political corruption index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_cspart,Civil society participation index,VDem,1900,2023
+tjet_cy,v2x_cspart_sd,"Civil society participation index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_delibdem,Deliberative democracy index,VDem,1900,2023
+tjet_cy,v2x_delibdem_sd,"Deliberative democracy index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_diagacc,Diagonal accountability index,VDem,1900,2023
+tjet_cy,v2x_egal,Egalitarian component index,VDem,1900,2023
+tjet_cy,v2x_egal_sd,"Egalitarian component index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_egaldem,Egalitarian democracy index,VDem,1900,2023
+tjet_cy,v2x_egaldem_sd,"Egalitarian democracy index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_elecoff,Elected officials index,VDem,1900,2023
+tjet_cy,v2x_execorr,Executive corruption index,VDem,1900,2023
+tjet_cy,v2x_execorr_sd,"Executive corruption index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_frassoc_thick,Freedom of association thick index,VDem,1900,2023
+tjet_cy,v2x_frassoc_thick_sd,"Freedom of association thick index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_freexp,Freedom of expression index,VDem,1900,2023
+tjet_cy,v2x_freexp_altinf,Freedom of Expression and Alternative Sources of Information index,VDem,1900,2023
+tjet_cy,v2x_freexp_altinf_sd,"Freedom of Expression and Alternative Sources of Information index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_freexp_sd,"Freedom of expression index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_gencl,Women civil liberties index,VDem,1900,2023
+tjet_cy,v2x_gencl_sd,"Women civil liberties index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_horacc,Horizontal accountability index,VDem,1900,2023
+tjet_cy,v2x_jucon,Judicial constraints on the executive index,VDem,1900,2023
+tjet_cy,v2x_jucon_sd,"Judicial constraints on the executive index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_libdem,Liberal democracy index,VDem,1900,2023
+tjet_cy,v2x_libdem_sd,"Liberal democracy index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_liberal,Liberal component index,VDem,1900,2023
+tjet_cy,v2x_liberal_sd,"Liberal component index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_mpi,Multiplicative polyarchy index,VDem,1900,2023
+tjet_cy,v2x_mpi_sd,"Multiplicative polyarchy index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_partip,Participatory component index,VDem,1900,2023
+tjet_cy,v2x_partip_sd,"Participatory component index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_partipdem,Participatory democracy index,VDem,1900,2023
+tjet_cy,v2x_partipdem_sd,"Participatory democracy index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_polyarchy,Electoral democracy index,VDem,1900,2023
+tjet_cy,v2x_polyarchy_sd,"Electoral democracy index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_pubcorr,Public sector corruption index,VDem,1900,2023
+tjet_cy,v2x_pubcorr_sd,"Public sector corruption index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_regime,"Regimes of the World, original numeric measure (0-3)",VDem,1900,2023
+tjet_cy,v2x_regime_cat,Regimes of the World categorical measure,VDem,1900,2023
+tjet_cy,v2x_regime_amb,"Regimes of the World, with ambiguous edge cases, original numeric measure (0-8)",VDem,1900,2023
+tjet_cy,v2x_regime_amb_cat,"Regimes of the World categorical measure, with ambiguous edge cases",VDem,1900,2023
+tjet_cy,v2x_rule,Rule of law index,VDem,1900,2023
+tjet_cy,v2x_rule_sd,"Rule of law index, standard deviation",VDem,1900,2023
+tjet_cy,v2x_suffr,Share of population with suffrage,VDem,1900,2023
+tjet_cy,v2x_veracc,Vertical accountability index,VDem,1900,2023
+tjet_cy,v2xcl_acjst,Access to justice,VDem,1900,2023
+tjet_cy,v2xcl_acjst_sd,"Access to justice, standard deviation",VDem,1900,2023
+tjet_cy,v2xcl_rol,Equality before the law and individual liberty index,VDem,1900,2023
+tjet_cy,v2xcl_rol_sd,"Equality before the law and individual liberty index, standard deviation",VDem,1900,2023
+tjet_cy,v2xcs_ccsi,Core civil society index ordinal,VDem,1900,2023
+tjet_cy,v2xcs_ccsi_sd,"Core civil society index ordinal, standard deviation",VDem,1900,2023
+tjet_cy,v2xdd_dd,Direct popular vote index,VDem,1900,2023
+tjet_cy,v2xdl_delib,Deliberative component index,VDem,1900,2023
+tjet_cy,v2xdl_delib_sd,"Deliberative component index, standard deviation",VDem,1900,2023
+tjet_cy,v2xel_frefair,Clean elections index,VDem,1900,2023
+tjet_cy,v2xel_frefair_sd,"Clean elections index, standard deviation",VDem,1900,2023
+tjet_cy,v2xel_locelec,Local government index,VDem,1900,2023
+tjet_cy,v2xel_locelec_sd,"Local government index, standard deviation",VDem,1900,2023
+tjet_cy,v2xel_regelec,Regional government index,VDem,1900,2023
+tjet_cy,v2xel_regelec_sd,"Regional government index, standard deviation",VDem,1900,2023
 tjet_cy,v2xnp_client,Clientelism Index,VDem,1900,2023
 tjet_cy,v2xnp_client_sd,"Clientelism Index, standard deviation",VDem,1900,2023
+tjet_cy,v2xnp_regcorr,Regime corruption,VDem,1900,2023
+tjet_cy,v2xnp_regcorr_sd,"Regime corruption, standard deviation",VDem,1900,2023
 tjet_cy,v2xpas_democracy_opposition,Opposition Parties Democracy Index,VDem,1900,2023
-tjet_cy,v2xpas_economic_government,"Government Coalition Left-Right (v2xpas_economic_government)
-Index",VDem,1900,2023
-tjet_cy,v2cagenmob,Mass mobilization index,VDem,1900,2023
-tjet_cy,v2cagenmob_sd,"Mass mobilization index, standard deviation",VDem,1900,2023
-tjet_cy,v2cagenmob_nr,"Mass mobilization index, count of expert ratings",VDem,1900,2023
-tjet_cy,v2regoppgroupssize,Regime opposition groups size,VDem,1900,2023
-tjet_cy,v2regoppgroupssize_sd,"Regime opposition groups size, standard deviation",VDem,1900,2023
-tjet_cy,v2regoppgroupssize_nr,"Regime opposition groups size, count of expert ratings",VDem,1900,2023
-tjet_cy,el_legislative,"Legislative elections, binary",VDem,1900,2023
+tjet_cy,v2xpas_economic_government,Government Coalition Left-Right (v2xpas_economic_government) Index,VDem,1900,2023
 tjet_cy,el_presidential,"Presidential elections, binary",VDem,1900,2023
+tjet_cy,el_legislative,"Legislative elections, binary",VDem,1900,2023
 tjet_cy,conf_intra,count of minor internal (incl. internationalized) conflicts (25-999 BRDs) ,UCDP ACD,1946,2023
 tjet_cy,wars_intra,count of internal (incl. internationalized) wars (1000+ BRDs) ,UCDP ACD,1946,2023
 tjet_cy,conf_intra_strict,count of minor internal (excl. internationalized) conflicts (25-999 BRDs) ,UCDP ACD,1946,2023
@@ -822,8 +923,21 @@ tjet_cy,events_pitf,count of atrocity events,PITF,,
 tjet_cy,deaths_pitf,counts of deaths due to atrocities,PITF,,
 tjet_cy,theta_mean_fariss,"estimated latent physical integrity (formerly latent mean, the posterior mean of the latent variable)","Fariss, Kenwick, & Reuning",,
 tjet_cy,theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",,
+tjet_cy,theta_q025,"estimated latent physical integrity, 95% confidence interval lower bound ","Fariss, Kenwick, & Reuning",,
+tjet_cy,theta_q975,"estimated latent physical integrity, 95% confidence interval upper bound","Fariss, Kenwick, & Reuning",,
 tjet_cy,killing_estimate_mean_fariss,posterior mean of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",,
 tjet_cy,killing_estimate_median_fariss,posterior median of the new latent one-sided killing variable,"Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag1,"repression (inverted theta_mean_fariss), lagged 1 year","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag2,"repression (inverted theta_mean_fariss), lagged 2 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag3,"repression (inverted theta_mean_fariss), lagged 3 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag4,"repression (inverted theta_mean_fariss), lagged 4 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag5,"repression (inverted theta_mean_fariss), lagged 5 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag6,"repression (inverted theta_mean_fariss), lagged 6 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag7,"repression (inverted theta_mean_fariss), lagged 7 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag8,"repression (inverted theta_mean_fariss), lagged 8 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag9,"repression (inverted theta_mean_fariss), lagged 9 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag10,"repression (inverted theta_mean_fariss), lagged 10 years","Fariss, Kenwick, & Reuning",,
+tjet_cy,repression_lag20,"repression (inverted theta_mean_fariss), lagged 20 years","Fariss, Kenwick, & Reuning",,
 tjet_cy,coups,number of successful coups,Powell & Thyne,,
 tjet_cy,attempted_coups,number of coup attempts,Powell & Thyne,,
 tjet_cy,leaders_n,number of consecutive effective political rulers,Archigos,,
