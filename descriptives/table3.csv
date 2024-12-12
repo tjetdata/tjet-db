@@ -1,12 +1,12 @@
 type,subtype,n
-domestic,Regular human rights prosecutions,3480
-domestic,Transitional human rights prosecutions,1299
-domestic,Intrastate conflict prosecutions,1399
-domestic,Opposition prosecutions,151
-foreign,NOT CODED,10
+domestic,Regular human rights prosecutions,3484
+domestic,Transitional human rights prosecutions,1327
+domestic,Intrastate conflict prosecutions,1400
+domestic,Opposition prosecutions,153
+foreign,NOT CODED,11
 foreign,Passive personality jurisdiction,16
-foreign,Territorial jurisdiction,9
-foreign,Universal jurisdiction,150
+foreign,Territorial jurisdiction,10
+foreign,Universal jurisdiction,149
 international,Ad Hoc Tribunals,155
 international,Hybrid Tribunals,192
 international,International Criminal Court,31
