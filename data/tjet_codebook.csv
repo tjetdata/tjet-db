@@ -350,7 +350,8 @@ tjet_cy,tcs_power_reform,"truth commission power to recommend institutional refo
 tjet_cy,tcs_report,"truth commission issued final report, binary",TJET,1970,2020
 tjet_cy,tcs_public_process,"truth commission publicness, process index",TJET,1970,2020
 tjet_cy,tcs_public_outcome,"truth commission publicness, outcome index",TJET,1970,2020
-tjet_cy,tcs_recommendations,truth commission recommendations in final report index,TJET,1970,2020
+tjet_cy,tcs_recommendations,"truth commission recommendations in final report index, carried forward",TJET,1970,2020
+tjet_cy,tcs_recommendations_beg,"truth commission recommendations in final report index, year of report",TJET,1970,2020
 tjet_cy,tcs_monitoring,"truth commission with mandated implementation monitoring, binary",TJET,1970,2020
 tjet_cy,tcs_ctj_binary,"TCs, binary, conflict TJ",TJET,1970,2020
 tjet_cy,tcs_ctj_created,"TCs, binary for year of creation only, conflict TJ",TJET,1970,2020
@@ -732,6 +733,16 @@ tjet_cy,v2xnp_regcorr,Regime corruption,VDem,1900,2023
 tjet_cy,v2xnp_regcorr_sd,"Regime corruption, standard deviation",VDem,1900,2023
 tjet_cy,v2xpas_democracy_opposition,Opposition Parties Democracy Index,VDem,1900,2023
 tjet_cy,v2xpas_economic_government,Government Coalition Left-Right (v2xpas_economic_government) Index,VDem,1900,2023
+tjet_cy,v2xpe_exlecon,Exclusion by Socio-Economic Group Index,VDem,1900,2023
+tjet_cy,v2xpe_exlecon_sd,"Exclusion by Socio-Economic Group Index, standard deviation",VDem,1900,2023
+tjet_cy,v2xpe_exlgender,Exclusion by Gender index,VDem,1900,2023
+tjet_cy,v2xpe_exlgender_sd,"Exclusion by Gender index, standard deviation",VDem,1900,2023
+tjet_cy,v2xpe_exlgeo,Exclusion by Urban-Rural Location index,VDem,1900,2023
+tjet_cy,v2xpe_exlgeo_sd,"Exclusion by Urban-Rural Location index, standard deviation",VDem,1900,2023
+tjet_cy,v2xpe_exlpol,Exclusion by Political Group index,VDem,1900,2023
+tjet_cy,v2xpe_exlpol_sd,"Exclusion by Political Group index, standard deviation",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr,Exclusion by Social Group index,VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_sd,"Exclusion by Social Group index, standard deviation",VDem,1900,2023
 tjet_cy,el_presidential,"Presidential elections, binary",VDem,1900,2023
 tjet_cy,el_legislative,"Legislative elections, binary",VDem,1900,2023
 tjet_cy,conf_intra,count of minor internal (incl. internationalized) conflicts (25-999 BRDs) ,UCDP ACD,1946,2023

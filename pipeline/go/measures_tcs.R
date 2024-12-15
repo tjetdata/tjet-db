@@ -667,7 +667,9 @@ df <- TCmeasure(
   ),
   monitor_vars = NULL
 ) %>%
-  select(-tcs_recommendations_binary, -tcs_recommendations_created)
+  # select(-tcs_recommendations_binary, -tcs_recommendations_created)
+  select(-tcs_recommendations_binary) |> 
+  rename(tcs_recommendations_beg = tcs_recommendations_created)
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_monitoring",
