@@ -77,12 +77,12 @@ tjet_cy,dem_reversion,categorical democratic reversion measure coded by TJET bas
 tjet_cy,v2x_regime_ert,"regime type (closed autocracy, electoral autocracy, electoral democracy, liberal democracy) ",VDem ERT,,
 tjet_cy,reg_anoc,anocracy (electoral autocracy or democracy),VDem ERT,,
 tjet_cy,reg_chg,regime change,VDem ERT & TJET,,
-tjet_cy,amnesties_sample,country-years from first year with any amnesties,TJET,,
-tjet_cy,reparations_sample,country-years from first year with any reparations policies,TJET,,
-tjet_cy,tcs_sample,country-years from first year with any truth commissions,TJET,,
-tjet_cy,trials_domestic_sample,country-years from first year with any domestic human rights or conflict prosecutions,TJET,,
-tjet_cy,vettings_sample,country-years from first year with any vetting policies,TJET,,
-tjet_cy,fair_postautocratic_trials,binary for whether human rights organizations reported that trials were fair after democratic transition,TJET,,
+tjet_cy,amnesties_sample,"country-years from first year with any amnesties, binary",TJET,,
+tjet_cy,reparations_sample,"country-years from first year with any reparations policies, binary",TJET,,
+tjet_cy,tcs_sample,"country-years from first year with any truth commissions, binary",TJET,,
+tjet_cy,trials_domestic_sample,"country-years from first year with any domestic human rights or conflict prosecutions, binary",TJET,,
+tjet_cy,vettings_sample,"country-years from first year with any vetting policies, binary",TJET,,
+tjet_cy,fair_postautocratic_trials,"binary for whether human rights organizations reported that trials were fair after democratic transition, carried forward until change",TJET,,
 tjet_cy,amnesties,count of amnesties per country and year of passing,TJET,,
 tjet_cy,amnesties_SGBV,"binary for whether amnesties in country-year included any that addressed SGBV (1 = yes, 0 = no) ",TJET,,
 tjet_cy,reparations,count of reparations polices per country and year of creation,TJET,,
@@ -743,6 +743,17 @@ tjet_cy,v2xpe_exlpol,Exclusion by Political Group index,VDem,1900,2023
 tjet_cy,v2xpe_exlpol_sd,"Exclusion by Political Group index, standard deviation",VDem,1900,2023
 tjet_cy,v2xpe_exlsocgr,Exclusion by Social Group index,VDem,1900,2023
 tjet_cy,v2xpe_exlsocgr_sd,"Exclusion by Social Group index, standard deviation",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag1,"Exclusion by Social Group index, lagged 1 year",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag2,"Exclusion by Social Group index, lagged 2 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag3,"Exclusion by Social Group index, lagged 3 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag4,"Exclusion by Social Group index, lagged 4 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag5,"Exclusion by Social Group index, lagged 5 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag6,"Exclusion by Social Group index, lagged 6 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag7,"Exclusion by Social Group index, lagged 7 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag8,"Exclusion by Social Group index, lagged 8 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag9,"Exclusion by Social Group index, lagged 9 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag10,"Exclusion by Social Group index, lagged 10 years",VDem,1900,2023
+tjet_cy,v2xpe_exlsocgr_lag20,"Exclusion by Social Group index, lagged 20 years",VDem,1900,2023
 tjet_cy,el_presidential,"Presidential elections, binary",VDem,1900,2023
 tjet_cy,el_legislative,"Legislative elections, binary",VDem,1900,2023
 tjet_cy,conf_intra,count of minor internal (incl. internationalized) conflicts (25-999 BRDs) ,UCDP ACD,1946,2023
@@ -807,9 +818,9 @@ tjet_cy,yrs_since_confl_1000,years since last conflict activity (or since 1945 f
 tjet_cy,peace_spell_25,"peace spell identifier, based on cumulative 25 deaths threshold during episode",TJET,,
 tjet_cy,peace_spell_100,"peace spell identifier, based on cumulative 100 deaths threshold during episode",TJET,,
 tjet_cy,peace_spell_1000,"peace spell identifier, based on cumulative 1000 deaths threshold during episode",TJET,,
-tjet_cy,territorial,"any internal armed conflict over territorial incompatibility, binary",UCDP ACD,1946,2023
-tjet_cy,confl_term,"any internal conflict dyad episode terminated, binary",UCDP Termination,1946,2020
-tjet_cy,recur_term,"any internal conflict dyad recurrence after spell of non-conflict, binary",UCDP Termination,1946,2020
+tjet_cy,territorial,number of internal conflicts over territorial incompatibility,UCDP ACD,1946,2023
+tjet_cy,confl_term,number of internal conflict episodes terminated,UCDP Termination,1946,2020
+tjet_cy,recur_term,number of internal conflict recurrences after spell of non-conflict,UCDP Termination,1946,2020
 tjet_cy,outcome_agreement,"internal conflict termination with peace agreement, binary, carried forward and lagged",UCDP Termination,1946,2020
 tjet_cy,outcome_ceasefire,"internal conflict termination with ceasefire, binary, carried forward and lagged",UCDP Termination,1946,2020
 tjet_cy,outcome_victory_gov,"internal conflict termination with government victory, binary, carried forward and lagged",UCDP Termination,1946,2020
@@ -825,14 +836,14 @@ tjet_cy,dyads_new,count of new conflict dyads of internal (incl. internationaliz
 tjet_cy,dyads_cumu,cumulative count of new conflict dyads of internal (incl. internationalized) conflict,UCDP DYAD,1946,2023
 tjet_cy,dyads_ep_new,count of new dyad episodes (incl. recurrence) of internal (incl. internationalized) conflict,UCDP DYAD,1946,2023
 tjet_cy,ethnic,"ethnic/communal orientation of any rebel group (""Does the group state, or is it clear in other ways/from other sources that the rebel group either represents or purports to represent a specific ethnic group?)",UCDP CID,1989,2017
-tjet_cy,sideb_regional,regional orientation of any rebel group,UCDP CID,1989,2017
-tjet_cy,sideb_national,national orientation of any rebel group,UCDP CID,1989,2017
-tjet_cy,sideb_subnational,subnational orientation of any rebel group,UCDP CID,1989,2017
-tjet_cy,sideb_trp,"rebel group demand for post-conflict justice: call for truth and reconciliation processes, binary",UCDP CID,1989,2017
-tjet_cy,sideb_accountabiliy,"rebel group demand for post-conflict justice: accountability/prosecution/investigation, binary",UCDP CID,1989,2017
-tjet_cy,sideb_amnesty,"rebel group demand for post-conflict justice: amnesties, binary",UCDP CID,1989,2017
-tjet_cy,sideb_recognition,"rebel group demand for post-conflict justice: recognition of wrongdoing, binary",UCDP CID,1989,2017
-tjet_cy,sideb_restoration,"rebel group demand for post-conflict justice: compensation/restoration, binary",UCDP CID,1989,2017
+tjet_cy,sideb_regional,"regional orientation of any rebel group, carried forward",UCDP CID,1989,2017
+tjet_cy,sideb_national,"national orientation of any rebel group, carried forward",UCDP CID,1989,2017
+tjet_cy,sideb_subnational,"subnational orientation of any rebel group, carried forward",UCDP CID,1989,2017
+tjet_cy,sideb_trp,"rebel group demand for post-conflict justice: call for truth and reconciliation processes, binary, carried forward",UCDP CID,1989,2017
+tjet_cy,sideb_accountabiliy,"rebel group demand for post-conflict justice: accountability/prosecution/investigation, binary, carried forward",UCDP CID,1989,2017
+tjet_cy,sideb_amnesty,"rebel group demand for post-conflict justice: amnesties, binary, carried forward",UCDP CID,1989,2017
+tjet_cy,sideb_recognition,"rebel group demand for post-conflict justice: recognition of wrongdoing, binary, carried forward",UCDP CID,1989,2017
+tjet_cy,sideb_restoration,"rebel group demand for post-conflict justice: compensation/restoration, binary, carried forward",UCDP CID,1989,2017
 tjet_cy,bd_ucdp,best estimate for battle-related deaths,UCDP BRD,1989,2023
 tjet_cy,bd_lo_ucdp,low estimate for battle-related deaths,UCDP BRD,1989,2023
 tjet_cy,bd_hi_ucdp,high estimate for battle-related deaths,UCDP BRD,1989,2023
@@ -926,6 +937,9 @@ tjet_cy,fl_mountainous_log,"mountainous terrain, log of %",Fearon & Laitin,1945,
 tjet_cy,fl_elevation_diff,difference between highest and lowest elevation,Fearon & Laitin,1945,1999
 tjet_cy,fl_noncontiguous,"noncontiguous state (""countries with territory holding at least 10,000 people and separated from the land area containing the capital city either by land or by 100 km of water"")",Fearon & Laitin,1945,1999
 tjet_cy,fl_fuel_export_third,"fuel exports as percentage of merchandise exports, binary for greater than 1/3 ",Fearon & Laitin,1945,1999
+tjet_cy,incidents_gtd,Terrorist incidents,GTD,1970,2020
+tjet_cy,killed_gtd,number of fatalities from terrorist incidents (not including attackers),GTD,1970,2020
+tjet_cy,injured_gtd,Number of injured from terrorist incidents (not including attackers),GTD,1970,2020
 tjet_cy,pko_mission,"active UN peacekeeping mission, binary",PKO,,
 tjet_cy,prev_state_svac,"prevalence of sexual violence among state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
 tjet_cy,prev_nonstate_svac,"prevalence of sexual violence among non-state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
@@ -1017,6 +1031,17 @@ tjet_cy,rgdpna_pwt,"Real GDP using national-accounts growth rates, for studies c
 tjet_cy,rgdpe_pwt,"Expenditure-side real GDP at chained PPPs, to compare relative living standards across countries over time",PWT,,
 tjet_cy,rgdpo_pwt,"Output-side real GDP at chained PPPs, to compare relative productive capacity across countries over time",PWT,,
 tjet_cy,growth_rgdpe_pwt,Expenditure-side GDP growth,PWT,,
+tjet_cy,latent_capacity,latent state capacity measure,Hanson & Sigman,1960,2015
+tjet_cy,latent_capacity_sd,"latent state capacity measure, standard deviation",Hanson & Sigman,1960,2015
+tjet_cy,ape1_rpc,Absolute Political Extraction (Model 1),RPC,1960,2018
+tjet_cy,ape1n_rpc,Absolute Political Extraction (Model 2 with the adjusted non-resource taxes),RPC,1960,2018
+tjet_cy,rpe_agri_rpc,Relative Political Extraction (Model 3),RPC,1960,2018
+tjet_cy,rpe_gdp_rpc,Relative Political Extraction (Model 4),RPC,1960,2018
+tjet_cy,rpe_gdp_nonres_rpc,Relative Political Extraction (Model 5 with the adjusted non-resource taxes),RPC,1960,2018
+tjet_cy,rpr_work_rpc,Relative Political Reach (Model 6),RPC,1960,2018
+tjet_cy,rpr_eap_rpc,Relative Political Reach (Model 7),RPC,1960,2018
+tjet_cy,rpa_full_rpc,Relative Political Allocation (Model 8),RPC,1960,2018
+tjet_cy,rpa_sub_rpc,Relative Political Allocation (Model 8 with income partitions),RPC,1960,2018
 tjet_accused.csv,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_accused.csv,accusedNotes,notes on the accused,TJET,1970,2020
 tjet_accused.csv,arrests,preliminary trial process: arrests,TJET,1970,2020
