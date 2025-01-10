@@ -310,18 +310,22 @@ TCmeasure <- function(cy, new_col_name,
     left_join(new, by = c("ccode_cow" = "ccode", "year" = "year_start")) %>%
     arrange(country_case, year) %>%
     group_by(country_case) %>%
-    mutate(created = binary) %>%
-    fill(scale,
+    mutate(beg = scale, 
+           created = binary) %>%
+    fill(
+      scale,
       binary,
       .direction = "down"
     ) %>%
     ungroup() %>%
     mutate(
       scale = ifelse(year %in% 1970:2023 & is.na(scale), 0, scale),
+      beg = ifelse(year %in% 1970:2020 & is.na(beg), 0, beg),
       binary = ifelse(year %in% 1970:2023 & is.na(binary), 0, binary),
-      created = ifelse(year %in% 1970:2023 & is.na(created), 0, created)
+      created = ifelse(year %in% 1970:2020 & is.na(created), 0, created)
     ) %>%
     rename_with(.fn = ~new_col_name, .cols = scale) %>%
+    rename_with(.fn = ~ paste(new_col_name, "beg", sep = "_"), .cols = beg) %>%
     rename_with(.fn = ~ paste(new_col_name, "binary", sep = "_"), .cols = binary) %>%
     rename_with(.fn = ~ paste(new_col_name, "created", sep = "_"), .cols = created) %>%
     return()

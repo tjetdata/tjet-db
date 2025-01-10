@@ -8,9 +8,7 @@ library(patchwork)
 ### get data
 
 # base <- "~/Documents/GitHub/tjet-db/tjet_datasets"
-# base <- "../analyses_datasets"
 base <- "tjet_datasets"
-
 db <- list(
   Amnesties = read_csv(here::here(base, "tjet_amnesties.csv")),
   Reparations = read_csv(here::here(base, "tjet_reparations.csv")),
@@ -40,7 +38,9 @@ df <- read_csv(here::here(base, "tjet_cy_analyses.csv")) %>%
     gdp_per_capita = rgdpe_pwt / pop_pwt,
     gdp_per_capita_log = log(gdp_per_capita),
     pop_log = log(pop_pwt)
-  )
+  ) %>%
+  mutate(trials = trials_domestic + trials_intl + trials_foreign) %>%
+  filter(year >= 1970 & year <= 2020)
 
 ### rescaling
 
@@ -61,10 +61,6 @@ UnitScale <- function(col) {
 #   select(any_of(to_put_on_unit_scale)) %>%
 #   summary()
 
-df <- df %>%
-  mutate(trials = trials_domestic + trials_intl + trials_foreign) %>%
-  filter(year >= 1970 & year <= 2020)
-
 ### Table 1: basic counts
 
 table1 <- list()
@@ -74,7 +70,6 @@ table1[["Amnesties"]] <- db[["Amnesties"]] %>%
   arrange(country) %>%
   group_by(country) %>%
   reframe(n = n()) %>%
-  # print(n = Inf)
   ungroup() %>%
   reframe(
     mech = "Amnesties",
@@ -87,7 +82,6 @@ table1[["Reparations"]] <- db[["Reparations"]] %>%
   arrange(country) %>%
   group_by(country) %>%
   reframe(n = n()) %>%
-  # print(n = Inf)
   ungroup() %>%
   reframe(
     mech = "Reparations",
@@ -101,7 +95,6 @@ table1[["Truth Commissions"]] <- db[["TruthCommissions"]] %>%
   arrange(country) %>%
   group_by(country) %>%
   reframe(n = n()) %>%
-  # print(n = Inf)
   ungroup() %>%
   reframe(
     mech = "Truth Commissions",
@@ -114,7 +107,6 @@ table1[["Criminal prosecutions"]] <- db[["Trials"]] %>%
   arrange(country_Accused) %>%
   group_by(country_Accused) %>%
   reframe(n = n()) %>%
-  # print(n = Inf)
   reframe(
     mech = "Criminal prosecutions",
     n = sum(n),
@@ -141,7 +133,6 @@ table1[["Vetting policies"]] <- db[["Vettings"]] %>%
   arrange(country) %>%
   group_by(country) %>%
   reframe(n = n()) %>%
-  # print(n = Inf)
   ungroup() %>%
   reframe(
     mech = "Vetting policies",
@@ -155,7 +146,6 @@ table1[["UN Investigations"]] <- db[["Investigations"]] %>%
   group_by(country) %>%
   reframe(n = n()) %>%
   ungroup() %>%
-  # print(n = Inf)
   reframe(
     mech = "UN Investigations",
     n = sum(n),
@@ -192,8 +182,6 @@ totals %>%
   cols_label(name = "", value = "Total")
 
 ### data release trends Figure 1 from cy-dataset
-
-# stop("fix Un Investigations count; not investigation-years!")
 
 df_fig1 <- df %>%
   group_by(year) %>%
@@ -253,7 +241,7 @@ df_fig1 %>%
     # strip.background = element_rect(fill = "white"),
     plot.margin = margin(t = 8, r = 2, b = 0, l = 0, unit = "pt")
   )
-ggsave("descriptives/trends.png", plot = last_plot(), width = 6, height = 4)
+ggsave("descriptives/tj_trends.png", plot = last_plot(), width = 6, height = 4)
 
 ## old figure
 
@@ -352,7 +340,7 @@ df_regions %>%
     panel.grid.major.x = element_blank()
   ) +
   ylab("Percentage")
-ggsave("descriptives/regions.png", plot = last_plot(), width = 6, height = 4)
+ggsave("descriptives/tj_regions.png", plot = last_plot(), width = 6, height = 4)
 
 
 ### Table 3: trial sub-types
@@ -382,9 +370,7 @@ table3[["foreign"]] <- db[["Trials"]] |>
   filter(trialType == "foreign" & yearStart >= 1970 & yearStart <= 2020) |>
   rename(subtype = jurisdiction) |>
   mutate(
-    subtype = ifelse(subtype == "territorial", "Territorial jurisdiction", subtype),
-    subtype = ifelse(subtype == "passive personality", "Passive personality jurisdiction", subtype),
-    subtype = str_to_sentence(subtype),
+    subtype = paste(str_to_sentence(subtype), " jurisdiction", sep = ""),
     subtype = ifelse(is.na(subtype), "NOT CODED", subtype)
   ) |>
   group_by(subtype) |>
@@ -413,25 +399,6 @@ table3 <- table3 |>
   select(type, subtype, n) |>
   write_csv("descriptives/table3.csv")
 
-
-### transitional human rights trials of state agents
-
-df %>%
-  group_by(year) %>%
-  summarize(trials = sum(tran_trs_dom_dtj_ctj_sta, na.rm = TRUE)) %>%
-  ggplot() +
-  geom_line(aes(x = as.integer(as.character(year)), y = trials), linewidth = 1) +
-  theme_bw() +
-  theme(
-    legend.position = "none",
-    legend.title = element_blank(),
-    legend.text = element_text(size = 20),
-    axis.text = element_text(size = 20),
-    axis.title = element_blank()
-  )
-# ggsave("descriptives/tran_trs_dom_dtj_ctj_sta.pdf", plot = last_plot(), width = 6, height = 4)
-
-
 ### Trials over time
 
 to_plot <- db[["Trials"]] %>%
@@ -451,15 +418,9 @@ to_plot %>%
   xlab("") +
   ylab("") +
   theme_bw() +
-  theme(
-    legend.position = "none",
-    legend.title = element_blank(),
-    axis.title = element_text(size = 20),
-    axis.text = element_text(size = 20),
-    title = element_text(size = 20)
-  ) +
+  theme(legend.position = "none") +
   ggtitle("Domestic Trials")
-# ggsave("descriptives/domestic.pdf", plot = last_plot(), width = 6, height = 4)
+ggsave("descriptives/trials_domestic.png", plot = last_plot(), width = 6, height = 4)
 
 to_plot %>%
   filter(trialType == "other") %>%
@@ -470,18 +431,11 @@ to_plot %>%
   xlab("") +
   ylab("") +
   theme_bw() +
-  theme(
-    legend.position = "none",
-    legend.title = element_blank(),
-    axis.title = element_text(size = 20),
-    axis.text = element_text(size = 20),
-    title = element_text(size = 20)
-  ) +
+  theme(legend.position = "none") +
   ggtitle("International (incl Hybrid) & Foreign Trials")
-# ggsave("descriptives/intl.pdf", plot = last_plot(), width = 6, height = 4)
+ggsave("descriptives/trials_intl.png", plot = last_plot(), width = 6, height = 4)
 
-
-### Trial Contexts and Types
+### trial contexts and types
 
 db[["Trials"]] %>%
   mutate(
@@ -509,7 +463,7 @@ db[["Trials"]] %>%
   ggplot() +
   geom_line(aes(x = yearStart, y = value, col = key), linewidth = 1) +
   scale_colour_manual(
-    values = c("orange", "red", "black"),
+    values = c("#089A82", "#565AB6", "black"),
     limits = c(
       "all human rights trials",
       "transitional trials",
@@ -522,14 +476,10 @@ db[["Trials"]] %>%
   theme_bw() +
   theme(
     legend.position = "bottom",
-    legend.title = element_blank(),
-    legend.text = element_text(size = 20),
-    axis.title = element_text(size = 20),
-    axis.text = element_text(size = 20),
-    title = element_text(size = 20)
+    legend.title = element_blank()
   ) +
   ggtitle("Domestic Trials")
-# ggsave("descriptives/domestic_nexus.pdf", plot = last_plot(), width = 6, height = 4)
+ggsave("descriptives/trials_domestic_nexus.png", plot = last_plot(), width = 6, height = 4)
 
 db[["Trials"]] %>%
   filter(trialType != "domestic") %>%
@@ -540,7 +490,7 @@ db[["Trials"]] %>%
   ggplot() +
   geom_line(aes(x = yearStart, y = count, col = trialType), linewidth = 1) +
   scale_colour_manual(
-    values = c("orange", "red", "black"),
+    values = c("#089A82", "#565AB6"),
     limits = c(
       "international",
       "foreign"
@@ -552,15 +502,33 @@ db[["Trials"]] %>%
   theme_bw() +
   theme(
     legend.position = "bottom",
-    legend.title = element_blank(),
-    legend.text = element_text(size = 20),
-    axis.title = element_text(size = 20),
-    axis.text = element_text(size = 20),
-    title = element_text(size = 20)
+    legend.title = element_blank()
   ) +
   ggtitle("International (incl Hybrid) & Foreign Trials")
-# ggsave("descriptives/intl_foreign.pdf", plot = last_plot(), width = 6, height = 4)
+ggsave("descriptives/trials_intl_foreign.png", plot = last_plot(), width = 6, height = 4)
 
+db[["Trials"]] %>% 
+  select(trialID, yearStart, trialType) |> 
+  mutate(trialType = ifelse(trialType == "international (hybrid)", "international", trialType), 
+         trialType = ifelse(trialType == "international", "international\n& hybrid" , trialType)) %>%
+  reframe(.by = c(yearStart, trialType), 
+          count = n()) |> 
+  arrange(trialType, yearStart) |> 
+  ggplot() +
+  geom_line(aes(x = yearStart, y = count, group = trialType, col = trialType), 
+            linewidth = 1) +
+  facet_grid(trialType ~ ., scales = "free_y") +
+  scale_y_continuous(labels = scales::number_format(accuracy = 1)) + 
+  scale_colour_manual(
+    values = c("#565AB6","black", "#089A82"),
+    limits = c("international\n& hybrid","foreign", "domestic"),
+    aesthetics = c("colour", "fill")
+  ) + 
+  xlab("") +
+  ylab("") +
+  theme_bw() +
+  theme(legend.position = "none") 
+ggsave("descriptives/trials_types.png", plot = last_plot(), width = 6, height = 4)
 
 ### Trials addressing SGBV over time
 
@@ -582,21 +550,13 @@ to_plot %>%
   ) %>%
   ggplot() +
   geom_line(aes(x = yearStart, y = count), linewidth = 1) +
-  geom_area(aes(x = yearStart, y = SGBV), fill = "red") +
+  geom_area(aes(x = yearStart, y = SGBV), fill = "#565AB6") +
   xlab("") +
   ylab("") +
   theme_bw() +
   # scale_colour_manual(values = c("SGBV" = "red")) +
-  theme(
-    legend.position = "bottom",
-    legend.title = element_blank(),
-    legend.text = element_text(size = 20),
-    axis.title = element_text(size = 20),
-    axis.text = element_text(size = 20),
-    title = element_text(size = 20)
-  ) +
-  ggtitle("Domestic addressing SGBV")
-# ggsave("descriptives/domestic_SGBV.pdf", plot = last_plot(), width = 6, height = 4)
+  theme(legend.position = "bottom")
+ggsave("descriptives/trials_domestic_SGBV.png", plot = last_plot(), width = 6, height = 4)
 
 to_plot %>%
   filter(trialType == "other") %>%
@@ -607,21 +567,16 @@ to_plot %>%
   ) %>%
   ggplot() +
   geom_line(aes(x = yearStart, y = count), linewidth = 1) +
-  geom_area(aes(x = yearStart, y = SGBV, fill = SGBV), fill = "red") +
+  geom_area(aes(x = yearStart, y = SGBV, fill = SGBV), fill = "#565AB6") +
   xlab("") +
   ylab("") +
   theme_bw() +
   theme(
     legend.position = "bottom",
-    legend.title = element_blank(),
-    legend.text = element_text(size = 20),
-    axis.title = element_text(size = 20),
-    axis.text = element_text(size = 20),
-    title = element_text(size = 16)
+    legend.title = element_blank()
   ) +
-  ggtitle("International (incl Hybrid), Foreign Trials addressing SGBV")
-# ggsave("descriptives/intl_foreign_SGBV.pdf", plot = last_plot(), width = 6, height = 4)
-
+  ggtitle("International (incl Hybrid) & Foreign Trials addressing SGBV")
+ggsave("descriptives/trials_intl_foreign_SGBV.png", plot = last_plot(), width = 6, height = 4)
 
 ### International & Hybrid Trials
 
@@ -634,11 +589,8 @@ db[["Trials"]] %>%
   ggplot() +
   geom_line(aes(x = yearStart, y = count, col = trialType), linewidth = 1) +
   scale_colour_manual(
-    values = c("orange", "red", "black"),
-    limits = c(
-      "international",
-      "hybrid"
-    ),
+    values = c("#089A82", "#565AB6"),
+    limits = c("international", "hybrid"),
     aesthetics = c("colour", "fill")
   ) +
   xlab("") +
@@ -646,15 +598,10 @@ db[["Trials"]] %>%
   theme_bw() +
   theme(
     legend.position = "bottom",
-    legend.title = element_blank(),
-    legend.text = element_text(size = 20),
-    axis.title = element_text(size = 20),
-    axis.text = element_text(size = 20),
-    title = element_text(size = 20)
+    legend.title = element_blank()
   ) +
   ggtitle("International & Hybrid Trials")
-# ggsave("descriptives/intl_hybrid.pdf", plot = last_plot(), width = 6, height = 4)
-
+ggsave("descriptives/trials_intl_hybrid.png", plot = last_plot(), width = 6, height = 4)
 
 ### defendants
 
@@ -678,7 +625,6 @@ db[["Trials"]] %>%
   ungroup() %>%
   gt()
 
-
 ### TCs
 
 df %>%
@@ -700,90 +646,246 @@ df %>%
   )) %>%
   ggplot() +
   geom_line(aes(x = year, y = value, color = name)) +
+  scale_colour_manual(
+    values = c("#089A82", "#565AB6","black"),
+    limits = c("Victim-centered process index", "Public process index", "Powers index"),
+    aesthetics = c("colour", "fill")
+  ) +
   theme_bw() +
   ylab("Average index value") +
   theme(
     axis.title.x = element_blank(),
     legend.title = element_blank(),
+    legend.position = "inside", 
     legend.position.inside = c(0.99, 0.01),
     legend.justification = c(0.99, 0.01),
     legend.background = element_rect(fill = "white"),
     legend.key.height = unit(10, "pt")
   )
-ggsave("descriptives/process.png", plot = last_plot(), width = 6, height = 4)
+ggsave("descriptives/tcs_process.png", plot = last_plot(), width = 6, height = 4)
 
 
 ### TCs reports
 # could later use 3 point scale for policy recommendation
 
-reports <- db[["TruthCommissions"]] %>%
+reports <- db[["TruthCommissions"]] |>
   filter(authorizedByState == 1 & temporaryBodyReport == 1 & ## met criteria
-    focusedPast == 1 & investigatePatternAbuse == 1) %>%
-  filter(!is.na(yearCompleteOperation)) %>%
-  select(
-    yearCompleteOperation,
-    finalReportIssued, reportPubliclyAvailable
-  ) %>%
+           focusedPast == 1 & investigatePatternAbuse == 1) |> 
+  mutate(
+    issued = case_when(finalReportIssued == "Yes" ~ 1, TRUE ~ 0),
+    public = case_when(reportPubliclyAvailable == "Yes" ~ 1, TRUE ~ 0),
+    responsibility = case_when(reportEstablishResponsibility == "Yes" ~ 1, TRUE ~ 0), 
+    publishnames = case_when(perpetratorNamesPublished == "Yes" ~ 1, TRUE ~ 0)
+  ) |> 
   rename(
-    year = yearCompleteOperation,
-    report = finalReportIssued,
-    public = reportPubliclyAvailable
-  ) %>%
-  mutate(
-    report = case_when(
-      report == "Yes" ~ 1,
-      TRUE ~ 0
-    ),
-    public = case_when(
-      public == "Yes" ~ 1,
-      TRUE ~ 0
-    )
-  ) %>%
-  group_by(year) %>%
-  reframe(
-    report = sum(report),
-    public = sum(public)
-  ) %>%
-  filter(year < 2021) %>%
-  full_join(expand_grid(year = 1970:2020), by = "year") %>%
-  arrange(year) %>%
-  mutate(
-    report = ifelse(is.na(report), 0, report),
-    public = ifelse(is.na(public), 0, public)
-  ) %>%
+    year = yearCompleteOperation, 
+    rec_prosecute = recommendProsecutions,
+    rec_repair = recommendReparations,
+    rec_reform = reportRecommendInstitutionalReform,
+    ref_legal = legalReform,
+    ref_judicial = judicialReforms,
+    ref_hrs = humanRightsReforms,
+    ref_vetting = vetting,
+    ref_ssr = SecuritySectorReforms,
+    ref_gender = genderReform,
+    ref_corruption = corruptionReforms
+  ) |>
+  filter(year < 2021 & issued == 1) 
+
+reports_yr <- reports |> 
+  reframe(.by = year,
+          across(c(issued, public, responsibility, publishnames, rec_prosecute, 
+                   rec_repair, rec_reform, ref_legal, ref_judicial, ref_hrs, 
+                   ref_vetting, ref_ssr, ref_gender, ref_corruption),
+                 ~ sum(.x, na.rm = TRUE))
+  ) |> 
+  arrange(year) |> 
+  full_join(expand_grid(year = 1970:2020), by = "year") |>
+  arrange(year) |>
+  mutate(across(!year, ~ ifelse(is.na(.x), 0, .x))) |>
   full_join(
     df %>%
-      mutate(tcs_recommendations = UnitScale(tcs_recommendations)) %>%
-      select(country, year, tcs_recommendations) %>%
-      group_by(year) %>%
-      reframe(recommendations = sum(tcs_recommendations)),
+      reframe(.by = year, 
+              recommendations = sum(tcs_recommendations_beg)),
     by = "year"
-  ) %>%
-  mutate(reports = cumsum(report)) %>%
-  mutate(recommendations = ifelse(reports > 0, recommendations / reports, NA) * 20)
+  ) %>% 
+  mutate(recommendations = ifelse(issued > 0, recommendations / issued, NA),
+         # recommendations = ifelse(issued > 0, recommendations / issued, NA) * 20,
+         recommendations = ifelse(is.na(recommendations), 0, recommendations))
 
-reports %>%
-  select(year, report, public) %>%
-  pivot_longer(cols = !year) %>%
+reports_decade <- reports |> 
+  mutate(decade = paste(str_sub(as.character(year), start = 1, end = 3), "0s", sep = ""), 
+         decade = ifelse(decade == "2020s", "2010s", decade) ) |>
+  reframe(.by = decade,
+          across(c(issued, public, responsibility, publishnames, rec_prosecute, 
+                   rec_repair, rec_reform, ref_legal, ref_judicial, ref_hrs, 
+                   ref_vetting, ref_ssr, ref_gender, ref_corruption),
+                 ~ sum(.x, na.rm = TRUE))
+          ) |> 
+  arrange(decade) |> 
+  full_join(
+    df %>%
+      mutate(decade = paste(str_sub(as.character(year), start = 1, end = 3), "0s", sep = ""), 
+             decade = ifelse(decade == "2020s", "2010s", decade)) |>
+      reframe(.by = decade, 
+              recommendations = sum(tcs_recommendations_beg)),
+    by = "decade"
+  ) %>% 
+  mutate(recommendations = ifelse(issued > 0, recommendations / issued, NA),
+         recommendations = ifelse(is.na(recommendations), 0, recommendations))
+
+reports_yr |> 
+  pivot_longer(c(issued, responsibility, publishnames) ) |> 
+  mutate(
+    name = factor(name, 
+                  levels = c("issued", "responsibility", "publishnames"), 
+                  labels = c("reports issued", "established\nrepsonsibility", 
+                             "published\nperpetrator names"))
+  ) |> 
+  ggplot() + 
+  geom_line(aes(x = year, y = value, group = name, col = name), col = "black") + 
+  facet_grid(name ~ ., scales = "fixed") +
+  ylab("Number of final reports") +
+  theme_bw() + 
+  theme(axis.title.x = element_blank(), 
+        legend.position = "none") 
+ggsave("descriptives/tcs_responsibility.png", plot = last_plot(), width = 6, height = 4)
+
+reports_decade |> 
+  mutate(responsibility = responsibility / issued * 100, 
+         publishnames = publishnames / issued * 100, 
+         ) |> 
+  select(decade, issued, responsibility, publishnames) |>
+  pivot_longer(c(issued, responsibility, publishnames) ) |> 
+  mutate(
+    name = factor(name, 
+                  levels = c("issued", "responsibility", "publishnames"), 
+                  labels = c("number of\nreports issued", "percentage of reports\nthat established\nrepsonsibility", 
+                             "percentage of reports\nthat published\nperpetrator names"))
+    ) |> 
+  ggplot() + 
+  geom_line(aes(x = decade, y = value, group = name, col = name), col = "black") + 
+  facet_grid(name ~ ., scales = "free_y") +
+  ylab("Percentage of final reports") +
+  theme_bw() + 
+  theme(axis.title = element_blank(), 
+        legend.position = "none") 
+ggsave("descriptives/tcs_responsibility_perc.png", plot = last_plot(), width = 6, height = 4)
+
+reports_yr |> 
+  pivot_longer(c(issued, rec_prosecute, rec_repair, rec_reform)) |> 
+  mutate(name = factor(name, 
+                       levels = c("issued", "rec_prosecute", "rec_repair", "rec_reform"), 
+                       labels = c("reports issued", "recommending proscutions", 
+                                  "recommending reparations", "recommending reforms"))
+  ) |> 
+  ggplot() + 
+  geom_line(aes(x = year, y = value, col = name), col = "black") + 
+  facet_wrap(name ~ ., scales = "fixed", ncol = 1) +
+  ylab("Number of final reports") +
+  theme_bw() + 
+  theme(axis.title.x = element_blank(), 
+        legend.title = element_blank(), 
+        legend.position = "none")
+ggsave("descriptives/tcs_recs_types.png", plot = last_plot(), width = 6, height = 4)
+  
+reports_decade |> 
+  mutate(
+    rec_prosecute = rec_prosecute / issued * 100,
+    rec_repair = rec_repair / issued * 100,
+    rec_reform = rec_reform / issued * 100) |>
+  select(decade, rec_prosecute, rec_repair, rec_reform) |> 
+  pivot_longer(c(rec_prosecute, rec_repair, rec_reform)) |> 
+  mutate(
+    name = factor(name, 
+                  levels = c("rec_prosecute", "rec_repair", "rec_reform"), 
+                  labels = c("percentage of reports that recommended prosecutions", 
+                             "percentage of reports that recommended reparations", 
+                             "percentage of reports that recommended reforms"))
+  ) |> 
+  ggplot() + 
+  geom_line(aes(x = decade, y = value, group = name, col = name), col = "black") + 
+  facet_wrap(name ~ ., scales = "free_y", ncol = 1) +
+  ylab("Number of final reports") +
+  theme_bw() + 
+  theme(axis.title = element_blank(), 
+        legend.title = element_blank(), 
+        legend.position = "none")
+  ggsave("descriptives/tcs_recs_types_perc.png", plot = last_plot(), width = 6, height = 4)
+  
+reports_yr |> 
+  pivot_longer(c(issued, ref_legal, ref_judicial, ref_hrs, ref_vetting, 
+                 ref_ssr, ref_gender, ref_corruption)) |> 
+  mutate(name = factor(name, 
+                       levels = c("issued", "ref_legal", "ref_judicial", 
+                                  "ref_hrs", "ref_vetting", "ref_ssr", 
+                                  "ref_gender", "ref_corruption"), 
+                       labels = c("reports issued", "legal reform", 
+                                  "judicial reform", "human rights reform", 
+                                  "vetting", "security sector reform", 
+                                  "gender reform", "corruption reform"))
+  ) |> 
+  ggplot() + 
+  geom_line(aes(x = year, y = value, col = name), col = "black") + 
+  facet_wrap(name ~ ., scales = "fixed", ncol = 2, nrow = 4) +
+  ylab("Number of final reports") +
+  theme_bw() + 
+  theme(axis.title.x = element_blank(), 
+        legend.title = element_blank(), 
+        legend.position = "none") 
+ggsave("descriptives/tcs_ref_types.png", plot = last_plot(), width = 6, height = 4)
+
+reports_decade |> 
+  mutate(across(c(rec_prosecute, rec_repair, ref_legal, ref_judicial, 
+                  ref_ssr, ref_gender), 
+                ~ .x / issued * 100)
+         ) |>
+  pivot_longer(c(rec_prosecute, rec_repair, ref_legal, ref_judicial, 
+                 ref_ssr, ref_gender)) |> 
+  mutate(name = factor(name, 
+                       levels = c("rec_prosecute", "rec_repair", "ref_legal", 
+                                  "ref_judicial", "ref_ssr", "ref_gender"), 
+                       labels = c("prosecutions", "reparations", "legal reform", 
+                                  "judicial reform", "security\nsector reform", 
+                                  "gender reform"))
+  ) |> 
+  ggplot() + 
+  geom_line(aes(x = decade, y = value, group = name), col = "black") + 
+  facet_grid(name ~ ., scales = "fixed") +
+  ylab("Percentage of final reports") +
+  theme_bw() + 
+  theme(axis.title.x = element_blank(), 
+        legend.title = element_blank(), 
+        legend.position = "none") 
+ggsave("descriptives/tcs_ref_types_perc.png", plot = last_plot(), width = 4, height = 6)
+
+reports_yr |>
+  select(year, issued, public) |>
+  mutate(issued = issued - public) |> 
+  pivot_longer(cols = !year) |>
   mutate(name = case_when(
-    name == "report" ~ "final report not public",
+    name == "issued" ~ "final report not public",
     name == "public" ~ "public final report"
-  )) %>%
+  )) |>
   ggplot() +
   geom_bar(aes(x = year, y = value, fill = name), stat = "identity") +
   geom_line(
-    data = reports %>%
-      select(year, recommendations),
-    aes(x = year, y = recommendations)
+    data = reports_yr |>
+      select(year, recommendations) |>
+      filter(!is.na(recommendations)) ,
+    aes(x = year, y = zoo::rollmean(recommendations, k = 5, fill = NA)), 
+    # aes(x = year, y = recommendations)
+    col = "#565AB6"
   ) +
-  scale_fill_manual(values = c("final report not public" = "darkgray", "public final report" = "lightgray")) +
+  scale_fill_manual(values = c("final report not public" = "darkgray", 
+                               "public final report" = "lightgray")) +
   theme_bw() +
   ylab("number of reports") +
-  ylim(c(0, 10)) +
   theme(
     legend.title = element_blank(),
-    legend.position.inside = c(0.33, 0.99),
-    legend.justification = c(0.33, 0.99),
+    legend.position = "inside",
+    legend.position.inside = c(0.1, 0.99),
+    legend.justification = c(0.1, 0.99),
     legend.background = element_rect(fill = "white"),
     axis.title.x = element_blank(),
     legend.key.size = unit(10, "pt"), # change legend key size
@@ -793,17 +895,46 @@ reports %>%
   scale_y_continuous(
     breaks = c(0, 2, 4, 6, 8),
     sec.axis = sec_axis(
-      transform = ~ . / 20,
-      name = "average reform recommendations index"
+      # transform = ~ . / 20,
+      transform = ~ .,
+      name = "rolling average reform recommendations index"
     )
   )
-### data release Figure 2
-ggsave("descriptives/reports.png", plot = last_plot(), width = 6, height = 4)
+### data release Figure 2?
+ggsave("descriptives/tcs_ref_recs.png", plot = last_plot(), width = 6, height = 4)
+
+reports_decade |>
+  select(decade, issued, public) |>
+  mutate(issued = issued - public) |> 
+  pivot_longer(cols = !decade) |>
+  mutate(name = case_when(
+    name == "issued" ~ "final report not public",
+    name == "public" ~ "public final report"
+  )) |>
+  ggplot() +
+  geom_bar(aes(x = decade, y = value, fill = name), stat = "identity") +
+  scale_fill_manual(values = c("final report not public" = "#565AB6", 
+                               "public final report" = "#089A82")) +
+  theme_bw() + 
+  ylab("number of reports") +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "inside",
+    legend.position.inside = c(0.1, 0.99),
+    legend.justification = c(0.1, 0.99),
+    legend.background = element_rect(fill = "white"),
+    axis.title.x = element_blank(),
+    legend.key.size = unit(10, "pt"), # change legend key size
+    legend.key.height = unit(10, "pt"), # change legend key height
+    legend.key.width = unit(10, "pt")
+  ) 
+ggsave("descriptives/tcs_reports.png", plot = last_plot(), width = 6, height = 4)
+
 
 
 ## Reparations
 
-db[["Reparations"]] %>%
+db[["Reparations"]] |>
   mutate(
     individual = case_when(
       individualReparations == "yes" ~ 1,
@@ -846,8 +977,9 @@ peace <- db[["Amnesties"]] %>%
   reframe(n = n()) %>%
   ggplot(aes(x = reorder(peaceSettlement, n), y = n, fill = peaceSettlement)) +
   geom_bar(position = position_dodge(), stat = "identity") +
+  scale_fill_manual(values = c("yes" = "#565AB6", "no"= "#089A82")) +
   # scale_fill_manual(values = c("yes" = "#F8766D", "no"= "darkgray")) +
-  scale_fill_manual(values = c("yes" = "darkgray", "no" = "lightgray")) +
+  # scale_fill_manual(values = c("yes" = "darkgray", "no" = "lightgray")) +
   expand_limits(y = 850) +
   geom_text(aes(label = n), vjust = -0.2, position = position_dodge(0.9), size = 2, color = "black") +
   theme_bw() +
@@ -875,8 +1007,9 @@ hrs <- db[["Amnesties"]] %>%
   reframe(n = n()) %>%
   ggplot(aes(x = reorder(hrCrimes, n), y = n, fill = hrCrimes)) +
   geom_bar(position = position_dodge(), stat = "identity") +
+  scale_fill_manual(values = c("yes" = "#565AB6", "no"= "#089A82")) +
   # scale_fill_manual(values = c("yes" = "#F8766D", "no"= "darkgray")) +
-  scale_fill_manual(values = c("yes" = "darkgray", "no" = "lightgray")) +
+  # scale_fill_manual(values = c("yes" = "darkgray", "no" = "lightgray")) +
   expand_limits(y = 750) +
   geom_text(aes(label = n), vjust = -0.2, position = position_dodge(0.9), size = 2, color = "black") +
   theme_bw() +
@@ -908,7 +1041,7 @@ who <- db[["Amnesties"]] %>%
   reframe(n = n()) %>%
   ggplot(aes(y = reorder(whoWasAmnestied, n), x = n)) +
   # geom_bar(position = position_dodge(), stat = "identity", fill = "#F8766D") +
-  geom_bar(position = position_dodge(), stat = "identity", fill = "darkgray") +
+  geom_bar(position = position_dodge(), stat = "identity", fill = "#565AB6") +
   geom_text(aes(label = n), hjust = -0.1, position = position_dodge(0.9), size = 2, color = "black") +
   expand_limits(x = 600) +
   theme_bw() +
@@ -923,7 +1056,7 @@ who <- db[["Amnesties"]] %>%
     title = element_text(size = 10)
   ) +
   ggtitle("Who was amnestied?")
-
+  
 # amnesty <- multi_panel_figure(columns = 2, rows = 2, panel_label_type = "none")
 # amnesty %<>%
 #   fill_panel(hrs, column = 1, row = 1) %<>%
@@ -935,6 +1068,7 @@ amnesty <- (hrs / peace) | who
 
 #### data release Figure 3
 ggsave("descriptives/amnesty.png", plot = amnesty, width = 6, height = 4)
+
 
 
 ### transitional trials
@@ -950,14 +1084,14 @@ df %>%
   geom_line(aes(x = year, y = tran_trs_dom_dtj_ctj_sta), linewidth = 1) +
   geom_area(aes(x = year, y = tran_trs_dom_dtj_ctj_sta_hi, fill = "high-ranking")) +
   scale_colour_manual(
-    values = c("high-ranking" = "red"),
-    limits = "red"
+    values = c("high-ranking" = "#565AB6"),
+    aesthetics = c("colour", "fill")
   ) +
-  xlab("") +
-  ylab("") +
   theme_bw() +
   theme(
     plot.title = element_text(hjust = 1),
+    axis.title = element_blank(), 
+    legend.position = "inside", 
     legend.position.inside = c(0.01, 0.99),
     legend.justification = c(0.01, 0.99),
     legend.background = element_rect(fill = "white"),
@@ -965,7 +1099,6 @@ df %>%
   ) +
   ggtitle("Transitional human rights trials of state agents")
 ggsave("descriptives/trials.png", plot = last_plot(), width = 6, height = 3)
-
 
 ### convictions
 
@@ -980,14 +1113,14 @@ df %>%
   geom_line(aes(x = year, y = tran_cce_dom_dtj_ctj_sta), linewidth = 1) +
   geom_area(aes(x = year, y = tran_cce_dom_dtj_ctj_sta_hi, fill = "high-ranking")) +
   scale_colour_manual(
-    values = c("high-ranking" = "red"),
-    limits = "red"
+    values = c("high-ranking" = "#565AB6"),
+    aesthetics = c("colour", "fill")
   ) +
-  xlab("") +
-  ylab("") +
   theme_bw() +
   theme(
     plot.title = element_text(hjust = 1),
+    axis.title = element_blank(), 
+    legend.position = "inside", 
     legend.position.inside = c(0.01, 0.99),
     legend.justification = c(0.01, 0.99),
     legend.background = element_rect(fill = "white"),
@@ -1004,7 +1137,6 @@ df %>%
     tran_cce_dom_dtj_ctj_sta_hi = sum(tran_cce_dom_dtj_ctj_sta_hi)
   ) %>%
   mutate(prop = ifelse(tran_cce_dom_dtj_ctj_sta != 0, tran_cce_dom_dtj_ctj_sta_hi / tran_cce_dom_dtj_ctj_sta * 100, 0)) %>%
-  # print(n = Inf)
   ggplot() +
   geom_line(aes(x = year, y = prop), linewidth = 1) +
   xlab("") +
@@ -1012,12 +1144,13 @@ df %>%
   theme_bw() +
   theme(
     plot.title = element_text(hjust = 1),
+    legend.position  = "inside", 
     legend.position.inside = c(0.01, 0.99),
     legend.justification = c(0.01, 0.99),
     legend.background = element_rect(fill = "white"),
     legend.title = element_blank()
-  ) +
-  ggtitle("High-ranking state agents convicted in transitional human rights trials")
+  )
+  # ggtitle("High-ranking state agents convicted in transitional human rights trials")
 ### data release Figure 4
 ggsave("descriptives/highrankconvictions.png", plot = last_plot(), width = 6, height = 3)
 
@@ -1054,17 +1187,18 @@ df %>%
   )) %>%
   ggplot() +
   geom_line(aes(x = year, y = value, col = name), linewidth = 1) +
-  # scale_colour_manual(values = c("orange", "red", "black"),
-  #                     limits = c("trials following truth commissions",
-  #                                "trials following amnesties",
-  #                                "trials following reparations policies"),
-  #                     aesthetics = c("colour", "fill")) +
-  xlab("") +
+  scale_colour_manual(
+    values = c("trials within two years of reparations policies" = "#089A82", 
+               "trials within two years of truth commissions" = "#565AB6", 
+               "trials within two years of amnesties" = "black"),
+    aesthetics = c("colour", "fill")
+  ) +
   ylab("Number of trials") +
   theme_bw() +
   theme(
     plot.title = element_text(hjust = 1), ,
     axis.title.x = element_blank(),
+    legend.position = "inside", 
     legend.position.inside = c(0.01, 0.99),
     legend.justification = c(0.01, 0.99),
     legend.title = element_blank(),

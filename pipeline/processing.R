@@ -1426,7 +1426,7 @@ df %>%
 
 ## for dev only
 # df <- df %>%
-#   select(country, country_case, ccode_cow, year, trials_domestic)
+#   select(country, country_case, ccode_cow, year)
 
 df <- AmnestyMeasure(cy = df, nexus_vars = "dtj", who_opts = "sta")
 df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "sta")
@@ -1440,7 +1440,7 @@ df <- AmnestyMeasure(cy = df, who_opts = "opp")
 df <- AmnestyMeasure(cy = df, who_opts = "opp", what_opts = "hrv")
 df <- AmnestyMeasure(cy = df, who_opts = "pol")
 df <- AmnestyMeasure(cy = df, peace_vars = "peaceSettlement") 
-source("pipeline/go/measures_prosecutions.R", echo = TRUE) 
+source("pipeline/go/measures_prosecutions.R", echo = TRUE)
 source("pipeline/go/measures_tcs.R", echo = TRUE) 
 df <- ReparationMeasures(cy = df)
 df <- VettingMeasures(cy = df)

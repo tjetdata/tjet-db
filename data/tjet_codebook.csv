@@ -331,58 +331,98 @@ tjet_cy,oppo_acc_dom_sta_opp,"domestic opposition prosecutions of state agents o
 tjet_cy,oppo_crt_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, conviction rate, cct/acc (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,oppo_sen_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, total sum of sentences scale, by nationality of the accused & conviction year (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,tcs_victim_process,victim-centered TC process index,TJET,1970,2020
+tjet_cy,tcs_victim_process_beg,"victim-centered TC process index, first year",TJET,1970,2020
 tjet_cy,tcs_victim_outcome,victim-centered TC outcome index,TJET,1970,2020
+tjet_cy,tcs_victim_outcome_beg,"victim-centered TC outcome index, first year",TJET,1970,2020
 tjet_cy,tcs_recreparations,"truth commission reparations recommendation, binary",TJET,1970,2020
+tjet_cy,tcs_recreparations_beg,"truth commission reparations recommendation, binary, first year",TJET,1970,2020
 tjet_cy,tcs_metcriteria,truth commission met all definitional criteria (but may not have operated),TJET,1970,2020
 tjet_cy,tcs_metcriteria_created,"truth commission met all definitional criteria (but may not have operated), binary for year of creation only",TJET,1970,2020
 tjet_cy,tcs_operated,"truth commission operated, binary",TJET,1970,2020
 tjet_cy,tcs_operated_created,"truth commission operated, binary for year of creation only",TJET,1970,2020
 tjet_cy,tcs_goalstruth,"truth commission with explicit goal of truth-finding, binary ",TJET,1970,2020
+tjet_cy,tcs_goalstruth_beg,"truth commission with explicit goal of truth-finding, binary, first year",TJET,1970,2020
 tjet_cy,tcs_independent,"truth commission was at least partially independent, binary",TJET,1970,2020
+tjet_cy,tcs_independent_beg,"truth commission was at least partially independent, binary, first year",TJET,1970,2020
 tjet_cy,tcs_independent_scale,"truth commission independence scale (not, partially, and fully independent)",TJET,1970,2020
 tjet_cy,tcs_harms,"harms investigated by truth commission, scale",TJET,1970,2020
+tjet_cy,tcs_harms_beg,"harms investigated by truth commission, scale, first year",TJET,1970,2020
 tjet_cy,tcs_powers,truth commission powers index,TJET,1970,2020
+tjet_cy,tcs_powers_beg,"truth commission powers index, first year",TJET,1970,2020
 tjet_cy,tcs_power_investigate,"truth commission power to investigate state members, binary",TJET,1970,2020
+tjet_cy,tcs_power_investigate_beg,"truth commission power to investigate state members, binary, first year",TJET,1970,2020
 tjet_cy,tcs_power_compel,"truth commission power to compel testimony, binary",TJET,1970,2020
+tjet_cy,tcs_power_compel_beg,"truth commission power to compel testimony, binary, first year",TJET,1970,2020
 tjet_cy,tcs_power_docs,"truth commission power to access official documents, binary",TJET,1970,2020
+tjet_cy,tcs_power_docs_beg,"truth commission power to access official documents, binary, first year",TJET,1970,2020
 tjet_cy,tcs_power_name,"truth commission power to name perpetrators, binary",TJET,1970,2020
+tjet_cy,tcs_power_name_beg,"truth commission power to name perpetrators, binary, first year",TJET,1970,2020
 tjet_cy,tcs_power_reform,"truth commission power to recommend institutional reforms, binary",TJET,1970,2020
+tjet_cy,tcs_power_reform_beg,"truth commission power to recommend institutional reforms, binary, first year",TJET,1970,2020
 tjet_cy,tcs_report,"truth commission issued final report, binary",TJET,1970,2020
+tjet_cy,tcs_report_beg,"truth commission issued final report, binary, first year",TJET,1970,2020
 tjet_cy,tcs_public_process,"truth commission publicness, process index",TJET,1970,2020
+tjet_cy,tcs_public_process_beg,"truth commission publicness, process index, first year",TJET,1970,2020
 tjet_cy,tcs_public_outcome,"truth commission publicness, outcome index",TJET,1970,2020
+tjet_cy,tcs_public_outcome_beg,"truth commission publicness, outcome index, first year",TJET,1970,2020
 tjet_cy,tcs_recommendations,"truth commission recommendations in final report index, carried forward",TJET,1970,2020
 tjet_cy,tcs_recommendations_beg,"truth commission recommendations in final report index, year of report",TJET,1970,2020
 tjet_cy,tcs_monitoring,"truth commission with mandated implementation monitoring, binary",TJET,1970,2020
+tjet_cy,tcs_monitoring_beg,"truth commission with mandated implementation monitoring, binary, first year",TJET,1970,2020
 tjet_cy,tcs_ctj_binary,"TCs, binary, conflict TJ",TJET,1970,2020
 tjet_cy,tcs_ctj_created,"TCs, binary for year of creation only, conflict TJ",TJET,1970,2020
 tjet_cy,tcs_ctj_victim_process,"victim-centered TC process index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_victim_process_beg,"victim-centered TC process index, conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_ctj_victim_outcome,"victim-centered TC outcome index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_victim_outcome_beg,"victim-centered TC outcome index, conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_ctj_account_process,"accountability-oriented TC process index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_account_process_beg,"accountability-oriented TC process index, conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_ctj_account_outcome,"accountability-oriented TC outcome index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_account_outcome_beg,"accountability-oriented TC outcome index, conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_ctj_peace_process,"peace-oriented TC process index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_peace_process_beg,"peace-oriented TC process index, conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_ctj_peace_outcome,"peace-oriented TC outcome index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_peace_outcome_beg,"peace-oriented TC outcome index, conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_ctj_reform_process,"reform-oriented TC process index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_reform_process_beg,"reform-oriented TC process index, conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_ctj_reform_outcome,"reform-oriented TC outcome index, conflict TJ",TJET,1970,2020
+tjet_cy,tcs_ctj_reform_outcome_beg,"reform-oriented TC outcome index, conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_binary,"TCs, binary, post-autocratic TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_created,"TCs, binary for year of creation only, post-autocratic TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_victim_process,"victim-centered TC process index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_victim_process_beg,"victim-centered TC process index, post-autocratic TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_victim_outcome,"victim-centered TC outcome index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_victim_outcome_beg,"victim-centered TC outcome index, post-autocratic TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_account_process,"accountability-oriented TC process index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_account_process_beg,"accountability-oriented TC process index, post-autocratic TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_account_outcome,"accountability-oriented TC outcome index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_account_outcome_beg,"accountability-oriented TC outcome index, post-autocratic TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_peace_process,"peace-oriented TC process index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_peace_process_beg,"peace-oriented TC process index, post-autocratic TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_peace_outcome,"peace-oriented TC outcome index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_peace_outcome_beg,"peace-oriented TC outcome index, post-autocratic TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_reform_process,"reform-oriented TC process index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_reform_process_beg,"reform-oriented TC process index, post-autocratic TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_reform_outcome,"reform-oriented TC outcome index, post-autocratic TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_reform_outcome_beg,"reform-oriented TC outcome index, post-autocratic TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_binary,"TCs, binary, post-autocratic & conflict TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_created,"TCs, binary for year of creation only, post-autocratic & conflict TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_victim_process,"victim-centered TC process index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_victim_process_beg,"victim-centered TC process index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_victim_outcome,"victim-centered TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_victim_outcome_beg,"victim-centered TC outcome index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_account_process,"accountability-oriented TC process index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_account_process_beg,"accountability-oriented TC process index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_account_outcome,"accountability-oriented TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_account_outcome_beg,"accountability-oriented TC outcome index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_peace_process,"peace-oriented TC process index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_peace_process_beg,"peace-oriented TC process index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_peace_outcome,"peace-oriented TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_peace_outcome_beg,"peace-oriented TC outcome index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_reform_process,"reform-oriented TC process index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_reform_process_beg,"reform-oriented TC process index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_reform_outcome,"reform-oriented TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
+tjet_cy,tcs_dtj_ctj_reform_outcome_beg,"reform-oriented TC outcome index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,amnesty_dtj_sta,"amnesty, binary (post-autocratic transitional justice nexus, state agents)",TJET,1970,2020
 tjet_cy,amnesty_dtj_ctj_sta,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents)",TJET,1970,2020
 tjet_cy,amnesty_dtj_ctj_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, opposition members)",TJET,1970,2020

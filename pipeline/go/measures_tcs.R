@@ -7,7 +7,7 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_dtj)
+  select(-tcs_dtj, -tcs_dtj_beg)
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_ctj",
@@ -18,7 +18,7 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_ctj)
+  select(-tcs_ctj, -tcs_ctj_beg)
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj",
@@ -29,7 +29,7 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_dtj_ctj)
+  select(-tcs_dtj_ctj, -tcs_dtj_ctj_beg)
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_victim_process",
@@ -441,7 +441,7 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_metcriteria) %>%
+  select(-tcs_metcriteria, -tcs_metcriteria_beg) %>%
   rename("tcs_metcriteria" = "tcs_metcriteria_binary")
 
 df <- TCmeasure(
@@ -453,7 +453,7 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_operated) %>%
+  select(-tcs_operated, -tcs_operated_beg) %>%
   rename("tcs_operated" = "tcs_operated_binary")
 
 df <- TCmeasure(
@@ -519,7 +519,8 @@ df <- df %>%
     tcs_ind_full == 1 ~ 2,
     TRUE ~ 0
   )) %>%
-  select(-tcs_ind_no, -tcs_ind_part, -tcs_ind_full)
+  select(-tcs_ind_no, -tcs_ind_no_beg, -tcs_ind_part, -tcs_ind_part_beg, 
+         -tcs_ind_full, -tcs_ind_full_beg)
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_harms",
@@ -536,12 +537,18 @@ df <- TCmeasure(
   reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL
 ) %>%
   select(-tcs_harms_binary, -tcs_harms_created) %>%
-  mutate(tcs_harms = case_when(
-    tcs_harms == 0 ~ 0,
-    tcs_harms %in% 1:2 ~ 1,
-    tcs_harms %in% 3:5 ~ 2,
-    tcs_harms %in% 6:7 ~ 3
-  ))
+  mutate(
+    tcs_harms = case_when(
+      tcs_harms == 0 ~ 0,
+      tcs_harms %in% 1:2 ~ 1,
+      tcs_harms %in% 3:5 ~ 2,
+      tcs_harms %in% 6:7 ~ 3), 
+    tcs_harms_beg = case_when(
+      tcs_harms_beg == 0 ~ 0,
+      tcs_harms_beg %in% 1:2 ~ 1,
+      tcs_harms_beg %in% 3:5 ~ 2,
+      tcs_harms_beg %in% 6:7 ~ 3)
+    )
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_powers",
@@ -667,9 +674,7 @@ df <- TCmeasure(
   ),
   monitor_vars = NULL
 ) %>%
-  # select(-tcs_recommendations_binary, -tcs_recommendations_created)
-  select(-tcs_recommendations_binary) |> 
-  rename(tcs_recommendations_beg = tcs_recommendations_created)
+  select(-tcs_recommendations_binary, -tcs_recommendations_created)
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_monitoring",
