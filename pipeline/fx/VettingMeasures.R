@@ -120,7 +120,6 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
       type_perjury,
       ban_from_elected,
       conduct,
-      # implementation,
       public,
       fairness,
       .direction = "down"

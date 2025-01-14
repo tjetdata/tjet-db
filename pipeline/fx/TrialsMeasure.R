@@ -4,6 +4,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
   ## options
   type_trial <- c(
     int = "international",
+    hyb = "international (hybrid)",
     "for" = "foreign",
     dom = "domestic"
   )
@@ -186,7 +187,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
   accused_ended <- db[["CourtLevels"]] %>%
     filter(!is.na(accusedID)) %>%
     select(accusedID, year, date, last_fx, last) %>%
-    mutate(year = ifelse(accusedID == 17751 & year == 2, 2014, year)) %>%
+    # mutate(year = ifelse(accusedID == 17751 & year == 2, 2014, year)) %>%
     arrange(accusedID, year) %>%
     group_by(accusedID) %>%
     mutate(
@@ -283,15 +284,16 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
     exclusion_condition <- TRUE
   }
 
-  trials <- db[["Trials"]] %>%
+  trials <- db[["Trials"]] %>% 
     mutate(
       humanRights = ifelse(HRs_charges > 0 & humanRights == 0, 1, humanRights),
-      trialType = case_when(
-        trialType %in% c("domestic", "don't know") ~ "domestic",
-        trialType %in% c("international", "international (hybrid)") ~ "international",
-        trialType == "foreign" ~ "foreign"
-      )
-    ) %>%
+      # trialType = case_when(
+      #   trialType %in% c("domestic", "don't know") ~ "domestic",
+      #   trialType %in% c("international", "international (hybrid)") ~ "international",
+      #   trialType == "foreign" ~ "foreign"
+      # ), 
+      # trialType = ifelse(trialType == "don't know", "domestic", trialType) 
+    ) %>% 
     filter(trialType == type_trial[type_opts]) %>%
     filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) %>%
     filter(eval(exclusion_condition)) %>%

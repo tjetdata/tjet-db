@@ -144,42 +144,78 @@ tjet_cy,uninv_evcoll,"ongoing UN investigation which collects evidence, binary",
 tjet_cy,uninv_intlpros_beg,"UN investigation which collects evidence for international prosecutions, binary for year of initiation only",TJET,1970,2020
 tjet_cy,uninv_intlpros,"ongoing UN investigation which collects evidence for international prosecutions, binary",TJET,1970,2020
 tjet_cy,cum_theta_mean_fariss,cumulative average of latent physical integrity since 1970 (or entrance into dataset),"Fariss, Kenwick, & Reuning",,
-tjet_cy,trs_int_sta,"int'l & hybrid trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,tro_int_sta,"int'l & hybrid trials of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,ado_int_sta,"int'l & hybrid trials of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,tfc_int_sta,"int'l & hybrid trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,cct_int_sta,"int'l & hybrid trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,cce_int_sta,"int'l & hybrid trials of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,acc_int_sta,"int'l & hybrid trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,crt_int_sta,"int'l & hybrid trials of state agents, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,sen_int_sta,"int'l & hybrid trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,trs_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,tro_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,ado_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,tfc_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,cct_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,cce_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,acc_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,crt_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,sen_int_sta_hi,"int'l & hybrid trials of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,trs_int_opp,"int'l & hybrid trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,tro_int_opp,"int'l & hybrid trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,ado_int_opp,"int'l & hybrid trials of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,tfc_int_opp,"int'l & hybrid trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,cct_int_opp,"int'l & hybrid trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,cce_int_opp,"int'l & hybrid trials of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,acc_int_opp,"int'l & hybrid trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,crt_int_opp,"int'l & hybrid trials of opposition members, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,sen_int_opp,"int'l & hybrid trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,trs_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,tro_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,ado_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,tfc_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,cct_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,cce_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,acc_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,crt_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,sen_int_opp_hi,"int'l & hybrid trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,trs_int_sta,"int'l trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,tro_int_sta,"int'l trials of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,ado_int_sta,"int'l trials of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,tfc_int_sta,"int'l trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cct_int_sta,"int'l trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cce_int_sta,"int'l trials of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,acc_int_sta,"int'l trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,crt_int_sta,"int'l trials of state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,sen_int_sta,"int'l trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,trs_int_sta_hi,"int'l trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,tro_int_sta_hi,"int'l trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,ado_int_sta_hi,"int'l trials of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,tfc_int_sta_hi,"int'l trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cct_int_sta_hi,"int'l trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cce_int_sta_hi,"int'l trials of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,acc_int_sta_hi,"int'l trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,crt_int_sta_hi,"int'l trials of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,sen_int_sta_hi,"int'l trials of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,trs_int_opp,"int'l trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,tro_int_opp,"int'l trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,ado_int_opp,"int'l trials of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,tfc_int_opp,"int'l trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cct_int_opp,"int'l trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cce_int_opp,"int'l trials of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,acc_int_opp,"int'l trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,crt_int_opp,"int'l trials of opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,sen_int_opp,"int'l trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,trs_int_opp_hi,"int'l trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,tro_int_opp_hi,"int'l trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,ado_int_opp_hi,"int'l trials of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,tfc_int_opp_hi,"int'l trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cct_int_opp_hi,"int'l trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cce_int_opp_hi,"int'l trials of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,acc_int_opp_hi,"int'l trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,crt_int_opp_hi,"int'l trials of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,sen_int_opp_hi,"int'l trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,trs_hyb_sta,"hybrid trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,tro_hyb_sta,"hybrid trials of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,ado_hyb_sta,"hybrid trials of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,tfc_hyb_sta,"hybrid trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cct_hyb_sta,"hybrid trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cce_hyb_sta,"hybrid trials of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,acc_hyb_sta,"hybrid trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,crt_hyb_sta,"hybrid trials of state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,sen_hyb_sta,"hybrid trials of state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,trs_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,tro_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,ado_hyb_sta_hi,"hybrid trials of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,tfc_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cct_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cce_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,acc_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,crt_hyb_sta_hi,"hybrid trials of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,sen_hyb_sta_hi,"hybrid trials of high-ranking state agents, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,trs_hyb_opp,"hybrid trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,tro_hyb_opp,"hybrid trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,ado_hyb_opp,"hybrid trials of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,tfc_hyb_opp,"hybrid trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cct_hyb_opp,"hybrid trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cce_hyb_opp,"hybrid trials of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,acc_hyb_opp,"hybrid trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,crt_hyb_opp,"hybrid trials of opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,sen_hyb_opp,"hybrid trials of opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,trs_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,tro_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,ado_hyb_opp_hi,"hybrid trials of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,tfc_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cct_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,cce_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,acc_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,crt_hyb_opp_hi,"hybrid trials of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,sen_hyb_opp_hi,"hybrid trials of high-ranking opposition members, total sum of sentences scale, by nationality of the accused & conviction year",TJET,1970,2020
 tjet_cy,trs_for_sta,"foreign trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,tro_for_sta,"foreign trials of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
 tjet_cy,ado_for_sta,"foreign trials of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
@@ -686,6 +722,21 @@ tjet_cy,v2pepwrgeo_sd,"Power distributed by urban-rural location, standard devia
 tjet_cy,v2psparban,Party ban,VDem,1900,2023
 tjet_cy,v2psparban_nr,"Party ban, number of expert raters",VDem,1900,2023
 tjet_cy,v2psparban_sd,"Party ban, standard deviation",VDem,1900,2023
+tjet_cy,v2regendtype,Principal regime end type,VDem,1900,2023
+tjet_cy,v2regendtypems_0,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_1,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_2,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_3,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_4,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_5,Regime end type: loss in civil war,VDem,1900,2023
+tjet_cy,v2regendtypems_6,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_7,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_8,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_9,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_10,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_11,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_12,Regime end type: ,VDem,1900,2023
+tjet_cy,v2regendtypems_13,Regime end type: ,VDem,1900,2023
 tjet_cy,v2regoppgroupssize,Regime opposition groups size,VDem,1900,2023
 tjet_cy,v2regoppgroupssize_nr,"Regime opposition groups size, number of expert raters",VDem,1900,2023
 tjet_cy,v2regoppgroupssize_sd,"Regime opposition groups size, standard deviation",VDem,1900,2023
@@ -861,12 +912,18 @@ tjet_cy,peace_spell_1000,"peace spell identifier, based on cumulative 1000 death
 tjet_cy,territorial,number of internal conflicts over territorial incompatibility,UCDP ACD,1946,2023
 tjet_cy,confl_term,number of internal conflict episodes terminated,UCDP Termination,1946,2020
 tjet_cy,recur_term,number of internal conflict recurrences after spell of non-conflict,UCDP Termination,1946,2020
-tjet_cy,outcome_agreement,"internal conflict termination with peace agreement, binary, carried forward and lagged",UCDP Termination,1946,2020
-tjet_cy,outcome_ceasefire,"internal conflict termination with ceasefire, binary, carried forward and lagged",UCDP Termination,1946,2020
-tjet_cy,outcome_victory_gov,"internal conflict termination with government victory, binary, carried forward and lagged",UCDP Termination,1946,2020
-tjet_cy,outcome_victory_reb,"internal conflict termination with victory by non-state side, binary, carried forward and lagged",UCDP Termination,1946,2020
-tjet_cy,outcome_low_activity,"internal conflict termination due to low activity, binary, carried forward and lagged",UCDP Termination,1946,2020
-tjet_cy,outcome_actor_ceases,"internal conflict termination because an actor ceased to exist, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_agreement,"internal conflict termination with peace agreement, binary",UCDP Termination,1946,2020
+tjet_cy,outcome_agreement_cflag,"internal conflict termination with peace agreement, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_ceasefire,"internal conflict termination with ceasefire, binary",UCDP Termination,1946,2020
+tjet_cy,outcome_ceasefire_cflag,"internal conflict termination with ceasefire, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_victory_gov,"internal conflict termination with government victory, binary",UCDP Termination,1946,2020
+tjet_cy,outcome_victory_gov_cflag,"internal conflict termination with government victory, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_victory_reb,"internal conflict termination with victory by non-state side, binary",UCDP Termination,1946,2020
+tjet_cy,outcome_victory_reb_cflag,"internal conflict termination with victory by non-state side, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_low_activity,"internal conflict termination due to low activity, binary",UCDP Termination,1946,2020
+tjet_cy,outcome_low_activity_cflag,"internal conflict termination due to low activity, binary, carried forward and lagged",UCDP Termination,1946,2020
+tjet_cy,outcome_actor_ceases,"internal conflict termination because an actor ceased to exist, binary",UCDP Termination,1946,2020
+tjet_cy,outcome_actor_ceases_cflag,"internal conflict termination because an actor ceased to exist, binary, carried forward and lagged",UCDP Termination,1946,2020
 tjet_cy,reb_claim,count of rebel groups in internal conflict dyads making exclusive ethnic claims,EPR (ACD2EPR),1946,2021
 tjet_cy,reb_recruit,count of rebel groups in internal conflict dyads recruiting from ethnic groups,EPR (ACD2EPR),1946,2021
 tjet_cy,gov_recruit,count of internal conflict dyads where governments recruit on the basis of ethnicity,EPR (ACD2EPR),1946,2021
