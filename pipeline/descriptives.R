@@ -527,8 +527,10 @@ db[["Trials"]] %>%
   xlab("") +
   ylab("") +
   theme_bw() +
-  theme(legend.position = "none") 
-ggsave("descriptives/trials_types.png", plot = last_plot(), width = 6, height = 4)
+  theme(legend.position = "none", 
+        plot.margin = margin(t = 1, r = 1, b = -12, l = -12)
+        )
+ggsave("descriptives/trials_types.png", plot = last_plot(), width = 1536, height = 960, units = "px")
 
 ### Trials addressing SGBV over time
 
@@ -1207,3 +1209,131 @@ df %>%
   ) +
   ggtitle("Human rights trials and other transitional justice")
 ggsave("descriptives/simultaneity.png", plot = last_plot(), width = 6, height = 3)
+
+
+
+### Syria comparison
+
+df |> 
+  select(country_case, ccode_cow, year, outcome_victory_reb, v2regendtypems_5, 
+         tcs_operated_created, rep_paidout_created, 
+         tran_trs_dom_dtj_ctj_sta, tran_trs_dom_dtj_ctj_sta_hi
+         ) |>
+  arrange(country_case, year) |> 
+  group_by(country_case, ccode_cow) |>  
+  mutate(
+    rebvictory = ifelse(
+      outcome_victory_reb > 0 | 
+        (v2regendtypems_5 == 1 & (lead(v2regendtypems_5) == 0 | year == max(year))), 
+      1, NA), 
+    rebvictory = ifelse(
+     (country_case == "Chile" & year == 1973) |
+       (country_case == "Comoros" & year == 1989) |
+       (country_case == "Ghana" & year == 1981) |
+       (country_case == "Guinea-Bissau" & year == 1999) | 
+       (country_case == "Haiti" & year == 1991) |
+       (country_case == "Liberia" & year == 1980) |
+       (country_case == "Paraguay" & year == 1989), 
+     NA, rebvictory) 
+    ) |> 
+  fill(rebvictory, .direction = "down") |>
+  mutate(rebvictory = ifelse(is.na(rebvictory), 0, rebvictory)) |> 
+  filter(rebvictory == 1) |> 
+  # select(country_case, year) |> 
+  # reframe(beg = min(year), 
+  #         end = max(year) ) |> 
+  # print(n = Inf)
+  reframe(tcs_operated_created = sum(tcs_operated_created), 
+          rep_paidout_created = sum(rep_paidout_created), 
+          tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta),
+          tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi)) |> 
+  left_join(db[["Trials"]] |> 
+              filter(trialType == "international (hybrid)") |> 
+              select(trialID, country_Accused, country_Trial) |> 
+              group_by(country_Accused) |> 
+              reframe(n = n()), 
+            by = c("country_case" = "country_Accused") 
+  ) |> 
+  rename(hybrid = n) |> 
+  left_join(db[["Trials"]] |> 
+              filter(trialType == "international") |> 
+              select(trialID, country_Accused, country_Trial) |> 
+              group_by(country_Accused) |> 
+              reframe(n = n()), 
+            by = c("country_case" = "country_Accused") 
+  ) |> 
+  rename(intl = n) |> 
+  left_join(db[["Vettings"]] |> 
+              filter(is.na(alterationOf)) |> 
+              filter(type_dismissal == 1 | type_ban == 1 | type_declassification == 1) |> 
+              rename(year = yearStart) |> 
+              group_by(ccode_cow) |> 
+              reframe(vet = n()), 
+            by = "ccode_cow") |>
+  mutate(hybrid = ifelse(is.na(hybrid), 0, hybrid), 
+         intl = ifelse(is.na(intl), 0, intl), 
+         vet = ifelse(is.na(vet), 0, vet) 
+         ) |> 
+  # write_csv("~/Desktop/list_of_cases.csv") 
+  reframe(hybrid = sum(hybrid, na.rm = TRUE),
+          intl = sum(intl, na.rm = TRUE),
+          vet = sum(vet, na.rm = TRUE),
+          sum_tcs_operated_created = sum(tcs_operated_created), 
+          sum_rep_paidout_created = sum(rep_paidout_created), 
+          avg_tran_trs_dom_dtj_ctj_sta = mean(tran_trs_dom_dtj_ctj_sta),
+          avg_tran_trs_dom_dtj_ctj_sta_hi = mean(tran_trs_dom_dtj_ctj_sta_hi)) |> 
+  pivot_longer(everything()) |> I() 
+  write_csv("~/Desktop/descriptives.csv") 
+
+### global
+  
+  df |> 
+    filter(dtr == 1 | pco == 1) |>  
+    select(country_case, ccode_cow, year, 
+           tcs_operated_created, rep_paidout_created, 
+           tran_trs_dom_dtj_ctj_sta, tran_trs_dom_dtj_ctj_sta_hi
+    ) |>
+    arrange(country_case, year) |> 
+    group_by(country_case, ccode_cow) |>  
+    reframe(tcs_operated_created = sum(tcs_operated_created), 
+            rep_paidout_created = sum(rep_paidout_created), 
+            tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta),
+            tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi)) |> 
+    left_join(db[["Trials"]] |> 
+                filter(trialType == "international (hybrid)") |> 
+                select(trialID, country_Accused, country_Trial) |> 
+                group_by(country_Accused) |> 
+                reframe(n = n()), 
+              by = c("country_case" = "country_Accused") 
+    ) |> 
+    rename(hybrid = n) |> 
+    left_join(db[["Trials"]] |> 
+                filter(trialType == "international") |> 
+                select(trialID, country_Accused, country_Trial) |> 
+                group_by(country_Accused) |> 
+                reframe(n = n()), 
+              by = c("country_case" = "country_Accused") 
+    ) |> 
+    rename(intl = n) |> 
+    left_join(db[["Vettings"]] |> 
+                filter(is.na(alterationOf)) |> 
+                filter(type_dismissal == 1 | type_ban == 1 | type_declassification == 1) |> 
+                rename(year = yearStart) |> 
+                group_by(ccode_cow) |> 
+                reframe(vet = n()), 
+              by = "ccode_cow") |>
+    mutate(hybrid = ifelse(is.na(hybrid), 0, hybrid), 
+           intl = ifelse(is.na(intl), 0, intl), 
+           vet = ifelse(is.na(vet), 0, vet) 
+    ) |> 
+    # print(n = Inf)
+    reframe(hybrid = sum(hybrid, na.rm = TRUE),
+            intl = sum(intl, na.rm = TRUE),
+            vet = sum(vet, na.rm = TRUE),
+            sum_tcs_operated_created = sum(tcs_operated_created), 
+            sum_rep_paidout_created = sum(rep_paidout_created), 
+            avg_tran_trs_dom_dtj_ctj_sta = mean(tran_trs_dom_dtj_ctj_sta),
+            avg_tran_trs_dom_dtj_ctj_sta_hi = mean(tran_trs_dom_dtj_ctj_sta_hi)) |> 
+    pivot_longer(everything()) |> 
+  write_csv("~/Desktop/global.csv") 
+  
