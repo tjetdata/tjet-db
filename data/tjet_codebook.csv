@@ -49,9 +49,6 @@ tjet_cy,intregion,United Nations intermediate region,UNSD M49,,
 tjet_cy,region_sub_un,United Nations detailed regions identifier; combination of intermediate and sub-region categories,UNSD M49,,
 tjet_cy,region_wb,World Bank region,World Bank,,
 tjet_cy,micro_ksg,Gleditsch micro-state ,Kristian S. Gleditsch,,
-tjet_cy,sample_trans,"democratic transition sample, binary",TJET,,
-tjet_cy,sample_confl,"conflict sample, binary",TJET,,
-tjet_cy,sample_combi,combined sample (democratic transition & conflict),TJET,,
 tjet_cy,transition,first year of democratic transition,TJET,,
 tjet_cy,dtr,"democratic transition sample, binary",TJET,,
 tjet_cy,aco,"conflict & post-conflict sample, binary",TJET,,
@@ -366,16 +363,16 @@ tjet_cy,oppo_cce_dom_sta_opp,"domestic opposition prosecutions of state agents o
 tjet_cy,oppo_acc_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, count of accused in ongoing trials, by nationality of the accused (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,oppo_crt_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, conviction rate, cct/acc (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,oppo_sen_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, total sum of sentences scale, by nationality of the accused & conviction year (trials not matched to UCDP conflict IDs)",TJET,1970,2020
-tjet_cy,tcs_victim_process,victim-centered TC process index,TJET,1970,2020
+tjet_cy,tcs_victim_process,"victim-centered TC process index, carried forward from first year",TJET,1970,2020
 tjet_cy,tcs_victim_process_beg,"victim-centered TC process index, first year",TJET,1970,2020
-tjet_cy,tcs_victim_outcome,victim-centered TC outcome index,TJET,1970,2020
+tjet_cy,tcs_victim_outcome,"victim-centered TC outcome index, carried forward from first year",TJET,1970,2020
 tjet_cy,tcs_victim_outcome_beg,"victim-centered TC outcome index, first year",TJET,1970,2020
-tjet_cy,tcs_recreparations,"truth commission reparations recommendation, binary",TJET,1970,2020
+tjet_cy,tcs_recreparations,"truth commission reparations recommendation, binary, carried forward from first year",TJET,1970,2020
 tjet_cy,tcs_recreparations_beg,"truth commission reparations recommendation, binary, first year",TJET,1970,2020
-tjet_cy,tcs_metcriteria,truth commission met all definitional criteria (but may not have operated),TJET,1970,2020
-tjet_cy,tcs_metcriteria_created,"truth commission met all definitional criteria (but may not have operated), binary for year of creation only",TJET,1970,2020
-tjet_cy,tcs_operated,"truth commission operated, binary",TJET,1970,2020
-tjet_cy,tcs_operated_created,"truth commission operated, binary for year of creation only",TJET,1970,2020
+tjet_cy,tcs_metcriteria_binary,"truth commission met all definitional criteria (but may not have operated), binary, carried forward from first year",TJET,1970,2020
+tjet_cy,tcs_metcriteria_created,"truth commissions met all definitional criteria (but may not have operated), count for year of creation only",TJET,1970,2020
+tjet_cy,tcs_operated_binary,"truth commission operated, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,tcs_operated_created,"truth commissions operated, count for year of creation only",TJET,1970,2020
 tjet_cy,tcs_goalstruth,"truth commission with explicit goal of truth-finding, binary ",TJET,1970,2020
 tjet_cy,tcs_goalstruth_beg,"truth commission with explicit goal of truth-finding, binary, first year",TJET,1970,2020
 tjet_cy,tcs_independent,"truth commission was at least partially independent, binary",TJET,1970,2020
@@ -459,55 +456,58 @@ tjet_cy,tcs_dtj_ctj_reform_process,"reform-oriented TC process index, post-autoc
 tjet_cy,tcs_dtj_ctj_reform_process_beg,"reform-oriented TC process index, post-autocratic & conflict TJ, first year",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_reform_outcome,"reform-oriented TC outcome index, post-autocratic & conflict TJ",TJET,1970,2020
 tjet_cy,tcs_dtj_ctj_reform_outcome_beg,"reform-oriented TC outcome index, post-autocratic & conflict TJ, first year",TJET,1970,2020
-tjet_cy,amnesty_dtj_sta,"amnesty, binary (post-autocratic transitional justice nexus, state agents)",TJET,1970,2020
-tjet_cy,amnesty_dtj_ctj_sta,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents)",TJET,1970,2020
-tjet_cy,amnesty_dtj_ctj_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, opposition members)",TJET,1970,2020
-tjet_cy,amnesty_dtj_ctj_sta_opp,"amnesty, binary (post-autocratic and conflict transitional justice nexus, state agents and opposition members)",TJET,1970,2020
-tjet_cy,amnesty_ctj_sta_opp,"amnesty, binary (conflict transitional justice nexus, state agents and opposition members)",TJET,1970,2020
-tjet_cy,amnesty_ctj,"amnesty, binary (conflict transitional justice nexus)",TJET,1970,2020
-tjet_cy,amnesty_sta,"amnesty, binary (state agents)",TJET,1970,2020
-tjet_cy,amnesty_sta_hrv,"amnesty, binary (state agents for human rights violations)",TJET,1970,2020
-tjet_cy,amnesty_opp,"amnesty, binary (opposition members)",TJET,1970,2020
-tjet_cy,amnesty_opp_hrv,"amnesty, binary (opposition members for human rights violations)",TJET,1970,2020
-tjet_cy,amnesty_pol,"amnesty, binary (political prisoners and protestors)",TJET,1970,2020
-tjet_cy,amnesty_peaceagree,"amnesty included in peace agreement, binary",TJET,1970,2020
-tjet_cy,rep_binary,"reparations policy, binary",TJET,1970,2020
-tjet_cy,rep_created,"reparations policy, binary for year of creation only",TJET,1970,2020
-tjet_cy,rep_peaceagree,"reparations policy included in peace agreement, binary",TJET,1970,2020
-tjet_cy,rep_collective,"reparations policy with collective component, binary",TJET,1970,2020
-tjet_cy,rep_collective_created,"reparations policy with collective component, binary for year of creation only",TJET,1970,2020
-tjet_cy,rep_individual,"reparations policy with individual beneficiaries, binary",TJET,1970,2020
-tjet_cy,rep_individual_created,"reparations policy with individual beneficiaries, binary for year of creation only",TJET,1970,2020
-tjet_cy,rep_symbolic,"reparations policy providing symbolic investments, binary",TJET,1970,2020
-tjet_cy,rep_symbolic_created,"reparations policy providing symbolic investments, binary for year of creation only",TJET,1970,2020
-tjet_cy,rep_compensation,"reparations policy providing compensation, binary",TJET,1970,2020
-tjet_cy,rep_compensation_created,"reparations policy providing compensation, binary for year of creation only",TJET,1970,2020
-tjet_cy,rep_services,"reparations policy providing services for rehabilitation and restitution, binary",TJET,1970,2020
-tjet_cy,rep_services_created,"reparations policy providing services for rehabilitation and restitution, binary for year of creation only",TJET,1970,2020
-tjet_cy,rep_victim_centered,"victims-centered reparations policy, index",TJET,1970,2020
-tjet_cy,rep_diffamount,reparations policy providing different types or amounts based on type of victim or type of harm,TJET,1970,2020
+tjet_cy,amnesty_dtj_sta,"amnesties for state agents with post-autocratic transitional justice nexus, count",TJET,1970,2020
+tjet_cy,amnesty_dtj_ctj_sta,"amnesties for state agents with post-autocratic and conflict transitional justice nexus, count",TJET,1970,2020
+tjet_cy,amnesty_dtj_ctj_opp,"amnesties for opposition members with post-autocratic and conflict transitional justice nexus, count",TJET,1970,2020
+tjet_cy,amnesty_dtj_ctj_sta_opp,"amnesties for state agents and opposition members with post-autocratic and conflict transitional justice nexus, count",TJET,1970,2020
+tjet_cy,amnesty_ctj_sta_opp,"amnesties for state agents and opposition members with conflict transitional justice nexus, count",TJET,1970,2020
+tjet_cy,amnesty_ctj,"amnesties with conflict transitional justice nexus, count",TJET,1970,2020
+tjet_cy,amnesty_sta,"amnesties for state agents, count",TJET,1970,2020
+tjet_cy,amnesty_sta_hrv,"amnesties for state agents for human rights violations, count",TJET,1970,2020
+tjet_cy,amnesty_opp,"amnesties for opposition members, count",TJET,1970,2020
+tjet_cy,amnesty_opp_hrv,"amnesties for opposition members for human rights violations, count",TJET,1970,2020
+tjet_cy,amnesty_pol,"amnesties for political prisoners and protestors, count",TJET,1970,2020
+tjet_cy,amnesty_peaceagree,"amnesties included in peace agreements, count",TJET,1970,2020
+tjet_cy,rep_binary,"reparations policy, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_created,"reparations policies, count for year of creation only",TJET,1970,2020
+tjet_cy,rep_peaceagree,"reparations policy included in peace agreement, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_peaceagree_created,"reparations policies included in peace agreements, count for year of creation only",TJET,1970,2020
+tjet_cy,rep_collective,"reparations policy with collective component, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_collective_created,"reparations policies with collective component, count for year of creation only",TJET,1970,2020
+tjet_cy,rep_individual,"reparations policy with individual beneficiaries, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_individual_created,"reparations policies with individual beneficiaries, count for year of creation only",TJET,1970,2020
+tjet_cy,rep_symbolic,"reparations policy providing symbolic investments, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_symbolic_created,"reparations policies providing symbolic investments, count for year of creation only",TJET,1970,2020
+tjet_cy,rep_compensation,"reparations policy providing compensation, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_compensation_created,"reparations policy providing compensation, count for year of creation only",TJET,1970,2020
+tjet_cy,rep_services,"reparations policy providing services for rehabilitation and restitution, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_services_created,"reparations policies providing services for rehabilitation and restitution, count for year of creation only",TJET,1970,2020
+tjet_cy,rep_paidout,"reparations policy which paid out, binary (coded when policy existed, not actual years of disbursements)",TJET,1970,2020
+tjet_cy,rep_paidout_created,"reparations policies which paid out, count for year of creation only",TJET,1970,2020
+tjet_cy,rep_victim_centered,"victims-centered reparations policy, index, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_victim_centered_beg,"victims-centered reparations policy, index, year of creation only",TJET,1970,2020
+tjet_cy,rep_scope,"reparations policy scope, scale based on reported number of beneficiaries (0-2; 1: 1 to 6163 beneficiaries, 2: greater than 6163 beneficiaries), carried forward from first year",TJET,1970,2020
+tjet_cy,rep_scope_beg,"reparations policy scope, scale based on reported number of beneficiaries (0-2; 1: 1 to 6163 beneficiaries, 2: greater than 6163 beneficiaries), year of creation only",TJET,1970,2020
+tjet_cy,rep_harms,"reparations policy harms, index, carried forward from first year",TJET,1970,2020
+tjet_cy,rep_harms_beg,"reparations policy harms, index, year of creation only",TJET,1970,2020
+tjet_cy,rep_diffamount,"reparations policy providing different types or amounts based on type of victim or type of harm, binary",TJET,1970,2020
 tjet_cy,rep_outreach,"reparations policy with outreach activities, binary",TJET,1970,2020
 tjet_cy,rep_alteration,"reparations policy which was expanded through alteration, binary",TJET,1970,2020
 tjet_cy,rep_foreclose,"reparations policy which does not foreclose criminal prosecutions or civil damages, binary",TJET,1970,2020
 tjet_cy,rep_accessibility,"reparations policy with at least one accessibility or inclusivity provision (incl. availability in multiple languages, multiple offices around country, confidentiality for sensitive topics, case workers or other application assistance, or other), binary ",TJET,1970,2020
-tjet_cy,rep_scope,"reparations policy scope, scale based on reported number of beneficiaries (0-2; 1: 1 to 6163 beneficiaries, 2: greater than 6163 beneficiaries)",TJET,1970,2020
-tjet_cy,rep_paidout,"reparations policy which paid out, binary (coded to policy existence, not actual years of disbursements)",TJET,1970,2020
-tjet_cy,rep_paidout_created,"reparations policy which paid out, binary for year of creation only (coded to policy existence, not actual years of disbursements)",TJET,1970,2020
-tjet_cy,rep_harms,"reparations policy harms, index",TJET,1970,2020
-tjet_cy,vet_dismiss,"vetting policy, type dimissal, binary",TJET,1970,2020
-tjet_cy,vet_dismiss_created,"vetting policy, type dimissal, binary for year of creation only",TJET,1970,2020
-tjet_cy,vet_ban,"vetting policy, type ban, binary",TJET,1970,2020
-tjet_cy,vet_ban_created,"vetting policy, type ban, binary for year of creation only",TJET,1970,2020
-tjet_cy,vet_declass,"vetting policy, type declassification, binary",TJET,1970,2020
-tjet_cy,vet_declass_created,"vetting policy, type declassification, binary for year of creation only",TJET,1970,2020
-tjet_cy,vet_perjury,"vetting policy, type perjury, binary",TJET,1970,2020
-tjet_cy,vet_perjury_created,"vetting policy, type perjury, binary for year of creation only",TJET,1970,2020
-tjet_cy,vet_ban_from_elected,"vetting policy, ban from elected office, binary",TJET,1970,2020
-tjet_cy,vet_conduct,"vetting policy targeting specific individual conduct, binary",TJET,1970,2020
-tjet_cy,vet_conduct_created,"vetting policy targeting specific individual conduct, binary for year of creation only",TJET,1970,2020
-tjet_cy,vet_implemented,was vetting policy implemented?,TJET,1970,2020
-tjet_cy,vet_public,"vetting policy involving public hearings, binary",TJET,1970,2020
-tjet_cy,vet_fairness,vetting policy fairness index,TJET,1970,2020
+tjet_cy,vet_dismiss,"vetting policy, type dimissal, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,vet_dismiss_created,"vetting policies, type dimissal, count for year of creation only",TJET,1970,2020
+tjet_cy,vet_ban,"vetting policy, type ban, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,vet_ban_created,"vetting policies, type ban, count for year of creation only",TJET,1970,2020
+tjet_cy,vet_declass,"vetting policy, type declassification, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,vet_declass_created,"vetting policies, type declassification, count for year of creation only",TJET,1970,2020
+tjet_cy,vet_perjury,"vetting policy, type perjury, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,vet_perjury_created,"vetting policies, type perjury, count for year of creation only",TJET,1970,2020
+tjet_cy,vet_ban_from_elected,"vetting policy, ban from elected office, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,vet_conduct,"vetting policy targeting specific individual conduct, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,vet_conduct_created,"vetting policies targeting specific individual conduct, count for year of creation only",TJET,1970,2020
+tjet_cy,vet_public,"vetting policy involving public hearings, binary, carried forward from first year",TJET,1970,2020
+tjet_cy,vet_fairness,"vetting policy fairness index, carried forward from first year",TJET,1970,2020
 tjet_cy,v2caautmob,Mobilization for autocracy,VDem,1900,2023
 tjet_cy,v2caautmob_nr,"Mobilization for autocracy, number of expert raters",VDem,1900,2023
 tjet_cy,v2caautmob_sd,"Mobilization for autocracy, standard deviation",VDem,1900,2023
@@ -890,15 +890,11 @@ tjet_cy,subreg_war_internal,number of countries in sub-region with any internal 
 tjet_cy,subreg_war_internal_strict,number of countries in sub-region with any internal (excl. internationalized) war,UCDP ACD & UNSD M49,1946,2023
 tjet_cy,subreg_war_internationalized,number of countries in sub-region with any internationalized war,UCDP ACD & UNSD M49,1946,2023
 tjet_cy,conflict_neighbours,number of neighboring countries with any internal (incl. internationalized) conflict,UCDP ACD & COW Contiguity,1946,2023
-tjet_cy,confl_new,number of new internal (incl. internationalized) conflicts starting,UCDP ACD,1946,2023
-tjet_cy,confl_new_ep,"number of new internal (incl. internationalized) conflict episodes starting, excl. new conflicts",UCDP ACD,1946,2023
 tjet_cy,confl_new_25,new conflict based on cumulative 25 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_new_100,new conflict based on cumulative 100 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
-tjet_cy,confl_new_500,new conflict based on cumulative 500 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_new_1000,new conflict based on cumulative 1000 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_recur_25,conflict recurrence based on cumulative 25 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_recur_100,conflict recurrence based on cumulative 100 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
-tjet_cy,confl_recur_500,conflict recurrence based on cumulative 500 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_recur_1000,conflict recurrence based on cumulative 1000 deaths threshold during episode,UCDP ACD & UCDP BRD & PRIO Lacina,1946,2023
 tjet_cy,confl_cont_25,"any conflict continuing from previous year, binary, 25 battle deaths or more over conflict episode",UCDP ACD,1946,2023
 tjet_cy,confl_cont_100,"any conflict continuing from previous year, binary, 100 battle deaths or more over conflict episode",UCDP ACD,1946,2023
@@ -1031,7 +1027,6 @@ tjet_cy,ef,"ethnic fractionalization index, calculated from EPR",EPR,1946,2021
 tjet_cy,noncontig,"non-contiguous state, binary",Fearon & Laitin,,
 tjet_cy,fl_mountainous,"mountainous terrain, %",Fearon & Laitin,1945,1999
 tjet_cy,fl_mountainous_log,"mountainous terrain, log of %",Fearon & Laitin,1945,1999
-tjet_cy,fl_elevation_diff,difference between highest and lowest elevation,Fearon & Laitin,1945,1999
 tjet_cy,fl_noncontiguous,"noncontiguous state (""countries with territory holding at least 10,000 people and separated from the land area containing the capital city either by land or by 100 km of water"")",Fearon & Laitin,1945,1999
 tjet_cy,fl_fuel_export_third,"fuel exports as percentage of merchandise exports, binary for greater than 1/3 ",Fearon & Laitin,1945,1999
 tjet_cy,incidents_gtd,Terrorist incidents,GTD,1970,2020
