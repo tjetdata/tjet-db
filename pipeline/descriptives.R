@@ -1,8 +1,8 @@
 library(tidyverse)
 library(gt)
-library(coefplot)
-library(multipanelfigure)
-library(cowplot)
+# library(coefplot)
+# library(multipanelfigure)
+# library(cowplot)
 library(patchwork)
 
 ### get data
@@ -224,7 +224,7 @@ df_fig1 %>%
   ) %>%
   ggplot() +
   # geom_line(aes(x = as.integer(as.character(year)), y = value, col = key, group = key), linewidth = 1) +
-  geom_line(aes(x = as.integer(as.character(year)), y = value, group = key), linewidth = 1) +
+  geom_line(aes(x = as.integer(as.character(year)), y = value, group = key), linewidth = 0.5) +
   facet_grid(key ~ ., scales = "free_y") +
   scale_y_continuous(
     breaks = function(x) floor(max(x)), minor_breaks = NULL # ,
@@ -629,22 +629,23 @@ db[["Trials"]] %>%
 
 ### TCs
 
+## if used, needs to be revisited
 df %>%
-  mutate(across(any_of(c("tcs_victim_process", "tcs_powers", "tcs_recommendations")), UnitScale)) %>%
-  select(year, tcs_metcriteria, tcs_public_process, tcs_victim_process, tcs_powers) %>%
+  mutate(across(any_of(c("tcs_victim_process_beg", "tcs_powers_beg")), UnitScale)) %>%
+  select(year, tcs_metcriteria_created, tcs_public_process_beg, tcs_victim_process_beg, tcs_powers_beg) %>%
   group_by(year) %>%
   reframe(across(everything(), ~ mean(.x, na.rm = TRUE))) %>%
   mutate(across(
-    all_of(c("tcs_public_process", "tcs_victim_process", "tcs_powers")),
-    ~ ifelse(tcs_metcriteria > 0, .x / tcs_metcriteria, 0)
+    all_of(c("tcs_public_process_beg", "tcs_victim_process_beg", "tcs_powers_beg")),
+    ~ ifelse(tcs_metcriteria_created > 0, .x / tcs_metcriteria_created, 0)
   )) %>%
-  select(year, tcs_public_process, tcs_victim_process, tcs_powers) %>%
+  select(year, tcs_public_process_beg, tcs_victim_process_beg, tcs_powers_beg) %>%
   filter(year > 1971) %>%
   pivot_longer(cols = -year) %>%
   mutate(name = case_when(
-    name == "tcs_public_process" ~ "Public process index",
-    name == "tcs_victim_process" ~ "Victim-centered process index",
-    name == "tcs_powers" ~ "Powers index"
+    name == "tcs_public_process_beg" ~ "Public process index",
+    name == "tcs_victim_process_beg" ~ "Victim-centered process index",
+    name == "tcs_powers_beg" ~ "Powers index"
   )) %>%
   ggplot() +
   geom_line(aes(x = year, y = value, color = name)) +
@@ -837,7 +838,7 @@ reports_yr |>
         legend.position = "none") 
 ggsave("descriptives/tcs_ref_types.png", plot = last_plot(), width = 6, height = 4)
 
-reports_decade |> 
+recs <- reports_decade |> 
   mutate(across(c(rec_prosecute, rec_repair, ref_legal, ref_judicial, 
                   ref_ssr, ref_gender), 
                 ~ .x / issued * 100)
@@ -854,12 +855,13 @@ reports_decade |>
   ggplot() + 
   geom_line(aes(x = decade, y = value, group = name), col = "black") + 
   facet_grid(name ~ ., scales = "fixed") +
-  ylab("Percentage of final reports") +
+  ylab("percentage of reports that recommend:") +
   theme_bw() + 
   theme(axis.title.x = element_blank(), 
         legend.title = element_blank(), 
         legend.position = "none") 
-ggsave("descriptives/tcs_ref_types_perc.png", plot = last_plot(), width = 4, height = 6)
+recs
+ggsave("descriptives/tcs_ref_types_perc.png", plot = recs, width = 4, height = 6)
 
 reports_yr |>
   select(year, issued, public) |>
@@ -905,7 +907,7 @@ reports_yr |>
 ### data release Figure 2?
 ggsave("descriptives/tcs_ref_recs.png", plot = last_plot(), width = 6, height = 4)
 
-reports_decade |>
+reps <- reports_decade |>
   select(decade, issued, public) |>
   mutate(issued = issued - public) |> 
   pivot_longer(cols = !decade) |>
@@ -930,9 +932,17 @@ reports_decade |>
     legend.key.height = unit(10, "pt"), # change legend key height
     legend.key.width = unit(10, "pt")
   ) 
-ggsave("descriptives/tcs_reports.png", plot = last_plot(), width = 6, height = 4)
+reps
+ggsave("descriptives/tcs_reports.png", plot = reps, width = 6, height = 4)
 
-
+layout <- c(
+  area(t = 1, l = 1, b = 1, r = 1),
+  area(t = 2, l = 1, b = 4, r = 1)
+)
+tcs <- reps + recs +
+  plot_layout(design = layout)
+tcs
+ggsave("descriptives/tcs.png", plot = tcs, width = 6, height = 8)
 
 ## Reparations
 
@@ -956,15 +966,6 @@ db[["Reparations"]] |>
     )
   ) %>%
   select(yearCreated, individual, collective, compensation, symbolic)
-
-# df %>%
-#   select(
-#     year, reparations, rep_binary, rep_compensation, rep_symbolic,
-#     rep_collective, rep_victim_centered
-#   ) %>%
-#   group_by(year) %>%
-#   reframe(across(everything(), ~ sum(.x, na.rm = TRUE))) %>%
-#   print(n = Inf)
 
 
 ### Amnesties
@@ -1112,7 +1113,7 @@ df %>%
     tran_cce_dom_dtj_ctj_sta_hi = sum(tran_cce_dom_dtj_ctj_sta_hi)
   ) %>%
   ggplot() +
-  geom_line(aes(x = year, y = tran_cce_dom_dtj_ctj_sta), linewidth = 1) +
+  geom_line(aes(x = year, y = tran_cce_dom_dtj_ctj_sta), linewidth = 0.5) +
   geom_area(aes(x = year, y = tran_cce_dom_dtj_ctj_sta_hi, fill = "high-ranking")) +
   scale_colour_manual(
     values = c("high-ranking" = "#565AB6"),
@@ -1129,7 +1130,40 @@ df %>%
     legend.title = element_blank()
   ) +
   ggtitle("State agents convicted in transitional human rights trials")
+
+
+df %>%
+  select(year, tran_cce_dom_dtj_ctj_sta, tran_cce_dom_dtj_ctj_sta_hi) %>%
+  group_by(year) %>%
+  reframe(
+    tran_cce_dom_dtj_ctj_sta = sum(tran_cce_dom_dtj_ctj_sta),
+    tran_cce_dom_dtj_ctj_sta_hi = sum(tran_cce_dom_dtj_ctj_sta_hi)
+  ) %>%
+  ggplot() +
+  geom_area(aes(x = year, y = tran_cce_dom_dtj_ctj_sta), fill = "darkgrey") +
+  geom_area(aes(x = year, y = tran_cce_dom_dtj_ctj_sta_hi, fill = "high-ranking")) +
+  scale_colour_manual(
+    values = c("high-ranking" = "#565AB6"),
+    aesthetics = c("colour", "fill")
+  ) +
+  theme_bw() +
+  theme(
+    plot.title = element_blank(),
+    axis.title = element_blank(), 
+    legend.position = "inside", 
+    legend.position.inside = c(0.01, 0.99),
+    legend.justification = c(0.01, 0.99),
+    legend.background = element_rect(fill = "white"),
+    legend.title = element_blank()
+  ) +
+  ggtitle("State agents convicted in transitional human rights trials")
 ggsave("descriptives/convictions.png", plot = last_plot(), width = 6, height = 3)
+
+
+
+
+
+
 
 df %>%
   select(year, tran_cce_dom_dtj_ctj_sta, tran_cce_dom_dtj_ctj_sta_hi) %>%
@@ -1212,7 +1246,7 @@ ggsave("descriptives/simultaneity.png", plot = last_plot(), width = 6, height = 
 
 
 
-### Syria comparison
+### Syria comparison: needs to be recoded to use new CY measures
 
 df |> 
   select(country_case, ccode_cow, year, outcome_victory_reb, v2regendtypems_5, 
@@ -1285,7 +1319,7 @@ df |>
   pivot_longer(everything()) |> I() 
   write_csv("~/Desktop/descriptives.csv") 
 
-### global
+### global: needs to be recoded to use new CY measures
   
   df |> 
     filter(dtr == 1 | pco == 1) |>  

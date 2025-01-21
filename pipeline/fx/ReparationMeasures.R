@@ -1,6 +1,8 @@
-ReparationMeasures <- function(cy = df,
-                               start_year_var = "yearCreated",
-                               nexus_vars = "all") {
+ReparationMeasures <- function(
+    cy = df,
+    start_year_var = "yearCreated",
+    nexus_vars = "all"
+    ) {
   ## options
   year_vars <- c("yearCreated", "yearBegin")
   nexus <- c(
@@ -94,64 +96,65 @@ ReparationMeasures <- function(cy = df,
     arrange(ccode, year) %>%
     group_by(ccode, year) %>%
     reframe(
-      binary = ifelse(n() > 0, 1, 0),
-      peaceagree = max(peaceagree),
-      individual = max(individual),
-      collective = max(collective),
-      symbolic = max(symbolic),
-      compensation = max(compensation),
-      services = max(services),
-      victim_centered = max(victim_centered),
+      # binary = ifelse(n() > 0, 1, 0),
+      count = n(),
+      peaceagree_created = sum(peaceagree),
+      individual_created = sum(individual),
+      collective_created = sum(collective),
+      symbolic_created = sum(symbolic),
+      compensation_created = sum(compensation),
+      services_created = sum(services),
+      paidout_created = sum(rep_paid),
+      ### 
       diffAmount = max(diffAmount),
       outreach = max(outreach),
       alterationEffect = max(alterationEffect),
       foreclose = max(foreclose),
       accessibility = max(accessibility),
-      scope = max(scope),
-      paidout = max(rep_paid),
-      harms = max(harms)
+      ### 
+      victim_centered = max(victim_centered), #
+      scope = max(scope), #
+      harms = max(harms) #
     ) %>%
     rename(
       diffamount = diffAmount,
       alteration = alterationEffect
     )
-
+  
   prefix <- paste("rep", nexus_vars, sep = "_") %>%
     str_replace(fixed("_all"), "")
 
   vars <- c(
-    "binary", "created", "peaceagree", "individual", "individual_created",
-    "collective", "collective_created", "symbolic", "symbolic_created",
-    "compensation", "compensation_created", "services", "services_created",
-    "victim_centered", "diffamount", "outreach", "alteration", "foreclose",
-    "accessibility", "scope", "paidout", "paidout_created", "harms"
+    "binary", "created", "peaceagree", "peaceagree_created", "individual", 
+    "individual_created", "collective", "collective_created", "compensation", 
+    "compensation_created", "symbolic", "symbolic_created", "services", 
+    "services_created", "paidout", "paidout_created", "victim_centered", 
+    "victim_centered_beg", "scope", "scope_beg", "harms", "harms_beg", 
+    "diffamount", "outreach", "alteration", "foreclose", "accessibility"
   )
 
   ## merging
   cy %>%
     left_join(reps, by = c("ccode_cow" = "ccode", "year" = "year")) %>%
     mutate(
-      created = binary,
-      individual_created = individual,
-      collective_created = collective,
-      compensation_created = compensation,
-      symbolic_created = symbolic,
-      paidout_created = paidout,
-      services_created = services
+      binary = ifelse(count > 0, 1, 0), 
+      peaceagree = ifelse(peaceagree_created > 0, 1, 0), 
+      individual = ifelse(individual_created > 0, 1, 0), 
+      collective = ifelse(collective_created > 0, 1, 0), 
+      compensation = ifelse(compensation_created > 0, 1, 0), 
+      symbolic = ifelse(symbolic_created > 0, 1, 0), 
+      services = ifelse(services_created > 0, 1, 0), 
+      paidout = ifelse(paidout_created > 0, 1, 0), 
+      victim_centered_beg = victim_centered, 
+      scope_beg = scope,
+      harms_beg = harms,
     ) %>%
+    rename(created = count) |>  
     arrange(country_case, year) %>%
     group_by(country_case) %>%
     fill(
-      binary,
-      peaceagree,
-      collective,
-      individual,
-      symbolic,
-      compensation,
-      services,
-      victim_centered,
-      scope,
-      paidout,
+      binary, peaceagree, collective, individual, symbolic, compensation, 
+      services, paidout, victim_centered, scope, harms, 
       .direction = "down"
     ) %>%
     ungroup() %>%

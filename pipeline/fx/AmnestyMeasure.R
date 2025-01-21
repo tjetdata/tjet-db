@@ -119,18 +119,19 @@ AmnestyMeasure <- function(cy,
     filter(if_any(all_of(what[what_opts]), ~ . == 1)) %>%
     select(amnestyID, ccode, amnestyYear) %>%
     arrange(ccode, amnestyYear) %>%
-    group_by(ccode, amnestyYear) %>%
-    mutate(binary = ifelse(n() > 0, 1, 0)) %>%
-    ungroup() %>%
-    select(-amnestyID) %>%
+    reframe(
+      .by = c(ccode, amnestyYear),
+      # binary = ifelse(n() > 0, 1, 0),
+      count = n()
+      ) %>%
     distinct()
 
   cy %>%
     left_join(amn, by = c("ccode_cow" = "ccode", "year" = "amnestyYear")) %>%
     mutate(
-      binary = ifelse(year %in% 1970:2020 & is.na(binary), 0, binary),
-      binary = ifelse(year > 2020, NA, binary)
+      count = ifelse(year %in% 1970:2020 & is.na(count), 0, count),
+      count = ifelse(year > 2020, NA, count)
     ) %>%
-    rename_with(.fn = ~var_name, .cols = binary) %>%
+    rename_with(.fn = ~var_name, .cols = count) %>%
     return()
 }

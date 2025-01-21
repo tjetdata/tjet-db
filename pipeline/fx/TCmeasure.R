@@ -298,25 +298,21 @@ TCmeasure <- function(cy, new_col_name,
     group_by(ccode, year_start) %>%
     mutate(
       scale = max(scale, na.rm = TRUE),
-      binary = ifelse(n() > 0, 1, 0)
+      binary = ifelse(n() > 0, 1, 0), 
+      created = n() 
     ) %>%
     ungroup() %>%
-    select(ccode, year_start, scale, binary) %>%
+    select(ccode, year_start, scale, binary, created) %>%
     distinct()
-
+  
   # important, binary indicates filtered TCs, but does not correspond to the scale
 
   cy %>%
     left_join(new, by = c("ccode_cow" = "ccode", "year" = "year_start")) %>%
     arrange(country_case, year) %>%
     group_by(country_case) %>%
-    mutate(beg = scale, 
-           created = binary) %>%
-    fill(
-      scale,
-      binary,
-      .direction = "down"
-    ) %>%
+    mutate(beg = scale) %>%
+    fill(scale, binary, .direction = "down") %>%
     ungroup() %>%
     mutate(
       scale = ifelse(year %in% 1970:2023 & is.na(scale), 0, scale),
@@ -324,7 +320,7 @@ TCmeasure <- function(cy, new_col_name,
       binary = ifelse(year %in% 1970:2023 & is.na(binary), 0, binary),
       created = ifelse(year %in% 1970:2020 & is.na(created), 0, created)
     ) %>%
-    rename_with(.fn = ~new_col_name, .cols = scale) %>%
+    rename_with(.fn = ~ new_col_name, .cols = scale) %>%
     rename_with(.fn = ~ paste(new_col_name, "beg", sep = "_"), .cols = beg) %>%
     rename_with(.fn = ~ paste(new_col_name, "binary", sep = "_"), .cols = binary) %>%
     rename_with(.fn = ~ paste(new_col_name, "created", sep = "_"), .cols = created) %>%

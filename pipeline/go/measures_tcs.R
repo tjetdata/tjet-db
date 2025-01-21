@@ -7,7 +7,7 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_dtj, -tcs_dtj_beg)
+  select(-tcs_dtj, -tcs_dtj_beg) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_ctj",
@@ -18,7 +18,7 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_ctj, -tcs_ctj_beg)
+  select(-tcs_ctj, -tcs_ctj_beg) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj",
@@ -29,7 +29,7 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_dtj_ctj, -tcs_dtj_ctj_beg)
+  select(-tcs_dtj_ctj, -tcs_dtj_ctj_beg) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_victim_process",
@@ -58,7 +58,7 @@ df <- TCmeasure(
   recommend_vars = "recommendReparations",
   monitor_vars = "mandatePeriodicMonitoringImplementation"
 ) %>%
-  select(-tcs_dtj_victim_outcome_binary, -tcs_dtj_victim_outcome_created)
+  select(-tcs_dtj_victim_outcome_binary, -tcs_dtj_victim_outcome_created) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_ctj_victim_process",
@@ -75,7 +75,7 @@ df <- TCmeasure(
   testimony_vars = "encourageVictimTestimony",
   reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_ctj_victim_process_binary, -tcs_ctj_victim_process_created)
+  select(-tcs_ctj_victim_process_binary, -tcs_ctj_victim_process_created) 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_ctj_victim_outcome",
   start_year_var = "yearCompleteOperation",
@@ -87,8 +87,8 @@ df <- TCmeasure(
   recommend_vars = "recommendReparations",
   monitor_vars = "mandatePeriodicMonitoringImplementation"
 ) %>%
-  select(-tcs_ctj_victim_outcome_binary, -tcs_ctj_victim_outcome_created)
-
+  select(-tcs_ctj_victim_outcome_binary, -tcs_ctj_victim_outcome_created) 
+ 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_victim_process",
   start_year_var = "yearBeginOperation",
@@ -104,7 +104,7 @@ df <- TCmeasure(
   testimony_vars = "encourageVictimTestimony",
   reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_dtj_ctj_victim_process_binary, -tcs_dtj_ctj_victim_process_created)
+  select(-tcs_dtj_ctj_victim_process_binary, -tcs_dtj_ctj_victim_process_created) 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_victim_outcome",
   start_year_var = "yearCompleteOperation",
@@ -116,7 +116,7 @@ df <- TCmeasure(
   recommend_vars = "recommendReparations",
   monitor_vars = "mandatePeriodicMonitoringImplementation"
 ) %>%
-  select(-tcs_dtj_ctj_victim_outcome_binary, -tcs_dtj_ctj_victim_outcome_created)
+  select(-tcs_dtj_ctj_victim_outcome_binary, -tcs_dtj_ctj_victim_outcome_created) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_victim_process",
@@ -133,7 +133,7 @@ df <- TCmeasure(
   testimony_vars = "encourageVictimTestimony",
   reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL
 ) %>%
-  select(-tcs_victim_process_binary, -tcs_victim_process_created)
+  select(-tcs_victim_process_binary, -tcs_victim_process_created) 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_victim_outcome",
   start_year_var = "yearCompleteOperation",
@@ -156,8 +156,8 @@ df <- TCmeasure(
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = "recommendReparations",
   monitor_vars = NULL
-) %>%
-  select(-tcs_recreparations_binary, -tcs_recreparations_created)
+) %>% 
+  select(-tcs_recreparations_binary, -tcs_recreparations_created) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_account_process",
@@ -179,8 +179,8 @@ df <- TCmeasure(
   ),
   testimony_vars = "perpetratorTestimony",
   reports_vars = NULL, recommend_vars = NULL, monitor_vars = NULL
-) %>%
-  select(-tcs_dtj_account_process_binary, -tcs_dtj_account_process_created)
+) %>% 
+  select(-tcs_dtj_account_process_binary, -tcs_dtj_account_process_created) 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_account_outcome",
   start_year_var = "yearCompleteOperation",
@@ -440,9 +440,8 @@ df <- TCmeasure(
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
-) %>%
-  select(-tcs_metcriteria, -tcs_metcriteria_beg) %>%
-  rename("tcs_metcriteria" = "tcs_metcriteria_binary")
+) %>% 
+  select(-tcs_metcriteria, -tcs_metcriteria_beg) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_operated",
@@ -452,9 +451,8 @@ df <- TCmeasure(
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
-) %>%
-  select(-tcs_operated, -tcs_operated_beg) %>%
-  rename("tcs_operated" = "tcs_operated_binary")
+) %>% 
+  select(-tcs_operated, -tcs_operated_beg) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_goalstruth",
@@ -465,7 +463,7 @@ df <- TCmeasure(
   independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL
-) %>%
+) %>% 
   select(-tcs_goalstruth_binary, -tcs_goalstruth_created)
 
 df <- TCmeasure(

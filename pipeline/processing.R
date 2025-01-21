@@ -456,8 +456,6 @@ fair_trials <- db[["MegaBase"]][["Transitions"]] %>%
   select(ccode, year, fair_postautocratic_trials) %>% 
   distinct() 
 
-### OK TO HERE > 
-
 db_years <- 1970:2020
 
 ### formatting transitions table for website 
@@ -1444,7 +1442,7 @@ source("pipeline/go/measures_prosecutions.R", echo = TRUE)
 source("pipeline/go/measures_tcs.R", echo = TRUE) 
 df <- ReparationMeasures(cy = df)
 df <- VettingMeasures(cy = df)
-rm(vet_ctry_incl, vet_spells)
+rm(vet_spells)
 
 ### checking domestic trials sample indicator
 
