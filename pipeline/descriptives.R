@@ -42,6 +42,11 @@ df <- read_csv(here::here(base, "tjet_cy_analyses.csv")) %>%
   mutate(trials = trials_domestic + trials_intl + trials_foreign) %>%
   filter(year >= 1970 & year <= 2020)
 
+read_csv(here::here(base, "tjet_codebook.csv")) |> 
+ reframe(.by = section, 
+         n_var = n()) |> 
+  print(n = Inf) 
+
 ### rescaling
 
 # to_put_on_unit_scale <- c("theta_mean_fariss")
@@ -91,7 +96,7 @@ table1[["Reparations"]] <- db[["Reparations"]] %>%
 
 table1[["Truth Commissions"]] <- db[["TruthCommissions"]] %>%
   filter(yearPassed %in% 1970:2020) %>%
-  filter(authorizedByState == 1 & temporaryBodyReport == 1 & focusedPast == 1 & investigatePatternAbuse == 1) %>%
+  # filter(authorizedByState == 1 & temporaryBodyReport == 1 & focusedPast == 1 & investigatePatternAbuse == 1) %>%
   arrange(country) %>%
   group_by(country) %>%
   reframe(n = n()) %>%
@@ -672,8 +677,8 @@ ggsave("descriptives/tcs_process.png", plot = last_plot(), width = 6, height = 4
 # could later use 3 point scale for policy recommendation
 
 reports <- db[["TruthCommissions"]] |>
-  filter(authorizedByState == 1 & temporaryBodyReport == 1 & ## met criteria
-           focusedPast == 1 & investigatePatternAbuse == 1) |> 
+  # filter(authorizedByState == 1 & temporaryBodyReport == 1 & ## met criteria
+  #          focusedPast == 1 & investigatePatternAbuse == 1) |> 
   mutate(
     issued = case_when(finalReportIssued == "Yes" ~ 1, TRUE ~ 0),
     public = case_when(reportPubliclyAvailable == "Yes" ~ 1, TRUE ~ 0),
@@ -849,15 +854,17 @@ recs <- reports_decade |>
                        levels = c("rec_prosecute", "rec_repair", "ref_legal", 
                                   "ref_judicial", "ref_ssr", "ref_gender"), 
                        labels = c("prosecutions", "reparations", "legal reform", 
-                                  "judicial reform", "security\nsector reform", 
+                                  "judicial reform", "security sector reform", 
                                   "gender reform"))
   ) |> 
   ggplot() + 
   geom_line(aes(x = decade, y = value, group = name), col = "black") + 
+  geom_text(aes(x = "2000s", y = 10, label = name), size = 3) +
   facet_grid(name ~ ., scales = "fixed") +
   ylab("percentage of reports that recommend:") +
   theme_bw() + 
   theme(axis.title.x = element_blank(), 
+        strip.text.y = element_blank(), 
         legend.title = element_blank(), 
         legend.position = "none") 
 recs
@@ -906,6 +913,10 @@ reports_yr |>
   )
 ### data release Figure 2?
 ggsave("descriptives/tcs_ref_recs.png", plot = last_plot(), width = 6, height = 4)
+
+reports_decade |>
+  select(decade, issued, public) |>
+  mutate(perc = public/issued * 100) 
 
 reps <- reports_decade |>
   select(decade, issued, public) |>
@@ -965,8 +976,15 @@ db[["Reparations"]] |>
       TRUE ~ 0
     )
   ) %>%
-  select(yearCreated, individual, collective, compensation, symbolic)
-
+  select(yearCreated, individual, collective, compensation, symbolic) %>%
+  mutate(onlyIndividual = ifelse(individual == 1 & collective == 0, 1, 0), 
+         onlyCompensation = ifelse(compensation == 1 & symbolic == 0, 1, 0)) |>
+  reframe(individual = sum(individual), 
+          onlyIndividual = sum(onlyIndividual),
+          collective = sum(collective), 
+          compensation = sum(compensation), 
+          symbolic = sum(symbolic), 
+          onlyCompensation = sum(onlyCompensation)) 
 
 ### Amnesties
 
@@ -1068,9 +1086,12 @@ who <- db[["Amnesties"]] %>%
 # amnesty
 
 amnesty <- (hrs / peace) | who
-
+amnesty
 #### data release Figure 3
 ggsave("descriptives/amnesty.png", plot = amnesty, width = 6, height = 4)
+
+
+
 
 
 
@@ -1250,7 +1271,7 @@ ggsave("descriptives/simultaneity.png", plot = last_plot(), width = 6, height = 
 
 df |> 
   select(country_case, ccode_cow, year, outcome_victory_reb, v2regendtypems_5, 
-         tcs_operated_created, rep_paidout_created, 
+         tcs_all_created, rep_paidout_created, 
          tran_trs_dom_dtj_ctj_sta, tran_trs_dom_dtj_ctj_sta_hi
          ) |>
   arrange(country_case, year) |> 
@@ -1277,7 +1298,7 @@ df |>
   # reframe(beg = min(year), 
   #         end = max(year) ) |> 
   # print(n = Inf)
-  reframe(tcs_operated_created = sum(tcs_operated_created), 
+  reframe(tcs_all_created = sum(tcs_all_created), 
           rep_paidout_created = sum(rep_paidout_created), 
           tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta),
           tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi)) |> 
@@ -1312,24 +1333,24 @@ df |>
   reframe(hybrid = sum(hybrid, na.rm = TRUE),
           intl = sum(intl, na.rm = TRUE),
           vet = sum(vet, na.rm = TRUE),
-          sum_tcs_operated_created = sum(tcs_operated_created), 
+          sum_tcs_all_created = sum(tcs_all_created), 
           sum_rep_paidout_created = sum(rep_paidout_created), 
           avg_tran_trs_dom_dtj_ctj_sta = mean(tran_trs_dom_dtj_ctj_sta),
           avg_tran_trs_dom_dtj_ctj_sta_hi = mean(tran_trs_dom_dtj_ctj_sta_hi)) |> 
-  pivot_longer(everything()) |> I() 
+  pivot_longer(everything()) |> 
   write_csv("~/Desktop/descriptives.csv") 
 
 ### global: needs to be recoded to use new CY measures
   
   df |> 
-    filter(dtr == 1 | pco == 1) |>  
+    filter(dtr == 1 | pco_25 == 1) |>  
     select(country_case, ccode_cow, year, 
-           tcs_operated_created, rep_paidout_created, 
+           tcs_all_created, rep_paidout_created, 
            tran_trs_dom_dtj_ctj_sta, tran_trs_dom_dtj_ctj_sta_hi
     ) |>
     arrange(country_case, year) |> 
     group_by(country_case, ccode_cow) |>  
-    reframe(tcs_operated_created = sum(tcs_operated_created), 
+    reframe(tcs_all_created = sum(tcs_all_created), 
             rep_paidout_created = sum(rep_paidout_created), 
             tran_trs_dom_dtj_ctj_sta = sum(tran_trs_dom_dtj_ctj_sta),
             tran_trs_dom_dtj_ctj_sta_hi = sum(tran_trs_dom_dtj_ctj_sta_hi)) |> 
@@ -1364,10 +1385,225 @@ df |>
     reframe(hybrid = sum(hybrid, na.rm = TRUE),
             intl = sum(intl, na.rm = TRUE),
             vet = sum(vet, na.rm = TRUE),
-            sum_tcs_operated_created = sum(tcs_operated_created), 
+            sum_tcs_all_created = sum(tcs_all_created), 
             sum_rep_paidout_created = sum(rep_paidout_created), 
             avg_tran_trs_dom_dtj_ctj_sta = mean(tran_trs_dom_dtj_ctj_sta),
             avg_tran_trs_dom_dtj_ctj_sta_hi = mean(tran_trs_dom_dtj_ctj_sta_hi)) |> 
     pivot_longer(everything()) |> 
   write_csv("~/Desktop/global.csv") 
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  library(tidyverse)
+  library(pglm)
+  library(survival)
+  library(bife)
+  library(sandwich)
+  library(lmtest)
+  
+  df <- read_csv("~/Documents/GitHub/tjet-db/tjet_datasets/tjet_cy_analyses.csv") %>% 
+    mutate(vet_count = vet_dismiss_created + vet_ban_created + vet_declass_created,
+           vet_dv = ifelse(vet_count > 0, 1, 0),
+           amn_dv = ifelse(amnesty_dtj_ctj_sta > 0, 1, 0)
+    ) |>
+    group_by(country_case) |>
+    mutate(lag_gdppc_log = lag(latent_gdppc_wdi_mean_log),
+           trials_cumu = cumsum(lag(tran_trs_dom_dtj_ctj_sta)),
+           tcs_cumu = cumsum(lag(tcs_all_created)),
+           rep_cumu = cumsum(lag(rep_paidout_created)),
+           vet_cumu = cumsum(lag(vet_count)),
+           amn_cumu = cumsum(lag(amnesty_dtj_ctj_sta)),
+           inv_cumu = cumsum(lag(uninv_beg)),
+           tcs_dv = ifelse(tcs_all_created > 0, 1, 0),
+           tcs_iv = lag(tcs_all_binary),
+           rep_dv = ifelse(rep_paidout_created > 0, 1, 0),
+           rep_iv = lag(rep_paidout),
+           amn_iv = ifelse(amn_cumu > 0, 1, 0),
+           vet_iv = ifelse(vet_cumu > 0, 1, 0),
+           inv_dv = ifelse(uninv_beg > 0, 1, 0),
+           inv_iv = ifelse(inv_cumu > 0, 1, 0)
+    ) |>
+    ungroup() |>
+    mutate() |>
+    filter(dtr == 1 | aco_25 == 1) |>
+    filter(year < 2021) |>
+    select(country_case, year, tran_trs_dom_dtj_ctj_sta, trials_cumu, tcs_dv, 
+           tcs_iv, tcs_cumu, rep_dv, rep_iv, rep_cumu, amn_dv, amn_iv, 
+           amn_cumu, vet_dv, vet_iv, vet_cumu, inv_dv, inv_iv, inv_cumu)
+  
+  df |>
+    summary()
+  
+  ### trials
+  pglm(
+    tran_trs_dom_dtj_ctj_sta ~ amn_iv + rep_iv + tcs_iv + vet_iv + inv_iv,
+    data = df, effect = "individual", model = "within",
+    family = poisson, index = c("country_case", "year")
+  ) |>
+    summary()
+  
+  mod_poisson <- glm(tran_trs_dom_dtj_ctj_sta ~ amn_iv + rep_iv + tcs_iv + vet_iv + inv_iv,
+                     data = na.omit(df), family = poisson)
+  mod_poisson_cl <- coeftest(mod_poisson, vcov. = vcovCL(mod_poisson, cluster = na.omit(df)$country_case, type = "HC0"))
+  mod_poisson_cl
+  
+  mod2 <- pglm(
+    tran_trs_dom_dtj_ctj_sta ~ amn_iv + rep_iv + tcs_iv + vet_iv + inv_iv,
+    data = df, effect = "individual", model = "within",
+    family = negbin, index = c("country_case", "year")
+  ) |>
+    summary()
+  
+  mod_nb <- MASS::glm.nb(tran_trs_dom_dtj_ctj_sta ~ amn_iv + rep_iv + tcs_iv + vet_iv + inv_iv,
+                         data = na.omit(df))
+  mod_nb_cl <- coeftest(mod_nb, vcov. = vcovCL(mod_nb, cluster = na.omit(df)$country_case, type = "HC0"))
+  mod_nb_cl
+  pchisq(2 * (as.numeric(logLik(mod_nb)) - as.numeric(logLik(mod_poisson))), df = 1, lower.tail = FALSE)
+  
+  ### TCs
+  mod_tcs <- glm(tcs_dv ~ trials_cumu + rep_iv + vet_iv + amn_iv + inv_iv,
+                 data = na.omit(df), family = binomial)
+  mod_tcs_cl <- coeftest(mod_tcs, vcov. = vcovCL(mod_tcs, cluster = na.omit(df)$country_case, type = "HC0"))
+  mod_tcs_cl
+  
+  bife(
+    tcs_dv ~ trials_cumu + rep_iv + vet_iv + amn_iv + inv_iv | country_case,
+    data  = na.omit(df),
+    model = "logit"
+  ) |> summary()
+  
+  clogit(
+    tcs_dv ~ trials_cumu + rep_iv + vet_iv + amn_iv + inv_iv + strata(country_case),
+    data = na.omit(df)
+  )
+  
+  ### reparations
+  mod_rep <- glm(rep_dv ~ trials_cumu + tcs_iv + vet_iv + amn_iv + inv_iv,
+                 data = na.omit(df), family = binomial)
+  mod_rep_cl <- coeftest(mod_rep, vcov. = vcovCL(mod_rep, cluster = na.omit(df)$country_case, type = "HC0"))
+  mod_rep_cl
+  
+  bife(
+    rep_dv ~ trials_cumu + tcs_iv + vet_iv + amn_iv + inv_iv | country_case,
+    data  = na.omit(df),
+    model = "logit"
+  ) |> summary()
+  
+  clogit(
+    rep_dv ~ trials_cumu + tcs_iv + vet_iv + amn_iv + inv_iv + strata(country_case),
+    data = na.omit(df)
+  )
+  
+  ### amnesties
+  mod_amn <- glm(amn_dv ~ trials_cumu + rep_iv + tcs_iv + vet_iv + inv_iv,
+                 data = na.omit(df), family = binomial)
+  mod_amn_cl <- coeftest(mod_amn, vcov. = vcovCL(mod_amn, cluster = na.omit(df)$country_case, type = "HC0"))
+  mod_amn_cl
+  
+  bife(
+    amn_dv ~ trials_cumu + rep_iv + tcs_iv + vet_iv + inv_iv | country_case,
+    data  = na.omit(df),
+    model = "logit"
+  ) |> summary()
+  
+  clogit(
+    amn_dv ~ trials_cumu + rep_iv + tcs_iv + vet_iv + inv_iv + strata(country_case),
+    data = na.omit(df)
+  )
+  
+  ### vetting
+  mod_vet <- glm(vet_dv ~ trials_cumu + rep_iv + tcs_iv + amn_iv + inv_iv,
+                 data = na.omit(df), family = binomial)
+  mod_vet_cl <- coeftest(mod_vet, vcov. = vcovCL(mod_vet, cluster = na.omit(df)$country_case, type = "HC0"))
+  mod_vet_cl
+  
+  bife(
+    vet_dv ~ trials_cumu + rep_iv + tcs_iv + amn_iv + inv_iv | country_case,
+    data  = na.omit(df),
+    model = "logit"
+  ) |> summary()
+  
+  clogit(
+    vet_dv ~ trials_cumu + rep_iv + tcs_iv + amn_iv + inv_iv + strata(country_case),
+    data = na.omit(df)
+  )
+  
+  ### UN investigations 
+  
+  mod_inv <- glm(inv_dv ~ trials_cumu + rep_iv + tcs_iv + amn_iv + vet_iv,
+                 data = na.omit(df), family = binomial)
+  mod_inv_cl <- coeftest(mod_inv, vcov. = vcovCL(mod_inv, cluster = na.omit(df)$country_case, type = "HC0"))
+  mod_inv_cl
+  
+  bife(
+    inv_dv ~ trials_cumu + rep_iv + tcs_iv + amn_iv + vet_iv | country_case,
+    data  = na.omit(df),
+    model = "logit"
+  ) |> summary()
+  
+  clogit(
+    inv_dv ~ trials_cumu + rep_iv + tcs_iv + amn_iv + vet_iv + strata(country_case),
+    data = na.omit(df)
+  )
+  
+  
+### 
+  
+  results <- list(
+    "Amnesties" = mod_amn_cl,
+    "Prosecutions" = mod_nb_cl,
+    "Reparations" = mod_rep_cl,
+    "Truth Commissions" = mod_tcs_cl,
+    "UN Investigations" = mod_inv_cl,
+    "Vetting" = mod_vet_cl)
+  
+  names(results) |>
+    map(function(modname) {
+      tibble(
+        Variable = rownames(results[[modname]]),
+        est = format(results[[modname]][, 1], justify = "right", digits = 1, nsmall = 3, scientific = FALSE),
+        se = format(results[[modname]][, 2], justify = "right", digits = 1, nsmall = 3, scientific = FALSE),
+        pvalue = format(results[[modname]][, 4], scientific = FALSE) ) |>
+        mutate(
+          stars = case_when(
+            pvalue > 0.05 ~ "   ",
+            pvalue <= 0.05 & pvalue > 0.01 ~ "*  ",
+            pvalue <= 0.01 & pvalue > 0.001 ~ "** ",
+            pvalue <= 0.001 ~ "***"
+          ),
+          result = paste(est, " (", se, ")", stars, sep = "")
+        ) |>
+        select(Variable, result) |>
+        rename(!!modname := result)
+    }) |>
+    reduce(full_join, by = "Variable") |>
+    mutate(Variable = case_when(
+      Variable == "amn_iv" ~ "Amnesties",
+      Variable == "rep_iv" ~ "Reparations policies",
+      Variable == "vet_iv" ~ "Vetting policies",
+      Variable == "tcs_iv" ~ "Truth commissions",
+      Variable == "trials_cumu" ~ "Prosecutions",
+      Variable == "inv_iv" ~ "UN Investigations",
+      Variable == "(Intercept)" ~ "Intercept"
+    )  ) |>
+    arrange(Variable) |>
+    filter(Variable != "Intercept") |>
+    rename("Prior TJ" = "Variable") |>
+    write_csv("~/Desktop/correlations.csv", na = "")
+
+df |> 
+  select(country_case, year, tcs_cumu, rep_dv) |> 
+  filter(rep_dv > 0 & tcs_cumu > 0) |> 
+  reframe(.by = country_case, 
+          rep_year = min(year)) |> 
+  print(n = Inf) 
