@@ -1,4 +1,4 @@
-colname,definition
+col_name,definition
 accusedID,TJET Accused ID
 ccode_Accused,COW numeric country code of country of the accused
 country,country name

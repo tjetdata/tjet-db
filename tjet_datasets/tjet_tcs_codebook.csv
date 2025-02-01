@@ -1,7 +1,6 @@
-colname,definition
+col_name,definition
 accessOfficialDocuments,truth commission powers: access official documents
 allocateReparations,truth commission powers: allocate reparations
-authorizedByState,Was the truth commission officially authorized or empowered by the state?
 beganOperatingAfterIntraConfl,Did this truth commission begin operating during intra-state conflict?
 beganOperatingDuringIntraConfl,Did this truth commission begin operating after intra-state conflict?
 branchCreated,Which branch(es) of government created the TC?
@@ -33,7 +32,6 @@ finalReportIssued,Did the truth commission issue a final report?
 finalReportRecommendations,Did the truth commission final report make final recommendations?
 fitsConflictTJ,Did this case fit the definition of a conflict truth commission?
 fitsPostAutocraticTJ,Did this case fit the definition of a post-authoritarian truth commission?
-focusedPast,Was the commission focused on past rather than ongoing events?
 forcedDisplacement,crimes covered: forced displacement
 formallyIndependent,Was the TC formally independent?
 genderReform,Did the final report recommend gender reform?
@@ -45,7 +43,6 @@ humanRightsReformType,What type of human rights reform did the final report reco
 idiosyncratic,this commission did not strictly meet the TJET definition of a truth commission
 internationalBody,Which international body initiated the commission?
 intraConflictBeforeTC,Did this country start an intra-state conflict at some point before this truth commission began operating?
-investigatePatternAbuse,Did the commission aim to investigates a pattern of abuse?
 investigateStateMembers,truth commission powers: investigate former or current members of the state
 judicialReforms,Did the final report recommend judicial reform?
 judicialReformsType,What type of judicial reform did the final report recommend?
@@ -56,7 +53,6 @@ mandatePeriodicMonitoringImplementation,Did the truth commission mandate require
 mandateTimePeriodCovered,Did the mandate specify the time period that is covered by the truth commission?
 namePerpetrators,truth commission powers: name perpetrators
 narrative,narrative description
-neverOperated,Did the truth commission never operate?
 officialName,name or description of the truth commission
 officialName_en,name or description of the truth commission (English)
 officialName_en_fr,name or description of the truth commission (French translation)
@@ -90,7 +86,6 @@ supportProsecutions,truth commission powers: support prosecutions
 tcAims,"How are the TC's aims or goals framed? Literally, what words do the establishing laws or report commonly make use of?"
 tclawOnline,URL of the truth commission law (if the law is online)
 tcType,type of truth commission
-temporaryBodyReport,Was the commission a temporary body with the aim of producing a final report?
 testimonies,Did the truth commission take testimony?
 testimoniesAvailablePublic,"Are the testimonies available to the public, either in hard copy or electronic archives?"
 timePeriod,What is the specific period covered by the truth commission?

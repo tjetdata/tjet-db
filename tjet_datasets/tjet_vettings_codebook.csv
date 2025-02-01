@@ -1,4 +1,4 @@
-colname,definition
+col_name,definition
 alterationOf,vettingID of the policy which is altered by this record
 appealJudgment,Is there evidence that any individual successfully appealed their specific judgment?
 ban_from_elected,ban from candidacy for office in legislature

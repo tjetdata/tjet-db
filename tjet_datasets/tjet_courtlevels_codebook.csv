@@ -1,4 +1,4 @@
-colname,definition
+col_name,definition
 accusedID,TJET Accused ID
 CLID,TJET court level record ID
 courtLevel,court level at which outcome occurred
