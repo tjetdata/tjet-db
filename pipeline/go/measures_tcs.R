@@ -1,7 +1,29 @@
+# df <- TCmeasure(
+#   cy = df, new_col_name = "tcs_metcriteria", operated = FALSE,
+#   start_year_var = "yearPassed",
+#   filter_nexus_vars = NULL,
+#   filter_crimes_vars = "all",
+#   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
+#   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
+#   recommend_vars = NULL, monitor_vars = NULL
+# ) %>% 
+#   select(-tcs_metcriteria, -tcs_metcriteria_beg) 
+
+df <- TCmeasure(
+  cy = df, new_col_name = "tcs_all",
+  start_year_var = "yearBeginOperation",
+  filter_nexus_vars = NULL,
+  filter_crimes_vars = "all",
+  aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
+  powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
+  recommend_vars = NULL, monitor_vars = NULL
+) %>% 
+  select(-tcs_all, -tcs_all_beg) 
+
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   independence_opts = NULL, aims_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
@@ -23,7 +45,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   independence_opts = NULL, aims_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
@@ -31,10 +53,17 @@ df <- TCmeasure(
 ) %>%
   select(-tcs_dtj_ctj, -tcs_dtj_ctj_beg) 
 
+
+
+
+
+
+
+
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_victim_process",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = c(
     "truth for victims", "memorialization", "apology",
@@ -50,7 +79,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_victim_outcome",
   start_year_var = "yearCompleteOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL,
@@ -92,7 +121,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_victim_process",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = c(
     "truth for victims", "memorialization", "apology",
@@ -108,7 +137,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_victim_outcome",
   start_year_var = "yearCompleteOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL,
@@ -162,7 +191,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_account_process",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = c(
     "accountability", "responsibility",
@@ -184,7 +213,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_account_outcome",
   start_year_var = "yearCompleteOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL,
@@ -232,7 +261,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_account_process",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = c(
     "accountability", "responsibility",
@@ -254,7 +283,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_account_outcome",
   start_year_var = "yearCompleteOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL,
@@ -267,7 +296,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_peace_process",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = c(
     "reconciliation", "coexistence", "dialogue",
@@ -282,7 +311,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_peace_outcome",
   start_year_var = "yearCompleteOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL,
@@ -321,7 +350,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_peace_process",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = c(
     "reconciliation", "coexistence", "dialogue",
@@ -336,7 +365,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_peace_outcome",
   start_year_var = "yearCompleteOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL,
@@ -348,7 +377,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_reform_process",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = c(
     "historial truth", "institutional reform",
@@ -364,7 +393,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_reform_outcome",
   start_year_var = "yearCompleteOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL,
@@ -406,7 +435,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_reform_process",
   start_year_var = "yearBeginOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = c(
     "historial truth", "institutional reform",
@@ -422,7 +451,7 @@ df <- TCmeasure(
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_ctj_reform_outcome",
   start_year_var = "yearCompleteOperation",
-  filter_nexus_vars = "fitsConflictTJ",
+  filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL,
@@ -431,28 +460,6 @@ df <- TCmeasure(
   monitor_vars = "mandatePeriodicMonitoringImplementation"
 ) %>%
   select(-tcs_dtj_ctj_reform_outcome_binary, -tcs_dtj_ctj_reform_outcome_created)
-
-df <- TCmeasure(
-  cy = df, new_col_name = "tcs_metcriteria", operated = FALSE,
-  start_year_var = "yearPassed",
-  filter_nexus_vars = NULL,
-  filter_crimes_vars = "all",
-  aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
-  powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
-  recommend_vars = NULL, monitor_vars = NULL
-) %>% 
-  select(-tcs_metcriteria, -tcs_metcriteria_beg) 
-
-df <- TCmeasure(
-  cy = df, new_col_name = "tcs_operated",
-  start_year_var = "yearBeginOperation",
-  filter_nexus_vars = NULL,
-  filter_crimes_vars = "all",
-  aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
-  powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
-  recommend_vars = NULL, monitor_vars = NULL
-) %>% 
-  select(-tcs_operated, -tcs_operated_beg) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_goalstruth",

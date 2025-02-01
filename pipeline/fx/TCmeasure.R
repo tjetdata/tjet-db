@@ -4,7 +4,8 @@
 ## there are error checks built into the function
 TCmeasure <- function(cy, new_col_name,
                       start_year_var, # which year variable to use as first year
-                      operated = TRUE, filter_nexus_vars, filter_crimes_vars, # filter variables
+                      # operated = TRUE, 
+                      filter_nexus_vars, filter_crimes_vars, # filter variables
                       independence_opts, aims_opts, consult_vars, # these are included in scale as binary
                       harms_vars = NULL, # same as filter_crimes_vars but to be summed for scale, not filtered
                       powers_vars, testimony_vars, reports_vars, recommend_vars, # these are summed before inclusion in scale
@@ -208,17 +209,17 @@ TCmeasure <- function(cy, new_col_name,
 
   ## subsetting & calc
 
-  if (operated) {
-    operation_condition <- expr(!is.na(yearBeginOperation) & neverOperated == 0)
-  } else {
-    operation_condition <- TRUE
-    start_year_var <- "yearPassed"
-    warning(
-      "TCs that met the criteria but never operated can only be based on \n",
-      "  start_year_var = 'yearPassed', so 'yearPassed' is always used \n",
-      "  when operated = FALSE."
-    )
-  }
+  # if (operated) {
+  #   operation_condition <- expr(!is.na(yearBeginOperation) & neverOperated == 0)
+  # } else {
+  #   operation_condition <- TRUE
+  #   start_year_var <- "yearPassed"
+  #   warning(
+  #     "TCs that met the criteria but never operated can only be based on \n",
+  #     "  start_year_var = 'yearPassed', so 'yearPassed' is always used \n",
+  #     "  when operated = FALSE."
+  #   )
+  # }
 
   new <- db[["TruthCommissions"]] %>%
     mutate(
@@ -267,9 +268,10 @@ TCmeasure <- function(cy, new_col_name,
         mandatePeriodicMonitoringImplementation == "Yes", 1, 0
       )
     ) %>%
-    filter(authorizedByState == 1 & temporaryBodyReport == 1 & ## met criteria
-      focusedPast == 1 & investigatePatternAbuse == 1) %>% ## met criteria
-    filter(eval(operation_condition)) %>% ## operated
+    # filter(authorizedByState == 1 & temporaryBodyReport == 1 & ## met criteria
+    #   focusedPast == 1 & investigatePatternAbuse == 1 & ## met criteria
+    #     neverOperated == 0 ) %>% 
+    # filter(eval(operation_condition)) %>% ## operated
     filter(if_any(all_of(filter_nexus_vars), ~ . == 1)) %>% ## context binary indicators
     filter(if_any(all_of(filter_crimes_vars), ~ . == 1)) %>% ## crimes included
     mutate(
