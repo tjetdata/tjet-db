@@ -1,0 +1,32 @@
+---
+title: "Condensed Codebook"
+format: typst
+margin: 
+  x: 0.5in
+  y: 0.5in
+df-print: kable
+editor: source
+---
+
+```{r}
+#| echo: false
+#| include: false
+library(tidyverse) 
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+read_csv(here::here("tjet_datasets", "tjet_codebook.csv")) |> 
+  select(section, col_name, definition) |> 
+  rename(Section = section, 
+         Variable = col_name, 
+         Definition = definition) |> 
+  gt::gt() |>
+  gt::cols_width(
+    Section ~ pct(30),
+    Variable ~ pct(30),
+    Definition ~ pct(40)
+  )
+```
