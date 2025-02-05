@@ -53,13 +53,6 @@ df <- TCmeasure(
 ) %>%
   select(-tcs_dtj_ctj, -tcs_dtj_ctj_beg) 
 
-
-
-
-
-
-
-
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_dtj_victim_process",
   start_year_var = "yearBeginOperation",
@@ -380,7 +373,7 @@ df <- TCmeasure(
   filter_nexus_vars = "fitsPostAutocraticTJ",
   filter_crimes_vars = "all",
   aims_opts = c(
-    "historial truth", "institutional reform",
+    "historical truth", "institutional reform",
     "addressing corruption"
   ),
   independence_opts = c("partially independent", "fully independent"),
@@ -409,7 +402,7 @@ df <- TCmeasure(
   filter_nexus_vars = "fitsConflictTJ",
   filter_crimes_vars = "all",
   aims_opts = c(
-    "historial truth", "institutional reform",
+    "historical truth", "institutional reform",
     "addressing corruption"
   ),
   independence_opts = c("partially independent", "fully independent"),
@@ -438,7 +431,7 @@ df <- TCmeasure(
   filter_nexus_vars = c("fitsPostAutocraticTJ", "fitsConflictTJ"),
   filter_crimes_vars = "all",
   aims_opts = c(
-    "historial truth", "institutional reform",
+    "historical truth", "institutional reform",
     "addressing corruption"
   ),
   independence_opts = c("partially independent", "fully independent"),
@@ -466,7 +459,7 @@ df <- TCmeasure(
   start_year_var = "yearBeginOperation",
   filter_nexus_vars = NULL,
   filter_crimes_vars = "all",
-  aims_opts = c("historial truth", "truth for victims"),
+  aims_opts = c("historical truth", "truth for victims"),
   independence_opts = NULL, consult_vars = NULL,
   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
   recommend_vars = NULL, monitor_vars = NULL

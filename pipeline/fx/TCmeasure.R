@@ -29,7 +29,7 @@ TCmeasure <- function(cy, new_col_name,
   )
   all_aims_opts <- c(
     "accountability", "addressing corruption", "apology", "coexistence", 
-    "dialogue", "historial truth", "institutional reform", "memorialization", 
+    "dialogue", "historical truth", "institutional reform", "memorialization", 
     "non-recurrence", "prevention of human rights violations",
     "recognition of victims", "reconciliation", "reparation", "responsibility", 
     "restitution", "truth for victims"
