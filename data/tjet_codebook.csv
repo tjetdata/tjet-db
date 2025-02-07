@@ -98,11 +98,14 @@ tjet_cy,amnesties,amnesty_dtj_ctj_opp,"amnesties for armed opposition members wi
 tjet_cy,amnesties,amnesty_dtj_ctj_sta_opp,"amnesties for state agents and armed opposition members with post-autocratic and conflict transitional justice nexus, count",TJET,1970,2020
 tjet_cy,amnesties,amnesty_ctj_sta_opp,"amnesties for state agents and armed opposition members with conflict transitional justice nexus, count",TJET,1970,2020
 tjet_cy,amnesties,amnesty_ctj,"amnesties with conflict transitional justice nexus, count",TJET,1970,2020
+tjet_cy,amnesties,amnesty_hrv,"amnesties for human rights violations, count",TJET,1970,2020
 tjet_cy,amnesties,amnesty_sta,"amnesties for state agents, count",TJET,1970,2020
 tjet_cy,amnesties,amnesty_sta_hrv,"amnesties for state agents for human rights violations, count",TJET,1970,2020
 tjet_cy,amnesties,amnesty_opp,"amnesties for armed opposition members, count",TJET,1970,2020
 tjet_cy,amnesties,amnesty_opp_hrv,"amnesties for armed opposition members for human rights violations, count",TJET,1970,2020
 tjet_cy,amnesties,amnesty_pol,"amnesties for political prisoners and protestors, count",TJET,1970,2020
+tjet_cy,amnesties,amnesty_ref,"amnesties for refugees or exiles, count",TJET,1970,2020
+tjet_cy,amnesties,amnesty_oth,"amnesties for others, including collaborators, draft dodgers or deserters, and regular convicts, count",TJET,1970,2020
 tjet_cy,amnesties,amnesty_peaceagree,"amnesties included in peace agreements, count",TJET,1970,2020
 tjet_cy,"prosecutions, domestic, regular",regu_trs_dom_sta,"domestic regular human rights prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,"prosecutions, domestic, regular",regu_trs_dom_sta_binary,binary version of regu_trs_dom_sta,TJET,1970,2020
@@ -218,78 +221,84 @@ tjet_cy,"prosecutions, domestic, opposition",oppo_cce_dom_sta_opp,"domestic oppo
 tjet_cy,"prosecutions, domestic, opposition",oppo_acc_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, count of accused in ongoing trials, by nationality of the accused (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,"prosecutions, domestic, opposition",oppo_crt_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, conviction rate, cct/acc (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,"prosecutions, domestic, opposition",oppo_sen_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year (trials not matched to UCDP conflict IDs)",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",trs_for_sta,"foreign trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",tro_for_sta,"foreign trials of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",ado_for_sta,"foreign trials of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",tfc_for_sta,"foreign trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",cct_for_sta,"foreign trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",cce_for_sta,"foreign trials of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",acc_for_sta,"foreign trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",crt_for_sta,"foreign trials of state agents, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",sen_for_sta,"foreign trials of state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",trs_for_sta_hi,"foreign trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",tro_for_sta_hi,"foreign trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",ado_for_sta_hi,"foreign trials of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",tfc_for_sta_hi,"foreign trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",cct_for_sta_hi,"foreign trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",cce_for_sta_hi,"foreign trials of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",acc_for_sta_hi,"foreign trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",crt_for_sta_hi,"foreign trials of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",sen_for_sta_hi,"foreign trials of high-ranking state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",trs_for_opp,"foreign trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",tro_for_opp,"foreign trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",ado_for_opp,"foreign trials of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",tfc_for_opp,"foreign trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",cct_for_opp,"foreign trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",cce_for_opp,"foreign trials of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",acc_for_opp,"foreign trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",crt_for_opp,"foreign trials of opposition members, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",sen_for_opp,"foreign trials of opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",trs_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",tro_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",ado_for_opp_hi,"foreign trials of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",tfc_for_opp_hi,"foreign trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",cct_for_opp_hi,"foreign trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",cce_for_opp_hi,"foreign trials of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",acc_for_opp_hi,"foreign trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",crt_for_opp_hi,"foreign trials of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, foreign",sen_for_opp_hi,"foreign trials of high-ranking opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_sta,"int'l trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",tro_int_sta,"int'l trials of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",ado_int_sta,"int'l trials of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",tfc_int_sta,"int'l trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",cct_int_sta,"int'l trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",cce_int_sta,"int'l trials of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",acc_int_sta,"int'l trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",crt_int_sta,"int'l trials of state agents, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",sen_int_sta,"int'l trials of state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_sta_hi,"int'l trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",tro_int_sta_hi,"int'l trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",ado_int_sta_hi,"int'l trials of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",tfc_int_sta_hi,"int'l trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",cct_int_sta_hi,"int'l trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",cce_int_sta_hi,"int'l trials of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",acc_int_sta_hi,"int'l trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",crt_int_sta_hi,"int'l trials of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",sen_int_sta_hi,"int'l trials of high-ranking state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_opp,"int'l trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",tro_int_opp,"int'l trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",ado_int_opp,"int'l trials of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",tfc_int_opp,"int'l trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",cct_int_opp,"int'l trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",cce_int_opp,"int'l trials of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",acc_int_opp,"int'l trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",crt_int_opp,"int'l trials of opposition members, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",sen_int_opp,"int'l trials of opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_opp_hi,"int'l trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",tro_int_opp_hi,"int'l trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",ado_int_opp_hi,"int'l trials of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",tfc_int_opp_hi,"int'l trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",cct_int_opp_hi,"int'l trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",cce_int_opp_hi,"int'l trials of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",acc_int_opp_hi,"int'l trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",crt_int_opp_hi,"int'l trials of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",sen_int_opp_hi,"int'l trials of high-ranking opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",trs_for_active,"foreign prosecutions, active personality jurisdiction, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",trs_for_passive,"foreign prosecutions, passive personality jurisdiction, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",trs_for_territorial,"foreign prosecutions, territorial jurisdiction, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",trs_for_universal,"foreign prosecutions, universal jurisdiction, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",trs_for_sta,"foreign prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",tro_for_sta,"foreign prosecutions of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",ado_for_sta,"foreign prosecutions of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",tfc_for_sta,"foreign prosecutions of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",cct_for_sta,"foreign prosecutions of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",cce_for_sta,"foreign prosecutions of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",acc_for_sta,"foreign prosecutions of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",crt_for_sta,"foreign prosecutions of state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",sen_for_sta,"foreign prosecutions of state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",trs_for_sta_hi,"foreign prosecutions of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",tro_for_sta_hi,"foreign prosecutions of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",ado_for_sta_hi,"foreign prosecutions of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",tfc_for_sta_hi,"foreign prosecutions of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",cct_for_sta_hi,"foreign prosecutions of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",cce_for_sta_hi,"foreign prosecutions of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",acc_for_sta_hi,"foreign prosecutions of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",crt_for_sta_hi,"foreign prosecutions of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",sen_for_sta_hi,"foreign prosecutions of high-ranking state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",trs_for_opp,"foreign prosecutions of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",tro_for_opp,"foreign prosecutions of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",ado_for_opp,"foreign prosecutions of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",tfc_for_opp,"foreign prosecutions of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",cct_for_opp,"foreign prosecutions of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",cce_for_opp,"foreign prosecutions of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",acc_for_opp,"foreign prosecutions of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",crt_for_opp,"foreign prosecutions of opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",sen_for_opp,"foreign prosecutions of opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",trs_for_opp_hi,"foreign prosecutions of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",tro_for_opp_hi,"foreign prosecutions of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",ado_for_opp_hi,"foreign prosecutions of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",tfc_for_opp_hi,"foreign prosecutions of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",cct_for_opp_hi,"foreign prosecutions of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",cce_for_opp_hi,"foreign prosecutions of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",acc_for_opp_hi,"foreign prosecutions of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",crt_for_opp_hi,"foreign prosecutions of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, foreign",sen_for_opp_hi,"foreign prosecutions of high-ranking opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_adhoc,"int'l prosecutions, Ad Hoc Tribunals, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_icc,"int'l prosecutions, International Criminal Court, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_sta,"int'l prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",tro_int_sta,"int'l prosecutions of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",ado_int_sta,"int'l prosecutions of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",tfc_int_sta,"int'l prosecutions of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",cct_int_sta,"int'l prosecutions of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",cce_int_sta,"int'l prosecutions of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",acc_int_sta,"int'l prosecutions of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",crt_int_sta,"int'l prosecutions of state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",sen_int_sta,"int'l prosecutions of state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_sta_hi,"int'l prosecutions of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",tro_int_sta_hi,"int'l prosecutions of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",ado_int_sta_hi,"int'l prosecutions of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",tfc_int_sta_hi,"int'l prosecutions of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",cct_int_sta_hi,"int'l prosecutions of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",cce_int_sta_hi,"int'l prosecutions of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",acc_int_sta_hi,"int'l prosecutions of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",crt_int_sta_hi,"int'l prosecutions of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",sen_int_sta_hi,"int'l prosecutions of high-ranking state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_opp,"int'l prosecutions of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",tro_int_opp,"int'l prosecutions of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",ado_int_opp,"int'l prosecutions of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",tfc_int_opp,"int'l prosecutions of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",cct_int_opp,"int'l prosecutions of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",cce_int_opp,"int'l prosecutions of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",acc_int_opp,"int'l prosecutions of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",crt_int_opp,"int'l prosecutions of opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",sen_int_opp,"int'l prosecutions of opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",trs_int_opp_hi,"int'l prosecutions of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",tro_int_opp_hi,"int'l prosecutions of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",ado_int_opp_hi,"int'l prosecutions of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",tfc_int_opp_hi,"int'l prosecutions of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",cct_int_opp_hi,"int'l prosecutions of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",cce_int_opp_hi,"int'l prosecutions of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",acc_int_opp_hi,"int'l prosecutions of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",crt_int_opp_hi,"int'l prosecutions of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",sen_int_opp_hi,"int'l prosecutions of high-ranking opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
 tjet_cy,"prosecutions, int'l (excl. hybrid)",ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,1970,2020
 tjet_cy,"prosecutions, int'l (excl. hybrid)",ICC_prelim_exam,"ongoing ICC preliminary examination by OTP, binary",TJET,1970,2020
 tjet_cy,"prosecutions, int'l (excl. hybrid)",ICC_prelim_exam_cumu,cumulative country-year count of ICC preliminary examination,TJET,1970,2020
@@ -306,42 +315,43 @@ tjet_cy,"prosecutions, int'l (excl. hybrid)",ICC_proceedings,number of ICC proce
 tjet_cy,"prosecutions, int'l (excl. hybrid)",ICC_proceedings_cumu,cumulative number of ICC proceedings,TJET,1970,2020
 tjet_cy,"prosecutions, int'l (excl. hybrid)",ICC_proceedings_region,"cumulative number of ICC proceedings in region (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2020
 tjet_cy,"prosecutions, int'l (excl. hybrid)",ICC_withdrawnDismissed,number of accused who have charges withdrawn or proceedings dismissed by ICC during the year,TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",trs_hyb_sta,"hybrid trials of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",tro_hyb_sta,"hybrid trials of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",ado_hyb_sta,"hybrid trials of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",tfc_hyb_sta,"hybrid trials of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",cct_hyb_sta,"hybrid trials of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",cce_hyb_sta,"hybrid trials of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",acc_hyb_sta,"hybrid trials of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",crt_hyb_sta,"hybrid trials of state agents, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",sen_hyb_sta,"hybrid trials of state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",trs_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",tro_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",ado_hyb_sta_hi,"hybrid trials of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",tfc_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",cct_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",cce_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",acc_hyb_sta_hi,"hybrid trials of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",crt_hyb_sta_hi,"hybrid trials of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",sen_hyb_sta_hi,"hybrid trials of high-ranking state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",trs_hyb_opp,"hybrid trials of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",tro_hyb_opp,"hybrid trials of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",ado_hyb_opp,"hybrid trials of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",tfc_hyb_opp,"hybrid trials of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",cct_hyb_opp,"hybrid trials of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",cce_hyb_opp,"hybrid trials of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",acc_hyb_opp,"hybrid trials of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",crt_hyb_opp,"hybrid trials of opposition members, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",sen_hyb_opp,"hybrid trials of opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",trs_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",tro_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",ado_hyb_opp_hi,"hybrid trials of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",tfc_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",cct_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",cce_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",acc_hyb_opp_hi,"hybrid trials of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",crt_hyb_opp_hi,"hybrid trials of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
-tjet_cy,"prosecutions, hybrid",sen_hyb_opp_hi,"hybrid trials of high-ranking opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",trs_hyb,"hybrid trials, count of trials beginning, by nationality of the accused & start year",,,
+tjet_cy,"prosecutions, hybrid",trs_hyb_sta,"hybrid prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",tro_hyb_sta,"hybrid prosecutions of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",ado_hyb_sta,"hybrid prosecutions of state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",tfc_hyb_sta,"hybrid prosecutions of state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",cct_hyb_sta,"hybrid prosecutions of state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",cce_hyb_sta,"hybrid prosecutions of state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",acc_hyb_sta,"hybrid prosecutions of state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",crt_hyb_sta,"hybrid prosecutions of state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",sen_hyb_sta,"hybrid prosecutions of state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",trs_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",tro_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",ado_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",tfc_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",cct_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",cce_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",acc_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",crt_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",sen_hyb_sta_hi,"hybrid prosecutions of high-ranking state agents, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",trs_hyb_opp,"hybrid prosecutions of opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",tro_hyb_opp,"hybrid prosecutions of opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",ado_hyb_opp,"hybrid prosecutions of opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",tfc_hyb_opp,"hybrid prosecutions of opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",cct_hyb_opp,"hybrid prosecutions of opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",cce_hyb_opp,"hybrid prosecutions of opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",acc_hyb_opp,"hybrid prosecutions of opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",crt_hyb_opp,"hybrid prosecutions of opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",sen_hyb_opp,"hybrid prosecutions of opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",trs_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",tro_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, count of trials ongoing, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",ado_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, average duration of ongoing trials (calendar years), by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",tfc_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, count of trials with any final convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",cct_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, count of convictions, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",cce_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",acc_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",crt_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
+tjet_cy,"prosecutions, hybrid",sen_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
 tjet_cy,reparations,reparations_gaTJ,"binary for whether reparations in country-year included any that was gender-attentive (1 = yes, 0 = no) ",TJET,1970,2020
 tjet_cy,reparations,rep_binary,"reparations policy, binary, carried forward from year of creation",TJET,1970,2020
 tjet_cy,reparations,rep_created,"reparations policies, count for year of creation only",TJET,1970,2020
@@ -378,8 +388,6 @@ tjet_cy,truth commissions,tcs_victim_process,"victim-centered TC process index (
 tjet_cy,truth commissions,tcs_victim_process_beg,"victim-centered TC process index (sum of binaries for consulted victims, encouraged victim testimony, had the power to allocate reparations, and whether it's aims included memorialization, apology, recognition of victims, or reparations), year of creation",TJET,1970,2020
 tjet_cy,truth commissions,tcs_victim_outcome,"victim-centered TC outcome index (sum of binaries for publicly available final report, report recommendation of reparations, and mandated implementation monitoring), carried forward from year of completion",TJET,1970,2020
 tjet_cy,truth commissions,tcs_victim_outcome_beg,"victim-centered TC outcome index (sum of binaries for publicly available final report, report recommendation of reparations, and mandated implementation monitoring), year of completion",TJET,1970,2020
-tjet_cy,truth commissions,tcs_recreparations,"truth commission reparations recommendation, binary, carried forward from year of creation",TJET,1970,2020
-tjet_cy,truth commissions,tcs_recreparations_beg,"truth commission reparations recommendation, binary, year of creation",TJET,1970,2020
 tjet_cy,truth commissions,tcs_independent,"truth commission was at least partially independent, binary, carried forward from year of creation",TJET,1970,2020
 tjet_cy,truth commissions,tcs_independent_beg,"truth commission was at least partially independent, binary, year of creation",TJET,1970,2020
 tjet_cy,truth commissions,tcs_independent_scale,"truth commission independence scale (not independent => 0; partially independent => 1, fully independent => 2), carried forward from year of creation",TJET,1970,2020
@@ -397,14 +405,34 @@ tjet_cy,truth commissions,tcs_power_name,"truth commission power to name perpetr
 tjet_cy,truth commissions,tcs_power_name_beg,"truth commission power to name perpetrators, binary, year of creation",TJET,1970,2020
 tjet_cy,truth commissions,tcs_power_reform,"truth commission power to recommend institutional reforms, binary, carried forward from year of creation",TJET,1970,2020
 tjet_cy,truth commissions,tcs_power_reform_beg,"truth commission power to recommend institutional reforms, binary, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_public_hearings,"truth commission with public hearings, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_public_hearings_n,"truth commission with public hearings, count of TCs, year of creation",TJET,1970,2020
 tjet_cy,truth commissions,tcs_report,"truth commission issued final report, binary, carried forward from year of completion",TJET,1970,2020
-tjet_cy,truth commissions,tcs_report_beg,"truth commission issued final report, binary, year of completion",TJET,1970,2020
-tjet_cy,truth commissions,tcs_public_process,"truth commission public process (public hearings), binary, carried forward from year of creation",TJET,1970,2020
-tjet_cy,truth commissions,tcs_public_process_beg,"truth commission public process (public hearings), binary, year of creation",TJET,1970,2020
-tjet_cy,truth commissions,tcs_public_outcome,"truth commission public outcome (publicly available final report), binary, carried forward from year of completion",TJET,1970,2020
-tjet_cy,truth commissions,tcs_public_outcome_beg,"truth commission public outcome (publicly available final report), binary, year of completion",TJET,1970,2020
-tjet_cy,truth commissions,tcs_recommendations,"truth commission recommendations in final report index (sum of binaries for reform categories vetting, security sector reform, legal reform, judicial reform, human rights reform, corruption reform, and gender reform), carried forward from year of completion",TJET,1970,2020
-tjet_cy,truth commissions,tcs_recommendations_beg,"truth commission recommendations in final report index (sum of binaries for reform categories vetting, security sector reform, legal reform, judicial reform, human rights reform, corruption reform, and gender reform), year of completion",TJET,1970,2020
+tjet_cy,truth commissions,tcs_report_n,"truth commission issued final report, count of TCs, year of completion",TJET,1970,2020
+tjet_cy,truth commissions,tcs_report_public,"truth commission publicly available final report, binary, year of completion",TJET,1970,2020
+tjet_cy,truth commissions,tcs_report_public_n,"truth commission publicly available final report, count of TCs, year of completion",TJET,1970,2020
+tjet_cy,truth commissions,tcs_rec_prosecutions,"truth commission prosecutions recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_rec_prosecutions_n,"truth commission prosecutions recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_rec_reparations,"truth commission reparations recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_rec_reparations_n,"truth commission reparations recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_rec_reform,"truth commission institutional reform recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_rec_reform_n,"truth commission institutional reform recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_legal,"truth commission legal reform recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_legal_n,"truth commission legal reform recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_judicial,"truth commission judicial reform recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_judicial_n,"truth commission judicial reform recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_hrs,"truth commission general human rights reform recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_hrs_n,"truth commission general human rights reform recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_vetting,"truth commission vetting recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_vetting_n,"truth commission vetting recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_ssr,"truth commission security sector reform recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_ssr_n,"truth commission security sector reform reform recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_gender,"truth commission gender reform recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_gender_n,"truth commission gender reform recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_corruption,"truth commission corruption reform recommendation, binary, carried forward from year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_ref_corruption_n,"truth commission corruption reform recommendation, count of TCs, year of creation",TJET,1970,2020
+tjet_cy,truth commissions,tcs_recommendations,"truth commission reform recommendations in final report index (sum of binaries for reform categories vetting, security sector reform, legal reform, judicial reform, human rights reform, corruption reform, and gender reform), carried forward from year of completion",TJET,1970,2020
+tjet_cy,truth commissions,tcs_recommendations_beg,"truth commission reform recommendations in final report index (sum of binaries for reform categories vetting, security sector reform, legal reform, judicial reform, human rights reform, corruption reform, and gender reform), year of completion",TJET,1970,2020
 tjet_cy,truth commissions,tcs_monitoring,"truth commission with mandated implementation monitoring, binary, carried forward from year of completion",TJET,1970,2020
 tjet_cy,truth commissions,tcs_monitoring_beg,"truth commission with mandated implementation monitoring, binary, year of completion",TJET,1970,2020
 tjet_cy,truth commissions,tcs_ctj_binary,"TCs, binary, conflict transitional justice nexus, carried forward from year of creation",TJET,1970,2020

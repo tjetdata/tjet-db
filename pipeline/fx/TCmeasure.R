@@ -6,10 +6,10 @@ TCmeasure <- function(cy, new_col_name,
                       start_year_var, # which year variable to use as first year
                       # operated = TRUE, 
                       filter_nexus_vars, filter_crimes_vars, # filter variables
-                      independence_opts, aims_opts, consult_vars, # these are included in scale as binary
-                      harms_vars = NULL, # same as filter_crimes_vars but to be summed for scale, not filtered
-                      powers_vars, testimony_vars, reports_vars, recommend_vars, # these are summed before inclusion in scale
-                      monitor_vars # included in scale as binary
+                      independence_opts, aims_opts, consult_vars, # these are included in index as binary
+                      harms_vars = NULL, # same as filter_crimes_vars but to be summed for index, not filtered
+                      powers_vars, testimony_vars, reports_vars, recommend_vars, # these are summed before inclusion in index
+                      monitor_vars # included in index as binary
 ) {
   # don't need to strip 'all' out of varnames because not created automatically
 
@@ -97,12 +97,12 @@ TCmeasure <- function(cy, new_col_name,
     ) {
       stop(
         "The 'harms_vars' can only be used with filter_crimes_vars == 'all'",
-        "  and other scale arguments set to NULL."
+        "  and other index arguments set to NULL."
       )
     }
     error <- expression(
       stop(
-        "Incorrect argument: for a scale, specify in 'harms_vars' one or more of:",
+        "Incorrect argument: for an index, specify in 'harms_vars' one or more of:",
         "\n  ", paste(all_crimes_vars, collapse = "; "), suffix
       )
     )
@@ -113,7 +113,7 @@ TCmeasure <- function(cy, new_col_name,
 
   error <- expression(
     stop(
-      "Missing argument: for a scale, specify in 'independence_opts' one or more of:",
+      "Missing argument: for an index, specify in 'independence_opts' one or more of:",
       "\n  ", paste(all_independence_opts, collapse = "; "), suffix
     )
   )
@@ -125,7 +125,7 @@ TCmeasure <- function(cy, new_col_name,
 
   error <- expression(
     stop(
-      "Missing argument: for a scale, specify in 'aims_opts' one or more of:",
+      "Missing argument: for an index, specify in 'aims_opts' one or more of:",
       "\n  ", paste(all_aims_opts, collapse = "; "), suffix
     )
   )
@@ -137,7 +137,7 @@ TCmeasure <- function(cy, new_col_name,
 
   error <- expression(
     stop(
-      "Missing argument: for a scale, specify in 'consult_vars': ",
+      "Missing argument: for an index, specify in 'consult_vars': ",
       paste(all_consult_vars, collapse = "; "), suffix
     )
   )
@@ -149,7 +149,7 @@ TCmeasure <- function(cy, new_col_name,
 
   error <- expression(
     stop(
-      "Missing argument: for a scale, specify in 'powers_vars' one or more of:",
+      "Missing argument: for an index, specify in 'powers_vars' one or more of:",
       "\n  ", paste(all_powers_vars, collapse = "; "), suffix
     )
   )
@@ -161,7 +161,7 @@ TCmeasure <- function(cy, new_col_name,
 
   error <- expression(
     stop(
-      "Missing argument: for a scale, specify in 'testimony_vars' one or more of:",
+      "Missing argument: for an index, specify in 'testimony_vars' one or more of:",
       "\n  ", paste(all_testimony_vars, collapse = "; "), suffix
     )
   )
@@ -173,7 +173,7 @@ TCmeasure <- function(cy, new_col_name,
 
   error <- expression(
     stop(
-      "Missing argument: for a scale, specify in 'reports_vars' one or more of:",
+      "Missing argument: for an index, specify in 'reports_vars' one or more of:",
       "\n  ", paste(all_reports_vars, collapse = "; "), suffix
     )
   )
@@ -185,7 +185,7 @@ TCmeasure <- function(cy, new_col_name,
 
   error <- expression(
     stop(
-      "Missing argument: for a scale, specify in 'recommend_vars' one or more of:",
+      "Missing argument: for an index, specify in 'recommend_vars' one or more of:",
       "\n  ", paste(all_recommend_vars, collapse = "; "), suffix
     )
   )
@@ -197,7 +197,7 @@ TCmeasure <- function(cy, new_col_name,
 
   error <- expression(
     stop(
-      "Missing argument: for a scale, specify in 'monitor_vars': ",
+      "Missing argument: for an index, specify in 'monitor_vars': ",
       paste(all_monitor_vars, collapse = "; "), suffix
     )
   )
@@ -275,54 +275,48 @@ TCmeasure <- function(cy, new_col_name,
     filter(if_any(all_of(filter_nexus_vars), ~ . == 1)) %>% ## context binary indicators
     filter(if_any(all_of(filter_crimes_vars), ~ . == 1)) %>% ## crimes included
     mutate(
-      goals = ifelse(!is.null(aims_opts) &
-        truthcommissionID %in% TCGoals(aims_opts), 1, 0),
-      indep = ifelse(!is.null(independence_opts) &
-        formallyIndependent %in% independence_opts, 1, 0),
-      consl = ifelse(!is.null(consult_vars) &
-        if_any(all_of(consult_vars), ~ . == 1), 1, 0),
+      goals = ifelse(!is.null(aims_opts) & truthcommissionID %in% TCGoals(aims_opts), 1, 0),
+      indep = ifelse(!is.null(independence_opts) & formallyIndependent %in% independence_opts, 1, 0),
+      consl = ifelse(!is.null(consult_vars) & if_any(all_of(consult_vars), ~ . == 1), 1, 0),
       harms = rowSums(across(all_of(harms_vars))),
       power = rowSums(across(all_of(powers_vars))),
       testi = rowSums(across(all_of(testimony_vars))),
       repor = rowSums(across(all_of(reports_vars))),
       recom = rowSums(across(all_of(recommend_vars))),
-      monit = ifelse(!is.null(monitor_vars) &
-        if_any(all_of(monitor_vars), ~ . == 1), 1, 0),
-      scale = goals + indep + consl + harms + power + testi + repor + recom + monit
+      monit = ifelse(!is.null(monitor_vars) & if_any(all_of(monitor_vars), ~ . == 1), 1, 0),
+      index = goals + indep + consl + harms + power + testi + repor + recom + monit
     ) %>%
     rename(year_start = .env$start_year_var) %>%
-    select(
-      ccode, year_start, # yearPassed, yearBeginOperation, yearCompleteOperation,
-      scale, goals, indep, consl, harms, power, testi, repor, recom, monit
-    ) %>%
+    select(ccode, year_start, index) %>%
     filter(!is.na(year_start)) %>%
-    arrange(ccode, year_start) %>%
+    arrange(ccode, year_start) %>% 
     group_by(ccode, year_start) %>%
     mutate(
-      scale = max(scale, na.rm = TRUE),
-      binary = ifelse(n() > 0, 1, 0), 
-      created = n() 
+      n = sum(index, na.rm = TRUE), 
+      index = max(index, na.rm = TRUE), 
+      binary = ifelse(n() > 0, 1, 0), # indicates filtered TCs, does not correspond to the index
+      created = n() # number of filtered TCs
     ) %>%
     ungroup() %>%
-    select(ccode, year_start, scale, binary, created) %>%
+    select(ccode, year_start, index, n, binary, created) %>%
     distinct()
   
-  # important, binary indicates filtered TCs, but does not correspond to the scale
-
   cy %>%
     left_join(new, by = c("ccode_cow" = "ccode", "year" = "year_start")) %>%
     arrange(country_case, year) %>%
     group_by(country_case) %>%
-    mutate(beg = scale) %>%
-    fill(scale, binary, .direction = "down") %>%
+    mutate(beg = index) %>%
+    fill(index, binary, .direction = "down") %>%
     ungroup() %>%
     mutate(
-      scale = ifelse(year %in% 1970:2023 & is.na(scale), 0, scale),
+      index = ifelse(year %in% 1970:2023 & is.na(index), 0, index),
+      n = ifelse(year %in% 1970:2020 & is.na(n), 0, n),
       beg = ifelse(year %in% 1970:2020 & is.na(beg), 0, beg),
       binary = ifelse(year %in% 1970:2023 & is.na(binary), 0, binary),
       created = ifelse(year %in% 1970:2020 & is.na(created), 0, created)
     ) %>%
-    rename_with(.fn = ~ new_col_name, .cols = scale) %>%
+    rename_with(.fn = ~ new_col_name, .cols = index) %>%
+    rename_with(.fn = ~ paste(new_col_name, "n", sep = "_"), .cols = n) %>%
     rename_with(.fn = ~ paste(new_col_name, "beg", sep = "_"), .cols = beg) %>%
     rename_with(.fn = ~ paste(new_col_name, "binary", sep = "_"), .cols = binary) %>%
     rename_with(.fn = ~ paste(new_col_name, "created", sep = "_"), .cols = created) %>%

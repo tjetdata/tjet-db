@@ -1420,7 +1420,7 @@ df %>%
   filter(is.na(df) | is.na(db) | is.na(country.x) | is.na(country.y)) %>% 
   group_by(ccode_cow) %>% 
   mutate(beg = min(year), 
-         end = max(year) ) %>% 
+         end = max(year)) %>% 
   select(-year) %>% 
   distinct() %>% 
   print(n = Inf)
@@ -1429,18 +1429,7 @@ df %>%
 # df <- df %>%
 #   select(country, country_case, ccode_cow, year)
 
-df <- AmnestyMeasure(cy = df, nexus_vars = "dtj", who_opts = "sta")
-df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "sta")
-df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = "opp") 
-df <- AmnestyMeasure(cy = df, nexus_vars = c("dtj", "ctj"), who_opts = c("sta", "opp")) 
-df <- AmnestyMeasure(cy = df, nexus_vars = "ctj", who_opts = c("sta", "opp")) 
-df <- AmnestyMeasure(cy = df, nexus_vars = "ctj", who_opts = "all") 
-df <- AmnestyMeasure(cy = df, who_opts = "sta")
-df <- AmnestyMeasure(cy = df, who_opts = "sta", what_opts = "hrv")
-df <- AmnestyMeasure(cy = df, who_opts = "opp") 
-df <- AmnestyMeasure(cy = df, who_opts = "opp", what_opts = "hrv")
-df <- AmnestyMeasure(cy = df, who_opts = "pol")
-df <- AmnestyMeasure(cy = df, peace_vars = "peaceSettlement") 
+source("pipeline/go/measures_amnesties.R", echo = TRUE)
 source("pipeline/go/measures_prosecutions.R", echo = TRUE)
 source("pipeline/go/measures_tcs.R", echo = TRUE) 
 df <- ReparationMeasures(cy = df)

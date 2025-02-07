@@ -183,6 +183,9 @@ df <- TrialsMeasure(cy = df, prefix = "oppo", measure = "sen", type_opts = "dom"
 
 #### intl & foreign
 
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "all", subtype = "adhoc") 
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "all", subtype = "icc")
+
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "sta")
@@ -213,6 +216,8 @@ df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "int", nexus_vars = c(
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "int", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
 
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "hyb", nexus_vars = c("hrs", "con"), memb_opts = "all") 
+
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "hyb", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "hyb", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "hyb", nexus_vars = c("hrs", "con"), memb_opts = "sta")
@@ -242,6 +247,11 @@ df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "hyb", nexus_vars = c(
 df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "hyb", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "hyb", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "hyb", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "all", subtype = "active")
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "all", subtype = "passive")
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "all", subtype = "territorial")
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "all", subtype = "universal")
 
 df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta")
 df <- TrialsMeasure(cy = df, measure = "tro", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "sta")

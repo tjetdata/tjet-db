@@ -15,7 +15,8 @@ AmnestyMeasure <- function(cy,
     sta = "who_sta", # state agents
     opp = "who_opp", # armed opposition
     pol = "who_pol", # political prisoners, protesters
-    oth = "who_oth"
+    ref = "who_ref", # refugees / exiles  
+    oth = "who_oth"  # other
   )
   what <- c(
     all = "all",
@@ -91,14 +92,15 @@ AmnestyMeasure <- function(cy,
       who_sta = ifelse(str_detect(whoWasAmnestied, "state agents"), 1, 0),
       who_opp = ifelse(str_detect(whoWasAmnestied, "armed opposition"), 1, 0),
       who_pol = ifelse(str_detect(whoWasAmnestied, "protesters / political prisoners"), 1, 0),
+      who_ref = ifelse(str_detect(whoWasAmnestied, "refugees / exiles"), 1, 0),
       who_oth = ifelse(str_detect(whoWasAmnestied, "collaborators") |
         str_detect(whoWasAmnestied, "draft dodgers / deserters") |
-        str_detect(whoWasAmnestied, "refugees / exiles") |
         str_detect(whoWasAmnestied, "regular convicts") |
         str_detect(whoWasAmnestied, "other"), 1, 0),
       what_reb = ifelse(str_detect(whatCrimes, "armed opposition") |
         str_detect(whatCrimes, "terrorism"), 1, 0),
-      what_hrv = ifelse(str_detect(whatCrimes, "human rights violations"), 1, 0),
+      # what_hrv = ifelse(str_detect(whatCrimes, "human rights violations"), 1, 0),
+      what_hrv = ifelse(hrCrimes == "human rights crimes were included in amnesty", 1, 0),
       what_dis = ifelse(str_detect(whatCrimes, "dissent / political crimes"), 1, 0),
       what_coi = ifelse(str_detect(whatCrimes, "armed violence against rebels"), 1, 0),
       what_oth = ifelse(str_detect(whoWasAmnestied, "collaboration") |
@@ -109,9 +111,9 @@ AmnestyMeasure <- function(cy,
     ) %>%
     select(
       amnestyID, ccode, amnestyYear, fitsPostAutocraticTJ, fitsConflictTJ,
-      dcj, pcj, all, all_of(peace_vars), # whoWasAmnestied,
+      dcj, pcj, all, all_of(peace_vars), 
       who_sta, who_opp, who_pol, who_oth,
-      what_reb, what_hrv, what_dis, what_oth, what_coi
+      what_reb, what_hrv, what_dis, who_ref, what_oth, what_coi
     ) %>%
     filter(if_any(all_of(nexus[nexus_vars]), ~ . == 1)) %>%
     filter(if_any(all_of(peace_vars), ~ . == 1)) %>%
@@ -121,7 +123,6 @@ AmnestyMeasure <- function(cy,
     arrange(ccode, amnestyYear) %>%
     reframe(
       .by = c(ccode, amnestyYear),
-      # binary = ifelse(n() > 0, 1, 0),
       count = n()
       ) %>%
     distinct()

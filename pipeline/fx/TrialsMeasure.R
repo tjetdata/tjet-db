@@ -1,4 +1,4 @@
-TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
+TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
                           nexus_vars, excl_nexus_vars = NULL,
                           memb_opts, rank_opts = NULL, charges_opts = NULL) {
   ## options
@@ -8,14 +8,26 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
     "for" = "foreign",
     dom = "domestic"
   )
+  
+  subtypes_int <- list(
+    adhoc = c("ICTR", "ICTY"), 
+    icc = "ICC"
+  ) 
+  subtypes_for <- c(
+    active = "active personality", 
+    passive = "passive personality", 
+    territorial = "territorial", 
+    universal = "universal"
+  ) 
+  
   nexus_trial <- c(
     hrs = "humanRights",
     con = "IntraConfl",
     ctj = "fitsConflictTJ",
     dtj = "fitsPostAutocraticTJ",
     dcj = "beganDuringIntraConfl", # subset of ctj
-    pcj = "beganAfterIntraConfl"
-  ) # subset of ctj
+    pcj = "beganAfterIntraConfl" # subset of ctj
+  ) 
   membership_acc <- c(
     all = "all",
     sta = "stateAgent",
@@ -47,14 +59,30 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
 
   error <- expression(
     stop(
-      "Missing or invalid argument for 'type_opts', select one or more of:",
+      "Missing or invalid argument for 'type_opts', select one of:",
       "\n  ", paste(names(type_trial), collapse = "; "), suffix
     )
   )
   if (missing(type_opts)) {
     eval(error)
-  } else if (sum(!type_opts %in% names(type_trial)) > 0) eval(error)
+  } else if (length(type_opts) > 1 | sum(!type_opts %in% names(type_trial)) > 0) eval(error)
 
+  error <- expression(
+    stop(
+      "Invalid argument for 'subtype', select one or more of:",
+      "\n  ", paste(names(subtypes_int), collapse = "; "), suffix
+    )
+  )
+  if (type_opts == "int" & sum(!subtype %in% names(subtypes_int)) > 0) eval(error)
+  
+  error <- expression(
+    stop(
+      "Invalid argument for 'subtype', select one or more of:",
+      "\n  ", paste(names(subtypes_int), collapse = "; "), suffix
+    )
+  )
+  if (type_opts == "for" & sum(!subtype %in% names(subtypes_for)) > 0) eval(error)
+  
   error <- expression(
     stop(
       "Missing or invalid argument for 'nexus_vars', select one or more of:",
@@ -126,7 +154,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
 
   var_name <- str_flatten(
     c(
-      prefix, measure, type_opts, nexus_vars, excl,
+      prefix, measure, type_opts, subtype, nexus_vars, excl,
       memb_opts, rank_opts, charges_opts
     ),
     collapse = "_"
@@ -283,7 +311,22 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
   } else {
     exclusion_condition <- TRUE
   }
-
+  
+  if (!is.null(subtype)) {
+    if (type_opts == "int") {
+      subtype_condition <- expr(
+        legalSystem %in% subtypes_int[[subtype]]
+      )
+    } 
+    if (type_opts == "for") {
+      subtype_condition <- expr(
+        jurisdiction == subtypes_for[[subtype]]
+      )
+    } 
+  } else {
+    subtype_condition <- TRUE
+  }
+  
   trials <- db[["Trials"]] %>% 
     mutate(
       humanRights = ifelse(HRs_charges > 0 & humanRights == 0, 1, humanRights),
@@ -297,6 +340,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts,
     filter(trialType == type_trial[type_opts]) %>%
     filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) %>%
     filter(eval(exclusion_condition)) %>%
+    filter(eval(subtype_condition)) %>%
     select(trialID, ccode_Accused, yearStart, yearEnd, firstConvictionYear_min)
   # ongoing, anyOpposedToGov, anyHighRank, anyStateAgent,
   # firstConvictionYear_min, finalConvictionYear_min,
