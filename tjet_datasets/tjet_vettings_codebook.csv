@@ -9,7 +9,8 @@ country,country name
 courtChallenge,"Was the entire policy challenged in court, and if so with what outcome?"
 dateLaw,date of the law or decree
 enactment,How was the policy enacted?
-fairness,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc)"
+fairness,"index adding binary variables for individual conduct or appeals, public, and any court challenges (0-3)"
+fairnessNotes,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc)"
 fitsConflictTJ,Did this case fit the definition of conflict transitional justice?
 fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?
 hearingsPublic,Were investigations transparent and publicly accessible?
@@ -35,10 +36,8 @@ tjet_version,TJET database version: date on which data was extracted from the da
 type_ban,policy type: ban from future employment
 type_declassification,policy type: declassification
 type_dismissal,policy type: dismissal from current employment
-type_perjury,policy type: dismissal and ban upon lustration lie
 ucdpConflictID,UCDP Conflict ID
 ucdpDyadID,UCDP Dyad ID
-var_fairness,"index adding binary variables for individual conduct or appeals, public, and any court challenges (0-3)"
 vettingID,TJET Vetting ID
 yearEnd,year vetting policy spell ended
 yearStart,"year vetting policy spell was in effect, not the date of the law"
