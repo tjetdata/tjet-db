@@ -374,8 +374,6 @@ data[["Vettings"]] <- db[["Vettings"]] %>%
   select(
     country_case, ccode_case, vettingID, alterationOf, yearStart, yearEnd,
     individual_conduct, type_dismissal, type_ban, type_declassification,
-    type_perjury,
-    # numberInvestigated,
     dateLaw
   ) %>%
   arrange(country_case, ccode_case, yearStart)
@@ -1619,12 +1617,11 @@ autotxt[["Vettings"]] <- data[["Vettings"]] %>%
     individual_conduct = max(individual_conduct),
     type_dismissal = max(type_dismissal),
     type_ban = max(type_ban),
-    type_declassification = max(type_declassification),
-    type_perjury = max(type_perjury)
+    type_declassification = max(type_declassification)
   ) %>%
   select(
     country_case, ccode_case, vettingID, yearStart, yearEnd, individual_conduct,
-    type_dismissal, type_ban, type_declassification, type_perjury
+    type_dismissal, type_ban, type_declassification
   ) %>%
   distinct() %>%
   group_by(country_case) %>%
@@ -1635,13 +1632,12 @@ autotxt[["Vettings"]] <- data[["Vettings"]] %>%
     individual_conduct = sum(individual_conduct),
     type_dismissal = sum(type_dismissal),
     type_ban = sum(type_ban),
-    type_declassification = sum(type_declassification),
-    type_perjury = sum(type_perjury)
+    type_declassification = sum(type_declassification)
   ) %>%
   ungroup() %>%
   select(
     country_case, ccode_case, count, yearStart, yearEnd, individual_conduct,
-    type_dismissal, type_ban, type_declassification, type_perjury
+    type_dismissal, type_ban, type_declassification
   ) %>%
   distinct() %>%
   rowwise() %>%
@@ -1793,18 +1789,18 @@ autotxt[["Vettings"]] <- data[["Vettings"]] %>%
           str_to_sentence()
       }
     )),
-    text = list(c(
-      text,
-      if (type_perjury > 0) {
-        paste(
-          type_perjury,
-          ifelse(type_perjury == 1, "policy", "policies"),
-          "included legal consequences for non-disclosure of relevant past activities."
-        ) %>%
-          n_transform() %>%
-          str_to_sentence()
-      }
-    )),
+    # text = list(c(
+    #   text,
+    #   if (type_perjury > 0) {
+    #     paste(
+    #       type_perjury,
+    #       ifelse(type_perjury == 1, "policy", "policies"),
+    #       "included legal consequences for non-disclosure of relevant past activities."
+    #     ) %>%
+    #       n_transform() %>%
+    #       str_to_sentence()
+    #   }
+    # )),
     text = str_flatten(text, " ") %>%
       str_trim()
   ) %>%

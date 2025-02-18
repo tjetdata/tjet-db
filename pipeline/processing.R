@@ -1115,6 +1115,47 @@ db[["Vettings"]] <- db[["Vettings"]] %>%
   left_join(multies[["Vettings"]], by = "vettingID") 
 rm(tabs, multies)
 
+### vettings 
+
+db[["Vettings"]] <- db[["Vettings"]] |>
+  mutate(policy_type = type_dismissal + type_ban + type_declassification, 
+         inst_exe = case_when(
+           str_detect(targetingPositionSought, "executive") ~ 1, 
+           TRUE ~ 0),
+         inst_legis = case_when(
+           str_detect(targetingPositionSought, "legislature") ~ 1, 
+           TRUE ~ 0),
+         inst_judiciary = case_when(
+           str_detect(targetingPositionSought, "judiciary") ~ 1, 
+           TRUE ~ 0),
+         inst_parties = case_when(
+           str_detect(targetingPositionSought, "political parties") ~ 1, 
+           TRUE ~ 0),
+         inst_public = case_when(
+           str_detect(targetingPositionSought, "public sector employee") ~ 1, 
+           TRUE ~ 0),
+         inst_police = case_when(
+           str_detect(targetingPositionSought, "police") ~ 1, 
+           TRUE ~ 0),
+         inst_military = case_when(
+           str_detect(targetingPositionSought, "armed forces") ~ 1, 
+           TRUE ~ 0),
+         inst_other = case_when(
+           str_detect(targetingPositionSought, "other") ~ 1, 
+           TRUE ~ 0), 
+         sum_inst = inst_exe + inst_legis + inst_judiciary + inst_parties + inst_public + inst_police + inst_military + inst_other,
+         inst_targeted = case_when(
+           sum_inst == 0 ~ 0, 
+           sum_inst == 1 ~ 1,
+           sum_inst >= 2 & sum_inst <=5 ~ 2, 
+           sum_inst > 5 ~ 3), 
+         ban_from_elected = ifelse(inst_legis == 1 & type_ban == 1, 1, 0), 
+         fairness = ifelse(str_detect(targetingWhy, "specific individual conduct") | 
+                        appealJudgment == "yes", 1, 0) + 
+           ifelse(hearingsPublic == "yes", 1, 0) + 
+           ifelse(courtChallenge !="no court challenge" & courtChallenge != "don't know" & !is.na(courtChallenge), 1, 0) 
+         ) 
+
 ### ICC data 
 db[["ICC"]] <- db[["ICC"]] %>%  
   select(country, ccode_cow, 

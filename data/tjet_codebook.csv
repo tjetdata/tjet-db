@@ -1565,7 +1565,8 @@ tjet_vettings.csv,,country,country name,TJET,1970,2020
 tjet_vettings.csv,,courtChallenge,"Was the entire policy challenged in court, and if so with what outcome? ",TJET,1970,2020
 tjet_vettings.csv,,dateLaw,date of the law or decree,TJET,1970,2020
 tjet_vettings.csv,,enactment,How was the policy enacted?,TJET,1970,2020
-tjet_vettings.csv,,fairness,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc) ",TJET,1970,2020
+tjet_vettings.csv,,fairnessNotes,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc) ",TJET,1970,2020
+tjet_vettings.csv,,fairness,"index adding binary variables for individual conduct or appeals, public, and any court challenges (0-3)",TJET,1970,2020
 tjet_vettings.csv,,fitsConflictTJ,Did this case fit the definition of conflict transitional justice?,TJET,1970,2020
 tjet_vettings.csv,,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?,TJET,1970,2020
 tjet_vettings.csv,,groups_targeted,"scaled number of targeted affiliations (1 => 1, 2 => 2, > 2 => 3)",TJET,1970,2020
@@ -1615,7 +1616,6 @@ tjet_vettings.csv,,type_dismissal,policy type: dismissal from current employment
 tjet_vettings.csv,,type_perjury,policy type: dismissal and ban upon lustration lie,TJET,1970,2020
 tjet_vettings.csv,,ucdpConflictID,UCDP Conflict ID,TJET,1970,2020
 tjet_vettings.csv,,ucdpDyadID,UCDP Dyad ID,TJET,1970,2020
-tjet_vettings.csv,,var_fairness,"index adding binary variables for individual conduct or appeals, public, and any court challenges (0-3)",TJET,1970,2020
 tjet_vettings.csv,,vettingID,TJET Vetting ID,TJET,1970,2020
 tjet_vettings.csv,,yearEnd,year vetting policy spell ended,TJET,1970,2020
 tjet_vettings.csv,,yearStart,"year vetting policy spell was in effect, not the date of the law",TJET,1970,2020

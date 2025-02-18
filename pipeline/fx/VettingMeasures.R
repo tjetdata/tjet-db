@@ -3,10 +3,8 @@
 ## so far, the data are only consistently coded for Eastern Europe and the Post-Soviet region
 
 vet_spells <- db[["Vettings"]] %>% 
-  select(-fairness) %>% 
   rename(
-    "type_declass" = "type_declassification",
-    "fairness" = "var_fairness"
+    "type_declass" = "type_declassification"
   ) %>%
   mutate(
     public = case_when(
@@ -30,7 +28,7 @@ vet_spells <- db[["Vettings"]] %>%
   select(
     ccode, year, fitsPostAutocraticTJ, fitsConflictTJ, type_dismissal, 
     type_dismissal_created, type_ban, type_ban_created, type_declass, 
-    type_declass_created, type_perjury, ban_from_elected, conduct, public, fairness,
+    type_declass_created, ban_from_elected, conduct, public, fairness,
     # targetingWhy, targetingAffiliationRank, targetingPositionSought,
     # targetingAffiliation, targetingPositionsRank, sanctions, 
     # sum_inst, inst_targeted, inst_exe, inst_legis, inst_judiciary, inst_public, 
@@ -45,9 +43,8 @@ vet_spells <- db[["Vettings"]] %>%
     ),
     across(
       all_of(
-        c("fitsPostAutocraticTJ", "fitsConflictTJ", "type_dismissal", 
-          "type_ban", "type_declass", "type_perjury", 
-          "ban_from_elected", "conduct", "public", "fairness") 
+        c("fitsPostAutocraticTJ", "fitsConflictTJ", "type_dismissal", "type_ban", 
+          "type_declass", "ban_from_elected", "conduct", "public", "fairness") 
       ), 
       .fns = ~ max(.x, na.rm = TRUE)
     )
@@ -72,8 +69,8 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
   ## subsetting
   vars <- c(
     "type_dismissal", "type_dismissal_created", "type_ban", "type_ban_created", 
-    "type_declass", "type_declass_created", "type_perjury", "ban_from_elected", 
-    "conduct", "public", "fairness")
+    "type_declass", "type_declass_created", "ban_from_elected", "conduct", 
+    "public", "fairness")
   
   vet <- vet_spells %>%
     mutate(all = 1) %>%
@@ -85,8 +82,8 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
     arrange(country_case, year) %>%
     group_by(country_case) %>%
     fill(
-      type_dismissal, type_ban, type_declass, type_perjury, 
-      ban_from_elected, conduct, public, fairness,
+      type_dismissal, type_ban, type_declass, ban_from_elected, 
+      conduct, public, fairness,
       .direction = "down"
     ) %>%
     ungroup() %>%
@@ -98,7 +95,6 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
       "vet_ban_created" = "type_ban_created",
       "vet_declass" = "type_declass",
       "vet_declass_created" = "type_declass_created",
-      "vet_perjury" = "type_perjury",
       "vet_ban_from_elected" = "ban_from_elected",
       "vet_conduct" = "conduct",
       "vet_public" = "public",
