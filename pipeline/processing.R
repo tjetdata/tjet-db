@@ -1157,9 +1157,14 @@ db[["Vettings"]] <- db[["Vettings"]] |>
          ) 
 
 ### ICC data 
-db[["ICC"]] <- db[["ICC"]] %>%  
-  select(country, ccode_cow, 
-         ICC_referral, ICC_prelim_exam, ICC_prelimEnd, ICC_investigation)
+db[["ICC"]] <- db[["ICC"]] |> 
+  reframe(.by = ccode_cow, 
+    ICC_referral = min(ICC_referral, na.rm = TRUE), 
+    ICC_prelim_exam = min(ICC_prelim_exam, na.rm = TRUE), 
+    ICC_prelimEnd = min(ICC_prelimEnd, na.rm = TRUE), 
+    ICC_investigation = min(ICC_investigation, na.rm = TRUE)) |> 
+  mutate(across(!ccode_cow, ~ ifelse(is.infinite(.x), NA, .x ) ) ) |> 
+  arrange(ccode_cow) 
 
 db[["ICCaccused"]] <- db[["Accused"]] %>% 
   filter(!is.na(ICC_investigation)) %>% 
@@ -1269,9 +1274,8 @@ df <- df %>%
          tcs_sample = ifelse(is.na(tcs_sample), 0, tcs_sample),
          trials_domestic_sample = ifelse(is.na(trials_domestic_sample), 0, trials_domestic_sample),
          vettings_sample = ifelse(is.na(vettings_sample), 0, vettings_sample)) %>%
-  ungroup() %>%
-  full_join(db[["ICC"]] %>% select(-country),
-            by = "ccode_cow" ) %>%
+  ungroup() %>% 
+  full_join(db[["ICC"]], by = "ccode_cow" ) %>%
   mutate(
     ICC_prelim_exam = case_when(year >= ICC_prelim_exam & 
                                   year <= ICC_prelimEnd ~ 1, 
@@ -1439,6 +1443,8 @@ df <- df %>%
          sample_combi = ifelse(sample_trans + sample_confl_25 > 0, 1, 0) ) %>%
   ungroup() %>%
   select(-isna) 
+
+if(nrow(df) != 9676) stop("Incorrect number of country-year for 1970-2023") 
 
 ### these CYs are included in the analyses data but not in TJET CountryYears
 ### this is ok because CountryYears is for mapping purposes and 
@@ -1696,6 +1702,8 @@ db[["Transitions"]] <- db[["Transitions"]] %>%
   write_csv(here::here("tjet_datasets", "tjet_transitions.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_transitions.csv"), na = "")
 
+db_years <- 1970:2024
+
 db[["Amnesties"]] <- db[["Amnesties"]] %>% 
   left_join(db[["Countries"]] %>%
               select(country_case, ccode) %>% 
@@ -1871,4 +1879,3 @@ db[["ICCaccusedCodebook"]] <- db[["codebook"]] %>%
 save(db, file = here::here("data", "tjetdb.RData"))
 
 source("pipeline/go/auto_texts.R", echo = TRUE)
-

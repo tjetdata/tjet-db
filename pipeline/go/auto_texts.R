@@ -379,7 +379,7 @@ data[["Vettings"]] <- db[["Vettings"]] %>%
   arrange(country_case, ccode_case, yearStart)
 
 data[["ICC-interventions"]] <- db[["ICC"]] %>%
-  select(-country) %>%
+  # select(-country) %>%
   left_join(countries %>% select(country_case, ccode, ccode_case),
     by = c(ccode_cow = "ccode")
   ) %>%
