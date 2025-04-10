@@ -352,6 +352,14 @@ tjet_cy,"prosecutions, hybrid",cce_hyb_opp_hi,"hybrid prosecutions of high-ranki
 tjet_cy,"prosecutions, hybrid",acc_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
 tjet_cy,"prosecutions, hybrid",crt_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
 tjet_cy,"prosecutions, hybrid",sen_hyb_opp_hi,"hybrid prosecutions of high-ranking opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
+tjet_cy,"prosecutions, domestic",hos_trs_dom,"domestic trials of (former) heads of state, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, domestic",hos_trs_dom_bincf,"domestic trials of (former) heads of state, binary carried forward from first start year, by nationality of the accused",TJET,1970,2023
+tjet_cy,"prosecutions, domestic",hos_tfc_dom,"domestic trials of (former) heads of state, count of trials with any final convictions, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, domestic",hos_cce_dom,"domestic trials of (former) heads of state, count of first convictions per accused, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, non-domestic",hos_trs_int_hyb_for,"non-domestic trials of (former) heads of state, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, non-domestic",hos_trs_int_hyb_for_bincf,"non-domestic trials of (former) heads of state, binary carried forward from first start year, by nationality of the accused",TJET,1970,2023
+tjet_cy,"prosecutions, non-domestic",hos_tfc_int_hyb_for,"non-domestic trials of (former) heads of state, count of trials with any final convictions, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, non-domestic",hos_cce_int_hyb_for,"non-domestic trials of (former) heads of state, count of first convictions per accused, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,reparations,reparations_gaTJ,"binary for whether reparations in country-year included any that was gender-attentive (1 = yes, 0 = no) ",TJET,1970,2020
 tjet_cy,reparations,rep_binary,"reparations policy, binary, carried forward from year of creation",TJET,1970,2020
 tjet_cy,reparations,rep_created,"reparations policies, count for year of creation only",TJET,1970,2020

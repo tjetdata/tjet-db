@@ -1,6 +1,7 @@
 TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
                           nexus_vars, excl_nexus_vars = NULL,
-                          memb_opts, rank_opts = NULL, charges_opts = NULL) {
+                          memb_opts, rank_opts = NULL, charges_opts = NULL, 
+                          hos = FALSE) {
   ## options
   type_trial <- c(
     int = "international",
@@ -65,7 +66,8 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
   )
   if (missing(type_opts)) {
     eval(error)
-  } else if (length(type_opts) > 1 | sum(!type_opts %in% names(type_trial)) > 0) eval(error)
+  # } else if (length(type_opts) > 1 | sum(!type_opts %in% names(type_trial)) > 0) eval(error)
+  } else if (sum(!type_opts %in% names(type_trial)) > 0) eval(error)
 
   error <- expression(
     stop(
@@ -73,7 +75,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
       "\n  ", paste(names(subtypes_int), collapse = "; "), suffix
     )
   )
-  if (type_opts == "int" & sum(!subtype %in% names(subtypes_int)) > 0) eval(error)
+  if ("int" %in% type_opts & sum(!subtype %in% names(subtypes_int)) > 0) eval(error)
   
   error <- expression(
     stop(
@@ -81,7 +83,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
       "\n  ", paste(names(subtypes_int), collapse = "; "), suffix
     )
   )
-  if (type_opts == "for" & sum(!subtype %in% names(subtypes_for)) > 0) eval(error)
+  if ("for" %in% type_opts & sum(!subtype %in% names(subtypes_for)) > 0) eval(error)
   
   error <- expression(
     stop(
@@ -175,6 +177,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
     str_replace(var_name, "_Xdtj", ""),
     var_name
   )
+  if(hos == TRUE) var_name <- paste("hos_", var_name, sep = "")
 
   ## CLs data
 
@@ -283,7 +286,14 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
     rename(year_scale = year)
 
   ## Accused data
-  accused <- db[["Accused"]] %>%
+  
+  if(hos) {
+    hos_condition <- expr(headOfState == 1) 
+  } else {
+    hos_condition <- TRUE
+  }
+  
+  accused <- db[["Accused"]] %>% 
     mutate(
       all = 1,
       lowRank = 1 - highRank
@@ -291,6 +301,7 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
     filter(if_any(all_of(membership_acc[memb_opts]), ~ . == 1)) %>%
     filter(if_any(all_of(rank_acc[rank_opts]), ~ . == 1)) %>%
     filter(if_any(all_of(charges_acc[charges_opts]), ~ . == 1)) %>%
+    filter(eval(hos_condition)) %>%
     arrange(accusedID) %>%
     select(accusedID, trialID, everGuilty, firstGuiltyYear)
   # everGuilty, firstGuiltyYear, lastGuilty, lastGuiltyYear
@@ -337,7 +348,8 @@ TrialsMeasure <- function(cy, prefix = NULL, measure, type_opts, subtype = NULL,
       # ), 
       # trialType = ifelse(trialType == "don't know", "domestic", trialType) 
     ) %>% 
-    filter(trialType == type_trial[type_opts]) %>%
+    # filter(trialType == type_trial[type_opts]) %>%
+    filter(trialType %in% type_trial[type_opts]) %>%
     filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) %>%
     filter(eval(exclusion_condition)) %>%
     filter(eval(subtype_condition)) %>%

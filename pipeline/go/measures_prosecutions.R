@@ -282,3 +282,26 @@ df <- TrialsMeasure(cy = df, measure = "cct", type_opts = "for", nexus_vars = c(
 df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
 df <- TrialsMeasure(cy = df, measure = "crt", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
 df <- TrialsMeasure(cy = df, measure = "sen", type_opts = "for", nexus_vars = c("hrs", "con"), memb_opts = "opp", rank_opts = "hi")
+
+### Hos
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "all", hos = TRUE) |> 
+  mutate(hos_trs_dom_bincf = ifelse(hos_trs_dom > 0, 1, NA)) |> 
+  arrange(country_case, year) %>%
+  group_by(country_case) %>%
+  fill(hos_trs_dom_bincf, 
+       .direction = "down") |> 
+  mutate(hos_trs_dom_bincf = ifelse(is.na(hos_trs_dom_bincf), 0, hos_trs_dom_bincf)) 
+
+df <- TrialsMeasure(cy = df, measure = "trs", type_opts = c("int", "hyb", "for"), nexus_vars = c("hrs", "con"), memb_opts = "all", hos = TRUE) |> 
+  mutate(hos_trs_int_hyb_for_bincf = ifelse(hos_trs_int_hyb_for > 0, 1, NA)) |> 
+  arrange(country_case, year) %>%
+  group_by(country_case) %>%
+  fill(hos_trs_int_hyb_for_bincf, 
+       .direction = "down") |> 
+  mutate(hos_trs_int_hyb_for_bincf = ifelse(is.na(hos_trs_int_hyb_for_bincf), 0, hos_trs_int_hyb_for_bincf))
+
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "all", hos = TRUE) 
+df <- TrialsMeasure(cy = df, measure = "tfc", type_opts = c("int", "hyb", "for"), nexus_vars = c("hrs", "con"), memb_opts = "all", hos = TRUE) 
+
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = "dom", nexus_vars = c("hrs", "con"), memb_opts = "all", hos = TRUE) 
+df <- TrialsMeasure(cy = df, measure = "cce", type_opts = c("int", "hyb", "for"), nexus_vars = c("hrs", "con"), memb_opts = "all", hos = TRUE) 
