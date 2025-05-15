@@ -205,13 +205,3 @@ db[tabs] %>%
 #   read_file() %>%
 #   translate() %>%
 #   write_file(file = here::here(base, "CotedIvoire-fr.qmd"))
-
-# read_csv("~/Desktop/ArgCausas.csv") %>%
-#   rowwise() %>%
-#   mutate(
-#     cover_proceedings = translate(cover_proceedings),
-#     cover_tof = translate(cover_tof),
-#     cover_cassation = translate(cover_cassation)
-#   ) %>%
-#   ungroup() %>%
-#   write_csv("~/Desktop/ArgCausasNEW.csv")

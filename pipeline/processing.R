@@ -426,7 +426,7 @@ db[["Prosecutions"]][["Trials"]] <-
 ### fixing missing Trials endYear & cleaning description
 db[["Prosecutions"]][["Trials"]] <- 
   db[["Prosecutions"]][["Trials"]] %>% 
-  mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2023, yearEnd), 
+  mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2024, yearEnd), 
          yearEnd = ifelse(is.na(yearEnd) & ongoing == 0 & CLs_final_year > 1970, 
                           CLs_final_year, yearEnd), 
          yearEnd = ifelse(is.na(yearEnd) & ongoing == 0, yearStart, yearEnd), 
@@ -496,6 +496,11 @@ db[["Prosecutions"]][["Trials"]] <-
 db[["Prosecutions"]][["Accused"]] <- 
   db[["Prosecutions"]][["Accused"]] %>% 
   filter(trialID %in% db[["Prosecutions"]][["Trials"]]$trialID) 
+
+# db[["Prosecutions"]][["Trials"]] |> 
+#   filter(str_detect(caseDescription, "Duterte") ) 
+# db[["Prosecutions"]][["Accused"]] |> 
+#   filter(str_detect(nameOrDesc, "Duterte") ) 
 
 db[["Prosecutions"]][["CourtLevels"]] <- 
   db[["Prosecutions"]][["CourtLevels"]] %>%
@@ -572,7 +577,8 @@ dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
   select(ccode_cow, beg, end, name, mandate_en, mandate_fr, 
          uninv_dompros, uninv_intlpros, uninv_evcoll, 
          secgen, unsc, cohr, unga, ohchr, hrc, source) %>% 
-  filter(beg >= 1970 & beg <= 2020) %>%
+  # filter(beg >= 1970 & beg <= 2020) %>%
+  filter(beg %in% db_years) %>%
   mutate(
     ccode_cow = ifelse(ccode_cow == 860 & beg == 1999, 850, ccode_cow),
     ccode_cow = ifelse(ccode_cow == 541 & beg == 1973, 235, ccode_cow)
@@ -1153,7 +1159,7 @@ db[["Vettings"]] <- db[["Vettings"]] |>
          fairness = ifelse(str_detect(targetingWhy, "specific individual conduct") | 
                         appealJudgment == "yes", 1, 0) + 
            ifelse(hearingsPublic == "yes", 1, 0) + 
-           ifelse(courtChallenge !="no court challenge" & courtChallenge != "don't know" & !is.na(courtChallenge), 1, 0) 
+           ifelse(courtChallenge != "no court challenge" & courtChallenge != "don't know" & !is.na(courtChallenge), 1, 0) 
          ) 
 
 ### ICC data 
@@ -1175,8 +1181,9 @@ db[["ICCaccused"]] <- db[["Accused"]] %>%
               filter(end == 2020) %>% 
               select(country, ccode),
             by = c(ccode_Accused = "ccode")) %>%
-  select(trialID, accusedID, country, ccode_Accused, nameOrDesc, ICC_arrest_warrant, 
-         ICC_arrestAppear, ICC_confirm_charges, ICC_proceedings, ICC_withdrawnDismissed) %>% 
+  select(trialID, accusedID, country, ccode_Accused, name, position_desc, 
+         ICC_arrest_warrant, ICC_arrestAppear, ICC_confirm_charges, 
+         ICC_proceedings, ICC_withdrawnDismissed) %>% 
   arrange(ccode_Accused, ICC_arrest_warrant)
 
 ### helpers for CY measures
@@ -1293,7 +1300,7 @@ df <- df %>%
   ungroup() %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_arrest_warrant) %>%
-              filter(!is.na(ICC_arrest_warrant)) %>% 
+              filter(!is.na(ICC_arrest_warrant) & ICC_arrest_warrant <= 2023) %>% 
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_arrest_warrant) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1301,7 +1308,7 @@ df <- df %>%
   rename(ICC_arrest_warrant = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_arrestAppear) %>%
-              filter(!is.na(ICC_arrestAppear)) %>%
+              filter(!is.na(ICC_arrestAppear) & ICC_arrestAppear <= 2023) %>%
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_arrestAppear) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1309,7 +1316,7 @@ df <- df %>%
   rename(ICC_arrestAppear = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_confirm_charges) %>%
-              filter(!is.na(ICC_confirm_charges)) %>%
+              filter(!is.na(ICC_confirm_charges) & ICC_confirm_charges <= 2023) %>%
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_confirm_charges) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1317,7 +1324,7 @@ df <- df %>%
   rename(ICC_confirm_charges = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_proceedings) %>%
-              filter(!is.na(ICC_proceedings)) %>%
+              filter(!is.na(ICC_proceedings) & ICC_proceedings <= 2023) %>%
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_proceedings) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1325,7 +1332,7 @@ df <- df %>%
   rename(ICC_proceedings = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_withdrawnDismissed) %>%
-              filter(!is.na(ICC_withdrawnDismissed)) %>%
+              filter(!is.na(ICC_withdrawnDismissed) & ICC_withdrawnDismissed <= 2023) %>%
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_withdrawnDismissed) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1641,14 +1648,14 @@ rm(vars)
 db[["Amnesties"]] <- db[["Amnesties"]] %>% 
   mutate(mechanismDescription_fr = str_replace_all(mechanismDescription_fr, "droits de l'homme", "droits de la personne")) 
 db[["Amnesties"]] %>% 
-  filter(amnestyYear %in% db_years) %>%  
+  filter(amnestyYear %in% db_years) %>%
   select(amnestyID, invalid, amnestyYear, mechanismDescription_fr) %>% 
   filter(str_detect(mechanismDescription_fr, "droits de l'homme") | is.na(mechanismDescription_fr)) 
 
 db[["Reparations"]] <- db[["Reparations"]] %>% 
   mutate(officialName_en_fr = str_replace_all(officialName_en_fr, "droits de l'homme", "droits de la personne")) 
 db[["Reparations"]] %>% 
-  filter(yearCreated %in% db_years) %>%  
+  filter(yearCreated %in% db_years) %>%
   select(reparationID, invalid, yearCreated, officialName_en_fr) %>% 
   filter(str_detect(officialName_en_fr, "droits de l'homme") | is.na(officialName_en_fr)) 
 
@@ -1657,24 +1664,24 @@ db[["Reparations"]] %>%
 db[["Trials"]] <- db[["Trials"]] %>% 
   mutate(caseDescription_fr = str_replace_all(caseDescription_fr, "droits de l'homme", "droits de la personne")) 
 db[["Trials"]] %>% 
-  filter(yearStart %in% db_years) %>%  
+  filter(yearStart %in% db_years) %>%
   select(trialID, invalid, yearStart, caseDescription_fr) %>% 
   filter(str_detect(caseDescription_fr, "droits de l'homme") | is.na(caseDescription_fr)) %>% 
   arrange(trialID) |> 
   print(n = Inf)
 
 db[["Accused"]] <- db[["Accused"]] %>% 
-  mutate(nameOrDesc_fr = str_replace_all(nameOrDesc_fr, "droits de l'homme", "droits de la personne"))
+  mutate(position_desc_fr = str_replace_all(position_desc_fr, "droits de l'homme", "droits de la personne"))
 db[["Accused"]] %>% 
-  select(accusedID, invalid, nameOrDesc_fr) %>% 
-  filter(str_detect(nameOrDesc_fr, "droits de l'homme") | is.na(nameOrDesc_fr)) %>% 
+  select(accusedID, invalid, position_desc, position_desc_fr) %>% 
+  filter(str_detect(position_desc_fr, "droits de l'homme") | is.na(position_desc_fr)) %>% 
   arrange(accusedID) |> 
   print(n = Inf)
  
 db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>% 
   mutate(officialName_en_fr = str_replace_all(officialName_en_fr, "droits de l'homme", "droits de la personne"))
 db[["TruthCommissions"]] %>% 
-  filter(yearPassed %in% db_years) %>%  
+  filter(yearPassed %in% db_years) %>%
   select(truthcommissionID, yearPassed, officialName_en_fr) %>% 
   filter(str_detect(officialName_en_fr, "droits de l'homme") | is.na(officialName_en_fr)) 
 
@@ -1702,7 +1709,7 @@ db[["Transitions"]] <- db[["Transitions"]] %>%
   write_csv(here::here("tjet_datasets", "tjet_transitions.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_transitions.csv"), na = "")
 
-db_years <- 1970:2024
+db_years <- 1970:2025
 
 db[["Amnesties"]] <- db[["Amnesties"]] %>% 
   left_join(db[["Countries"]] %>%
