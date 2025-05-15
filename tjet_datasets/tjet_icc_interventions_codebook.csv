@@ -1,6 +1,5 @@
 col_name,definition
 ccode_cow,COW numeric country code
-country,country name
 ICC_investigation,year in which ICC investigation began
 ICC_prelim_exam,year in which preliminary ICC examination began
 ICC_prelimEnd,year in which preliminary ICC examination ended

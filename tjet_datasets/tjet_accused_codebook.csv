@@ -41,13 +41,14 @@ LGBTQvictim,SGBV: LGBTQ victim
 maleVictim,SGBV: male victim
 membership,state membership: in what capacity did the state agent act?
 murderKilling,charges: murder or killing
-nameOrDesc,name or description of the accused
-nameOrDesc_fr,name or description of the accused (French)
+name,name of the accused
 ongoing,trial is ongoing for the accused at time of coding
 opposedToGovernment,Was this person opposed to the government?
 oppositionType,opposition type
 other,preliminary trial process: other
 otherSGBV,other SGBV
+position_desc,"description of the accused (position rank, title, role, etc)"
+position_desc_fr,description of the accused (French)
 prosecutorType,prosecutor type
 rape,charges: rape
 RSV,charges: rape of sexual violence

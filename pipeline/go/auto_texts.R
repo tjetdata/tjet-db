@@ -392,7 +392,7 @@ data[["ICC-accused"]] <- db[["ICCaccused"]] %>%
     by = c(ccode_Accused = "ccode")
   ) %>%
   select(
-    country_case, ccode_case, nameOrDesc, ICC_arrest_warrant,
+    country_case, ccode_case, name, position_desc, ICC_arrest_warrant,
     ICC_arrestAppear, ICC_confirm_charges, ICC_proceedings,
     ICC_withdrawnDismissed, trialID, accusedID
   ) %>%

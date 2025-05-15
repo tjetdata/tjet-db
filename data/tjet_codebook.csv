@@ -355,11 +355,15 @@ tjet_cy,"prosecutions, hybrid",sen_hyb_opp_hi,"hybrid prosecutions of high-ranki
 tjet_cy,"prosecutions, domestic",hos_trs_dom,"domestic trials of (former) heads of state, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,"prosecutions, domestic",hos_trs_dom_bincf,"domestic trials of (former) heads of state, binary carried forward from first start year, by nationality of the accused",TJET,1970,2023
 tjet_cy,"prosecutions, domestic",hos_tfc_dom,"domestic trials of (former) heads of state, count of trials with any final convictions, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, domestic",hos_tfc_dom_bincf,"domestic trials of (former) heads of state, binary carried forward for any trials with final convictions, by nationality of the accused",TJET,1970,2020
 tjet_cy,"prosecutions, domestic",hos_cce_dom,"domestic trials of (former) heads of state, count of first convictions per accused, by nationality of the accused",TJET,1970,2020
+tjet_cy,"prosecutions, domestic",hos_cce_dom_bincf,"domestic trials of (former) heads of state, binary carried forward for any first convictions, by nationality of the accused",TJET,1970,2020
 tjet_cy,"prosecutions, non-domestic",hos_trs_int_hyb_for,"non-domestic trials of (former) heads of state, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,"prosecutions, non-domestic",hos_trs_int_hyb_for_bincf,"non-domestic trials of (former) heads of state, binary carried forward from first start year, by nationality of the accused",TJET,1970,2023
 tjet_cy,"prosecutions, non-domestic",hos_tfc_int_hyb_for,"non-domestic trials of (former) heads of state, count of trials with any final convictions, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, non-domestic",hos_tfc_int_hyb_for_bincf,"non-domestic trials of (former) heads of state, binary carried forward for any trials with final convictions, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,"prosecutions, non-domestic",hos_cce_int_hyb_for,"non-domestic trials of (former) heads of state, count of first convictions per accused, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, non-domestic",hos_cce_int_hyb_for_bincf,"non-domestic trials of (former) heads of state, binary carried forward for any first convictions, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,reparations,reparations_gaTJ,"binary for whether reparations in country-year included any that was gender-attentive (1 = yes, 0 = no) ",TJET,1970,2020
 tjet_cy,reparations,rep_binary,"reparations policy, binary, carried forward from year of creation",TJET,1970,2020
 tjet_cy,reparations,rep_created,"reparations policies, count for year of creation only",TJET,1970,2020
@@ -1208,13 +1212,14 @@ tjet_accused.csv,,LGBTQvictim,SGBV: LGBTQ victim,TJET,1970,2020
 tjet_accused.csv,,maleVictim,SGBV: male victim,TJET,1970,2020
 tjet_accused.csv,,membership,state membership: in what capacity did the state agent act?,TJET,1970,2020
 tjet_accused.csv,,murderKilling,charges: murder or killing,TJET,1970,2020
-tjet_accused.csv,,nameOrDesc,name or description of the accused,TJET,1970,2020
-tjet_accused.csv,,nameOrDesc_fr,name or description of the accused (French),TJET,1970,2020
+tjet_accused.csv,,name,name of the accused,TJET,1970,2020
 tjet_accused.csv,,ongoing,trial is ongoing for the accused at time of coding,TJET,1970,2020
 tjet_accused.csv,,opposedToGovernment,Was this person opposed to the government? ,TJET,1970,2020
 tjet_accused.csv,,oppositionType,opposition type,TJET,1970,2020
 tjet_accused.csv,,other,preliminary trial process: other,TJET,1970,2020
 tjet_accused.csv,,otherSGBV,other SGBV,TJET,1970,2020
+tjet_accused.csv,,position_desc,"description of the accused (position rank, title, role, etc)",TJET,1970,2020
+tjet_accused.csv,,position_desc_fr,description of the accused (French),TJET,1970,2020
 tjet_accused.csv,,prosecutorType,prosecutor type,TJET,1970,2020
 tjet_accused.csv,,rape,charges: rape,TJET,1970,2020
 tjet_accused.csv,,RSV,charges: rape of sexual violence,TJET,1970,2020
@@ -1337,6 +1342,7 @@ tjet_reparations.csv,,implementationSources,coding sources on policy implementat
 tjet_reparations.csv,,individualReparations,Did the policy offer individual reparations?,TJET,1970,2020
 tjet_reparations.csv,,individualReparationsEligible,Which individuals are eligible to receive reparations under the policy? ,TJET,1970,2020
 tjet_reparations.csv,,individualReparationsForm,Which forms of individual reparations does the policy offer?,TJET,1970,2020
+tjet_reparations.csv,,individualsRepaired,How many individuals have been repaired under the policy?,TJET,1970,2020
 tjet_reparations.csv,,invalid,"invalid observation, binary",TJET,1970,2020
 tjet_reparations.csv,,legalBasis,legal basis of the reparations policy,TJET,1970,2020
 tjet_reparations.csv,,legalBranches,Which branch(es) of government recommended or initiated the reparations policy? ,TJET,1970,2020
