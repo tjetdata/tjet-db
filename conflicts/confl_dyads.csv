@@ -19,9 +19,10 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 735,333,Afghanistan,700,Taleban,1995-1996,War,1995-03-11,1995,1996,1975-07-02,
 735,333,Afghanistan,700,Taleban,2003-2021,Internationalized War,2003-02-14,2003,2021,1975-07-02,
 736,333,Afghanistan,700,UIFSA,1996-2001,Internationalized War,1996-10-12,1996,2001,1975-07-02,
-14320,13637,Afghanistan,700,IS [territory: Islamic State],2015-2021,Internationalized War,2015-03-03,2015,2021,2015-02-09,
+14320,13637,Afghanistan,700,IS [territory: Islamic State],2015-2023,Internationalized War,2015-03-03,2015,2023,2015-02-09,
 16210,333,Afghanistan,700,High Council of Afghanistan Islamic Emirate,2020,Internationalized Conflict,2020-01-08,2020,2020,1975-07-02,
-16825,333,Afghanistan,700,NRF,2021,Conflict,2021-08-21,2021,2021,1975-07-02,
+16825,333,Afghanistan,700,NRF,2021-2023,Conflict,2021-08-21,2021,2023,1975-07-02,
+17083,333,Afghanistan,700,AFF,2022-2023,Conflict,2022-07-10,2022,2023,1975-07-02,
 827,386,Algeria,615,Takfir wa'l Hijra,1991,Conflict,1991-12-09,1991,1991,1985-08-27,2020-12-02
 828,386,Algeria,615,AIS,1992-1997,War,1992-03-10,1992,1997,1985-08-27,2020-12-02
 829,386,Algeria,615,GIA,1993-2003,War,1993-12-31,1993,2003,1985-08-27,2020-12-02
@@ -32,17 +33,18 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 713,327,Angola,540,FNLA,1975-1979,Internationalized Conflict,1975-11-11,1975,1979,1975-11-11,2002-04-01
 714,327,Angola,540,UNITA,1975-1995,Internationalized War,1975-11-11,1975,1995,1975-11-11,2002-04-01
 714,327,Angola,540,UNITA,1998-2002,Internationalized War,1998-05-02,1998,2002,1975-11-11,2002-04-01
-831,387,Angola,540,FLEC-R [territory: Cabinda],1991,Conflict,1991-12-31,1991,1991,1989-08-04,2020-12-31
-831,387,Angola,540,FLEC-R [territory: Cabinda],1994,Conflict,1994-12-31,1994,1994,1989-08-04,2020-12-31
-831,387,Angola,540,FLEC-R [territory: Cabinda],1997,Conflict,1997-12-31,1997,1997,1989-08-04,2020-12-31
-831,387,Angola,540,FLEC-R [territory: Cabinda],2002,Conflict,2002-12-31,2002,2002,1989-08-04,2020-12-31
-832,387,Angola,540,FLEC-FAC [territory: Cabinda],1992,Conflict,1992-12-31,1992,1992,1989-08-04,2020-12-31
-832,387,Angola,540,FLEC-FAC [territory: Cabinda],1994-1998,Conflict,1994-12-31,1994,1998,1989-08-04,2020-12-31
-832,387,Angola,540,FLEC-FAC [territory: Cabinda],2002-2004,Conflict,2002-11-12,2002,2004,1989-08-04,2020-12-31
-832,387,Angola,540,FLEC-FAC [territory: Cabinda],2007,Conflict,2007-12-31,2007,2007,1989-08-04,2020-12-31
-832,387,Angola,540,FLEC-FAC [territory: Cabinda],2009,Conflict,2009-12-31,2009,2009,1989-08-04,2020-12-31
-15993,387,Angola,540,FLEC-FAC-TN [territory: Cabinda],2016-2017,Conflict,2016-12-31,2016,2017,1989-08-04,2020-12-31
-15993,387,Angola,540,FLEC-FAC-TN [territory: Cabinda],2019-2020,Conflict,2019-12-31,2019,2020,1989-08-04,2020-12-31
+831,387,Angola,540,FLEC-R [territory: Cabinda],1991,Conflict,1991-12-31,1991,1991,1989-08-04,2022-12-31
+831,387,Angola,540,FLEC-R [territory: Cabinda],1994,Conflict,1994-12-31,1994,1994,1989-08-04,2022-12-31
+831,387,Angola,540,FLEC-R [territory: Cabinda],1997,Conflict,1997-12-31,1997,1997,1989-08-04,2022-12-31
+831,387,Angola,540,FLEC-R [territory: Cabinda],2002,Conflict,2002-12-31,2002,2002,1989-08-04,2022-12-31
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],1992,Conflict,1992-12-31,1992,1992,1989-08-04,2022-12-31
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],1994-1998,Conflict,1994-12-31,1994,1998,1989-08-04,2022-12-31
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],2002-2004,Conflict,2002-11-12,2002,2004,1989-08-04,2022-12-31
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],2007,Conflict,2007-12-31,2007,2007,1989-08-04,2022-12-31
+832,387,Angola,540,FLEC-FAC [territory: Cabinda],2009,Conflict,2009-12-31,2009,2009,1989-08-04,2022-12-31
+15993,387,Angola,540,FLEC-FAC-TN [territory: Cabinda],2016-2017,Conflict,2016-12-31,2016,2017,1989-08-04,2022-12-31
+15993,387,Angola,540,FLEC-FAC-TN [territory: Cabinda],2019-2020,Conflict,2019-12-31,2019,2020,1989-08-04,2022-12-31
+15993,387,Angola,540,FLEC-FAC-TN [territory: Cabinda],2022,Conflict,2022-12-31,2022,2022,1989-08-04,2022-12-31
 499,247,Argentina,160,Military faction (forces of Eduardo A. Lonardi Doucet),1955,Conflict,1955-09-19,1955,1955,1955-06-16,1977-12-31
 500,247,Argentina,160,Military faction (forces of Samuel Toranzo Calderón),1955,Conflict,1955-06-16,1955,1955,1955-06-16,1977-12-31
 501,247,Argentina,160,Military faction (colorados),1963,Conflict,1963-04-02,1963,1963,1955-06-16,1977-12-31
@@ -54,36 +56,39 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2008,Internationalized Conflict,2008-12-31,2008,2008,1991-12-29,
 833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2012,Internationalized Conflict,2012-09-25,2012,2012,1991-12-29,
 833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2014-2017,Internationalized Conflict,2014-08-01,2014,2017,1991-12-29,
-833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2020-2021,Internationalized War,2020-07-16,2020,2021,1991-12-29,
+833,388,Azerbaijan,373,Republic of Artsakh [territory: Artsakh (Nagorno-Karabakh)],2020-2023,Internationalized War,2020-07-16,2020,2023,1991-12-29,
 844,396,Azerbaijan,373,Military faction (forces of Suret Husseinov),1993,Conflict,1993-06-06,1993,1993,1992-05-15,1995-03-17
 845,396,Azerbaijan,373,OPON Forces,1995,Conflict,1995-03-17,1995,1995,1992-05-15,1995-03-17
-705,322,Bangladesh,771,JSS/SB [territory: Chittagong Hill Tracts],1975-1991,Conflict,1975-02-28,1975,1991,1975-02-28,1991-12-31
+705,322,Bangladesh,771,PCJSS [territory: Chittagong Hill Tracts],1975-1991,Conflict,1975-02-28,1975,1991,1975-02-28,1991-12-31
 10985,11350,Bangladesh,771,PBCP,2005,Conflict,2005-07-09,2005,2005,1994-04-24,2006-12-22
 11991,11350,Bangladesh,771,PBCP-J,2005-2006,Conflict,2005-10-26,2005,2006,1994-04-24,2006-12-22
 14718,13674,Bangladesh,771,IS [territory: Islamic State],2016-2017,Conflict,2016-08-29,2016,2017,2015-11-04,2017-09-06
+16685,15256,Benin,434,JNIM,2022-2023,Conflict,2022-10-12,2022,2023,2020-02-09,
 399,200,Bolivia,145,Popular Revolutionary Movement,1946,War,1946-07-21,1946,1946,1946-07-18,1967-10-16
+400,200,Bolivia,145,MNR,1949,Conflict,1949-09-15,1949,1949,1946-07-18,1967-10-16
 400,200,Bolivia,145,MNR,1952,Conflict,1952-04-09,1952,1952,1946-07-18,1967-10-16
 401,200,Bolivia,145,ELN,1967,Conflict,1967-03-31,1967,1967,1946-07-18,1967-10-16
-834,389,Bosnia-Herzegovina,346,Serbian irregulars [territory: Serb],1992-1995,Internationalized Conflict,1992-05-31,1992,1995,1992-04-13,1995-12-14
-835,389,Bosnia-Herzegovina,346,Serbian Republic of Bosnia-Herzegovina [territory: Serb],1992-1995,Internationalized War,1992-04-27,1992,1995,1992-04-13,1995-12-14
-846,397,Bosnia-Herzegovina,346,Autonomous Province of Western Bosnia [territory: Bihaca Krajina],1993-1995,Conflict,1993-10-03,1993,1995,1992-06-28,1995-07-28
-847,398,Bosnia-Herzegovina,346,Croatian irregulars [territory: Croat],1993-1994,Internationalized Conflict,1993-05-31,1993,1994,1992-05-27,1994-03-16
-848,398,Bosnia-Herzegovina,346,Croatian Republic of Bosnia-Herzegovina [territory: Croat],1992-1994,Internationalized War,1992-07-17,1992,1994,1992-05-27,1994-03-16
+834,389,Bosnia-Herzegovina,346,Serbian irregulars [territory: Serb],1992-1995,Internationalized Conflict,1992-05-31,1992,1995,1992-04-05,1995-12-14
+835,389,Bosnia-Herzegovina,346,Serbian Republic of Bosnia-Herzegovina [territory: Serb],1992-1995,Internationalized War,1992-04-27,1992,1995,1992-04-05,1995-12-14
+846,397,Bosnia-Herzegovina,346,Autonomous Province of Western Bosnia [territory: Bihaca Krajina],1993-1995,War,1993-10-03,1993,1995,1992-06-28,1995-07-28
+847,398,Bosnia-Herzegovina,346,Croatian irregulars [territory: Croat],1993-1994,Internationalized Conflict,1993-05-31,1993,1994,1992-05-29,1994-03-16
+848,398,Bosnia-Herzegovina,346,Croatian Republic of Bosnia-Herzegovina [territory: Croat],1992-1994,Internationalized War,1992-07-21,1992,1994,1992-05-29,1994-03-16
 787,360,Burkina Faso,439,Popular Front,1987,Conflict,1987-10-15,1987,1987,1987-10-15,
-14953,13840,Burkina Faso,439,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019-08-19,2019,2021,2017-10-23,
-15175,360,Burkina Faso,439,JNIM,2018-2021,Internationalized Conflict,2018-05-22,2018,2021,1987-10-15,
+14953,13840,Burkina Faso,439,IS [territory: Islamic State],2019-2023,Internationalized Conflict,2019-08-19,2019,2023,2017-10-23,
+15175,360,Burkina Faso,439,JNIM,2018-2023,Internationalized War,2018-05-22,2018,2023,1987-10-15,
 592,287,Burundi,516,Military faction (forces loyal to Gervais Nyangoma),1965,Conflict,1965-10-19,1965,1965,1965-10-18,
 593,287,Burundi,516,Palipehutu,1991-1992,Conflict,1991-11-27,1991,1992,1965-10-18,
 594,287,Burundi,516,CNDD,1994-1998,Conflict,1994-10-18,1994,1998,1965-10-18,
-595,287,Burundi,516,Frolina,1997,Conflict,1997-10-27,1997,1997,1965-10-18,
-596,287,Burundi,516,Palipehutu-FNL,1997-2006,Conflict,1997-03-14,1997,2006,1965-10-18,
+595,287,Burundi,516,Frolina,1997,Conflict,1997-04-13,1997,1997,1965-10-18,
+596,287,Burundi,516,Palipehutu-FNL,1995-2006,Conflict,1995-03-19,1995,2006,1965-10-18,
 596,287,Burundi,516,Palipehutu-FNL,2008,Conflict,2008-03-01,2008,2008,1965-10-18,
-597,287,Burundi,516,CNDD-FDD,1998-2003,Conflict,1998-11-22,1998,2003,1965-10-18,
+597,287,Burundi,516,CNDD-FDD,1998-2003,Conflict,1998-06-28,1998,2003,1965-10-18,
 11798,287,Burundi,516,FNL-Ubugabo-Burihabwa,2020,Internationalized Conflict,2020-10-23,2020,2020,1965-10-18,
+11798,287,Burundi,516,FNL-Ubugabo-Burihabwa,2022,Internationalized Conflict,2022-10-23,2022,2022,1965-10-18,
 14528,287,Burundi,516,Military faction (forces of Godefroid Niyombare),2015,Conflict,2015-07-10,2015,2015,1965-10-18,
 14649,287,Burundi,516,FPB,2015,Conflict,2015-12-11,2015,2015,1965-10-18,
 14842,287,Burundi,516,RED-TABARA,2014-2015,Conflict,2014-12-31,2014,2015,1965-10-18,
-14842,287,Burundi,516,RED-TABARA,2019-2021,Internationalized Conflict,2019-01-20,2019,2021,1965-10-18,
+14842,287,Burundi,516,RED-TABARA,2019-2023,Internationalized Conflict,2019-01-20,2019,2023,1965-10-18,
 644,300,Cambodia (Kampuchea),811,KR,1967-1975,Internationalized War,1967-05-31,1967,1975,1967-04-30,1998-10-03
 644,300,Cambodia (Kampuchea),811,KR,1979-1998,Internationalized Conflict,1979-12-31,1979,1998,1967-04-30,1998-10-03
 645,300,Cambodia (Kampuchea),811,KNUFNS,1978-1979,Internationalized War,1978-12-30,1978,1979,1967-04-30,1998-10-03
@@ -92,14 +97,16 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 647,300,Cambodia (Kampuchea),811,FUNCINPEC,1991,Conflict,1991-05-01,1991,1991,1967-04-30,1998-10-03
 15800,300,Cambodia (Kampuchea),811,Forces of Norodom Ranariddh,1997-1998,Conflict,1997-08-20,1997,1998,1967-04-30,1998-10-03
 15801,300,Cambodia (Kampuchea),811,Military faction (Forces of Hun Sen),1997,Conflict,1997-07-06,1997,1997,1967-04-30,1998-10-03
-779,353,Cameroon,471,UPC,1960-1961,Internationalized War,1960-01-31,1960,1961,1960-01-31,2020-12-16
-780,353,Cameroon,471,Military faction (forces of Ibrahim Saleh),1984,Conflict,1984-04-06,1984,1984,1960-01-31,2020-12-16
-12422,353,Cameroon,471,Jama'atu Ahlis Sunna Lidda'awati wal-Jihad,2015-2017,Internationalized Conflict,2015-01-12,2015,2017,1960-01-31,2020-12-16
-12422,353,Cameroon,471,Jama'atu Ahlis Sunna Lidda'awati wal-Jihad,2020,Conflict,2020-09-29,2020,2020,1960-01-31,2020-12-16
+779,353,Cameroon,471,UPC,1960-1961,Internationalized War,1960-01-31,1960,1961,1960-01-31,
+780,353,Cameroon,471,Military faction (forces of Ibrahim Saleh),1984,Conflict,1984-04-06,1984,1984,1960-01-31,
+12422,353,Cameroon,471,JAS,2015-2017,Internationalized Conflict,2015-01-12,2015,2017,1960-01-31,
+12422,353,Cameroon,471,JAS,2020,Conflict,2020-09-29,2020,2020,1960-01-31,
+12422,353,Cameroon,471,JAS,2022-2023,Conflict,2022-08-04,2022,2023,1960-01-31,
 14666,13638,Cameroon,471,IS [territory: Islamic State],2015-2016,Internationalized Conflict,2015-08-11,2015,2016,2015-03-19,
 14666,13638,Cameroon,471,IS [territory: Islamic State],2019,Internationalized Conflict,2019-04-27,2019,2019,2015-03-19,
 14666,13638,Cameroon,471,IS [territory: Islamic State],2021,Internationalized Conflict,2021-07-09,2021,2021,2015-03-19,
-15895,14129,Cameroon,471,Ambazonia insurgents [territory: Ambazonia],2017-2021,Conflict,2017-12-08,2017,2021,2017-09-16,
+14666,13638,Cameroon,471,IS [territory: Islamic State],2023,Conflict,2023-06-05,2023,2023,2015-03-19,
+15895,14129,Cameroon,471,Ambazonia insurgents [territory: Ambazonia],2017-2023,Conflict,2017-12-08,2017,2023,2017-09-16,
 873,416,Central African Republic,482,Military faction (forces of André Kolingba),2001,Internationalized Conflict,2001-06-01,2001,2001,2001-05-27,
 874,416,Central African Republic,482,Forces of Francois Bozize,2002,Conflict,2002-10-30,2002,2002,2001-05-27,
 875,416,Central African Republic,482,Seleka,2006,Internationalized Conflict,2006-11-28,2006,2006,2001-05-27,
@@ -107,9 +114,10 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 876,416,Central African Republic,482,CPJP,2009-2011,Conflict,2009-12-07,2009,2011,2001-05-27,
 12380,416,Central African Republic,482,anti-Balaka,2013-2014,Internationalized Conflict,2013-08-20,2013,2014,2001-05-27,
 12380,416,Central African Republic,482,anti-Balaka,2017-2018,Internationalized Conflict,2017-12-04,2017,2018,2001-05-27,
-12391,15283,Central African Republic,482,FPRC [territory: Logone],2015,Internationalized Conflict,2015-10-10,2015,2015,2015-02-10,2015-10-10
+12391,15283,Central African Republic,482,FPRC [territory: Logone],2015,Internationalized Conflict,2015-10-10,2015,2015,2015-02-10,
 15593,416,Central African Republic,482,UPC,2018-2021,Internationalized Conflict,2018-05-17,2018,2021,2001-05-27,
-16562,416,Central African Republic,482,CPC,2020-2021,Internationalized Conflict,2020-12-25,2020,2021,2001-05-27,
+16139,15283,Central African Republic,482,MPC [territory: Logone],2023,Internationalized Conflict,2023-12-09,2023,2023,2015-02-10,
+16562,416,Central African Republic,482,CPC,2020-2023,Internationalized Conflict,2020-12-25,2020,2023,2001-05-27,
 598,288,Chad,483,Frolinat,1966-1970,Internationalized Conflict,1966-07-31,1966,1970,1966-07-31,
 599,288,Chad,483,First Liberation Army,1971-1972,Internationalized Conflict,1971-01-09,1971,1972,1966-07-31,
 600,288,Chad,483,Second Liberation Army,1971,Internationalized Conflict,1971-06-18,1971,1971,1966-07-31,
@@ -138,10 +146,11 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 620,288,Chad,483,AN,2008,Conflict,2008-02-05,2008,2008,1966-07-31,
 621,288,Chad,483,UFR,2009,Conflict,2009-05-08,2009,2009,1966-07-31,
 622,288,Chad,483,FPRN,2010,Conflict,2010-04-28,2010,2010,1966-07-31,
-14667,13640,Chad,483,IS [territory: Islamic State],2015,Conflict,2015-05-27,2015,2015,2015-05-27,
-14667,13640,Chad,483,IS [territory: Islamic State],2017-2021,Conflict,2017-05-05,2017,2021,2015-05-27,
+14667,13640,Chad,483,IS [territory: Islamic State],2015,Conflict,2015-05-27,2015,2015,2015-05-27,2022-11-22
+14667,13640,Chad,483,IS [territory: Islamic State],2017-2022,Conflict,2017-05-05,2017,2022,2015-05-27,2022-11-22
 15676,288,Chad,483,CCMSR,2018,Conflict,2018-08-11,2018,2018,1966-07-31,
 15676,288,Chad,483,CCMSR,2020,Conflict,2020-02-19,2020,2020,1966-07-31,
+15676,288,Chad,483,CCMSR,2023,Conflict,2023-08-09,2023,2023,1966-07-31,
 16743,288,Chad,483,FACT,2021,Conflict,2021-04-18,2021,2021,1966-07-31,
 704,321,Chile,155,"Military faction (forces of Augusto Pinochet, Toribio Merino and Leigh Guzman)",1973,Conflict,1973-09-11,1973,1973,1973-09-11,1973-09-11
 403,202,China,710,PLA,1946-1949,War,1946-12-31,1946,1949,1946-12-31,1949-12-08
@@ -162,15 +171,16 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 624,289,Colombia,100,ELN,2013,Conflict,2013-12-31,2013,2013,1964-12-31,
 624,289,Colombia,100,ELN,2015-2016,Conflict,2015-09-17,2015,2016,1964-12-31,
 624,289,Colombia,100,ELN,2018-2019,Conflict,2018-02-27,2018,2019,1964-12-31,
-624,289,Colombia,100,ELN,2021,Conflict,2021-09-11,2021,2021,1964-12-31,
+624,289,Colombia,100,ELN,2021-2023,Conflict,2021-09-11,2021,2023,1964-12-31,
 625,289,Colombia,100,M-19,1978-1979,Conflict,1978-05-28,1978,1979,1964-12-31,
 625,289,Colombia,100,M-19,1981-1986,Conflict,1981-12-31,1981,1986,1964-12-31,
 625,289,Colombia,100,M-19,1988,Conflict,1988-12-31,1988,1988,1964-12-31,
 626,289,Colombia,100,EPL,1984,Conflict,1984-12-31,1984,1984,1964-12-31,
 626,289,Colombia,100,EPL,1987-1990,Conflict,1987-12-31,1987,1990,1964-12-31,
-15488,289,Colombia,100,FARC dissidents,2018-2021,Conflict,2018-05-27,2018,2021,1964-12-31,
 15558,289,Colombia,100,EPL - Megateo,2000,Conflict,2000-05-17,2000,2000,1964-12-31,
+15558,289,Colombia,100,EPL - Megateo,2002,Conflict,2002-11-03,2002,2002,1964-12-31,
 15558,289,Colombia,100,EPL - Megateo,2004,Conflict,2004-10-14,2004,2004,1964-12-31,
+17247,289,Colombia,100,FARC-EMC,2018-2023,Conflict,2018-05-27,2018,2023,1964-12-31,
 789,362,Comoros,581,Presidential guard,1989,Conflict,1989-11-29,1989,1989,1989-11-27,1989-11-29
 860,407,Comoros,581,MPA/Republic of Anjouan [territory: Anjouan],1997,Conflict,1997-09-05,1997,1997,1997-09-03,1997-09-05
 861,408,Congo,484,Ninjas,1993,Conflict,1993-11-11,1993,1993,1993-11-03,2016-12-10
@@ -181,9 +191,8 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 864,408,Congo,484,Ntsiloulous,2002,Internationalized Conflict,2002-04-10,2002,2002,1993-11-03,2016-12-10
 864,408,Congo,484,Ntsiloulous,2016,Conflict,2016-04-05,2016,2016,1993-11-03,2016-12-10
 447,225,Costa Rica,94,National Liberation Army,1948,War,1948-03-03,1948,1948,1948-03-03,1948-04-20
-836,390,Croatia,344,Serbian irregulars [territory: Serb],1992,Internationalized Conflict,1992-07-31,1992,1992,1992-04-23,1995-09-06
-837,390,Croatia,344,Serbian Republic of Krajina [territory: Serb],1992-1993,Internationalized War,1992-04-30,1992,1993,1992-04-23,1995-09-06
-837,390,Croatia,344,Serbian Republic of Krajina [territory: Serb],1995,Conflict,1995-05-01,1995,1995,1992-04-23,1995-09-06
+836,390,Croatia,344,Serbian irregulars [territory: Serb],1992,Internationalized Conflict,1992-07-31,1992,1992,1992-04-23,1995-09-13
+837,390,Croatia,344,Serbian Republic of Krajina [territory: Serb],1992-1995,Internationalized War,1992-04-30,1992,1995,1992-04-23,1995-09-13
 490,242,Cuba,40,M-26-7,1953,Conflict,1953-07-26,1953,1953,1953-07-26,1961-04-20
 490,242,Cuba,40,M-26-7,1956-1958,War,1956-12-05,1956,1958,1953-07-26,1961-04-20
 491,242,Cuba,40,Cuban Revolutionary Council,1961,Internationalized Conflict,1961-04-17,1961,1961,1953-07-26,1961-04-20
@@ -201,12 +210,12 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 894,429,DR Congo (Zaire),490,BDK [territory: Kongo Kingdom],2020,Internationalized Conflict,2020-04-22,2020,2020,1998-07-02,2020-04-24
 10509,283,DR Congo (Zaire),490,APCLS,2013-2014,Internationalized Conflict,2013-02-27,2013,2014,1964-01-03,
 10509,283,DR Congo (Zaire),490,APCLS,2020-2021,Internationalized Conflict,2020-11-24,2020,2021,1964-01-03,
-11377,283,DR Congo (Zaire),490,CNPSC,2011-2012,Conflict,2011-10-07,2011,2012,1964-01-03,
+11377,283,DR Congo (Zaire),490,CNPSC,2011-2012,Conflict,2011-08-31,2011,2012,1964-01-03,
 11377,283,DR Congo (Zaire),490,CNPSC,2014,Internationalized Conflict,2014-07-01,2014,2014,1964-01-03,
-11377,283,DR Congo (Zaire),490,CNPSC,2017-2021,Internationalized Conflict,2017-07-01,2017,2021,1964-01-03,
+11377,283,DR Congo (Zaire),490,CNPSC,2017-2022,Internationalized Conflict,2017-07-01,2017,2022,1964-01-03,
 11982,283,DR Congo (Zaire),490,M23,2012-2013,Internationalized War,2012-06-06,2012,2013,1964-01-03,
 11982,283,DR Congo (Zaire),490,M23,2017,Internationalized Conflict,2017-02-22,2017,2017,1964-01-03,
-11982,283,DR Congo (Zaire),490,M23,2021,Internationalized Conflict,2021-12-26,2021,2021,1964-01-03,
+11982,283,DR Congo (Zaire),490,M23,2021-2023,Internationalized Conflict,2021-12-26,2021,2023,1964-01-03,
 12009,265,DR Congo (Zaire),490,Kata Katanga [territory: Katanga],2013-2014,Internationalized Conflict,2013-03-18,2013,2014,1961-10-27,2020-09-26
 12009,265,DR Congo (Zaire),490,Kata Katanga [territory: Katanga],2020,Internationalized Conflict,2020-03-28,2020,2020,1961-10-27,2020-09-26
 12463,283,DR Congo (Zaire),490,Forces of Paul Joseph Mukungubila,2013,Conflict,2013-12-30,2013,2013,1964-01-03,
@@ -215,16 +224,18 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 15135,283,DR Congo (Zaire),490,MNR,2017,Internationalized Conflict,2017-06-17,2017,2017,1964-01-03,
 15336,283,DR Congo (Zaire),490,UPLC,2018-2019,Internationalized Conflict,2018-10-15,2018,2019,1964-01-03,
 15389,283,DR Congo (Zaire),490,CMC,2018-2021,Internationalized Conflict,2018-07-03,2018,2021,1964-01-03,
-15998,14692,DR Congo (Zaire),490,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019-11-06,2019,2021,2019-04-16,
+15998,14692,DR Congo (Zaire),490,IS [territory: Islamic State],2017-2023,Internationalized Conflict,2017-12-08,2017,2023,2017-11-22,
+16129,283,DR Congo (Zaire),490,Mayi Mayi Kyandenga,2022,Internationalized Conflict,2022-09-04,2022,2022,1964-01-03,
 16286,283,DR Congo (Zaire),490,RNL,2005,Conflict,2005-11-01,2005,2005,1964-01-03,
 16286,283,DR Congo (Zaire),490,RNL,2016,Conflict,2016-12-19,2016,2016,1964-01-03,
-16286,283,DR Congo (Zaire),490,RNL,2021,Internationalized Conflict,2021-11-13,2021,2021,1964-01-03,
+16286,283,DR Congo (Zaire),490,RNL,2021-2022,Internationalized Conflict,2021-11-13,2021,2022,1964-01-03,
+16823,283,DR Congo (Zaire),490,Mayi Mayi Biloze Bishambuke,2022,Internationalized Conflict,2022-02-04,2022,2022,1964-01-03,
 810,379,Djibouti,522,FRUD,1991-1994,Conflict,1991-11-13,1991,1994,1991-11-12,1999-08-31
 811,379,Djibouti,522,FRUD-C,1999,Conflict,1999-07-24,1999,1999,1991-11-12,1999-08-31
 627,290,Dominican Republic,42,Military faction (constitutionalists),1965,Conflict,1965-04-24,1965,1965,1965-04-24,1965-08-31
 838,391,Egypt,651,al-Gama'a al-Islamiyya,1993-1998,Conflict,1993-03-10,1993,1998,1981-10-08,2019-09-24
 12487,391,Egypt,651,Ansar Bayt al-Maqdis,2014,Conflict,2014-05-02,2014,2014,1981-10-08,2019-09-24
-14677,13648,Egypt,651,IS [territory: Islamic State],2015-2021,Conflict,2015-01-29,2015,2021,2005-02-01,
+14677,13648,Egypt,651,IS [territory: Islamic State],2015-2022,Conflict,2015-01-29,2015,2022,2005-02-01,2022-12-30
 14973,391,Egypt,651,Harakit Sawa'id Misr,2017-2019,Conflict,2017-07-14,2017,2019,1981-10-08,2019-09-24
 15262,391,Egypt,651,Jama'at Ansar al-Islam,2017,Conflict,2017-10-20,2017,2017,1981-10-08,2019-09-24
 694,316,El Salvador,92,Military faction (forces of Benjamin Mejia),1972,Conflict,1972-03-25,1972,1972,1972-03-25,1991-11-18
@@ -234,16 +245,16 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 712,326,Eritrea,531,EIJM - AS,1997,Conflict,1997-06-30,1997,1997,1993-12-16,2003-08-09
 712,326,Eritrea,531,EIJM - AS,1999,Conflict,1999-04-04,1999,1999,1993-12-16,2003-08-09
 712,326,Eritrea,531,EIJM - AS,2003,Conflict,2003-07-17,2003,2003,1993-12-16,2003-08-09
-553,267,Ethiopia,530,Military faction (forces of Mengistu Neway),1960,Conflict,1960-12-17,1960,1960,1960-12-17,
-554,267,Ethiopia,530,EPRP,1976-1977,Conflict,1976-12-02,1976,1977,1960-12-17,
-554,267,Ethiopia,530,EPRP,1984-1987,Conflict,1984-12-31,1984,1987,1960-12-17,
-555,267,Ethiopia,530,TPLF,1976,War,1976-06-02,1976,1976,1960-12-17,
-555,267,Ethiopia,530,TPLF,1978-1988,War,1978-12-31,1978,1988,1960-12-17,
-555,267,Ethiopia,530,TPLF,2020-2021,Internationalized War,2020-11-04,2020,2021,1960-12-17,
-556,267,Ethiopia,530,EDU,1977-1978,Conflict,1977-01-31,1977,1978,1960-12-17,
-557,267,Ethiopia,530,EPDM,1983-1985,Conflict,1983-12-31,1983,1985,1960-12-17,
-558,267,Ethiopia,530,EPRDF,1989-1991,War,1989-01-08,1989,1991,1960-12-17,
-559,267,Ethiopia,530,Military faction (forces of Amsha Desta and Merid Negusie),1989,Conflict,1989-05-20,1989,1989,1960-12-17,
+553,267,Ethiopia,530,Military faction (forces of Mengistu Neway),1960,Conflict,1960-12-17,1960,1960,1960-12-17,2022-11-27
+554,267,Ethiopia,530,EPRP,1976-1977,Conflict,1976-12-02,1976,1977,1960-12-17,2022-11-27
+554,267,Ethiopia,530,EPRP,1984-1987,Conflict,1984-12-31,1984,1987,1960-12-17,2022-11-27
+555,267,Ethiopia,530,TPLF,1976,War,1976-06-02,1976,1976,1960-12-17,2022-11-27
+555,267,Ethiopia,530,TPLF,1978-1988,War,1978-12-31,1978,1988,1960-12-17,2022-11-27
+555,267,Ethiopia,530,TPLF,2020-2022,Internationalized War,2020-11-04,2020,2022,1960-12-17,2022-11-27
+556,267,Ethiopia,530,EDU,1977-1978,Conflict,1977-01-31,1977,1978,1960-12-17,2022-11-27
+557,267,Ethiopia,530,EPDM,1983-1985,Conflict,1983-12-31,1983,1985,1960-12-17,2022-11-27
+558,267,Ethiopia,530,EPRDF,1989-1991,War,1989-01-08,1989,1991,1960-12-17,2022-11-27
+559,267,Ethiopia,530,Military faction (forces of Amsha Desta and Merid Negusie),1989,Conflict,1989-05-20,1989,1989,1960-12-17,2022-11-27
 570,275,Ethiopia,530,ELF [territory: Eritrea],1964-1980,Internationalized War,1964-03-15,1964,1980,1961-09-30,1991-05-31
 571,275,Ethiopia,530,EPLF [territory: Eritrea],1973,Conflict,1973-09-30,1973,1973,1961-09-30,1991-05-31
 571,275,Ethiopia,530,EPLF [territory: Eritrea],1975-1991,Internationalized War,1975-12-31,1975,1991,1961-09-30,1991-05-31
@@ -267,9 +278,11 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 904,437,Ethiopia,530,SLM [territory: Sidamaland],1981,War,1981-03-21,1981,1981,1981-03-21,1983-12-31
 904,437,Ethiopia,530,SLM [territory: Sidamaland],1983,Conflict,1983-03-16,1983,1983,1981-03-21,1983-12-31
 10006,11447,Ethiopia,530,IGLF [territory: Hararghe],1991,Conflict,1991-10-10,1991,1991,1991-10-10,1991-10-10
-12104,267,Ethiopia,530,Forces of Harar garrison,1991,Conflict,1991-06-02,1991,1991,1960-12-17,
+12104,267,Ethiopia,530,Forces of Harar garrison,1991,Conflict,1991-06-02,1991,1991,1960-12-17,2022-11-27
 16023,14935,Ethiopia,530,Military faction (forces of Asaminew Tsige) [territory: Amhara],2019,Conflict,2019-06-22,2019,2019,2019-06-22,2019-06-24
-16240,413,Ethiopia,530,OLA [territory: Oromiya],2019-2021,Conflict,2019-10-06,2019,2021,1974-08-31,
+16240,413,Ethiopia,530,OLA [territory: Oromiya],2019-2023,Internationalized Conflict,2019-10-06,2019,2023,1974-08-31,
+16920,267,Ethiopia,530,GLF,2022,Conflict,2022-06-14,2022,2022,1960-12-17,2022-11-27
+17147,16069,Ethiopia,530,Fano [territory: Amhara],2023,War,2023-06-27,2023,2023,2023-05-25,
 563,270,France,220,OAS,1961-1962,War,1961-04-22,1961,1962,1961-04-22,1962-06-30
 589,284,Gabon,481,Military faction (forces loyal to Léon M'Ba),1964,Internationalized Conflict,1964-02-18,1964,1964,1964-02-18,1964-02-19
 765,344,Gambia,420,NRC,1981,Internationalized Conflict,1981-07-30,1981,1981,1981-07-30,1981-08-05
@@ -304,7 +317,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 451,227,India,750,PWG,1991-1994,Conflict,1991-07-16,1991,1994,1948-05-01,
 451,227,India,750,PWG,1996-2004,Conflict,1996-04-03,1996,2004,1948-05-01,
 452,227,India,750,MCC,1999-2004,Conflict,1999-09-18,1999,2004,1948-05-01,
-453,227,India,750,CPI-Maoist,2005-2021,Conflict,2005-01-30,2005,2021,1948-05-01,
+453,227,India,750,CPI-Maoist,2005-2023,Conflict,2005-01-30,2005,2023,1948-05-01,
 507,251,India,750,NNC [territory: Nagaland],1956-1959,Conflict,1956-12-31,1956,1959,1955-07-20,2000-09-13
 507,251,India,750,NNC [territory: Nagaland],1961-1968,Conflict,1961-12-31,1961,1968,1955-07-20,2000-09-13
 508,251,India,750,NSCN-IM [territory: Nagaland],1992-1997,Conflict,1992-08-05,1992,1997,1955-07-20,2000-09-13
@@ -328,7 +341,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 770,347,India,750,KCP [territory: Manipur],2008-2009,Conflict,2008-10-08,2008,2009,1979-04-26,2009-12-28
 771,347,India,750,PREPAK [territory: Manipur],2008-2009,Conflict,2008-09-30,2008,2009,1979-04-26,2009-12-28
 775,351,India,750,Sikh insurgents [territory: Punjab/Khalistan],1983-1993,War,1983-12-31,1983,1993,1981-09-20,1993-12-24
-792,364,India,750,Kashmir insurgents [territory: Kashmir],1990-2021,War,1990-02-12,1990,2021,1984-02-06,
+792,364,India,750,Kashmir insurgents [territory: Kashmir],1990-2023,War,1990-02-12,1990,2023,1984-02-06,
 793,365,India,750,ULFA [territory: Assam],1990,Conflict,1990-11-30,1990,1990,1983-12-31,2010-10-16
 793,365,India,750,ULFA [territory: Assam],1994-2010,Conflict,1994-12-31,1994,2010,1983-12-31,2010-10-16
 884,421,India,750,ABSU [territory: Bodoland],1989-1990,Conflict,1989-03-16,1989,1990,1989-02-16,2014-12-31
@@ -354,7 +367,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 628,291,Indonesia,850,OPM [territory: West Papua],1981,War,1981-12-31,1981,1981,1965-07-28,
 628,291,Indonesia,850,OPM [territory: West Papua],1984,Conflict,1984-12-31,1984,1984,1965-07-28,
 628,291,Indonesia,850,OPM [territory: West Papua],2018,Conflict,2018-12-02,2018,2018,1965-07-28,
-628,291,Indonesia,850,OPM [territory: West Papua],2021,Conflict,2021-04-28,2021,2021,1965-07-28,
+628,291,Indonesia,850,OPM [territory: West Papua],2021-2023,Conflict,2021-04-28,2021,2023,1965-07-28,
 720,330,Indonesia,850,CNRT [territory: East Timor],1975-1988,War,1975-12-07,1975,1988,1975-12-07,1999-09-22
 720,330,Indonesia,850,CNRT [territory: East Timor],1992,Conflict,1992-12-15,1992,1992,1975-12-07,1999-09-22
 720,330,Indonesia,850,CNRT [territory: East Timor],1997-1999,Conflict,1997-05-31,1997,1999,1975-12-07,1999-09-22
@@ -382,6 +395,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 755,338,Iran,630,Jondullah,2006-2010,Conflict,2006-04-07,2006,2010,1972-08-13,
 756,339,Iran,630,APCO [territory: Arabistan],1979-1980,Conflict,1979-05-31,1979,1980,1979-05-30,1980-12-31
 12556,338,Iran,630,Jaish al-Adl,2019,Conflict,2019-02-13,2019,2019,1972-08-13,
+12556,338,Iran,630,Jaish al-Adl,2023,Conflict,2023-12-15,2023,2023,1972-08-13,
 14895,14268,Iran,630,IS [territory: Islamic State],2017,Conflict,2017-06-11,2017,2017,2016-08-15,2017-06-11
 517,259,Iraq,645,Military faction (free Officers Movement),1958,Conflict,1958-07-14,1958,1958,1958-07-14,
 518,259,Iraq,645,Military faction (forces of Abdul Wahab al-Shawaf),1959,Conflict,1959-03-08,1959,1959,1958-07-14,
@@ -392,7 +406,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 521,259,Iraq,645,SCIRI,1991-1996,Conflict,1991-04-24,1991,1996,1958-07-14,
 523,259,Iraq,645,Ansar al-Islam,2004-2007,Internationalized Conflict,2004-01-18,2004,2007,1958-07-14,
 523,259,Iraq,645,Ansar al-Islam,2011,Internationalized Conflict,2011-10-13,2011,2011,1958-07-14,
-524,259,Iraq,645,IS,2004-2021,Internationalized War,2004-06-19,2004,2021,1958-07-14,
+524,259,Iraq,645,IS,2004-2023,Internationalized War,2004-06-19,2004,2023,1958-07-14,
 525,259,Iraq,645,RJF,2005-2007,Internationalized Conflict,2005-02-10,2005,2007,1958-07-14,
 564,271,Iraq,645,KDP [territory: Kurdistan],1961-1970,War,1961-12-31,1961,1970,1945-08-30,1996-09-30
 564,271,Iraq,645,KDP [territory: Kurdistan],1973-1975,War,1973-07-31,1973,1975,1945-08-30,1996-09-30
@@ -415,23 +429,26 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 476,234,Israel,666,Fatah [territory: Palestine],1990-1992,Conflict,1990-12-30,1990,1992,1948-05-15,
 476,234,Israel,666,Fatah [territory: Palestine],2000-2002,Conflict,2000-12-10,2000,2002,1948-05-15,
 476,234,Israel,666,Fatah [territory: Palestine],2005-2007,Conflict,2005-10-21,2005,2007,1948-05-15,
+476,234,Israel,666,Fatah [territory: Palestine],2022,Conflict,2022-10-28,2022,2022,1948-05-15,
 477,234,Israel,666,Hamas [territory: Palestine],1993-1994,Conflict,1993-07-01,1993,1994,1948-05-15,
 477,234,Israel,666,Hamas [territory: Palestine],2001-2009,Conflict,2001-07-02,2001,2009,1948-05-15,
 477,234,Israel,666,Hamas [territory: Palestine],2011-2012,Conflict,2011-04-09,2011,2012,1948-05-15,
 477,234,Israel,666,Hamas [territory: Palestine],2014,War,2014-07-08,2014,2014,1948-05-15,
 477,234,Israel,666,Hamas [territory: Palestine],2018,Conflict,2018-07-14,2018,2018,1948-05-15,
 477,234,Israel,666,Hamas [territory: Palestine],2021,Conflict,2021-05-10,2021,2021,1948-05-15,
+477,234,Israel,666,Hamas [territory: Palestine],2023,War,2023-07-06,2023,2023,1948-05-15,
 478,234,Israel,666,PIJ [territory: Palestine],1995,Conflict,1995-04-09,1995,1995,1948-05-15,
 478,234,Israel,666,PIJ [territory: Palestine],2001-2012,Conflict,2001-12-14,2001,2012,1948-05-15,
 478,234,Israel,666,PIJ [territory: Palestine],2014,Conflict,2014-07-11,2014,2014,1948-05-15,
 478,234,Israel,666,PIJ [territory: Palestine],2019,Conflict,2019-11-12,2019,2019,1948-05-15,
-478,234,Israel,666,PIJ [territory: Palestine],2021,Conflict,2021-05-19,2021,2021,1948-05-15,
+478,234,Israel,666,PIJ [territory: Palestine],2021-2023,Conflict,2021-05-19,2021,2023,1948-05-15,
 479,234,Israel,666,PNA [territory: Palestine],1996,Conflict,1996-09-26,1996,1996,1948-05-15,
 479,234,Israel,666,PNA [territory: Palestine],2000-2002,Conflict,2000-11-01,2000,2002,1948-05-15,
 480,234,Israel,666,AMB [territory: Palestine],2002-2004,Conflict,2002-03-03,2002,2004,1948-05-15,
 481,234,Israel,666,PRC [territory: Palestine],2006,Conflict,2006-06-09,2006,2006,1948-05-15,
-891,426,Israel,666,Hezbollah [territory: Southern Lebanon],1990-1999,Conflict,1990-07-10,1990,1999,1986-09-30,2006-08-23
-891,426,Israel,666,Hezbollah [territory: Southern Lebanon],2006,Conflict,2006-07-13,2006,2006,1986-09-30,2006-08-23
+891,426,Israel,666,Hezbollah [territory: Southern Lebanon],1990-1999,Conflict,1990-07-10,1990,1999,1986-09-30,
+891,426,Israel,666,Hezbollah [territory: Southern Lebanon],2006,Conflict,2006-07-13,2006,2006,1986-09-30,
+891,426,Israel,666,Hezbollah [territory: Southern Lebanon],2023,Conflict,2023-10-18,2023,2023,1986-09-30,
 879,419,Ivory Coast,437,MPCI,2002,Conflict,2002-09-20,2002,2002,2002-09-19,2011-04-27
 880,419,Ivory Coast,437,MPIGO,2002-2003,Conflict,2002-11-28,2002,2003,2002-09-19,2011-04-27
 881,419,Ivory Coast,437,MJP,2003,Conflict,2003-01-06,2003,2003,2002-09-19,2011-04-27
@@ -440,7 +457,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 10842,419,Ivory Coast,437,FDSI-CI,2011,Conflict,2011-03-16,2011,2011,2002-09-19,2011-04-27
 14741,13886,Jordan,663,IS [territory: Islamic State],2016,Conflict,2016-12-18,2016,2016,2016-03-02,2016-12-29
 772,348,Kenya,501,Military faction (forces of Hezekiah Ochuka),1982,Conflict,1982-08-01,1982,1982,1982-08-01,1982-08-21
-10589,13646,Kenya,501,Al-Shabaab [territory: Northeastern Province and Coast],2015-2021,Internationalized Conflict,2015-07-13,2015,2021,2015-03-13,
+10589,13646,Kenya,501,Al-Shabaab [territory: Northeastern Province and Coast],2015-2023,Internationalized Conflict,2015-07-13,2015,2023,2015-03-13,
 535,262,Laos,812,Pathet Lao,1959-1961,Internationalized War,1959-11-12,1959,1961,1959-11-12,1990-04-10
 535,262,Laos,812,Pathet Lao,1963-1973,Internationalized War,1963-12-31,1963,1973,1959-11-12,1990-04-10
 536,262,Laos,812,Neutralists,1960,Internationalized Conflict,1960-12-16,1960,1960,1959-11-12,1990-04-10
@@ -493,8 +510,9 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 12578,11347,Mali,432,Signed-in-Blood Battalion,2013,Internationalized Conflict,2013-02-22,2013,2013,2009-06-10,
 12582,11347,Mali,432,al-Murabitun,2014,Internationalized Conflict,2014-07-14,2014,2014,2009-06-10,
 14610,13611,Mali,432,FLM [territory: Macina Empire],2015,Conflict,2015-06-27,2015,2015,2015-01-05,2015-10-28
-15108,11347,Mali,432,JNIM,2017-2021,Internationalized Conflict,2017-04-18,2017,2021,2009-06-10,
-15259,14113,Mali,432,IS [territory: Islamic State],2017-2021,Internationalized Conflict,2017-07-09,2017,2021,2017-02-04,
+15108,11347,Mali,432,JNIM,2017-2023,Internationalized War,2017-04-18,2017,2023,2009-06-10,
+15259,14113,Mali,432,IS [territory: Islamic State],2017-2023,Internationalized Conflict,2017-07-09,2017,2023,2017-02-04,
+17666,16038,Mali,432,CSP-PSD [territory: Azawad],2023,Conflict,2023-09-12,2023,2023,2023-08-04,
 893,428,Mauritania,435,POLISARIO [territory: Sahrawi Arab Democratic Republic (Western Sahara)],1975-1978,Conflict,1975-12-19,1975,1978,1975-12-10,1978-12-31
 909,442,Mauritania,435,AQIM,2010,Internationalized Conflict,2010-09-18,2010,2010,2008-09-15,2010-09-18
 850,400,Mexico,70,EZLN,1994,Conflict,1994-01-01,1994,1994,1994-01-01,1996-12-31
@@ -505,14 +523,14 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 722,332,Mozambique,541,Renamo,1977-1992,Internationalized War,1977-12-31,1977,1992,1977-12-31,2019-07-12
 722,332,Mozambique,541,Renamo,2013-2014,Conflict,2013-10-12,2013,2014,1977-12-31,2019-07-12
 722,332,Mozambique,541,Renamo,2016,Conflict,2016-04-10,2016,2016,1977-12-31,2019-07-12
-15516,332,Mozambique,541,Ansar al-Sunnah,2018-2019,Conflict,2018-07-10,2018,2019,1977-12-31,2019-07-12
-16022,14845,Mozambique,541,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019-08-07,2019,2021,2019-06-04,
+15516,332,Mozambique,541,ASWJ,2018-2019,Conflict,2018-07-10,2018,2019,1977-12-31,2019-07-12
+16022,14845,Mozambique,541,IS [territory: Islamic State],2019-2023,Internationalized Conflict,2019-08-07,2019,2023,2019-06-04,
 427,221,Myanmar (Burma),775,KNUP [territory: Karen],1949-1975,War,1949-01-15,1949,1975,1948-12-31,
 428,221,Myanmar (Burma),775,KNU [territory: Karen],1966-1992,War,1966-12-31,1966,1992,1948-12-31,
 428,221,Myanmar (Burma),775,KNU [territory: Karen],1994-1995,Conflict,1994-12-31,1994,1995,1948-12-31,
 428,221,Myanmar (Burma),775,KNU [territory: Karen],1997-1998,Conflict,1997-02-23,1997,1998,1948-12-31,
 428,221,Myanmar (Burma),775,KNU [territory: Karen],2000-2011,Conflict,2000-11-02,2000,2011,1948-12-31,
-428,221,Myanmar (Burma),775,KNU [territory: Karen],2021,Conflict,2021-04-27,2021,2021,1948-12-31,
+428,221,Myanmar (Burma),775,KNU [territory: Karen],2021-2023,Conflict,2021-04-27,2021,2023,1948-12-31,
 429,221,Myanmar (Burma),775,God's Army [territory: Karen],2000,Conflict,2000-12-31,2000,2000,1948-12-31,
 430,221,Myanmar (Burma),775,DKBA 5 [territory: Karen],2010-2011,Conflict,2010-11-28,2010,2011,1948-12-31,
 430,221,Myanmar (Burma),775,DKBA 5 [territory: Karen],2013,Conflict,2013-04-29,2013,2013,1948-12-31,
@@ -522,14 +540,14 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 433,222,Myanmar (Burma),775,"PVO - ""White Band"" faction",1948-1953,War,1948-08-31,1948,1953,1948-02-29,
 434,222,Myanmar (Burma),775,ABSDF,1990-1992,Conflict,1990-12-31,1990,1992,1948-02-29,
 434,222,Myanmar (Burma),775,ABSDF,1994,Conflict,1994-12-31,1994,1994,1948-02-29,
-435,223,Myanmar (Burma),775,APLP [territory: Arakan],1948-1957,Conflict,1948-01-31,1948,1957,1948-01-31,2020-11-25
-436,223,Myanmar (Burma),775,Mujahid Party [territory: Arakan],1948-1961,Conflict,1948-08-31,1948,1961,1948-01-31,2020-11-25
-437,223,Myanmar (Burma),775,ANLP [territory: Arakan],1964-1972,Conflict,1964-12-31,1964,1972,1948-01-31,2020-11-25
-438,223,Myanmar (Burma),775,CPA [territory: Arakan],1964-1973,Conflict,1964-12-31,1964,1973,1948-01-31,2020-11-25
-439,223,Myanmar (Burma),775,RPF [territory: Arakan],1973-1978,Conflict,1973-12-31,1973,1978,1948-01-31,2020-11-25
-440,223,Myanmar (Burma),775,ALP [territory: Arakan],1977,Conflict,1977-06-01,1977,1977,1948-01-31,2020-11-25
-442,223,Myanmar (Burma),775,RSO [territory: Arakan],1991,Conflict,1991-12-29,1991,1991,1948-01-31,2020-11-25
-442,223,Myanmar (Burma),775,RSO [territory: Arakan],1994,Conflict,1994-05-15,1994,1994,1948-01-31,2020-11-25
+435,223,Myanmar (Burma),775,APLP [territory: Arakan],1948-1957,Conflict,1948-01-31,1948,1957,1948-01-31,
+436,223,Myanmar (Burma),775,Mujahid Party [territory: Arakan],1948-1961,Conflict,1948-08-31,1948,1961,1948-01-31,
+437,223,Myanmar (Burma),775,ANLP [territory: Arakan],1964-1972,Conflict,1964-12-31,1964,1972,1948-01-31,
+438,223,Myanmar (Burma),775,CPA [territory: Arakan],1964-1973,Conflict,1964-12-31,1964,1973,1948-01-31,
+439,223,Myanmar (Burma),775,RPF [territory: Arakan],1973-1978,Conflict,1973-12-31,1973,1978,1948-01-31,
+440,223,Myanmar (Burma),775,ALP [territory: Arakan],1977,Conflict,1977-06-01,1977,1977,1948-01-31,
+442,223,Myanmar (Burma),775,RSO [territory: Arakan],1991,Conflict,1991-12-29,1991,1991,1948-01-31,
+442,223,Myanmar (Burma),775,RSO [territory: Arakan],1994,Conflict,1994-05-15,1994,1994,1948-01-31,
 443,224,Myanmar (Burma),775,MFL-MUF [territory: Mon],1949-1951,Conflict,1949-02-28,1949,1951,1948-12-31,1996-12-23
 444,224,Myanmar (Burma),775,MPF [territory: Mon],1952-1958,Conflict,1952-12-31,1952,1958,1948-12-31,1996-12-23
 445,224,Myanmar (Burma),775,NMSP [territory: Mon],1959-1963,Conflict,1959-12-31,1959,1963,1948-12-31,1996-12-23
@@ -538,13 +556,13 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 460,231,Myanmar (Burma),775,PNDF [territory: Kachin],1949-1950,Conflict,1949-12-31,1949,1950,1949-12-31,
 461,231,Myanmar (Burma),775,KIO [territory: Kachin],1961-1992,War,1961-02-28,1961,1992,1949-12-31,
 461,231,Myanmar (Burma),775,KIO [territory: Kachin],2011-2019,Conflict,2011-06-27,2011,2019,1949-12-31,
-461,231,Myanmar (Burma),775,KIO [territory: Kachin],2021,Conflict,2021-04-10,2021,2021,1949-12-31,
+461,231,Myanmar (Burma),775,KIO [territory: Kachin],2021-2023,Conflict,2021-04-10,2021,2023,1949-12-31,
 511,253,Myanmar (Burma),775,KNPP [territory: Karenni],1957,Conflict,1957-12-31,1957,1957,1957-12-31,
 511,253,Myanmar (Burma),775,KNPP [territory: Karenni],1987,Conflict,1987-12-31,1987,1987,1957-12-31,
 511,253,Myanmar (Burma),775,KNPP [territory: Karenni],1992,Conflict,1992-09-22,1992,1992,1957-12-31,
 511,253,Myanmar (Burma),775,KNPP [territory: Karenni],1996,Conflict,1996-03-06,1996,1996,1957-12-31,
 511,253,Myanmar (Burma),775,KNPP [territory: Karenni],2005,Conflict,2005-01-16,2005,2005,1957-12-31,
-511,253,Myanmar (Burma),775,KNPP [territory: Karenni],2021,Conflict,2021-11-04,2021,2021,1957-12-31,
+511,253,Myanmar (Burma),775,KNPP [territory: Karenni],2021-2023,Conflict,2021-11-04,2021,2023,1957-12-31,
 541,264,Myanmar (Burma),775,NSH [territory: Shan],1959,Conflict,1959-11-22,1959,1959,1959-11-22,2015-11-30
 542,264,Myanmar (Burma),775,SSIA [territory: Shan],1960-1961,Conflict,1960-12-31,1960,1961,1959-11-22,2015-11-30
 543,264,Myanmar (Burma),775,SNUF [territory: Shan],1962-1963,Conflict,1962-12-31,1962,1963,1959-11-22,2015-11-30
@@ -565,19 +583,23 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 906,439,Myanmar (Burma),775,MNDAA [territory: Kokang],2014-2015,Conflict,2014-12-22,2014,2015,2009-08-27,
 906,439,Myanmar (Burma),775,MNDAA [territory: Kokang],2017,Conflict,2017-03-06,2017,2017,2009-08-27,
 906,439,Myanmar (Burma),775,MNDAA [territory: Kokang],2021,Conflict,2021-08-28,2021,2021,2009-08-27,
+906,439,Myanmar (Burma),775,MNDAA [territory: Kokang],2023,Conflict,2023-11-22,2023,2023,2009-08-27,
 907,440,Myanmar (Burma),775,LNUP [territory: Lahu],1973-1982,Conflict,1973-02-28,1973,1982,1973-01-11,1982-12-31
+10988,222,Myanmar (Burma),775,CNF,2023,Conflict,2023-05-29,2023,2023,1948-02-29,
 11018,11475,Myanmar (Burma),775,NSCN-K [territory: Nagaland],1991,Conflict,1991-12-31,1991,1991,1991-12-31,2007-02-15
 11018,11475,Myanmar (Burma),775,NSCN-K [territory: Nagaland],1995,Conflict,1995-04-17,1995,1995,1991-12-31,2007-02-15
 11018,11475,Myanmar (Burma),775,NSCN-K [territory: Nagaland],2000-2001,Conflict,2000-02-28,2000,2001,1991-12-31,2007-02-15
 11018,11475,Myanmar (Burma),775,NSCN-K [territory: Nagaland],2005-2007,Conflict,2005-01-31,2005,2007,1991-12-31,2007-02-15
-11387,223,Myanmar (Burma),775,ULA [territory: Arakan],2018-2020,Conflict,2018-12-16,2018,2020,1948-01-31,2020-11-25
+11387,223,Myanmar (Burma),775,ULA [territory: Arakan],2018-2020,Conflict,2018-12-16,2018,2020,1948-01-31,
+11387,223,Myanmar (Burma),775,ULA [territory: Arakan],2022-2023,Conflict,2022-08-25,2022,2023,1948-01-31,
 11972,264,Myanmar (Burma),775,SSPP [territory: Shan],2011,Conflict,2011-03-21,2011,2011,1959-11-22,2015-11-30
 11972,264,Myanmar (Burma),775,SSPP [territory: Shan],2013,Conflict,2013-02-22,2013,2013,1959-11-22,2015-11-30
 11972,264,Myanmar (Burma),775,SSPP [territory: Shan],2015,Conflict,2015-10-31,2015,2015,1959-11-22,2015-11-30
 14273,222,Myanmar (Burma),775,PSLF,2013-2015,Conflict,2013-11-15,2013,2015,1948-02-29,
 14273,222,Myanmar (Burma),775,PSLF,2017-2019,Conflict,2017-04-29,2017,2019,1948-02-29,
-15069,223,Myanmar (Burma),775,ARSA [territory: Arakan],2016-2017,Conflict,2016-10-12,2016,2017,1948-01-31,2020-11-25
-16759,222,Myanmar (Burma),775,NUG,2021,Conflict,2021-05-03,2021,2021,1948-02-29,
+14273,222,Myanmar (Burma),775,PSLF,2022-2023,Conflict,2022-02-04,2022,2023,1948-02-29,
+15069,223,Myanmar (Burma),775,ARSA [territory: Arakan],2016-2017,Conflict,2016-10-12,2016,2017,1948-01-31,
+16759,222,Myanmar (Burma),775,NUG,2021-2023,War,2021-05-03,2021,2023,1948-02-29,
 561,269,Nepal,790,NC,1960-1962,Conflict,1960-02-29,1960,1962,1960-02-29,2006-09-21
 562,269,Nepal,790,CPN-M,1996-2006,War,1996-08-23,1996,2006,1960-02-29,2006-09-21
 741,336,Nicaragua,93,FSLN,1977-1979,War,1977-10-10,1977,1979,1974-12-27,1990-04-15
@@ -587,16 +609,16 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 895,430,Niger,436,FLAA,1991-1992,Conflict,1991-12-31,1991,1992,1991-10-25,
 896,430,Niger,436,UFRA,1997,Conflict,1997-10-19,1997,1997,1991-10-25,
 897,430,Niger,436,MNJ,2007-2008,Conflict,2007-04-30,2007,2008,1991-10-25,
-14668,13639,Niger,436,IS [territory: Islamic State],2015-2021,Internationalized Conflict,2015-03-30,2015,2021,2015-03-26,
-15174,430,Niger,436,JNIM,2021,Internationalized Conflict,2021-12-09,2021,2021,1991-10-25,
+14668,13639,Niger,436,IS [territory: Islamic State],2015-2023,Internationalized Conflict,2015-03-30,2015,2023,2015-03-26,
+15174,430,Niger,436,JNIM,2021-2023,Internationalized Conflict,2021-12-09,2021,2023,1991-10-25,
 639,297,Nigeria,475,Military faction (forces of Patrick Nzeogwu),1966,Conflict,1966-01-15,1966,1966,1966-01-15,
-640,297,Nigeria,475,Jama'atu Ahlis Sunna Lidda'awati wal-Jihad,2009,Conflict,2009-07-26,2009,2009,1966-01-15,
-640,297,Nigeria,475,Jama'atu Ahlis Sunna Lidda'awati wal-Jihad,2011-2021,Internationalized War,2011-03-01,2011,2021,1966-01-15,
+640,297,Nigeria,475,JAS,2009,Conflict,2009-07-26,2009,2009,1966-01-15,
+640,297,Nigeria,475,JAS,2011-2023,Internationalized War,2011-03-01,2011,2023,1966-01-15,
 650,303,Nigeria,475,Republic of Biafra [territory: Biafra],1967-1970,War,1967-07-06,1967,1970,1967-07-06,
 889,424,Nigeria,475,Ahlul Sunnah Jamaa [territory: Northern Nigeria],2004,Conflict,2004-01-06,2004,2004,2003-12-22,2004-10-08
 890,425,Nigeria,475,NDPVF [territory: Niger Delta],2004,Conflict,2004-06-04,2004,2004,2004-06-04,2004-09-20
-14636,303,Nigeria,475,IPOB [territory: Biafra],2021,Conflict,2021-04-24,2021,2021,1967-07-06,
-14669,13641,Nigeria,475,IS [territory: Islamic State],2015-2021,Internationalized War,2015-03-22,2015,2021,2015-03-15,
+14636,303,Nigeria,475,IPOB [territory: Biafra],2021-2023,Internationalized Conflict,2021-04-24,2021,2023,1967-07-06,
+14669,13641,Nigeria,475,IS [territory: Islamic State],2015-2023,Internationalized War,2015-03-22,2015,2023,2015-03-15,
 877,417,North Macedonia,343,UCK,2001,Conflict,2001-05-03,2001,2001,2000-01-11,2001-08-17
 516,258,Oman,698,State of Oman/Free Oman [territory: Oman],1957,Internationalized Conflict,1957-07-31,1957,1957,1957-07-31,1957-08-26
 698,317,Oman,698,PFLO,1969-1975,Internationalized Conflict,1969-12-31,1969,1975,1968-10-31,1975-12-11
@@ -613,7 +635,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 711,325,Pakistan,770,BRA [territory: Balochistan],2014-2015,Conflict,2014-06-05,2014,2015,1973-05-18,
 855,404,Pakistan,770,MQM,1990,Conflict,1990-02-11,1990,1990,1990-02-11,
 855,404,Pakistan,770,MQM,1994-1996,Conflict,1994-05-03,1994,1996,1990-02-11,
-857,404,Pakistan,770,TTP,2007-2021,Internationalized War,2007-07-15,2007,2021,1990-02-11,
+857,404,Pakistan,770,TTP,2007-2023,Internationalized War,2007-07-15,2007,2023,1990-02-11,
 10961,404,Pakistan,770,IMU,2014,Conflict,2014-06-15,2014,2014,1990-02-11,
 11336,404,Pakistan,770,Lashkar-e-Islam,2009-2010,Conflict,2009-07-01,2009,2010,1990-02-11,
 11336,404,Pakistan,770,Lashkar-e-Islam,2012-2014,Conflict,2012-02-18,2012,2014,1990-02-11,
@@ -621,8 +643,9 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 11521,325,Pakistan,770,UBA [territory: Balochistan],2016,Conflict,2016-04-09,2016,2016,1973-05-18,
 14227,404,Pakistan,770,Jamaat-ul-Ahrar,2014,Conflict,2014-03-14,2014,2014,1990-02-11,
 14319,13936,Pakistan,770,IS [territory: Islamic State],2016-2019,Conflict,2016-10-24,2016,2019,2016-02-12,
-14319,13936,Pakistan,770,IS [territory: Islamic State],2021,Conflict,2021-12-20,2021,2021,2016-02-12,
-16177,325,Pakistan,770,BRAS [territory: Balochistan],2019-2021,Conflict,2019-05-11,2019,2021,1973-05-18,
+14319,13936,Pakistan,770,IS [territory: Islamic State],2021-2023,Conflict,2021-12-20,2021,2023,2016-02-12,
+16177,325,Pakistan,770,BRAS [territory: Balochistan],2019-2023,Conflict,2019-05-11,2019,2023,1973-05-18,
+17628,404,Pakistan,770,TJP,2023,Conflict,2023-05-13,2023,2023,1990-02-11,
 795,367,Panama,95,Military faction (forces of Moisés Giroldi),1989,Conflict,1989-10-03,1989,1989,1989-10-03,1989-10-03
 797,369,Papua New Guinea,910,BRA [territory: Bougainville],1990,Conflict,1990-02-07,1990,1990,1989-04-06,1996-11-28
 797,369,Papua New Guinea,910,BRA [territory: Bougainville],1992-1996,Conflict,1992-08-02,1992,1996,1989-04-06,1996-11-28
@@ -637,7 +660,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 410,209,Philippines,840,Huk,1946-1954,War,1946-07-31,1946,1954,1946-07-31,
 411,209,Philippines,840,CPP,1969-1995,War,1969-09-30,1969,1995,1946-07-31,
 411,209,Philippines,840,CPP,1997,Conflict,1997-11-23,1997,1997,1946-07-31,
-411,209,Philippines,840,CPP,1999-2021,Conflict,1999-06-06,1999,2021,1946-07-31,
+411,209,Philippines,840,CPP,1999-2023,Conflict,1999-06-06,1999,2023,1946-07-31,
 412,209,Philippines,840,"Military faction (forces of Honasan, Abenina & Zumel)",1987,Conflict,1987-08-29,1987,1987,1946-07-31,
 412,209,Philippines,840,"Military faction (forces of Honasan, Abenina & Zumel)",1989-1990,Conflict,1989-12-02,1989,1990,1946-07-31,
 655,308,Philippines,840,MIM [territory: Mindanao],1970-1971,Conflict,1970-08-20,1970,1971,1970-08-20,2020-12-09
@@ -658,7 +681,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 660,308,Philippines,840,MNLF - HM [territory: Mindanao],2007,Conflict,2007-05-08,2007,2007,1970-08-20,2020-12-09
 11246,308,Philippines,840,BIFM [territory: Mindanao],2012-2016,Conflict,2012-08-08,2012,2016,1970-08-20,2020-12-09
 14913,308,Philippines,840,Maute group [territory: Mindanao],2016,Conflict,2016-02-25,2016,2016,1970-08-20,2020-12-09
-15473,14275,Philippines,840,IS [territory: Islamic State],2016-2021,War,2016-06-01,2016,2021,2016-06-01,
+15473,14275,Philippines,840,IS [territory: Islamic State],2016-2023,War,2016-06-01,2016,2023,2016-06-01,
 15474,308,Philippines,840,al-Harakat al-Islamiyah [territory: Mindanao],2016,Conflict,2016-04-09,2016,2016,1970-08-20,2020-12-09
 15475,308,Philippines,840,BIFM-K [territory: Mindanao],2018,Conflict,2018-07-06,2018,2018,1970-08-20,2020-12-09
 798,370,Romania,360,NSF,1989,Conflict,1989-12-22,1989,1989,1989-12-17,1989-12-29
@@ -670,20 +693,24 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 417,213,Russia (Soviet Union),365,UPA [territory: Ukraine],1946-1950,War,1946-12-31,1946,1950,1941-12-31,1950-12-31
 807,376,Russia (Soviet Union),365,Republic of Armenia [territory: Nagorno-Karabakh],1990-1991,Conflict,1990-08-31,1990,1991,1990-01-19,1991-12-21
 808,377,Russia (Soviet Union),365,APF [territory: Azerbaijan],1990,Conflict,1990-01-23,1990,1990,1990-01-20,1990-01-27
-849,399,Russia (Soviet Union),365,Parliamentary Forces,1993,Conflict,1993-10-03,1993,1993,1991-08-20,1993-10-05
+849,399,Russia (Soviet Union),365,Parliamentary Forces,1993,Conflict,1993-10-03,1993,1993,1991-08-20,
 852,401,Russia (Soviet Union),365,Chechen Republic of Ichkeria [territory: Chechnya],1994-1996,War,1994-11-26,1994,1996,1994-05-27,2007-10-06
 852,401,Russia (Soviet Union),365,Chechen Republic of Ichkeria [territory: Chechnya],1999-2007,War,1999-08-11,1999,2007,1994-05-27,2007-10-06
 870,414,Russia (Soviet Union),365,Wahhabi movement of the Buinaksk district [territory: Dagestan],1999,Conflict,1999-09-02,1999,1999,1999-08-29,1999-09-09
 899,432,Russia (Soviet Union),365,Forces of the Caucasus Emirate [territory: Caucasus Emirate],2007-2015,Conflict,2007-11-28,2007,2015,2007-10-07,2015-10-21
 14619,13588,Russia (Soviet Union),365,IS [territory: Islamic State],2015-2020,Conflict,2015-10-10,2015,2020,2015-03-21,2020-12-28
-804,374,Rwanda,517,FPR,1990-1994,Internationalized War,1990-10-03,1990,1994,1990-10-01,2020-12-30
-805,374,Rwanda,517,ALiR,1996-2000,War,1996-07-12,1996,2000,1990-10-01,2020-12-30
-12102,374,Rwanda,517,FDLR,2001-2002,War,2001-05-20,2001,2002,1990-10-01,2020-12-30
-12102,374,Rwanda,517,FDLR,2009-2012,Internationalized War,2009-02-16,2009,2012,1990-10-01,2020-12-30
-12102,374,Rwanda,517,FDLR,2016,Internationalized Conflict,2016-03-29,2016,2016,1990-10-01,2020-12-30
-12102,374,Rwanda,517,FDLR,2019-2020,Internationalized Conflict,2019-09-18,2019,2020,1990-10-01,2020-12-30
-15547,374,Rwanda,517,FDLR-RUD,2019-2020,Internationalized Conflict,2019-10-29,2019,2020,1990-10-01,2020-12-30
-16081,374,Rwanda,517,CNRD,2019-2020,Internationalized Conflict,2019-05-25,2019,2020,1990-10-01,2020-12-30
+17509,399,Russia (Soviet Union),365,RDK,2023,Conflict,2023-09-26,2023,2023,1991-08-20,
+17511,399,Russia (Soviet Union),365,LSR,2023,Conflict,2023-06-02,2023,2023,1991-08-20,
+17528,399,Russia (Soviet Union),365,Wagner,2023,Conflict,2023-08-23,2023,2023,1991-08-20,
+804,374,Rwanda,517,FPR,1990-1994,Internationalized War,1990-10-03,1990,1994,1990-10-01,
+805,374,Rwanda,517,ALiR,1996-2000,War,1996-07-12,1996,2000,1990-10-01,
+12102,374,Rwanda,517,FDLR-FOCA,2001-2002,War,2001-05-20,2001,2002,1990-10-01,
+12102,374,Rwanda,517,FDLR-FOCA,2009-2012,Internationalized War,2009-02-16,2009,2012,1990-10-01,
+12102,374,Rwanda,517,FDLR-FOCA,2016,Internationalized Conflict,2016-03-29,2016,2016,1990-10-01,
+12102,374,Rwanda,517,FDLR-FOCA,2019-2020,Internationalized Conflict,2019-09-18,2019,2020,1990-10-01,
+12102,374,Rwanda,517,FDLR-FOCA,2022-2023,Conflict,2022-12-11,2022,2023,1990-10-01,
+15547,374,Rwanda,517,FDLR-RUD,2019-2020,Internationalized Conflict,2019-10-29,2019,2020,1990-10-01,
+16081,374,Rwanda,517,RMDC,2019-2020,Internationalized Conflict,2019-05-25,2019,2020,1990-10-01,
 757,340,Saudi Arabia,670,JSM,1979,Conflict,1979-11-20,1979,1979,1979-11-20,1979-12-04
 806,375,Senegal,433,MFDC [territory: Casamance],1990,Conflict,1990-08-31,1990,1990,1988-12-31,2011-12-30
 806,375,Senegal,433,MFDC [territory: Casamance],1992-1993,Conflict,1992-09-01,1992,1993,1988-12-31,2011-12-30
@@ -708,19 +735,19 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 747,337,Somalia,520,USC/SNA,1991-1996,War,1991-09-07,1991,1996,1982-01-18,
 748,337,Somalia,520,SRRC,2001-2002,Conflict,2001-05-12,2001,2002,1982-01-18,
 749,337,Somalia,520,ARS/UIC,2006-2008,Internationalized War,2006-10-24,2006,2008,1982-01-18,
-750,337,Somalia,520,Al-Shabaab,2008-2021,Internationalized War,2008-01-17,2008,2021,1982-01-18,
+750,337,Somalia,520,Al-Shabaab,2008-2023,Internationalized War,2008-01-17,2008,2023,1982-01-18,
 752,337,Somalia,520,Hizbul Islam,2009-2010,Internationalized Conflict,2009-05-21,2009,2010,1982-01-18,
 11545,14074,Somalia,520,Republic of Somaliland [territory: Somaliland],2018,Conflict,2018-05-15,2018,2018,2016-07-18,2018-11-05
-15077,14197,Somalia,520,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019-06-04,2019,2021,2018-02-08,
-641,298,South Africa,560,SWAPO [territory: Namibia],1966-1988,War,1966-12-31,1966,1988,1966-08-26,1988-08-08
+15077,14197,Somalia,520,IS [territory: Islamic State],2019-2021,Internationalized Conflict,2019-06-04,2019,2021,2018-02-08,2021-12-19
+641,298,South Africa,560,SWAPO [territory: Namibia],1966-1989,War,1966-12-31,1966,1989,1966-08-26,1989-05-05
 766,345,South Africa,560,ANC,1981-1983,Conflict,1981-08-07,1981,1983,1978-02-01,1988-12-31
 766,345,South Africa,560,ANC,1985-1988,Conflict,1985-06-26,1985,1988,1978-02-01,1988-12-31
-11805,11345,South Sudan,626,SSDM/A - Cobra Faction,2013,Conflict,2013-05-22,2013,2013,2011-08-20,
-11978,11345,South Sudan,626,SSDM/A,2011,Conflict,2011-08-20,2011,2011,2011-08-20,
-11979,11345,South Sudan,626,SSLM/A,2011-2012,Conflict,2011-10-29,2011,2012,2011-08-20,
-12413,11345,South Sudan,626,SPLM/A - IO,2013-2018,Internationalized War,2013-12-15,2013,2018,2011-08-20,
-15195,11345,South Sudan,626,NAS,2019-2021,Conflict,2019-01-03,2019,2021,2011-08-20,
-17033,11345,South Sudan,626,SPLM/A - IO - Kitgwang faction,2021,Conflict,2021-08-08,2021,2021,2011-08-20,
+11805,11345,South Sudan,626,SSDM/A - Cobra Faction,2013,Conflict,2013-05-22,2013,2013,2011-08-20,2021-12-27
+11978,11345,South Sudan,626,SSDM/A,2011,Conflict,2011-08-20,2011,2011,2011-08-20,2021-12-27
+11979,11345,South Sudan,626,SSLM/A,2011-2012,Conflict,2011-10-29,2011,2012,2011-08-20,2021-12-27
+12413,11345,South Sudan,626,SPLM/A - IO,2013-2018,Internationalized War,2013-12-15,2013,2018,2011-08-20,2021-12-27
+15195,11345,South Sudan,626,NAS,2019-2021,Conflict,2019-01-03,2019,2021,2011-08-20,2021-12-27
+17033,11345,South Sudan,626,SPLM/A - IO - Kitgwang,2021,Conflict,2021-08-08,2021,2021,2011-08-20,2021-12-27
 505,249,South Vietnam,817,FNL [territory: South Vietnam],1955-1964,Internationalized War,1955-04-30,1955,1964,1955-04-30,1964-12-31
 786,359,South Yemen,680,YSP - AFI,1986,War,1986-01-13,1986,1986,1986-01-13,1986-01-20
 763,342,Spain,230,ETA [territory: Basque],1978-1982,Conflict,1978-10-22,1978,1982,1968-06-07,1991-12-13
@@ -744,27 +771,30 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 666,309,Sudan,625,SLM/A,2003-2006,Internationalized War,2003-04-09,2003,2006,1971-07-22,
 666,309,Sudan,625,SLM/A,2008-2011,Conflict,2008-08-12,2008,2011,1971-07-22,
 666,309,Sudan,625,SLM/A,2017-2018,Conflict,2017-04-22,2017,2018,1971-07-22,
-666,309,Sudan,625,SLM/A,2020-2021,Conflict,2020-06-01,2020,2021,1971-07-22,
+666,309,Sudan,625,SLM/A,2020-2022,Conflict,2020-06-01,2020,2022,1971-07-22,
 667,309,Sudan,625,NRF,2006,Conflict,2006-07-29,2006,2006,1971-07-22,
 668,309,Sudan,625,SLM/A - MM,2006,Conflict,2006-02-14,2006,2006,1971-07-22,
 669,309,Sudan,625,SLFA,2007-2008,Conflict,2007-08-01,2007,2008,1971-07-22,
 670,309,Sudan,625,SSDM/A,2010-2011,Conflict,2010-05-12,2010,2011,1971-07-22,
 11975,309,Sudan,625,SPLM/A-North,2011,Internationalized Conflict,2011-06-08,2011,2011,1971-07-22,
 11975,309,Sudan,625,SPLM/A-North,2015-2016,Conflict,2015-12-21,2015,2016,1971-07-22,
+11975,309,Sudan,625,SPLM/A-North,2023,Conflict,2023-08-16,2023,2023,1971-07-22,
 11976,309,Sudan,625,SSLM/A,2011,Conflict,2011-04-19,2011,2011,1971-07-22,
 11977,11344,Sudan,625,Republic of South Sudan [territory: Abyei],2011,Conflict,2011-05-19,2011,2011,2011-05-01,2011-06-15
 11988,309,Sudan,625,SRF,2011-2017,War,2011-12-10,2011,2017,1971-07-22,
 14134,309,Sudan,625,SARC,2014,Conflict,2014-02-28,2014,2014,1971-07-22,
 14134,309,Sudan,625,SARC,2017,Conflict,2017-11-26,2017,2017,1971-07-22,
 14150,309,Sudan,625,Darfur Joint Resistance Forces,2014-2015,Conflict,2014-03-02,2014,2015,1971-07-22,
+17497,309,Sudan,625,RSF,2023,War,2023-04-16,2023,2023,1971-07-22,
 784,357,Suriname,115,SLA,1987,Conflict,1987-10-12,1987,1987,1986-08-21,1987-12-31
 642,299,Syria,652,Military faction (forces loyal to Nureddin Atassi and Youssef Zeayen),1966,Conflict,1966-02-23,1966,1966,1966-02-23,
 643,299,Syria,652,Muslim Brotherhood,1979-1982,War,1979-06-16,1979,1982,1966-02-23,
-11973,299,Syria,652,Syrian insurgents,2011-2021,Internationalized War,2011-08-02,2011,2021,1966-02-23,
+11973,299,Syria,652,Syrian insurgents,2011-2023,Internationalized War,2011-08-02,2011,2023,1966-02-23,
 13821,13042,Syria,652,PYD [territory: Rojava Kurdistan],2012-2015,Conflict,2012-09-07,2012,2015,2011-09-10,2015-07-25
-14620,13604,Syria,652,IS [territory: Islamic State],2013-2021,Internationalized War,2013-07-25,2013,2021,2013-03-26,
-14784,13809,Syria,652,SDF [territory: Rojava Kurdistan],2016,Conflict,2016-04-23,2016,2016,2015-12-06,2018-12-23
-14784,13809,Syria,652,SDF [territory: Rojava Kurdistan],2018,Conflict,2018-09-08,2018,2018,2015-12-06,2018-12-23
+14620,13604,Syria,652,IS [territory: Islamic State],2013-2023,Internationalized War,2013-07-25,2013,2023,2013-03-26,
+14784,13809,Syria,652,SDF [territory: Rojava Kurdistan],2016,Conflict,2016-04-23,2016,2016,2015-12-06,
+14784,13809,Syria,652,SDF [territory: Rojava Kurdistan],2018,Conflict,2018-09-08,2018,2018,2015-12-06,
+14784,13809,Syria,652,SDF [territory: Rojava Kurdistan],2023,Conflict,2023-11-06,2023,2023,2015-12-06,
 842,395,Tajikistan,702,UTO,1992-1996,Internationalized War,1992-05-10,1992,1996,1992-05-05,2011-07-25
 842,395,Tajikistan,702,UTO,1998,Conflict,1998-03-24,1998,1998,1992-05-05,2011-07-25
 843,395,Tajikistan,702,Forces of Khudoberdiyev,1997-1998,Conflict,1997-08-30,1997,1998,1992-05-05,2011-07-25
@@ -775,56 +805,58 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 16474,15183,Tanzania,510,IS [territory: Islamic State],2020,Conflict,2020-10-28,2020,2020,2020-10-14,2020-10-28
 487,240,Thailand,800,Military faction (navy),1951,Conflict,1951-06-30,1951,1951,1951-06-30,1982-12-31
 488,240,Thailand,800,CPT,1974-1982,Conflict,1974-10-31,1974,1982,1951-06-30,1982-12-31
-888,423,Thailand,800,Patani insurgents [territory: Patani],2003-2021,Conflict,2003-10-27,2003,2021,1965-12-31,
-785,358,Togo,461,MTD,1986,Conflict,1986-09-23,1986,1986,1986-09-23,1986-09-24
+888,423,Thailand,800,Patani insurgents [territory: Patani],2003-2023,Conflict,2003-10-27,2003,2023,1965-12-31,
+785,358,Togo,461,MTD,1986,Conflict,1986-09-23,1986,1986,1986-09-23,
+16955,358,Togo,461,JNIM,2022-2023,Conflict,2022-07-10,2022,2023,1986-09-23,
 809,378,Trinidad and Tobago,52,Jamaat al-Muslimeen,1990,Conflict,1990-08-02,1990,1990,1990-07-27,1990-08-02
 764,343,Tunisia,616,Résistance Armée Tunisienne,1980,Conflict,1980-01-28,1980,1980,1980-01-27,2015-11-15
 10882,343,Tunisia,616,AQIM,2013-2015,Conflict,2013-10-23,2013,2015,1980-01-27,2015-11-15
 14744,343,Tunisia,616,JAK-T,2015,Conflict,2015-06-15,2015,2015,1980-01-27,2015-11-15
 14747,14333,Tunisia,616,IS [territory: Islamic State],2016,Conflict,2016-03-07,2016,2016,2015-03-18,2016-03-21
 781,354,Turkey,640,PKK [territory: Kurdistan],1984-2013,War,1984-08-15,1984,2013,1983-05-01,
-781,354,Turkey,640,PKK [territory: Kurdistan],2015-2021,War,2015-07-30,2015,2021,1983-05-01,
+781,354,Turkey,640,PKK [territory: Kurdistan],2015-2023,War,2015-07-30,2015,2023,1983-05-01,
 822,383,Turkey,640,DHKP-C,1991-1993,Conflict,1991-07-13,1991,1993,1987-12-31,2016-12-17
 823,383,Turkey,640,MKP,2005,Conflict,2005-06-17,2005,2005,1987-12-31,2016-12-17
 10516,383,Turkey,640,TAK,2016,Conflict,2016-02-17,2016,2016,1987-12-31,2016-12-17
 14701,13902,Turkey,640,IS [territory: Islamic State],2015-2017,War,2015-11-14,2015,2017,2015-07-23,2017-09-06
 15065,383,Turkey,640,Yurtta Sulh Konseyi,2016,Conflict,2016-07-16,2016,2016,1987-12-31,2016-12-17
 16900,383,Turkey,640,TKP-ML,2000,Conflict,2000-04-25,2000,2000,1987-12-31,2016-12-17
-675,314,Uganda,500,Military faction (forces of Idi Amin),1971,Conflict,1971-01-29,1971,1971,1971-01-25,2019-07-21
-676,314,Uganda,500,Kikosi Maalum,1972,Conflict,1972-09-17,1972,1972,1971-01-25,2019-07-21
-676,314,Uganda,500,Kikosi Maalum,1979,Internationalized Conflict,1979-01-22,1979,1979,1971-01-25,2019-07-21
-677,314,Uganda,500,Military faction (forces of Charles Arube),1974,Conflict,1974-03-23,1974,1974,1971-01-25,2019-07-21
-678,314,Uganda,500,Fronasa,1979,Internationalized Conflict,1979-03-20,1979,1979,1971-01-25,2019-07-21
-679,314,Uganda,500,UNLF,1979,Internationalized Conflict,1979-04-07,1979,1979,1971-01-25,2019-07-21
-680,314,Uganda,500,FUNA,1980-1981,Internationalized Conflict,1980-10-07,1980,1981,1971-01-25,2019-07-21
-681,314,Uganda,500,NRA,1981-1986,Internationalized War,1981-08-10,1981,1986,1971-01-25,2019-07-21
-682,314,Uganda,500,UNRF,1981-1983,Internationalized Conflict,1981-12-31,1981,1983,1971-01-25,2019-07-21
-683,314,Uganda,500,UFM,1982,Conflict,1982-02-23,1982,1982,1971-01-25,2019-07-21
-684,314,Uganda,500,HSM,1986-1987,War,1986-11-26,1986,1987,1971-01-25,2019-07-21
-685,314,Uganda,500,UPDA,1986-1987,Conflict,1986-08-10,1986,1987,1971-01-25,2019-07-21
-686,314,Uganda,500,UPA,1987-1992,Conflict,1987-12-03,1987,1992,1971-01-25,2019-07-21
-687,314,Uganda,500,Lord's Army,1988,Conflict,1988-03-18,1988,1988,1971-01-25,2019-07-21
-688,314,Uganda,500,LRA,1988-1991,War,1988-02-25,1988,1991,1971-01-25,2019-07-21
-688,314,Uganda,500,LRA,1994-1998,Conflict,1994-02-21,1994,1998,1971-01-25,2019-07-21
-688,314,Uganda,500,LRA,2000-2006,Internationalized War,2000-01-31,2000,2006,1971-01-25,2019-07-21
-688,314,Uganda,500,LRA,2008-2011,Internationalized Conflict,2008-10-25,2008,2011,1971-01-25,2019-07-21
-688,314,Uganda,500,LRA,2013-2014,Internationalized Conflict,2013-10-01,2013,2014,1971-01-25,2019-07-21
-689,314,Uganda,500,ADF,1996-2002,Conflict,1996-11-16,1996,2002,1971-01-25,2019-07-21
-689,314,Uganda,500,ADF,2007,Conflict,2007-03-27,2007,2007,1971-01-25,2019-07-21
-689,314,Uganda,500,ADF,2010-2011,Internationalized Conflict,2010-07-14,2010,2011,1971-01-25,2019-07-21
-689,314,Uganda,500,ADF,2013-2019,Internationalized Conflict,2013-06-30,2013,2019,1971-01-25,2019-07-21
-690,314,Uganda,500,WNBF,1996,Conflict,1996-04-25,1996,1996,1971-01-25,2019-07-21
-691,314,Uganda,500,UNRF II,1997,Conflict,1997-08-04,1997,1997,1971-01-25,2019-07-21
+675,314,Uganda,500,Military faction (forces of Idi Amin),1971,Conflict,1971-01-29,1971,1971,1971-01-25,2017-12-22
+676,314,Uganda,500,Kikosi Maalum,1972,Conflict,1972-09-17,1972,1972,1971-01-25,2017-12-22
+676,314,Uganda,500,Kikosi Maalum,1979,Internationalized Conflict,1979-01-22,1979,1979,1971-01-25,2017-12-22
+677,314,Uganda,500,Military faction (forces of Charles Arube),1974,Conflict,1974-03-23,1974,1974,1971-01-25,2017-12-22
+678,314,Uganda,500,Fronasa,1979,Internationalized Conflict,1979-03-20,1979,1979,1971-01-25,2017-12-22
+679,314,Uganda,500,UNLF,1979,Internationalized Conflict,1979-04-07,1979,1979,1971-01-25,2017-12-22
+680,314,Uganda,500,FUNA,1980-1981,Internationalized Conflict,1980-10-07,1980,1981,1971-01-25,2017-12-22
+681,314,Uganda,500,NRA,1981-1986,Internationalized War,1981-08-10,1981,1986,1971-01-25,2017-12-22
+682,314,Uganda,500,UNRF,1981-1983,Internationalized Conflict,1981-12-31,1981,1983,1971-01-25,2017-12-22
+683,314,Uganda,500,UFM,1982,Conflict,1982-02-23,1982,1982,1971-01-25,2017-12-22
+684,314,Uganda,500,HSM,1986-1987,War,1986-11-26,1986,1987,1971-01-25,2017-12-22
+685,314,Uganda,500,UPDA,1986-1987,Conflict,1986-08-10,1986,1987,1971-01-25,2017-12-22
+686,314,Uganda,500,UPA,1987-1992,Conflict,1987-12-03,1987,1992,1971-01-25,2017-12-22
+687,314,Uganda,500,Lord's Army,1988,Conflict,1988-03-18,1988,1988,1971-01-25,2017-12-22
+688,314,Uganda,500,LRA,1988-1991,War,1988-02-25,1988,1991,1971-01-25,2017-12-22
+688,314,Uganda,500,LRA,1994-1998,Conflict,1994-02-21,1994,1998,1971-01-25,2017-12-22
+688,314,Uganda,500,LRA,2000-2006,Internationalized War,2000-01-31,2000,2006,1971-01-25,2017-12-22
+688,314,Uganda,500,LRA,2008-2011,Internationalized Conflict,2008-10-25,2008,2011,1971-01-25,2017-12-22
+688,314,Uganda,500,LRA,2013-2014,Internationalized Conflict,2013-10-01,2013,2014,1971-01-25,2017-12-22
+689,314,Uganda,500,ADF,1996-2002,Conflict,1996-11-16,1996,2002,1971-01-25,2017-12-22
+689,314,Uganda,500,ADF,2007,Conflict,2007-03-27,2007,2007,1971-01-25,2017-12-22
+689,314,Uganda,500,ADF,2010-2011,Internationalized Conflict,2010-07-14,2010,2011,1971-01-25,2017-12-22
+689,314,Uganda,500,ADF,2013-2017,Internationalized Conflict,2013-06-30,2013,2017,1971-01-25,2017-12-22
+690,314,Uganda,500,WNBF,1996,Conflict,1996-04-25,1996,1996,1971-01-25,2017-12-22
+691,314,Uganda,500,UNRF II,1997,Conflict,1997-08-04,1997,1997,1971-01-25,2017-12-22
+16938,15438,Uganda,500,IS [territory: Islamic State],2022,Conflict,2022-12-21,2022,2022,2021-06-01,2022-12-27
 14085,13219,Ukraine,369,Maidan,2014,Conflict,2014-02-18,2014,2014,2014-01-22,2014-02-21
-14124,13246,Ukraine,369,DPR [territory: Donetsk],2014,Internationalized War,2014-05-02,2014,2014,2014-04-13,2014-09-28
-14184,13247,Ukraine,369,LPR [territory: Lugansk],2014,Internationalized War,2014-06-14,2014,2014,2014-05-04,2014-10-17
-14210,13306,Ukraine,369,United Armed Forces of Novorossiya [territory: Novorossiya],2014-2015,Internationalized War,2014-09-18,2014,2015,2014-04-08,
-15100,13306,Ukraine,369,DPR [territory: Novorossiya],2015-2021,Internationalized Conflict,2015-06-18,2015,2021,2014-04-08,
-15101,13306,Ukraine,369,LPR [territory: Novorossiya],2015-2021,Internationalized Conflict,2015-07-15,2015,2021,2014-04-08,
+14124,13246,Ukraine,369,DPR [territory: Donetsk],2014,Internationalized War,2014-05-02,2014,2014,2014-04-08,2014-09-15
+14184,13247,Ukraine,369,LPR [territory: Lugansk],2014,Internationalized War,2014-06-14,2014,2014,2014-05-04,2014-09-17
+14210,13306,Ukraine,369,United Armed Forces of Novorossiya [territory: Novorossiya],2014-2015,Internationalized War,2014-09-18,2014,2015,2014-09-16,2022-02-25
+15100,13306,Ukraine,369,DPR [territory: Novorossiya],2015-2022,Internationalized Conflict,2015-06-18,2015,2022,2014-09-16,2022-02-25
+15101,13306,Ukraine,369,LPR [territory: Novorossiya],2015-2021,Internationalized Conflict,2015-07-15,2015,2021,2014-09-16,2022-02-25
 692,315,United Kingdom,200,PIRA [territory: Northern Ireland],1971-1991,Conflict,1971-08-31,1971,1991,1970-08-11,1998-08-15
 693,315,United Kingdom,200,RIRA [territory: Northern Ireland],1998,Conflict,1998-08-15,1998,1998,1970-08-11,1998-08-15
-878,418,United States of America,2,al-Qaida,2001-2017,Internationalized War,2001-09-11,2001,2017,2001-09-11,2019-09-07
-878,418,United States of America,2,al-Qaida,2019,Internationalized Conflict,2019-07-31,2019,2019,2001-09-11,2019-09-07
+878,418,United States of America,2,al-Qaida,2001-2017,Internationalized War,2001-09-11,2001,2017,2000-10-12,2019-09-07
+878,418,United States of America,2,al-Qaida,2019,Internationalized Conflict,2019-07-31,2019,2019,2000-10-12,2019-09-07
 702,319,Uruguay,165,MLN/Tupamaros,1972,Conflict,1972-04-30,1972,1972,1970-04-13,1972-12-31
 871,415,Uzbekistan,704,IMU,1999-2000,Internationalized Conflict,1999-03-30,1999,2000,1999-02-16,2004-07-30
 872,415,Uzbekistan,704,JIG,2004,Conflict,2004-03-30,2004,2004,1999-02-16,2004-07-30
@@ -837,7 +869,7 @@ dyad_id,conflict_id,location,gwno_loc,side_b,ep_years,intensity,ep_start_date,ep
 459,230,Yemen (North Yemen),678,AQAP,2009-2018,Internationalized War,2009-12-17,2009,2018,1948-03-15,
 853,402,Yemen (North Yemen),678,Democratic Republic of Yemen [territory: South Yemen],1994,War,1994-04-28,1994,1994,1994-02-21,1994-07-04
 10855,230,Yemen (North Yemen),678,Ansarallah,2014-2015,Conflict,2014-04-09,2014,2015,1948-03-15,
-14595,230,Yemen (North Yemen),678,Forces of Hadi,2015-2021,Internationalized War,2015-03-24,2015,2021,1948-03-15,
+14595,230,Yemen (North Yemen),678,Forces of the Presidential Leadership Council,2015-2023,Internationalized War,2015-03-24,2015,2023,1948-03-15,
 14609,13645,Yemen (North Yemen),678,IS [territory: Islamic State],2015,Conflict,2015-03-20,2015,2015,2015-03-20,2020-09-18
 14609,13645,Yemen (North Yemen),678,IS [territory: Islamic State],2017,Conflict,2017-05-18,2017,2017,2015-03-20,2020-09-18
 14609,13645,Yemen (North Yemen),678,IS [territory: Islamic State],2020,Conflict,2020-08-20,2020,2020,2015-03-20,2020-09-18
