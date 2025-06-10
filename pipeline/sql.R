@@ -44,12 +44,12 @@ db[["dl_tjet_codebook"]] <- db[["dl_tjet_codebook"]] %>%
   rename(definition_en = definition) %>%
   left_join(
     db_fr[["dl_tjet_codebook_fr"]] %>%
-      select(colname, definition),
-    by = "colname"
+      select(col_name, definition),
+    by = "col_name"
   ) %>%
   rename(definition_fr = definition) %>%
   select(
-    colname, definition_en, definition_fr, source, source_description,
+    col_name, definition_en, definition_fr, source, source_description,
     source_url, tjet_version
   )
 
@@ -88,7 +88,7 @@ tabs <- c(
   "Reparations_individualReparationsEligible", "SurveysMeta", "TJETversions",
   "Transitions", "Trials", "TrialsCodebook", "TruthCommissions",
   "TruthCommissionsCodebook", "Vettings", "VettingsCodebook",
-  "Vettings_targetingAffiliation"
+  "Vettings_targetingPositionSought"
 ) %>%
   print()
 
