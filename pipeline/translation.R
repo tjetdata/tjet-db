@@ -196,6 +196,19 @@ tabs <- tabs[tabs %in% names(db)]
 db[tabs] %>%
   saveRDS(file = here::here("data", "tjetdb_fr.rds"))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### for translating focus country reports
 # usage(key_get("DeepL"))
 # base <- "~/Documents/GitHub/tjetFI/quarto-site-generator/_focus"
@@ -205,3 +218,143 @@ db[tabs] %>%
 #   read_file() %>%
 #   translate() %>%
 #   write_file(file = here::here(base, "CotedIvoire-fr.qmd"))
+
+read_csv("~/Desktop/temp.csv") |> 
+rowwise() |> 
+  mutate(
+    summary_fr = translate(summary),
+    amnesties_fr = translate(amnesties),
+    domestic_fr = translate(domestic),
+    intl_fr = translate(intl),
+    foreign_fr = translate(foreign),
+    reparations_fr = translate(reparations),
+    tcs_fr = translate(tcs),
+    vetting_fr = translate(vetting)
+  ) %>%
+  ungroup() |> 
+  mutate(
+    summary_fr = str_replace(summary_fr, ", la TJET ", ", TJET " ), 
+    summary_fr = str_replace(summary_fr, ", le TJET ", ", TJET " ), 
+    domestic_fr = str_replace(domestic_fr, "La TJET ", "TJET " ), 
+  ) |> 
+  write_csv("~/Desktop/new.csv", na = "") 
+
+
+
+
+
+
+
+"auto_text_update/new_confl.csv" |> 
+  read_csv() |> 
+  rowwise() |> 
+  mutate(
+    conflict_fr = translate(conflict)
+  ) %>%
+  ungroup() |> 
+  mutate(
+    conflict_fr = str_replace(conflict_fr, ", la TJET ", ", TJET " ), 
+    conflict_fr = str_replace(conflict_fr, ", le TJET ", ", TJET " )
+  ) |> 
+  write_csv("auto_text_update/new_confl.csv", na = "") 
+
+"auto_text_update/new_summary.csv" |> 
+  read_csv() |> 
+  rowwise() |> 
+  mutate(
+    summary_fr = translate(summary)
+  ) %>%
+  ungroup() |> 
+  mutate(
+    summary_fr = str_replace(summary_fr, ", la TJET ", ", TJET " ), 
+    summary_fr = str_replace(summary_fr, ", le TJET ", ", TJET " )
+  ) |> 
+  write_csv("auto_text_update/new_summary.csv", na = "") 
+
+"auto_text_update/new_domestic.csv" |> 
+  read_csv() |> 
+  rowwise() |> 
+  mutate(
+    domestic_fr = translate(domestic)
+  ) %>%
+  ungroup() |> 
+  mutate(
+    domestic_fr = str_replace(domestic_fr, ", la TJET ", ", TJET " ), 
+    domestic_fr = str_replace(domestic_fr, ", le TJET ", ", TJET " ),
+    domestic_fr = str_replace(domestic_fr, "La TJET ", "TJET " ), 
+    domestic_fr = str_replace(domestic_fr, "Le TJET ", "TJET " )
+  ) |> 
+  write_csv("auto_text_update/new_domestic.csv", na = "") 
+
+"auto_text_update/new_foreign.csv" |> 
+  read_csv() |> 
+  rowwise() |> 
+  mutate(
+    foreign_fr = translate(foreign)
+  ) %>%
+  ungroup() |> 
+  write_csv("auto_text_update/new_foreign.csv", na = "") 
+
+"auto_text_update/new_intl.csv" |> 
+  read_csv() |> 
+  rowwise() |> 
+  mutate(
+    intl_fr = translate(intl)
+  ) %>%
+  ungroup() |> 
+  write_csv("auto_text_update/new_intl.csv", na = "") 
+
+"auto_text_update/new_reparations.csv" |> 
+  read_csv() |> 
+  rowwise() |> 
+  mutate(
+    reparations_fr = translate(reparations)
+  ) %>%
+  ungroup() |> 
+  mutate(
+    reparations_fr = str_replace(reparations_fr, ", la TJET ", ", TJET " ), 
+    reparations_fr = str_replace(reparations_fr, ", le TJET ", ", TJET " ),
+    reparations_fr = str_replace(reparations_fr, "La TJET ", "TJET " ), 
+    reparations_fr = str_replace(reparations_fr, "Le TJET ", "TJET " )
+  ) |> 
+  write_csv("auto_text_update/new_reparations.csv", na = "") 
+
+"auto_text_update/new_tcs.csv" |> 
+  read_csv() |> 
+  rowwise() |>
+  mutate(
+    tcs_fr = translate(tcs)
+  ) %>%
+  ungroup() |>
+  mutate(
+    tcs_fr = str_replace(tcs_fr, "; la TJET ", "; TJET " ), 
+    tcs_fr = str_replace(tcs_fr, "; le TJET ", "; TJET " ),
+  ) |> 
+  write_csv("auto_text_update/new_tcs.csv", na = "") 
+
+"auto_text_update/new_vetting.csv" |> 
+  read_csv() |> 
+  rowwise() |>
+  mutate(
+    vetting_fr = translate(vetting)
+  ) %>%
+  ungroup() |>
+  mutate(
+    vetting_fr = str_replace(vetting_fr, "; la TJET ", "; TJET " ), 
+    vetting_fr = str_replace(vetting_fr, "; le TJET ", "; TJET " ),
+    vetting_fr = str_replace(vetting_fr, "politique de vérification des antécédents", "politique de filtrage" ),
+    vetting_fr = str_replace(vetting_fr, "politiques de vérification des antécédents", "politiques de filtrage" ),
+    vetting_fr = str_replace(vetting_fr, "politique de contrôle", "politique de filtrage" ),
+    vetting_fr = str_replace(vetting_fr, "politiques de contrôle", "politiques de filtrage" ),
+  ) |> 
+  write_csv("auto_text_update/new_vetting.csv", na = "") 
+
+"auto_text_update/new_un.csv" |> 
+  read_csv() |> 
+  rowwise() |>
+  mutate(
+    un_fr = translate(un)
+  ) %>%
+  ungroup() |>
+  write_csv("auto_text_update/new_un.csv", na = "") 
+
