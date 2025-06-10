@@ -87,7 +87,7 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
       .direction = "down"
     ) %>%
     ungroup() %>%
-    mutate(across(all_of(vars), ~ ifelse(year %in% 1970:2020 & is.na(.x), 0, ifelse(year > 2020, NA, .x)))) %>%
+    mutate(across(all_of(vars), ~ ifelse(year %in% 1970:2023 & is.na(.x), 0, ifelse(year > 2023, NA, .x)))) %>%
     rename(
       "vet_dismiss" = "type_dismissal",
       "vet_dismiss_created" = "type_dismissal_created",

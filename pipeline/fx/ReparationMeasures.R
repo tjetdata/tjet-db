@@ -30,7 +30,7 @@ ReparationMeasures <- function(
   if (sum(!nexus_vars %in% names(nexus)) > 0) eval(error)
 
   ## subsetting & new measures
-
+  
   reps <- db[["Reparations"]] %>%
     mutate(
       all = 1,
@@ -80,13 +80,9 @@ ReparationMeasures <- function(
       accessibility = ifelse(!is.na(accessibility), 1, 0),
       victim_centered = diffAmount + outreach + alterationEffect + foreclose + accessibility,
       scope = case_when(
-        is.na(beneficiariesCount) | beneficiariesCount == 0 ~ 0,
-        # beneficiariesCount > 0 & beneficiariesCount < 1039 ~ 1, # above 1st quartile
-        # beneficiariesCount >= 1039 & beneficiariesCount < 6164 ~ 2, # above median
-        # beneficiariesCount >= 6164 & beneficiariesCount < 28778 ~ 3,
-        # beneficiariesCount >= 28778 ~ 4,
-        beneficiariesCount > 0 & beneficiariesCount < 6164 ~ 1,
-        beneficiariesCount >= 6164 ~ 2
+        is.na(individualsRepairedEstimate) | individualsRepairedEstimate == 0 ~ 0,
+        individualsRepairedEstimate > 0 & individualsRepairedEstimate < 4481 ~ 1,
+        individualsRepairedEstimate >= 4481 ~ 2
       ),
       harms = harmsMurder + harmsTorture + harmsDetention + harmsDisappearance +
         harmsChildRecruitment + harmsDisplacement + harmsSexualViolence + harmsOther
@@ -160,7 +156,7 @@ ReparationMeasures <- function(
     ungroup() %>%
     mutate(across(
       all_of(vars),
-      ~ ifelse(year %in% 1970:2020 & is.na(.x), 0, ifelse(year > 2020, NA, .x))
+      ~ ifelse(year %in% 1970:2023 & is.na(.x), 0, ifelse(year > 2023, NA, .x))
     )) %>%
     rename_with(.fn = ~ paste(prefix, .x, sep = "_"), .cols = all_of(vars)) %>%
     return()

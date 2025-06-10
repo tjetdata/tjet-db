@@ -130,8 +130,8 @@ AmnestyMeasure <- function(cy,
   cy %>%
     left_join(amn, by = c("ccode_cow" = "ccode", "year" = "amnestyYear")) %>%
     mutate(
-      count = ifelse(year %in% 1970:2020 & is.na(count), 0, count),
-      count = ifelse(year > 2020, NA, count)
+      count = ifelse(year %in% 1970:2023 & is.na(count), 0, count),
+      count = ifelse(year > 2023, NA, count)
     ) %>%
     rename_with(.fn = ~var_name, .cols = count) %>%
     return()
