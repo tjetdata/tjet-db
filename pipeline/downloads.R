@@ -1,12 +1,13 @@
 # remotes::install_github('matthewjrogers/rairtable', ref = 'dev')
 ### the development version handles multi-select fields without error
+
 ## packages
 require(tidyverse)
 require(rairtable)
 
 ### the api key needs to be set only once, to save it to the local environment
-### if it needs to be set again,
-### replace the string and un-comment below to run once
+### if it needs to be set again, replace the string and un-comment to run once
+
 # set_airtable_api_key("MY_KEY_HERE", install = TRUE)
 # readRenviron("~/.Renviron")
 # Sys.getenv("AIRTABLE_API_KEY")
@@ -16,15 +17,17 @@ to_download <-
   list(
     "appHsoHAemKITZgMF" = c(
       "Amnesties", "Reparations", "TruthCommissions", "Vettings", "Countries",
-      "Transitions", "ConflictDyadSpells", "Conflicts", "Dyads",
+      "Transitions", "ConflictDyadSpells", "Conflicts", "Dyads", 
       "select_options", "metadata", "UCDPcountries", "TJETmembers", "Experts",
       "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges",
       "VettingComparison", "BIcomparison", "ICC", "Investigations",
-      "AdHocHybrid", "SurveysMeta", "Ethiopia", "TJETversions"
+      "AdHocHybrid", "SurveysMeta", "Ethiopia", "TJETversions", 
+      "Southey", "Filipa", "CorrectionsCandidates"
     ),
     "appF8HAH7SN7C09cU" = c(
-      "Trials", "Accused", "CourtLevels", "Countries",
-      "Conflicts", "Dyads", "metadata"
+      "Trials", "Accused", "CourtLevels", "Countries", "Conflicts", "Dyads", 
+      "metadata", "ArgCausas", "ArgAccused", "ArgCLs", "ArgCharges", 
+      "BIcomparison", "BIcaseIDlink", "TI", "newTI"
     )
   )
 
