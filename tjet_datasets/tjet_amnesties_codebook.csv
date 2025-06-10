@@ -1,32 +1,32 @@
 col_name,definition
 amnestyID,TJET Amnesty ID
-amnestyName,official name of amnesty law or proclamation
-amnestyYear,year the amnesty was passed or announced
-blanket,Could this be considered a blanket amnesty?
-ccode_cow,COW numeric country code
 country,country name
-dcj,Was this amnesty passed during the intra-state conflict?
-enactedHow,How was the amnesty enacted?
-fitsConflictTJ,Did this case fit the definition of a conflict amnesty?
-fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic amnesty?
-hrCrimes,How did this amnesty relate to human rights?
+ccode_cow,COW numeric country code
+amnestyYear,year the amnesty was passed or announced
+yearOngoing,last known year when amnesty still applies
 mechanismDescription,name and/or description of the amnesty
 mechanismDescription_fr,name and/or description of the amnesty (French)
-mediation,Was the peace settlement mediated?
-narrative,explanation of the amnesty law
-oppRank,Which members of the armed opposition were offered amnesty?
-otherExplain,Which other actors were amnestied?
-pcj,Was this amnesty passed after the intra-state conflict?
-peaceSettlement,Was the amnesty part of a peace settlement?
-qualifyingProcess,What actions did subjects have to take to qualify for amnesty?
-selfAmnesty,Could this be considered a self-amnesty?
-SGBV,Did the amnesty cover sexual or gender-based violence?
+amnestyName,official name of amnesty law or proclamation
 start_date,date of amnesty passage
-startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before or immediately after this amnesty?
-startedIntraConflbefore,Did this country start an intra-state conflict at some point before this amnesty?
+enactedHow,How was the amnesty enacted?
+narrative,explanation of the amnesty law
+whoWasAmnestied,Which actors were amnestied?
 stateAgents,Which state agents were offered amnesty?
-tjet_version,TJET database version: date on which data was extracted from the database
+oppRank,Which members of the armed opposition were offered amnesty?
+selfAmnesty,Could this be considered a self-amnesty?
+qualifyingProcess,What actions did subjects have to take to qualify for amnesty?
+whatCrimes,What crimes were amnestied?
+blanket,Could this be considered a blanket amnesty?
+hrCrimes,How did this amnesty relate to human rights?
+SGBV,Did the amnesty cover sexual or gender-based violence?
+startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before or immediately after this amnesty?
+fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic amnesty?
+startedIntraConflbefore,Did this country start an intra-state conflict at some point before this amnesty?
+fitsConflictTJ,Did this case fit the definition of a conflict amnesty?
 ucdpConflictID,UCDP Conflict ID
 ucdpDyadID,UCDP Dyad ID
-whatCrimes,What crimes were amnestied?
-whoWasAmnestied,Which actors were amnestied?
+dcj,Was this amnesty passed during the intra-state conflict?
+pcj,Was this amnesty passed after the intra-state conflict?
+peaceSettlement,Was the amnesty part of a peace settlement?
+mediation,Was the peace settlement mediated?
+tjet_version,TJET database version: date on which data was extracted from the database

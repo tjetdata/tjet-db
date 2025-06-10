@@ -1,63 +1,61 @@
 col_name,definition
 accusedID,TJET Accused ID
-accusedNotes,notes on the accused
-arrests,preliminary trial process: arrests
-atrocity,charges: atrocity
-certainty,How much certainty did coders have in coding this accused?
-charges,charges description
-chargesOther,charges: other
-chargesUnknown,charges: none reported
-childVictim,SGBV: child victim
-currentStateAgent,Is this individual currently a state agent? (within the last year of coding)
-detention,preliminary trial process: detention
-disappearance,charges: disappearance
-ethnicityAccused,ethnicity of accused
-everGuilty,Was the accused ever convicted in this trial?
-extradition,preliminary trial process: extradition
-extraditionCountry,country from which extradition was sought
-firstGuiltyYear,year in which the accused was first found guilty
-genocide,charges: genocide
-headOfState,Was this individual the head of state at the time of the crime?
-highRank,Was this a high-ranking individual?
-ICC_arrest_warrant,year in which ICC arrest warrant was issued
-ICC_arrestAppear,year of court appearance of accused
-ICC_atLarge,accused with ICC arrest warrant is at large
-ICC_confirm_charges,year in which ICC trial chamber confirmed charges
-ICC_investigation,year in which ICC investigation began
-ICC_prelim_exam,year in which preliminary ICC examination began
-ICC_proceedings,year in which ICC proceedings began
-ICC_referral,year in which country situation was referred to the ICC
-ICC_withdrawnDismissed,year in which ICC charges were dismissed or withdrawn
-illegalImprisonment,charges: illegal imprisonment
-indictments,preliminary trial process: indictments
-lastGuilty,Was the accused found guilty in the last verdict of the proceedings?
-lastGuiltyYear,year of last guilty verdict
-lastSentencingArrangement,sentencing arrangement of the last verdict
-lastSentencingTime,detention time of last sentencing verdict for the accused
-lastVerdict,final verdict in the proceedings for the accused
-lastVerdictYear,year of final verdict
-laterPardonedAmnestied,Was this person later pardoned or amnestied?
-LGBTQvictim,SGBV: LGBTQ victim
-maleVictim,SGBV: male victim
-membership,state membership: in what capacity did the state agent act?
-murderKilling,charges: murder or killing
+trialID,TJET Trial ID
 name,name of the accused
-ongoing,trial is ongoing for the accused at time of coding
-opposedToGovernment,Was this person opposed to the government?
-oppositionType,opposition type
-other,preliminary trial process: other
-otherSGBV,other SGBV
 position_desc,"description of the accused (position rank, title, role, etc)"
 position_desc_fr,description of the accused (French)
-prosecutorType,prosecutor type
-rape,charges: rape
-RSV,charges: rape of sexual violence
-sexualViolence,charges: sexual violence
-SGBV,charges: sexual or gender-based violence
+accusedNotes,notes on the accused
+ethnicityAccused,ethnicity of accused
 stateAgent,Was the accused a state agent?
-statuteAmnestyCircumvented,statute or amnesty circumvented
-tjet_version,TJET database version: date on which data was extracted from the database
+currentStateAgent,Is this individual currently a state agent? (within the last year of coding)
+membership,state membership: in what capacity did the state agent act?
+opposedToGovernment,Was this person opposed to the government?
+oppositionType,opposition type
+highRank,Was this a high-ranking individual?
+headOfState,Was this individual the head of state at the time of the crime?
+prosecutorType,prosecutor type
+charges,charges description
+chargesUnknown,charges: none reported
+atrocity,charges: atrocity
+murderKilling,charges: murder or killing
 torture,charges: torture
-trialID,TJET Trial ID
-trialRelevantInfo,other relevant information about the trial
+illegalImprisonment,charges: illegal imprisonment
+disappearance,charges: disappearance
+chargesOther,charges: other
 unknown,preliminary trial process: none reported
+indictments,preliminary trial process: indictments
+arrests,preliminary trial process: arrests
+extradition,preliminary trial process: extradition
+extraditionCountry,country from which extradition was sought
+detention,preliminary trial process: detention
+other,preliminary trial process: other
+statuteAmnestyCircumvented,statute or amnesty circumvented
+laterPardonedAmnestied,Was this person later pardoned or amnestied?
+trialRelevantInfo,other relevant information about the trial
+certainty,How much certainty did coders have in coding this accused?
+SGBV,charges: sexual or gender-based violence
+rape,charges: rape
+sexualViolence,charges: sexual violence (other than rape)
+RSV,charges: rape or sexual violence
+otherSGBV,other SGBV
+maleVictim,SGBV: male victim
+childVictim,SGBV: child victim
+LGBTQvictim,SGBV: LGBTQ victim
+ICC_referral,year in which country situation was referred to the ICC
+ICC_prelim_exam,year in which preliminary ICC examination began
+ICC_investigation,year in which ICC investigation began
+ICC_arrest_warrant,year in which ICC arrest warrant was issued
+ICC_arrestAppear,year of court appearance of accused
+ICC_confirm_charges,year in which ICC trial chamber confirmed charges
+ICC_proceedings,year in which ICC proceedings began
+ICC_atLarge,accused with ICC arrest warrant is at large
+ICC_withdrawnDismissed,year in which ICC charges were dismissed or withdrawn
+everGuilty,Was the accused ever convicted in this trial?
+firstGuiltyYear,year in which the accused was first found guilty
+lastGuilty,Was the accused found guilty in the last verdict of the proceedings?
+lastGuiltyYear,year of last guilty verdict
+lastVerdict,final verdict in the proceedings for the accused
+lastVerdictYear,year of final verdict
+lastSentencingTime,detention time of last sentencing verdict for the accused
+lastSentencingArrangement,sentencing arrangement of the last verdict
+tjet_version,TJET database version: date on which data was extracted from the database

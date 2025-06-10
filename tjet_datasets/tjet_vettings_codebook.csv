@@ -1,43 +1,30 @@
 col_name,definition
+vettingID,TJET Vetting ID
 alterationOf,vettingID of the policy which is altered by this record
-appealJudgment,Is there evidence that any individual successfully appealed their specific judgment?
-ban_from_elected,ban from candidacy for office in legislature
-beganAfterIntraConfl,Did this vetting policy begin after an intra-state conflict?
-beganDuringIntraConfl,Did this vetting policy begin during an intra-state conflict?
-ccode_cow,COW numeric country code
 country,country name
-courtChallenge,"Was the entire policy challenged in court, and if so with what outcome?"
-dateLaw,date of the law or decree
-enactment,How was the policy enacted?
-fairness,"index adding binary variables for individual conduct or appeals, public, and any court challenges (0-3)"
-fairnessNotes,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc)"
-fitsConflictTJ,Did this case fit the definition of conflict transitional justice?
-fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?
-hearingsPublic,Were investigations transparent and publicly accessible?
-inst_exe,specific institution targeted: executive (see also targetingPositionSought)
-inst_judiciary,specific institution targeted: judiciary (see also targetingPositionSought)
-inst_legis,specific institution targeted: legislature (see also targetingPositionSought)
-inst_military,specific institution targeted: armed forces (see also targetingPositionSought)
-inst_other,specific institution targeted: other (see also targetingPositionSought)
-inst_parties,specific institution targeted: political parties (see also targetingPositionSought)
-inst_police,specific institution targeted: police (includes ordinary police and secret police informants) (see also targetingPositionSought)
-inst_public,"specific institution targeted: public sector (bureaucrats, low-rank nominated or elected officials) (see also targetingPositionSought)"
-inst_targeted,"scaled version of sum_inst (0 => 0, 1 => 1, 2-5 => 2, > 5 => 3)"
-narrative,narrative description of the policy and its implementation
-policy_type,number of combined policy types (1-3)
+ccode_cow,COW numeric country code
+yearStart,"year vetting policy spell was in effect, not the date of the law"
+yearEnd,year vetting policy spell ended
 policyName,name or description of the vetting policy
 policyName_fr,name or description of the vetting policy (French translation)
-startedDemocraticTransition,Did this country start a democratic transition at some point before this vetting policy?
-startedIntraConflBefore,Did this country start an intrastate conflict at some point before this vetting policy?
-sum_inst,number of specific institutions targeted (0-8)
-targetingPositionSought,Which institutional positions were those targeted by this policy prevented from holding?
-targetingWhy,Why were individuals targeted?
-tjet_version,TJET database version: date on which data was extracted from the database
+dateLaw,date of the law or decree
+narrative,narrative description of the policy and its implementation
+type_dismissal,policy type: dismissal from current employment
 type_ban,policy type: ban from future employment
 type_declassification,policy type: declassification
-type_dismissal,policy type: dismissal from current employment
+targetingPositionSought,Which institutional positions were those targeted by this policy prevented from holding?
+enactment,How was the policy enacted?
+targetingWhy,Why were individuals targeted?
+hearingsPublic,Were investigations transparent and publicly accessible?
+appealJudgment,Is there evidence that any individual successfully appealed their specific judgment?
+fairnessNotes,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc)"
+courtChallenge,"Was the entire policy challenged in court, and if so with what outcome?"
+startedDemocraticTransition,Did this country start a democratic transition at some point before this vetting policy?
+fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?
+startedIntraConflBefore,Did this country start an intrastate conflict at some point before this vetting policy?
+fitsConflictTJ,Did this case fit the definition of conflict transitional justice?
 ucdpConflictID,UCDP Conflict ID
 ucdpDyadID,UCDP Dyad ID
-vettingID,TJET Vetting ID
-yearEnd,year vetting policy spell ended
-yearStart,"year vetting policy spell was in effect, not the date of the law"
+beganDuringIntraConfl,Did this vetting policy begin during an intra-state conflict?
+beganAfterIntraConfl,Did this vetting policy begin after an intra-state conflict?
+tjet_version,TJET database version: date on which data was extracted from the database

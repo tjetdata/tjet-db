@@ -1,7 +1,7 @@
 col_name,definition
 ccode_cow,COW numeric country code
-ICC_investigation,year in which ICC investigation began
+ICC_referral,year in which country situation was referred to the ICC
 ICC_prelim_exam,year in which preliminary ICC examination began
 ICC_prelimEnd,year in which preliminary ICC examination ended
-ICC_referral,year in which country situation was referred to the ICC
+ICC_investigation,year in which ICC investigation began
 tjet_version,TJET database version: date on which data was extracted from the database

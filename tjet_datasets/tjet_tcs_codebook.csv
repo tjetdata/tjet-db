@@ -1,102 +1,102 @@
 col_name,definition
-accessOfficialDocuments,truth commission powers: access official documents
-allocateReparations,truth commission powers: allocate reparations
-beganOperatingAfterIntraConfl,Did this truth commission begin operating during intra-state conflict?
-beganOperatingDuringIntraConfl,Did this truth commission begin operating after intra-state conflict?
-branchCreated,Which branch(es) of government created the TC?
-casesTestimoniesCount,What is the total number of testimonies taken?
-ccode_cow,COW numeric country code
-commissionerCount,How many commissioners were on the truth commission?
-commissioners,Did the truth commission have commissioners?
-commissionersHowChosen,How were commissioners chosen?
-commissionersVictimGroups,Did commissioners include representatives of victim groups?
-compelTestimony,truth commission powers: compel testimony
-consultedGroups,Which vulnerable groups were consulted?
-consultedVictims,Did the truth commission consult victims groups during the design phase?
-corruption,crimes covered: corruption
-corruptionReforms,Did the final report recommend corruption reform?
-corruptionReformsType,What type of corruption reform did the final report recommend?
+truthcommissionID,TJET Truth Commission ID
 country,country name
-crimesOther,crimes covered: other
-crimeSpecificGroups,crimes covered: crimes against specific groups
-dayMonthPassed,day/month of the truth commission law
-death,crimes covered: deaths
-democraticTransitionBeforeTC,Did this country start a democratic transition at some point before this truth commission began operating?
-disappearance,crimes covered: disappearance
-domesticInitiatePerson,Who specifically initiated the commission?
-encourageVictimTestimony,Did the truth commission encourage victim testimony?
-encourageVictimTestimonyHow,How did the truth commission encourage victim testimony?
-estimatedCost,What was the estimated cost of the TC (in USD)?
-finalRecommendations,additional recommendations of the truth commission
-finalReportIssued,Did the truth commission issue a final report?
-finalReportRecommendations,Did the truth commission final report make final recommendations?
-fitsConflictTJ,Did this case fit the definition of a conflict truth commission?
-fitsPostAutocraticTJ,Did this case fit the definition of a post-authoritarian truth commission?
-forcedDisplacement,crimes covered: forced displacement
-formallyIndependent,Was the TC formally independent?
-genderReform,Did the final report recommend gender reform?
-genderReformType,What type of gender reform did the final report recommend?
-grantAmnesty,truth commission powers: grant amnesty
-heldPublicHearings,Did the truth commission hold public hearings?
-humanRightsReforms,Did the final report recommend human rights reform?
-humanRightsReformType,What type of human rights reform did the final report recommend?
-idiosyncratic,this commission did not strictly meet the TJET definition of a truth commission
-internationalBody,Which international body initiated the commission?
-intraConflictBeforeTC,Did this country start an intra-state conflict at some point before this truth commission began operating?
-investigateStateMembers,truth commission powers: investigate former or current members of the state
-judicialReforms,Did the final report recommend judicial reform?
-judicialReformsType,What type of judicial reform did the final report recommend?
-legalBasis,legal basis of the truth commission
-legalReform,Did the final report recommend legal or constitutional reform?
-legalType,What type of legal or constitutional reform did the final report recommend?
-mandatePeriodicMonitoringImplementation,Did the truth commission mandate require periodic monitoring or automatic implementation of recommendations?
-mandateTimePeriodCovered,Did the mandate specify the time period that is covered by the truth commission?
-namePerpetrators,truth commission powers: name perpetrators
-narrative,narrative description
+ccode_cow,COW numeric country code
 officialName,name or description of the truth commission
 officialName_en,name or description of the truth commission (English)
 officialName_en_fr,name or description of the truth commission (French translation)
-pdf_file,Does TJET have a copy of the final report on the website?
-penalizeIndividuals,truth commission powers: penalize individuals for non-compliance or interference
-perpetratorNamesPublished,Were perpetrators' names published?
-perpetratorPubliclyNamedTestimony,Were perpetrators publicly named during testimony?
-perpetratorReceived,Did the perpetrator receive something in return for testimony?
-perpetratorsWho,Who were the perpetrators?
-perpetratorTestimony,Did the truth commission take perpetrator testimony?
+narrative,narrative description
+tcType,type of truth commission
+legalBasis,legal basis of the truth commission
+branchCreated,Which branch(es) of government created the TC?
+domesticInitiatePerson,Who specifically initiated the commission?
+internationalBody,Which international body initiated the commission?
+yearPassed,year the truth commission was mandated
+dayMonthPassed,day/month of the truth commission law
+tclawOnline,URL of the truth commission law (if the law is online)
+status,"What was the status of the truth commission at the time of coding? (ongoing; aborted, completed)"
+yearBeginOperation,year the TC began operating
+democraticTransitionBeforeTC,Did this country start a democratic transition at some point before this truth commission began operating?
+fitsPostAutocraticTJ,Did this case fit the definition of a post-authoritarian truth commission?
+intraConflictBeforeTC,Did this country start an intra-state conflict at some point before this truth commission began operating?
+fitsConflictTJ,Did this case fit the definition of a conflict truth commission?
+ucdpConflictID,UCDP Conflict ID
+ucdpDyadID,UCDP Dyad ID
+beganOperatingDuringIntraConfl,Did this truth commission begin operating after intra-state conflict?
+beganOperatingAfterIntraConfl,Did this truth commission begin operating during intra-state conflict?
+tcAims,"How are the TC's aims or goals framed? Literally, what words do the establishing laws or report commonly make use of?"
+subnationalAuthorization,Was this truth commission created or authorized by a subnational government?
+subnationalOperation,Did this truth commission operate at the subnational level?
+consultedVictims,Did the truth commission consult victims groups during the design phase?
+consultedGroups,Which vulnerable groups were consulted?
+mandateTimePeriodCovered,Did the mandate specify the time period that is covered by the truth commission?
+timePeriod,What is the specific period covered by the truth commission?
+idiosyncratic,this commission did not strictly meet the TJET definition of a truth commission
+disappearance,crimes covered: disappearance
+death,crimes covered: deaths
+torture,crimes covered: torture
+SGBV,crimes covered: sexual or gender-based violence
+forcedDisplacement,crimes covered: forced displacement
+corruption,crimes covered: corruption
+crimeSpecificGroups,crimes covered: crimes against specific groups
+crimesOther,crimes covered: other
+victimCount,approximate number of victims listed by truth commission
+formallyIndependent,Was the TC formally independent?
+commissioners,Did the truth commission have commissioners?
+commissionerCount,How many commissioners were on the truth commission?
+commissionersHowChosen,How were commissioners chosen?
+commissionersVictimGroups,Did commissioners include representatives of victim groups?
+staff,Did the truth commission have staff?
+staffMemberCount,How many staff members did the truth commission have?
 primaryFunding,What was the primary funding source for the truth commission?
+estimatedCost,What was the estimated cost of the TC (in USD)?
+investigateStateMembers,truth commission powers: investigate former or current members of the state
+compelTestimony,truth commission powers: compel testimony
+penalizeIndividuals,truth commission powers: penalize individuals for non-compliance or interference
+namePerpetrators,truth commission powers: name perpetrators
+accessOfficialDocuments,truth commission powers: access official documents
+supportProsecutions,truth commission powers: support prosecutions
+allocateReparations,truth commission powers: allocate reparations
 recommendInstitutionalReforms,truth commission powers: recommend institutional reforms
+grantAmnesty,truth commission powers: grant amnesty
+testimonies,Did the truth commission take testimony?
+casesTestimoniesCount,What is the total number of testimonies taken?
+testimoniesAvailablePublic,"Are the testimonies available to the public, either in hard copy or electronic archives?"
+heldPublicHearings,Did the truth commission hold public hearings?
+encourageVictimTestimony,Did the truth commission encourage victim testimony?
+encourageVictimTestimonyHow,How did the truth commission encourage victim testimony?
+perpetratorTestimony,Did the truth commission take perpetrator testimony?
+perpetratorPubliclyNamedTestimony,Were perpetrators publicly named during testimony?
+perpetratorsWho,Who were the perpetrators?
+perpetratorReceived,Did the perpetrator receive something in return for testimony?
+yearCompleteOperation,year truth commission completed operation
+finalReportIssued,Did the truth commission issue a final report?
+reportPublisher,Who published the final report?
+reportPubliclyAvailable,Is the final report publicly available?
+pdf_file,Does TJET have a copy of the final report on the website?
+reportEstablishResponsibility,Did the final report establish responsibility?
+perpetratorNamesPublished,Were perpetrators' names published?
+reportHighlightVictimGroups,Did the final report highlight specific victim groups?
+finalReportRecommendations,Did the truth commission final report make final recommendations?
 recommendProsecutions,Did the final report recommend prosecutions?
 recommendProsecutionsWho,Who did the report recommend prosecuting?
 recommendReparations,Did the final report recommend reparations?
 reparationsType,What type of reparations did the final report recommend?
-reportEstablishResponsibility,Did the final report establish responsibility?
-reportHighlightVictimGroups,Did the final report highlight specific victim groups?
-reportPubliclyAvailable,Is the final report publicly available?
-reportPublisher,Who published the final report?
 reportRecommendInstitutionalReform,Did the final report recommend institutional reform?
 SecuritySectorReforms,Did the final report recommend security sector reform?
-SGBV,crimes covered: sexual or gender-based violence
 SSRType,What type of security sector reform did the final report recommend?
-staff,Did the truth commission have staff?
-staffMemberCount,How many staff members did the truth commission have?
-status,"What was the status of the truth commission at the time of coding? (ongoing; aborted, completed)"
-subnationalAuthorization,Was this truth commission created or authorized by a subnational government?
-subnationalOperation,Did this truth commission operate at the subnational level?
-supportProsecutions,truth commission powers: support prosecutions
-tcAims,"How are the TC's aims or goals framed? Literally, what words do the establishing laws or report commonly make use of?"
-tclawOnline,URL of the truth commission law (if the law is online)
-tcType,type of truth commission
-testimonies,Did the truth commission take testimony?
-testimoniesAvailablePublic,"Are the testimonies available to the public, either in hard copy or electronic archives?"
-timePeriod,What is the specific period covered by the truth commission?
-tjet_version,TJET database version: date on which data was extracted from the database
-torture,crimes covered: torture
-truthcommissionID,TJET Truth Commission ID
-ucdpConflictID,UCDP Conflict ID
-ucdpDyadID,UCDP Dyad ID
 vetting,Did the final report recommend vetting?
 vettingType,What type of vetting did the final report recommend?
-victimCount,approximate number of victims listed by truth commission
-yearBeginOperation,year the TC began operating
-yearCompleteOperation,year truth commission completed operation
-yearPassed,year the truth commission was mandated
+legalReform,Did the final report recommend legal or constitutional reform?
+legalType,What type of legal or constitutional reform did the final report recommend?
+judicialReforms,Did the final report recommend judicial reform?
+judicialReformsType,What type of judicial reform did the final report recommend?
+humanRightsReforms,Did the final report recommend human rights reform?
+humanRightsReformType,What type of human rights reform did the final report recommend?
+corruptionReforms,Did the final report recommend corruption reform?
+corruptionReformsType,What type of corruption reform did the final report recommend?
+genderReform,Did the final report recommend gender reform?
+genderReformType,What type of gender reform did the final report recommend?
+finalRecommendations,additional recommendations of the truth commission
+mandatePeriodicMonitoringImplementation,Did the truth commission mandate require periodic monitoring or automatic implementation of recommendations?
+tjet_version,TJET database version: date on which data was extracted from the database

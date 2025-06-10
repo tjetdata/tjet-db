@@ -1,14 +1,14 @@
 col_name,definition
-beg,year the UN investigation was mandated/began
-ccode_cow,COW numeric country code
 country,country name
-end,year the UN investigation ended
-goals,"goals of the UN investigation (see also uninv_dompros, uninv_evcoll, and uninv_intlpros)"
+ccode_cow,COW numeric country code
 mandate,mandating authority/document
 mandate_en,mandating authority/document (English)
 mandate_fr,mandating authority/document (French translation)
-source,Where was documentation on the UN investigation mandate found?
-tjet_version,TJET database version: date on which data was extracted from the database
+beg,year the UN investigation was mandated/began
+end,year the UN investigation ended
+goals,"goals of the UN investigation (see also uninv_dompros, uninv_evcoll, and uninv_intlpros)"
 uninv_dompros,Did the investigation aim to encourage prosecutions? (binary)
 uninv_evcoll,Did the investigation aim to collect evidence for possible future prosecutions? (binary)
 uninv_intlpros,Did the investigation aim to support international prosecutions? (binary)
+source,Where was documentation on the UN investigation mandate found?
+tjet_version,TJET database version: date on which data was extracted from the database
