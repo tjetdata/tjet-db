@@ -146,7 +146,7 @@ autoprep$conflicts <- db[["ConflictDyads"]] %>%
     dyads = length(unique(dyad_id)),
     episodes = n(),
     years = list(sort(unique(unlist(years)))),
-    years = list(unlist(years)[unlist(years) %in% 1970:2020]),
+    years = list(unlist(years)[unlist(years) %in% 1970:2023]),
     int_ep = sum(internationalized)
   )
 
@@ -315,7 +315,7 @@ data[["Foreign"]] <- db[["Trials"]] %>%
   select(trialID, countryAccused, ccode_Accused, countryTrial, ccode_Trial, yearStart, yearEnd, caseDescription) %>%
   arrange(countryAccused, yearStart)
 
-data[["Reparations"]] <- db[["Reparations"]] %>%
+data[["Reparations"]] <- db[["Reparations"]] %>% 
   left_join(
     countries %>%
       select(country_case, ccode, ccode_case),
@@ -326,7 +326,7 @@ data[["Reparations"]] <- db[["Reparations"]] %>%
   ungroup() %>%
   select(
     country_case, ccode_case, count, reparationID, yearCreated, yearBegin, yearEnd,
-    individualReparations, collectiveReparations, beneficiariesCount
+    individualReparations, collectiveReparations, beneficiariesCount, individualsRepairedEstimate
   ) %>%
   arrange(country_case, yearCreated)
 
@@ -379,7 +379,6 @@ data[["Vettings"]] <- db[["Vettings"]] %>%
   arrange(country_case, ccode_case, yearStart)
 
 data[["ICC-interventions"]] <- db[["ICC"]] %>%
-  # select(-country) %>%
   left_join(countries %>% select(country_case, ccode, ccode_case),
     by = c(ccode_cow = "ccode")
   ) %>%
@@ -408,47 +407,47 @@ data[["Investigations"]] <- db[["Investigations"]] %>%
   ) %>%
   arrange(country_case, beg)
 
-### peace agreements: "https://peaceaccords.nd.edu/wp-content/uploads/2019/08/PAM_ID-V.1.5-Updated-29JULY2015.xlsx"
-data[["peace-agreements"]] <- readxl::read_xlsx("data/PAM_ID-V.1.5-Updated-29JULY2015.xlsx") %>%
-  rename("accord_name" = "accord name") %>%
-  group_by(pam_caseid) %>%
-  mutate(
-    beg = min(year),
-    end = max(year)
-  ) %>%
-  ungroup() %>%
-  mutate(
-    war_start = as_date(war_start),
-    cease_date = as_date(cease_date)
-  ) %>%
-  left_join(
-    countries %>%
-      select(country_case, ccode, ccode_case),
-    by = c(cowcode = "ccode")
-  ) %>%
-  select(
-    pam_caseid, country_case, ccode_case, accord_name, war_start,
-    cease_date, beg, end, amnest_prov, humrts_prov, prisr_prov, repar_prov,
-    truth_prov
-  ) %>%
-  distinct() %>%
-  arrange(country_case, cease_date)
-
-### PAX: https://www.peaceagreements.org/search
-tj_vars <- c(
-  "TjGen", "TjAm", "TjAmPro", "TjSan", "TjPower", "TjCou", "TjJaNc",
-  "TjJaIc", "TjMech", "TjPrire", "TjVet", "TjVic", "TjMis", "TjRep",
-  "TjRSym", "TjRMa", "TjNR"
-)
-## have not adjusted this to ccode_case
-data[["PAX"]] <- read_csv("data/pax_all_agreements_data_v6.csv") %>%
-  arrange(Con, PPName, Dat) %>%
-  filter(Stage %in% c("SubComp", "SubPar")) %>%
-  filter(if_any(all_of(tj_vars), ~ . == 1)) %>%
-  select(
-    Con, PP, PPName, AgtId, Agt, Dat, Status, Agtp, Stage, Loc1GWNO,
-    Loc2GWNO, UcdpCon, UcdpAgr, PamAgr, all_of(tj_vars)
-  )
+# ### peace agreements: "https://peaceaccords.nd.edu/wp-content/uploads/2019/08/PAM_ID-V.1.5-Updated-29JULY2015.xlsx"
+# data[["peace-agreements"]] <- readxl::read_xlsx("data/PAM_ID-V.1.5-Updated-29JULY2015.xlsx") %>%
+#   rename("accord_name" = "accord name") %>%
+#   group_by(pam_caseid) %>%
+#   mutate(
+#     beg = min(year),
+#     end = max(year)
+#   ) %>%
+#   ungroup() %>%
+#   mutate(
+#     war_start = as_date(war_start),
+#     cease_date = as_date(cease_date)
+#   ) %>%
+#   left_join(
+#     countries %>%
+#       select(country_case, ccode, ccode_case),
+#     by = c(cowcode = "ccode")
+#   ) %>%
+#   select(
+#     pam_caseid, country_case, ccode_case, accord_name, war_start,
+#     cease_date, beg, end, amnest_prov, humrts_prov, prisr_prov, repar_prov,
+#     truth_prov
+#   ) %>%
+#   distinct() %>%
+#   arrange(country_case, cease_date)
+# 
+# ### PAX: https://www.peaceagreements.org/search
+# tj_vars <- c(
+#   "TjGen", "TjAm", "TjAmPro", "TjSan", "TjPower", "TjCou", "TjJaNc",
+#   "TjJaIc", "TjMech", "TjPrire", "TjVet", "TjVic", "TjMis", "TjRep",
+#   "TjRSym", "TjRMa", "TjNR"
+# )
+# ## have not adjusted this to ccode_case
+# data[["PAX"]] <- read_csv("data/pax_all_agreements_data_v6.csv") %>%
+#   arrange(Con, PPName, Dat) %>%
+#   filter(Stage %in% c("SubComp", "SubPar")) %>%
+#   filter(if_any(all_of(tj_vars), ~ . == 1)) %>%
+#   select(
+#     Con, PP, PPName, AgtId, Agt, Dat, Status, Agtp, Stage, Loc1GWNO,
+#     Loc2GWNO, UcdpCon, UcdpAgr, PamAgr, all_of(tj_vars)
+#   )
 
 ### write to file
 ### WE DON'T NEED THIS ANYMORE
@@ -475,6 +474,7 @@ n_transform <- function(x) {
     str_replace_all(" 10 ", " ten ") %>%
     str_replace_all(" 11 ", " eleven ") %>%
     str_replace_all(" 12 ", " twelve ") %>%
+    # str_replace_all(" 13 ", " thirteen ") %>%
     str_trim() %>%
     return()
 }
@@ -501,7 +501,8 @@ n_transform_nth <- function(x) {
 autotxt[["summary"]] <- autoprep[["summary"]] %>%
   rowwise() %>%
   mutate(
-    text = paste("For ",
+    text = paste(
+      "For ",
       country_case,
       ", TJET has collected information on: ",
       str_flatten(
@@ -509,9 +510,7 @@ autotxt[["summary"]] <- autoprep[["summary"]] %>%
           if (amnesties > 0) {
             paste(
               amnesties,
-              ifelse(amnesties == 1,
-                "amnesty", "amnesties"
-              ),
+              ifelse(amnesties == 1, "amnesty", "amnesties"),
               ifelse(min(amnesties_yrs) == max(amnesties_yrs),
                 paste("in", unique(amnesties_yrs)),
                 paste(
@@ -652,9 +651,7 @@ autotxt[["Transitions"]] <- autoprep[["transitions"]] %>%
     text = paste("Based on well-known democracy data, TJET records ",
       length(trans_year_begin),
       " democratic ",
-      ifelse(length(trans_year_begin) == 1,
-        "transition", "transitions"
-      ),
+      ifelse(length(trans_year_begin) == 1, "transition", "transitions"),
       " starting in ",
       str_flatten_comma(trans_year_begin, ", and "),
       ".",
@@ -1263,7 +1260,7 @@ autotxt[["UNinvestigations"]] <- data[["Investigations"]] %>%
 
 autotxt[["Reparations"]] <- data[["Reparations"]] %>%
   mutate(
-    implemented = ifelse(!is.na(yearBegin) | !is.na(yearEnd) | !is.na(beneficiariesCount), 1, 0),
+    implemented = ifelse(!is.na(yearBegin) | !is.na(individualsRepairedEstimate), 1, 0),
     individual = case_when(
       individualReparations == "yes" ~ 1,
       TRUE ~ 0
@@ -1272,21 +1269,23 @@ autotxt[["Reparations"]] <- data[["Reparations"]] %>%
       collectiveReparations == "yes" ~ 1,
       TRUE ~ 0
     ),
-    beneficiariesCount = ifelse(is.na(beneficiariesCount), 0, beneficiariesCount)
+    beneficiariesCount = ifelse(is.na(beneficiariesCount), 0, beneficiariesCount), 
+    individualsRepairedEstimate = ifelse(is.na(individualsRepairedEstimate), 0, individualsRepairedEstimate)
   ) %>%
   group_by(country_case) %>%
   mutate(
-    yearCreated = list(unlist(yearCreated)),
-    yearBegin = list(unlist(yearBegin)),
-    yearEnd = list(unlist(yearEnd)),
+    yearCreated = list(unlist(yearCreated[!is.na(yearCreated)])),
+    yearBegin = list(unlist(yearBegin[!is.na(yearBegin)])),
+    yearEnd = list(unlist(yearEnd[!is.na(yearEnd)])),
     individual = sum(individual),
     collective = sum(collective),
     implemented = sum(implemented),
-    beneficiariesCount = sum(beneficiariesCount)
+    beneficiariesCount = sum(beneficiariesCount), 
+    individualsRepairedEstimate = sum(individualsRepairedEstimate)
   ) %>%
   select(
     country_case, ccode_case, count, yearCreated, yearBegin, yearEnd,
-    individual, collective, beneficiariesCount, implemented
+    individual, collective, beneficiariesCount, individualsRepairedEstimate, implemented
   ) %>%
   distinct() %>%
   rowwise() %>%
@@ -1314,7 +1313,7 @@ autotxt[["Reparations"]] <- data[["Reparations"]] %>%
     )),
     text = list(c(
       text,
-      if (length(yearBegin) == 0 & length(yearEnd) == 1) {
+      if (length(yearBegin) == 0 & length(yearEnd) > 0) {
         paste(country_case,
           " mandated ",
           count,
@@ -1365,10 +1364,10 @@ autotxt[["Reparations"]] <- data[["Reparations"]] %>%
     )),
     text = list(c(
       text,
-      if (beneficiariesCount > 0) {
+      if (individualsRepairedEstimate > 0) {
         paste(
           "According to available information, there was a total of",
-          beneficiariesCount,
+          individualsRepairedEstimate,
           "individual beneficiaries."
         ) %>%
           n_transform() %>%
@@ -1377,7 +1376,7 @@ autotxt[["Reparations"]] <- data[["Reparations"]] %>%
     )),
     text = list(c(
       text,
-      if (beneficiariesCount == 0) {
+      if (individualsRepairedEstimate == 0) {
         paste("TJET found no information on the total number of beneficiaries.")
       }
     )),
@@ -1400,7 +1399,7 @@ autotxt[["Reparations"]] <- data[["Reparations"]] %>%
         paste(
           "TJET found evidence on implementation only for",
           implemented,
-          ifelse(implemented == 1, " reparations policy.", " reparations policies.")
+          ifelse(implemented == 1, "reparations policy.", "reparations policies.")
         ) %>%
           n_transform()
       }
@@ -1414,8 +1413,10 @@ autotxt[["Reparations"]] <- data[["Reparations"]] %>%
     text = str_flatten(text, " ") %>%
       str_trim()
   ) %>%
-  ungroup() %>%
+  ungroup() %>% 
   select(country_case, ccode_case, text)
+  # select(country_case, yearCreated, yearBegin, yearEnd, individualsRepairedEstimate, implemented, text) |>
+  # print(n = Inf)
 
 autotxt[["TruthCommissions"]] <- data[["TruthCommissions"]] %>%
   mutate(
@@ -1554,19 +1555,16 @@ autotxt[["TruthCommissions"]] <- data[["TruthCommissions"]] %>%
             ),
             paste(finalReportIssued, "of the commissions issued")
           ),
-          ifelse(finalReportIssued == 1, " a ", " "),
-          ifelse(finalReportIssued == 1, "final report", "final reports"),
-          ifelse(reportPubliclyAvailable > 0 & reportPubliclyAvailable < finalReportIssued,
-            paste(
-              ",",
-              reportPubliclyAvailable,
-              "of which"
-            ),
-            ", which"
-          ),
-          ifelse(reportPubliclyAvailable == 1,
-            " is", " are"
-          ),
+          ifelse(finalReportIssued == 1, " a final report", " final reports"),
+          ifelse(reportPubliclyAvailable > 0, 
+                 paste(
+                   ifelse(reportPubliclyAvailable < finalReportIssued,
+                          paste(",", reportPubliclyAvailable, "of which"),
+                          ", which"), 
+                   ifelse(reportPubliclyAvailable == 1, "is", "are")
+                   ), 
+                 paste(", which", ifelse(finalReportIssued == 1, "is", "are"), "not")
+                 ),
           " publicly available.",
           sep = ""
         ) %>%
@@ -1960,8 +1958,65 @@ chk <- db[["Countries"]] %>%
     country_case, all_of(check_vars), summary, regime, conflict, amnesties,
     domestic, intl, foreign, reparations, tcs, vetting, un
   ) %>%
-  filter(if_any(all_of(check_vars), ~ . == 1)) %>%
-  write_csv("~/Desktop/temp.csv", na = "") %>%
-  print(n = Inf)
+  filter(if_any(all_of(check_vars), ~ . == 1)) 
+
+# %>%
+#   write_csv("~/Desktop/temp.csv", na = "") %>%
+#   print(n = Inf)
 
 if (nrow(chk) > 0) warning("Some auto-texts in Airtable do not match the current data!")
+
+new_summary <- chk |> 
+  filter(chk_summary == 1) |> 
+  select(country_case, summary) |> 
+  write_csv("auto_text_update/new_summary.csv", na = "")
+
+new_regime <- chk |> 
+  filter(chk_regime == 1) |> 
+  select(country_case, regime) |> 
+  write_csv("auto_text_update/new_regime.csv", na = "")
+
+new_conflict <- chk |> 
+  filter(chk_conflict == 1) |> 
+  select(country_case, conflict) |> 
+  write_csv("auto_text_update/new_confl.csv", na = "")
+
+new_amnesties <- chk |> 
+  filter(chk_amnesties == 1) |> 
+  select(country_case, amnesties) |> 
+  write_csv("auto_text_update/new_amnesties.csv", na = "")
+
+new_domestic <- chk |> 
+  filter(chk_domestic == 1) |> 
+  select(country_case, domestic) |> 
+  write_csv("auto_text_update/new_domestic.csv", na = "")
+
+new_foreign <- chk |> 
+  filter(chk_foreign == 1) |> 
+  select(country_case, foreign) |> 
+  write_csv("auto_text_update/new_foreign.csv", na = "")
+
+new_intl <- chk |> 
+  filter(chk_intl == 1) |> 
+  select(country_case, intl) |> 
+  write_csv("auto_text_update/new_intl.csv", na = "")
+
+new_reparations <- chk |> 
+  filter(chk_reparations == 1) |> 
+  select(country_case, reparations) |> 
+  write_csv("auto_text_update/new_reparations.csv", na = "")
+
+new_tcs <- chk |> 
+  filter(chk_tcs == 1) |> 
+  select(country_case, tcs) |> 
+  write_csv("auto_text_update/new_tcs.csv", na = "")
+
+new_vetting <- chk |> 
+  filter(chk_vetting == 1) |> 
+  select(country_case, vetting) |> 
+  write_csv("auto_text_update/new_vetting.csv", na = "")
+
+new_un <- chk |> 
+  filter(chk_un == 1) |> 
+  select(country_case, un) |> 
+  write_csv("auto_text_update/new_un.csv", na = "")
