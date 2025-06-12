@@ -309,11 +309,11 @@ TCmeasure <- function(cy, new_col_name,
     fill(index, binary, .direction = "down") %>%
     ungroup() %>%
     mutate(
-      index = ifelse(year %in% 1970:2023 & is.na(index), 0, index),
-      n = ifelse(year %in% 1970:2023 & is.na(n), 0, n),
-      beg = ifelse(year %in% 1970:2023 & is.na(beg), 0, beg),
-      binary = ifelse(year %in% 1970:2023 & is.na(binary), 0, binary),
-      created = ifelse(year %in% 1970:2023 & is.na(created), 0, created)
+      index = ifelse(year %in% 1970:2024 & is.na(index), 0, index),
+      n = ifelse(year %in% 1970:2024 & is.na(n), 0, n),
+      beg = ifelse(year %in% 1970:2024 & is.na(beg), 0, beg),
+      binary = ifelse(year %in% 1970:2024 & is.na(binary), 0, binary),
+      created = ifelse(year %in% 1970:2024 & is.na(created), 0, created)
     ) %>%
     rename_with(.fn = ~ new_col_name, .cols = index) %>%
     rename_with(.fn = ~ paste(new_col_name, "n", sep = "_"), .cols = n) %>%

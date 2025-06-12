@@ -15,7 +15,7 @@ vet_spells <- db[["Vettings"]] %>%
       str_detect(targetingWhy, "specific individual conduct") ~ 1,
       TRUE ~ 0
     ),
-    yearEnd = ifelse(is.na(yearEnd) | yearEnd > 2020, 2020, yearEnd)
+    yearEnd = ifelse(is.na(yearEnd) | yearEnd > 2024, 2024, yearEnd)
   ) %>%
   rowwise() %>%
   mutate(year = map2(yearStart, yearEnd, seq)) %>%
@@ -87,7 +87,7 @@ VettingMeasures <- function(cy = df, nexus_vars = "all") {
       .direction = "down"
     ) %>%
     ungroup() %>%
-    mutate(across(all_of(vars), ~ ifelse(year %in% 1970:2023 & is.na(.x), 0, ifelse(year > 2023, NA, .x)))) %>%
+    mutate(across(all_of(vars), ~ ifelse(year %in% 1970:2024 & is.na(.x), 0, ifelse(year > 2024, NA, .x)))) %>%
     rename(
       "vet_dismiss" = "type_dismissal",
       "vet_dismiss_created" = "type_dismissal_created",

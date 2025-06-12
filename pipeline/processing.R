@@ -460,7 +460,7 @@ fair_trials <- db[["MegaBase"]][["Transitions"]] %>%
 
 db_years_mech <- 1970:2024
 db_years_trials <- 1970:2020
-db_years_cy <- 1970:2023
+db_years_cy <- 1970:2024
 
 ### formatting transitions table for website 
 db[["MegaBase"]][["Transitions"]] <-
@@ -682,7 +682,7 @@ countrylist <- db[["Countries"]] %>%
          end = ifelse(country == "Serbia and Montenegro", 2005, end),
          end = ifelse(country == "German Federal Republic (West)", 1989, end),
          end = ifelse(country == "Yemen Arab Republic (North)", 1989, end),
-         end = ifelse(end == 2020, 2023, end), ### to extend years 
+         end = ifelse(end == 2020, 2024, end), ### to extend years 
          region_sub_un = ifelse(is.na(intregion), subregion, intregion),
          region = ifelse(region_wb == "Middle East & North Africa" & 
                            region %in% c("Asia", "Africa"), "MENA", region)) %>% 
@@ -995,7 +995,7 @@ attr(db[["translations"]], "problems") <- NULL
 db[["ConflictDyads"]] <- read_csv(here::here("conflicts", "confl_dyads.csv"), 
                              show_col_types = FALSE) %>% 
   tibble() %>%
-  filter(ep_start_year <= 2023 & ep_end_year >= 1970)
+  filter(ep_start_year <= 2024 & ep_end_year >= 1970)
 
 attr(db[["ConflictDyads"]], "spec") <- NULL
 attr(db[["ConflictDyads"]], "problems") <- NULL
@@ -1163,7 +1163,7 @@ db[["ICCaccused"]] <- db[["Accused"]] %>%
               select(trialID, ccode_Accused), 
             by = "trialID") %>% 
   left_join(db[["Countries"]] %>% 
-              filter(end == 2023) %>% 
+              filter(end == 2024) %>% 
               select(country, ccode),
             by = c(ccode_Accused = "ccode")) %>%
   select(trialID, accusedID, country, ccode_Accused, name, 
@@ -1291,7 +1291,7 @@ df <- df %>%
   ungroup() %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_arrest_warrant) %>%
-              filter(!is.na(ICC_arrest_warrant) & ICC_arrest_warrant <= 2023) %>% 
+              filter(!is.na(ICC_arrest_warrant) & ICC_arrest_warrant <= 2024) %>% 
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_arrest_warrant) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1299,7 +1299,7 @@ df <- df %>%
   rename(ICC_arrest_warrant = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_arrestAppear) %>%
-              filter(!is.na(ICC_arrestAppear) & ICC_arrestAppear <= 2023) %>%
+              filter(!is.na(ICC_arrestAppear) & ICC_arrestAppear <= 2024) %>%
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_arrestAppear) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1307,7 +1307,7 @@ df <- df %>%
   rename(ICC_arrestAppear = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_confirm_charges) %>%
-              filter(!is.na(ICC_confirm_charges) & ICC_confirm_charges <= 2023) %>%
+              filter(!is.na(ICC_confirm_charges) & ICC_confirm_charges <= 2024) %>%
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_confirm_charges) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1315,7 +1315,7 @@ df <- df %>%
   rename(ICC_confirm_charges = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_proceedings) %>%
-              filter(!is.na(ICC_proceedings) & ICC_proceedings <= 2023) %>%
+              filter(!is.na(ICC_proceedings) & ICC_proceedings <= 2024) %>%
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_proceedings) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1323,7 +1323,7 @@ df <- df %>%
   rename(ICC_proceedings = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
               select(ccode_Accused, ICC_withdrawnDismissed) %>%
-              filter(!is.na(ICC_withdrawnDismissed) & ICC_withdrawnDismissed <= 2023) %>%
+              filter(!is.na(ICC_withdrawnDismissed) & ICC_withdrawnDismissed <= 2024) %>%
               mutate(icc_action = 1) %>%
               group_by(ccode_Accused, ICC_withdrawnDismissed) %>%  
               reframe(icc_action = sum(icc_action)),
@@ -1442,7 +1442,7 @@ df <- df %>%
   ungroup() %>%
   select(-isna) 
 
-if(nrow(df) != 9676) stop("Incorrect number of country-year for 1970-2023") 
+if(nrow(df) != 9871) stop("Incorrect number of country-year for 1970-2024") 
 
 ### these CYs are included in the analyses data but not in TJET CountryYears
 ### this is ok because CountryYears is for mapping purposes and 
@@ -1524,9 +1524,9 @@ hra_lags <- c(1:10, 20) |>
       rename_with(.cols = legacy_mean, ~ paste(.x, "_lag", yrs, sep = ""))
   }) |>
   reduce(full_join, by = c("country", "year")) |>
-  filter(year <= 2023)
+  filter(year <= 2024)
 hra <- full_join(hra, hra_lags, by = c("country", "year")) |> 
-  filter(year %in% 1970:2023) 
+  filter(year %in% 1970:2024) 
 
 df <- df %>% 
   left_join(hra, by = c("country_case" = "country", "year" = "year")) |> 
@@ -1604,9 +1604,10 @@ db[["dl_tjet_codebook"]] <- codebook %>%
 rm(codebook, included) 
 
 vars <- db[["dl_tjet_codebook"]]$col_name[db[["dl_tjet_codebook"]]$col_name %in% names(df)]
+
 db[["dl_tjet_cy"]] <- df %>%
   select(all_of(vars)) %>% 
-  filter(year %in% 1970:2023) %>% 
+  filter(year %in% db_years_cy) %>% 
   filter(!(country == "Andorra" & year < 1994)) %>% 
   filter(!(country == "Antigua and Barbuda" & year == 1981)) %>%
   filter(!(country == "Brunei" & year == 1984)) %>% 

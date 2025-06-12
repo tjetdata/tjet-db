@@ -146,7 +146,7 @@ autoprep$conflicts <- db[["ConflictDyads"]] %>%
     dyads = length(unique(dyad_id)),
     episodes = n(),
     years = list(sort(unique(unlist(years)))),
-    years = list(unlist(years)[unlist(years) %in% 1970:2023]),
+    years = list(unlist(years)[unlist(years) %in% 1970:2024]),
     int_ep = sum(internationalized)
   )
 

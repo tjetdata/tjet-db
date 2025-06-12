@@ -156,7 +156,7 @@ ReparationMeasures <- function(
     ungroup() %>%
     mutate(across(
       all_of(vars),
-      ~ ifelse(year %in% 1970:2023 & is.na(.x), 0, ifelse(year > 2023, NA, .x))
+      ~ ifelse(year %in% 1970:2024 & is.na(.x), 0, ifelse(year > 2024, NA, .x))
     )) %>%
     rename_with(.fn = ~ paste(prefix, .x, sep = "_"), .cols = all_of(vars)) %>%
     return()
