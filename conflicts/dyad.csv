@@ -7,7 +7,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 406,205,Iran,1946,1946-05-31,2018,1,Kurdistan
 407,206,Iran,1946,1945-11-19,1946,1,Azerbaijan
 410,209,Philippines,1946,1946-07-31,1954,2,
-411,209,Philippines,1969,1969-09-30,2023,2,
+411,209,Philippines,1969,1969-09-30,2024,2,
 412,209,Philippines,1987,1987-01-27,1990,2,
 413,210,Russia (Soviet Union),1946,1944-12-31,1948,1,Estonia
 414,211,Russia (Soviet Union),1946,1945-12-31,1946,1,Latvia
@@ -19,7 +19,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 425,220,Paraguay,1954,1954-05-05,1954,2,
 426,220,Paraguay,1989,1989-02-03,1989,2,
 427,221,Myanmar (Burma),1949,1948-12-31,1975,1,Karen
-428,221,Myanmar (Burma),1966,1966-12-31,2023,1,Karen
+428,221,Myanmar (Burma),1966,1966-12-31,2024,1,Karen
 429,221,Myanmar (Burma),2000,2000-01-27,2000,1,Karen
 430,221,Myanmar (Burma),2010,2010-08-05,2013,1,Karen
 431,222,Myanmar (Burma),1948,1948-05-31,1988,2,
@@ -42,13 +42,13 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 450,227,India,1969,1969-05-27,1971,2,
 451,227,India,1991,1987-07-29,2004,2,
 452,227,India,1999,1992-02-12,2004,2,
-453,227,India,2005,2004-11-20,2023,2,
+453,227,India,2005,2004-11-20,2024,2,
 456,230,Yemen (North Yemen),1948,1948-03-15,1948,2,
 457,230,Yemen (North Yemen),1962,1962-10-31,1970,2,
 458,230,Yemen (North Yemen),1979,1979-03-31,1982,2,
 459,230,Yemen (North Yemen),2009,2009-11-03,2018,2,
 460,231,Myanmar (Burma),1949,1949-12-31,1950,1,Kachin
-461,231,Myanmar (Burma),1961,1961-02-28,2023,1,Kachin
+461,231,Myanmar (Burma),1961,1961-02-28,2024,1,Kachin
 463,233,Guatemala,1949,1949-07-18,1949,2,
 464,233,Guatemala,1954,1954-06-18,1954,2,
 465,233,Guatemala,1963,1963-03-22,1981,2,
@@ -62,9 +62,9 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 473,234,Israel,1974,1974-12-31,1988,1,Palestine
 474,234,Israel,1989,1989-02-05,2001,1,Palestine
 475,234,Israel,1989,1973-07-31,1989,1,Palestine
-476,234,Israel,1990,1965-02-28,2022,1,Palestine
-477,234,Israel,1993,1989-05-03,2023,1,Palestine
-478,234,Israel,1995,1987-08-31,2023,1,Palestine
+476,234,Israel,1990,1965-02-28,2024,1,Palestine
+477,234,Israel,1993,1989-05-03,2024,1,Palestine
+478,234,Israel,1995,1987-08-31,2024,1,Palestine
 479,234,Israel,1996,1995-01-02,2002,1,Palestine
 480,234,Israel,2002,2000-10-30,2004,1,Palestine
 481,234,Israel,2006,2001-08-19,2006,1,Palestine
@@ -85,7 +85,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 505,249,South Vietnam,1955,1955-04-30,1964,1,South Vietnam
 507,251,India,1956,1955-07-20,1968,1,Nagaland
 508,251,India,1992,1982-08-24,2000,1,Nagaland
-511,253,Myanmar (Burma),1957,1957-12-31,2023,1,Karenni
+511,253,Myanmar (Burma),1957,1957-12-31,2024,1,Karenni
 516,258,Oman,1957,1957-07-31,1957,1,Oman
 517,259,Iraq,1958,1958-07-14,1958,2,
 518,259,Iraq,1959,1959-03-08,1959,2,
@@ -93,7 +93,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 520,259,Iraq,1963,1963-02-08,1963,2,
 521,259,Iraq,1982,1982-08-01,1996,2,
 523,259,Iraq,2004,2003-12-12,2011,2,
-524,259,Iraq,2004,2004-05-17,2023,2,
+524,259,Iraq,2004,2004-05-17,2024,2,
 525,259,Iraq,2005,2004-10-03,2007,2,
 526,260,Lebanon,1958,1958-05-15,1958,2,
 527,260,Lebanon,1975,1975-09-02,1984,2,
@@ -179,11 +179,11 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 621,288,Chad,2009,2009-04-19,2009,2,
 622,288,Chad,2010,2007-12-06,2010,2,
 623,289,Colombia,1964,1964-12-31,2015,2,
-624,289,Colombia,1966,1965-01-07,2023,2,
+624,289,Colombia,1966,1965-01-07,2024,2,
 625,289,Colombia,1978,1978-01-15,1988,2,
 626,289,Colombia,1984,1968-01-06,1990,2,
 627,290,Dominican Republic,1965,1965-04-24,1965,2,
-628,291,Indonesia,1965,1965-07-28,2023,1,West Papua
+628,291,Indonesia,1965,1965-07-28,2024,1,West Papua
 629,292,Peru,1965,1963-05-15,1965,2,
 630,292,Peru,1965,1965-06-15,1965,2,
 631,292,Peru,1982,1981-08-15,2010,2,
@@ -193,7 +193,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 637,295,Ghana,1983,1983-06-19,1983,2,
 638,296,India,1966,1966-09-01,1968,1,Mizoram
 639,297,Nigeria,1966,1966-01-15,1966,2,
-640,297,Nigeria,2009,2009-06-09,2023,2,
+640,297,Nigeria,2009,2009-06-09,2024,2,
 641,298,South Africa,1966,1966-08-26,1989,1,Namibia
 642,299,Syria,1966,1966-02-23,1966,2,
 643,299,Syria,1979,1979-06-16,1982,2,
@@ -293,7 +293,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 747,337,Somalia,1991,1991-09-07,1996,2,
 748,337,Somalia,2001,2001-05-12,2002,2,
 749,337,Somalia,2006,2006-09-18,2008,2,
-750,337,Somalia,2008,2008-01-02,2023,2,
+750,337,Somalia,2008,2008-01-02,2024,2,
 752,337,Somalia,2009,2009-03-17,2010,2,
 753,338,Iran,1979,1972-08-13,2001,2,
 754,338,Iran,2005,2005-07-26,2021,2,
@@ -320,7 +320,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 778,352,Sri Lanka,1985,1985-05-04,1989,1,Eelam
 779,353,Cameroon,1960,1960-01-31,1961,2,
 780,353,Cameroon,1984,1984-04-06,1984,2,
-781,354,Turkey,1984,1983-05-01,2023,1,Kurdistan
+781,354,Turkey,1984,1983-05-01,2024,1,Kurdistan
 784,357,Suriname,1987,1986-08-21,1987,2,
 785,358,Togo,1986,1986-09-23,1986,2,
 786,359,South Yemen,1986,1986-01-13,1986,2,
@@ -328,7 +328,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 789,362,Comoros,1989,1989-11-27,1989,2,
 790,363,Ethiopia,1975,1975-06-30,1976,1,Afar
 791,363,Ethiopia,1996,1996-12-31,1996,1,Afar
-792,364,India,1990,1984-02-06,2023,1,Kashmir
+792,364,India,1990,1984-02-06,2024,1,Kashmir
 793,365,India,1990,1983-12-31,2010,1,Assam
 794,366,Indonesia,1990,1989-05-02,2005,1,Aceh
 795,367,Panama,1989,1989-10-03,1989,2,
@@ -389,7 +389,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 852,401,Russia (Soviet Union),1994,1994-05-27,2007,1,Chechnya
 853,402,Yemen (North Yemen),1994,1994-02-21,1994,1,South Yemen
 855,404,Pakistan,1990,1990-02-11,1996,2,
-857,404,Pakistan,2007,2007-07-04,2023,2,
+857,404,Pakistan,2007,2007-07-04,2024,2,
 859,406,Niger,1995,1995-03-23,1995,1,Eastern Niger
 860,407,Comoros,1997,1997-09-03,1997,1,Anjouan
 861,408,Congo,1993,1993-11-03,1998,2,
@@ -417,10 +417,10 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 885,421,India,1994,1992-10-08,2004,1,Bodoland
 886,421,India,2009,2009-01-03,2010,1,Bodoland
 887,422,Myanmar (Burma),1997,1997-03-16,1997,1,Wa
-888,423,Thailand,2003,1965-12-31,2023,1,Patani
+888,423,Thailand,2003,1965-12-31,2024,1,Patani
 889,424,Nigeria,2004,2003-12-22,2004,1,Northern Nigeria
 890,425,Nigeria,2004,2004-06-04,2004,1,Niger Delta
-891,426,Israel,1990,1986-09-30,2023,1,Southern Lebanon
+891,426,Israel,1990,1986-09-30,2024,1,Southern Lebanon
 893,428,Mauritania,1975,1975-12-10,1978,1,Sahrawi Arab Democratic Republic (Western Sahara)
 894,429,DR Congo (Zaire),2007,1998-07-02,2020,1,Kongo Kingdom
 895,430,Niger,1991,1991-10-25,1992,2,
@@ -430,7 +430,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 901,434,India,2008,2000-06-20,2008,1,Islamic State
 903,436,Ethiopia,1977,1977-12-31,1980,1,"Arssi, Bale & Sidamo"
 904,437,Ethiopia,1981,1981-03-21,1983,1,Sidamaland
-906,439,Myanmar (Burma),2009,2009-08-27,2023,1,Kokang
+906,439,Myanmar (Burma),2009,2009-08-27,2024,1,Kokang
 907,440,Myanmar (Burma),1973,1973-01-11,1982,1,Lahu
 908,395,Tajikistan,2010,2005-01-31,2011,2,
 909,442,Mauritania,2010,2008-09-15,2010,2,
@@ -438,7 +438,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 10054,372,Mali,1991,1991-05-20,1991,1,Azawad
 10509,283,DR Congo (Zaire),2013,2012-10-06,2021,2,
 10516,383,Turkey,2016,2005-04-30,2016,2,
-10589,13646,Kenya,2015,2015-03-13,2023,1,Northeastern Province and Coast
+10589,13646,Kenya,2015,2015-03-13,2024,1,Northeastern Province and Coast
 10842,419,Ivory Coast,2011,2011-03-11,2011,2,
 10855,230,Yemen (North Yemen),2014,2014-03-13,2015,2,
 10882,343,Tunisia,2013,2011-05-18,2015,2,
@@ -451,7 +451,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 11299,335,India,2004,2003-11-22,2004,1,Tripura
 11336,404,Pakistan,2009,2008-10-22,2014,2,
 11377,283,DR Congo (Zaire),2011,2010-11-08,2022,2,
-11387,223,Myanmar (Burma),2018,2015-03-29,2023,1,Arakan
+11387,223,Myanmar (Burma),2018,2015-03-29,2024,1,Arakan
 11497,404,Pakistan,2012,2012-06-02,2012,2,
 11521,325,Pakistan,2016,2012-10-08,2016,1,Balochistan
 11545,14074,Somalia,2018,2016-07-18,2018,1,Somaliland
@@ -460,7 +460,7 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 11932,227,India,2000,1998-10-24,2000,2,
 11971,11342,India,2012,2010-06-27,2014,1,Garoland
 11972,264,Myanmar (Burma),2011,2006-11-22,2015,1,Shan
-11973,299,Syria,2011,2011-07-30,2023,2,
+11973,299,Syria,2011,2011-07-30,2024,2,
 11975,309,Sudan,2011,2011-06-06,2023,2,
 11976,309,Sudan,2011,2011-03-26,2011,2,
 11977,11344,Sudan,2011,2011-05-01,2011,1,Abyei
@@ -473,21 +473,23 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 11986,11347,Mali,2012,2012-01-20,2016,2,
 11987,11347,Mali,2012,2012-05-01,2012,2,
 11988,309,Sudan,2011,2011-11-22,2017,2,
-11990,11349,China,2008,1990-04-05,2008,1,East Turkestan
+11990,11349,China,2008,1990-04-05,2008,1,"East Turkestan
+"
 11991,11350,Bangladesh,2005,2004-01-15,2006,2,
 12009,265,DR Congo (Zaire),2013,2011-12-04,2020,1,Katanga
-12102,374,Rwanda,2001,2001-05-20,2023,2,
+12102,374,Rwanda,2001,2001-05-20,2024,2,
 12104,267,Ethiopia,1991,1991-06-02,1991,2,
 12139,11487,Malaysia,2013,2013-03-01,2013,1,Sabah
+12287,404,Pakistan,2023,2023-05-16,2024,2,
 12298,395,Tajikistan,1992,1992-09-10,1992,2,
 12300,395,Tajikistan,2000,2000-09-01,2010,2,
 12380,416,Central African Republic,2013,2013-04-14,2018,2,
 12391,15283,Central African Republic,2015,2015-02-10,2015,1,Logone
 12413,11345,South Sudan,2013,2013-12-15,2018,2,
-12422,353,Cameroon,2015,2015-01-12,2023,2,
+12422,353,Cameroon,2015,2015-01-12,2024,2,
 12463,283,DR Congo (Zaire),2013,2013-12-30,2013,2,
 12487,391,Egypt,2014,2014-03-11,2014,2,
-12556,338,Iran,2019,2014-10-08,2023,2,
+12556,338,Iran,2019,2014-10-08,2024,2,
 12571,11347,Mali,2013,2013-01-12,2013,2,
 12575,11347,Mali,2009,2009-06-10,2017,2,
 12578,11347,Mali,2013,2013-02-19,2013,2,
@@ -506,22 +508,22 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 14227,404,Pakistan,2014,2014-03-03,2014,2,
 14244,13675,Lebanon,2014,2014-06-25,2017,1,Islamic State
 14249,11346,Libya,2014,2014-05-18,2014,2,
-14273,222,Myanmar (Burma),2013,1994-05-02,2023,2,
+14273,222,Myanmar (Burma),2013,1994-05-02,2024,2,
 14319,13936,Pakistan,2016,2016-02-12,2023,1,Islamic State
-14320,13637,Afghanistan,2015,2015-02-09,2023,1,Islamic State
+14320,13637,Afghanistan,2015,2015-02-09,2024,1,Islamic State
 14471,370,Romania,1989,1989-12-23,1989,2,
 14528,287,Burundi,2015,2015-05-14,2015,2,
-14595,230,Yemen (North Yemen),2015,2015-03-07,2023,2,
+14595,230,Yemen (North Yemen),2015,2015-03-07,2024,2,
 14609,13645,Yemen (North Yemen),2015,2015-03-20,2020,1,Islamic State
 14610,13611,Mali,2015,2015-01-05,2015,1,Macina Empire
-14619,13588,Russia (Soviet Union),2015,2015-06-25,2020,1,Islamic State
-14620,13604,Syria,2013,2013-03-26,2023,1,Islamic State
-14636,303,Nigeria,2021,2021-02-21,2023,1,Biafra
+14619,13588,Russia (Soviet Union),2015,2015-06-25,2024,1,Islamic State
+14620,13604,Syria,2013,2013-03-26,2024,1,Islamic State
+14636,303,Nigeria,2021,2021-02-21,2024,1,Biafra
 14649,287,Burundi,2015,2015-12-11,2015,2,
 14666,13638,Cameroon,2015,2015-03-19,2023,1,Islamic State
 14667,13640,Chad,2015,2015-05-27,2022,1,Islamic State
-14668,13639,Niger,2015,2015-03-26,2023,1,Islamic State
-14669,13641,Nigeria,2015,2015-03-15,2023,1,Islamic State
+14668,13639,Niger,2015,2015-03-26,2024,1,Islamic State
+14669,13641,Nigeria,2015,2015-03-15,2024,1,Islamic State
 14677,13648,Egypt,2015,2014-11-16,2022,1,Islamic State
 14685,13653,India,2015,2015-04-19,2018,1,Western South East Asia
 14701,13902,Turkey,2015,2015-07-23,2017,1,Islamic State
@@ -530,33 +532,33 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 14744,343,Tunisia,2015,2014-12-01,2015,2,
 14745,13694,Libya,2015,2015-03-14,2019,1,Islamic State
 14747,14333,Tunisia,2016,2015-03-18,2016,1,Islamic State
-14784,13809,Syria,2016,2015-12-06,2023,3,Rojava Kurdistan
+14784,13809,Syria,2016,2015-12-06,2024,3,Rojava Kurdistan
 14808,283,DR Congo (Zaire),2012,2012-06-05,2012,2,
-14842,287,Burundi,2014,2012-10-04,2023,2,
+14842,287,Burundi,2014,2012-10-04,2024,2,
 14847,13721,Algeria,2015,2014-12-11,2015,1,Islamic State
 14895,14268,Iran,2017,2016-08-15,2017,1,Islamic State
 14913,308,Philippines,2016,2016-02-22,2016,1,Mindanao
 14929,283,DR Congo (Zaire),2016,2016-07-22,2018,2,
-14953,13840,Burkina Faso,2019,2017-10-23,2023,1,Islamic State
+14953,13840,Burkina Faso,2019,2017-10-23,2024,1,Islamic State
 14973,391,Egypt,2017,2016-10-08,2019,2,
 15065,383,Turkey,2016,2016-07-16,2016,2,
 15069,223,Myanmar (Burma),2016,2016-10-09,2017,1,Arakan
-15077,14197,Somalia,2019,2018-02-08,2021,1,Islamic State
-15100,13306,Ukraine,2015,2015-06-09,2022,1,Novorossiya
-15101,13306,Ukraine,2015,2015-06-10,2021,1,Novorossiya
-15108,11347,Mali,2017,2017-03-05,2023,2,
+15077,14197,Somalia,2019,2018-02-08,2024,1,Islamic State
+15100,13306,Ukraine,2015,2014-08-09,2022,1,Novorossiya
+15101,13306,Ukraine,2015,2014-11-16,2021,1,Novorossiya
+15108,11347,Mali,2017,2017-03-05,2024,2,
 15135,283,DR Congo (Zaire),2017,2017-06-17,2017,2,
-15174,430,Niger,2021,2017-07-05,2023,2,
-15175,360,Burkina Faso,2018,2017-07-15,2023,2,
+15174,430,Niger,2021,2017-07-05,2024,2,
+15175,360,Burkina Faso,2018,2017-07-15,2024,2,
 15195,11345,South Sudan,2019,2018-12-16,2021,2,
 15225,11346,Libya,2017,2016-10-14,2017,2,
-15259,14113,Mali,2017,2017-02-04,2023,1,Islamic State
+15259,14113,Mali,2017,2017-02-04,2024,1,Islamic State
 15262,391,Egypt,2017,2017-10-20,2017,2,
 15298,230,Yemen (North Yemen),2017,2017-11-29,2017,2,
 15333,11346,Libya,2017,2017-11-08,2017,2,
 15336,283,DR Congo (Zaire),2018,2018-01-09,2019,2,
 15389,283,DR Congo (Zaire),2018,2017-02-12,2021,2,
-15473,14275,Philippines,2016,2016-06-01,2023,1,Islamic State
+15473,14275,Philippines,2016,2016-06-01,2024,1,Islamic State
 15474,308,Philippines,2016,2016-01-19,2016,1,Mindanao
 15475,308,Philippines,2018,2016-07-26,2018,1,Mindanao
 15516,332,Mozambique,2018,2018-01-14,2019,2,
@@ -564,39 +566,45 @@ dyad_id,conflict_id,location,year_beg,start_date,year_end,incompatibility,territ
 15547,374,Rwanda,2019,2019-08-18,2020,2,
 15558,289,Colombia,2000,1991-09-09,2004,2,
 15593,416,Central African Republic,2018,2017-04-14,2021,2,
+15661,16292,Tajikistan,2018,2018-07-30,2019,1,Islamic State
 15676,288,Chad,2018,2017-08-18,2023,2,
 15800,300,Cambodia (Kampuchea),1997,1997-07-08,1998,2,
 15801,300,Cambodia (Kampuchea),1997,1997-07-05,1997,2,
-15895,14129,Cameroon,2017,2017-09-16,2023,1,Ambazonia
-15993,387,Angola,2016,2010-11-08,2022,1,Cabinda
-15998,14692,DR Congo (Zaire),2017,2017-11-22,2023,1,Islamic State
-16022,14845,Mozambique,2019,2019-06-04,2023,1,Islamic State
+15895,14129,Cameroon,2017,2017-09-16,2024,1,Ambazonia
+15993,387,Angola,2016,2010-11-08,2024,1,Cabinda
+15998,14692,DR Congo (Zaire),2017,2017-11-22,2024,1,Islamic State
+16022,14845,Mozambique,2019,2019-06-04,2024,1,Islamic State
 16023,14935,Ethiopia,2019,2019-06-22,2019,1,Amhara
 16081,374,Rwanda,2019,2018-12-15,2020,2,
 16129,283,DR Congo (Zaire),2022,2019-11-15,2022,2,
 16139,15283,Central African Republic,2023,2015-11-10,2023,1,Logone
-16177,325,Pakistan,2019,2019-02-17,2023,1,Balochistan
+16177,325,Pakistan,2019,2019-02-17,2024,1,Balochistan
 16210,333,Afghanistan,2020,2020-01-08,2020,2,
-16240,413,Ethiopia,2019,2019-05-04,2023,1,Oromiya
+16240,413,Ethiopia,2019,2019-05-04,2024,1,Oromiya
 16286,283,DR Congo (Zaire),2005,2005-11-01,2022,2,
 16474,15183,Tanzania,2020,2020-10-14,2020,1,Islamic State
-16562,416,Central African Republic,2020,2020-12-15,2023,2,
-16685,15256,Benin,2022,2020-02-09,2023,2,
+16562,416,Central African Republic,2020,2020-12-15,2024,2,
+16685,15256,Benin,2022,2020-02-09,2024,2,
 16743,288,Chad,2021,2021-04-18,2021,2,
-16759,222,Myanmar (Burma),2021,2021-04-24,2023,2,
+16759,222,Myanmar (Burma),2021,2021-04-24,2024,2,
 16823,283,DR Congo (Zaire),2022,2021-07-25,2022,2,
-16825,333,Afghanistan,2021,2021-08-20,2023,2,
+16825,333,Afghanistan,2021,2021-08-20,2024,2,
 16900,383,Turkey,2000,1990-05-31,2000,2,
 16920,267,Ethiopia,2022,2021-10-05,2022,2,
 16938,15438,Uganda,2022,2021-06-01,2022,1,Islamic State
-16955,358,Togo,2022,2022-05-11,2023,2,
+16955,358,Togo,2022,2022-05-11,2024,2,
 17033,11345,South Sudan,2021,2021-08-08,2021,2,
 17083,333,Afghanistan,2022,2022-03-18,2023,2,
-17147,16069,Ethiopia,2023,2023-05-25,2023,3,Amhara
-17247,289,Colombia,2018,2017-04-08,2023,2,
-17497,309,Sudan,2023,2023-04-15,2023,2,
+17147,16069,Ethiopia,2023,2023-05-25,2024,3,Amhara
+17247,289,Colombia,2018,2017-04-08,2024,2,
+17249,289,Colombia,2024,2019-10-15,2024,2,
+17497,309,Sudan,2023,2023-04-15,2024,2,
 17509,399,Russia (Soviet Union),2023,2023-03-02,2023,2,
-17511,399,Russia (Soviet Union),2023,2023-05-22,2023,2,
+17511,399,Russia (Soviet Union),2023,2023-05-22,2024,2,
 17528,399,Russia (Soviet Union),2023,2023-06-24,2023,2,
-17628,404,Pakistan,2023,2023-03-06,2023,2,
-17666,16038,Mali,2023,2023-08-04,2023,3,Azawad
+17628,404,Pakistan,2023,2023-02-27,2023,2,
+17666,16038,Mali,2023,2023-08-04,2024,3,Azawad
+17740,283,DR Congo (Zaire),2024,2023-12-22,2024,2,
+17806,222,Myanmar (Burma),2024,2024-01-22,2024,2,
+17970,381,Haiti,2024,2024-02-29,2024,2,
+18169,16379,Somalia,2024,2024-12-12,2024,1,Jubaland
