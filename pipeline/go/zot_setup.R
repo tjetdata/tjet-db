@@ -1,0 +1,11 @@
+library(tidyverse)
+library(stringi)
+library(httr2)
+library(jsonlite)
+library(furrr)
+library(RMariaDB)
+
+zot_user <- as.integer(Sys.getenv("ZOT_USER"))
+zot_group <- as.integer(Sys.getenv("ZOT_GROUP"))
+zot_key <- Sys.getenv("ZOT_KEY")
+base <- paste("https://api.zotero.org/groups/", zot_group, "/", sep = "")

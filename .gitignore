@@ -8,5 +8,7 @@
 
 data/*.RData
 data/cy_covariates_prev.rds
+data/zot_collections.rds
+data/zot_items.rds
 data/downloads/*.xlsx
 focus/
