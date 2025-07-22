@@ -78,6 +78,7 @@ tjet_cy,sample indicators,,reparations_sample,"country-years from first year wit
 tjet_cy,sample indicators,,tcs_sample,"country-years from first year with any truth commissions, binary",TJET,,
 tjet_cy,sample indicators,,trials_domestic_sample,"country-years from first year with any domestic human rights or conflict prosecutions, binary",TJET,,
 tjet_cy,sample indicators,,vettings_sample,"country-years from first year with any vetting policies, binary",TJET,,
+tjet_cy,sample indicators,,tj_yr_zero,"year when transitional justice was first initiated, binary based on when prosecutions of high-ranking defendants, public truth commissions, lustration or reparation policies started in a country",TJET,,
 tjet_cy,website map: amnesties,,amnesties,count of amnesties per country and year of passing,TJET,,
 tjet_cy,website map: amnesties,,amnesties_SGBV,"binary for whether amnesties in country-year included any that addressed SGBV (1 = yes, 0 = no) ",TJET,,
 tjet_cy,"website map: prosecutions, domestic",,trials_domestic,"count of domestic trials per country and start year, by country of the accused",TJET,,
@@ -856,6 +857,8 @@ tjet_cy,,,v2xpe_exlsocgr_lag8,"Exclusion by Social Group index, lagged 8 years",
 tjet_cy,,,v2xpe_exlsocgr_lag9,"Exclusion by Social Group index, lagged 9 years",VDem,1900,2023
 tjet_cy,,,v2xpe_exlsocgr_lag10,"Exclusion by Social Group index, lagged 10 years",VDem,1900,2023
 tjet_cy,,,v2xpe_exlsocgr_lag20,"Exclusion by Social Group index, lagged 20 years",VDem,1900,2023
+tjet_cy,,,v2xeg_eqdr,Equal distribution of resources index,VDem,1900,2023
+tjet_cy,,,v2xeg_eqdr_sd,"Equal distribution of resources index, standard deviation",VDem,1900,2023
 tjet_cy,,,el_presidential,"Presidential elections, binary",VDem,1900,2023
 tjet_cy,,,el_legislative,"Legislative elections, binary",VDem,1900,2023
 tjet_cy,,,conf_intra,count of minor internal (incl. internationalized) conflicts (25-999 BRDs) ,UCDP ACD,1946,2023
@@ -1155,6 +1158,10 @@ tjet_cy,,,rgdpna_pwt,"Real GDP using national-accounts growth rates, for studies
 tjet_cy,,,rgdpe_pwt,"Expenditure-side real GDP at chained PPPs, to compare relative living standards across countries over time",PWT,,
 tjet_cy,,,rgdpo_pwt,"Output-side real GDP at chained PPPs, to compare relative productive capacity across countries over time",PWT,,
 tjet_cy,,,growth_rgdpe_pwt,Expenditure-side GDP growth,PWT,,
+tjet_cy,,,gini_disp,"estimated GINI, household disposable income (post-tax, post-trasnfer), mean",SWIID,,
+tjet_cy,,,gini_disp_se,"estimated GINI, household disposable income (post-tax, post-trasnfer), standard error",SWIID,,
+tjet_cy,,,gini_mkt,"estimated GINI, household market income (pre-tax, pre-trasnfer), mean",SWIID,,
+tjet_cy,,,gini_mkt_se,"estimated GINI, household market income (pre-tax, pre-trasnfer), standard error",SWIID,,
 tjet_cy,,,latent_capacity,latent state capacity measure,Hanson & Sigman,1960,2015
 tjet_cy,,,latent_capacity_sd,"latent state capacity measure, standard deviation",Hanson & Sigman,1960,2015
 tjet_cy,,,ape1_rpc,Absolute Political Extraction (Model 1),RPC,1960,2018
