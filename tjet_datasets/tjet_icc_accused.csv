@@ -1,51 +1,51 @@
 accusedID,trialID,country,ccode_Accused,name,position_desc,position_desc_fr,ICC_arrest_warrant,ICC_arrestAppear,ICC_confirm_charges,ICC_proceedings,ICC_withdrawnDismissed,tjet_version
-11188,6906,Mali,432,Ahmad al-Faqi al-Mahdi,,,2015,2015,2016,2016,,2025-06-13
-11193,6907,Mali,432,Al Hassan Ag Abdoul Aziz Ag Mohamed Ag Mahmoud,,,2018,2018,2019,2020,,2025-06-13
-31709,11822,Mali,432,Iyad Ag Ghaly AKA Abou Fadl,,,2017,,,,,2025-06-13
-7760,4751,Cote d'Ivoire,437,Simone Gbagbo,former first lady,ancienne première dame,2012,,,,2021,2025-06-13
-10831,6732,Cote d'Ivoire,437,Laurent Gbagbo,former President of Côte D'Ivoire,ancien président de la Côte d'Ivoire,2011,2011,2013,2016,,2025-06-13
-10832,6732,Cote d'Ivoire,437,Charles Blé Goudé,"a close ally of ex-President Laurent Gbagbo, was the youth and employment minister in Gbago's government and the leader of the Young Patriots, a pro-Gbagbo militia group","proche allié de l'ex-président Laurent Gbagbo, a été ministre de la jeunesse et de l'emploi dans le gouvernement de M. Gbago et chef des Jeunes patriotes, une milice pro-Gbagbo.",2011,2014,2014,2016,,2025-06-13
-10692,6667,Central African Republic,482,Jean-Pierre Bemba Gombo,,,2008,2008,2009,2010,,2025-06-13
-17957,9783,Central African Republic,482,Jean-Pierre Bemba Gombo,,,2013,2013,2014,2015,,2025-06-13
-17958,9783,Central African Republic,482,Aimé Kilolo Musamba,,,2013,2013,2014,2015,,2025-06-13
-17959,9783,Central African Republic,482,Fidèle Babala Wandu,,,2013,2013,2014,2015,,2025-06-13
-17960,9783,Central African Republic,482,Jean-Jacques Mangenda Kabongo,,,2013,2013,2014,2015,,2025-06-13
-17961,9783,Central African Republic,482,Narcisse Arido,,,2013,2013,2014,2015,,2025-06-13
-17962,9784,Central African Republic,482,Maxime Jeoffroy Eli Mokom Gawaka,former National Coordinator of Operations of the Anti-Balaka,ancien coordinateur national des opérations de l'Anti-Balaka,2018,2022,,,,2025-06-13
-17963,9785,Central African Republic,482,Mahamat Said Abdel Kani,,,2018,2021,2021,2022,,2025-06-13
-17964,9786,Central African Republic,482,Alfred Yekatom,"former caporal-chef in the Forces Armées Centrafricaines, and a member of parliament in the CAR",ancien caporal-chef des Forces armées centrafricaines et membre du parlement centrafricain,2018,2018,,,,2025-06-13
-17965,9786,Central African Republic,482,Patrice-Edouard Ngaïssona,"National General Coordinator"" of the Anti-Balaka","Coordinateur général national"" de l'Anti-Balaka",2018,2018,2019,2021,,2025-06-13
-17966,9787,Central African Republic,482,Nouradine Adam,"former Minister of Security, Emigration, Immigration and Public Order","ancien ministre de la sécurité, de l'émigration, de l'immigration et de l'ordre public",2019,,,,,2025-06-13
-468,319,Democratic Republic of the Congo,490,Thomas Lubanga,former President of the Union des Patriotes Congolais / Forces Patriotique pour la Liberlation du Congo (UPC/FPLC),ancien président de l'Union des patriotes congolais / Forces patriotiques pour la libération du Congo (UPC/FPLC),2006,2006,2007,2009,,2025-06-13
-5166,4112,Democratic Republic of the Congo,490,Callixte Mbarushimana,"Alleged Executive Secretary of the Forces Démocratiques pour la Libération du Rwanda - Forces Combattantes Abacunguzi (FDLR-FCA, FDLR)","Secrétaire exécutif présumé des Forces démocratiques pour la libération du Rwanda - Forces combattantes Abacunguzi (FDLR-FCA, FDLR)",2010,2011,2011,,2011,2025-06-13
-7756,4750,Democratic Republic of the Congo,490,Sylvestre Mudacumura,Alleged Supreme Commander of the Forces Démocratiques pour la Libération du Rwanda,Commandant suprême présumé des Forces démocratiques pour la libération du Rwanda,2012,,,,,2025-06-13
-11083,6860,Democratic Republic of the Congo,490,Mathieu Ngudjolo Chui,Leader of the Front des nationalistes et intégrationnistes (FNI),Leader du Front des nationalistes et intégrationnistes (FNI),2007,2008,2008,2009,,2025-06-13
-11084,6861,Democratic Republic of the Congo,490,Germain Katanga,Alleged commander of the Force de résistance patriotique en Ituri (FRPI),Commandant présumé de la Force de résistance patriotique en Ituri (FRPI),2007,2007,2008,2009,,2025-06-13
-11090,6863,Democratic Republic of the Congo,490,Bosco Ntaganda,former Deputy Chief of Staff and commoander of operations of the Froces Patriotiques pour la Liberation du Congo (FPLC),ancien chef d'état-major adjoint et commandant des opérations des Forces patriotiques pour la libération du Congo (FPLC),2006,2006,2007,2009,,2025-06-13
-5167,4113,Uganda,500,Joseph Kony,Alleged Commander-in-Chief of the Lord's Resistance Army (LRA),Présumé commandant en chef de l'Armée de résistance du Seigneur (LRA),2005,,,,,2025-06-13
-5168,4113,Uganda,500,Vincent Otti,Alleged Vice-Chairman and Second-in-Command of the LRA,Présumé vice-président et commandant en second de la LRA,2005,,,,,2025-06-13
-5169,4113,Uganda,500,Okot Odhiambo,Alleged Deputy Army Commander of the LRA,Présumé commandant adjoint de l'armée de la LRA,2005,,,,2015,2025-06-13
-17971,4113,Uganda,500,Raska Lukwiya,third-highest ranking member of the LRA,troisième membre le plus haut placé de l'ARS,2005,,,,2007,2025-06-13
-5170,9770,Uganda,500,Dominic Ongwen,Alleged Brigade Commander of the Sinia Brigade of the LRA,Présumé commandant de la brigade Sinia de la LRA,2005,2015,2016,2016,,2025-06-13
-5176,4117,Kenya,501,William Samouei Ruto,,,2011,2011,2012,2013,2016,2025-06-13
-5177,4117,Kenya,501,Joshua Arap Sang,,,2011,2011,2012,2013,2016,2025-06-13
-7757,4117,Kenya,501,Henry Kiprono Kosgey,member of Parliament and Cabinet member,Membre du Parlement et membre du Cabinet,2011,2011,2012,,,2025-06-13
-5178,4118,Kenya,501,Francis Kirimi Muthaura,,,2011,2011,2012,,2013,2025-06-13
-5179,4118,Kenya,501,Uhuru Muigai Kenyatta,President,Président,2011,2011,2012,,2014,2025-06-13
-7758,4118,Kenya,501,Mohammed Hussein Ali,former Commissioner of the Kenya Police,ancien commissaire de la police du Kenya,2011,2011,2011,,2011,2025-06-13
-17967,9788,Kenya,501,Walter Osapiri Barasa,journalist,journaliste,2013,,,,,2025-06-13
-17968,9789,Kenya,501,Paul Gicheru,Kenyan lawyer and qualified advocate of the High Court,Avocat kenyan et avocat qualifié de la Haute Cour,2015,2020,2021,2022,2022,2025-06-13
-17969,9789,Kenya,501,Philip Kipkoech Bett,,,2015,,,,,2025-06-13
-5180,4119,Libya,620,Saif Al-Islam Gaddafi,,,2011,,,,,2025-06-13
-5181,4119,Libya,620,Abdullah Al-Senussi,,,2011,,,,2013,2025-06-13
-7759,4119,Libya,620,Muammar Gaddafi,former Prime Minister and dictator,ancien Premier ministre et dictateur,2011,,,,2011,2025-06-13
-14421,8239,Libya,620,Mahmoud al-Werfalli,Libya National Army commander,Commandant de l'armée nationale libyenne,2017,,,,2022,2025-06-13
-17970,9790,Libya,620,Al-Tuhamy Mohamed Khaled,former Lieutenant General of the Libyan army and former head of hte Libyan Internal Security Agency,ancien lieutenant général de l'armée libyenne et ancien chef de l'agence libyenne de sécurité intérieure,2013,,,,2022,2025-06-13
-5172,4114,Sudan,625,Bahar Idriss Abu Garda,Chairman and General Coordinator of Military Operations of the United Resistance Front,Président et coordinateur général des opérations militaires du Front de résistance uni,2009,2009,2010,,2010,2025-06-13
-5175,4116,Sudan,625,Abdel Raheem Muhammad Hussein,Current Minister of National Defence and former Minister of the Interior and former Sudanese President's Special Representative in Darfur,"Actuel ministre de la Défense nationale, ancien ministre de l'Intérieur et ancien représentant spécial du président soudanais au Darfour",2012,,,,,2025-06-13
-5666,4454,Sudan,625,Omar Al-Bashir,President,Président,2009,,,,,2025-06-13
-5667,4455,Sudan,625,Ahmad Harun,Minister of the State for the Interior of Sudan and allegedly in charge of the management of the “Darfur Security Desk”,Ministre d'État chargé de l'Intérieur du Soudan et prétendument responsable de la gestion du « Bureau de sécurité du Darfour »,2007,,,,,2025-06-13
-5668,4456,Sudan,625,Abdallah Banda Abakaer Nourain,"Commander-in-Chief of Justice and Equality Movement Collective-Leadership, one of the components of the United Resistance Front","Commandant en chef du mouvement Justice et Égalité Collective-Leadership, l'une des composantes du Front de résistance uni",2009,2010,2011,,,2025-06-13
-6163,4456,Sudan,625,Saleh Jerbo Jamus,"former Chief‐of‐Staff of the Sudan Liberation Army‐Unity (SLA‐Unity), later integrated into the Justice and Equality Movement","Ancien chef d'état-major de l'Armée de libération du Soudan-Unité (SLA-Unity), intégrée par la suite au Mouvement pour la justice et l'égalité",2009,2010,2011,,2013,2025-06-13
-14442,8253,Sudan,625,Ali Abd-Al-Rahman,senior commander of the Janjaweed militia,commandant supérieur de la milice Janjaweed,2007,2020,2021,2022,,2025-06-13
-31708,11821,Philippines,840,Rodrigo Duterte,former President,ancien président,2025,2025,,,,2025-06-13
+11188,6906,Mali,432,Ahmad al-Faqi al-Mahdi,,,2015,2015,2016,2016,,2025-07-22
+11193,6907,Mali,432,Al Hassan Ag Abdoul Aziz Ag Mohamed Ag Mahmoud,,,2018,2018,2019,2020,,2025-07-22
+31709,11822,Mali,432,Iyad Ag Ghaly AKA Abou Fadl,,,2017,,,,,2025-07-22
+7760,4751,Cote d'Ivoire,437,Simone Gbagbo,former first lady,ancienne première dame,2012,,,,2021,2025-07-22
+10831,6732,Cote d'Ivoire,437,Laurent Gbagbo,former President of Côte D'Ivoire,ancien président de la Côte d'Ivoire,2011,2011,2013,2016,,2025-07-22
+10832,6732,Cote d'Ivoire,437,Charles Blé Goudé,"a close ally of ex-President Laurent Gbagbo, was the youth and employment minister in Gbago's government and the leader of the Young Patriots, a pro-Gbagbo militia group","proche allié de l'ex-président Laurent Gbagbo, a été ministre de la jeunesse et de l'emploi dans le gouvernement de M. Gbago et chef des Jeunes patriotes, une milice pro-Gbagbo.",2011,2014,2014,2016,,2025-07-22
+10692,6667,Central African Republic,482,Jean-Pierre Bemba Gombo,,,2008,2008,2009,2010,,2025-07-22
+17957,9783,Central African Republic,482,Jean-Pierre Bemba Gombo,,,2013,2013,2014,2015,,2025-07-22
+17958,9783,Central African Republic,482,Aimé Kilolo Musamba,,,2013,2013,2014,2015,,2025-07-22
+17959,9783,Central African Republic,482,Fidèle Babala Wandu,,,2013,2013,2014,2015,,2025-07-22
+17960,9783,Central African Republic,482,Jean-Jacques Mangenda Kabongo,,,2013,2013,2014,2015,,2025-07-22
+17961,9783,Central African Republic,482,Narcisse Arido,,,2013,2013,2014,2015,,2025-07-22
+17962,9784,Central African Republic,482,Maxime Jeoffroy Eli Mokom Gawaka,former National Coordinator of Operations of the Anti-Balaka,ancien coordinateur national des opérations de l'Anti-Balaka,2018,2022,,,,2025-07-22
+17963,9785,Central African Republic,482,Mahamat Said Abdel Kani,,,2018,2021,2021,2022,,2025-07-22
+17964,9786,Central African Republic,482,Alfred Yekatom,"former caporal-chef in the Forces Armées Centrafricaines, and a member of parliament in the CAR",ancien caporal-chef des Forces armées centrafricaines et membre du parlement centrafricain,2018,2018,,,,2025-07-22
+17965,9786,Central African Republic,482,Patrice-Edouard Ngaïssona,"National General Coordinator"" of the Anti-Balaka","Coordinateur général national"" de l'Anti-Balaka",2018,2018,2019,2021,,2025-07-22
+17966,9787,Central African Republic,482,Nouradine Adam,"former Minister of Security, Emigration, Immigration and Public Order","ancien ministre de la sécurité, de l'émigration, de l'immigration et de l'ordre public",2019,,,,,2025-07-22
+468,319,Democratic Republic of the Congo,490,Thomas Lubanga,former President of the Union des Patriotes Congolais / Forces Patriotique pour la Liberlation du Congo (UPC/FPLC),ancien président de l'Union des patriotes congolais / Forces patriotiques pour la libération du Congo (UPC/FPLC),2006,2006,2007,2009,,2025-07-22
+5166,4112,Democratic Republic of the Congo,490,Callixte Mbarushimana,"Alleged Executive Secretary of the Forces Démocratiques pour la Libération du Rwanda - Forces Combattantes Abacunguzi (FDLR-FCA, FDLR)","Secrétaire exécutif présumé des Forces démocratiques pour la libération du Rwanda - Forces combattantes Abacunguzi (FDLR-FCA, FDLR)",2010,2011,2011,,2011,2025-07-22
+7756,4750,Democratic Republic of the Congo,490,Sylvestre Mudacumura,Alleged Supreme Commander of the Forces Démocratiques pour la Libération du Rwanda,Commandant suprême présumé des Forces démocratiques pour la libération du Rwanda,2012,,,,,2025-07-22
+11083,6860,Democratic Republic of the Congo,490,Mathieu Ngudjolo Chui,Leader of the Front des nationalistes et intégrationnistes (FNI),Leader du Front des nationalistes et intégrationnistes (FNI),2007,2008,2008,2009,,2025-07-22
+11084,6861,Democratic Republic of the Congo,490,Germain Katanga,Alleged commander of the Force de résistance patriotique en Ituri (FRPI),Commandant présumé de la Force de résistance patriotique en Ituri (FRPI),2007,2007,2008,2009,,2025-07-22
+11090,6863,Democratic Republic of the Congo,490,Bosco Ntaganda,former Deputy Chief of Staff and commoander of operations of the Froces Patriotiques pour la Liberation du Congo (FPLC),ancien chef d'état-major adjoint et commandant des opérations des Forces patriotiques pour la libération du Congo (FPLC),2006,2006,2007,2009,,2025-07-22
+5167,4113,Uganda,500,Joseph Kony,Alleged Commander-in-Chief of the Lord's Resistance Army (LRA),Présumé commandant en chef de l'Armée de résistance du Seigneur (LRA),2005,,,,,2025-07-22
+5168,4113,Uganda,500,Vincent Otti,Alleged Vice-Chairman and Second-in-Command of the LRA,Présumé vice-président et commandant en second de la LRA,2005,,,,,2025-07-22
+5169,4113,Uganda,500,Okot Odhiambo,Alleged Deputy Army Commander of the LRA,Présumé commandant adjoint de l'armée de la LRA,2005,,,,2015,2025-07-22
+17971,4113,Uganda,500,Raska Lukwiya,third-highest ranking member of the LRA,troisième membre le plus haut placé de l'ARS,2005,,,,2007,2025-07-22
+5170,9770,Uganda,500,Dominic Ongwen,Alleged Brigade Commander of the Sinia Brigade of the LRA,Présumé commandant de la brigade Sinia de la LRA,2005,2015,2016,2016,,2025-07-22
+5176,4117,Kenya,501,William Samouei Ruto,,,2011,2011,2012,2013,2016,2025-07-22
+5177,4117,Kenya,501,Joshua Arap Sang,,,2011,2011,2012,2013,2016,2025-07-22
+7757,4117,Kenya,501,Henry Kiprono Kosgey,member of Parliament and Cabinet member,Membre du Parlement et membre du Cabinet,2011,2011,2012,,,2025-07-22
+5178,4118,Kenya,501,Francis Kirimi Muthaura,,,2011,2011,2012,,2013,2025-07-22
+5179,4118,Kenya,501,Uhuru Muigai Kenyatta,President,Président,2011,2011,2012,,2014,2025-07-22
+7758,4118,Kenya,501,Mohammed Hussein Ali,former Commissioner of the Kenya Police,ancien commissaire de la police du Kenya,2011,2011,2011,,2011,2025-07-22
+17967,9788,Kenya,501,Walter Osapiri Barasa,journalist,journaliste,2013,,,,,2025-07-22
+17968,9789,Kenya,501,Paul Gicheru,Kenyan lawyer and qualified advocate of the High Court,Avocat kenyan et avocat qualifié de la Haute Cour,2015,2020,2021,2022,2022,2025-07-22
+17969,9789,Kenya,501,Philip Kipkoech Bett,,,2015,,,,,2025-07-22
+5180,4119,Libya,620,Saif Al-Islam Gaddafi,,,2011,,,,,2025-07-22
+5181,4119,Libya,620,Abdullah Al-Senussi,,,2011,,,,2013,2025-07-22
+7759,4119,Libya,620,Muammar Gaddafi,former Prime Minister and dictator,ancien Premier ministre et dictateur,2011,,,,2011,2025-07-22
+14421,8239,Libya,620,Mahmoud al-Werfalli,Libya National Army commander,Commandant de l'armée nationale libyenne,2017,,,,2022,2025-07-22
+17970,9790,Libya,620,Al-Tuhamy Mohamed Khaled,former Lieutenant General of the Libyan army and former head of hte Libyan Internal Security Agency,ancien lieutenant général de l'armée libyenne et ancien chef de l'agence libyenne de sécurité intérieure,2013,,,,2022,2025-07-22
+5172,4114,Sudan,625,Bahar Idriss Abu Garda,Chairman and General Coordinator of Military Operations of the United Resistance Front,Président et coordinateur général des opérations militaires du Front de résistance uni,2009,2009,2010,,2010,2025-07-22
+5175,4116,Sudan,625,Abdel Raheem Muhammad Hussein,Current Minister of National Defence and former Minister of the Interior and former Sudanese President's Special Representative in Darfur,"Actuel ministre de la Défense nationale, ancien ministre de l'Intérieur et ancien représentant spécial du président soudanais au Darfour",2012,,,,,2025-07-22
+5666,4454,Sudan,625,Omar Al-Bashir,President,Président,2009,,,,,2025-07-22
+5667,4455,Sudan,625,Ahmad Harun,Minister of the State for the Interior of Sudan and allegedly in charge of the management of the “Darfur Security Desk”,Ministre d'État chargé de l'Intérieur du Soudan et prétendument responsable de la gestion du « Bureau de sécurité du Darfour »,2007,,,,,2025-07-22
+5668,4456,Sudan,625,Abdallah Banda Abakaer Nourain,"Commander-in-Chief of Justice and Equality Movement Collective-Leadership, one of the components of the United Resistance Front","Commandant en chef du mouvement Justice et Égalité Collective-Leadership, l'une des composantes du Front de résistance uni",2009,2010,2011,,,2025-07-22
+6163,4456,Sudan,625,Saleh Jerbo Jamus,"former Chief‐of‐Staff of the Sudan Liberation Army‐Unity (SLA‐Unity), later integrated into the Justice and Equality Movement","Ancien chef d'état-major de l'Armée de libération du Soudan-Unité (SLA-Unity), intégrée par la suite au Mouvement pour la justice et l'égalité",2009,2010,2011,,2013,2025-07-22
+14442,8253,Sudan,625,Ali Abd-Al-Rahman,senior commander of the Janjaweed militia,commandant supérieur de la milice Janjaweed,2007,2020,2021,2022,,2025-07-22
+31708,11821,Philippines,840,Rodrigo Duterte,former President,ancien président,2025,2025,,,,2025-07-22
