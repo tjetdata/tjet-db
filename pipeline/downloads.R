@@ -27,7 +27,7 @@ to_download <-
     "appF8HAH7SN7C09cU" = c(
       "Trials", "Accused", "CourtLevels", "Countries", "Conflicts", "Dyads", 
       "metadata", "ArgCausas", "ArgAccused", "ArgCLs", "ArgCharges", 
-      "BIcomparison", "BIcaseIDlink", "TI", "newTI"
+      "BIcomparison", "TI", "newTI", "Individuals"
     )
   )
 
