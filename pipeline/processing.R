@@ -167,8 +167,8 @@ rm(to_download)
 
 ### ccode tables for Crimes and Victims
 
-crimes <- c("ccode_Crime1", "ccode_Crime2", "ccode_Crime3")
-victims <- c("ccode_Victim1", "ccode_Victim2", "ccode_Victim3")
+crimes <- c("ccode_Crime", "ccode_Crime2", "ccode_Crime3")
+victims <- c("ccode_Victim", "ccode_Victim2", "ccode_Victim3")
 
 db[["Prosecutions"]][["Trials_Crimes"]] <- map(crimes, function(var) {
   db[["Prosecutions"]][["Trials"]] %>%
@@ -248,6 +248,10 @@ cbind(orig = dim_orig[[2]], drop = dim_drop[[2]],
 ### approaches differ by whether the relationship is one-to-one or one-to-many
 ### could simplify code below with functions
 
+
+### build in checks to prevent increased number of obs after unnesting!!!
+
+
 db[["MegaBase"]][["Reparations"]] <- 
   db[["MegaBase"]][["Reparations"]] %>%
   unnest_longer(ucdpConflictID, keep_empty = TRUE) %>%
@@ -275,22 +279,33 @@ db[["Prosecutions"]][["Trials"]] <-
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-db[["MegaBase"]][["Vettings"]] <- 
-  db[["MegaBase"]][["Vettings"]] %>%
-  unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), 
-                keep_empty = TRUE) %>%
-  rename(airtable_record_id = "ucdpConflictID") %>%
-  left_join(tjet[["MegaBase"]]$Conflicts %>% 
-              select(airtable_record_id, conflict_id),
-            by = "airtable_record_id") %>%
-  select(-airtable_record_id) %>%
-  rename(airtable_record_id = "ucdpDyadID") %>%
-  left_join(tjet[["MegaBase"]]$Dyads %>% 
-              select(airtable_record_id, dyad_id),
-            by = "airtable_record_id") %>%
-  select(-airtable_record_id) %>%
-  rename(ucdpConflictID = "conflict_id",
-         ucdpDyadID = "dyad_id")
+
+### this no longer works vor vettings because the relationship is one-to-many
+
+# db[["MegaBase"]][["Vettings"]][130, ] |> 
+#   select(vettingID, ucdpConflictID, ucdpDyadID) |> 
+#   unnest(ucdpConflictID, keep_empty = TRUE) |> 
+#   unnest(ucdpDyadID, keep_empty = TRUE)
+
+# 389 - 834:835
+# 398 - 848:847
+
+# db[["MegaBase"]][["Vettings"]] <- 
+#   db[["MegaBase"]][["Vettings"]][-130, ] %>%
+#   unnest_longer(all_of(c("ucdpConflictID", "ucdpDyadID")), 
+#                 keep_empty = TRUE) %>%
+#   rename(airtable_record_id = "ucdpConflictID") %>%
+#   left_join(tjet[["MegaBase"]]$Conflicts %>% 
+#               select(airtable_record_id, conflict_id),
+#             by = "airtable_record_id") %>%
+#   select(-airtable_record_id) %>%
+#   rename(airtable_record_id = "ucdpDyadID") %>%
+#   left_join(tjet[["MegaBase"]]$Dyads %>% 
+#               select(airtable_record_id, dyad_id),
+#             by = "airtable_record_id") %>%
+#   select(-airtable_record_id) %>%
+#   rename(ucdpConflictID = "conflict_id",
+#          ucdpDyadID = "dyad_id")
 
 ### the trial-accused link is one-to-many 
 ### (it should be many-to-many but the original DB was not designed to accomodate this)
@@ -313,7 +328,35 @@ db[["Prosecutions"]][["CourtLevels"]] <-
             by = "airtable_record_id") %>%
   select(-airtable_record_id)
 
-### truth commissions and amnesties have one-to-many links
+### vettings and truth commissions and amnesties have one-to-many links
+
+db[["MegaBase"]][["Vettings_Conflicts"]] <- 
+  db[["MegaBase"]][["Vettings"]] %>%
+  select(vettingID, ucdpConflictID) %>%
+  unnest_longer(ucdpConflictID) %>%
+  rename(airtable_record_id = "ucdpConflictID") %>%
+  left_join(tjet[["MegaBase"]]$Conflicts %>%
+              select(airtable_record_id, conflict_id),
+            by = "airtable_record_id") %>%
+  select(-airtable_record_id) %>%
+  rename(ucdpConflictID = "conflict_id") %>%
+  drop_na()
+
+db[["MegaBase"]][["Vettings_Dyads"]] <- 
+  db[["MegaBase"]][["Vettings"]] %>%
+  select(vettingID, ucdpDyadID) %>%
+  unnest_longer(ucdpDyadID) %>%
+  rename(airtable_record_id = "ucdpDyadID") %>%
+  left_join(tjet[["MegaBase"]]$Dyads %>%
+              select(airtable_record_id, dyad_id),
+            by = "airtable_record_id") %>%
+  select(-airtable_record_id) %>%
+  rename(ucdpDyadID = "dyad_id") %>%
+  drop_na()
+
+db[["MegaBase"]][["Vettings"]] <- 
+  db[["MegaBase"]][["Vettings"]] %>%
+  select(-ucdpConflictID,-ucdpDyadID)
 
 db[["MegaBase"]][["TruthCommissions_Conflicts"]] <- 
   db[["MegaBase"]][["TruthCommissions"]] %>%
@@ -1201,6 +1244,7 @@ source("pipeline/fx/VettingMeasures.R", echo = TRUE)
 ### cy dataset assembled in other repo
 df <- readRDS(here::here("data", "cy_covariates.rds")) %>% 
   select(-beg, -end) 
+
 not <- c("histname", "cid_who", "ldc", "lldc", "sids", "income_wb", 
          "iso3c_wb", "region_wb2")
 first <- c("country", "country_case", "year", "ccode_cow", "ccode_ksg", 
@@ -1512,6 +1556,41 @@ rm(vet_spells)
 #             by = c("country_case" = "country", "year" = "year")) %>%
 #   filter(country_id_vdem != cid_vdem)
 
+
+### TJ year zero
+df <- df |> 
+  arrange(country_case, year) |>  
+  mutate(
+    tj_yr_zero = ifelse(
+      ((dtr == 1 | aco_25 == 1) & ccode_cow != 2) & (
+        tran_cce_dom_dtj_sta_hi >= 1 | 
+        (tcs_dtj_ctj_binary >= 1 & tcs_report_public == 1) | 
+        rep_paidout_created == 1 | 
+        (region == "Europe" & (vet_dismiss_created == 1 | vet_ban_created == 1)) | 
+        (ccode_cow == 645 & (vet_dismiss_created == 1 | vet_ban_created == 1))
+      ), 
+      year, NA
+    ) 
+  ) |>  
+  group_by(country_case) |> 
+  mutate(
+    tj_yr_zero = min(tj_yr_zero, na.rm = TRUE), 
+    tj_yr_zero = ifelse(is.infinite(tj_yr_zero), NA, tj_yr_zero) 
+  ) |> 
+  ungroup() |>
+  mutate(
+    tj_yr_zero = ifelse(ccode_cow == 432, 2015, tj_yr_zero), 
+    tj_yr_zero = ifelse(ccode_cow == 70, 2012, tj_yr_zero), 
+    tj_yr_zero = ifelse(ccode_cow == 150, 1996, tj_yr_zero), 
+    tj_yr_zero = ifelse(ccode_cow == 517, 1998, tj_yr_zero), 
+    tj_yr_zero = ifelse(ccode_cow == 230, 2007, tj_yr_zero), 
+    tj_yr_zero = ifelse(ccode_cow == 640, NA, tj_yr_zero), 
+  ) |> 
+  mutate(tj_yr_zero = case_when(
+    year == tj_yr_zero ~ 1, 
+    TRUE ~ 0
+  ))
+
 ### HRA 
 
 hra <- read_csv("../tjet-hra/tjet-hra.csv") %>%
@@ -1598,7 +1677,7 @@ db[["dl_tjet_codebook"]] <- codebook %>%
   filter(col_name %in% included & !is.na(section)) %>% 
   select(section, col_name, definition, source_abr) %>% 
   rename(source = source_abr) %>% 
-  left_join(read_csv(here::here("data", "sources.csv")), by = "source") %>% 
+  left_join(read_csv(here::here("data", "tjet_sources.csv")), by = "source") %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
 rm(codebook, included) 
