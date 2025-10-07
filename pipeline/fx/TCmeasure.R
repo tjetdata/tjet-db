@@ -1,16 +1,41 @@
-## function for subsetting TC data and calculating indices
+## functions for subsetting TC data and calculating indices
+
+TCGoals <- function(aims) {
+  db[["TruthCommissions_tcAims"]] %>% # Goals (binaries)
+    left_join(db[["labels"]], by = "labelID") %>%
+    select(-labelID) %>%
+    # mutate(
+    #   new = 1,
+    #   label = str_replace_all(label, fixed(" "), "_")
+    # ) %>%
+    #   pivot_wider(names_from = label, values_from = new) %>%
+    #   mutate(across(!truthcommissionID, ~ ifelse(is.na(.x), 0, .x)))
+    filter(label %in% aims) %>%
+    select(truthcommissionID) %>%
+    arrange(truthcommissionID) %>%
+    distinct() %>%
+    unlist(use.names = FALSE)
+}
+
 ## include fields (or "all") or options (for independence & aims)
 ## for indicators to be included; use NULL for those to exclude
 ## there are error checks built into the function
-TCmeasure <- function(cy, new_col_name,
-                      start_year_var, # which year variable to use as first year
-                      # operated = TRUE, 
-                      filter_nexus_vars, filter_crimes_vars, # filter variables
-                      independence_opts, aims_opts, consult_vars, # these are included in index as binary
-                      harms_vars = NULL, # same as filter_crimes_vars but to be summed for index, not filtered
-                      powers_vars, testimony_vars, reports_vars, recommend_vars, # these are summed before inclusion in index
-                      monitor_vars # included in index as binary
+TCmeasure <- function(
+  cy, new_col_name,
+  start_year_var, # which year variable to use as first year
+  filter_nexus_vars, # filter variables
+  filter_crimes_vars, # filter variables
+  independence_opts, # these are included in index as binary
+  aims_opts, # these are included in index as binary
+  consult_vars, # these are included in index as binary
+  harms_vars = NULL, # same as filter_crimes_vars but to be summed for index, not filtered
+  powers_vars, # these are summed before inclusion in index
+  testimony_vars, # these are summed before inclusion in index
+  reports_vars, # these are summed before inclusion in index
+  recommend_vars, # these are summed before inclusion in index
+  monitor_vars # included in index as binary
 ) {
+
   # don't need to strip 'all' out of varnames because not created automatically
 
   ## options
@@ -209,18 +234,6 @@ TCmeasure <- function(cy, new_col_name,
 
   ## subsetting & calc
 
-  # if (operated) {
-  #   operation_condition <- expr(!is.na(yearBeginOperation) & neverOperated == 0)
-  # } else {
-  #   operation_condition <- TRUE
-  #   start_year_var <- "yearPassed"
-  #   warning(
-  #     "TCs that met the criteria but never operated can only be based on \n",
-  #     "  start_year_var = 'yearPassed', so 'yearPassed' is always used \n",
-  #     "  when operated = FALSE."
-  #   )
-  # }
-
   new <- db[["TruthCommissions"]] %>%
     mutate(
       all = 1,
@@ -271,7 +284,6 @@ TCmeasure <- function(cy, new_col_name,
     # filter(authorizedByState == 1 & temporaryBodyReport == 1 & ## met criteria
     #   focusedPast == 1 & investigatePatternAbuse == 1 & ## met criteria
     #     neverOperated == 0 ) %>% 
-    # filter(eval(operation_condition)) %>% ## operated
     filter(if_any(all_of(filter_nexus_vars), ~ . == 1)) %>% ## context binary indicators
     filter(if_any(all_of(filter_crimes_vars), ~ . == 1)) %>% ## crimes included
     mutate(

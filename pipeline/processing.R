@@ -1,14 +1,31 @@
-### packages
 library(tidyverse)
-library(readxl)
-library(writexl)
 
-### load the raw data tables
-load(here::here("data", "tjet.RData"), verbose = TRUE)
+min_inf_to_na <- function(x) {
+  x <- x[!is.na(x)]
+  if (length(x) > 0) 
+    min(x) 
+  else 
+    NA
+}
+
+max_inf_to_na <- function(x) {
+  x <- x[!is.na(x)]
+  if (length(x) > 0) 
+    max(x) 
+  else 
+    NA
+}
+
+cat("\n\nLoading the raw data tables...")
+load(here::here("data", "tjet.RData"), verbose = FALSE)
+cat(" done.\n\n")
 map(tjet, names)
 
-### ID column names
-pkeys <- c(
+### note that both bases have Countries, Transitions, Conflicts and Dyads tables
+### but these should be the same; ideally the two bases should be combined and 
+### using only one version each but Airtable makes this difficult
+
+pkeys <- c( ## ID column names
   "Amnesties" = "amnestyID",
   "Trials" = "trialID",
   "Accused" = "accusedID",
@@ -24,22 +41,15 @@ pkeys <- c(
   "Investigations" = "pkey", 
   "TJETmembers" = "pkey")
 
-### note that both bases have Countries, Transitions, Conflicts and Dyads tables
-### but these should be the same; ideally the two bases should be combined and 
-### using only one version each but Airtable makes this difficult
+exclude <- c( ## exclude these tables from the production database
+  "metadata", "select_options", "Experts", "NGOs", "Legal", "ConflictDyadSpells", 
+  "UCDPcountries", "Mallinder", "Rozic", "Challenges", "VettingComparison", "ICDB", 
+  "BIcomparison", "AdHocHybrid", "Ethiopia", "ArgCausas", "ArgAccused", "ArgCLs", 
+  "ArgCharges", "BIcomparison", "BIcaseIDlink", "TI", "newTI", "Southey", "Filipa", 
+  "CorrectionsCandidates")
 
-### exclude these tables from the production database
-exclude <- c("metadata", "select_options", "Experts", "NGOs", "Legal", 
-             "ConflictDyadSpells", "UCDPcountries", "Mallinder", "Rozic", 
-             "Challenges", "VettingComparison", "ICDB", "BIcomparison", 
-             "AdHocHybrid", "Ethiopia", "ArgCausas", "ArgAccused", "ArgCLs", 
-             "ArgCharges", "BIcomparison", "BIcaseIDlink", "TI", "newTI",
-             "Southey", "Filipa", "CorrectionsCandidates")
-
-### check metadata table for non-existing fields
-### can use this to determine which fields can be deleted from dev DB
-cat("These fields listed in 'metadata' are missing in the Airtable download.")
-map(names(to_download), function(basename) {
+cat("\nThese fields listed in 'metadata' are missing in the Airtable download and are candidates for deletion:\n\n")
+map(names(to_download), function(basename) { ## check metadata table for non-existing fields
   cat("Base:", basename, "\n\n")
   names(tables) <- tables <- 
     to_download[[basename]][!to_download[[basename]] %in% exclude]
@@ -55,7 +65,7 @@ map(names(to_download), function(basename) {
   return()
 })
 
-### create prodDB tables
+cat("\nCreating the production database tables...")
 db <- map(names(to_download), function(basename) { # basename = "MegaBase"
   names(select_tables) <- select_tables <- 
     to_download[[basename]][!to_download[[basename]] %in% exclude]
@@ -85,15 +95,15 @@ db <- map(names(to_download), function(basename) { # basename = "MegaBase"
       select(all_of(select_vars))
   })
 })
-
 names(db) <- names(to_download)
+cat(" done.\n")
 
-### for tracking valid rows in data tables
-dim_orig <- map(db, function(dat) {
+dim_orig <- map(db, function(dat) { ## for tracking valid rows in data tables
   map_vec(dat, nrow)
 })
 
-### filtering out invalid records (more removal for other reasons below)
+cat("\n\nRemoving invalid mechanism records...")
+## more removal for other reasons below
 drop_invalids <- c("Amnesties", "Trials", "Accused", 
                    "TruthCommissions", "Reparations", "Vettings")
 db <- map(names(to_download), function(basename) {
@@ -106,16 +116,18 @@ db <- map(names(to_download), function(basename) {
   return(base)
 })
 names(db) <- names(to_download)
+cat(" done.\n")
 
-### checking how many records left
-dim_drop <- map(db, function(dat) {
+dim_drop <- map(db, function(dat) { ## for keeping track of how many records left
   map_vec(dat, nrow)
 })
-cbind(orig = dim_orig[[1]], drop = dim_drop[[1]])
-cbind(orig = dim_orig[[2]], drop = dim_drop[[2]])
+# cat("\nMegaBase:\n")
+# cbind(orig = dim_orig[[1]], drop = dim_drop[[1]])
+# cat("\nProsecutions:\n")
+# cbind(orig = dim_orig[[2]], drop = dim_drop[[2]])
 
-### transforming checkboxes to binary
-db <- map(names(to_download), function(basename) {
+cat("\n\nTransforming checkbox fields to binary variables...")
+db <- map(names(to_download), function(basename) { ## transforming checkboxes to binary
   names(select) <- select <- 
     to_download[[basename]][!to_download[[basename]] %in% exclude]
   map(select, function(tab_name) {
@@ -131,8 +143,9 @@ db <- map(names(to_download), function(basename) {
   })
 })
 names(db) <- names(to_download)
+cat(" done.\n")
 
-### including fields with multipleLookupValues
+cat("\n\nProcessing multiple selection fields...")
 db <- map(names(to_download), function(basename) {
   names(select) <- select <- tjet[[basename]]$metadata %>%
     filter(
@@ -162,26 +175,32 @@ db <- map(names(to_download), function(basename) {
   return(base)
 })
 names(db) <- names(to_download)
-
 rm(to_download) 
 
-### ccode tables for Crimes and Victims
+### ccode tables for Crimes and Victims 
+### THIS CAN TO BE ADJUSTED TO NEW MULTISELECT FIELDS BUT IS WORKING AS IS
 
-crimes <- c("ccode_Crime", "ccode_Crime2", "ccode_Crime3")
-victims <- c("ccode_Victim", "ccode_Victim2", "ccode_Victim3")
+crimes <- c("ccode_crime", "ccode_crime2", "ccode_crime3")
+victims <- c("ccode_victim", "ccode_victim2", "ccode_victim3")
 
 db[["Prosecutions"]][["Trials_Crimes"]] <- map(crimes, function(var) {
   db[["Prosecutions"]][["Trials"]] %>%
     select(all_of(c("trialID", var))) %>%
-    rename(ccode_Crime = all_of(var)) %>%
+    rename(ccode_crime = all_of(var)) %>%
     drop_na()
 }) %>%
   bind_rows()
 
+# db[["Prosecutions"]][["Trials_Crimes"]] |> 
+#   arrange(trialID) |> 
+#   group_by(trialID) |>  
+#   mutate(n = n()) |> 
+#   filter(n > 1) 
+
 db[["Prosecutions"]][["Trials_Victims"]] <- map(victims, function(var) {
   db[["Prosecutions"]]$Trials %>%
     select(all_of(c("trialID", var))) %>%
-    rename(ccode_Victim = all_of(var)) %>%
+    rename(ccode_victim = all_of(var)) %>%
     drop_na()
 }) %>%
   bind_rows()
@@ -235,22 +254,41 @@ multi_selects <- map(select, function(tab_name) {
 names(multi_selects) <- str_replace(names(multi_selects), fixed("."), "_")
 db[["MegaBase"]] <- c(db[["MegaBase"]], multi_selects)
 
+cat(" done.\n\n")
+
 ### checking numbers of records again to ensure integrity
+cat("\nHow many records after processing multi-select fields?\n")
 dim_now <- map(db, function(dat) {
   map_vec(dat, nrow)
 })
-cbind(orig = dim_orig[[1]], drop = dim_drop[[1]], 
-      now = dim_now[[1]][names(dim_orig[[1]])])
-cbind(orig = dim_orig[[2]], drop = dim_drop[[2]], 
-      now = dim_now[[2]][names(dim_orig[[2]])])
+cat("\nMegaBase:\n")
+mega <- cbind(
+  orig = dim_orig[[1]], 
+  drop = dim_drop[[1]], 
+  now = dim_now[[1]][names(dim_orig[[1]])]
+) |> 
+  as.data.frame() |> 
+  rownames_to_column() |> 
+  print() 
+cat("\nProsecutions:\n")
+pros <- cbind(
+  orig = dim_orig[[2]], 
+  drop = dim_drop[[2]], 
+  now = dim_now[[2]][names(dim_orig[[2]])]
+) |> 
+  as.data.frame() |> 
+  rownames_to_column() |> 
+  print() 
+
+if(!length(mega$drop == mega$now) == sum(length(mega$drop == mega$now)) | 
+  !length(pros$drop == pros$now) == sum(length(pros$drop == pros$now))) 
+stop("Unexpected change in number of mechanism record! This needs to be resolved by the pipeline can be conpleted.")
 
 ### recoding keys in multipleRecordLinks (from Airtable record IDs)
 ### approaches differ by whether the relationship is one-to-one or one-to-many
 ### could simplify code below with functions
 
-
-### build in checks to prevent increased number of obs after unnesting!!!
-
+cat("\n\nProcessing conflictIDs and dyadIDs...")
 
 db[["MegaBase"]][["Reparations"]] <- 
   db[["MegaBase"]][["Reparations"]] %>%
@@ -275,10 +313,18 @@ db[["Prosecutions"]][["Trials"]] <-
   left_join(tjet[["Prosecutions"]]$Dyads %>% 
               select(airtable_record_id, dyad_id),
             by = "airtable_record_id") %>%
-  select(-airtable_record_id) %>%
+  select(-airtable_record_id) %>%  
   rename(ucdpConflictID = "conflict_id",
-         ucdpDyadID = "dyad_id")
+         ucdpDyadID = "dyad_id") |> 
+  group_by(trialID) |> 
+  mutate(ucdpDyadID = str_flatten_comma(ucdpDyadID)) |> 
+  ungroup() |> 
+  distinct()
 
+# db[["Prosecutions"]][["Trials"]] |> 
+#   filter(.by = trialID, n() > 1) |> 
+#   distinct() |> 
+#   print(n = Inf)
 
 ### this no longer works vor vettings because the relationship is one-to-many
 
@@ -306,27 +352,6 @@ db[["Prosecutions"]][["Trials"]] <-
 #   select(-airtable_record_id) %>%
 #   rename(ucdpConflictID = "conflict_id",
 #          ucdpDyadID = "dyad_id")
-
-### the trial-accused link is one-to-many 
-### (it should be many-to-many but the original DB was not designed to accomodate this)
-
-db[["Prosecutions"]][["Accused"]] <- 
-  db[["Prosecutions"]][["Accused"]] %>%
-  unnest_longer(trialID, keep_empty = TRUE) %>%
-  rename(airtable_record_id = "trialID") %>%
-  left_join(tjet[["Prosecutions"]][["Trials"]] %>% 
-              select(airtable_record_id, trialID),
-            by = "airtable_record_id") %>%
-  select(-airtable_record_id)
-
-db[["Prosecutions"]][["CourtLevels"]] <- 
-  db[["Prosecutions"]][["CourtLevels"]] %>%
-  unnest_longer(accusedID, keep_empty = TRUE) %>%
-  rename(airtable_record_id = "accusedID") %>%
-  left_join(tjet[["Prosecutions"]][["Accused"]] %>% 
-              select(airtable_record_id, accusedID),
-            by = "airtable_record_id") %>%
-  select(-airtable_record_id)
 
 ### vettings and truth commissions and amnesties have one-to-many links
 
@@ -434,7 +459,35 @@ db[["Prosecutions"]][["Dyads"]] <-
   rename(ucdpConflictID = "conflict_id",
          ucdpDyadID = "dyad_id")
 
-### other multi-select fields (lookup fields as list columns of length one)
+cat(" done.\n\n")
+
+cat("\nProcessing trials, accused, and CLs links...")
+### the trial-accused link is one-to-many 
+### (it should be many-to-many but the original DB was not designed to accomodate this)
+
+db[["Prosecutions"]][["Accused"]] <- 
+  db[["Prosecutions"]][["Accused"]] %>%
+  unnest_longer(trialID, keep_empty = TRUE) %>%
+  rename(airtable_record_id = "trialID") %>%
+  left_join(tjet[["Prosecutions"]][["Trials"]] %>% 
+              select(airtable_record_id, trialID),
+            by = "airtable_record_id") %>%
+  select(-airtable_record_id)
+
+db[["Prosecutions"]][["CourtLevels"]] <- 
+  db[["Prosecutions"]][["CourtLevels"]] %>%
+  unnest_longer(accusedID, keep_empty = TRUE) %>%
+  rename(airtable_record_id = "accusedID") %>%
+  left_join(tjet[["Prosecutions"]][["Accused"]] %>% 
+              select(airtable_record_id, accusedID),
+            by = "airtable_record_id") %>%
+  select(-airtable_record_id)
+
+cat(" done.\n\n")
+
+cat("\nCleaning up lookup fields...")
+
+### lookup fields as list columns of length one
 
 db[["Prosecutions"]][["Accused"]] <- 
   db[["Prosecutions"]][["Accused"]] %>% 
@@ -443,7 +496,6 @@ db[["Prosecutions"]][["Accused"]] <-
                          "lastSentencingArrangement")), keep_empty = TRUE) %>%
   distinct() 
 
-### other multi-select fields: 
 ### lookup fields as list columns of length greater than one
 
 db[["Prosecutions"]][["Trials"]] <- 
@@ -468,7 +520,10 @@ db[["Prosecutions"]][["Trials"]] <-
   db[["Prosecutions"]][["Trials"]] %>%
   select(-lastVerdict, -lastSentencingTime)
 
+cat(" done.\n\n")
+
 ### fixing missing Trials endYear & cleaning description
+cat("\nCleaning trial descriptions and end years...")
 db[["Prosecutions"]][["Trials"]] <- 
   db[["Prosecutions"]][["Trials"]] %>% 
   mutate(yearEnd = ifelse(is.na(yearEnd) & ongoing == 1, 2024, yearEnd), 
@@ -481,6 +536,8 @@ db[["Prosecutions"]][["Trials"]] <-
                                   str_sub(caseDescription, 1, charnum - 1), 
                                   caseDescription)) %>% 
   select(-charnum) 
+
+cat(" done.\n\n")
 
 ### fair trials measure for later 
 fair_trials <- db[["MegaBase"]][["Transitions"]] %>%
@@ -506,6 +563,7 @@ db_years_trials <- 1970:2020
 db_years_cy <- 1970:2024
 
 ### formatting transitions table for website 
+cat("\nProcessing transitions data... ")
 db[["MegaBase"]][["Transitions"]] <-
   db[["MegaBase"]][["Transitions"]] %>% 
   filter(trans == 1) %>% 
@@ -527,6 +585,9 @@ db[["MegaBase"]][["Transitions"]] <-
   filter(!(ccode == 265 & trans_year_begin == 1990)) %>%
   select(transitionID, ccode, trans_year_begin, nsupport, sources, p5_year, ert_year, bmr_year) %>%
   arrange(trans_year_begin, ccode)
+cat("done.\n\n")
+
+cat("\nFiltering mechanisms records to meet TJET criteria for inclusion... ")
 
 ### filter out non-HRs policies & events, 
 ### state agents and opposition members only for domestic trials
@@ -594,8 +655,10 @@ db[["MegaBase"]][["Amnesties"]] <-
 
 rm(keep_amnesties)
 
-### UN investigations
+cat("done.\n\n")
 
+### UN investigations
+cat("\nProcessing UN investigations data... ")
 dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
   rename(beg = year_beg, 
          end = year_end) %>% 
@@ -654,10 +717,6 @@ dl_invest <- db[["MegaBase"]][["Investigations"]] %>%
   # filter(n() > 1) %>% 
   # print(n = Inf)
 
-### investigations where mandate differs
-# dl_invest %>%
-#   filter(mandate != mandate_en | is.na(mandate_en))
-
 db[["MegaBase"]][["Investigations"]] <- dl_invest |>
   rowwise() |>  
   mutate(uninv = 1, 
@@ -678,7 +737,10 @@ db[["MegaBase"]][["Investigations"]] <- dl_invest |>
   select(ccode_cow, year, uninv_beg, uninv, uninv_dompros_beg, uninv_dompros, 
          uninv_evcoll_beg, uninv_evcoll, uninv_intlpros_beg, uninv_intlpros) 
 
+cat("done.\n\n")
+
 ### compare numbers of records again
+cat("\nHow many mechanism records are left after applying definitional criteria?\n\n")
 dim_last <- map(db, function(dat) {
   map_vec(dat, nrow)
 })
@@ -701,6 +763,8 @@ db <- c(db[["MegaBase"]],
 ### cleaning up workspace environment
 rm(exclude, select, dim_drop, dim_last, dim_now, dim_orig, 
    drop_invalids, crimes, victims, multi_selects, pkeys)
+
+cat("\n\nPreparing data for TJET country-year dataset... ")
 
 ### creating country list as basis for country-year dataset
 countrylist <- db[["Countries"]] %>% 
@@ -816,7 +880,7 @@ vettings <- db[["Vettings"]] %>%
 
 ### preparing trials list for merging into country-year dataset
 trials <- db[["Trials"]] %>%
-  rename("ccode" = "ccode_Accused") %>% 
+  rename("ccode" = "ccode_target") %>% 
   arrange(ccode, yearStart) %>%
   mutate(SGBV = ifelse(rape_Accused == 1 | sexualViolence_Accused == 1 | 
                          otherSGBV_Accused == 1, 1, 0) ) %>% 
@@ -882,8 +946,7 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
          finite_check = sum(!is.na(dem_vdem)), 
          dem_vdem_min = ifelse(finite_check > 0, min(dem_vdem, na.rm = TRUE), NA), 
          dem_vdem_max = ifelse(finite_check > 0, max(dem_vdem, na.rm = TRUE), NA), 
-         sources = 3 - (is.na(dem_polity_max) + 
-                          is.na(dem_bmr_max) + is.na(dem_vdem_max)),
+         sources = 3 - (is.na(dem_polity_max) + is.na(dem_bmr_max) + is.na(dem_vdem_max)),
          regime = max(transition, na.rm = TRUE), 
          dem_prop = sum(dem_all, na.rm = TRUE) / n()) %>% 
   ungroup() %>% 
@@ -909,7 +972,7 @@ translist <- read_csv("transitions/transitions_new_revised.csv",
   rename(regime_sample = regime) %>% 
   select(country, ccode, year, transition, dem_bmr, dem_polity, dem_vdem, 
          regime_sample, reg_democ, reg_autoc, reg_trans) |> 
-  filter(year <= 2020) 
+  filter(year <= 2024) 
 
 ### democratic reversions data for merging 
 reversions <- read_csv("transitions/transitions_new_revised.csv",
@@ -923,6 +986,10 @@ reversions <- read_csv("transitions/transitions_new_revised.csv",
          reg_trans_vdem = reg_trans,
          dem_spell_id_vdem = dem_spell_id) %>% 
   filter(!is.na(country_id_vdem)) 
+
+cat("done.\n\n")
+
+cat("\nCreating country-year dataset with mechanisms count measures... ")
 
 ### creating country-year dataset and merging in mechanisms count measures
 db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
@@ -957,13 +1024,6 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
          beg, end, ccode, ccode_case, country_case, ccode_ksg, country_id_vdem, 
          tjet_focus, region, regime_sample, reg_democ, reg_autoc, reg_trans, 
          conflict, transition) %>% 
-# db[["CountryYears"]] |> ### Montenegro 2004
-#   select(country, country_case, ccode, ccode_case, year) |>
-#   mutate(base = 1) |>
-#   full_join(domestic |>
-#               mutate(domestic = 1),
-#             by = c("ccode", "year")) |>
-#   filter(is.na(base))
   left_join(amnesties, by = c("ccode", "year") ) %>% 
   mutate(amnesties = ifelse(is.na(amnesties), 0, amnesties),
          amnesties_SGBV = ifelse(is.na(amnesties_SGBV), 0, amnesties_SGBV)) %>% 
@@ -985,6 +1045,9 @@ db[["CountryYears"]] <- map(countrylist$country , function(ctry) {
   mutate(trials_foreign = ifelse(is.na(trials_foreign), 0, trials_foreign),
          trials_foreign_SGBV = ifelse(is.na(trials_foreign_SGBV), 0, trials_foreign_SGBV)) 
 
+cat("done.\n\n")
+
+cat("\nTotal counts of TJ mechanims in country-year datatset:\n\n")
 db[["CountryYears"]] |> 
   reframe(
     amnesties = sum(amnesties), 
@@ -1005,6 +1068,8 @@ db[["CountryYears"]] |>
 #          beg, end, ccode, ccode_case, ccode_ksg, country_id_vdem) %>%
 #   filter(country != country_label) %>%
 #   distinct()
+
+cat("\n\nCreating other production database tables... ")
 
 ### countries table for database
 db[["Countries"]] <- countrylist %>% 
@@ -1044,6 +1109,16 @@ attr(db[["ConflictDyads"]], "spec") <- NULL
 attr(db[["ConflictDyads"]], "problems") <- NULL
 # attributes(db[["ConflictDyads"]]) 
 
+### database version 
+db[["db_timestamp"]] <- tjet[["db_timestamp"]] %>% tibble(tjet_timestamp = .)
+timestamp <- db[["db_timestamp"]] %>% 
+  mutate(tjet_timestamp = as.character(date(tjet_timestamp))) %>% 
+  unlist(use.names = FALSE)
+
+cat("done.\n\n")
+
+cat("\nProcessing survey data...\n\n")
+
 ### surveys metadata 
 db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
   select(-country_fr) %>% 
@@ -1058,7 +1133,7 @@ db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
          bibtex_key, results_tables) %>% 
   unnest(results_tables)
 
-gloss <- read_csv(here::here("data", "HHI_surveys_glossary.csv")) %>%
+gloss <- read_csv(here::here("data", "HHI_surveys_glossary.csv"), show_col_types = FALSE) %>%
   rename(from = "Appears as", 
          to = "Should be") %>%
   arrange(str_to_lower(from)) %>% 
@@ -1070,7 +1145,7 @@ rm(gloss)
 ### survey data tables
 map(db[["SurveysMeta"]]$results_tables, function(filename) { 
   ## for dev: filename = "Uganda_2005_Submission.xlsx" 
-  surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename))
+  surveytab <- readxl::read_xlsx(here::here("data", "downloads", filename), .name_repair = "unique_quiet")
   tooltips <- names(surveytab)
   tooltips[str_detect(tooltips, fixed("..."))] <- NA
   if(is.na(tooltips[1]) & surveytab[1, 1] == "Section") tooltips[1] <- "Section"
@@ -1094,16 +1169,13 @@ map(db[["SurveysMeta"]]$results_tables, function(filename) {
            Responses = str_replace_all(Responses, gl))
   db[[str_replace(filename, ".xlsx", "")]] <<- surveytab %>%
     fill(Section, Question, Responses, .direction = "down")
+  return(filename)
 })
 
 ### cleaning up workspace environment
 rm(countrylist, translist, confllist, gl)
 
-### database version 
-db[["db_timestamp"]] <- tjet[["db_timestamp"]] %>% tibble(tjet_timestamp = .)
-timestamp <- db[["db_timestamp"]] %>% 
-  mutate(tjet_timestamp = as.character(date(tjet_timestamp))) %>% 
-  unlist(use.names = FALSE)
+cat("\nProcessing multi-select tables for mechanisms... ")
 
 ### dealing with multi-select fields
 tabs <- c("Amnesties" = "amnestyID", 
@@ -1149,8 +1221,10 @@ db[["Vettings"]] <- db[["Vettings"]] %>%
   left_join(multies[["Vettings"]], by = "vettingID") 
 rm(tabs, multies)
 
-### vettings 
+cat("done.\n\n") 
 
+### vettings 
+cat("\nProcessing vettings data... ")
 db[["Vettings"]] <- db[["Vettings"]] |>
   mutate(policy_type = type_dismissal + type_ban + type_declassification, 
          inst_exe = case_when(
@@ -1189,44 +1263,34 @@ db[["Vettings"]] <- db[["Vettings"]] |>
            ifelse(hearingsPublic == "yes", 1, 0) + 
            ifelse(courtChallenge != "no court challenge" & courtChallenge != "don't know" & !is.na(courtChallenge), 1, 0) 
          ) 
+cat("done.\n\n") 
 
-### ICC data 
+cat("\nProcessing ICC data... ")
+
 db[["ICC"]] <- db[["ICC"]] |> 
   reframe(.by = ccode_cow, 
-    ICC_referral = min(ICC_referral, na.rm = TRUE), 
-    ICC_prelim_exam = min(ICC_prelim_exam, na.rm = TRUE), 
-    ICC_prelimEnd = min(ICC_prelimEnd, na.rm = TRUE), 
-    ICC_investigation = min(ICC_investigation, na.rm = TRUE)) |> 
-  mutate(across(!ccode_cow, ~ ifelse(is.infinite(.x), NA, .x ) ) ) |> 
+    ICC_referral = min_inf_to_na(ICC_referral), 
+    ICC_prelim_exam = min_inf_to_na(ICC_prelim_exam), 
+    ICC_prelimEnd = min_inf_to_na(ICC_prelimEnd), 
+    ICC_investigation = min_inf_to_na(ICC_investigation)) |> 
   arrange(ccode_cow) 
 
 db[["ICCaccused"]] <- db[["Accused"]] %>% 
   filter(!is.na(ICC_investigation)) %>% 
   left_join(db[["Trials"]] %>% 
-              select(trialID, ccode_Accused), 
+              select(trialID, ccode_target), 
             by = "trialID") %>% 
   left_join(db[["Countries"]] %>% 
               filter(end == 2024) %>% 
               select(country, ccode),
-            by = c(ccode_Accused = "ccode")) %>%
-  select(trialID, accusedID, country, ccode_Accused, name, 
+            by = c(ccode_target = "ccode")) %>%
+  select(trialID, accusedID, country, ccode_target, name, 
          position_desc, position_desc_fr, 
          ICC_arrest_warrant, ICC_arrestAppear, ICC_confirm_charges, 
          ICC_proceedings, ICC_withdrawnDismissed) %>% 
-  arrange(ccode_Accused, ICC_arrest_warrant)
+  arrange(ccode_target, ICC_arrest_warrant)
 
-### helpers for CY measures
-source("pipeline/fx/AmnestyMeasure.R", echo = TRUE)
-source("pipeline/fx/ReparationMeasures.R", echo = TRUE)
-source("pipeline/fx/TCgoals.R", echo = TRUE)
-source("pipeline/fx/TCmeasure.R", echo = TRUE)
-source("pipeline/fx/TrialsMeasure.R", echo = TRUE)
-source("pipeline/fx/VettingMeasures.R", echo = TRUE)
-
-### dtr = democratic transition, binary, from first transition year
-### aco = all conflicts, binary, from first conflict year
-### dco = during conflict, binary, when conflict active
-### pco = post-conflict, binary, after active conflict ended
+cat("done.\n\n") 
 
 ### merging it all together
 
@@ -1242,6 +1306,7 @@ source("pipeline/fx/VettingMeasures.R", echo = TRUE)
 #     Accept = "Accept: application/vnd.github.v3.raw"))
 
 ### cy dataset assembled in other repo
+cat("\nLoading covariates for dataset... ")
 df <- readRDS(here::here("data", "cy_covariates.rds")) %>% 
   select(-beg, -end) 
 
@@ -1269,7 +1334,9 @@ df <- df %>%
     TRUE ~ country_case_fr
   )) 
 
-### special country cases 
+cat("done.\n\n") 
+
+cat("\nSpecial country cases:\n")
 df %>% 
   filter(country != country_case) %>%
   group_by(country) %>%
@@ -1282,6 +1349,7 @@ df %>%
 # unique(db[["CountryYears"]]$country)[!unique(db[["CountryYears"]]$country) %in% unique(df$country) ]
 
 ### assembling dataset for website and analyses
+cat("\nAssembling dataset for website and analyses... ")
 
 df <- df %>%
   left_join(db[["CountryYears"]] %>%
@@ -1334,44 +1402,44 @@ df <- df %>%
          ICC_investigation_cumu = cumsum(ICC_investigation)) %>% 
   ungroup() %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Accused, ICC_arrest_warrant) %>%
+              select(ccode_target, ICC_arrest_warrant) %>%
               filter(!is.na(ICC_arrest_warrant) & ICC_arrest_warrant <= 2024) %>% 
               mutate(icc_action = 1) %>%
-              group_by(ccode_Accused, ICC_arrest_warrant) %>%  
+              group_by(ccode_target, ICC_arrest_warrant) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_arrest_warrant")) %>% 
+            by = c("ccode_cow" = "ccode_target", "year" = "ICC_arrest_warrant")) %>% 
   rename(ICC_arrest_warrant = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Accused, ICC_arrestAppear) %>%
+              select(ccode_target, ICC_arrestAppear) %>%
               filter(!is.na(ICC_arrestAppear) & ICC_arrestAppear <= 2024) %>%
               mutate(icc_action = 1) %>%
-              group_by(ccode_Accused, ICC_arrestAppear) %>%  
+              group_by(ccode_target, ICC_arrestAppear) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_arrestAppear")) %>% 
+            by = c("ccode_cow" = "ccode_target", "year" = "ICC_arrestAppear")) %>% 
   rename(ICC_arrestAppear = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Accused, ICC_confirm_charges) %>%
+              select(ccode_target, ICC_confirm_charges) %>%
               filter(!is.na(ICC_confirm_charges) & ICC_confirm_charges <= 2024) %>%
               mutate(icc_action = 1) %>%
-              group_by(ccode_Accused, ICC_confirm_charges) %>%  
+              group_by(ccode_target, ICC_confirm_charges) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_confirm_charges")) %>% 
+            by = c("ccode_cow" = "ccode_target", "year" = "ICC_confirm_charges")) %>% 
   rename(ICC_confirm_charges = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Accused, ICC_proceedings) %>%
+              select(ccode_target, ICC_proceedings) %>%
               filter(!is.na(ICC_proceedings) & ICC_proceedings <= 2024) %>%
               mutate(icc_action = 1) %>%
-              group_by(ccode_Accused, ICC_proceedings) %>%  
+              group_by(ccode_target, ICC_proceedings) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_proceedings")) %>% 
+            by = c("ccode_cow" = "ccode_target", "year" = "ICC_proceedings")) %>% 
   rename(ICC_proceedings = icc_action) %>% 
   full_join(db[["ICCaccused"]] %>% 
-              select(ccode_Accused, ICC_withdrawnDismissed) %>%
+              select(ccode_target, ICC_withdrawnDismissed) %>%
               filter(!is.na(ICC_withdrawnDismissed) & ICC_withdrawnDismissed <= 2024) %>%
               mutate(icc_action = 1) %>%
-              group_by(ccode_Accused, ICC_withdrawnDismissed) %>%  
+              group_by(ccode_target, ICC_withdrawnDismissed) %>%  
               reframe(icc_action = sum(icc_action)),
-            by = c("ccode_cow" = "ccode_Accused", "year" = "ICC_withdrawnDismissed")) %>% 
+            by = c("ccode_cow" = "ccode_target", "year" = "ICC_withdrawnDismissed")) %>% 
   rename(ICC_withdrawnDismissed = icc_action) %>% 
   mutate(ICC_arrest_warrant = ifelse(is.na(ICC_arrest_warrant), 0, ICC_arrest_warrant), 
          ICC_arrestAppear = ifelse(is.na(ICC_arrestAppear), 0, ICC_arrestAppear), 
@@ -1383,7 +1451,7 @@ df <- df %>%
   mutate(ICC_arrest_warrant_cumu = cumsum(ICC_arrest_warrant), 
          ICC_proceedings_cumu = cumsum(ICC_proceedings)) %>% 
   ungroup() %>% 
-  left_join(read_csv("data/icc_statesparty.csv") %>%
+  left_join(read_csv("data/icc_statesparty.csv", show_col_types = FALSE) %>%
               filter(ccode != 511) %>%
               mutate(ccode = ifelse(ccode == 260 & year == 1990, 255, ccode)) %>%
               select(-country),
@@ -1435,11 +1503,11 @@ df <- df %>%
          # dco = dco_25
   ) %>%
   group_by(country_case) %>% 
-  mutate(sample_trans = min(sample_trans, na.rm = TRUE), 
+  mutate(sample_trans = min_inf_to_na(sample_trans), 
          ## warnings here that are addressed in next mutate
-         sample_confl_25 = min(sample_confl_25, na.rm = TRUE), 
-         sample_confl_100 = min(sample_confl_100, na.rm = TRUE), 
-         sample_confl_1000 = min(sample_confl_1000, na.rm = TRUE), 
+         sample_confl_25 = min_inf_to_na(sample_confl_25), 
+         sample_confl_100 = min_inf_to_na(sample_confl_100), 
+         sample_confl_1000 = min_inf_to_na(sample_confl_1000), 
          peace_spell_25 = ifelse(dco_25 == 0 & (lag(dco_25) == 1 | is.na(lag(dco_25))), paste(ccode_ksg, year, sep = "-"), NA), 
          peace_spell_100 = ifelse(dco_100 == 0 & (lag(dco_100) == 1 | is.na(lag(dco_100))), paste(ccode_ksg, year, sep = "-"), NA), 
          peace_spell_1000 = ifelse(dco_1000 == 0 & (lag(dco_1000) == 1 | is.na(lag(dco_1000))), paste(ccode_ksg, year, sep = "-"), NA) 
@@ -1486,6 +1554,8 @@ df <- df %>%
   ungroup() %>%
   select(-isna) 
 
+cat("done.\n\n") 
+
 if(nrow(df) != 9871) stop("Incorrect number of country-year for 1970-2024") 
 
 ### these CYs are included in the analyses data but not in TJET CountryYears
@@ -1494,22 +1564,36 @@ if(nrow(df) != 9871) stop("Incorrect number of country-year for 1970-2024")
 ### we could elect to delete these country years from the analyses dataset
 ### UPDATE: this has now been addressed upstream, so this no longer applies 
 
-df %>% 
-  select(country, ccode_cow, ccode_ksg, year) %>% 
-  mutate(df = TRUE) %>% 
-  full_join(db[["CountryYears"]] %>% 
-              select(country, ccode, ccode_ksg, year) %>% 
-              mutate(db = TRUE), 
-            by = c("ccode_cow" = "ccode", 
-                   "ccode_ksg" = "ccode_ksg", 
-                   "year" = "year") ) %>% 
-  filter(is.na(df) | is.na(db) | is.na(country.x) | is.na(country.y)) %>% 
-  group_by(ccode_cow) %>% 
-  mutate(beg = min(year), 
-         end = max(year)) %>% 
-  select(-year) %>% 
-  distinct() %>% 
-  print(n = Inf)
+# df %>% 
+#   select(country, ccode_cow, ccode_ksg, year) %>% 
+#   mutate(df = TRUE) %>% 
+#   full_join(db[["CountryYears"]] %>% 
+#               select(country, ccode, ccode_ksg, year) %>% 
+#               mutate(db = TRUE), 
+#             by = c("ccode_cow" = "ccode", 
+#                    "ccode_ksg" = "ccode_ksg", 
+#                    "year" = "year") ) %>% 
+#   filter(is.na(df) | is.na(db) | is.na(country.x) | is.na(country.y)) %>% 
+#   group_by(ccode_cow) %>% 
+#   mutate(beg = min(year), 
+#          end = max(year)) %>% 
+#   select(-year) %>% 
+#   distinct() %>% 
+#   print(n = Inf)
+
+cat("\nCreating TJ measures in TJET country-year dataset...\n")
+
+### helpers for CY measures
+source("pipeline/fx/AmnestyMeasure.R", echo = FALSE)
+source("pipeline/fx/ReparationMeasures.R", echo = FALSE)
+source("pipeline/fx/TCmeasure.R", echo = FALSE)
+source("pipeline/fx/TrialsMeasure.R", echo = FALSE)
+source("pipeline/fx/VettingMeasures.R", echo = FALSE)
+
+### dtr = democratic transition, binary, from first transition year
+### aco = all conflicts, binary, from first conflict year
+### dco = during conflict, binary, when conflict active
+### pco = post-conflict, binary, after active conflict ended
 
 ## for dev only
 # df <- df %>%
@@ -1521,6 +1605,8 @@ source("pipeline/go/measures_tcs.R", echo = TRUE)
 df <- ReparationMeasures(cy = df)
 df <- VettingMeasures(cy = df)
 rm(vet_spells)
+
+cat("\n...done.\n\n") 
 
 ### checking domestic trials sample indicator
 
@@ -1556,8 +1642,7 @@ rm(vet_spells)
 #             by = c("country_case" = "country", "year" = "year")) %>%
 #   filter(country_id_vdem != cid_vdem)
 
-
-### TJ year zero
+cat("Creating TJ year zero variable... ")
 df <- df |> 
   arrange(country_case, year) |>  
   mutate(
@@ -1574,8 +1659,8 @@ df <- df |>
   ) |>  
   group_by(country_case) |> 
   mutate(
-    tj_yr_zero = min(tj_yr_zero, na.rm = TRUE), 
-    tj_yr_zero = ifelse(is.infinite(tj_yr_zero), NA, tj_yr_zero) 
+    tj_yr_zero = min_inf_to_na(tj_yr_zero), 
+    # tj_yr_zero = ifelse(is.infinite(tj_yr_zero), NA, tj_yr_zero) 
   ) |> 
   ungroup() |>
   mutate(
@@ -1590,10 +1675,11 @@ df <- df |>
     year == tj_yr_zero ~ 1, 
     TRUE ~ 0
   ))
+cat("done.\n\n") 
 
-### HRA 
+cat("Merging in legacy-of-violence index... ")
 
-hra <- read_csv("../tjet-hra/tjet-hra.csv") %>%
+hra <- read_csv("../tjet-hra/tjet-hra.csv", show_col_types = FALSE) %>%
   select(country, year, legacy_mean, legacy_low95, legacy_upp95, legacy_rank)
 hra_lags <- c(1:10, 20) |>
   map(function(yrs) {
@@ -1611,8 +1697,10 @@ df <- df %>%
   left_join(hra, by = c("country_case" = "country", "year" = "year")) |> 
   mutate(legacy_decile = as.numeric(gtools::quantcut(legacy_mean, q = 10)))
 
-### cleanup
-# first <- c(first, "dtr", "aco", "dco", "pco")
+cat("done.\n\n") 
+
+cat("\nCleanup and saving dataset locally... ")
+
 not <- c(not, "regime_sample", "reg_democ", "reg_autoc", "reg_trans", 
          "transition", "conflict", "sample_trans", "sample_confl_25", 
          "sample_confl_100", "sample_confl_1000", "sample_combi") 
@@ -1627,11 +1715,14 @@ codebook <- db[["codebook"]] %>%
   filter(col_name != "lag_*") %>% 
   filter(!str_detect(col_name, "access_"))
 ## these are in the codebook but not in the dataset 
+
+cat("\nThese variables are in the codebook but not in the dataset:\n")
 codebook$col_name[!codebook$col_name %in% names(df)]
+
 ## these are in the dataset but not in the codebook
 if(length(names(df)[!names(df) %in% codebook$col_name]) > 0) {
   print(names(df)[!names(df) %in% codebook$col_name])
-  stop("Not all dataset variable names are included in the codebook; add these to the codebook first!") 
+  stop("\nNot all dataset variable names are included in the codebook; add these to the codebook first!") 
 }
 
 df <- df %>% 
@@ -1657,6 +1748,64 @@ df %>%
   write_csv(here::here(dropbox_path, "tjet_cy_analyses.csv"), na = "")
 rm(exclude)
 
+cat("done.\n\n") 
+
+cat("\nTranslations cleanup and checks: (shown records are missing French translations)...\n\n")
+
+db[["Amnesties"]] <- db[["Amnesties"]] %>% 
+  mutate(mechanismDescription_fr = str_replace_all(mechanismDescription_fr, "droits de l'homme", "droits de la personne")) 
+db[["Amnesties"]] %>% 
+  filter(amnestyYear %in% db_years_mech) %>%
+  select(amnestyID, invalid, amnestyYear, mechanismDescription_fr) %>% 
+  filter(str_detect(mechanismDescription_fr, "droits de l'homme") | is.na(mechanismDescription_fr)) 
+
+db[["Reparations"]] <- db[["Reparations"]] %>% 
+  mutate(officialName_en_fr = str_replace_all(officialName_en_fr, "droits de l'homme", "droits de la personne")) 
+db[["Reparations"]] %>% 
+  filter(yearCreated %in% db_years_mech) %>%
+  select(reparationID, invalid, yearCreated, officialName_en_fr) %>% 
+  filter(str_detect(officialName_en_fr, "droits de l'homme") | is.na(officialName_en_fr)) 
+
+db[["Trials"]] <- db[["Trials"]] %>% 
+  mutate(caseDescription_fr = str_replace_all(caseDescription_fr, "droits de l'homme", "droits de la personne")) 
+db[["Trials"]] %>% 
+  filter(yearStart %in% db_years_trials) %>%
+  select(trialID, invalid, yearStart, caseDescription_fr) %>% 
+  filter(str_detect(caseDescription_fr, "droits de l'homme") | is.na(caseDescription_fr)) %>% 
+  arrange(trialID)
+
+db[["Accused"]] <- db[["Accused"]] %>% 
+  mutate(position_desc_fr = str_replace_all(position_desc_fr, "droits de l'homme", "droits de la personne"))
+db[["Accused"]] %>% 
+  select(accusedID, invalid, position_desc, position_desc_fr) %>% 
+  filter(!is.na(position_desc) & (str_detect(position_desc_fr, "droits de l'homme") | is.na(position_desc_fr))) %>% 
+  arrange(accusedID) 
+ 
+db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>% 
+  mutate(officialName_en_fr = str_replace_all(officialName_en_fr, "droits de l'homme", "droits de la personne"))
+db[["TruthCommissions"]] %>% 
+  filter(yearPassed %in% db_years_mech) %>%
+  select(truthcommissionID, yearPassed, officialName_en_fr) %>% 
+  filter(str_detect(officialName_en_fr, "droits de l'homme") | is.na(officialName_en_fr)) 
+
+db[["Vettings"]] <- db[["Vettings"]] %>%
+  mutate(policyName_fr = str_replace_all(policyName_fr,"droits de l'homme", "droits de la personne"))
+db[["Vettings"]] %>% 
+  select(vettingID, invalid, yearStart, policyName, policyName_fr) %>% 
+  filter(str_detect(policyName_fr, "droits de l'homme") | is.na(policyName_fr)) 
+
+db[["Countries"]] <- db[["Countries"]] %>%
+  mutate(across(all_of(c("auto_conflict_fr", "auto_regime_fr", "txt_amnesties_fr", 
+                         "txt_conflict_fr", "txt_domestic_fr", "txt_foreign_fr", 
+                         "txt_intl_fr", "txt_intro_fr", "txt_regime_fr", 
+                         "txt_reparations_fr", "txt_summary_fr", "txt_tcs_fr", 
+                         "txt_TJ", "txt_TJ_fr", "txt_un_fr", "txt_vetting_fr")), 
+                ~ str_replace_all(.x, "droits de l'homme", "droits de la personne")))
+
+cat("\n...done.\n\n") 
+
+cat("\nCreating data files for download from the TJET website... ")
+
 ### downloads datasets 
 # - include country IDs, transitions and our data
 # - everything in our filters, but not other outcomes
@@ -1677,7 +1826,7 @@ db[["dl_tjet_codebook"]] <- codebook %>%
   filter(col_name %in% included & !is.na(section)) %>% 
   select(section, col_name, definition, source_abr) %>% 
   rename(source = source_abr) %>% 
-  left_join(read_csv(here::here("data", "tjet_sources.csv")), by = "source") %>% 
+  left_join(read_csv(here::here("data", "tjet_sources.csv"), show_col_types = FALSE), by = "source") %>% 
   mutate(tjet_version = timestamp) %>% 
   write_csv(here::here("tjet_datasets", "tjet_codebook.csv"), na = "")
 rm(codebook, included) 
@@ -1701,61 +1850,6 @@ db[["dl_tjet_cy"]] <- df %>%
   write_csv(here::here("tjet_datasets", "tjet_cy.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_cy.csv"), na = "")
 rm(vars)
-
-### translations checks 
-### INTEGRATE ELSEWHERE?
-
-db[["Amnesties"]] <- db[["Amnesties"]] %>% 
-  mutate(mechanismDescription_fr = str_replace_all(mechanismDescription_fr, "droits de l'homme", "droits de la personne")) 
-db[["Amnesties"]] %>% 
-  filter(amnestyYear %in% db_years_mech) %>%
-  select(amnestyID, invalid, amnestyYear, mechanismDescription_fr) %>% 
-  filter(str_detect(mechanismDescription_fr, "droits de l'homme") | is.na(mechanismDescription_fr)) 
-
-db[["Reparations"]] <- db[["Reparations"]] %>% 
-  mutate(officialName_en_fr = str_replace_all(officialName_en_fr, "droits de l'homme", "droits de la personne")) 
-db[["Reparations"]] %>% 
-  filter(yearCreated %in% db_years_mech) %>%
-  select(reparationID, invalid, yearCreated, officialName_en_fr) %>% 
-  filter(str_detect(officialName_en_fr, "droits de l'homme") | is.na(officialName_en_fr)) 
-
-db[["Trials"]] <- db[["Trials"]] %>% 
-  mutate(caseDescription_fr = str_replace_all(caseDescription_fr, "droits de l'homme", "droits de la personne")) 
-db[["Trials"]] %>% 
-  filter(yearStart %in% db_years_trials) %>%
-  select(trialID, invalid, yearStart, caseDescription_fr) %>% 
-  filter(str_detect(caseDescription_fr, "droits de l'homme") | is.na(caseDescription_fr)) %>% 
-  arrange(trialID) |> 
-  print(n = Inf)
-
-db[["Accused"]] <- db[["Accused"]] %>% 
-  mutate(position_desc_fr = str_replace_all(position_desc_fr, "droits de l'homme", "droits de la personne"))
-db[["Accused"]] %>% 
-  select(accusedID, invalid, position_desc, position_desc_fr) %>% 
-  filter(!is.na(position_desc) & (str_detect(position_desc_fr, "droits de l'homme") | is.na(position_desc_fr))) %>% 
-  arrange(accusedID) |> 
-  print(n = Inf)
- 
-db[["TruthCommissions"]] <- db[["TruthCommissions"]] %>% 
-  mutate(officialName_en_fr = str_replace_all(officialName_en_fr, "droits de l'homme", "droits de la personne"))
-db[["TruthCommissions"]] %>% 
-  filter(yearPassed %in% db_years_mech) %>%
-  select(truthcommissionID, yearPassed, officialName_en_fr) %>% 
-  filter(str_detect(officialName_en_fr, "droits de l'homme") | is.na(officialName_en_fr)) 
-
-db[["Vettings"]] <- db[["Vettings"]] %>%
-  mutate(policyName_fr = str_replace_all(policyName_fr,"droits de l'homme", "droits de la personne"))
-db[["Vettings"]] %>% 
-  select(vettingID, invalid, yearStart, policyName, policyName_fr) %>% 
-  filter(str_detect(policyName_fr, "droits de l'homme") | is.na(policyName_fr)) 
-
-db[["Countries"]] <- db[["Countries"]] %>%
-  mutate(across(all_of(c("auto_conflict_fr", "auto_regime_fr", "txt_amnesties_fr", 
-                         "txt_conflict_fr", "txt_domestic_fr", "txt_foreign_fr", 
-                         "txt_intl_fr", "txt_intro_fr", "txt_regime_fr", 
-                         "txt_reparations_fr", "txt_summary_fr", "txt_tcs_fr", 
-                         "txt_TJ", "txt_TJ_fr", "txt_un_fr", "txt_vetting_fr")), 
-                ~ str_replace_all(.x, "droits de l'homme", "droits de la personne")))
 
 ### saving individual mechanism tables for local analyses & repo
 ### these will also be written to the database for downloads
@@ -1828,16 +1922,16 @@ db[["Trials"]] <- db[["Trials"]] %>%
               select(country_case, ccode) %>% 
               rename(country = country_case) %>% 
               distinct(),
-            by = c("ccode_Accused" = "ccode")) %>% 
-  rename(country_Accused = country) %>% 
+            by = c("ccode_target" = "ccode")) %>% 
+  rename(country_target = country) %>% 
   left_join(db[["Countries"]] %>%
               select(country_case, ccode) %>% 
               rename(country = country_case) %>% 
               distinct(),
-            by = c("ccode_Trial" = "ccode")) %>% 
-  rename(country_Trial = country) %>% 
+            by = c("ccode_trial" = "ccode")) %>% 
+  rename(country_trial = country) %>% 
   filter(yearStart %in% db_years_trials) %>% 
-  arrange(country_Accused, yearStart, yearEnd) |> 
+  arrange(country_target, yearStart, yearEnd) |> 
   mutate(tjet_version = timestamp) %>% 
   select(all_of(db[["TrialsCodebook"]] |> 
                   select(col_name) |> 
@@ -1974,7 +2068,7 @@ db[["ICCaccusedCodebook"]] <- db[["codebook"]] %>%
   write_csv(here::here("tjet_datasets", "tjet_icc_accused_codebook.csv"), na = "") %>% 
   write_csv(here::here(dropbox_path, "tjet_icc_accused_codebook.csv"), na = "")
 db[["ICCaccused"]] <- db[["ICCaccused"]] %>% 
-  arrange(ccode_Accused, trialID, accusedID) |> 
+  arrange(ccode_target, trialID, accusedID) |> 
   mutate(tjet_version = timestamp) %>% 
   select(all_of(db[["ICCaccusedCodebook"]] |> 
                   select(col_name) |> 
@@ -1984,5 +2078,9 @@ db[["ICCaccused"]] <- db[["ICCaccused"]] %>%
 
 rm(timestamp)
 save(db, file = here::here("data", "tjetdb.RData"))
+
+cat("done.\n\n") 
+
+cat("\nCreating automatic descriptive texts for website country pages...\n")
 
 source("pipeline/go/auto_texts.R", echo = TRUE)

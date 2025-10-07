@@ -294,25 +294,25 @@ data[["Foreign"]] <- db[["Trials"]] %>%
   left_join(
     countries %>%
       select(country_case, ccode, ccode_case),
-    by = c(ccode_Accused = "ccode")
+    by = c(ccode_target = "ccode")
   ) %>%
-  select(-ccode_Accused) %>%
+  select(-ccode_target) %>%
   rename(
     "countryAccused" = "country_case",
-    "ccode_Accused" = "ccode_case"
+    "ccode_target" = "ccode_case"
   ) %>%
   left_join(
     countries %>%
       select(country_case, ccode, ccode_case),
-    by = c(ccode_Trial = "ccode")
+    by = c(ccode_trial = "ccode")
   ) %>%
-  select(-ccode_Trial) %>%
+  select(-ccode_trial) %>%
   rename(
     "countryTrial" = "country_case",
-    "ccode_Trial" = "ccode_case"
+    "ccode_trial" = "ccode_case"
   ) %>%
   filter(trialType == "foreign") %>%
-  select(trialID, countryAccused, ccode_Accused, countryTrial, ccode_Trial, yearStart, yearEnd, caseDescription) %>%
+  select(trialID, countryAccused, ccode_target, countryTrial, ccode_trial, yearStart, yearEnd, caseDescription) %>%
   arrange(countryAccused, yearStart)
 
 data[["Reparations"]] <- db[["Reparations"]] %>% 
@@ -388,7 +388,7 @@ data[["ICC-interventions"]] <- db[["ICC"]] %>%
 data[["ICC-accused"]] <- db[["ICCaccused"]] %>%
   select(-country) %>%
   left_join(countries %>% select(country_case, ccode, ccode_case),
-    by = c(ccode_Accused = "ccode")
+    by = c(ccode_target = "ccode")
   ) %>%
   select(
     country_case, ccode_case, name, position_desc, ICC_arrest_warrant,
@@ -407,54 +407,7 @@ data[["Investigations"]] <- db[["Investigations"]] %>%
   ) %>%
   arrange(country_case, beg)
 
-# ### peace agreements: "https://peaceaccords.nd.edu/wp-content/uploads/2019/08/PAM_ID-V.1.5-Updated-29JULY2015.xlsx"
-# data[["peace-agreements"]] <- readxl::read_xlsx("data/PAM_ID-V.1.5-Updated-29JULY2015.xlsx") %>%
-#   rename("accord_name" = "accord name") %>%
-#   group_by(pam_caseid) %>%
-#   mutate(
-#     beg = min(year),
-#     end = max(year)
-#   ) %>%
-#   ungroup() %>%
-#   mutate(
-#     war_start = as_date(war_start),
-#     cease_date = as_date(cease_date)
-#   ) %>%
-#   left_join(
-#     countries %>%
-#       select(country_case, ccode, ccode_case),
-#     by = c(cowcode = "ccode")
-#   ) %>%
-#   select(
-#     pam_caseid, country_case, ccode_case, accord_name, war_start,
-#     cease_date, beg, end, amnest_prov, humrts_prov, prisr_prov, repar_prov,
-#     truth_prov
-#   ) %>%
-#   distinct() %>%
-#   arrange(country_case, cease_date)
-# 
-# ### PAX: https://www.peaceagreements.org/search
-# tj_vars <- c(
-#   "TjGen", "TjAm", "TjAmPro", "TjSan", "TjPower", "TjCou", "TjJaNc",
-#   "TjJaIc", "TjMech", "TjPrire", "TjVet", "TjVic", "TjMis", "TjRep",
-#   "TjRSym", "TjRMa", "TjNR"
-# )
-# ## have not adjusted this to ccode_case
-# data[["PAX"]] <- read_csv("data/pax_all_agreements_data_v6.csv") %>%
-#   arrange(Con, PPName, Dat) %>%
-#   filter(Stage %in% c("SubComp", "SubPar")) %>%
-#   filter(if_any(all_of(tj_vars), ~ . == 1)) %>%
-#   select(
-#     Con, PP, PPName, AgtId, Agt, Dat, Status, Agtp, Stage, Loc1GWNO,
-#     Loc2GWNO, UcdpCon, UcdpAgr, PamAgr, all_of(tj_vars)
-#   )
-
-### write to file
-### WE DON'T NEED THIS ANYMORE
-# write_xlsx(data, path = "~/Dropbox/TJLab/TimoDataWork/country_profiles/summary_data.xlsx")
-
-rm(tj_vars, vars_dom, vars_for, vars_int)
-
+rm(vars_dom, vars_for, vars_int)
 
 ### automating written summaries
 
@@ -474,7 +427,6 @@ n_transform <- function(x) {
     str_replace_all(" 10 ", " ten ") %>%
     str_replace_all(" 11 ", " eleven ") %>%
     str_replace_all(" 12 ", " twelve ") %>%
-    # str_replace_all(" 13 ", " thirteen ") %>%
     str_trim() %>%
     return()
 }
@@ -1010,7 +962,7 @@ autotxt[["Foreign"]] <- data[["Foreign"]] %>%
     yearStart = list(unlist(yearStart)),
     yearEnd = list(unlist(yearEnd))
   ) %>%
-  select(countryAccused, ccode_Accused, count, countryTrial, yearStart, yearEnd) %>%
+  select(countryAccused, ccode_target, count, countryTrial, yearStart, yearEnd) %>%
   distinct() %>%
   rowwise() %>%
   mutate(
@@ -1041,10 +993,10 @@ autotxt[["Foreign"]] <- data[["Foreign"]] %>%
       n_transform()
   ) %>%
   ungroup() %>%
-  select(countryAccused, ccode_Accused, text) %>%
+  select(countryAccused, ccode_target, text) %>%
   rename(
     "country_case" = "countryAccused",
-    "ccode_case" = "ccode_Accused"
+    "ccode_case" = "ccode_target"
   )
 
 autotxt[["Intl"]] <- data[["Intl_cy"]] %>%
@@ -1415,8 +1367,7 @@ autotxt[["Reparations"]] <- data[["Reparations"]] %>%
   ) %>%
   ungroup() %>% 
   select(country_case, ccode_case, text)
-  # select(country_case, yearCreated, yearBegin, yearEnd, individualsRepairedEstimate, implemented, text) |>
-  # print(n = Inf)
+  # select(country_case, yearCreated, yearBegin, yearEnd, individualsRepairedEstimate, implemented, text)
 
 autotxt[["TruthCommissions"]] <- data[["TruthCommissions"]] %>%
   mutate(
@@ -1832,7 +1783,7 @@ autotxt <- db[["Countries"]] %>%
     paste(
       "TJET records no democratic transitions in",
       country_case,
-      "between 1970 and 2020."
+      "between 1970 and 2024."
     ),
     regime
   )) %>%
@@ -1845,7 +1796,7 @@ autotxt <- db[["Countries"]] %>%
     paste(
       "Based on the Uppsala Conflict Data Program, TJET records no episodes of violent intrastate conflict in",
       country_case,
-      "between 1970 and 2020."
+      "between 1970 and 2024."
     ),
     conflict
   )) %>%
@@ -1906,9 +1857,6 @@ autotxt <- db[["Countries"]] %>%
       rename("un" = "text"),
     by = c("country_case", "ccode_case")
   )
-# write_csv(file = "~/Desktop/temp.csv", na = "")
-
-
 
 ### auto-text fields check
 ### 'auto_' fields are generated here and need to be transfered to Airtable
@@ -1959,10 +1907,6 @@ chk <- db[["Countries"]] %>%
     domestic, intl, foreign, reparations, tcs, vetting, un
   ) %>%
   filter(if_any(all_of(check_vars), ~ . == 1)) 
-
-# %>%
-#   write_csv("~/Desktop/temp.csv", na = "") %>%
-#   print(n = Inf)
 
 if (nrow(chk) > 0) warning("Some auto-texts in Airtable do not match the current data!")
 

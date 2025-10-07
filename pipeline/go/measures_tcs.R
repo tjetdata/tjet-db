@@ -1,13 +1,3 @@
-# df <- TCmeasure(
-#   cy = df, new_col_name = "tcs_metcriteria", operated = FALSE,
-#   start_year_var = "yearPassed",
-#   filter_nexus_vars = NULL,
-#   filter_crimes_vars = "all",
-#   aims_opts = NULL, independence_opts = NULL, consult_vars = NULL,
-#   powers_vars = NULL, testimony_vars = NULL, reports_vars = NULL,
-#   recommend_vars = NULL, monitor_vars = NULL
-# ) %>% 
-#   select(-tcs_metcriteria, -tcs_metcriteria_beg) 
 
 df <- TCmeasure(
   cy = df, new_col_name = "tcs_all",

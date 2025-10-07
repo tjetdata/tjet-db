@@ -1,6 +1,3 @@
-## the approach to coding vetting measures is different from that of other measures
-## because the vetting measures were already constructed in Airtable (THIS HAS CHANGED) 
-## so far, the data are only consistently coded for Eastern Europe and the Post-Soviet region
 
 vet_spells <- db[["Vettings"]] %>% 
   rename(
@@ -28,11 +25,7 @@ vet_spells <- db[["Vettings"]] %>%
   select(
     ccode, year, fitsPostAutocraticTJ, fitsConflictTJ, type_dismissal, 
     type_dismissal_created, type_ban, type_ban_created, type_declass, 
-    type_declass_created, ban_from_elected, conduct, public, fairness,
-    # targetingWhy, targetingAffiliationRank, targetingPositionSought,
-    # targetingAffiliation, targetingPositionsRank, sanctions, 
-    # sum_inst, inst_targeted, inst_exe, inst_legis, inst_judiciary, inst_public, 
-    # inst_police, inst_military, inst_parties, inst_other, 
+    type_declass_created, ban_from_elected, conduct, public, fairness
   ) %>%
   reframe(.by = c(ccode, year), 
     across(
@@ -44,15 +37,19 @@ vet_spells <- db[["Vettings"]] %>%
     across(
       all_of(
         c("fitsPostAutocraticTJ", "fitsConflictTJ", "type_dismissal", "type_ban", 
-          "type_declass", "ban_from_elected", "conduct", "public", "fairness") 
+          "type_declass", "ban_from_elected", "conduct", "public") 
       ), 
       .fns = ~ max(.x, na.rm = TRUE)
-    )
+    ), 
+    fairness = max_inf_to_na(fairness)
   ) %>%
-  mutate(across(everything(), .fns = ~ ifelse(is.infinite(.x), NA, .x))) %>%
-  mutate(across(everything(), .fns = ~ ifelse(is.na(.x), 0, .x)))
+  mutate(fairness = ifelse(is.na(fairness), 0, fairness)) 
 
-VettingMeasures <- function(cy = df, nexus_vars = "all") {
+VettingMeasures <- function(
+  cy = df, 
+  nexus_vars = "all"
+) {
+
   ## options
   nexus <- c(all = "all", dtj = "fitsPostAutocraticTJ", ctj = "fitsConflictTJ")
 

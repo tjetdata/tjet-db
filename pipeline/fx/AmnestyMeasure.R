@@ -1,9 +1,11 @@
-AmnestyMeasure <- function(cy,
-                           nexus_vars = "all", # NULL also works
-                           peace_vars = NULL,
-                           who_opts = "all", # NULL also works
-                           what_opts = "all" # NULL also works
+AmnestyMeasure <- function(
+  cy,
+  nexus_vars = "all", # NULL also works
+  peace_vars = NULL,
+  who_opts = "all", # NULL also works
+  what_opts = "all" # NULL also works
 ) {
+  
   ## options
   peace <- c("peaceSettlement")
   nexus <- c(
@@ -23,7 +25,7 @@ AmnestyMeasure <- function(cy,
     reb = "what_reb", # rebellion & terrorism
     hrv = "what_hrv", # human rights violations
     dis = "what_dis", # dissent
-    coi = "what_coi", #  armed violence against rebels
+    coi = "what_coi", # armed violence against rebels
     oth = "what_oth"
   )
 
@@ -36,9 +38,6 @@ AmnestyMeasure <- function(cy,
       "\n  ", paste(names(nexus), collapse = "; "), suffix
     )
   )
-  # if(missing(nexus_vars)) {
-  #   eval(error)
-  # } else
   if (sum(!nexus_vars %in% names(nexus)) > 0) eval(error)
 
   error <- expression(
@@ -47,9 +46,6 @@ AmnestyMeasure <- function(cy,
       "\n  ", paste(peace, collapse = "; "), suffix
     )
   )
-  # if(missing(peace_vars)) {
-  #   eval(error)
-  # } else
   if (length(peace_vars) > 0) if (sum(!peace_vars %in% peace) > 0) eval(error)
 
   error <- expression(
@@ -58,9 +54,6 @@ AmnestyMeasure <- function(cy,
       "\n  ", paste(names(who), collapse = "; "), suffix
     )
   )
-  # if(missing(who_opts)) {
-  #   eval(error)
-  # } else
   if (sum(!who_opts %in% names(who)) > 0) eval(error)
 
   error <- expression(
@@ -69,9 +62,6 @@ AmnestyMeasure <- function(cy,
       "\n  ", paste(names(what), collapse = "; "), suffix
     )
   )
-  # if(missing(what_opts)) {
-  #   eval(error)
-  # } else
   if (sum(!what_opts %in% names(what)) > 0) eval(error)
 
   if (length(peace_vars) > 0) {

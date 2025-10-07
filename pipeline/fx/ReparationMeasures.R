@@ -1,8 +1,9 @@
 ReparationMeasures <- function(
-    cy = df,
-    start_year_var = "yearCreated",
-    nexus_vars = "all"
-    ) {
+  cy = df,
+  start_year_var = "yearCreated",
+  nexus_vars = "all"
+) {
+
   ## options
   year_vars <- c("yearCreated", "yearBegin")
   nexus <- c(
