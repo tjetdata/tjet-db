@@ -26,7 +26,7 @@ unknown,preliminary trial process: none reported
 indictments,preliminary trial process: indictments
 arrests,preliminary trial process: arrests
 extradition,preliminary trial process: extradition
-extraditionCountry,country from which extradition was sought
+countryExtradition,country from which extradition was sought
 detention,preliminary trial process: detention
 other,preliminary trial process: other
 statuteAmnestyCircumvented,statute or amnesty circumvented

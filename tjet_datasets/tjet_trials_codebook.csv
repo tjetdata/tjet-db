@@ -1,6 +1,6 @@
 col_name,definition
 trialID,TJET Trial ID
-country_Accused,country of the accused
+country_target,target or situation country
 yearStart,"year the trial began; this is the first year that any prosecutorial activity began, usually starting with an indictment"
 yearEnd,"year the trial ended; this is the year of the very last action regarding any trial proceedings, up to the last appeal decision for any accused"
 caseDescription,case description
@@ -12,11 +12,11 @@ narrative,trial narrative
 trialType,"type of trial (domestic, international, hybrid, or foreign)"
 legalSystem,legal system of the proceedings
 jurisdiction,jurisdiction under which foreign trial was held
-country_Trial,country of trial
-ccode_Accused,COW numeric code of country of the accused
-ccode_Trial,COW numeric code of country where the trial was held
-ccode_Crime,COW numeric code of country where the crime was committed
-ccode_Victim,COW numeric code of country of the victim(s) of the crime
+country_trial,country of trial
+ccode_target,COW numeric code of the target or situation country
+ccode_trial,COW numeric code of country where the trial was held
+ccode_crime,COW numeric code of country where the crime was committed
+ccode_victim,COW numeric code of country of the victim(s) of the crime
 HRs_charges,number of accused with human rights charges in this trial
 humanRights,Was this trial focused on human rights?
 IntraConfl,Was this trial focused on intra-state conflict?

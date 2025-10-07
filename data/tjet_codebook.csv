@@ -1049,6 +1049,11 @@ tjet_cy,,,prev_nonstate_svac,"prevalence of sexual violence among non-state acto
 tjet_cy,,,conflictyear_svac,conflict-year in SVAC dataset,SVAC,,
 tjet_cy,,,events_pitf,count of atrocity events,PITF,,
 tjet_cy,,,deaths_pitf,counts of deaths due to atrocities,PITF,,
+tjet_cy,,,physint_cir,CIRights Physical Integrity Index,CIRights,1981,2022
+tjet_cy,,,disap_cir,CIRights Disappearances Index,CIRights,1981,2022
+tjet_cy,,,kill_cir,CIRights Extrajudicial Killings Index,CIRights,1981,2022
+tjet_cy,,,polpris_cir,CIRights Political Imprisonment Index,CIRights,1981,2022
+tjet_cy,,,tort_cir ,CIRights Torture Index,CIRights,1981,2022
 tjet_cy,,,theta_mean_fariss,"estimated latent physical integrity (formerly latent mean, the posterior mean of the latent variable)","Fariss, Kenwick, & Reuning",,
 tjet_cy,,,theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",,
 tjet_cy,,,theta_q025,"estimated latent physical integrity, 95% confidence interval lower bound ","Fariss, Kenwick, & Reuning",,
@@ -1201,7 +1206,7 @@ tjet_accused.csv,,24,unknown,preliminary trial process: none reported,TJET,1970,
 tjet_accused.csv,,25,indictments,preliminary trial process: indictments,TJET,1970,2020
 tjet_accused.csv,,26,arrests,preliminary trial process: arrests,TJET,1970,2020
 tjet_accused.csv,,27,extradition,preliminary trial process: extradition,TJET,1970,2020
-tjet_accused.csv,,28,extraditionCountry,country from which extradition was sought,TJET,1970,2020
+tjet_accused.csv,,28,countryExtradition,country from which extradition was sought,TJET,1970,2020
 tjet_accused.csv,,29,detention,preliminary trial process: detention,TJET,1970,2020
 tjet_accused.csv,,30,other,preliminary trial process: other,TJET,1970,2020
 tjet_accused.csv,,31,statuteAmnestyCircumvented,statute or amnesty circumvented,TJET,1970,2020
@@ -1291,7 +1296,7 @@ tjet_courtlevels.csv,,16,tjet_version,TJET database version: date on which data 
 tjet_icc_accused.csv,,1,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_icc_accused.csv,,2,trialID,TJET Trial ID,TJET,1970,2020
 tjet_icc_accused.csv,,3,country,country of accused,TJET,1970,2020
-tjet_icc_accused.csv,,4,ccode_Accused,COW numeric country code of country of the accused,TJET,1970,2020
+tjet_icc_accused.csv,,4,ccode_target,COW numeric country code of the target or situation country,TJET,1970,2020
 tjet_icc_accused.csv,,5,name,name of the accused,TJET,1970,2020
 tjet_icc_accused.csv,,6,position_desc,"description of the accused (position rank, title, role, etc)",TJET,1970,2020
 tjet_icc_accused.csv,,7,position_desc_fr,description of the accused (French),TJET,1970,2020
@@ -1365,7 +1370,7 @@ tjet_reparations.csv,,49,genderCrimes,"Did the policy include reparations for ge
 tjet_reparations.csv,,50,genderWomen,Did the policy include reparations for gender-based crimes against women and girls? ,TJET,1970,2020
 tjet_reparations.csv,,51,genderMen,Did the policy reparations for gender-based crimes against men and boys?,TJET,1970,2020
 tjet_reparations.csv,,52,lgbtqCrimes,"Did the policy include reparations for crimes against sexual and gender minorities (lesbian, gay, bisexual, transgender, queer, etc.)? ",TJET,1970,2020
-tjet_reparations.csv,,53,genderAttentive,Was the policy gender attentive?,TJET,1970,2020
+tjet_reparations.csv,,,genderAttentive,Was the policy gender attentive?,TJET,1970,2020
 tjet_reparations.csv,,54,typeInjury,What types of injury does the reparations policy cover? ,TJET,1970,2020
 tjet_reparations.csv,,55,individualReparations,Did the policy offer individual reparations?,TJET,1970,2020
 tjet_reparations.csv,,56,individualReparationsForm,Which forms of individual reparations does the policy offer?,TJET,1970,2020
@@ -1515,7 +1520,7 @@ tjet_transitions.csv,,,trans_year_begin,year democratic transition began,TJET,19
 tjet_transitions.csv,,,transitionID,TJET Transition ID,TJET,1970,2020
 tjet_trials.csv,,1,trialID,TJET Trial ID,TJET,1970,2020
 tjet_trials.csv,,,invalid,"invalid observation, binary",TJET,1970,2020
-tjet_trials.csv,,2,country_Accused,country of the accused,TJET,1970,2020
+tjet_trials.csv,,2,country_target,target or situation country,TJET,1970,2020
 tjet_trials.csv,,3,yearStart,"year the trial began; this is the first year that any prosecutorial activity began, usually starting with an indictment",TJET,1970,2020
 tjet_trials.csv,,4,yearEnd,"year the trial ended; this is the year of the very last action regarding any trial proceedings, up to the last appeal decision for any accused",TJET,1970,2020
 tjet_trials.csv,,5,caseDescription,case description,TJET,1970,2020
@@ -1527,11 +1532,11 @@ tjet_trials.csv,,10,narrative,trial narrative,TJET,1970,2020
 tjet_trials.csv,,11,trialType,"type of trial (domestic, international, hybrid, or foreign)",TJET,1970,2020
 tjet_trials.csv,,12,legalSystem,legal system of the proceedings,TJET,1970,2020
 tjet_trials.csv,,13,jurisdiction,jurisdiction under which foreign trial was held,TJET,1970,2020
-tjet_trials.csv,,14,country_Trial,country of trial,TJET,1970,2020
-tjet_trials.csv,,15,ccode_Accused,COW numeric code of country of the accused,TJET,1970,2020
-tjet_trials.csv,,16,ccode_Trial,COW numeric code of country where the trial was held,TJET,1970,2020
-tjet_trials.csv,,17,ccode_Crime,COW numeric code of country where the crime was committed,TJET,1970,2020
-tjet_trials.csv,,18,ccode_Victim,COW numeric code of country of the victim(s) of the crime,TJET,1970,2020
+tjet_trials.csv,,14,country_trial,country of trial,TJET,1970,2020
+tjet_trials.csv,,15,ccode_target,COW numeric code of the target or situation country,TJET,1970,2020
+tjet_trials.csv,,16,ccode_trial,COW numeric code of country where the trial was held,TJET,1970,2020
+tjet_trials.csv,,17,ccode_crime,COW numeric code of country where the crime was committed,TJET,1970,2020
+tjet_trials.csv,,18,ccode_victim,COW numeric code of country of the victim(s) of the crime,TJET,1970,2020
 tjet_trials.csv,,19,HRs_charges,number of accused with human rights charges in this trial,TJET,1970,2020
 tjet_trials.csv,,20,humanRights,Was this trial focused on human rights?,TJET,1970,2020
 tjet_trials.csv,,21,IntraConfl,Was this trial focused on intra-state conflict?,TJET,1970,2020
