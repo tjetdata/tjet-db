@@ -26,8 +26,8 @@ to_download <-
     ),
     "appF8HAH7SN7C09cU" = c(
       "Trials", "Accused", "CourtLevels", "Countries", "Conflicts", "Dyads", 
-      "metadata", "ArgCausas", "ArgAccused", "ArgCLs", "ArgCharges", 
-      "BIcomparison", "TI", "newTI", "Individuals"
+      "metadata", "ArgCausas", "ArgAccused", "ArgCLs", "BIcomparison", 
+      "TrialInternational", "Individuals"
     )
   )
 
@@ -36,7 +36,8 @@ to_download <-
 ### linked table fields; we could build in a check to ensure the data in these
 ### tables are consistent but ideally all tables would be in the same base
 
-### downloading data via Airtable API and saving the raw data locally
+### Downloading raw data via Airtable API and saving locally...
+cat("\nDownloading raw data via Airtable API and saving locally...\n") 
 
 tjet <- map(names(to_download), function(base_id) {
   cat("base ID:", base_id, "\n")
@@ -60,3 +61,5 @@ map(tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]], function(x) {
     destfile = here::here("data", "downloads", x$filename)
   )
 })
+
+cat("...done.\n") 
