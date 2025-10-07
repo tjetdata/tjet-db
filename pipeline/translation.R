@@ -1,3 +1,6 @@
+### NEED TO CLEAN THIS UP: 
+### no longer a regularly run script but for ad hoc bulk translating, so not part of the pipeline anymore
+
 ### translation code is wrapped in conditional statements because it is costly
 translations <- list(
   conflicts = FALSE,
@@ -201,6 +204,85 @@ db[tabs] %>%
 
 
 
+
+
+
+
+
+
+
+
+
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_confl.csv") |> 
+  rowwise() |> 
+  mutate(
+    conflict_fr = translate(conflict),
+  ) %>%
+  ungroup() |> 
+  write_csv("~/Desktop/new_confl.csv", na = "") 
+
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_domestic.csv") |> 
+  rowwise() |> 
+  mutate(
+    domestic_fr = translate(domestic),
+  ) %>%
+  ungroup() |> 
+  write_csv("~/Desktop/new_domestic.csv", na = "") 
+
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_regime.csv") |> 
+  rowwise() |> 
+  mutate(
+    regime_fr = translate(regime),
+  ) %>%
+  ungroup() |> 
+  write_csv("~/Desktop/new_regime.csv", na = "") 
+
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_summary.csv") |> 
+  rowwise() |> 
+  mutate(
+    summary_fr = translate(summary),
+  ) %>%
+  ungroup() |> 
+  write_csv("~/Desktop/new_summary.csv", na = "") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+read_csv("~/Desktop/Trials-for-translation.csv") |> 
+  rowwise() |> 
+  mutate(
+    caseDescription_fr = translate(caseDescription),
+  ) %>%
+  ungroup() |> 
+  rename(caseDescription_translated = caseDescription) |> 
+  write_csv("~/Desktop/Trials.csv", na = "") 
+
+usage(key_get("DeepL"))
+
+read_csv("~/Desktop/Individuals-translations_to_revise.csv") |> 
+  select(pkey, description) |> 
+  reframe(
+    .by = description,
+    pkey = list(pkey)
+  ) |> 
+  rowwise() |> 
+  mutate(
+    description_fr = translate(description),
+  ) %>%
+  ungroup() |> 
+  unnest(pkey) |> 
+  rename(description_translated = description) |> 
+  write_csv("~/Desktop/Individuals-new.csv", na = "") 
 
 
 
