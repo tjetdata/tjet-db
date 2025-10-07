@@ -1,5 +1,6 @@
 ### this script was used for the initial migration from the extra field to tags
-### DO NOT RUN AGAIN!
+
+stop("DO NOT RUN AGAIN!") 
 
 source(here::here("pipeline/go/zot_setup.R"))
 
