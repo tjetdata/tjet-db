@@ -229,6 +229,14 @@ read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_domestic.csv") |>
   ungroup() |> 
   write_csv("~/Desktop/new_domestic.csv", na = "") 
 
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_intl.csv") |> 
+  rowwise() |> 
+  mutate(
+    intl_fr = translate(intl),
+  ) %>%
+  ungroup() |> 
+  write_csv("~/Desktop/new_intl.csv", na = "") 
+
 read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_regime.csv") |> 
   rowwise() |> 
   mutate(
@@ -247,17 +255,6 @@ read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_summary.csv") |>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 read_csv("~/Desktop/Trials-for-translation.csv") |> 
   rowwise() |> 
   mutate(
@@ -270,17 +267,17 @@ read_csv("~/Desktop/Trials-for-translation.csv") |>
 usage(key_get("DeepL"))
 
 read_csv("~/Desktop/Individuals-translations_to_revise.csv") |> 
-  select(pkey, description) |> 
+  select(individualID, description) |> 
   reframe(
     .by = description,
-    pkey = list(pkey)
+    individualID = list(individualID)
   ) |> 
   rowwise() |> 
   mutate(
     description_fr = translate(description),
   ) %>%
   ungroup() |> 
-  unnest(pkey) |> 
+  unnest(individualID) |> 
   rename(description_translated = description) |> 
   write_csv("~/Desktop/Individuals-new.csv", na = "") 
 

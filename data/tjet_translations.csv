@@ -33,9 +33,9 @@ Context,Contexte
 Contexts,Contextes
 Count,Nombre
 Count of amnesties in selected data sample,Nombre d'amnisties dans l'échantillon de données sélectionné
-Count of domestic criminal trials in selected data sample by nationality of the accused individuals,"Nombre de procès pénaux domestiques dans l'échantillon de données sélectionné, par nationalité des accusés"
-Count of foreign and universal jurisdiction criminal trials in selected data sample by nationality of the accused individuals,"Nombre de procès pénaux étrangers et de compétence universelle dans l'échantillon de données sélectionné, par nationalité des accusés"
-Count of international or hybrid criminal trials in selected data sample by nationality of the accused individuals,"Nombre de procès pénaux internationaux ou hybrides dans l'échantillon de données sélectionné, par nationalité des accusés"
+Count of domestic criminal trials in selected data sample by nationality of the accused individuals (TJET has data until 2020),"Nombre de procès pénaux domestiques dans l'échantillon de données sélectionné, par nationalité des accusés (TJET dispose de données jusqu'en 2020)"
+Count of foreign and universal jurisdiction criminal trials in selected data sample by nationality of the accused individuals (TJET has data until 2020),"Nombre de procès pénaux étrangers et de compétence universelle dans l'échantillon de données sélectionné, par nationalité des accusés (TJET dispose de données jusqu'en 2020)"
+Count of international or hybrid criminal trials in selected data sample by nationality of the accused individuals (TJET has data until 2020),"Nombre de procès pénaux internationaux ou hybrides dans l'échantillon de données sélectionné, par nationalité des accusés (TJET dispose de données jusqu'en 2020)"
 Count of reparations policies in selected data sample,Nombre de politiques de réparation dans l'échantillon de données sélectionné
 Count of truth commissions in selected data sample,Nombre de commissions de vérité dans l'échantillon de données sélectionné
 Count of vetting policies in selected data sample,Nombre de politiques de filtrage dans l'échantillon de données sélectionné

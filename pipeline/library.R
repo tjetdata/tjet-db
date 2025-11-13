@@ -153,7 +153,7 @@ cat("\nAre there collections and/or tags not in the dictionary? Checking...\n")
 
 ### are there new collections?
 collections |>
-  filter(!str_detect(collection, regex("^(accusedID|amnestyID|reparationID|trialID|truthcommissionID|vettingID)( [1-9]\\d*)$"))) |>
+  filter(!str_detect(collection, regex("^(amnestyID|reparationID|trialID|truthcommissionID|vettingID)( [1-9]\\d*)$"))) |>
   full_join(dict |>
               select(collection, collection_key, parent_key) |>
               mutate(dict = TRUE),
@@ -186,12 +186,31 @@ mechID_tags <- cleaned_tags |>
 #   rename(tag = cleaned) |>
 #   filter(!str_detect(tag, "^(accusedID|amnestyID|reparationID|trialID|truthcommissionID|vettingID)( [1-9]\\d*)$"))
 
+### assigning accusedIDs tags to respective trialIDs 
+
+read_csv(here::here("tjet_datasets/tjet_accused.csv") ) |> 
+  select(accusedID, trialID)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 cat("\nCreating new sub-collections for mechanism IDs...\n") 
 
 new_subcollections <- mechID_tags |>
   arrange(tag) |>
   mutate(mech = case_when(
-    str_detect(tag, regex("^(accusedID)( [1-9]\\d*)$")) ~ "accusedID",
     str_detect(tag, regex("^(amnestyID)( [1-9]\\d*)$")) ~ "amnestyID",
     str_detect(tag, regex("^(reparationID)( [1-9]\\d*)$")) ~ "reparationID",
     str_detect(tag, regex("^(trialID)( [1-9]\\d*)$")) ~ "trialID",

@@ -13,3 +13,4 @@ data/zot_items.rds
 data/downloads/*.xlsx
 focus/
 auto_text_update/
+zot_missing/
