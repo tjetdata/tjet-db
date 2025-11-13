@@ -32,22 +32,26 @@ TrialsMeasure <- function(
   ) 
   
   nexus_trial <- c(
-    hrs = "humanRights",
+    # hrs = "humanRights",
+    hrs = "HRVorCoreCrimes",
     con = "IntraConfl",
     ctj = "fitsConflictTJ",
     dtj = "fitsPostAutocraticTJ",
     dcj = "beganDuringIntraConfl", # subset of ctj
     pcj = "beganAfterIntraConfl" # subset of ctj
   ) 
+  
   membership_acc <- c(
     all = "all",
-    sta = "stateAgent",
-    opp = "opposedToGovernment"
+    sta = "stateagent",
+    opp = "opposition"
   )
+
   rank_acc <- c(
     hi = "highRank", # hi = "high rank"
     lo = "lowRank"
   ) # lo = "not high rank"
+  
   charges_acc <- c(
     rap = "rape",
     sva = "SGBV", # sva = "all sexual violence"
@@ -191,7 +195,7 @@ TrialsMeasure <- function(
 
   accused_ended <- db[["CourtLevels"]] %>%
     filter(!is.na(accusedID)) %>%
-    select(accusedID, year, date, last_fx, last) %>%
+    select(accusedID, year, date, last_fx) %>%
     arrange(accusedID, year) %>%
     group_by(accusedID) %>%
     mutate(
@@ -216,12 +220,12 @@ TrialsMeasure <- function(
       max_date = as_date(max_date)
     ) %>%
     select(
-      n, accusedID, last_fx, last, any_last, year, date, max_date,
+      n, accusedID, last_fx, any_last, year, date, max_date,
       guilty, sentencingTime, sentencingArrangement
     ) %>%
     filter(!(n > 1 & !is.na(max_date) & date != max_date)) %>%
     filter(!(n > 1 & last_fx != any_last)) %>%
-    select(accusedID, year, last, last_fx, guilty, sentencingTime, sentencingArrangement) %>%
+    select(accusedID, year, last_fx, guilty, sentencingTime, sentencingArrangement) %>%
     distinct() %>%
     ungroup()
 
@@ -260,9 +264,11 @@ TrialsMeasure <- function(
   } else {
     hos_condition <- TRUE
   }
-  
+
   accused <- db[["Accused"]] %>% 
     mutate(
+      stateagent = ifelse(stateRelation != "neither state nor opposition member" & str_detect(stateRelation, "state agent"), 1, 0), 
+      opposition = ifelse(stateRelation != "neither state nor opposition member" & str_detect(stateRelation, "opposition member"), 1, 0),
       all = 1,
       lowRank = 1 - highRank
     ) %>%
@@ -306,14 +312,15 @@ TrialsMeasure <- function(
   }
   
   trials <- db[["Trials"]] %>% 
-    mutate(
-      humanRights = ifelse(HRs_charges > 0 & humanRights == 0, 1, humanRights),
-    ) %>% 
+    ## no longer needed after coding of HRVorCoreCrimes
+    # mutate(
+    #   humanRights = ifelse(HRs_charges > 0 & humanRights == 0, 1, humanRights),
+    # ) %>% 
     filter(trialType %in% type_trial[type_opts]) %>%
     filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) %>%
     filter(eval(exclusion_condition)) %>%
     filter(eval(subtype_condition)) %>%
-    select(trialID, ccode_target, yearStart, yearEnd, firstConvictionYear_min)
+    select(trialID, ccode_target, yearStart, yearEnd, firstConvictionYear)
 
   ## combining the trials and accused subsets; one-to-many, unit is accused
   subset_accused <- trials %>%
@@ -351,7 +358,7 @@ TrialsMeasure <- function(
     ) %>%
     select(
       accusedID, ccode_target, yearStart, yearEnd, last_fx, guilty,
-      year, year_convict_final, firstConvictionYear_min
+      year, year_convict_final, firstConvictionYear
     )
 
   ## combining with prison scale; makes unit accused-year
@@ -454,9 +461,9 @@ TrialsMeasure <- function(
   if (measure %in% c("cct", "crt")) {
     convictions <- subset_accused_convictions %>%
       filter(!is.na(guilty) | guilty != 1) %>%
-      mutate(firstConvictionYear_min = as.integer(firstConvictionYear_min)) %>%
-      filter(!(!is.na(firstConvictionYear_min) & firstConvictionYear_min < yearStart)) %>% ### temp fix
-      # select(accusedID, ccode_target, yearStart, yearEnd, year, year_convict_final, firstConvictionYear_min)
+      mutate(firstConvictionYear = as.integer(firstConvictionYear)) %>%
+      filter(!(!is.na(firstConvictionYear) & firstConvictionYear < yearStart)) %>% ### temp fix
+      # select(accusedID, ccode_target, yearStart, yearEnd, year, year_convict_final, firstConvictionYear)
       mutate(
         year = ifelse(is.na(year), year_convict_final, year),
         year = ifelse(guilty == 1 & is.na(year), yearEnd, year)
@@ -494,7 +501,7 @@ TrialsMeasure <- function(
         mutate(yearEnd = ifelse(!is.na(year_ended) & yearEnd > year_ended,
           year_ended, yearEnd
         )) %>%
-        # select(accusedID, ccode_target, yearStart, yearEnd, year_convict_final, firstConvictionYear_min) %>%
+        # select(accusedID, ccode_target, yearStart, yearEnd, year_convict_final, firstConvictionYear) %>%
         select(ccode_target, yearStart, yearEnd) %>%
         rowwise() %>%
         mutate(year = list(yearStart:yearEnd)) %>%
