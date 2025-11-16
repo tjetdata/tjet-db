@@ -182,10 +182,12 @@ TrialsMeasure <- function(
     var_name
   )
   var_name <- ifelse(str_detect(var_name, "regu_"),
-    str_replace(var_name, "_Xctj", ""),
+    var_name |> 
+      str_replace("_Xctj", "") |> 
+      str_replace("_Xdtj", ""),
     var_name
   )
-  var_name <- ifelse(str_detect(var_name, "regu_"),
+  var_name <- ifelse(str_detect(var_name, "core_"),
     str_replace(var_name, "_Xdtj", ""),
     var_name
   )
