@@ -221,6 +221,8 @@ tjet_cy,"prosecutions, domestic, opposition",,oppo_cce_dom_sta_opp,"domestic opp
 tjet_cy,"prosecutions, domestic, opposition",,oppo_acc_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, count of accused in ongoing trials, by nationality of the accused (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,"prosecutions, domestic, opposition",,oppo_crt_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, conviction rate, cct/acc (trials not matched to UCDP conflict IDs)",TJET,1970,2020
 tjet_cy,"prosecutions, domestic, opposition",,oppo_sen_dom_sta_opp,"domestic opposition prosecutions of state agents or opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year (trials not matched to UCDP conflict IDs)",TJET,1970,2020
+tjet_cy,"prosecutions, domestic, core crimes by opposition",,core_trs_dom_opp,"domestic prosecutions of opposition members for international core crimes, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
+tjet_cy,"prosecutions, domestic, core crimes by opposition",,core_cce_dom_opp,"domestic prosecutions of opposition members for international core crimes, count of first convictions per accused, by nationality of the accused & conviction year",TJET,1970,2020
 tjet_cy,"prosecutions, foreign",,trs_for_active,"foreign prosecutions, active personality jurisdiction, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,"prosecutions, foreign",,trs_for_passive,"foreign prosecutions, passive personality jurisdiction, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,"prosecutions, foreign",,trs_for_territorial,"foreign prosecutions, territorial jurisdiction, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
@@ -1044,8 +1046,11 @@ tjet_cy,,,incidents_gtd,Terrorist incidents,GTD,1970,2020
 tjet_cy,,,killed_gtd,number of fatalities from terrorist incidents (not including attackers),GTD,1970,2020
 tjet_cy,,,injured_gtd,Number of injured from terrorist incidents (not including attackers),GTD,1970,2020
 tjet_cy,,,pko_mission,"active UN peacekeeping mission, binary",PKO,,
-tjet_cy,,,prev_state_svac,"prevalence of sexual violence among state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
-tjet_cy,,,prev_nonstate_svac,"prevalence of sexual violence among non-state actors, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
+tjet_cy,,,prev_state_svac,"prevalence of sexual violence among state actors in intrastate conflicts, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
+tjet_cy,,,prev_nonstate_svac,"prevalence of sexual violence among non-state actors in intrastate conflicts, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
+tjet_cy,,,prev_gov_svac,"prevalence of sexual violence among incumbent governments in intrastate conflicts, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
+tjet_cy,,,prev_reb_svac,"prevalence of sexual violence among rebels in intrastate conflicts, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
+tjet_cy,,,prev_pgm_svac,"prevalence of sexual violence among pro-governments militias in intrastate conflicts, maximum level across AI, SD, and HRW sources (scale: 0=none; 1=isolated; 2=numerous; 3=massive)",SVAC,,
 tjet_cy,,,conflictyear_svac,conflict-year in SVAC dataset,SVAC,,
 tjet_cy,,,events_pitf,count of atrocity events,PITF,,
 tjet_cy,,,deaths_pitf,counts of deaths due to atrocities,PITF,,
@@ -1180,48 +1185,26 @@ tjet_cy,,,rpa_full_rpc,Relative Political Allocation (Model 8),RPC,1960,2018
 tjet_cy,,,rpa_sub_rpc,Relative Political Allocation (Model 8 with income partitions),RPC,1960,2018
 tjet_accused.csv,,1,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_accused.csv,,2,trialID,TJET Trial ID,TJET,1970,2020
-tjet_accused.csv,,,invalid,"invalid observation, binary",TJET,1970,2020
 tjet_accused.csv,,3,name,name of the accused,TJET,1970,2020
 tjet_accused.csv,,4,position_desc,"description of the accused (position rank, title, role, etc)",TJET,1970,2020
 tjet_accused.csv,,5,position_desc_fr,description of the accused (French),TJET,1970,2020
 tjet_accused.csv,,6,accusedNotes,notes on the accused,TJET,1970,2020
 tjet_accused.csv,,7,ethnicityAccused,ethnicity of accused,TJET,1970,2020
-tjet_accused.csv,,8,stateAgent,Was the accused a state agent?,TJET,1970,2020
-tjet_accused.csv,,9,currentStateAgent,Is this individual currently a state agent? (within the last year of coding),TJET,1970,2020
-tjet_accused.csv,,10,membership,state membership: in what capacity did the state agent act?,TJET,1970,2020
-tjet_accused.csv,,11,opposedToGovernment,Was this person opposed to the government? ,TJET,1970,2020
-tjet_accused.csv,,12,oppositionType,opposition type,TJET,1970,2020
-tjet_accused.csv,,13,highRank,Was this a high-ranking individual?,TJET,1970,2020
-tjet_accused.csv,,14,headOfState,Was this individual the head of state at the time of the crime?,TJET,1970,2020
-tjet_accused.csv,,15,prosecutorType,prosecutor type,TJET,1970,2020
-tjet_accused.csv,,16,charges,charges description,TJET,1970,2020
-tjet_accused.csv,,17,chargesUnknown,charges: none reported,TJET,1970,2020
-tjet_accused.csv,,18,atrocity,charges: atrocity,TJET,1970,2020
-tjet_accused.csv,,19,murderKilling,charges: murder or killing,TJET,1970,2020
-tjet_accused.csv,,20,torture,charges: torture,TJET,1970,2020
-tjet_accused.csv,,21,illegalImprisonment,charges: illegal imprisonment,TJET,1970,2020
-tjet_accused.csv,,22,disappearance,charges: disappearance,TJET,1970,2020
-tjet_accused.csv,,23,chargesOther,charges: other,TJET,1970,2020
-tjet_accused.csv,,24,unknown,preliminary trial process: none reported,TJET,1970,2020
-tjet_accused.csv,,25,indictments,preliminary trial process: indictments,TJET,1970,2020
-tjet_accused.csv,,26,arrests,preliminary trial process: arrests,TJET,1970,2020
-tjet_accused.csv,,27,extradition,preliminary trial process: extradition,TJET,1970,2020
-tjet_accused.csv,,28,countryExtradition,country from which extradition was sought,TJET,1970,2020
-tjet_accused.csv,,29,detention,preliminary trial process: detention,TJET,1970,2020
-tjet_accused.csv,,30,other,preliminary trial process: other,TJET,1970,2020
-tjet_accused.csv,,31,statuteAmnestyCircumvented,statute or amnesty circumvented,TJET,1970,2020
-tjet_accused.csv,,32,laterPardonedAmnestied,Was this person later pardoned or amnestied?,TJET,1970,2020
-tjet_accused.csv,,33,trialRelevantInfo,other relevant information about the trial,TJET,1970,2020
-tjet_accused.csv,,34,certainty,How much certainty did coders have in coding this accused? ,TJET,1970,2020
-tjet_accused.csv,,,sources,coding sources (besides State Department Country Human Rights Reports),TJET,1970,2020
-tjet_accused.csv,,36,SGBV,charges: sexual or gender-based violence,TJET,1970,2020
-tjet_accused.csv,,37,rape,charges: rape,TJET,1970,2020
-tjet_accused.csv,,38,sexualViolence,charges: sexual violence (other than rape),TJET,1970,2020
-tjet_accused.csv,,39,RSV,charges: rape or sexual violence,TJET,1970,2020
-tjet_accused.csv,,40,otherSGBV,other SGBV,TJET,1970,2020
-tjet_accused.csv,,41,maleVictim,SGBV: male victim,TJET,1970,2020
-tjet_accused.csv,,42,childVictim,SGBV: child victim,TJET,1970,2020
-tjet_accused.csv,,43,LGBTQvictim,SGBV: LGBTQ victim,TJET,1970,2020
+tjet_accused.csv,,8,stateRelation,Was the accused a state agent or opposed to the government? (current refers to within the last year of the last trials coded) ,TJET,1970,2020
+tjet_accused.csv,,9,membership,state membership: in what capacity did the state agent act?,TJET,1970,2020
+tjet_accused.csv,,10,oppositionType,opposition type,TJET,1970,2020
+tjet_accused.csv,,11,highRank,Was this a high-ranking individual?,TJET,1970,2020
+tjet_accused.csv,,12,headOfState,Was this individual the head of state at the time of the crime?,TJET,1970,2020
+tjet_accused.csv,,14,charges,charges description,TJET,1970,2020
+tjet_accused.csv,,15,chargesCategories ,charges categorical coding,TJET,1970,2020
+tjet_accused.csv,,16,genderAttentiveCharges,"gender attentive charges: rape, sexual violence (other than rape), and/or other gender-attentive charges",TJET,1970,2020
+tjet_accused.csv,,17,genderVictims,victim type for gender-attentive charges,TJET,1970,2020
+tjet_accused.csv,,18,prelimProcess,"preliminary trial process (incl. indictments, arrests, extraditions, detentions, other, and unknown or none reported)",TJET,1970,2020
+tjet_accused.csv,,19,countryExtradition,country from which extradition was sought,TJET,1970,2020
+tjet_accused.csv,,20,statuteAmnestyCircumvented,statute or amnesty circumvented,TJET,1970,2020
+tjet_accused.csv,,21,laterPardonedAmnestied,Was this person later pardoned or amnestied?,TJET,1970,2020
+tjet_accused.csv,,22,trialRelevantInfo,other relevant information about the trial,TJET,1970,2020
+tjet_accused.csv,,23,certainty,How much certainty did coders have in coding this accused? ,TJET,1970,2020
 tjet_accused.csv,,44,ICC_referral,year in which country situation was referred to the ICC,TJET,1970,2020
 tjet_accused.csv,,45,ICC_prelim_exam,year in which preliminary ICC examination began,TJET,1970,2020
 tjet_accused.csv,,46,ICC_investigation,year in which ICC investigation began,TJET,1970,2020
@@ -1240,43 +1223,38 @@ tjet_accused.csv,,58,lastVerdictYear,year of final verdict,TJET,1970,2020
 tjet_accused.csv,,59,lastSentencingTime,detention time of last sentencing verdict for the accused,TJET,1970,2020
 tjet_accused.csv,,60,lastSentencingArrangement,sentencing arrangement of the last verdict,TJET,1970,2020
 tjet_accused.csv,,61,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
-tjet_accused.csv,,,genocide,charges: genocide,TJET,1970,2020
-tjet_accused.csv,,,ongoing,trial is ongoing for the accused at time of coding,TJET,1970,2020
-tjet_amnesties.csv,,1,amnestyID,TJET Amnesty ID,TJET,1970,2020
-tjet_amnesties.csv,,,invalid,"invalid observation, binary",TJET,1970,2020
-tjet_amnesties.csv,,2,country,country name,TJET,1970,2020
-tjet_amnesties.csv,,3,ccode_cow,COW numeric country code,TJET,1970,2020
-tjet_amnesties.csv,,4,amnestyYear,year the amnesty was passed or announced,TJET,1970,2020
-tjet_amnesties.csv,,5,yearOngoing,last known year when amnesty still applies,TJET,1970,2020
-tjet_amnesties.csv,,6,mechanismDescription,name and/or description of the amnesty,TJET,1970,2020
-tjet_amnesties.csv,,7,mechanismDescription_fr,name and/or description of the amnesty (French),TJET,1970,2020
-tjet_amnesties.csv,,8,amnestyName,official name of amnesty law or proclamation,TJET,1970,2020
-tjet_amnesties.csv,,9,start_date,date of amnesty passage,TJET,1970,2020
-tjet_amnesties.csv,,10,enactedHow,How was the amnesty enacted?,TJET,1970,2020
-tjet_amnesties.csv,,11,narrative,explanation of the amnesty law,TJET,1970,2020
-tjet_amnesties.csv,,12,whoWasAmnestied,Which actors were amnestied?,TJET,1970,2020
-tjet_amnesties.csv,,13,stateAgents,Which state agents were offered amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,14,oppRank,Which members of the armed opposition were offered amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,15,selfAmnesty,Could this be considered a self-amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,16,qualifyingProcess,What actions did subjects have to take to qualify for amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,17,whatCrimes,What crimes were amnestied?,TJET,1970,2020
-tjet_amnesties.csv,,18,blanket,Could this be considered a blanket amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,19,hrCrimes,How did this amnesty relate to human rights?,TJET,1970,2020
-tjet_amnesties.csv,,20,SGBV,Did the amnesty cover sexual or gender-based violence?,TJET,1970,2020
-tjet_amnesties.csv,,21,startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before or immediately after this amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,22,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,23,startedIntraConflbefore,Did this country start an intra-state conflict at some point before this amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,24,fitsConflictTJ,Did this case fit the definition of a conflict amnesty?,TJET,1970,2020
-tjet_amnesties.csv,,25,ucdpConflictID,UCDP Conflict ID,TJET,1970,2020
-tjet_amnesties.csv,,26,ucdpDyadID,UCDP Dyad ID,TJET,1970,2020
-tjet_amnesties.csv,,27,dcj,Was this amnesty passed during the intra-state conflict?,TJET,1970,2020
-tjet_amnesties.csv,,28,pcj,Was this amnesty passed after the intra-state conflict?,TJET,1970,2020
-tjet_amnesties.csv,,29,peaceSettlement,Was the amnesty part of a peace settlement?,TJET,1970,2020
-tjet_amnesties.csv,,30,mediation,Was the peace settlement mediated?,TJET,1970,2020
-tjet_amnesties.csv,,31,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
-tjet_amnesties.csv,,,otherExplain,Which other actors were amnestied?,TJET,1970,2020
-tjet_amnesties.csv,,,sourceInformation,"coding sources (besides Mallinder, TJDB, and PAX)",TJET,1970,2020
-tjet_amnesties.csv,,,sourceNotes,coding sources notes,TJET,1970,2020
+tjet_amnesties.csv,,1,amnestyID,TJET Amnesty ID,TJET,1970,2024
+tjet_amnesties.csv,,2,country,country name,TJET,1970,2024
+tjet_amnesties.csv,,3,ccode_cow,COW numeric country code,TJET,1970,2024
+tjet_amnesties.csv,,4,amnestyYear,year the amnesty was passed or announced,TJET,1970,2024
+tjet_amnesties.csv,,5,yearOngoing,last known year when amnesty still applies,TJET,1970,2024
+tjet_amnesties.csv,,6,mechanismDescription,name and/or description of the amnesty,TJET,1970,2024
+tjet_amnesties.csv,,7,mechanismDescription_fr,name and/or description of the amnesty (French),TJET,1970,2024
+tjet_amnesties.csv,,8,amnestyName,official name of amnesty law or proclamation,TJET,1970,2024
+tjet_amnesties.csv,,9,start_date,date of amnesty passage,TJET,1970,2024
+tjet_amnesties.csv,,10,enactedHow,How was the amnesty enacted?,TJET,1970,2024
+tjet_amnesties.csv,,11,narrative,explanation of the amnesty law,TJET,1970,2024
+tjet_amnesties.csv,,12,whoWasAmnestied,Which actors were amnestied?,TJET,1970,2024
+tjet_amnesties.csv,,13,stateAgents,Which state agents were offered amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,14,oppRank,Which members of the armed opposition were offered amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,,otherExplain,Which other actors were amnestied?,TJET,1970,2024
+tjet_amnesties.csv,,15,selfAmnesty,Could this be considered a self-amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,16,qualifyingProcess,What actions did subjects have to take to qualify for amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,17,whatCrimes,What crimes were amnestied?,TJET,1970,2024
+tjet_amnesties.csv,,18,blanket,Could this be considered a blanket amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,19,hrCrimes,How did this amnesty relate to human rights?,TJET,1970,2024
+tjet_amnesties.csv,,20,SGBV,Did the amnesty cover sexual or gender-based violence?,TJET,1970,2024
+tjet_amnesties.csv,,21,startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before or immediately after this amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,22,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,23,startedIntraConflbefore,Did this country start an intra-state conflict at some point before this amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,24,fitsConflictTJ,Did this case fit the definition of a conflict amnesty?,TJET,1970,2024
+tjet_amnesties.csv,,25,ucdpConflictID,UCDP Conflict ID,TJET,1970,2024
+tjet_amnesties.csv,,26,ucdpDyadID,UCDP Dyad ID,TJET,1970,2024
+tjet_amnesties.csv,,27,dcj,Was this amnesty passed during the intra-state conflict?,TJET,1970,2024
+tjet_amnesties.csv,,28,pcj,Was this amnesty passed after the intra-state conflict?,TJET,1970,2024
+tjet_amnesties.csv,,29,peaceSettlement,Was the amnesty part of a peace settlement?,TJET,1970,2024
+tjet_amnesties.csv,,30,mediation,Was the peace settlement mediated?,TJET,1970,2024
+tjet_amnesties.csv,,31,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2024
 tjet_courtlevels.csv,,1,CLID,TJET court level record ID,TJET,1970,2020
 tjet_courtlevels.csv,,2,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_courtlevels.csv,,3,courtLevel,court level at which outcome occurred,TJET,1970,2020
@@ -1317,198 +1295,181 @@ tjet_icc_interventions.csv,,,prelim_end_month,month in which preliminary ICC exa
 tjet_icc_interventions.csv,,9,ICC_investigation,year in which ICC investigation began,TJET,1970,2020
 tjet_icc_interventions.csv,,,investigation_month,month in which ICC investigation began,TJET,1970,2020
 tjet_icc_interventions.csv,,11,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
-tjet_reparations.csv,,1,reparationID,TJET Reparation ID,TJET,1970,2020
-tjet_reparations.csv,,,invalid,"invalid observation, binary",TJET,1970,2020
-tjet_reparations.csv,,2,country,country name,TJET,1970,2020
-tjet_reparations.csv,,3,ccode_cow,COW numeric country code,TJET,1970,2020
-tjet_reparations.csv,,4,officialName,name or description of the reparations policy,TJET,1970,2020
-tjet_reparations.csv,,5,officialName_en,name or description of the reparations policy (English),TJET,1970,2020
-tjet_reparations.csv,,6,officialName_en_fr,name or description of the reparations policy (French translation),TJET,1970,2020
-tjet_reparations.csv,,7,timeframeCovered,What timeframe does the policy cover? ,TJET,1970,2020
-tjet_reparations.csv,,8,narrative,narrative description of the reparations policy,TJET,1970,2020
-tjet_reparations.csv,,9,legalBasis,legal basis of the reparations policy,TJET,1970,2020
-tjet_reparations.csv,,10,legalInternationalBody,Which international body initiated the reparations policy?,TJET,1970,2020
-tjet_reparations.csv,,11,legalBranches,Which branch(es) of government recommended or initiated the reparations policy? ,TJET,1970,2020
-tjet_reparations.csv,,12,subnational,Was the reparations policy created by a subnational government? ,TJET,1970,2020
-tjet_reparations.csv,,13,yearCreated,year the reparation policy was created,TJET,1970,2020
-tjet_reparations.csv,,14,dateCreated,date the policy was created,TJET,1970,2020
-tjet_reparations.csv,,15,yearBegin,year the policy began operating,TJET,1970,2020
-tjet_reparations.csv,,16,dateBegin,date the policy began operating,TJET,1970,2020
-tjet_reparations.csv,,17,yearEnd,year the policy ended,TJET,1970,2020
-tjet_reparations.csv,,18,dateEnd,date the policy ended,TJET,1970,2020
-tjet_reparations.csv,,19,yearEndAnticipated,year the policy is anticipated to end,TJET,1970,2020
-tjet_reparations.csv,,20,statedAims,What are the stated goals or aims of the policy?,TJET,1970,2020
-tjet_reparations.csv,,21,policyURL,policy URL,TJET,1970,2020
-tjet_reparations.csv,,,basicsSources,coding sources on policy basics,TJET,1970,2020
-tjet_reparations.csv,,23,democraticTransitionStarted,Did this country start a democratic transition at some point before the reparations policy was enacted?,TJET,1970,2020
-tjet_reparations.csv,,24,fitsPostAutocraticTJ,Did this case fit the definition of transitional human rights reparation?,TJET,1970,2020
-tjet_reparations.csv,,25,startedIntraConfl,Did this country start an intra-state conflict at some point before the reparations policy was enacted?,TJET,1970,2020
-tjet_reparations.csv,,26,fitsConflictTJ,Did this case fit the definition of conflict reparation?,TJET,1970,2020
-tjet_reparations.csv,,27,ucdpConflictID,UCDP conflict ID,TJET,1970,2020
-tjet_reparations.csv,,28,reparationConflictDuring,Was the reparations policy enacted during the conflict?,TJET,1970,2020
-tjet_reparations.csv,,29,reparationConflictAfter,Was the reparations policy enacted after the conflict?,TJET,1970,2020
-tjet_reparations.csv,,,nexusSources,coding sources on policy nexus,TJET,1970,2020
-tjet_reparations.csv,,31,beneficiariesIdentified,How does the policy recognize potential beneficiaries?,TJET,1970,2020
-tjet_reparations.csv,,32,beneficiariesCount,Approximately how many potential beneficiaries were recognized by any of the above means?,TJET,1970,2020
-tjet_reparations.csv,,33,requirementsRegistration,"Are there requirements to register to receive payments? Examples: citizenship, residency, identification, payment of a fee, proof of crime, witnesses, etc. ",TJET,1970,2020
-tjet_reparations.csv,,34,responsibleDepartment,Was there a department or unit responsible for administering reparations?,TJET,1970,2020
-tjet_reparations.csv,,35,departmentName,What is the responsible department called?,TJET,1970,2020
-tjet_reparations.csv,,36,departmentStaff,Did the responsible department have staff?,TJET,1970,2020
-tjet_reparations.csv,,37,staffCount,How many staff members does the responsible department have (if known)?,TJET,1970,2020
-tjet_reparations.csv,,38,funding,What is the primary funding source for the reparations?,TJET,1970,2020
-tjet_reparations.csv,,,operationSources,coding sources on policy operation,TJET,1970,2020
-tjet_reparations.csv,,40,harmsMurder,"violations covered: Murder, homicide, massacres, or other deprivation of life",TJET,1970,2020
-tjet_reparations.csv,,41,harmsTorture,violations covered: torture,TJET,1970,2020
-tjet_reparations.csv,,42,harmsDetention,violations covered: arbitrary arrest and detention,TJET,1970,2020
-tjet_reparations.csv,,43,harmsDisappearance,violations covered: kidnapping and enforced disappearance,TJET,1970,2020
-tjet_reparations.csv,,44,harmsChildRecruitment,violations covered: forced recruitment or conscription of children in armed conflict,TJET,1970,2020
-tjet_reparations.csv,,45,harmsDisplacement,violations covered: displacement,TJET,1970,2020
-tjet_reparations.csv,,46,harmsSexualViolence,violations covered: sexual violence,TJET,1970,2020
-tjet_reparations.csv,,47,sexualViolenceType,types of sexual violence covered,TJET,1970,2020
-tjet_reparations.csv,,48,harmsOther,violations covered: other,TJET,1970,2020
-tjet_reparations.csv,,49,genderCrimes,"Did the policy include reparations for gender-based crimes, other than the sexual violence crimes listed under sexualViolenceType? ",TJET,1970,2020
-tjet_reparations.csv,,50,genderWomen,Did the policy include reparations for gender-based crimes against women and girls? ,TJET,1970,2020
-tjet_reparations.csv,,51,genderMen,Did the policy reparations for gender-based crimes against men and boys?,TJET,1970,2020
-tjet_reparations.csv,,52,lgbtqCrimes,"Did the policy include reparations for crimes against sexual and gender minorities (lesbian, gay, bisexual, transgender, queer, etc.)? ",TJET,1970,2020
-tjet_reparations.csv,,,genderAttentive,Was the policy gender attentive?,TJET,1970,2020
-tjet_reparations.csv,,54,typeInjury,What types of injury does the reparations policy cover? ,TJET,1970,2020
-tjet_reparations.csv,,55,individualReparations,Did the policy offer individual reparations?,TJET,1970,2020
-tjet_reparations.csv,,56,individualReparationsForm,Which forms of individual reparations does the policy offer?,TJET,1970,2020
-tjet_reparations.csv,,57,individualReparationsEligible,Which individuals are eligible to receive reparations under the policy? ,TJET,1970,2020
-tjet_reparations.csv,,58,collectiveReparations,Did the policy offer collective or community reparations?,TJET,1970,2020
-tjet_reparations.csv,,59,collectiveReparationsForm,Which forms of collective or community reparations does the policy offer? ,TJET,1970,2020
-tjet_reparations.csv,,60,collectiveReparationsEligibility,Which types of communities are eligible to receive collective or community reparations under the policy? ,TJET,1970,2020
-tjet_reparations.csv,,61,diffAmount,Did the policy award different types or amounts of reparations to victims based on either the type of victim or the type of harm? ,TJET,1970,2020
-tjet_reparations.csv,,62,foreclose,Did the acceptance of reparations benefits foreclose victims from resorting to the justice system for criminal prosecution and/or civil damages?,TJET,1970,2020
-tjet_reparations.csv,,,policySources,coding sources on policy details,TJET,1970,2020
-tjet_reparations.csv,,63,outreach,Did the policy include a plan for outreach activities?,TJET,1970,2020
-tjet_reparations.csv,,64,accessibility,Did the reparations program have any of the following accessibility / inclusivity provisions?,TJET,1970,2020
-tjet_reparations.csv,,65,rep_paid,Did the reparations policy actually pay out?,TJET,1970,2020
-tjet_reparations.csv,,66,individualsRepaired,How many individuals have been repaired under the policy? (text),TJET,1970,2020
-tjet_reparations.csv,,67,individualsRepairedEstimate,How many individuals have been repaired under the policy? (numeric),TJET,1970,2020
-tjet_reparations.csv,,68,costEstimate,What is the estimated total cost of the reparations awarded? ,TJET,1970,2020
-tjet_reparations.csv,,69,alteration,"Was the policy ever altered, either by legislation or court interpretation, to change the eligibility requirements for receiving reparations (e.g., timeframe, type of violation)?",TJET,1970,2020
-tjet_reparations.csv,,70,alterationName,What is the name of the legislation or court ruling altering the policy?,TJET,1970,2020
-tjet_reparations.csv,,71,alterationYear,What year did the alteration occur? (see alterationName),TJET,1970,2020
-tjet_reparations.csv,,72,alterationEffect,What was the effect of the policy alteration? (see alterationName),TJET,1970,2020
-tjet_reparations.csv,,,implementationSources,coding sources on policy implementation,TJET,1970,2020
-tjet_reparations.csv,,74,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
-tjet_tcs.csv,,1,truthcommissionID,TJET Truth Commission ID,TJET,1970,2020
-tjet_tcs.csv,,,invalid,"invalid observation, binary",TJET,1970,2020
-tjet_tcs.csv,,2,country,country name,TJET,1970,2020
-tjet_tcs.csv,,3,ccode_cow,COW numeric country code,TJET,1970,2020
-tjet_tcs.csv,,4,officialName,name or description of the truth commission,TJET,1970,2020
-tjet_tcs.csv,,5,officialName_en,name or description of the truth commission (English),TJET,1970,2020
-tjet_tcs.csv,,6,officialName_en_fr,name or description of the truth commission (French translation),TJET,1970,2020
-tjet_tcs.csv,,7,narrative,narrative description,TJET,1970,2020
-tjet_tcs.csv,,8,tcType,type of truth commission,TJET,1970,2020
-tjet_tcs.csv,,9,legalBasis,legal basis of the truth commission,TJET,1970,2020
-tjet_tcs.csv,,10,branchCreated,Which branch(es) of government created the TC?,TJET,1970,2020
-tjet_tcs.csv,,11,domesticInitiatePerson,Who specifically initiated the commission? ,TJET,1970,2020
-tjet_tcs.csv,,12,internationalBody,Which international body initiated the commission?  ,TJET,1970,2020
-tjet_tcs.csv,,,basicsSources,coding sources on basics,TJET,1970,2020
-tjet_tcs.csv,,14,yearPassed,year the truth commission was mandated,TJET,1970,2020
-tjet_tcs.csv,,15,dayMonthPassed,day/month of the truth commission law,TJET,1970,2020
-tjet_tcs.csv,,16,tclawOnline,URL of the truth commission law (if the law is online),TJET,1970,2020
-tjet_tcs.csv,,,neverOperated,Did the truth commission never operate?  ,TJET,1970,2020
-tjet_tcs.csv,,18,status,"What was the status of the truth commission at the time of coding? (ongoing; aborted, completed)",TJET,1970,2020
-tjet_tcs.csv,,19,yearBeginOperation,year the TC began operating,TJET,1970,2020
-tjet_tcs.csv,,,timingSources,coding sources on truth commission timing,TJET,1970,2020
-tjet_tcs.csv,,21,democraticTransitionBeforeTC,Did this country start a democratic transition at some point before this truth commission began operating?,TJET,1970,2020
-tjet_tcs.csv,,22,fitsPostAutocraticTJ,Did this case fit the definition of a post-authoritarian truth commission? ,TJET,1970,2020
-tjet_tcs.csv,,23,intraConflictBeforeTC,Did this country start an intra-state conflict at some point before this truth commission began operating?,TJET,1970,2020
-tjet_tcs.csv,,24,fitsConflictTJ,Did this case fit the definition of a conflict truth commission?,TJET,1970,2020
-tjet_tcs.csv,,25,ucdpConflictID,UCDP Conflict ID,TJET,1970,2020
-tjet_tcs.csv,,26,ucdpDyadID,UCDP Dyad ID,TJET,1970,2020
-tjet_tcs.csv,,27,beganOperatingDuringIntraConfl,Did this truth commission begin operating after intra-state conflict?,TJET,1970,2020
-tjet_tcs.csv,,28,beganOperatingAfterIntraConfl,Did this truth commission begin operating during intra-state conflict?,TJET,1970,2020
-tjet_tcs.csv,,29,tcAims,"How are the TC's aims or goals framed? Literally, what words do the establishing laws or report commonly make use of?",TJET,1970,2020
-tjet_tcs.csv,,,authorizedByState,Was the truth commission officially authorized or empowered by the state?,TJET,1970,2020
-tjet_tcs.csv,,31,subnationalAuthorization,Was this truth commission created or authorized by a subnational government?,TJET,1970,2020
-tjet_tcs.csv,,32,subnationalOperation,Did this truth commission operate at the subnational level? ,TJET,1970,2020
-tjet_tcs.csv,,33,consultedVictims,Did the truth commission consult victims groups during the design phase?,TJET,1970,2020
-tjet_tcs.csv,,34,consultedGroups,Which vulnerable groups were consulted?,TJET,1970,2020
-tjet_tcs.csv,,,temporaryBodyReport,Was the commission a temporary body with the aim of producing a final report?,TJET,1970,2020
-tjet_tcs.csv,,,focusedPast,Was the commission focused on past rather than ongoing events?,TJET,1970,2020
-tjet_tcs.csv,,37,mandateTimePeriodCovered,Did the mandate specify the time period that is covered by the truth commission?,TJET,1970,2020
-tjet_tcs.csv,,38,timePeriod,What is the specific period covered by the truth commission?,TJET,1970,2020
-tjet_tcs.csv,,,investigatePatternAbuse,Did the commission aim to investigates a pattern of abuse?,TJET,1970,2020
-tjet_tcs.csv,,40,idiosyncratic,this commission did not strictly meet the TJET definition of a truth commission,TJET,1970,2020
-tjet_tcs.csv,,41,disappearance,crimes covered: disappearance,TJET,1970,2020
-tjet_tcs.csv,,42,death,crimes covered: deaths,TJET,1970,2020
-tjet_tcs.csv,,43,torture,crimes covered: torture,TJET,1970,2020
-tjet_tcs.csv,,44,SGBV,crimes covered: sexual or gender-based violence,TJET,1970,2020
-tjet_tcs.csv,,45,forcedDisplacement,crimes covered: forced displacement,TJET,1970,2020
-tjet_tcs.csv,,46,corruption,crimes covered: corruption,TJET,1970,2020
-tjet_tcs.csv,,47,crimeSpecificGroups,crimes covered: crimes against specific groups,TJET,1970,2020
-tjet_tcs.csv,,48,crimesOther,crimes covered: other,TJET,1970,2020
-tjet_tcs.csv,,49,victimCount,approximate number of victims listed by truth commission,TJET,1970,2020
-tjet_tcs.csv,,,criteriaSources,coding sources on truth commission criteria,TJET,1970,2020
-tjet_tcs.csv,,51,formallyIndependent,Was the TC formally independent?,TJET,1970,2020
-tjet_tcs.csv,,52,commissioners,Did the truth commission have commissioners?,TJET,1970,2020
-tjet_tcs.csv,,53,commissionerCount,How many commissioners were on the truth commission? ,TJET,1970,2020
-tjet_tcs.csv,,54,commissionersHowChosen,How were commissioners chosen?,TJET,1970,2020
-tjet_tcs.csv,,55,commissionersVictimGroups,Did commissioners include representatives of victim groups?,TJET,1970,2020
-tjet_tcs.csv,,56,staff,Did the truth commission have staff?,TJET,1970,2020
-tjet_tcs.csv,,57,staffMemberCount,How many staff members did the truth commission have?,TJET,1970,2020
-tjet_tcs.csv,,58,primaryFunding,What was the primary funding source for the truth commission?,TJET,1970,2020
-tjet_tcs.csv,,59,estimatedCost,What was the estimated cost of the TC (in USD)?,TJET,1970,2020
-tjet_tcs.csv,,,operationSources,coding sources on operations,TJET,1970,2020
-tjet_tcs.csv,,61,investigateStateMembers,truth commission powers: investigate former or current members of the state,TJET,1970,2020
-tjet_tcs.csv,,62,compelTestimony,truth commission powers: compel testimony,TJET,1970,2020
-tjet_tcs.csv,,63,penalizeIndividuals,truth commission powers: penalize individuals for non-compliance or interference ,TJET,1970,2020
-tjet_tcs.csv,,64,namePerpetrators,truth commission powers: name perpetrators,TJET,1970,2020
-tjet_tcs.csv,,65,accessOfficialDocuments,truth commission powers: access official documents,TJET,1970,2020
-tjet_tcs.csv,,66,supportProsecutions,truth commission powers: support prosecutions,TJET,1970,2020
-tjet_tcs.csv,,67,allocateReparations,truth commission powers: allocate reparations,TJET,1970,2020
-tjet_tcs.csv,,68,recommendInstitutionalReforms,truth commission powers: recommend institutional reforms,TJET,1970,2020
-tjet_tcs.csv,,69,grantAmnesty,truth commission powers: grant amnesty,TJET,1970,2020
-tjet_tcs.csv,,,powersSources,coding sources on truth commission powers,TJET,1970,2020
-tjet_tcs.csv,,71,testimonies,Did the truth commission take testimony?,TJET,1970,2020
-tjet_tcs.csv,,72,casesTestimoniesCount,What is the total number of testimonies taken?,TJET,1970,2020
-tjet_tcs.csv,,73,testimoniesAvailablePublic,"Are the testimonies available to the public, either in hard copy or electronic archives?",TJET,1970,2020
-tjet_tcs.csv,,74,heldPublicHearings,Did the truth commission hold public hearings?,TJET,1970,2020
-tjet_tcs.csv,,75,encourageVictimTestimony,Did the truth commission encourage victim testimony?,TJET,1970,2020
-tjet_tcs.csv,,76,encourageVictimTestimonyHow,How did the truth commission encourage victim testimony?,TJET,1970,2020
-tjet_tcs.csv,,77,perpetratorTestimony,Did the truth commission take perpetrator testimony?,TJET,1970,2020
-tjet_tcs.csv,,78,perpetratorPubliclyNamedTestimony,Were perpetrators publicly named during testimony? ,TJET,1970,2020
-tjet_tcs.csv,,79,perpetratorsWho,Who were the perpetrators?,TJET,1970,2020
-tjet_tcs.csv,,80,perpetratorReceived,Did the perpetrator receive something in return for testimony?,TJET,1970,2020
-tjet_tcs.csv,,,testimonySources,coding sources on testimonies,TJET,1970,2020
-tjet_tcs.csv,,82,yearCompleteOperation,year truth commission completed operation,TJET,1970,2020
-tjet_tcs.csv,,83,finalReportIssued,Did the truth commission issue a final report?,TJET,1970,2020
-tjet_tcs.csv,,84,reportPublisher,Who published the final report? ,TJET,1970,2020
-tjet_tcs.csv,,85,reportPubliclyAvailable,Is the final report publicly available?,TJET,1970,2020
-tjet_tcs.csv,,86,pdf_file,Does TJET have a copy of the final report on the website?,TJET,1970,2020
-tjet_tcs.csv,,87,reportEstablishResponsibility,Did the final report establish responsibility?,TJET,1970,2020
-tjet_tcs.csv,,88,perpetratorNamesPublished,Were perpetrators' names published?,TJET,1970,2020
-tjet_tcs.csv,,89,reportHighlightVictimGroups,Did the final report highlight specific victim groups?,TJET,1970,2020
-tjet_tcs.csv,,90,finalReportRecommendations,Did the truth commission final report make final recommendations?,TJET,1970,2020
-tjet_tcs.csv,,91,recommendProsecutions,Did the final report recommend prosecutions?,TJET,1970,2020
-tjet_tcs.csv,,92,recommendProsecutionsWho,Who did the report recommend prosecuting?,TJET,1970,2020
-tjet_tcs.csv,,93,recommendReparations,Did the final report recommend reparations?,TJET,1970,2020
-tjet_tcs.csv,,94,reparationsType,What type of reparations did the final report recommend? ,TJET,1970,2020
-tjet_tcs.csv,,95,reportRecommendInstitutionalReform,Did the final report recommend institutional reform?,TJET,1970,2020
-tjet_tcs.csv,,96,SecuritySectorReforms,Did the final report recommend security sector reform?,TJET,1970,2020
-tjet_tcs.csv,,97,SSRType,What type of security sector reform did the final report recommend?,TJET,1970,2020
-tjet_tcs.csv,,98,vetting,Did the final report recommend vetting?,TJET,1970,2020
-tjet_tcs.csv,,99,vettingType,What type of vetting did the final report recommend?,TJET,1970,2020
-tjet_tcs.csv,,100,legalReform,Did the final report recommend legal or constitutional reform?,TJET,1970,2020
-tjet_tcs.csv,,101,legalType,What type of legal or constitutional reform did the final report recommend?,TJET,1970,2020
-tjet_tcs.csv,,102,judicialReforms,Did the final report recommend judicial reform?,TJET,1970,2020
-tjet_tcs.csv,,103,judicialReformsType,What type of judicial reform did the final report recommend?,TJET,1970,2020
-tjet_tcs.csv,,104,humanRightsReforms,Did the final report recommend human rights reform?,TJET,1970,2020
-tjet_tcs.csv,,105,humanRightsReformType,What type of human rights reform did the final report recommend?,TJET,1970,2020
-tjet_tcs.csv,,106,corruptionReforms,Did the final report recommend corruption reform?,TJET,1970,2020
-tjet_tcs.csv,,107,corruptionReformsType,What type of corruption reform did the final report recommend?,TJET,1970,2020
-tjet_tcs.csv,,108,genderReform,Did the final report recommend gender reform?,TJET,1970,2020
-tjet_tcs.csv,,109,genderReformType,What type of gender reform did the final report recommend?,TJET,1970,2020
-tjet_tcs.csv,,110,finalRecommendations,additional recommendations of the truth commission,TJET,1970,2020
-tjet_tcs.csv,,,reportSources,coding sources on final report,TJET,1970,2020
-tjet_tcs.csv,,112,mandatePeriodicMonitoringImplementation,Did the truth commission mandate require periodic monitoring or automatic implementation of recommendations?,TJET,1970,2020
-tjet_tcs.csv,,,implementationSources,coding sources on implementation,TJET,1970,2020
-tjet_tcs.csv,,,sources,coding sources,TJET,1970,2020
-tjet_tcs.csv,,115,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
+tjet_reparations.csv,,1,reparationID,TJET Reparation ID,TJET,1970,2024
+tjet_reparations.csv,,2,country,country name,TJET,1970,2024
+tjet_reparations.csv,,3,ccode_cow,COW numeric country code,TJET,1970,2024
+tjet_reparations.csv,,4,officialName,name or description of the reparations policy,TJET,1970,2024
+tjet_reparations.csv,,5,officialName_en,name or description of the reparations policy (English),TJET,1970,2024
+tjet_reparations.csv,,6,officialName_en_fr,name or description of the reparations policy (French translation),TJET,1970,2024
+tjet_reparations.csv,,7,timeframeCovered,What timeframe does the policy cover? ,TJET,1970,2024
+tjet_reparations.csv,,8,narrative,narrative description of the reparations policy,TJET,1970,2024
+tjet_reparations.csv,,9,legalBasis,legal basis of the reparations policy,TJET,1970,2024
+tjet_reparations.csv,,10,legalInternationalBody,Which international body initiated the reparations policy?,TJET,1970,2024
+tjet_reparations.csv,,11,legalBranches,Which branch(es) of government recommended or initiated the reparations policy? ,TJET,1970,2024
+tjet_reparations.csv,,12,subnational,Was the reparations policy created by a subnational government? ,TJET,1970,2024
+tjet_reparations.csv,,13,yearCreated,year the reparation policy was created,TJET,1970,2024
+tjet_reparations.csv,,14,dateCreated,date the policy was created,TJET,1970,2024
+tjet_reparations.csv,,15,yearBegin,year the policy began operating,TJET,1970,2024
+tjet_reparations.csv,,16,dateBegin,date the policy began operating,TJET,1970,2024
+tjet_reparations.csv,,17,yearEnd,year the policy ended,TJET,1970,2024
+tjet_reparations.csv,,18,dateEnd,date the policy ended,TJET,1970,2024
+tjet_reparations.csv,,19,yearEndAnticipated,year the policy is anticipated to end,TJET,1970,2024
+tjet_reparations.csv,,20,statedAims,What are the stated goals or aims of the policy?,TJET,1970,2024
+tjet_reparations.csv,,21,policyURL,policy URL,TJET,1970,2024
+tjet_reparations.csv,,23,democraticTransitionStarted,Did this country start a democratic transition at some point before the reparations policy was enacted?,TJET,1970,2024
+tjet_reparations.csv,,24,fitsPostAutocraticTJ,Did this case fit the definition of transitional human rights reparation?,TJET,1970,2024
+tjet_reparations.csv,,25,startedIntraConfl,Did this country start an intra-state conflict at some point before the reparations policy was enacted?,TJET,1970,2024
+tjet_reparations.csv,,26,fitsConflictTJ,Did this case fit the definition of conflict reparation?,TJET,1970,2024
+tjet_reparations.csv,,27,ucdpConflictID,UCDP conflict ID,TJET,1970,2024
+tjet_reparations.csv,,28,reparationConflictDuring,Was the reparations policy enacted during the conflict?,TJET,1970,2024
+tjet_reparations.csv,,29,reparationConflictAfter,Was the reparations policy enacted after the conflict?,TJET,1970,2024
+tjet_reparations.csv,,31,beneficiariesIdentified,How does the policy recognize potential beneficiaries?,TJET,1970,2024
+tjet_reparations.csv,,32,beneficiariesCount,Approximately how many potential beneficiaries were recognized by any of the above means?,TJET,1970,2024
+tjet_reparations.csv,,33,requirementsRegistration,"Are there requirements to register to receive payments? Examples: citizenship, residency, identification, payment of a fee, proof of crime, witnesses, etc. ",TJET,1970,2024
+tjet_reparations.csv,,34,responsibleDepartment,Was there a department or unit responsible for administering reparations?,TJET,1970,2024
+tjet_reparations.csv,,35,departmentName,What is the responsible department called?,TJET,1970,2024
+tjet_reparations.csv,,36,departmentStaff,Did the responsible department have staff?,TJET,1970,2024
+tjet_reparations.csv,,37,staffCount,How many staff members does the responsible department have (if known)?,TJET,1970,2024
+tjet_reparations.csv,,38,funding,What is the primary funding source for the reparations?,TJET,1970,2024
+tjet_reparations.csv,,40,harmsMurder,"violations covered: Murder, homicide, massacres, or other deprivation of life",TJET,1970,2024
+tjet_reparations.csv,,41,harmsTorture,violations covered: torture,TJET,1970,2024
+tjet_reparations.csv,,42,harmsDetention,violations covered: arbitrary arrest and detention,TJET,1970,2024
+tjet_reparations.csv,,43,harmsDisappearance,violations covered: kidnapping and enforced disappearance,TJET,1970,2024
+tjet_reparations.csv,,44,harmsChildRecruitment,violations covered: forced recruitment or conscription of children in armed conflict,TJET,1970,2024
+tjet_reparations.csv,,45,harmsDisplacement,violations covered: displacement,TJET,1970,2024
+tjet_reparations.csv,,46,harmsSexualViolence,violations covered: sexual violence,TJET,1970,2024
+tjet_reparations.csv,,47,sexualViolenceType,types of sexual violence covered,TJET,1970,2024
+tjet_reparations.csv,,48,harmsOther,violations covered: other,TJET,1970,2024
+tjet_reparations.csv,,49,genderCrimes,"Did the policy include reparations for gender-based crimes, other than the sexual violence crimes listed under sexualViolenceType? ",TJET,1970,2024
+tjet_reparations.csv,,50,genderWomen,Did the policy include reparations for gender-based crimes against women and girls? ,TJET,1970,2024
+tjet_reparations.csv,,51,genderMen,Did the policy reparations for gender-based crimes against men and boys?,TJET,1970,2024
+tjet_reparations.csv,,52,lgbtqCrimes,"Did the policy include reparations for crimes against sexual and gender minorities (lesbian, gay, bisexual, transgender, queer, etc.)? ",TJET,1970,2024
+tjet_reparations.csv,,,genderAttentive,Was the policy gender attentive?,TJET,1970,2024
+tjet_reparations.csv,,54,typeInjury,What types of injury does the reparations policy cover? ,TJET,1970,2024
+tjet_reparations.csv,,55,individualReparations,Did the policy offer individual reparations?,TJET,1970,2024
+tjet_reparations.csv,,56,individualReparationsForm,Which forms of individual reparations does the policy offer?,TJET,1970,2024
+tjet_reparations.csv,,57,individualReparationsEligible,Which individuals are eligible to receive reparations under the policy? ,TJET,1970,2024
+tjet_reparations.csv,,58,collectiveReparations,Did the policy offer collective or community reparations?,TJET,1970,2024
+tjet_reparations.csv,,59,collectiveReparationsForm,Which forms of collective or community reparations does the policy offer? ,TJET,1970,2024
+tjet_reparations.csv,,60,collectiveReparationsEligibility,Which types of communities are eligible to receive collective or community reparations under the policy? ,TJET,1970,2024
+tjet_reparations.csv,,61,diffAmount,Did the policy award different types or amounts of reparations to victims based on either the type of victim or the type of harm? ,TJET,1970,2024
+tjet_reparations.csv,,62,foreclose,Did the acceptance of reparations benefits foreclose victims from resorting to the justice system for criminal prosecution and/or civil damages?,TJET,1970,2024
+tjet_reparations.csv,,63,outreach,Did the policy include a plan for outreach activities?,TJET,1970,2024
+tjet_reparations.csv,,64,accessibility,Did the reparations program have any of the following accessibility / inclusivity provisions?,TJET,1970,2024
+tjet_reparations.csv,,65,rep_paid,Did the reparations policy actually pay out?,TJET,1970,2024
+tjet_reparations.csv,,66,individualsRepaired,How many individuals have been repaired under the policy? (text),TJET,1970,2024
+tjet_reparations.csv,,67,individualsRepairedEstimate,How many individuals have been repaired under the policy? (numeric),TJET,1970,2024
+tjet_reparations.csv,,68,costEstimate,What is the estimated total cost of the reparations awarded? ,TJET,1970,2024
+tjet_reparations.csv,,69,alteration,"Was the policy ever altered, either by legislation or court interpretation, to change the eligibility requirements for receiving reparations (e.g., timeframe, type of violation)?",TJET,1970,2024
+tjet_reparations.csv,,70,alterationName,What is the name of the legislation or court ruling altering the policy?,TJET,1970,2024
+tjet_reparations.csv,,71,alterationYear,What year did the alteration occur? (see alterationName),TJET,1970,2024
+tjet_reparations.csv,,72,alterationEffect,What was the effect of the policy alteration? (see alterationName),TJET,1970,2024
+tjet_reparations.csv,,74,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2024
+tjet_tcs.csv,,1,truthcommissionID,TJET Truth Commission ID,TJET,1970,2024
+tjet_tcs.csv,,2,country,country name,TJET,1970,2024
+tjet_tcs.csv,,3,ccode_cow,COW numeric country code,TJET,1970,2024
+tjet_tcs.csv,,4,officialName,name or description of the truth commission,TJET,1970,2024
+tjet_tcs.csv,,5,officialName_en,name or description of the truth commission (English),TJET,1970,2024
+tjet_tcs.csv,,6,officialName_en_fr,name or description of the truth commission (French translation),TJET,1970,2024
+tjet_tcs.csv,,7,narrative,narrative description,TJET,1970,2024
+tjet_tcs.csv,,8,tcType,type of truth commission,TJET,1970,2024
+tjet_tcs.csv,,9,legalBasis,legal basis of the truth commission,TJET,1970,2024
+tjet_tcs.csv,,10,branchCreated,Which branch(es) of government created the TC?,TJET,1970,2024
+tjet_tcs.csv,,11,domesticInitiatePerson,Who specifically initiated the commission? ,TJET,1970,2024
+tjet_tcs.csv,,12,internationalBody,Which international body initiated the commission?  ,TJET,1970,2024
+tjet_tcs.csv,,14,yearPassed,year the truth commission was mandated,TJET,1970,2024
+tjet_tcs.csv,,15,dayMonthPassed,day/month of the truth commission law,TJET,1970,2024
+tjet_tcs.csv,,16,tclawOnline,URL of the truth commission law (if the law is online),TJET,1970,2024
+tjet_tcs.csv,,18,status,"What was the status of the truth commission at the time of coding? (ongoing; aborted, completed)",TJET,1970,2024
+tjet_tcs.csv,,19,yearBeginOperation,year the TC began operating,TJET,1970,2024
+tjet_tcs.csv,,21,democraticTransitionBeforeTC,Did this country start a democratic transition at some point before this truth commission began operating?,TJET,1970,2024
+tjet_tcs.csv,,22,fitsPostAutocraticTJ,Did this case fit the definition of a post-authoritarian truth commission? ,TJET,1970,2024
+tjet_tcs.csv,,23,intraConflictBeforeTC,Did this country start an intra-state conflict at some point before this truth commission began operating?,TJET,1970,2024
+tjet_tcs.csv,,24,fitsConflictTJ,Did this case fit the definition of a conflict truth commission?,TJET,1970,2024
+tjet_tcs.csv,,25,ucdpConflictID,UCDP Conflict ID,TJET,1970,2024
+tjet_tcs.csv,,26,ucdpDyadID,UCDP Dyad ID,TJET,1970,2024
+tjet_tcs.csv,,27,beganOperatingDuringIntraConfl,Did this truth commission begin operating after intra-state conflict?,TJET,1970,2024
+tjet_tcs.csv,,28,beganOperatingAfterIntraConfl,Did this truth commission begin operating during intra-state conflict?,TJET,1970,2024
+tjet_tcs.csv,,29,tcAims,"How are the TC's aims or goals framed? Literally, what words do the establishing laws or report commonly make use of?",TJET,1970,2024
+tjet_tcs.csv,,,authorizedByState,Was the truth commission officially authorized or empowered by the state?,TJET,1970,2024
+tjet_tcs.csv,,31,subnationalAuthorization,Was this truth commission created or authorized by a subnational government?,TJET,1970,2024
+tjet_tcs.csv,,32,subnationalOperation,Did this truth commission operate at the subnational level? ,TJET,1970,2024
+tjet_tcs.csv,,33,consultedVictims,Did the truth commission consult victims groups during the design phase?,TJET,1970,2024
+tjet_tcs.csv,,34,consultedGroups,Which vulnerable groups were consulted?,TJET,1970,2024
+tjet_tcs.csv,,,temporaryBodyReport,Was the commission a temporary body with the aim of producing a final report?,TJET,1970,2024
+tjet_tcs.csv,,,focusedPast,Was the commission focused on past rather than ongoing events?,TJET,1970,2024
+tjet_tcs.csv,,37,mandateTimePeriodCovered,Did the mandate specify the time period that is covered by the truth commission?,TJET,1970,2024
+tjet_tcs.csv,,38,timePeriod,What is the specific period covered by the truth commission?,TJET,1970,2024
+tjet_tcs.csv,,,investigatePatternAbuse,Did the commission aim to investigates a pattern of abuse?,TJET,1970,2024
+tjet_tcs.csv,,40,idiosyncratic,this commission did not strictly meet the TJET definition of a truth commission,TJET,1970,2024
+tjet_tcs.csv,,41,disappearance,crimes covered: disappearance,TJET,1970,2024
+tjet_tcs.csv,,42,death,crimes covered: deaths,TJET,1970,2024
+tjet_tcs.csv,,43,torture,crimes covered: torture,TJET,1970,2024
+tjet_tcs.csv,,44,SGBV,crimes covered: sexual or gender-based violence,TJET,1970,2024
+tjet_tcs.csv,,45,forcedDisplacement,crimes covered: forced displacement,TJET,1970,2024
+tjet_tcs.csv,,46,corruption,crimes covered: corruption,TJET,1970,2024
+tjet_tcs.csv,,47,crimeSpecificGroups,crimes covered: crimes against specific groups,TJET,1970,2024
+tjet_tcs.csv,,48,crimesOther,crimes covered: other,TJET,1970,2024
+tjet_tcs.csv,,49,victimCount,approximate number of victims listed by truth commission,TJET,1970,2024
+tjet_tcs.csv,,51,formallyIndependent,Was the TC formally independent?,TJET,1970,2024
+tjet_tcs.csv,,52,commissioners,Did the truth commission have commissioners?,TJET,1970,2024
+tjet_tcs.csv,,53,commissionerCount,How many commissioners were on the truth commission? ,TJET,1970,2024
+tjet_tcs.csv,,54,commissionersHowChosen,How were commissioners chosen?,TJET,1970,2024
+tjet_tcs.csv,,55,commissionersVictimGroups,Did commissioners include representatives of victim groups?,TJET,1970,2024
+tjet_tcs.csv,,56,staff,Did the truth commission have staff?,TJET,1970,2024
+tjet_tcs.csv,,57,staffMemberCount,How many staff members did the truth commission have?,TJET,1970,2024
+tjet_tcs.csv,,58,primaryFunding,What was the primary funding source for the truth commission?,TJET,1970,2024
+tjet_tcs.csv,,59,estimatedCost,What was the estimated cost of the TC (in USD)?,TJET,1970,2024
+tjet_tcs.csv,,61,investigateStateMembers,truth commission powers: investigate former or current members of the state,TJET,1970,2024
+tjet_tcs.csv,,62,compelTestimony,truth commission powers: compel testimony,TJET,1970,2024
+tjet_tcs.csv,,63,penalizeIndividuals,truth commission powers: penalize individuals for non-compliance or interference ,TJET,1970,2024
+tjet_tcs.csv,,64,namePerpetrators,truth commission powers: name perpetrators,TJET,1970,2024
+tjet_tcs.csv,,65,accessOfficialDocuments,truth commission powers: access official documents,TJET,1970,2024
+tjet_tcs.csv,,66,supportProsecutions,truth commission powers: support prosecutions,TJET,1970,2024
+tjet_tcs.csv,,67,allocateReparations,truth commission powers: allocate reparations,TJET,1970,2024
+tjet_tcs.csv,,68,recommendInstitutionalReforms,truth commission powers: recommend institutional reforms,TJET,1970,2024
+tjet_tcs.csv,,69,grantAmnesty,truth commission powers: grant amnesty,TJET,1970,2024
+tjet_tcs.csv,,71,testimonies,Did the truth commission take testimony?,TJET,1970,2024
+tjet_tcs.csv,,72,casesTestimoniesCount,What is the total number of testimonies taken?,TJET,1970,2024
+tjet_tcs.csv,,73,testimoniesAvailablePublic,"Are the testimonies available to the public, either in hard copy or electronic archives?",TJET,1970,2024
+tjet_tcs.csv,,74,heldPublicHearings,Did the truth commission hold public hearings?,TJET,1970,2024
+tjet_tcs.csv,,75,encourageVictimTestimony,Did the truth commission encourage victim testimony?,TJET,1970,2024
+tjet_tcs.csv,,76,encourageVictimTestimonyHow,How did the truth commission encourage victim testimony?,TJET,1970,2024
+tjet_tcs.csv,,77,perpetratorTestimony,Did the truth commission take perpetrator testimony?,TJET,1970,2024
+tjet_tcs.csv,,78,perpetratorPubliclyNamedTestimony,Were perpetrators publicly named during testimony? ,TJET,1970,2024
+tjet_tcs.csv,,79,perpetratorsWho,Who were the perpetrators?,TJET,1970,2024
+tjet_tcs.csv,,80,perpetratorReceived,Did the perpetrator receive something in return for testimony?,TJET,1970,2024
+tjet_tcs.csv,,82,yearCompleteOperation,year truth commission completed operation,TJET,1970,2024
+tjet_tcs.csv,,83,finalReportIssued,Did the truth commission issue a final report?,TJET,1970,2024
+tjet_tcs.csv,,84,reportPublisher,Who published the final report? ,TJET,1970,2024
+tjet_tcs.csv,,85,reportPubliclyAvailable,Is the final report publicly available?,TJET,1970,2024
+tjet_tcs.csv,,86,pdf_file,Does TJET have a copy of the final report on the website?,TJET,1970,2024
+tjet_tcs.csv,,87,reportEstablishResponsibility,Did the final report establish responsibility?,TJET,1970,2024
+tjet_tcs.csv,,88,perpetratorNamesPublished,Were perpetrators' names published?,TJET,1970,2024
+tjet_tcs.csv,,89,reportHighlightVictimGroups,Did the final report highlight specific victim groups?,TJET,1970,2024
+tjet_tcs.csv,,90,finalReportRecommendations,Did the truth commission final report make final recommendations?,TJET,1970,2024
+tjet_tcs.csv,,91,recommendProsecutions,Did the final report recommend prosecutions?,TJET,1970,2024
+tjet_tcs.csv,,92,recommendProsecutionsWho,Who did the report recommend prosecuting?,TJET,1970,2024
+tjet_tcs.csv,,93,recommendReparations,Did the final report recommend reparations?,TJET,1970,2024
+tjet_tcs.csv,,94,reparationsType,What type of reparations did the final report recommend? ,TJET,1970,2024
+tjet_tcs.csv,,95,reportRecommendInstitutionalReform,Did the final report recommend institutional reform?,TJET,1970,2024
+tjet_tcs.csv,,96,SecuritySectorReforms,Did the final report recommend security sector reform?,TJET,1970,2024
+tjet_tcs.csv,,97,SSRType,What type of security sector reform did the final report recommend?,TJET,1970,2024
+tjet_tcs.csv,,98,vetting,Did the final report recommend vetting?,TJET,1970,2024
+tjet_tcs.csv,,99,vettingType,What type of vetting did the final report recommend?,TJET,1970,2024
+tjet_tcs.csv,,100,legalReform,Did the final report recommend legal or constitutional reform?,TJET,1970,2024
+tjet_tcs.csv,,101,legalType,What type of legal or constitutional reform did the final report recommend?,TJET,1970,2024
+tjet_tcs.csv,,102,judicialReforms,Did the final report recommend judicial reform?,TJET,1970,2024
+tjet_tcs.csv,,103,judicialReformsType,What type of judicial reform did the final report recommend?,TJET,1970,2024
+tjet_tcs.csv,,104,humanRightsReforms,Did the final report recommend human rights reform?,TJET,1970,2024
+tjet_tcs.csv,,105,humanRightsReformType,What type of human rights reform did the final report recommend?,TJET,1970,2024
+tjet_tcs.csv,,106,corruptionReforms,Did the final report recommend corruption reform?,TJET,1970,2024
+tjet_tcs.csv,,107,corruptionReformsType,What type of corruption reform did the final report recommend?,TJET,1970,2024
+tjet_tcs.csv,,108,genderReform,Did the final report recommend gender reform?,TJET,1970,2024
+tjet_tcs.csv,,109,genderReformType,What type of gender reform did the final report recommend?,TJET,1970,2024
+tjet_tcs.csv,,110,finalRecommendations,additional recommendations of the truth commission,TJET,1970,2024
+tjet_tcs.csv,,112,mandatePeriodicMonitoringImplementation,Did the truth commission mandate require periodic monitoring or automatic implementation of recommendations?,TJET,1970,2024
+tjet_tcs.csv,,115,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2024
 tjet_transitions.csv,,,bmr_year,year for which BMR supports coding of a transition,TJET,1970,2020
 tjet_transitions.csv,,,ccode_cow,COW numeric country code,TJET,1970,2020
 tjet_transitions.csv,,,ert_year,year for which VDem-ERT supports coding of a transition,TJET,1970,2020
@@ -1519,7 +1480,6 @@ tjet_transitions.csv,,,tjet_version,TJET database version: date on which data wa
 tjet_transitions.csv,,,trans_year_begin,year democratic transition began,TJET,1970,2020
 tjet_transitions.csv,,,transitionID,TJET Transition ID,TJET,1970,2020
 tjet_trials.csv,,1,trialID,TJET Trial ID,TJET,1970,2020
-tjet_trials.csv,,,invalid,"invalid observation, binary",TJET,1970,2020
 tjet_trials.csv,,2,country_target,target or situation country,TJET,1970,2020
 tjet_trials.csv,,3,yearStart,"year the trial began; this is the first year that any prosecutorial activity began, usually starting with an indictment",TJET,1970,2020
 tjet_trials.csv,,4,yearEnd,"year the trial ended; this is the year of the very last action regarding any trial proceedings, up to the last appeal decision for any accused",TJET,1970,2020
@@ -1528,54 +1488,53 @@ tjet_trials.csv,,6,caseDescription_fr,case description (French translation),TJET
 tjet_trials.csv,,7,crimeyears,When was/were the crime(s) committed? (years),TJET,1970,2020
 tjet_trials.csv,,8,numberAccused,number of accused,TJET,1970,2020
 tjet_trials.csv,,9,numberAccusedRecords,number of accused records for trial,TJET,1970,2020
-tjet_trials.csv,,10,narrative,trial narrative,TJET,1970,2020
-tjet_trials.csv,,11,trialType,"type of trial (domestic, international, hybrid, or foreign)",TJET,1970,2020
-tjet_trials.csv,,12,legalSystem,legal system of the proceedings,TJET,1970,2020
-tjet_trials.csv,,13,jurisdiction,jurisdiction under which foreign trial was held,TJET,1970,2020
-tjet_trials.csv,,14,country_trial,country of trial,TJET,1970,2020
-tjet_trials.csv,,15,ccode_target,COW numeric code of the target or situation country,TJET,1970,2020
-tjet_trials.csv,,16,ccode_trial,COW numeric code of country where the trial was held,TJET,1970,2020
-tjet_trials.csv,,17,ccode_crime,COW numeric code of country where the crime was committed,TJET,1970,2020
-tjet_trials.csv,,18,ccode_victim,COW numeric code of country of the victim(s) of the crime,TJET,1970,2020
-tjet_trials.csv,,19,HRs_charges,number of accused with human rights charges in this trial,TJET,1970,2020
-tjet_trials.csv,,20,humanRights,Was this trial focused on human rights?,TJET,1970,2020
-tjet_trials.csv,,21,IntraConfl,Was this trial focused on intra-state conflict?,TJET,1970,2020
-tjet_trials.csv,,22,corruption,Was this trial focused on corruption?,TJET,1970,2020
-tjet_trials.csv,,23,SGBV,Did this trial involve charges of sexual or gender-based violence?,TJET,1970,2020
-tjet_trials.csv,,24,transnational_terror,Was this trial focused on transnational terrorism?,TJET,1970,2020
-tjet_trials.csv,,25,civil,Is this a civil case?,TJET,1970,2020
-tjet_trials.csv,,26,startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before this trial?,TJET,1970,2020
-tjet_trials.csv,,27,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?,TJET,1970,2020
-tjet_trials.csv,,28,startedIntraConflbefore,Did this country start an intra-state conflict at some point before this trial?,TJET,1970,2020
-tjet_trials.csv,,29,fitsConflictTJ,Did this case fit the definition of conflict transitional justice and can it be matched to a UCDP conflict ID? ,TJET,1970,2020
-tjet_trials.csv,,30,ucdpConflictID,UCDP Conflict ID,TJET,1970,2020
-tjet_trials.csv,,31,ucdpDyadID,UCDP Dyad ID,TJET,1970,2020
-tjet_trials.csv,,32,beganDuringIntraConfl,Did this trial begin during intra-state conflict?,TJET,1970,2020
-tjet_trials.csv,,33,beganAfterIntraConfl,Did this trial begin after intra-state conflict?,TJET,1970,2020
-tjet_trials.csv,,34,generalOrSpecific,Is this entry a general report or a specific event?,TJET,1970,2020
-tjet_trials.csv,,35,discoveredSDHRsReport,Was this trial first discovered in a State Department Human Rights Report?,TJET,1970,2020
-tjet_trials.csv,,,nonSDsources,coding sources other than State Department Country Human Rights Reports,TJET,1970,2020
-tjet_trials.csv,,36,fairnessQuestioned,Did any reports question the fairness of the trial?,TJET,1970,2020
-tjet_trials.csv,,37,membership,state membership: in what capacities did the state agents act?,TJET,1970,2020
-tjet_trials.csv,,38,anyStateAgent,Were any of the accused state agents?,TJET,1970,2020
-tjet_trials.csv,,39,anyCurrentStateAgent,Were any of the accused currently state agents?,TJET,1970,2020
-tjet_trials.csv,,40,anyOpposedToGov,Were any of the accused opposition members?,TJET,1970,2020
-tjet_trials.csv,,41,anyHighRank,Were any of the accused high-ranking?,TJET,1970,2020
-tjet_trials.csv,,42,anyHeadOfState,Were any of the accused (former) heads of state?,TJET,1970,2020
-tjet_trials.csv,,43,rape_Accused,Were there rape charges for any of the accused in this trial?,TJET,1970,2020
-tjet_trials.csv,,44,sexualViolence_Accused,Were there sexual violence charges for any of the accused in this trial?,TJET,1970,2020
-tjet_trials.csv,,45,otherSGBV_Accused,Were there other charges related to SGBV for any of the accused in this trial?,TJET,1970,2020
-tjet_trials.csv,,46,CLs_final_year,year of last court levels record for this trial,TJET,1970,2020
-tjet_trials.csv,,47,conviction,Was any accused ever convicted in this trial?,TJET,1970,2020
-tjet_trials.csv,,48,firstConvictionYear_min,year of first conviction in this trial,TJET,1970,2020
-tjet_trials.csv,,49,convictionHighRank,Was any high-ranking accused ever convicted in this trial?,TJET,1970,2020
-tjet_trials.csv,,50,finalConviction,Was any accused convicted by the end of this trial?,TJET,1970,2020
-tjet_trials.csv,,51,finalConvictionHighRank,Was any high-ranking accused convicted by the end of this trial?,TJET,1970,2020
-tjet_trials.csv,,52,finalConvictionYear_min,year of first final conviction in this trial,TJET,1970,2020
-tjet_trials.csv,,53,lastSentencingTime,detention times of last sentencing verdicts,TJET,1970,2020
-tjet_trials.csv,,54,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
-tjet_trials.csv,,,lastVerdict,final verdicts in the proceedings,TJET,1970,2020
-tjet_trials.csv,,,lastVerdictYear_max,last final verdict year,TJET,1970,2020
+tjet_trials.csv,,,narrative,trial narrative,TJET,1970,2020
+tjet_trials.csv,,10,trialType,"type of trial (domestic, international, hybrid, or foreign)",TJET,1970,2020
+tjet_trials.csv,,11,legalSystem,legal system of the proceedings,TJET,1970,2020
+tjet_trials.csv,,12,jurisdiction,jurisdiction under which foreign trial was held,TJET,1970,2020
+tjet_trials.csv,,13,country_trial,country of trial,TJET,1970,2020
+tjet_trials.csv,,14,ccode_target,COW numeric code of the target or situation country,TJET,1970,2020
+tjet_trials.csv,,15,ccode_trial,COW numeric code of country where the trial was held,TJET,1970,2020
+tjet_trials.csv,,16,ccode_crime,COW numeric code of country where the crime was committed,TJET,1970,2020
+tjet_trials.csv,,17,ccode_victim,COW numeric code of country of the victim(s) of the crime,TJET,1970,2020
+tjet_trials.csv,,,HRs_charges,number of accused with human rights charges in this trial,TJET,1970,2020
+tjet_trials.csv,,19,HRVorCoreCrimes,Was this trial focused on human rights or core international crimes?,TJET,1970,2020
+tjet_trials.csv,,20,IntraConfl,Was this trial focused on intra-state conflict?,TJET,1970,2020
+tjet_trials.csv,,,corruption,Was this trial focused on corruption?,TJET,1970,2020
+tjet_trials.csv,,,SGBV,Did this trial involve charges of sexual or gender-based violence?,TJET,1970,2020
+tjet_trials.csv,,22,TransnationalTerror,Was this trial focused on transnational terrorism?,TJET,1970,2020
+tjet_trials.csv,,23,civil,Is this a civil case?,TJET,1970,2020
+tjet_trials.csv,,24,startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before this trial?,TJET,1970,2020
+tjet_trials.csv,,25,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?,TJET,1970,2020
+tjet_trials.csv,,26,startedIntraConflbefore,Did this country start an intra-state conflict at some point before this trial?,TJET,1970,2020
+tjet_trials.csv,,27,fitsConflictTJ,Did this case fit the definition of conflict transitional justice and can it be matched to a UCDP conflict ID? ,TJET,1970,2020
+tjet_trials.csv,,28,ucdpConflictID,UCDP Conflict ID,TJET,1970,2020
+tjet_trials.csv,,29,ucdpDyadID,UCDP Dyad ID,TJET,1970,2020
+tjet_trials.csv,,30,beganDuringOrAfterConfl,Did this trial begin during or after intra-state conflict?,TJET,1970,2020
+tjet_trials.csv,,,beganDuringIntraConfl,Did this trial begin during intra-state conflict?,TJET,1970,2020
+tjet_trials.csv,,,beganAfterIntraConfl,Did this trial begin after intra-state conflict?,TJET,1970,2020
+tjet_trials.csv,,,generalOrSpecific,Is this entry a general report or a specific event?,TJET,1970,2020
+tjet_trials.csv,,32,discoveredSDHRsReport,Was this trial first discovered in a State Department Human Rights Report?,TJET,1970,2020
+tjet_trials.csv,,33,prosecutorType,prosecutor type,TJET,1970,2020
+tjet_trials.csv,,34,fairnessQuestioned,Did any reports question the fairness of the trial?,TJET,1970,2020
+tjet_trials.csv,,,membership,state membership: in what capacities did the state agents act?,TJET,1970,2020
+tjet_trials.csv,,,anyStateAgent,Were any of the accused state agents?,TJET,1970,2020
+tjet_trials.csv,,,anyCurrentStateAgent,Were any of the accused currently state agents?,TJET,1970,2020
+tjet_trials.csv,,,anyOpposedToGov,Were any of the accused opposition members?,TJET,1970,2020
+tjet_trials.csv,,,anyHighRank,Were any of the accused high-ranking?,TJET,1970,2020
+tjet_trials.csv,,,anyHeadOfState,Were any of the accused (former) heads of state?,TJET,1970,2020
+tjet_trials.csv,,,rape_Accused,Were there rape charges for any of the accused in this trial?,TJET,1970,2020
+tjet_trials.csv,,,sexualViolence_Accused,Were there sexual violence charges for any of the accused in this trial?,TJET,1970,2020
+tjet_trials.csv,,,otherSGBV_Accused,Were there other charges related to SGBV for any of the accused in this trial?,TJET,1970,2020
+tjet_trials.csv,,41,CLs_final_year,year of last court levels record for this trial,TJET,1970,2020
+tjet_trials.csv,,42,conviction,Was any accused ever convicted in this trial?,TJET,1970,2020
+tjet_trials.csv,,43,firstConvictionYear,year of first conviction in this trial,TJET,1970,2020
+tjet_trials.csv,,44,convictionHighRank,Was any high-ranking accused ever convicted in this trial?,TJET,1970,2020
+tjet_trials.csv,,45,finalConviction,Was any accused convicted by the end of this trial?,TJET,1970,2020
+tjet_trials.csv,,46,finalConvictionHighRank,Was any high-ranking accused convicted by the end of this trial?,TJET,1970,2020
+tjet_trials.csv,,47,finalConvictionYear,year of first final conviction in this trial,TJET,1970,2020
+tjet_trials.csv,,48,lastSentencingTime,detention times of last sentencing verdicts,TJET,1970,2020
+tjet_trials.csv,,49,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
 tjet_trials.csv,,,ongoing,Was the trial ongoing at time of coding?,TJET,1970,2020
 tjet_un_investigations.csv,,1,country,country name,TJET,1970,2020
 tjet_un_investigations.csv,,2,ccode_cow,COW numeric country code,TJET,1970,2020
@@ -1590,68 +1549,55 @@ tjet_un_investigations.csv,,10,uninv_evcoll,Did the investigation aim to collect
 tjet_un_investigations.csv,,11,uninv_intlpros,Did the investigation aim to support international prosecutions? (binary),TJET,1970,2020
 tjet_un_investigations.csv,,12,source,Where was documentation on the UN investigation mandate found?,TJET,1970,2020
 tjet_un_investigations.csv,,13,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
-tjet_vettings.csv,,1,vettingID,TJET Vetting ID,TJET,1970,2020
-tjet_vettings.csv,,2,alterationOf,vettingID of the policy which is altered by this record,TJET,1970,2020
-tjet_vettings.csv,,,invalid,"invalid observation, binary",TJET,1970,2020
-tjet_vettings.csv,,4,country,country name,TJET,1970,2020
-tjet_vettings.csv,,5,ccode_cow,COW numeric country code,TJET,1970,2020
-tjet_vettings.csv,,6,yearStart,"year vetting policy spell was in effect, not the date of the law",TJET,1970,2020
-tjet_vettings.csv,,7,yearEnd,year vetting policy spell ended,TJET,1970,2020
-tjet_vettings.csv,,8,policyName,name or description of the vetting policy,TJET,1970,2020
-tjet_vettings.csv,,9,policyName_fr,name or description of the vetting policy (French translation),TJET,1970,2020
-tjet_vettings.csv,,10,dateLaw,date of the law or decree,TJET,1970,2020
-tjet_vettings.csv,,11,narrative,narrative description of the policy and its implementation,TJET,1970,2020
-tjet_vettings.csv,,12,type_dismissal,policy type: dismissal from current employment,TJET,1970,2020
-tjet_vettings.csv,,13,type_ban,policy type: ban from future employment,TJET,1970,2020
-tjet_vettings.csv,,14,type_declassification,policy type: declassification,TJET,1970,2020
-tjet_vettings.csv,,,type_perjury,policy type: dismissal and ban upon lustration lie,TJET,1970,2020
-tjet_vettings.csv,,15,targetingPositionSought,Which institutional positions were those targeted by this policy prevented from holding?  ,TJET,1970,2020
-tjet_vettings.csv,,16,enactment,How was the policy enacted?,TJET,1970,2020
-tjet_vettings.csv,,17,targetingWhy,Why were individuals targeted? ,TJET,1970,2020
-tjet_vettings.csv,,18,hearingsPublic,Were investigations transparent and publicly accessible?,TJET,1970,2020
-tjet_vettings.csv,,,numberInvestigated,Approximately how many people were investigated under the policy?,TJET,1970,2020
-tjet_vettings.csv,,20,appealJudgment,Is there evidence that any individual successfully appealed their specific judgment?,TJET,1970,2020
-tjet_vettings.csv,,21,fairnessNotes,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc) ",TJET,1970,2020
-tjet_vettings.csv,,22,courtChallenge,"Was the entire policy challenged in court, and if so with what outcome? ",TJET,1970,2020
-tjet_vettings.csv,,,numberRemoved,Approximately how many people were removed from office/employment under the policy?,TJET,1970,2020
-tjet_vettings.csv,,,sources,coding sources,TJET,1970,2020
-tjet_vettings.csv,,25,startedDemocraticTransition,Did this country start a democratic transition at some point before this vetting policy?,TJET,1970,2020
-tjet_vettings.csv,,26,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?,TJET,1970,2020
-tjet_vettings.csv,,27,startedIntraConflBefore,Did this country start an intrastate conflict at some point before this vetting policy?,TJET,1970,2020
-tjet_vettings.csv,,28,fitsConflictTJ,Did this case fit the definition of conflict transitional justice?,TJET,1970,2020
-tjet_vettings.csv,,29,ucdpConflictID,UCDP Conflict ID,TJET,1970,2020
-tjet_vettings.csv,,30,ucdpDyadID,UCDP Dyad ID,TJET,1970,2020
-tjet_vettings.csv,,31,beganDuringIntraConfl,Did this vetting policy begin during an intra-state conflict?,TJET,1970,2020
-tjet_vettings.csv,,32,beganAfterIntraConfl,Did this vetting policy begin after an intra-state conflict?,TJET,1970,2020
-tjet_vettings.csv,,33,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
-tjet_vettings.csv,,,ban_from_elected,ban from candidacy for office in legislature,TJET,1970,2020
-tjet_vettings.csv,,,fairness,"index adding binary variables for individual conduct or appeals, public, and any court challenges (0-3)",TJET,1970,2020
-tjet_vettings.csv,,,groups_targeted,"scaled number of targeted affiliations (1 => 1, 2 => 2, > 2 => 3)",TJET,1970,2020
-tjet_vettings.csv,,,grp_exe,targeted affiliation: executive (see also targetingAffiliation),TJET,1970,2020
-tjet_vettings.csv,,,grp_judiciary,targeted affiliation: judiciary (see also targetingAffiliation),TJET,1970,2020
-tjet_vettings.csv,,,grp_legis,targeted affiliation: legislature (see also targetingAffiliation),TJET,1970,2020
-tjet_vettings.csv,,,grp_military,targeted affiliation: armed forces (see also targetingAffiliation),TJET,1970,2020
-tjet_vettings.csv,,,grp_other,targeted affiliation: other (see also targetingAffiliation),TJET,1970,2020
-tjet_vettings.csv,,,grp_parties,targeted affiliation: political parties (see also targetingAffiliation),TJET,1970,2020
-tjet_vettings.csv,,,grp_police,targeted affiliation: police (includes ordinary police and secret police informants) (see also targetingPositionSought),TJET,1970,2020
-tjet_vettings.csv,,,grp_public,"targeted affiliation: public sector (bureaucrats, low-rank nominated or elected officials) (see also targetingPositionSought)",TJET,1970,2020
-tjet_vettings.csv,,,implementation,binary version of implemented,TJET,1970,2020
-tjet_vettings.csv,,,implementationNotes,implementation notes,TJET,1970,2020
-tjet_vettings.csv,,,implemented,Was the policy implemented?,TJET,1970,2020
-tjet_vettings.csv,,,inst_exe,specific institution targeted: executive (see also targetingPositionSought),TJET,1970,2020
-tjet_vettings.csv,,,inst_judiciary,specific institution targeted: judiciary (see also targetingPositionSought),TJET,1970,2020
-tjet_vettings.csv,,,inst_legis,specific institution targeted: legislature (see also targetingPositionSought),TJET,1970,2020
-tjet_vettings.csv,,,inst_military,specific institution targeted: armed forces (see also targetingPositionSought),TJET,1970,2020
-tjet_vettings.csv,,,inst_other,specific institution targeted: other (see also targetingPositionSought),TJET,1970,2020
-tjet_vettings.csv,,,inst_parties,specific institution targeted: political parties (see also targetingPositionSought),TJET,1970,2020
-tjet_vettings.csv,,,inst_police,specific institution targeted: police (includes ordinary police and secret police informants) (see also targetingPositionSought),TJET,1970,2020
-tjet_vettings.csv,,,inst_public,"specific institution targeted: public sector (bureaucrats, low-rank nominated or elected officials) (see also targetingPositionSought)",TJET,1970,2020
-tjet_vettings.csv,,,inst_targeted,"scaled version of sum_inst (0 => 0, 1 => 1, 2-5 => 2, > 5 => 3)",TJET,1970,2020
-tjet_vettings.csv,,,policy_type,number of combined policy types (1-3),TJET,1970,2020
-tjet_vettings.csv,,,policyProcedure,How was the policy enacted?,TJET,1970,2020
-tjet_vettings.csv,,,policySource,policy source,TJET,1970,2020
-tjet_vettings.csv,,,sanctions,What are the sanctions prescribed by the policy?,TJET,1970,2020
-tjet_vettings.csv,,,sum_inst,number of specific institutions targeted (0-8),TJET,1970,2020
-tjet_vettings.csv,,,targetingAffiliation,Individuals were targeted for their affiliation with which institutional actor at the time of their abuse or transgression?,TJET,1970,2020
-tjet_vettings.csv,,,targetingAffiliationRank,targeting affiliation: rank ,TJET,1970,2020
-tjet_vettings.csv,,,targetingPositionsRank,targeting positions sought: rank,TJET,1970,2020
+tjet_vettings.csv,,1,vettingID,TJET Vetting ID,TJET,1970,2024
+tjet_vettings.csv,,2,alterationOf,vettingID of the policy which is altered by this record,TJET,1970,2024
+tjet_vettings.csv,,4,country,country name,TJET,1970,2024
+tjet_vettings.csv,,5,ccode_cow,COW numeric country code,TJET,1970,2024
+tjet_vettings.csv,,6,yearStart,"year vetting policy spell was in effect, not the date of the law",TJET,1970,2024
+tjet_vettings.csv,,7,yearEnd,year vetting policy spell ended,TJET,1970,2024
+tjet_vettings.csv,,8,policyName,name or description of the vetting policy,TJET,1970,2024
+tjet_vettings.csv,,9,policyName_fr,name or description of the vetting policy (French translation),TJET,1970,2024
+tjet_vettings.csv,,10,dateLaw,date of the law or decree,TJET,1970,2024
+tjet_vettings.csv,,11,narrative,narrative description of the policy and its implementation,TJET,1970,2024
+tjet_vettings.csv,,12,type_dismissal,policy type: dismissal from current employment,TJET,1970,2024
+tjet_vettings.csv,,13,type_ban,policy type: ban from future employment,TJET,1970,2024
+tjet_vettings.csv,,14,type_declassification,policy type: declassification,TJET,1970,2024
+tjet_vettings.csv,,,type_perjury,policy type: dismissal and ban upon lustration lie,TJET,1970,2024
+tjet_vettings.csv,,15,targetingPositionSought,Which institutional positions were those targeted by this policy prevented from holding?  ,TJET,1970,2024
+tjet_vettings.csv,,16,enactment,How was the policy enacted?,TJET,1970,2024
+tjet_vettings.csv,,17,targetingWhy,Why were individuals targeted? ,TJET,1970,2024
+tjet_vettings.csv,,18,hearingsPublic,Were investigations transparent and publicly accessible?,TJET,1970,2024
+tjet_vettings.csv,,,numberInvestigated,Approximately how many people were investigated under the policy?,TJET,1970,2024
+tjet_vettings.csv,,20,appealJudgment,Is there evidence that any individual successfully appealed their specific judgment?,TJET,1970,2024
+tjet_vettings.csv,,21,fairnessNotes,"Has the fairness of this policy been questioned by observers who are not targeted by the policy? (NGOs, journalists, scholars, international organizations, etc) ",TJET,1970,2024
+tjet_vettings.csv,,22,courtChallenge,"Was the entire policy challenged in court, and if so with what outcome? ",TJET,1970,2024
+tjet_vettings.csv,,,numberRemoved,Approximately how many people were removed from office/employment under the policy?,TJET,1970,2024
+tjet_vettings.csv,,25,startedDemocraticTransition,Did this country start a democratic transition at some point before this vetting policy?,TJET,1970,2024
+tjet_vettings.csv,,26,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?,TJET,1970,2024
+tjet_vettings.csv,,27,startedIntraConflBefore,Did this country start an intrastate conflict at some point before this vetting policy?,TJET,1970,2024
+tjet_vettings.csv,,28,fitsConflictTJ,Did this case fit the definition of conflict transitional justice?,TJET,1970,2024
+tjet_vettings.csv,,29,ucdpConflictID,UCDP Conflict ID,TJET,1970,2024
+tjet_vettings.csv,,30,ucdpDyadID,UCDP Dyad ID,TJET,1970,2024
+tjet_vettings.csv,,31,beganDuringIntraConfl,Did this vetting policy begin during an intra-state conflict?,TJET,1970,2024
+tjet_vettings.csv,,32,beganAfterIntraConfl,Did this vetting policy begin after an intra-state conflict?,TJET,1970,2024
+tjet_vettings.csv,,33,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2024
+tjet_vettings.csv,,,fairness,"index adding binary variables for individual conduct or appeals, public, and any court challenges (0-3)",TJET,1970,2024
+tjet_vettings.csv,,,implementation,binary version of implemented,TJET,1970,2024
+tjet_vettings.csv,,,implementationNotes,implementation notes,TJET,1970,2024
+tjet_vettings.csv,,,implemented,Was the policy implemented?,TJET,1970,2024
+tjet_vettings.csv,,,inst_exe,specific institution targeted: executive (see also targetingPositionSought),TJET,1970,2024
+tjet_vettings.csv,,,inst_judiciary,specific institution targeted: judiciary (see also targetingPositionSought),TJET,1970,2024
+tjet_vettings.csv,,,inst_legis,specific institution targeted: legislature (see also targetingPositionSought),TJET,1970,2024
+tjet_vettings.csv,,,inst_military,specific institution targeted: armed forces (see also targetingPositionSought),TJET,1970,2024
+tjet_vettings.csv,,,inst_other,specific institution targeted: other (see also targetingPositionSought),TJET,1970,2024
+tjet_vettings.csv,,,inst_parties,specific institution targeted: political parties (see also targetingPositionSought),TJET,1970,2024
+tjet_vettings.csv,,,inst_police,specific institution targeted: police (includes ordinary police and secret police informants) (see also targetingPositionSought),TJET,1970,2024
+tjet_vettings.csv,,,inst_public,"specific institution targeted: public sector (bureaucrats, low-rank nominated or elected officials) (see also targetingPositionSought)",TJET,1970,2024
+tjet_vettings.csv,,,inst_targeted,"scaled version of sum_inst (0 => 0, 1 => 1, 2-5 => 2, > 5 => 3)",TJET,1970,2024
+tjet_vettings.csv,,,policy_type,number of combined policy types (1-3),TJET,1970,2024
+tjet_vettings.csv,,,policyProcedure,How was the policy enacted?,TJET,1970,2024
+tjet_vettings.csv,,,policySource,policy source,TJET,1970,2024
+tjet_vettings.csv,,,sanctions,What are the sanctions prescribed by the policy?,TJET,1970,2024
+tjet_vettings.csv,,,targetingAffiliation,Individuals were targeted for their affiliation with which institutional actor at the time of their abuse or transgression?,TJET,1970,2024
+tjet_vettings.csv,,,targetingAffiliationRank,targeting affiliation: rank ,TJET,1970,2024
+tjet_vettings.csv,,,targetingPositionsRank,targeting positions sought: rank,TJET,1970,2024

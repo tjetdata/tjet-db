@@ -8,7 +8,6 @@ caseDescription_fr,case description (French translation)
 crimeyears,When was/were the crime(s) committed? (years)
 numberAccused,number of accused
 numberAccusedRecords,number of accused records for trial
-narrative,trial narrative
 trialType,"type of trial (domestic, international, hybrid, or foreign)"
 legalSystem,legal system of the proceedings
 jurisdiction,jurisdiction under which foreign trial was held
@@ -17,12 +16,9 @@ ccode_target,COW numeric code of the target or situation country
 ccode_trial,COW numeric code of country where the trial was held
 ccode_crime,COW numeric code of country where the crime was committed
 ccode_victim,COW numeric code of country of the victim(s) of the crime
-HRs_charges,number of accused with human rights charges in this trial
-humanRights,Was this trial focused on human rights?
+HRVorCoreCrimes,Was this trial focused on human rights or core international crimes?
 IntraConfl,Was this trial focused on intra-state conflict?
-corruption,Was this trial focused on corruption?
-SGBV,Did this trial involve charges of sexual or gender-based violence?
-transnational_terror,Was this trial focused on transnational terrorism?
+TransnationalTerror,Was this trial focused on transnational terrorism?
 civil,Is this a civil case?
 startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before this trial?
 fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?
@@ -30,26 +26,16 @@ startedIntraConflbefore,Did this country start an intra-state conflict at some p
 fitsConflictTJ,Did this case fit the definition of conflict transitional justice and can it be matched to a UCDP conflict ID?
 ucdpConflictID,UCDP Conflict ID
 ucdpDyadID,UCDP Dyad ID
-beganDuringIntraConfl,Did this trial begin during intra-state conflict?
-beganAfterIntraConfl,Did this trial begin after intra-state conflict?
-generalOrSpecific,Is this entry a general report or a specific event?
+beganDuringOrAfterConfl,Did this trial begin during or after intra-state conflict?
 discoveredSDHRsReport,Was this trial first discovered in a State Department Human Rights Report?
+prosecutorType,prosecutor type
 fairnessQuestioned,Did any reports question the fairness of the trial?
-membership,state membership: in what capacities did the state agents act?
-anyStateAgent,Were any of the accused state agents?
-anyCurrentStateAgent,Were any of the accused currently state agents?
-anyOpposedToGov,Were any of the accused opposition members?
-anyHighRank,Were any of the accused high-ranking?
-anyHeadOfState,Were any of the accused (former) heads of state?
-rape_Accused,Were there rape charges for any of the accused in this trial?
-sexualViolence_Accused,Were there sexual violence charges for any of the accused in this trial?
-otherSGBV_Accused,Were there other charges related to SGBV for any of the accused in this trial?
 CLs_final_year,year of last court levels record for this trial
 conviction,Was any accused ever convicted in this trial?
-firstConvictionYear_min,year of first conviction in this trial
+firstConvictionYear,year of first conviction in this trial
 convictionHighRank,Was any high-ranking accused ever convicted in this trial?
 finalConviction,Was any accused convicted by the end of this trial?
 finalConvictionHighRank,Was any high-ranking accused convicted by the end of this trial?
-finalConvictionYear_min,year of first final conviction in this trial
+finalConvictionYear,year of first final conviction in this trial
 lastSentencingTime,detention times of last sentencing verdicts
 tjet_version,TJET database version: date on which data was extracted from the database
