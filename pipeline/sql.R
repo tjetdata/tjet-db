@@ -23,21 +23,30 @@ fr <- fr[!fr %in% surveytabs] %>%
 
 db[["labels"]] <- db[["labels"]] %>%
   rename(label_en = label) %>%
-  full_join(db_fr[["labels_fr"]],
-    by = "labelID"
-  ) %>%
+  full_join(db_fr[["labels_fr"]], by = "labelID") %>%
   rename(label_fr = label)
 
 db[["ConflictDyads"]] <- db[["ConflictDyads"]] %>%
   rename(side_b_en = side_b) %>%
-  left_join(db_fr[["ConflictDyads_fr"]],
+  left_join(
+    db_fr[["ConflictDyads_fr"]],
     by = c("dyad_id", "conflict_id", "gwno_loc", "ep_start_date")
   ) %>%
   rename(side_b_fr = side_b) %>%
   select(
-    dyad_id, conflict_id, location, gwno_loc, side_b_en, side_b_fr,
-    ep_years, intensity, ep_start_date, ep_start_year, ep_end_year,
-    confl_start, confl_end
+    dyad_id,
+    conflict_id,
+    location,
+    gwno_loc,
+    side_b_en,
+    side_b_fr,
+    ep_years,
+    intensity,
+    ep_start_date,
+    ep_start_year,
+    ep_end_year,
+    confl_start,
+    confl_end
   )
 
 db[["dl_tjet_codebook"]] <- db[["dl_tjet_codebook"]] %>%
@@ -49,8 +58,13 @@ db[["dl_tjet_codebook"]] <- db[["dl_tjet_codebook"]] %>%
   ) %>%
   rename(definition_fr = definition) %>%
   select(
-    col_name, definition_en, definition_fr, source, source_description,
-    source_url, tjet_version
+    col_name,
+    definition_en,
+    definition_fr,
+    source,
+    source_description,
+    source_url,
+    tjet_version
   )
 
 db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
@@ -64,9 +78,15 @@ db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
   left_join(
     db_fr[["SurveysMeta_fr"]] %>%
       select(
-        country, year, date_start, date_end,
-        section_title, text_context, text_results,
-        text_methods, survey_design
+        country,
+        year,
+        date_start,
+        date_end,
+        section_title,
+        text_context,
+        text_results,
+        text_methods,
+        survey_design
       ),
     by = c("country", "year", "date_start", "date_end")
   ) %>%
@@ -79,22 +99,47 @@ db[["SurveysMeta"]] <- db[["SurveysMeta"]] %>%
   )
 
 tabs <- c(
-  "Accused", "AccusedCodebook", "Amnesties", "AmnestiesCodebook",
-  "Amnesties_whoWasAmnestied", "ConflictDyads", "Countries", "CountryYears",
-  "CourtLevels", "CourtLevelsCodebook", "dl_tjet_codebook", "dl_tjet_cy",
-  "fields_meta", "ICC", "ICCcodebook", "ICCaccused", "ICCaccusedCodebook",
-  "Investigations", "InvestigationsCodebook", "labels", "Reparations",
-  "ReparationsCodebook", "Reparations_collectiveReparationsEligibility",
-  "Reparations_individualReparationsEligible", "SurveysMeta", "TJETversions",
-  "Transitions", "Trials", "TrialsCodebook", "TruthCommissions",
-  "TruthCommissionsCodebook", "Vettings", "VettingsCodebook",
+  "Accused",
+  "AccusedCodebook",
+  "Amnesties",
+  "AmnestiesCodebook",
+  "Amnesties_whoWasAmnestied",
+  "ConflictDyads",
+  "Countries",
+  "CountryYears",
+  "CourtLevels",
+  "CourtLevelsCodebook",
+  "dl_tjet_codebook",
+  "dl_tjet_cy",
+  "fields_meta",
+  "ICC",
+  "ICCcodebook",
+  "ICCaccused",
+  "ICCaccusedCodebook",
+  "Investigations",
+  "InvestigationsCodebook",
+  "labels",
+  "Reparations",
+  "ReparationsCodebook",
+  "Reparations_collectiveReparationsEligibility",
+  "Reparations_individualReparationsEligible",
+  "SurveysMeta",
+  "TJETversions",
+  "Transitions",
+  "Trials",
+  "TrialsCodebook",
+  "TruthCommissions",
+  "TruthCommissionsCodebook",
+  "Vettings",
+  "VettingsCodebook",
   "Vettings_targetingPositionSought"
 ) %>%
   print()
 
 ### two different ways of establishing the same database connection
 ### (note that cloudways requires the local IP address to be added)
-con <- dbConnect(RMariaDB::MariaDB(),
+con <- dbConnect(
+  RMariaDB::MariaDB(),
   host = "159.203.34.223",
   dbname = "fckdtuwsqu",
   user = "fckdtuwsqu",
@@ -119,7 +164,7 @@ dbListTables(con) %>%
 #   value = db[["dl_tjet_cy"]],
 #   overwrite = TRUE
 # )
-# dbReadTable(con, "dl_tjet_cy") %>% 
+# dbReadTable(con, "dl_tjet_cy") %>%
 #   tibble()
 
 ### write all tables to the database
@@ -180,7 +225,7 @@ dbWriteTable(
 #   value = rankings,
 #   overwrite = TRUE
 # )
-# dbReadTable(con, "rankings") %>% 
+# dbReadTable(con, "rankings") %>%
 #   tibble()
 
 ### when done always disconnect

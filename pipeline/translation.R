@@ -1,4 +1,4 @@
-### NEED TO CLEAN THIS UP: 
+### NEED TO CLEAN THIS UP:
 ### no longer a regularly run script but for ad hoc bulk translating, so not part of the pipeline anymore
 
 ### translation code is wrapped in conditional statements because it is costly
@@ -41,7 +41,9 @@ str(db[sort(names(db))], 1)
 
 ### fx
 translate <- function(col) {
-  ifelse(is.na(col), "",
+  ifelse(
+    is.na(col),
+    "",
     toFrench(
       text = col,
       source_lang = "EN",
@@ -60,7 +62,8 @@ usage(key_get("DeepL"))
 
 ### translation of relevant fields in tables
 
-if (translations$conflicts) { # about 3 min / 2000 characters
+if (translations$conflicts) {
+  # about 3 min / 2000 characters
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
   start <- Sys.time()
   db[["ConflictDyads_fr"]] <- db[["ConflictDyads"]] %>%
@@ -69,11 +72,16 @@ if (translations$conflicts) { # about 3 min / 2000 characters
     mutate(side_b = translate(side_b)) %>%
     ungroup()
   print(Sys.time() - start)
-  cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
+  cat(
+    "Characters:",
+    usage(key_get("DeepL"))[["character_count"]] - usage_last,
+    "\n"
+  )
   db[["ConflictDyads_fr"]]
 }
 
-if (translations$country_profiles) { # about 10 min, 812,000 characters
+if (translations$country_profiles) {
+  # about 10 min, 812,000 characters
   ## do not translate the country field; this is used in the website structure
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
   start <- Sys.time()
@@ -100,12 +108,17 @@ if (translations$country_profiles) { # about 10 min, 812,000 characters
     ungroup() %>%
     select(all_of(order))
   print(Sys.time() - start)
-  cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
+  cat(
+    "Characters:",
+    usage(key_get("DeepL"))[["character_count"]] - usage_last,
+    "\n"
+  )
   db[["Countries_fr"]] %>%
     select(country, txt_intro, txt_regime, txt_conflict, txt_TJ)
 }
 
-if (translations$dl_codebook) { # about 1.5 min / 26000 characters
+if (translations$dl_codebook) {
+  # about 1.5 min / 26000 characters
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
   start <- Sys.time()
   db[["dl_tjet_codebook_fr"]] <- db[["dl_tjet_codebook"]] %>%
@@ -113,11 +126,16 @@ if (translations$dl_codebook) { # about 1.5 min / 26000 characters
     mutate(definition = translate(definition)) %>%
     ungroup()
   print(Sys.time() - start)
-  cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
+  cat(
+    "Characters:",
+    usage(key_get("DeepL"))[["character_count"]] - usage_last,
+    "\n"
+  )
   db[["dl_tjet_codebook_fr"]]
 }
 
-if (translations$labels) { # about 0.5 min / 5000 characters
+if (translations$labels) {
+  # about 0.5 min / 5000 characters
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
   start <- Sys.time()
   db[["labels_fr"]] <- db[["labels"]] %>%
@@ -125,11 +143,16 @@ if (translations$labels) { # about 0.5 min / 5000 characters
     mutate(label = translate(label)) %>%
     ungroup()
   print(Sys.time() - start)
-  cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
+  cat(
+    "Characters:",
+    usage(key_get("DeepL"))[["character_count"]] - usage_last,
+    "\n"
+  )
   db[["labels_fr"]]
 }
 
-if (translations$surveysmeta) { # about 0.5 min / 12,000 characters
+if (translations$surveysmeta) {
+  # about 0.5 min / 12,000 characters
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
   start <- Sys.time()
   order <- names(db[["SurveysMeta"]])
@@ -145,7 +168,11 @@ if (translations$surveysmeta) { # about 0.5 min / 12,000 characters
     ungroup() %>%
     select(all_of(order))
   print(Sys.time() - start)
-  cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
+  cat(
+    "Characters:",
+    usage(key_get("DeepL"))[["character_count"]] - usage_last,
+    "\n"
+  )
   db[["SurveysMeta_fr"]]
 }
 
@@ -154,7 +181,8 @@ surveytabs <- db[["SurveysMeta"]] %>%
   unlist(use.names = FALSE) %>%
   str_replace(fixed(".xlsx"), "")
 
-if (translations$surveys) { # about 11 min / 67,000 characters
+if (translations$surveys) {
+  # about 11 min / 67,000 characters
   usage_last <- usage(key_get("DeepL"))[["character_count"]]
   start <- Sys.time()
   db[paste(surveytabs, "_fr", sep = "")] <- surveytabs %>%
@@ -183,16 +211,30 @@ if (translations$surveys) { # about 11 min / 67,000 characters
         select(all_of(order), Section_fr, Question_fr, Responses_fr)
     })
   print(Sys.time() - start)
-  cat("Characters:", usage(key_get("DeepL"))[["character_count"]] - usage_last, "\n")
+  cat(
+    "Characters:",
+    usage(key_get("DeepL"))[["character_count"]] - usage_last,
+    "\n"
+  )
 }
 
 ### saving locally
 str(db[sort(names(db))], 1)
 save(db, file = here::here("data", "tjetdb.RData"))
 to_save <- c(
-  "Countries", "ConflictDyads", "dl_tjet_codebook", "Amnesties",
-  "Reparations", "TruthCommissions", "Trials", "Accused", "Vettings",
-  "SurveysMeta", surveytabs, "labels", "TJETmembers"
+  "Countries",
+  "ConflictDyads",
+  "dl_tjet_codebook",
+  "Amnesties",
+  "Reparations",
+  "TruthCommissions",
+  "Trials",
+  "Accused",
+  "Vettings",
+  "SurveysMeta",
+  surveytabs,
+  "labels",
+  "TJETmembers"
 )
 tabs <- paste(to_save, "_fr", sep = "")
 tabs <- tabs[tabs %in% names(db)]
@@ -200,92 +242,72 @@ db[tabs] %>%
   saveRDS(file = here::here("data", "tjetdb_fr.rds"))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_confl.csv") |> 
-  rowwise() |> 
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_confl.csv") |>
+  rowwise() |>
   mutate(
     conflict_fr = translate(conflict),
   ) %>%
-  ungroup() |> 
-  write_csv("~/Desktop/new_confl.csv", na = "") 
+  ungroup() |>
+  write_csv("~/Desktop/new_confl.csv", na = "")
 
-read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_domestic.csv") |> 
-  rowwise() |> 
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_domestic.csv") |>
+  rowwise() |>
   mutate(
     domestic_fr = translate(domestic),
   ) %>%
-  ungroup() |> 
-  write_csv("~/Desktop/new_domestic.csv", na = "") 
+  ungroup() |>
+  write_csv("~/Desktop/new_domestic.csv", na = "")
 
-read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_intl.csv") |> 
-  rowwise() |> 
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_intl.csv") |>
+  rowwise() |>
   mutate(
     intl_fr = translate(intl),
   ) %>%
-  ungroup() |> 
-  write_csv("~/Desktop/new_intl.csv", na = "") 
+  ungroup() |>
+  write_csv("~/Desktop/new_intl.csv", na = "")
 
-read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_regime.csv") |> 
-  rowwise() |> 
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_regime.csv") |>
+  rowwise() |>
   mutate(
     regime_fr = translate(regime),
   ) %>%
-  ungroup() |> 
-  write_csv("~/Desktop/new_regime.csv", na = "") 
+  ungroup() |>
+  write_csv("~/Desktop/new_regime.csv", na = "")
 
-read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_summary.csv") |> 
-  rowwise() |> 
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_summary.csv") |>
+  rowwise() |>
   mutate(
     summary_fr = translate(summary),
   ) %>%
-  ungroup() |> 
-  write_csv("~/Desktop/new_summary.csv", na = "") 
+  ungroup() |>
+  write_csv("~/Desktop/new_summary.csv", na = "")
 
 
-
-read_csv("~/Desktop/Trials-for-translation.csv") |> 
-  rowwise() |> 
+read_csv("~/Desktop/Trials-for-translation.csv") |>
+  rowwise() |>
   mutate(
     caseDescription_fr = translate(caseDescription),
   ) %>%
-  ungroup() |> 
-  rename(caseDescription_translated = caseDescription) |> 
-  write_csv("~/Desktop/Trials.csv", na = "") 
+  ungroup() |>
+  rename(caseDescription_translated = caseDescription) |>
+  write_csv("~/Desktop/Trials.csv", na = "")
 
 usage(key_get("DeepL"))
 
-read_csv("~/Desktop/Individuals-translations_to_revise.csv") |> 
-  select(individualID, description) |> 
+read_csv("~/Desktop/Individuals-translations_to_revise.csv") |>
+  select(individualID, description) |>
   reframe(
     .by = description,
     individualID = list(individualID)
-  ) |> 
-  rowwise() |> 
+  ) |>
+  rowwise() |>
   mutate(
     description_fr = translate(description),
   ) %>%
-  ungroup() |> 
-  unnest(individualID) |> 
-  rename(description_translated = description) |> 
-  write_csv("~/Desktop/Individuals-new.csv", na = "") 
-
-
-
-
-
-
+  ungroup() |>
+  unnest(individualID) |>
+  rename(description_translated = description) |>
+  write_csv("~/Desktop/Individuals-new.csv", na = "")
 
 
 ### for translating focus country reports
@@ -298,8 +320,8 @@ read_csv("~/Desktop/Individuals-translations_to_revise.csv") |>
 #   translate() %>%
 #   write_file(file = here::here(base, "CotedIvoire-fr.qmd"))
 
-read_csv("~/Desktop/temp.csv") |> 
-rowwise() |> 
+read_csv("~/Desktop/temp.csv") |>
+  rowwise() |>
   mutate(
     summary_fr = translate(summary),
     amnesties_fr = translate(amnesties),
@@ -310,130 +332,140 @@ rowwise() |>
     tcs_fr = translate(tcs),
     vetting_fr = translate(vetting)
   ) %>%
-  ungroup() |> 
+  ungroup() |>
   mutate(
-    summary_fr = str_replace(summary_fr, ", la TJET ", ", TJET " ), 
-    summary_fr = str_replace(summary_fr, ", le TJET ", ", TJET " ), 
-    domestic_fr = str_replace(domestic_fr, "La TJET ", "TJET " ), 
-  ) |> 
-  write_csv("~/Desktop/new.csv", na = "") 
+    summary_fr = str_replace(summary_fr, ", la TJET ", ", TJET "),
+    summary_fr = str_replace(summary_fr, ", le TJET ", ", TJET "),
+    domestic_fr = str_replace(domestic_fr, "La TJET ", "TJET "),
+  ) |>
+  write_csv("~/Desktop/new.csv", na = "")
 
 
-
-
-
-
-
-"auto_text_update/new_confl.csv" |> 
-  read_csv() |> 
-  rowwise() |> 
+"auto_text_update/new_confl.csv" |>
+  read_csv() |>
+  rowwise() |>
   mutate(
     conflict_fr = translate(conflict)
   ) %>%
-  ungroup() |> 
+  ungroup() |>
   mutate(
-    conflict_fr = str_replace(conflict_fr, ", la TJET ", ", TJET " ), 
-    conflict_fr = str_replace(conflict_fr, ", le TJET ", ", TJET " )
-  ) |> 
-  write_csv("auto_text_update/new_confl.csv", na = "") 
+    conflict_fr = str_replace(conflict_fr, ", la TJET ", ", TJET "),
+    conflict_fr = str_replace(conflict_fr, ", le TJET ", ", TJET ")
+  ) |>
+  write_csv("auto_text_update/new_confl.csv", na = "")
 
-"auto_text_update/new_summary.csv" |> 
-  read_csv() |> 
-  rowwise() |> 
+"auto_text_update/new_summary.csv" |>
+  read_csv() |>
+  rowwise() |>
   mutate(
     summary_fr = translate(summary)
   ) %>%
-  ungroup() |> 
+  ungroup() |>
   mutate(
-    summary_fr = str_replace(summary_fr, ", la TJET ", ", TJET " ), 
-    summary_fr = str_replace(summary_fr, ", le TJET ", ", TJET " )
-  ) |> 
-  write_csv("auto_text_update/new_summary.csv", na = "") 
+    summary_fr = str_replace(summary_fr, ", la TJET ", ", TJET "),
+    summary_fr = str_replace(summary_fr, ", le TJET ", ", TJET ")
+  ) |>
+  write_csv("auto_text_update/new_summary.csv", na = "")
 
-"auto_text_update/new_domestic.csv" |> 
-  read_csv() |> 
-  rowwise() |> 
+"auto_text_update/new_domestic.csv" |>
+  read_csv() |>
+  rowwise() |>
   mutate(
     domestic_fr = translate(domestic)
   ) %>%
-  ungroup() |> 
+  ungroup() |>
   mutate(
-    domestic_fr = str_replace(domestic_fr, ", la TJET ", ", TJET " ), 
-    domestic_fr = str_replace(domestic_fr, ", le TJET ", ", TJET " ),
-    domestic_fr = str_replace(domestic_fr, "La TJET ", "TJET " ), 
-    domestic_fr = str_replace(domestic_fr, "Le TJET ", "TJET " )
-  ) |> 
-  write_csv("auto_text_update/new_domestic.csv", na = "") 
+    domestic_fr = str_replace(domestic_fr, ", la TJET ", ", TJET "),
+    domestic_fr = str_replace(domestic_fr, ", le TJET ", ", TJET "),
+    domestic_fr = str_replace(domestic_fr, "La TJET ", "TJET "),
+    domestic_fr = str_replace(domestic_fr, "Le TJET ", "TJET ")
+  ) |>
+  write_csv("auto_text_update/new_domestic.csv", na = "")
 
-"auto_text_update/new_foreign.csv" |> 
-  read_csv() |> 
-  rowwise() |> 
+"auto_text_update/new_foreign.csv" |>
+  read_csv() |>
+  rowwise() |>
   mutate(
     foreign_fr = translate(foreign)
   ) %>%
-  ungroup() |> 
-  write_csv("auto_text_update/new_foreign.csv", na = "") 
+  ungroup() |>
+  write_csv("auto_text_update/new_foreign.csv", na = "")
 
-"auto_text_update/new_intl.csv" |> 
-  read_csv() |> 
-  rowwise() |> 
+"auto_text_update/new_intl.csv" |>
+  read_csv() |>
+  rowwise() |>
   mutate(
     intl_fr = translate(intl)
   ) %>%
-  ungroup() |> 
-  write_csv("auto_text_update/new_intl.csv", na = "") 
+  ungroup() |>
+  write_csv("auto_text_update/new_intl.csv", na = "")
 
-"auto_text_update/new_reparations.csv" |> 
-  read_csv() |> 
-  rowwise() |> 
+"auto_text_update/new_reparations.csv" |>
+  read_csv() |>
+  rowwise() |>
   mutate(
     reparations_fr = translate(reparations)
   ) %>%
-  ungroup() |> 
+  ungroup() |>
   mutate(
-    reparations_fr = str_replace(reparations_fr, ", la TJET ", ", TJET " ), 
-    reparations_fr = str_replace(reparations_fr, ", le TJET ", ", TJET " ),
-    reparations_fr = str_replace(reparations_fr, "La TJET ", "TJET " ), 
-    reparations_fr = str_replace(reparations_fr, "Le TJET ", "TJET " )
-  ) |> 
-  write_csv("auto_text_update/new_reparations.csv", na = "") 
+    reparations_fr = str_replace(reparations_fr, ", la TJET ", ", TJET "),
+    reparations_fr = str_replace(reparations_fr, ", le TJET ", ", TJET "),
+    reparations_fr = str_replace(reparations_fr, "La TJET ", "TJET "),
+    reparations_fr = str_replace(reparations_fr, "Le TJET ", "TJET ")
+  ) |>
+  write_csv("auto_text_update/new_reparations.csv", na = "")
 
-"auto_text_update/new_tcs.csv" |> 
-  read_csv() |> 
+"auto_text_update/new_tcs.csv" |>
+  read_csv() |>
   rowwise() |>
   mutate(
     tcs_fr = translate(tcs)
   ) %>%
   ungroup() |>
   mutate(
-    tcs_fr = str_replace(tcs_fr, "; la TJET ", "; TJET " ), 
-    tcs_fr = str_replace(tcs_fr, "; le TJET ", "; TJET " ),
-  ) |> 
-  write_csv("auto_text_update/new_tcs.csv", na = "") 
+    tcs_fr = str_replace(tcs_fr, "; la TJET ", "; TJET "),
+    tcs_fr = str_replace(tcs_fr, "; le TJET ", "; TJET "),
+  ) |>
+  write_csv("auto_text_update/new_tcs.csv", na = "")
 
-"auto_text_update/new_vetting.csv" |> 
-  read_csv() |> 
+"auto_text_update/new_vetting.csv" |>
+  read_csv() |>
   rowwise() |>
   mutate(
     vetting_fr = translate(vetting)
   ) %>%
   ungroup() |>
   mutate(
-    vetting_fr = str_replace(vetting_fr, "; la TJET ", "; TJET " ), 
-    vetting_fr = str_replace(vetting_fr, "; le TJET ", "; TJET " ),
-    vetting_fr = str_replace(vetting_fr, "politique de vérification des antécédents", "politique de filtrage" ),
-    vetting_fr = str_replace(vetting_fr, "politiques de vérification des antécédents", "politiques de filtrage" ),
-    vetting_fr = str_replace(vetting_fr, "politique de contrôle", "politique de filtrage" ),
-    vetting_fr = str_replace(vetting_fr, "politiques de contrôle", "politiques de filtrage" ),
-  ) |> 
-  write_csv("auto_text_update/new_vetting.csv", na = "") 
+    vetting_fr = str_replace(vetting_fr, "; la TJET ", "; TJET "),
+    vetting_fr = str_replace(vetting_fr, "; le TJET ", "; TJET "),
+    vetting_fr = str_replace(
+      vetting_fr,
+      "politique de vérification des antécédents",
+      "politique de filtrage"
+    ),
+    vetting_fr = str_replace(
+      vetting_fr,
+      "politiques de vérification des antécédents",
+      "politiques de filtrage"
+    ),
+    vetting_fr = str_replace(
+      vetting_fr,
+      "politique de contrôle",
+      "politique de filtrage"
+    ),
+    vetting_fr = str_replace(
+      vetting_fr,
+      "politiques de contrôle",
+      "politiques de filtrage"
+    ),
+  ) |>
+  write_csv("auto_text_update/new_vetting.csv", na = "")
 
-"auto_text_update/new_un.csv" |> 
-  read_csv() |> 
+"auto_text_update/new_un.csv" |>
+  read_csv() |>
   rowwise() |>
   mutate(
     un_fr = translate(un)
   ) %>%
   ungroup() |>
-  write_csv("auto_text_update/new_un.csv", na = "") 
-
+  write_csv("auto_text_update/new_un.csv", na = "")

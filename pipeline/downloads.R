@@ -16,18 +16,52 @@ require(rairtable)
 to_download <-
   list(
     "appHsoHAemKITZgMF" = c(
-      "Amnesties", "Reparations", "TruthCommissions", "Vettings", "Countries",
-      "Transitions", "ConflictDyadSpells", "Conflicts", "Dyads", 
-      "select_options", "metadata", "UCDPcountries", "TJETmembers", "Experts",
-      "NGOs", "Legal", "ICDB", "Mallinder", "Rozic", "Challenges",
-      "VettingComparison", "BIcomparison", "ICC", "Investigations",
-      "AdHocHybrid", "SurveysMeta", "Ethiopia", "TJETversions", 
-      "Southey", "Filipa", "CorrectionsCandidates"
+      "Amnesties",
+      "Reparations",
+      "TruthCommissions",
+      "Vettings",
+      "Countries",
+      "Transitions",
+      "ConflictDyadSpells",
+      "Conflicts",
+      "Dyads",
+      "select_options",
+      "metadata",
+      "UCDPcountries",
+      "TJETmembers",
+      "Experts",
+      "NGOs",
+      "Legal",
+      "ICDB",
+      "Mallinder",
+      "Rozic",
+      "Challenges",
+      "VettingComparison",
+      "BIcomparison",
+      "ICC",
+      "Investigations",
+      "AdHocHybrid",
+      "SurveysMeta",
+      "Ethiopia",
+      "TJETversions",
+      "Southey",
+      "Filipa",
+      "CorrectionsCandidates",
+      "ArgCausas",
+      "ArgAccused",
+      "ArgCLs"
     ),
     "appF8HAH7SN7C09cU" = c(
-      "Trials", "Accused", "CourtLevels", "Countries", "Conflicts", "Dyads", 
-      "metadata", "ArgCausas", "ArgAccused", "ArgCLs", "BIcomparison", 
-      "TrialInternational", "Individuals"
+      "Trials",
+      "Accused",
+      "Individuals",
+      "CaseEvents",
+      "Countries",
+      "Conflicts",
+      "Dyads",
+      "metadata",
+      "BIcomparison",
+      "TrialInternational"
     )
   )
 
@@ -37,7 +71,7 @@ to_download <-
 ### tables are consistent but ideally all tables would be in the same base
 
 ### Downloading raw data via Airtable API and saving locally...
-cat("\nDownloading raw data via Airtable API and saving locally...\n") 
+cat("\nDownloading raw data via Airtable API and saving locally...\n")
 
 tjet <- map(names(to_download), function(base_id) {
   cat("base ID:", base_id, "\n")
@@ -62,4 +96,4 @@ map(tjet[["MegaBase"]][["SurveysMeta"]][["results_tables"]], function(x) {
   )
 })
 
-cat("...done.\n") 
+cat("...done.\n")
