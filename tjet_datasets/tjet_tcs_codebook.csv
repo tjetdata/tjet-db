@@ -5,7 +5,6 @@ ccode_cow,COW numeric country code
 officialName,name or description of the truth commission
 officialName_en,name or description of the truth commission (English)
 officialName_en_fr,name or description of the truth commission (French translation)
-narrative,narrative description
 tcType,type of truth commission
 legalBasis,legal basis of the truth commission
 branchCreated,Which branch(es) of government created the TC?

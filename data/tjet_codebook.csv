@@ -79,6 +79,7 @@ tjet_cy,sample indicators,,tcs_sample,"country-years from first year with any tr
 tjet_cy,sample indicators,,trials_domestic_sample,"country-years from first year with any domestic human rights or conflict prosecutions, binary",TJET,,
 tjet_cy,sample indicators,,vettings_sample,"country-years from first year with any vetting policies, binary",TJET,,
 tjet_cy,sample indicators,,tj_yr_zero,"year when transitional justice was first initiated, binary based on when prosecutions of high-ranking defendants, public truth commissions, lustration or reparation policies started in a country",TJET,,
+tjet_cy,,,tj_laws,count of TJ-related laws passed,TJET,1970,2024
 tjet_cy,website map: amnesties,,amnesties,count of amnesties per country and year of passing,TJET,,
 tjet_cy,website map: amnesties,,amnesties_SGBV,"binary for whether amnesties in country-year included any that addressed SGBV (1 = yes, 0 = no) ",TJET,,
 tjet_cy,"website map: prosecutions, domestic",,trials_domestic,"count of domestic trials per country and start year, by country of the accused",TJET,,
@@ -1195,33 +1196,35 @@ tjet_accused.csv,,9,membership,state membership: in what capacity did the state 
 tjet_accused.csv,,10,oppositionType,opposition type,TJET,1970,2020
 tjet_accused.csv,,11,highRank,Was this a high-ranking individual?,TJET,1970,2020
 tjet_accused.csv,,12,headOfState,Was this individual the head of state at the time of the crime?,TJET,1970,2020
+tjet_accused.csv,,13,transnationalTerror,"Was the accused suspected of being a member of, or supporting, a transnational terror group?",TJET,1970,2020
 tjet_accused.csv,,14,charges,charges description,TJET,1970,2020
 tjet_accused.csv,,15,chargesCategories ,charges categorical coding,TJET,1970,2020
 tjet_accused.csv,,16,genderAttentiveCharges,"gender attentive charges: rape, sexual violence (other than rape), and/or other gender-attentive charges",TJET,1970,2020
 tjet_accused.csv,,17,genderVictims,victim type for gender-attentive charges,TJET,1970,2020
-tjet_accused.csv,,18,prelimProcess,"preliminary trial process (incl. indictments, arrests, extraditions, detentions, other, and unknown or none reported)",TJET,1970,2020
-tjet_accused.csv,,19,countryExtradition,country from which extradition was sought,TJET,1970,2020
-tjet_accused.csv,,20,statuteAmnestyCircumvented,statute or amnesty circumvented,TJET,1970,2020
-tjet_accused.csv,,21,laterPardonedAmnestied,Was this person later pardoned or amnestied?,TJET,1970,2020
+tjet_accused.csv,,,prelimProcess,"preliminary trial process (incl. indictments, arrests, extraditions, detentions, other, and unknown or none reported)",TJET,1970,2020
+tjet_accused.csv,,,countryExtradition,country from which extradition was sought,TJET,1970,2020
+tjet_accused.csv,,,statuteAmnestyCircumvented,statute or amnesty circumvented,TJET,1970,2020
+tjet_accused.csv,,,laterPardonedAmnestied,Was this person later pardoned or amnestied?,TJET,1970,2020
 tjet_accused.csv,,22,trialRelevantInfo,other relevant information about the trial,TJET,1970,2020
 tjet_accused.csv,,23,certainty,How much certainty did coders have in coding this accused? ,TJET,1970,2020
-tjet_accused.csv,,44,ICC_referral,year in which country situation was referred to the ICC,TJET,1970,2020
-tjet_accused.csv,,45,ICC_prelim_exam,year in which preliminary ICC examination began,TJET,1970,2020
-tjet_accused.csv,,46,ICC_investigation,year in which ICC investigation began,TJET,1970,2020
-tjet_accused.csv,,47,ICC_arrest_warrant,year in which ICC arrest warrant was issued,TJET,1970,2020
-tjet_accused.csv,,48,ICC_arrestAppear,year of court appearance of accused,TJET,1970,2020
-tjet_accused.csv,,49,ICC_confirm_charges,year in which ICC trial chamber confirmed charges,TJET,1970,2020
-tjet_accused.csv,,50,ICC_proceedings,year in which ICC proceedings began,TJET,1970,2020
-tjet_accused.csv,,51,ICC_atLarge,accused with ICC arrest warrant is at large,TJET,1970,2020
-tjet_accused.csv,,52,ICC_withdrawnDismissed,year in which ICC charges were dismissed or withdrawn,TJET,1970,2020
-tjet_accused.csv,,53,everGuilty,Was the accused ever convicted in this trial?,TJET,1970,2020
-tjet_accused.csv,,54,firstGuiltyYear,year in which the accused was first found guilty,TJET,1970,2020
-tjet_accused.csv,,55,lastGuilty,Was the accused found guilty in the last verdict of the proceedings?,TJET,1970,2020
-tjet_accused.csv,,56,lastGuiltyYear,year of last guilty verdict,TJET,1970,2020
-tjet_accused.csv,,57,lastVerdict,final verdict in the proceedings for the accused,TJET,1970,2020
-tjet_accused.csv,,58,lastVerdictYear,year of final verdict,TJET,1970,2020
-tjet_accused.csv,,59,lastSentencingTime,detention time of last sentencing verdict for the accused,TJET,1970,2020
-tjet_accused.csv,,60,lastSentencingArrangement,sentencing arrangement of the last verdict,TJET,1970,2020
+tjet_accused.csv,,,ICC_referral,year in which country situation was referred to the ICC,TJET,1970,2020
+tjet_accused.csv,,,ICC_prelim_exam,year in which preliminary ICC examination began,TJET,1970,2020
+tjet_accused.csv,,,ICC_investigation,year in which ICC investigation began,TJET,1970,2020
+tjet_accused.csv,,,ICC_arrest_warrant,year in which ICC arrest warrant was issued,TJET,1970,2020
+tjet_accused.csv,,,ICC_arrestAppear,year of court appearance of accused,TJET,1970,2020
+tjet_accused.csv,,,ICC_confirm_charges,year in which ICC trial chamber confirmed charges,TJET,1970,2020
+tjet_accused.csv,,,ICC_proceedings,year in which ICC proceedings began,TJET,1970,2020
+tjet_accused.csv,,,ICC_atLarge,accused with ICC arrest warrant is at large,TJET,1970,2020
+tjet_accused.csv,,,ICC_withdrawnDismissed,year in which ICC charges were dismissed or withdrawn,TJET,1970,2020
+tjet_accused.csv,,,everGuilty,Was the accused ever convicted in this trial?,TJET,1970,2020
+tjet_accused.csv,,,firstGuiltyYear,year in which the accused was first found guilty,TJET,1970,2020
+tjet_accused.csv,,,lastGuilty,Was the accused found guilty in the last verdict of the proceedings?,TJET,1970,2020
+tjet_accused.csv,,,lastGuiltyYear,year of last guilty verdict,TJET,1970,2020
+tjet_accused.csv,,,lastVerdict,final verdict in the proceedings for the accused,TJET,1970,2020
+tjet_accused.csv,,,lastVerdictYear,year of final verdict,TJET,1970,2020
+tjet_accused.csv,,,lastSentencingTime,detention time of last sentencing verdict for the accused,TJET,1970,2020
+tjet_accused.csv,,,lastSentencingArrangement,sentencing arrangement of the last verdict,TJET,1970,2020
+tjet_accused.csv,,60,date_last,the last relevant date in the case events table for determining the final outcome of a prosecution for a given accused individual,TJET,1970,2020
 tjet_accused.csv,,61,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
 tjet_amnesties.csv,,1,amnestyID,TJET Amnesty ID,TJET,1970,2024
 tjet_amnesties.csv,,2,country,country name,TJET,1970,2024
@@ -1233,7 +1236,7 @@ tjet_amnesties.csv,,7,mechanismDescription_fr,name and/or description of the amn
 tjet_amnesties.csv,,8,amnestyName,official name of amnesty law or proclamation,TJET,1970,2024
 tjet_amnesties.csv,,9,start_date,date of amnesty passage,TJET,1970,2024
 tjet_amnesties.csv,,10,enactedHow,How was the amnesty enacted?,TJET,1970,2024
-tjet_amnesties.csv,,11,narrative,explanation of the amnesty law,TJET,1970,2024
+tjet_amnesties.csv,,,narrative,explanation of the amnesty law,TJET,1970,2024
 tjet_amnesties.csv,,12,whoWasAmnestied,Which actors were amnestied?,TJET,1970,2024
 tjet_amnesties.csv,,13,stateAgents,Which state agents were offered amnesty?,TJET,1970,2024
 tjet_amnesties.csv,,14,oppRank,Which members of the armed opposition were offered amnesty?,TJET,1970,2024
@@ -1263,8 +1266,9 @@ tjet_courtlevels.csv,,5,year,year,TJET,1970,2020
 tjet_courtlevels.csv,,6,month,month,TJET,1970,2020
 tjet_courtlevels.csv,,7,day,day of month,TJET,1970,2020
 tjet_courtlevels.csv,,8,date,date of court level event,TJET,1970,2020
-tjet_courtlevels.csv,,9,last_fx,Was this the last relevant trial event of these proceedings for the purpose of identifying outcomes/rulings? ,TJET,1970,2020
-tjet_courtlevels.csv,,10,verdict,verdict or trial outcome,TJET,1970,2020
+tjet_courtlevels.csv,,9,date_precision,"Is the date field based on day, month or year precision?",TJET,1970,2020
+tjet_courtlevels.csv,,,last_fx,Was this the last relevant trial event of these proceedings for the purpose of identifying outcomes/rulings? ,TJET,1970,2020
+tjet_courtlevels.csv,,10,outcome,verdict or trial outcome,TJET,1970,2020
 tjet_courtlevels.csv,,11,guilty,Was it a guilty verdict?,TJET,1970,2020
 tjet_courtlevels.csv,,12,sentence,sentence of the verdict,TJET,1970,2020
 tjet_courtlevels.csv,,13,sentencingTime,sentencing time,TJET,1970,2020
@@ -1273,7 +1277,7 @@ tjet_courtlevels.csv,,15,sentenceNotes,sentencing notes,TJET,1970,2020
 tjet_courtlevels.csv,,16,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
 tjet_icc_accused.csv,,1,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_icc_accused.csv,,2,trialID,TJET Trial ID,TJET,1970,2020
-tjet_icc_accused.csv,,3,country,country of accused,TJET,1970,2020
+tjet_icc_accused.csv,,,country,country of accused,TJET,1970,2020
 tjet_icc_accused.csv,,4,ccode_target,COW numeric country code of the target or situation country,TJET,1970,2020
 tjet_icc_accused.csv,,5,name,name of the accused,TJET,1970,2020
 tjet_icc_accused.csv,,6,position_desc,"description of the accused (position rank, title, role, etc)",TJET,1970,2020
@@ -1302,7 +1306,7 @@ tjet_reparations.csv,,4,officialName,name or description of the reparations poli
 tjet_reparations.csv,,5,officialName_en,name or description of the reparations policy (English),TJET,1970,2024
 tjet_reparations.csv,,6,officialName_en_fr,name or description of the reparations policy (French translation),TJET,1970,2024
 tjet_reparations.csv,,7,timeframeCovered,What timeframe does the policy cover? ,TJET,1970,2024
-tjet_reparations.csv,,8,narrative,narrative description of the reparations policy,TJET,1970,2024
+tjet_reparations.csv,,,narrative,narrative description of the reparations policy,TJET,1970,2024
 tjet_reparations.csv,,9,legalBasis,legal basis of the reparations policy,TJET,1970,2024
 tjet_reparations.csv,,10,legalInternationalBody,Which international body initiated the reparations policy?,TJET,1970,2024
 tjet_reparations.csv,,11,legalBranches,Which branch(es) of government recommended or initiated the reparations policy? ,TJET,1970,2024
@@ -1371,7 +1375,7 @@ tjet_tcs.csv,,3,ccode_cow,COW numeric country code,TJET,1970,2024
 tjet_tcs.csv,,4,officialName,name or description of the truth commission,TJET,1970,2024
 tjet_tcs.csv,,5,officialName_en,name or description of the truth commission (English),TJET,1970,2024
 tjet_tcs.csv,,6,officialName_en_fr,name or description of the truth commission (French translation),TJET,1970,2024
-tjet_tcs.csv,,7,narrative,narrative description,TJET,1970,2024
+tjet_tcs.csv,,,narrative,narrative description,TJET,1970,2024
 tjet_tcs.csv,,8,tcType,type of truth commission,TJET,1970,2024
 tjet_tcs.csv,,9,legalBasis,legal basis of the truth commission,TJET,1970,2024
 tjet_tcs.csv,,10,branchCreated,Which branch(es) of government created the TC?,TJET,1970,2024
@@ -1502,8 +1506,7 @@ tjet_trials.csv,,19,HRVorCoreCrimes,Was this trial focused on human rights or co
 tjet_trials.csv,,20,IntraConfl,Was this trial focused on intra-state conflict?,TJET,1970,2020
 tjet_trials.csv,,,corruption,Was this trial focused on corruption?,TJET,1970,2020
 tjet_trials.csv,,,SGBV,Did this trial involve charges of sexual or gender-based violence?,TJET,1970,2020
-tjet_trials.csv,,22,TransnationalTerror,Was this trial focused on transnational terrorism?,TJET,1970,2020
-tjet_trials.csv,,23,civil,Is this a civil case?,TJET,1970,2020
+tjet_trials.csv,,23,civilLitigation,Is this a civil case?,TJET,1970,2020
 tjet_trials.csv,,24,startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before this trial?,TJET,1970,2020
 tjet_trials.csv,,25,fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?,TJET,1970,2020
 tjet_trials.csv,,26,startedIntraConflbefore,Did this country start an intra-state conflict at some point before this trial?,TJET,1970,2020
@@ -1526,14 +1529,14 @@ tjet_trials.csv,,,anyHeadOfState,Were any of the accused (former) heads of state
 tjet_trials.csv,,,rape_Accused,Were there rape charges for any of the accused in this trial?,TJET,1970,2020
 tjet_trials.csv,,,sexualViolence_Accused,Were there sexual violence charges for any of the accused in this trial?,TJET,1970,2020
 tjet_trials.csv,,,otherSGBV_Accused,Were there other charges related to SGBV for any of the accused in this trial?,TJET,1970,2020
-tjet_trials.csv,,41,CLs_final_year,year of last court levels record for this trial,TJET,1970,2020
-tjet_trials.csv,,42,conviction,Was any accused ever convicted in this trial?,TJET,1970,2020
-tjet_trials.csv,,43,firstConvictionYear,year of first conviction in this trial,TJET,1970,2020
-tjet_trials.csv,,44,convictionHighRank,Was any high-ranking accused ever convicted in this trial?,TJET,1970,2020
-tjet_trials.csv,,45,finalConviction,Was any accused convicted by the end of this trial?,TJET,1970,2020
-tjet_trials.csv,,46,finalConvictionHighRank,Was any high-ranking accused convicted by the end of this trial?,TJET,1970,2020
-tjet_trials.csv,,47,finalConvictionYear,year of first final conviction in this trial,TJET,1970,2020
-tjet_trials.csv,,48,lastSentencingTime,detention times of last sentencing verdicts,TJET,1970,2020
+tjet_trials.csv,,,CLs_final_year,year of last court levels record for this trial,TJET,1970,2020
+tjet_trials.csv,,,conviction,Was any accused ever convicted in this trial?,TJET,1970,2020
+tjet_trials.csv,,,firstConvictionYear,year of first conviction in this trial,TJET,1970,2020
+tjet_trials.csv,,,convictionHighRank,Was any high-ranking accused ever convicted in this trial?,TJET,1970,2020
+tjet_trials.csv,,,finalConviction,Was any accused convicted by the end of this trial?,TJET,1970,2020
+tjet_trials.csv,,,finalConvictionHighRank,Was any high-ranking accused convicted by the end of this trial?,TJET,1970,2020
+tjet_trials.csv,,,finalConvictionYear,year of first final conviction in this trial,TJET,1970,2020
+tjet_trials.csv,,,lastSentencingTime,detention times of last sentencing verdicts,TJET,1970,2020
 tjet_trials.csv,,49,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
 tjet_trials.csv,,,ongoing,Was the trial ongoing at time of coding?,TJET,1970,2020
 tjet_un_investigations.csv,,1,country,country name,TJET,1970,2020
@@ -1558,7 +1561,7 @@ tjet_vettings.csv,,7,yearEnd,year vetting policy spell ended,TJET,1970,2024
 tjet_vettings.csv,,8,policyName,name or description of the vetting policy,TJET,1970,2024
 tjet_vettings.csv,,9,policyName_fr,name or description of the vetting policy (French translation),TJET,1970,2024
 tjet_vettings.csv,,10,dateLaw,date of the law or decree,TJET,1970,2024
-tjet_vettings.csv,,11,narrative,narrative description of the policy and its implementation,TJET,1970,2024
+tjet_vettings.csv,,,narrative,narrative description of the policy and its implementation,TJET,1970,2024
 tjet_vettings.csv,,12,type_dismissal,policy type: dismissal from current employment,TJET,1970,2024
 tjet_vettings.csv,,13,type_ban,policy type: ban from future employment,TJET,1970,2024
 tjet_vettings.csv,,14,type_declassification,policy type: declassification,TJET,1970,2024

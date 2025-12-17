@@ -7,8 +7,8 @@ year,year
 month,month
 day,day of month
 date,date of court level event
-last_fx,Was this the last relevant trial event of these proceedings for the purpose of identifying outcomes/rulings?
-verdict,verdict or trial outcome
+date_precision,"Is the date field based on day, month or year precision?"
+outcome,verdict or trial outcome
 guilty,Was it a guilty verdict?
 sentence,sentence of the verdict
 sentencingTime,sentencing time

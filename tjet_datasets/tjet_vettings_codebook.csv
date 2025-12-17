@@ -8,7 +8,6 @@ yearEnd,year vetting policy spell ended
 policyName,name or description of the vetting policy
 policyName_fr,name or description of the vetting policy (French translation)
 dateLaw,date of the law or decree
-narrative,narrative description of the policy and its implementation
 type_dismissal,policy type: dismissal from current employment
 type_ban,policy type: ban from future employment
 type_declassification,policy type: declassification

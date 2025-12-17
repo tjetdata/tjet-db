@@ -11,31 +11,12 @@ membership,state membership: in what capacity did the state agent act?
 oppositionType,opposition type
 highRank,Was this a high-ranking individual?
 headOfState,Was this individual the head of state at the time of the crime?
+transnationalTerror,"Was the accused suspected of being a member of, or supporting, a transnational terror group?"
 charges,charges description
 chargesCategories,charges categorical coding
 genderAttentiveCharges,"gender attentive charges: rape, sexual violence (other than rape), and/or other gender-attentive charges"
 genderVictims,victim type for gender-attentive charges
-prelimProcess,"preliminary trial process (incl. indictments, arrests, extraditions, detentions, other, and unknown or none reported)"
-countryExtradition,country from which extradition was sought
-statuteAmnestyCircumvented,statute or amnesty circumvented
-laterPardonedAmnestied,Was this person later pardoned or amnestied?
 trialRelevantInfo,other relevant information about the trial
 certainty,How much certainty did coders have in coding this accused?
-ICC_referral,year in which country situation was referred to the ICC
-ICC_prelim_exam,year in which preliminary ICC examination began
-ICC_investigation,year in which ICC investigation began
-ICC_arrest_warrant,year in which ICC arrest warrant was issued
-ICC_arrestAppear,year of court appearance of accused
-ICC_confirm_charges,year in which ICC trial chamber confirmed charges
-ICC_proceedings,year in which ICC proceedings began
-ICC_atLarge,accused with ICC arrest warrant is at large
-ICC_withdrawnDismissed,year in which ICC charges were dismissed or withdrawn
-everGuilty,Was the accused ever convicted in this trial?
-firstGuiltyYear,year in which the accused was first found guilty
-lastGuilty,Was the accused found guilty in the last verdict of the proceedings?
-lastGuiltyYear,year of last guilty verdict
-lastVerdict,final verdict in the proceedings for the accused
-lastVerdictYear,year of final verdict
-lastSentencingTime,detention time of last sentencing verdict for the accused
-lastSentencingArrangement,sentencing arrangement of the last verdict
+date_last,the last relevant date in the case events table for determining the final outcome of a prosecution for a given accused individual
 tjet_version,TJET database version: date on which data was extracted from the database

@@ -18,8 +18,7 @@ ccode_crime,COW numeric code of country where the crime was committed
 ccode_victim,COW numeric code of country of the victim(s) of the crime
 HRVorCoreCrimes,Was this trial focused on human rights or core international crimes?
 IntraConfl,Was this trial focused on intra-state conflict?
-TransnationalTerror,Was this trial focused on transnational terrorism?
-civil,Is this a civil case?
+civilLitigation,Is this a civil case?
 startedDemocraticTransitionBefore,Did this country start a democratic transition at some point before this trial?
 fitsPostAutocraticTJ,Did this case fit the definition of post-autocratic transitional justice?
 startedIntraConflbefore,Did this country start an intra-state conflict at some point before this trial?
@@ -30,12 +29,4 @@ beganDuringOrAfterConfl,Did this trial begin during or after intra-state conflic
 discoveredSDHRsReport,Was this trial first discovered in a State Department Human Rights Report?
 prosecutorType,prosecutor type
 fairnessQuestioned,Did any reports question the fairness of the trial?
-CLs_final_year,year of last court levels record for this trial
-conviction,Was any accused ever convicted in this trial?
-firstConvictionYear,year of first conviction in this trial
-convictionHighRank,Was any high-ranking accused ever convicted in this trial?
-finalConviction,Was any accused convicted by the end of this trial?
-finalConvictionHighRank,Was any high-ranking accused convicted by the end of this trial?
-finalConvictionYear,year of first final conviction in this trial
-lastSentencingTime,detention times of last sentencing verdicts
 tjet_version,TJET database version: date on which data was extracted from the database

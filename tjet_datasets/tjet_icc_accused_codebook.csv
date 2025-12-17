@@ -1,7 +1,6 @@
 col_name,definition
 accusedID,TJET Accused ID
 trialID,TJET Trial ID
-country,country of accused
 ccode_target,COW numeric country code of the target or situation country
 name,name of the accused
 position_desc,"description of the accused (position rank, title, role, etc)"
