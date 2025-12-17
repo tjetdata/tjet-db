@@ -11,6 +11,7 @@ data/cy_covariates_prev.rds
 data/zot_collections.rds
 data/zot_items.rds
 data/downloads/*.xlsx
+conflicts/original_data/
 focus/
 auto_text_update/
 zot_missing/
