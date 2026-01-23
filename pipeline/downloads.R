@@ -46,10 +46,7 @@ to_download <-
       "TJETversions",
       "Southey",
       "Filipa",
-      "CorrectionsCandidates",
-      "ArgCausas",
-      "ArgAccused",
-      "ArgCLs"
+      "CorrectionsCandidates"
     ),
     "appF8HAH7SN7C09cU" = c(
       "Trials",

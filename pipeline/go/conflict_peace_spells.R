@@ -574,9 +574,9 @@ confl_ep_years |>
 ### merging in existing TJET measures (not by conflictID)
 #########################################################
 
-# df <- read_csv(
-#   here::here("tjet_datasets/tjet_cy_analyses.csv")
-# )
+df <- read_csv(
+  here::here("tjet_datasets/tjet_cy_analyses.csv")
+)
 
 # df |>
 #   select(
@@ -592,75 +592,81 @@ confl_ep_years |>
 #   filter(str_detect(country_case, "Angola")) |>
 #   print(n = 55)
 
-to_merge <- df |>
-  select(
-    country_case,
-    ccode_ksg,
-    year,
-    tj_laws,
-    regu_trs_dom_sta,
-    regu_cce_dom_sta,
-    tran_trs_dom_dtj_ctj,
-    tran_trs_dom_ctj,
-    trs_int_sta,
-    trs_int_opp,
-    amnesty_dtj_ctj_sta_opp,
-    amnesty_pol,
-    tcs_all_created,
-    rep_created,
-  ) |>
-  arrange(country_case, year) |>
-  group_by(country_case) |>
-  mutate(
-    across(
-      .cols = !c(ccode_ksg, year),
-      .fns = ~ cumsum(.x),
-      .names = "sum_{.col}"
-    )
-  ) |>
-  ungroup() |>
-  select(ccode_ksg, year, starts_with("sum_")) |>
-  mutate(
-    year = year + 1,
-    ccode_ksg = ifelse(ccode_ksg == 345 & year == 2006, 340, ccode_ksg)
-  )
+# to_merge <- df |>
+#   select(
+#     country_case,
+#     ccode_ksg,
+#     year,
+#     tj_laws,
+#     regu_trs_dom_sta,
+#     regu_cce_dom_sta,
+#     tran_trs_dom_dtj_ctj,
+#     tran_trs_dom_ctj,
+#     trs_int_sta,
+#     trs_int_opp,
+#     amnesty_dtj_ctj_sta_opp,
+#     amnesty_pol,
+#     tcs_all_created,
+#     rep_created,
+#   ) |>
+#   arrange(country_case, year) |>
+#   group_by(country_case) |>
+#   mutate(
+#     across(
+#       .cols = !c(ccode_ksg, year),
+#       .fns = ~ cumsum(.x),
+#       .names = "sum_{.col}"
+#     )
+#   ) |>
+#   ungroup() |>
+#   select(ccode_ksg, year, starts_with("sum_")) |>
+#   mutate(
+#     year = year + 1,
+#     ccode_ksg = ifelse(ccode_ksg == 345 & year == 2006, 340, ccode_ksg)
+#   )
 
 confl_ep_years <- confl_ep_years |>
+  # left_join(
+  #   to_merge,
+  #   by = c(gwno_loc = "ccode_ksg", year = "year")
+  # ) |>
   left_join(
     df |>
       select(
         ccode_ksg,
         year,
-        tj_yr_zero
+        tj_yr_zero,
+        yr_cce_sta_hi,
+        yr_tcs,
+        yr_rep,
+        yr_vet,
+        ICC_prelim_exam,
+        ICC_investigation
       ),
-    by = c(gwno_loc = "ccode_ksg", year = "year")
-  ) |>
-  left_join(
-    to_merge,
     by = c(gwno_loc = "ccode_ksg", year = "year")
   )
 
-confl_ep_years |>
-  select(
-    conflict_id,
-    location,
-    gwno_loc,
-    year,
-    tj_yr_zero,
-    sum_tj_laws,
-    sum_regu_trs_dom_sta,
-    sum_regu_cce_dom_sta,
-    sum_tran_trs_dom_dtj_ctj,
-    sum_tran_trs_dom_ctj,
-    sum_trs_int_sta,
-    sum_trs_int_opp,
-    sum_amnesty_dtj_ctj_sta_opp,
-    sum_amnesty_pol,
-    sum_tcs_all_created,
-    sum_rep_created,
-  ) |>
-  # filter(year > 1970 & year < 2021) |>
-  summary()
+# confl_ep_years |>
+#   select(
+#     conflict_id,
+#     location,
+#     gwno_loc,
+#     year,
+#     tj_yr_zero,
+#     sum_tj_laws,
+#     sum_regu_trs_dom_sta,
+#     sum_regu_cce_dom_sta,
+#     sum_tran_trs_dom_dtj_ctj,
+#     sum_tran_trs_dom_ctj,
+#     sum_trs_int_sta,
+#     sum_trs_int_opp,
+#     sum_amnesty_dtj_ctj_sta_opp,
+#     sum_amnesty_pol,
+#     sum_tcs_all_created,
+#     sum_rep_created,
+#   ) |>
+#   # filter(year > 1970 & year < 2021) |>
+#   summary()
 
 #############################
 ### conflict-matched measures
