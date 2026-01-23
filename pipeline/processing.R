@@ -2621,9 +2621,39 @@ message("Creating TJ year zero variable... ")
 df <- df |>
   arrange(country_case, year) |>
   mutate(
+    yr_cce_sta_hi = if_else(
+      (dtr == 1 | aco_25 == 1) &
+        ccode_cow != 2 &
+        tran_cce_dom_dtj_ctj_sta_hi >= 1,
+      year,
+      NA
+    ),
+    yr_tcs = if_else(
+      (dtr == 1 | aco_25 == 1) &
+        ccode_cow != 2 &
+        tcs_dtj_ctj_binary == 1 &
+        tcs_report_public == 1,
+      year,
+      NA
+    ),
+    yr_rep = if_else(
+      (dtr == 1 | aco_25 == 1) &
+        ccode_cow != 2 &
+        rep_paidout_created == 1,
+      year,
+      NA
+    ),
+    yr_vet = if_else(
+      (dtr == 1 | aco_25 == 1) &
+        ccode_cow != 2 &
+        (vet_dismiss_created == 1 | vet_ban_created == 1) &
+        (region == "Europe" | ccode_cow == 645),
+      year,
+      NA
+    ),
     tj_yr_zero = ifelse(
       ((dtr == 1 | aco_25 == 1) & ccode_cow != 2) &
-        (tran_cce_dom_dtj_sta_hi >= 1 |
+        (tran_cce_dom_dtj_ctj_sta_hi >= 1 |
           (tcs_dtj_ctj_binary >= 1 & tcs_report_public == 1) |
           rep_paidout_created == 1 |
           (region == "Europe" &
@@ -2632,12 +2662,25 @@ df <- df |>
             (vet_dismiss_created == 1 | vet_ban_created == 1))),
       year,
       NA
-    )
+    ),
+    tj_yr_zero = ifelse(ccode_ksg == 700 & year == 2006, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_ksg == 373 & year == 1995, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_ksg == 490 & year == 1978, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_ksg == 666 & year == 1991, NA, tj_yr_zero),
+    # tj_yr_zero = ifelse(ccode_ksg == 135 & year == 1990, NA, tj_yr_zero),
+    # tj_yr_zero = ifelse(ccode_ksg == 135 & year == 1994, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_ksg == 678 & year == 1987, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_ksg == 678 & year == 2019, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_ksg == 678 & year == 2020, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_ksg == 660 & year == 1994, NA, tj_yr_zero),
   ) |>
   group_by(country_case) |>
   mutate(
+    yr_cce_sta_hi = min_inf_to_na(yr_cce_sta_hi),
+    yr_tcs = min_inf_to_na(yr_tcs),
+    yr_rep = min_inf_to_na(yr_rep),
+    yr_vet = min_inf_to_na(yr_vet),
     tj_yr_zero = min_inf_to_na(tj_yr_zero),
-    # tj_yr_zero = ifelse(is.infinite(tj_yr_zero), NA, tj_yr_zero)
   ) |>
   ungroup() |>
   mutate(
@@ -2646,9 +2689,51 @@ df <- df |>
     tj_yr_zero = ifelse(ccode_cow == 150, 1996, tj_yr_zero),
     tj_yr_zero = ifelse(ccode_cow == 517, 1998, tj_yr_zero),
     tj_yr_zero = ifelse(ccode_cow == 230, 2007, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_cow == 100, 2005, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_ksg == 135, 2003, tj_yr_zero),
     tj_yr_zero = ifelse(ccode_cow == 640, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_cow == 373, NA, tj_yr_zero),
+    tj_yr_zero = ifelse(ccode_cow == 620, NA, tj_yr_zero),
   ) |>
   mutate(
+    yr_cce_sta_hi = if_else(
+      yr_cce_sta_hi < tj_yr_zero | is.na(tj_yr_zero),
+      tj_yr_zero,
+      yr_cce_sta_hi
+    ),
+    yr_tcs = if_else(
+      yr_tcs < tj_yr_zero | is.na(tj_yr_zero),
+      tj_yr_zero,
+      yr_tcs
+    ),
+    yr_rep = if_else(
+      yr_rep < tj_yr_zero | is.na(tj_yr_zero),
+      tj_yr_zero,
+      yr_rep
+    ),
+    yr_vet = if_else(
+      yr_vet < tj_yr_zero | is.na(tj_yr_zero),
+      tj_yr_zero,
+      yr_vet
+    ),
+  ) |>
+  mutate(
+    yr_cce_sta_hi = case_when(
+      year == yr_cce_sta_hi ~ 1,
+      TRUE ~ 0
+    ),
+    yr_tcs = case_when(
+      year == yr_tcs ~ 1,
+      TRUE ~ 0
+    ),
+    yr_rep = case_when(
+      year == yr_rep ~ 1,
+      TRUE ~ 0
+    ),
+    yr_vet = case_when(
+      year == yr_vet ~ 1,
+      TRUE ~ 0
+    ),
     tj_yr_zero = case_when(
       year == tj_yr_zero ~ 1,
       TRUE ~ 0

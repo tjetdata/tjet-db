@@ -78,7 +78,11 @@ tjet_cy,sample indicators,,reparations_sample,"country-years from first year wit
 tjet_cy,sample indicators,,tcs_sample,"country-years from first year with any truth commissions, binary",TJET,,
 tjet_cy,sample indicators,,trials_domestic_sample,"country-years from first year with any domestic human rights or conflict prosecutions, binary",TJET,,
 tjet_cy,sample indicators,,vettings_sample,"country-years from first year with any vetting policies, binary",TJET,,
-tjet_cy,sample indicators,,tj_yr_zero,"year when transitional justice was first initiated, binary based on when prosecutions of high-ranking defendants, public truth commissions, lustration or reparation policies started in a country",TJET,,
+tjet_cy,,,tj_yr_zero,"year when transitional justice was first initiated, binary based on when prosecutions of high-ranking defendants with conviction, public truth commissions, lustration or reparation policies started in a country",TJET,,
+tjet_cy,,,yr_rep,tj_yr_zero for reparations,TJET,1970,2024
+tjet_cy,,,yr_tcs,tj_yr_zero for truth commissions,TJET,1970,2024
+tjet_cy,,,yr_cce_sta_hi,tj_yr_zero for trials,TJET,1970,2020
+tjet_cy,,,yr_vet,tj_yr_zero for vetting,TJET,1970,2024
 tjet_cy,,,tj_laws,count of TJ-related laws passed,TJET,1970,2024
 tjet_cy,website map: amnesties,,amnesties,count of amnesties per country and year of passing,TJET,,
 tjet_cy,website map: amnesties,,amnesties_SGBV,"binary for whether amnesties in country-year included any that addressed SGBV (1 = yes, 0 = no) ",TJET,,
