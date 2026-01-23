@@ -1,7 +1,7 @@
 get_data <- TRUE
 source(here::here("pipeline/go/zot_setup.R"))
 
-cat("\nBacking up Zotero...\n")
+message("Backing up Zotero...")
 file.copy(
   from = "~/Zotero/zotero.sqlite",
   # to = paste("~/Zotero/zotero.sqlite.backup", str_replace_all(today(), "-", "_"), sep = "_"),
@@ -28,7 +28,7 @@ if (get_data) {
   saveRDS(resps, here::here("data/zot_collections.rds"))
 }
 
-cat("\nProcessing collections...\n")
+message("Processing collections...")
 collections <- readRDS(here::here("data/zot_collections.rds")) |>
   resps_successes() |>
   resps_data(\(resp) resp_body_json(resp)) |>
@@ -69,10 +69,11 @@ if (nrow(dupes) > 0) {
     "There are duplicate mechanism ID collections! These need to be resolved manually in Zotero first."
   )
 }
+rm(dupes)
 
 ### don't actually need tags on their own; getting them below from items
 # if(get_data) {
-#   cat("\nDownloading Zotero tags and saving locally...\n")
+#   message("Downloading Zotero tags and saving locally...")
 #   req <- request(paste(base, "tags?format=json", sep = "") ) |>
 #     req_headers(
 #       'Zotero-API-Key' = zot_key,
@@ -100,8 +101,8 @@ if (nrow(dupes) > 0) {
 #   arrange(tag)
 
 if (get_data) {
-  cat(
-    "\nDownloading Zotero items locally (this will take a long time, at least 30-45 min)...\n"
+  message(
+    "Downloading Zotero items locally (this will take a long time, at least 42-45 min)..."
   )
   req <- request(paste(base, "items?format=json", sep = "")) |>
     req_headers(
@@ -128,7 +129,7 @@ if (get_data) {
   saveRDS(resps, here::here("data/zot_items.rds"))
 }
 
-cat("\nProcessing items...\n")
+message("Processing items...")
 items <- readRDS(here::here("data/zot_items.rds")) |>
   resps_successes() |>
   resps_data(\(resp) resp_body_json(resp)) |>
@@ -136,7 +137,7 @@ items <- readRDS(here::here("data/zot_items.rds")) |>
     x[["data"]]
   })
 
-cat("\nProcessing and cleaning tags...\n")
+message("Processing and cleaning tags...")
 
 tags <- items |>
   map(\(x) {
@@ -168,17 +169,27 @@ cleaned_tags <- tags |>
     cleaned = str_replace(cleaned, "id ", "ID ")
   )
 
-### these are actually not yet getting cleaned below; need to fix that!!!
 cleaned_tags |>
   filter(cleaned != tag) |>
   arrange(cleaned) |>
   print(n = Inf)
 
+CleanTags <- function(x) {
+  if (length(x) == 0) {
+    return(character(0))
+  }
+  tibble(tag = x) |>
+    left_join(cleaned_tags, by = "tag") |>
+    mutate(cleaned = if_else(is.na(cleaned), tag, cleaned)) |>
+    pull(cleaned)
+}
+
+message(
+  "Are there collections and/or tags not in the dictionary? Checking & updating..."
+)
+
 dict <- read_csv(here::here("data/zot_dict.csv"))
 
-cat("\nAre there collections and/or tags not in the dictionary? Checking...\n")
-
-### are there new collections?
 collections |>
   filter(
     !str_detect(
@@ -188,13 +199,22 @@ collections |>
       )
     )
   ) |>
+  mutate(exist = TRUE) |>
   full_join(
     dict |>
-      select(collection, collection_key, parent_key) |>
       mutate(dict = TRUE),
-    by = c("collection", "collection_key", "parent_key")
+    by = c("collection", "collection_key", "parent_key", "parent")
   ) |>
-  filter(is.na(dict))
+  filter(exist) |>
+  select(
+    tag,
+    collection,
+    collection_key,
+    parent,
+    parent_key
+  ) |>
+  arrange(parent, collection, tag) |>
+  write_csv(here::here("data/zot_dict.csv"), na = "")
 
 ### are there tags not in the dictionary?
 unassigned <- cleaned_tags |>
@@ -218,7 +238,7 @@ unassigned <- cleaned_tags |>
   select(-dict)
 if (nrow(unassigned) > 0) {
   warning("There are unassigned tags!")
-  print(unassigned, n = Inf)
+  write_csv(unassigned, here::here("data/zot_unassigned_tags.csv"), na = "")
 }
 
 mechID_tags <- cleaned_tags |>
@@ -226,21 +246,36 @@ mechID_tags <- cleaned_tags |>
   rename(tag = cleaned) |>
   filter(str_detect(
     tag,
-    "^(accusedID|amnestyID|reparationID|trialID|truthcommissionID|vettingID)( [1-9]\\d*)$"
+    "^(amnestyID|reparationID|truthcommissionID|vettingID)( [1-9]\\d*)$"
   ))
 
-# other_tags <- cleaned_tags |>
-#   select(cleaned) |>
-#   rename(tag = cleaned) |>
-#   filter(!str_detect(tag, "^(accusedID|amnestyID|reparationID|trialID|truthcommissionID|vettingID)( [1-9]\\d*)$"))
+message("Assigning accusedIDs to respective trialIDs if missing... ")
+load(here::here("data/tjet.RData"))
 
-### assigning accusedIDs tags to respective trialIDs
-
-read_csv(here::here("tjet_datasets/tjet_accused.csv")) |>
+ids <- tjet[["Prosecutions"]][["Accused"]] |>
+  tibble() |>
+  select(accusedID, trialID) |>
+  unnest(trialID, keep_empty = TRUE) |>
+  rename(airtable_record_id = trialID) |>
+  left_join(
+    tjet[["Prosecutions"]][["Trials"]] |>
+      select(airtable_record_id, trialID),
+    by = "airtable_record_id"
+  ) |>
   select(accusedID, trialID)
 
+getID <- function(x) {
+  tibble(accusedID = x) |>
+    left_join(ids, by = "accusedID") |>
+    pull(trialID) |>
+    as.character()
+}
 
-cat("\nCreating new sub-collections for mechanism IDs...\n")
+####################################################################################################
+#### assigning accusedIDs to respective trialIDs may have to be done before creating new collections
+####################################################################################################
+
+message("Creating new sub-collections for mechanism IDs...")
 
 new_subcollections <- mechID_tags |>
   arrange(tag) |>
@@ -340,7 +375,7 @@ if (nrow(new_subcollections) > 0) {
     )
 }
 
-cat("\nCreating lookup table for TJET website...\n")
+message("Creating lookup table for TJET website...")
 # libbase <- "https://library.transitionaljusticedata.org/?tjetdb="
 lookup <- collections |>
   filter(str_detect(
@@ -352,14 +387,25 @@ lookup <- collections |>
   arrange(collection) |>
   rename(id = collection)
 
-cat("\nCleaning items & uploading edits...\n")
+message("Cleaning items & uploading edits...")
 
 new <- items |>
   future_map(\(x) {
     tags <- x[["tags"]] |>
-      unlist(use.names = FALSE)
+      unlist(use.names = FALSE) |>
+      CleanTags()
+    # tags <- tags[tags != "trialID na"]
+    new_tags <- tags[str_detect(tags, regex("^(accusedID)( [1-9]\\d*)$"))] |>
+      str_replace("accusedID ", "") |>
+      as.integer() |>
+      getID()
+    new_tags <- new_tags[!is.na(new_tags)]
+    if (length(new_tags) > 0) {
+      new_tags <- paste("trialID", new_tags)
+    }
+    new_tags <- unique(c(tags, new_tags))
     collection_keys <- dict |>
-      filter(tag %in% tags & is.na(tag2)) |>
+      filter(tag %in% tags) |>
       select(collection_key) |>
       distinct() |>
       unlist(use.names = FALSE)
@@ -381,18 +427,27 @@ new <- items |>
       key = x[["key"]],
       version = x[["version"]],
       old_collections = list(unlist(x[["collections"]])),
-      collections = list(new_collections)
+      collections = list(new_collections),
+      old_tags = list(unlist(x[["tags"]])),
+      tags = list(new_tags)
     )
   }) |>
   bind_rows() |>
   rowwise() |>
-  mutate(update = length(collections) > length(old_collections)) |>
+  mutate(
+    update = length(collections) > length(old_collections) |
+      length(tags) > length(old_tags),
+    tags = list(
+      map(tags, \(x) {
+        list(tag = x)
+      })
+    )
+  ) |>
   ungroup() |>
-  select(key, version, collections, update)
+  filter(update) |>
+  select(key, version, collections, tags)
 
 responses <- new |>
-  filter(update) |>
-  select(-update) |>
   group_split(group_id = row_number() %/% 50) |>
   as.list() |>
   map(\(x) {
@@ -413,7 +468,7 @@ responses <- new |>
       req_perform()
   })
 
-cat("\nWriting lookup table to site generator database...\n")
+message("Writing lookup table to site generator database...")
 
 con <- dbConnect(
   RMariaDB::MariaDB(),
@@ -436,12 +491,9 @@ dbReadTable(con, "mechIDcollections") %>%
   tibble()
 dbDisconnect(con)
 
-#### what's missing?
-cat(
-  "\nAnalyzing missing sourcing for TJET mechanisms and saving results locally...\n"
+message(
+  "Analyzing missing sourcing for TJET mechanisms and saving results locally..."
 )
-
-load(here::here("data", "tjet.RData"), verbose = TRUE)
 
 ### amnesties
 ids <- read_csv(here::here("tjet_datasets/tjet_amnesties.csv")) |>
@@ -661,10 +713,10 @@ miss_prosecutions <- lookup |>
         "Bureau of Democracy Human Rights and Labor, U.S. Department of State, Country Reports on Human Rights Practices, available at <http://www.state.gov/j/drl/rls/hrrpt/>\r\n"
   ) |>
   select(accusedID, trialID, sources, nonSDsourceFirst, nonSDsources)
-if (nrow(miss_prosecutions) > 0) {
-  write_csv(
-    miss_prosecutions,
-    here::here("zot_missing/prosecutions.csv"),
-    na = ""
-  )
-}
+# if (nrow(miss_prosecutions) > 0) {
+#   write_csv(
+#     miss_prosecutions,
+#     here::here("zot_missing/prosecutions.csv"),
+#     na = ""
+#   )
+# }
