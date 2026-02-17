@@ -31,7 +31,7 @@ pkeys <- c(
   "Amnesties" = "amnestyID",
   "Trials" = "trialID",
   "Accused" = "accusedID",
-  "CourtLevels" = "CLID",
+  "CaseEvents" = "CLID",
   "TruthCommissions" = "truthcommissionID",
   "Reparations" = "reparationID",
   "Vettings" = "vettingID",
@@ -163,7 +163,7 @@ db <- names(to_download) |>
     base <- db[[basename]]
     base[drop_invalids] <- map(drop_invalids, function(tab_name) {
       base[[tab_name]] |>
-        filter(is.na(invalid) | invalid == 0)
+        filter(invalid == 0)
     })
     return(base)
   })
@@ -665,11 +665,11 @@ message("\nCleaning up lookup fields...")
 
 ### lookup fields as list columns of length greater than one
 
-# db[["Prosecutions"]][["Trials"]] <-
-#   db[["Prosecutions"]][["Trials"]] |>
-#   rowwise() |>
-#   mutate(membership = str_flatten(membership, collapse =", ")) |>
-#   ungroup()
+db[["Prosecutions"]][["Accused"]] <-
+  db[["Prosecutions"]][["Accused"]] |>
+  rowwise() |>
+  mutate(membership = str_flatten(membership, collapse = "; ")) |>
+  ungroup()
 
 # db[["Prosecutions"]][["Trials_lastVerdict"]] <-
 #   db[["Prosecutions"]][["Trials"]] |>
@@ -1391,8 +1391,7 @@ translist <- read_csv(
     dem_all = rowSums(
       across(all_of(c("dem_bmr", "dem_polity", "dem_vdem"))),
       na.rm = TRUE
-    ) /
-      3
+    )
   ) |>
   select(
     country,
@@ -1406,27 +1405,40 @@ translist <- read_csv(
   ) |>
   group_by(ccode) |>
   mutate(
-    finite_check = sum(!is.na(dem_polity)),
     dem_polity_min = ifelse(
-      finite_check > 0,
+      sum(!is.na(dem_polity)) > 0,
       min(dem_polity, na.rm = TRUE),
       NA
     ),
     dem_polity_max = ifelse(
-      finite_check > 0,
+      sum(!is.na(dem_polity)) > 0,
       max(dem_polity, na.rm = TRUE),
       NA
     ),
-    finite_check = sum(!is.na(dem_bmr)),
-    dem_bmr_min = ifelse(finite_check > 0, min(dem_bmr, na.rm = TRUE), NA),
-    dem_bmr_max = ifelse(finite_check > 0, max(dem_bmr, na.rm = TRUE), NA),
-    finite_check = sum(!is.na(dem_vdem)),
-    dem_vdem_min = ifelse(finite_check > 0, min(dem_vdem, na.rm = TRUE), NA),
-    dem_vdem_max = ifelse(finite_check > 0, max(dem_vdem, na.rm = TRUE), NA),
-    sources = 3 -
-      (is.na(dem_polity_max) + is.na(dem_bmr_max) + is.na(dem_vdem_max)),
-    regime = max(transition, na.rm = TRUE),
-    dem_prop = sum(dem_all, na.rm = TRUE) / n()
+    dem_bmr_min = ifelse(
+      sum(!is.na(dem_bmr)) > 0,
+      min(dem_bmr, na.rm = TRUE),
+      NA
+    ),
+    dem_bmr_max = ifelse(
+      sum(!is.na(dem_bmr)) > 0,
+      max(dem_bmr, na.rm = TRUE),
+      NA
+    ),
+    dem_vdem_min = ifelse(
+      sum(!is.na(dem_vdem)) > 0,
+      min(dem_vdem, na.rm = TRUE),
+      NA
+    ),
+    dem_vdem_max = ifelse(
+      sum(!is.na(dem_vdem)) > 0,
+      max(dem_vdem, na.rm = TRUE),
+      NA
+    ),
+    # sources = 3 -
+    #   (is.na(dem_polity_max) + is.na(dem_bmr_max) + is.na(dem_vdem_max)),
+    # regime = max(transition, na.rm = TRUE),
+    dem_prop = sum(dem_all / 3, na.rm = TRUE) / n()
   ) |>
   ungroup() |>
   mutate(
@@ -1446,13 +1458,31 @@ translist <- read_csv(
       across(all_of(c("context_bmr", "context_polity", "context_vdem"))),
       na.rm = TRUE
     ),
+    sources = 3 -
+      (is.na(dem_polity) + is.na(dem_bmr) + is.na(dem_vdem)),
+    regime = if_else(transition == 1, "transitional", NA)
+  ) |>
+  arrange(ccode, year) |>
+  fill(
+    .by = ccode,
+    .direction = "down",
+    regime
+  ) |>
+  mutate(
+    # regime = case_when(
+    #   regime == "transitional" ~ "transitional",
+    #   is.na(regime) & context_dem == 0 & sources > 0 ~ "autocratic",
+    #   is.na(regime) & (context_dem == sources | context_dem > 1) ~ "democratic",
+    #   is.na(regime) & dem_prop > 0.5 ~ "democratic"
+    #   ## India is the only ambiguous case by this algorithm, hence the last line
+    # ),
     regime = case_when(
-      regime == 1 ~ "transitional",
-      regime == 0 & context_dem == 0 & sources > 0 ~ "autocratic",
-      regime == 0 & (context_dem == sources | context_dem > 1) ~ "democratic",
-      regime == 0 & dem_prop > 0.5 ~ "democratic"
+      regime == "transitional" ~ "transitional",
+      dem_all == 0 ~ "autocratic",
+      dem_all == 1 & sources > 1 ~ "autocratic",
+      dem_all == 1 & sources == 1 ~ "democratic",
+      dem_all > 1 ~ "democratic"
     ),
-    ## India is the only ambiguous case by this algorithm, hence the last line
     reg_democ = ifelse(regime == "democratic", 1, 0),
     reg_autoc = ifelse(regime == "autocratic", 1, 0),
     reg_trans = ifelse(regime == "transitional", 1, 0)
@@ -1466,12 +1496,15 @@ translist <- read_csv(
     dem_bmr,
     dem_polity,
     dem_vdem,
+    # dem_all, #
+    # sources_new, #
+    # regime_new, #
+    sources,
     regime_sample,
     reg_democ,
     reg_autoc,
     reg_trans
-  ) |>
-  filter(year <= 2024)
+  )
 
 ### democratic reversions data for merging
 reversions <- read_csv(
@@ -1521,10 +1554,19 @@ db[["CountryYears"]] <- map(countrylist$country, function(ctry) {
   mutate(cyID = paste(ccode, year, sep = "-")) |>
   full_join(translist, by = c("country", "ccode", "year")) |>
   full_join(confllist, by = c("ccode_ksg" = "gwno_loc", "year" = "year")) |>
-  mutate(conflict = ifelse(is.na(conflict), 0, 1)) |>
-  group_by(ccode_case) |>
-  mutate(conflict = max(conflict)) |>
-  ungroup() |>
+  arrange(ccode_case, year) |>
+  mutate(
+    conflict_active = conflict,
+  ) |>
+  fill(
+    .by = ccode_case,
+    .direction = "down",
+    conflict
+  ) |>
+  mutate(
+    conflict = ifelse(is.na(conflict), 0, 1),
+    conflict_active = ifelse(is.na(conflict_active), 0, 1)
+  ) |>
   mutate(
     country_label = ifelse(
       end < 2020,
@@ -1574,7 +1616,8 @@ db[["CountryYears"]] <- map(countrylist$country, function(ctry) {
     reg_autoc,
     reg_trans,
     conflict,
-    transition
+    transition,
+    conflict_active
   ) |>
   left_join(amnesties, by = c("ccode", "year")) |>
   mutate(
@@ -1938,15 +1981,122 @@ db[["Vettings"]] <- db[["Vettings"]] |>
 
 message("\nProcessing ICC data... ")
 
+year_end <- 2024
+
 db[["ICC"]] <- db[["ICC"]] |>
-  reframe(
-    .by = ccode_cow,
-    ICC_referral = min_inf_to_na(ICC_referral),
-    ICC_prelim_exam = min_inf_to_na(ICC_prelim_exam),
-    ICC_prelimEnd = min_inf_to_na(ICC_prelimEnd),
-    ICC_investigation = min_inf_to_na(ICC_investigation)
+  select(
+    situation,
+    ccode_cow,
+    referral_type,
+    ICC_prelim,
+    ICC_prelim_month,
+    ICC_prelim_end,
+    ICC_prelim_end_month,
+    ICC_referral,
+    ICC_referral_month,
+    ICC_investigation,
+    ICC_investigation_month,
+    ICC_investigation_closed,
+    ICC_investigation_closed_month,
+    ICC_arrest_warrant,
+    ICC_arrest_appear,
+    ICC_confirm_charges,
+    ICC_proceedings,
+    ICC_proceedings_end,
+    ICC_withdrawn_dismissed
+  )
+
+icc_to_merge <- db[["ICC"]] |>
+  arrange(situation) |>
+  select(
+    situation,
+    ccode_cow,
+    ICC_referral,
+    ICC_prelim,
+    ICC_prelim_end,
+    ICC_investigation,
+    ICC_investigation_closed,
+    ICC_proceedings,
+    ICC_proceedings_end,
   ) |>
-  arrange(ccode_cow)
+  mutate(
+    ICC_prelim_end = if_else(
+      !is.na(ICC_prelim) & is.na(ICC_prelim_end),
+      year_end,
+      ICC_prelim_end
+    ),
+    ICC_investigation_closed = if_else(
+      !is.na(ICC_investigation) & is.na(ICC_investigation_closed),
+      year_end,
+      ICC_investigation_closed
+    ),
+    ICC_proceedings_end = if_else(
+      !is.na(ICC_proceedings) & is.na(ICC_proceedings_end),
+      year_end,
+      ICC_proceedings_end
+    ),
+  ) |>
+  rowwise() |>
+  mutate(
+    ICC_prelim = list(
+      if (!is.na(ICC_prelim)) ICC_prelim:ICC_prelim_end else NULL
+    ),
+    ICC_investigation = list(
+      if (!is.na(ICC_investigation)) {
+        ICC_investigation:ICC_investigation_closed
+      } else {
+        NULL
+      }
+    ),
+    ICC_proceedings = list(
+      if (!is.na(ICC_proceedings)) ICC_proceedings:ICC_proceedings_end else NULL
+    )
+  ) |>
+  ungroup()
+
+# db[["ICC"]] <- db[["ICC"]] |>
+#   reframe(
+#     .by = ccode_cow,
+#     ICC_referral = min_inf_to_na(ICC_referral),
+#     ICC_prelim = min_inf_to_na(ICC_prelim),
+#     ICC_prelim_end = min_inf_to_na(ICC_prelim_end),
+#     ICC_investigation = min_inf_to_na(ICC_investigation)
+#   ) |>
+#   arrange(ccode_cow)
+
+icc_to_merge <- icc_to_merge |>
+  select(ccode_cow, ICC_referral) |>
+  filter(!is.na(ICC_referral)) |>
+  rename(year = ICC_referral) |>
+  mutate(ICC_referral = 1) |>
+  full_join(
+    icc_to_merge |>
+      select(ccode_cow, ICC_prelim) |>
+      unnest(cols = ICC_prelim) |>
+      rename(year = ICC_prelim) |>
+      mutate(ICC_prelim = 1) |>
+      distinct(),
+    by = c("ccode_cow", "year")
+  ) |>
+  full_join(
+    icc_to_merge |>
+      select(ccode_cow, ICC_investigation) |>
+      unnest(cols = ICC_investigation) |>
+      rename(year = ICC_investigation) |>
+      mutate(ICC_investigation = 1) |>
+      distinct(),
+    by = c("ccode_cow", "year")
+  ) |>
+  full_join(
+    icc_to_merge |>
+      select(ccode_cow, ICC_proceedings) |>
+      unnest(cols = ICC_proceedings) |>
+      rename(year = ICC_proceedings) |>
+      mutate(ICC_proceedings = 1) |>
+      distinct(),
+    by = c("ccode_cow", "year")
+  ) |>
+  arrange(ccode_cow, year)
 
 # db[["ICCaccused"]] <- db[["Accused"]] |>
 #   filter(!is.na(ICC_investigation)) |>
@@ -1992,11 +2142,11 @@ db[["ICCaccused"]] <- db[["CaseEvents"]] |>
   mutate(
     outcome = case_when(
       outcome == "ICC: arrest warrant issued" ~ "ICC_arrest_warrant",
-      outcome == "ICC: arrest and appearance at court" ~ "ICC_arrestAppear",
+      outcome == "ICC: arrest and appearance at court" ~ "ICC_arrest_appear",
       outcome == "ICC: confirmation of charges" ~ "ICC_confirm_charges",
       outcome == "ICC: proceedings began" ~ "ICC_proceedings",
       outcome ==
-        "ICC: charges withdrawn or case dismissed" ~ "ICC_withdrawnDismissed"
+        "ICC: charges withdrawn or case dismissed" ~ "ICC_withdrawn_dismissed"
     )
   ) |>
   select(accusedID, year, outcome) |>
@@ -2019,10 +2169,10 @@ db[["ICCaccused"]] <- db[["CaseEvents"]] |>
     position_desc,
     position_desc_fr,
     ICC_arrest_warrant,
-    ICC_arrestAppear,
+    ICC_arrest_appear,
     ICC_confirm_charges,
     ICC_proceedings,
-    ICC_withdrawnDismissed
+    ICC_withdrawn_dismissed
   )
 
 ### merging it all together
@@ -2185,31 +2335,54 @@ df <- df |>
     by = c("ccode_cow" = "ccode", "year" = "year")
   ) |>
   mutate(tj_laws = ifelse(is.na(tj_laws) & year >= 1970, 0, tj_laws)) |>
-  full_join(db[["ICC"]], by = "ccode_cow") |>
+  full_join(icc_to_merge, by = c("ccode_cow", "year")) |>
+  # mutate(
+  #   ICC_prelim_exam = case_when(
+  #     year >= ICC_prelim_exam &
+  #       year <= ICC_prelimEnd ~ 1,
+  #     year >= ICC_investigation ~ 0,
+  #     TRUE ~ 0
+  #   ),
+  #   ICC_referral = case_when(
+  #     year >= ICC_referral ~ 1,
+  #     TRUE ~ 0
+  #   ),
+  #   ICC_investigation = case_when(
+  #     year >= ICC_investigation ~ 1,
+  #     TRUE ~ 0
+  #   )
+  # ) |>
+  # select(-ICC_prelimEnd) |>
   mutate(
-    ICC_prelim_exam = case_when(
-      year >= ICC_prelim_exam &
-        year <= ICC_prelimEnd ~ 1,
-      year >= ICC_investigation ~ 0,
-      TRUE ~ 0
+    ICC_prelim = case_when(
+      .default = ICC_prelim,
+      ICC_investigation == 1 ~ 0,
+      is.na(ICC_prelim) ~ 0
     ),
-    ICC_referral = case_when(
-      year >= ICC_referral ~ 1,
-      TRUE ~ 0
+    ICC_investigation = if_else(
+      is.na(ICC_investigation),
+      0,
+      ICC_investigation
     ),
-    ICC_investigation = case_when(
-      year >= ICC_investigation ~ 1,
-      TRUE ~ 0
+    ICC_proceedings = if_else(
+      is.na(ICC_proceedings),
+      0,
+      ICC_proceedings
     )
   ) |>
-  select(-ICC_prelimEnd) |>
   arrange(country_case, year) |>
   group_by(country_case) |>
+  fill(
+    .direction = "down",
+    ICC_referral
+  ) |>
   mutate(
-    ICC_prelim_exam_cumu = cumsum(ICC_prelim_exam),
-    ICC_investigation_cumu = cumsum(ICC_investigation)
+    ICC_prelim_cumu = cumsum(ICC_prelim),
+    ICC_investigation_cumu = cumsum(ICC_investigation),
+    ICC_proceedings_cumu = cumsum(ICC_proceedings)
   ) |>
   ungroup() |>
+  mutate(ICC_referral = if_else(is.na(ICC_referral), 0, ICC_referral)) |>
   full_join(
     db[["ICCaccused"]] |>
       select(ccode_target, ICC_arrest_warrant) |>
@@ -2222,14 +2395,14 @@ df <- df |>
   rename(ICC_arrest_warrant = icc_action) |>
   full_join(
     db[["ICCaccused"]] |>
-      select(ccode_target, ICC_arrestAppear) |>
-      filter(!is.na(ICC_arrestAppear) & ICC_arrestAppear <= 2024) |>
+      select(ccode_target, ICC_arrest_appear) |>
+      filter(!is.na(ICC_arrest_appear) & ICC_arrest_appear <= 2024) |>
       mutate(icc_action = 1) |>
-      group_by(ccode_target, ICC_arrestAppear) |>
+      group_by(ccode_target, ICC_arrest_appear) |>
       reframe(icc_action = sum(icc_action)),
-    by = c("ccode_cow" = "ccode_target", "year" = "ICC_arrestAppear")
+    by = c("ccode_cow" = "ccode_target", "year" = "ICC_arrest_appear")
   ) |>
-  rename(ICC_arrestAppear = icc_action) |>
+  rename(ICC_arrest_appear = icc_action) |>
   full_join(
     db[["ICCaccused"]] |>
       select(ccode_target, ICC_confirm_charges) |>
@@ -2249,41 +2422,43 @@ df <- df |>
       reframe(icc_action = sum(icc_action)),
     by = c("ccode_cow" = "ccode_target", "year" = "ICC_proceedings")
   ) |>
-  rename(ICC_proceedings = icc_action) |>
+  rename(ICC_proceedings_n = icc_action) |>
   full_join(
     db[["ICCaccused"]] |>
-      select(ccode_target, ICC_withdrawnDismissed) |>
-      filter(!is.na(ICC_withdrawnDismissed) & ICC_withdrawnDismissed <= 2024) |>
+      select(ccode_target, ICC_withdrawn_dismissed) |>
+      filter(
+        !is.na(ICC_withdrawn_dismissed) & ICC_withdrawn_dismissed <= 2024
+      ) |>
       mutate(icc_action = 1) |>
-      group_by(ccode_target, ICC_withdrawnDismissed) |>
+      group_by(ccode_target, ICC_withdrawn_dismissed) |>
       reframe(icc_action = sum(icc_action)),
-    by = c("ccode_cow" = "ccode_target", "year" = "ICC_withdrawnDismissed")
+    by = c("ccode_cow" = "ccode_target", "year" = "ICC_withdrawn_dismissed")
   ) |>
-  rename(ICC_withdrawnDismissed = icc_action) |>
+  rename(ICC_withdrawn_dismissed = icc_action) |>
   mutate(
     ICC_arrest_warrant = ifelse(
       is.na(ICC_arrest_warrant),
       0,
       ICC_arrest_warrant
     ),
-    ICC_arrestAppear = ifelse(is.na(ICC_arrestAppear), 0, ICC_arrestAppear),
+    ICC_arrest_appear = ifelse(is.na(ICC_arrest_appear), 0, ICC_arrest_appear),
     ICC_confirm_charges = ifelse(
       is.na(ICC_confirm_charges),
       0,
       ICC_confirm_charges
     ),
-    ICC_proceedings = ifelse(is.na(ICC_proceedings), 0, ICC_proceedings),
-    ICC_withdrawnDismissed = ifelse(
-      is.na(ICC_withdrawnDismissed),
+    ICC_proceedings_n = ifelse(is.na(ICC_proceedings_n), 0, ICC_proceedings_n),
+    ICC_withdrawn_dismissed = ifelse(
+      is.na(ICC_withdrawn_dismissed),
       0,
-      ICC_withdrawnDismissed
+      ICC_withdrawn_dismissed
     )
   ) |>
   arrange(country_case, year) |>
   group_by(country_case) |>
   mutate(
     ICC_arrest_warrant_cumu = cumsum(ICC_arrest_warrant),
-    ICC_proceedings_cumu = cumsum(ICC_proceedings)
+    ICC_proceedings_n_cumu = cumsum(ICC_proceedings_n)
   ) |>
   ungroup() |>
   left_join(
@@ -2376,10 +2551,10 @@ df <- df |>
   group_by(region, year) |>
   mutate(
     icc_sp_region = sum(icc_sp),
-    ICC_prelim_exam_region = sum(ICC_prelim_exam_cumu),
+    ICC_prelim_region = sum(ICC_prelim_cumu),
     ICC_investigation_region = sum(ICC_investigation_cumu),
     ICC_arrest_warrant_region = sum(ICC_arrest_warrant_cumu),
-    ICC_proceedings_region = sum(ICC_proceedings_cumu)
+    ICC_proceedings_n_region = sum(ICC_proceedings_n_cumu)
   ) |>
   ungroup() |>
   left_join(
@@ -2529,7 +2704,6 @@ df <- df |>
   ) |>
   ungroup() |>
   select(-isna)
-
 
 if (nrow(df) != 9871) {
   stop("Incorrect number of country-years for 1970-2024")
@@ -2768,8 +2942,8 @@ not <- c(
   "reg_democ",
   "reg_autoc",
   "reg_trans",
-  "transition",
   "conflict",
+  "conflict_active",
   "sample_trans",
   "sample_confl_25",
   "sample_confl_100",
@@ -2839,7 +3013,7 @@ db[["Amnesties"]] <- db[["Amnesties"]] |>
   )
 db[["Amnesties"]] |>
   filter(amnestyYear %in% db_years_mech) |>
-  select(amnestyID, invalid, amnestyYear, mechanismDescription_fr) |>
+  select(amnestyID, amnestyYear, mechanismDescription_fr) |>
   filter(
     str_detect(mechanismDescription_fr, "droits de l'homme") |
       is.na(mechanismDescription_fr)
@@ -2855,7 +3029,7 @@ db[["Reparations"]] <- db[["Reparations"]] |>
   )
 db[["Reparations"]] |>
   filter(yearCreated %in% db_years_mech) |>
-  select(reparationID, invalid, yearCreated, officialName_en_fr) |>
+  select(reparationID, yearCreated, officialName_en_fr) |>
   filter(
     str_detect(officialName_en_fr, "droits de l'homme") |
       is.na(officialName_en_fr)
@@ -2871,7 +3045,7 @@ db[["Trials"]] <- db[["Trials"]] |>
   )
 db[["Trials"]] |>
   filter(yearStart %in% db_years_trials) |>
-  select(trialID, invalid, yearStart, caseDescription_fr) |>
+  select(trialID, yearStart, caseDescription_fr) |>
   filter(
     str_detect(caseDescription_fr, "droits de l'homme") |
       is.na(caseDescription_fr)
@@ -2887,7 +3061,7 @@ db[["Accused"]] <- db[["Accused"]] |>
     )
   )
 db[["Accused"]] |>
-  select(accusedID, invalid, position_desc, position_desc_fr) |>
+  select(accusedID, position_desc, position_desc_fr) |>
   filter(
     !is.na(position_desc) &
       (str_detect(position_desc_fr, "droits de l'homme") |
@@ -2920,7 +3094,7 @@ db[["Vettings"]] <- db[["Vettings"]] |>
     )
   )
 db[["Vettings"]] |>
-  select(vettingID, invalid, yearStart, policyName, policyName_fr) |>
+  select(vettingID, yearStart, policyName, policyName_fr) |>
   filter(str_detect(policyName_fr, "droits de l'homme") | is.na(policyName_fr))
 
 db[["Countries"]] <- db[["Countries"]] |>
@@ -3140,16 +3314,16 @@ db[["Accused"]] <- db[["Accused"]] |>
   write_csv(here::here(dropbox_path, "tjet_accused.csv"), na = "")
 
 db[["CaseEventsCodebook"]] <- db[["codebook"]] |>
-  filter(tables == "tjet_courtlevels.csv" & !is.na(order)) |>
+  filter(tables == "tjet_caseevents.csv" & !is.na(order)) |>
   arrange(order) |>
   # filter(col_name %in% names(db[["CaseEvents"]])) |>
   select(col_name, definition) |>
   # arrange(str_to_lower(col_name)) |>
   write_csv(
-    here::here("tjet_datasets", "tjet_courtlevels_codebook.csv"),
+    here::here("tjet_datasets", "tjet_caseevents_codebook.csv"),
     na = ""
   ) |>
-  write_csv(here::here(dropbox_path, "tjet_courtlevels_codebook.csv"), na = "")
+  write_csv(here::here(dropbox_path, "tjet_caseevents_codebook.csv"), na = "")
 db[["CaseEvents"]] <- db[["CaseEvents"]] |>
   # select(CLID, accusedID, courtLevel, courtName, day, month, year, date,
   #        last_fx, verdict, guilty, sentence, sentencingTime,
@@ -3163,8 +3337,8 @@ db[["CaseEvents"]] <- db[["CaseEvents"]] |>
         unlist(use.names = FALSE)
     )
   ) |>
-  write_csv(here::here("tjet_datasets", "tjet_courtlevels.csv"), na = "") |>
-  write_csv(here::here(dropbox_path, "tjet_courtlevels.csv"), na = "")
+  write_csv(here::here("tjet_datasets", "tjet_caseevents.csv"), na = "") |>
+  write_csv(here::here(dropbox_path, "tjet_caseevents.csv"), na = "")
 
 db[["TruthCommissionsCodebook"]] <- db[["codebook"]] |>
   filter(tables == "tjet_tcs.csv" & !is.na(order)) |>
@@ -3275,7 +3449,7 @@ db[["ICCcodebook"]] <- db[["codebook"]] |>
     na = ""
   )
 db[["ICC"]] <- db[["ICC"]] |>
-  arrange(ccode_cow, ICC_prelim_exam) |>
+  arrange(ccode_cow, ICC_prelim) |>
   mutate(tjet_version = timestamp) |>
   select(
     all_of(

@@ -306,22 +306,24 @@ tjet_cy,"prosecutions, int'l (excl. hybrid)",,cce_int_opp_hi,"int'l prosecutions
 tjet_cy,"prosecutions, int'l (excl. hybrid)",,acc_int_opp_hi,"int'l prosecutions of high-ranking opposition members, count of accused in ongoing trials, by nationality of the accused",TJET,1970,2020
 tjet_cy,"prosecutions, int'l (excl. hybrid)",,crt_int_opp_hi,"int'l prosecutions of high-ranking opposition members, conviction rate, cct/acc",TJET,1970,2020
 tjet_cy,"prosecutions, int'l (excl. hybrid)",,sen_int_opp_hi,"int'l prosecutions of high-ranking opposition members, total sum of sentences scale (> 1 year => 1; 1-3 years => 2; 4-9 years => 3; 10-19 years => 4; 20+ years => 5; Life Imprisonment => 6), by nationality of the accused & conviction year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_prelim_exam,"ongoing ICC preliminary examination by OTP, binary",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_prelim_exam_cumu,cumulative country-year count of ICC preliminary examination,TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_prelim_exam_region,"regional sum of cumulative country-year counts of ICC preliminary examinations (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_investigation,"ICC investigation by OTP, binary, carried forward from first year",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_investigation_cumu,cumulative country-year count of ICC investigation,TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_investigation_region,"regional sum of cumulative country-year counts of ICC investigations (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_arrest_warrant,number of arrest warrants issued by ICC,TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_arrest_warrant_cumu,cumulative number of arrest warrants issued by ICC,TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_arrest_warrant_region,"cumulative number of arrest warrants issued by ICC in region (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_arrestAppear,number of ICC appearances after arrest,TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_confirm_charges,number of cases with charges confirmed by ICC trial chamber,TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_proceedings,number of ICC proceedings beginning during the year,TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_proceedings_cumu,cumulative number of ICC proceedings,TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_proceedings_region,"cumulative number of ICC proceedings in region (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2020
-tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_withdrawnDismissed,number of accused who have charges withdrawn or proceedings dismissed by ICC during the year,TJET,1970,2020
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_referral,"state referral of situation to ICC, binary, carried forward from first year",TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_prelim,"ongoing ICC preliminary examination by OTP, binary",TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_prelim_cumu,cumulative country-year count of ICC preliminary examination,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_prelim_region,"regional sum of cumulative country-year counts of ICC preliminary examinations (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_investigation,"ICC investigation by OTP, binary, carried forward from first year",TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_investigation_cumu,cumulative country-year count of ICC investigation,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_investigation_region,"regional sum of cumulative country-year counts of ICC investigations (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_proceedings,"ongoing ICC proceedings, binary",TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_proceedings_cumu,cumulative country-year count of ICC proceedings,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_arrest_warrant,number of arrest warrants issued by ICC,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_arrest_warrant_cumu,cumulative number of arrest warrants issued by ICC,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_arrest_warrant_region,"cumulative number of arrest warrants issued by ICC in region (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_arrest_appear,number of ICC appearances after arrest,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_confirm_charges,number of cases with charges confirmed by ICC trial chamber,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_proceedings_n,number of ICC proceedings beginning during the year,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_proceedings_n_cumu,cumulative number of ICC proceedings,TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_proceedings_n_region,"cumulative number of ICC proceedings in region (Africa, Asia, Europe, Americas, Oceania)",TJET,1970,2024
+tjet_cy,"prosecutions, int'l (excl. hybrid)",,ICC_withdrawn_dismissed,number of accused who have charges withdrawn or proceedings dismissed by ICC during the year,TJET,1970,2024
 tjet_cy,"prosecutions, hybrid",,trs_hyb,"hybrid trials, count of trials beginning, by nationality of the accused & start year",,,
 tjet_cy,"prosecutions, hybrid",,trs_hyb_sta,"hybrid prosecutions of state agents, count of trials beginning, by nationality of the accused & start year",TJET,1970,2020
 tjet_cy,"prosecutions, hybrid",,tro_hyb_sta,"hybrid prosecutions of state agents, count of trials ongoing, by nationality of the accused",TJET,1970,2020
@@ -1041,6 +1043,8 @@ tjet_cy,,,rugged_mean,"ruggedness, mean",Shaver et al,,
 tjet_cy,,,rugged_range,"ruggedness, range",Shaver et al,,
 tjet_cy,,,rugged_std,"ruggedness, standard deviation",Shaver et al,,
 tjet_cy,,,rugged_sum,"ruggedness, sum",Shaver et al,,
+tjet_cy,,,milper_nmc,military personnel (in thousands),COW,1816,2016
+tjet_cy,,,cinc_nmc,Composite Index of National Capability score,COW,1816,2016
 tjet_cy,,,ef,"ethnic fractionalization index, calculated from EPR",EPR,1946,2021
 tjet_cy,,,noncontig,"non-contiguous state, binary",Fearon & Laitin,,
 tjet_cy,,,fl_mountainous,"mountainous terrain, %",Fearon & Laitin,1945,1999
@@ -1152,6 +1156,8 @@ tjet_cy,,,gdp_growth_wdi,GDP growth,WDI,,
 tjet_cy,,,gdppc_const_wdi,"GDP per capita, constant USD",WDI,,
 tjet_cy,,,gdppc_ppp_wdi,"GDP per capita, purchasing power parity",WDI,,
 tjet_cy,,,gdppc_growth_wdi,"GDP per capita growth, constant USD",WDI,,
+tjet_cy,,,income_level_latent_gdppc_wdi,"income level based on annual latent_gdp_wdi_mean quartiles (low, lower-middle, upper-middle, and high income)",,,
+tjet_cy,,,income_level_gdppc_wdi,"income level based on annual gdppc_const_wdi quartiles (low, lower-middle, upper-middle, and high income)",,,
 tjet_cy,,,pop_wdi,population size,WDI,,
 tjet_cy,,,pop_male_wdi,"population size, male",WDI,,
 tjet_cy,,,pop_fem_wdi,"population size, female",WDI,,
@@ -1188,6 +1194,13 @@ tjet_cy,,,rpr_work_rpc,Relative Political Reach (Model 6),RPC,1960,2018
 tjet_cy,,,rpr_eap_rpc,Relative Political Reach (Model 7),RPC,1960,2018
 tjet_cy,,,rpa_full_rpc,Relative Political Allocation (Model 8),RPC,1960,2018
 tjet_cy,,,rpa_sub_rpc,Relative Political Allocation (Model 8 with income partitions),RPC,1960,2018
+tjet_cy,,,forces_pers_total_wdi,"armed forces personnel, total",WDI,,
+tjet_cy,,,forces_pers_perclabor_wdi,armed forces personnel (% of total labor force),WDI,,
+tjet_cy,,,military_exp_percgdp_wdi,military expenditure (% of GDP),WDI,,
+tjet_cy,,,military_exp_percexp_wdi,military expenditure (% of general government expenditure),WDI,,
+tjet_cy,,,hom_rate_wdi,homicide rate,WDI,,
+tjet_cy,,,hom_rate_fem_wdi,"homicide rate, females",WDI,,
+tjet_cy,,,hom_rate_male_wdi,"homicide rate, males",WDI,,
 tjet_accused.csv,,1,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_accused.csv,,2,trialID,TJET Trial ID,TJET,1970,2020
 tjet_accused.csv,,3,name,name of the accused,TJET,1970,2020
@@ -1196,8 +1209,8 @@ tjet_accused.csv,,5,position_desc_fr,description of the accused (French),TJET,19
 tjet_accused.csv,,6,accusedNotes,notes on the accused,TJET,1970,2020
 tjet_accused.csv,,7,ethnicityAccused,ethnicity of accused,TJET,1970,2020
 tjet_accused.csv,,8,stateRelation,Was the accused a state agent or opposed to the government? (current refers to within the last year of the last trials coded) ,TJET,1970,2020
-tjet_accused.csv,,9,membership,state membership: in what capacity did the state agent act?,TJET,1970,2020
-tjet_accused.csv,,10,oppositionType,opposition type,TJET,1970,2020
+tjet_accused.csv,,9,membership,state membership: in what capacity did the state agent or opposition member act?,TJET,1970,2020
+tjet_accused.csv,,,oppositionType,opposition type,TJET,1970,2020
 tjet_accused.csv,,11,highRank,Was this a high-ranking individual?,TJET,1970,2020
 tjet_accused.csv,,12,headOfState,Was this individual the head of state at the time of the crime?,TJET,1970,2020
 tjet_accused.csv,,13,transnationalTerror,"Was the accused suspected of being a member of, or supporting, a transnational terror group?",TJET,1970,2020
@@ -1212,14 +1225,14 @@ tjet_accused.csv,,,laterPardonedAmnestied,Was this person later pardoned or amne
 tjet_accused.csv,,22,trialRelevantInfo,other relevant information about the trial,TJET,1970,2020
 tjet_accused.csv,,23,certainty,How much certainty did coders have in coding this accused? ,TJET,1970,2020
 tjet_accused.csv,,,ICC_referral,year in which country situation was referred to the ICC,TJET,1970,2020
-tjet_accused.csv,,,ICC_prelim_exam,year in which preliminary ICC examination began,TJET,1970,2020
+tjet_accused.csv,,,ICC_prelim,year in which preliminary ICC examination began,TJET,1970,2020
 tjet_accused.csv,,,ICC_investigation,year in which ICC investigation began,TJET,1970,2020
 tjet_accused.csv,,,ICC_arrest_warrant,year in which ICC arrest warrant was issued,TJET,1970,2020
-tjet_accused.csv,,,ICC_arrestAppear,year of court appearance of accused,TJET,1970,2020
+tjet_accused.csv,,,ICC_arrest_appear,year of court appearance of accused,TJET,1970,2020
 tjet_accused.csv,,,ICC_confirm_charges,year in which ICC trial chamber confirmed charges,TJET,1970,2020
 tjet_accused.csv,,,ICC_proceedings,year in which ICC proceedings began,TJET,1970,2020
 tjet_accused.csv,,,ICC_atLarge,accused with ICC arrest warrant is at large,TJET,1970,2020
-tjet_accused.csv,,,ICC_withdrawnDismissed,year in which ICC charges were dismissed or withdrawn,TJET,1970,2020
+tjet_accused.csv,,,ICC_withdrawn_dismissed,year in which ICC charges were dismissed or withdrawn,TJET,1970,2020
 tjet_accused.csv,,,everGuilty,Was the accused ever convicted in this trial?,TJET,1970,2020
 tjet_accused.csv,,,firstGuiltyYear,year in which the accused was first found guilty,TJET,1970,2020
 tjet_accused.csv,,,lastGuilty,Was the accused found guilty in the last verdict of the proceedings?,TJET,1970,2020
@@ -1262,23 +1275,23 @@ tjet_amnesties.csv,,28,pcj,Was this amnesty passed after the intra-state conflic
 tjet_amnesties.csv,,29,peaceSettlement,Was the amnesty part of a peace settlement?,TJET,1970,2024
 tjet_amnesties.csv,,30,mediation,Was the peace settlement mediated?,TJET,1970,2024
 tjet_amnesties.csv,,31,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2024
-tjet_courtlevels.csv,,1,CLID,TJET court level record ID,TJET,1970,2020
-tjet_courtlevels.csv,,2,accusedID,TJET Accused ID,TJET,1970,2020
-tjet_courtlevels.csv,,3,courtLevel,court level at which outcome occurred,TJET,1970,2020
-tjet_courtlevels.csv,,4,courtName,name of the court at which outcome occurred,TJET,1970,2020
-tjet_courtlevels.csv,,5,year,year,TJET,1970,2020
-tjet_courtlevels.csv,,6,month,month,TJET,1970,2020
-tjet_courtlevels.csv,,7,day,day of month,TJET,1970,2020
-tjet_courtlevels.csv,,8,date,date of court level event,TJET,1970,2020
-tjet_courtlevels.csv,,9,date_precision,"Is the date field based on day, month or year precision?",TJET,1970,2020
-tjet_courtlevels.csv,,,last_fx,Was this the last relevant trial event of these proceedings for the purpose of identifying outcomes/rulings? ,TJET,1970,2020
-tjet_courtlevels.csv,,10,outcome,verdict or trial outcome,TJET,1970,2020
-tjet_courtlevels.csv,,11,guilty,Was it a guilty verdict?,TJET,1970,2020
-tjet_courtlevels.csv,,12,sentence,sentence of the verdict,TJET,1970,2020
-tjet_courtlevels.csv,,13,sentencingTime,sentencing time,TJET,1970,2020
-tjet_courtlevels.csv,,14,sentencingArrangement,sentencing arrangement,TJET,1970,2020
-tjet_courtlevels.csv,,15,sentenceNotes,sentencing notes,TJET,1970,2020
-tjet_courtlevels.csv,,16,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
+tjet_caseevents.csv,,1,CLID,TJET court level record ID,TJET,1970,2020
+tjet_caseevents.csv,,2,accusedID,TJET Accused ID,TJET,1970,2020
+tjet_caseevents.csv,,3,courtLevel,court level at which outcome occurred,TJET,1970,2020
+tjet_caseevents.csv,,4,courtName,name of the court at which outcome occurred,TJET,1970,2020
+tjet_caseevents.csv,,5,year,year,TJET,1970,2020
+tjet_caseevents.csv,,6,month,month,TJET,1970,2020
+tjet_caseevents.csv,,7,day,day of month,TJET,1970,2020
+tjet_caseevents.csv,,8,date,date of court level event,TJET,1970,2020
+tjet_caseevents.csv,,9,date_precision,"Is the date field based on day, month or year precision?",TJET,1970,2020
+tjet_caseevents.csv,,,last_fx,Was this the last relevant trial event of these proceedings for the purpose of identifying outcomes/rulings? ,TJET,1970,2020
+tjet_caseevents.csv,,10,outcome,verdict or trial outcome,TJET,1970,2020
+tjet_caseevents.csv,,11,guilty,Was it a guilty verdict?,TJET,1970,2020
+tjet_caseevents.csv,,12,sentence,sentence of the verdict,TJET,1970,2020
+tjet_caseevents.csv,,13,sentencingTime,sentencing time,TJET,1970,2020
+tjet_caseevents.csv,,14,sentencingArrangement,sentencing arrangement,TJET,1970,2020
+tjet_caseevents.csv,,15,sentenceNotes,sentencing notes,TJET,1970,2020
+tjet_caseevents.csv,,16,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
 tjet_icc_accused.csv,,1,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_icc_accused.csv,,2,trialID,TJET Trial ID,TJET,1970,2020
 tjet_icc_accused.csv,,,country,country of accused,TJET,1970,2020
@@ -1287,22 +1300,25 @@ tjet_icc_accused.csv,,5,name,name of the accused,TJET,1970,2020
 tjet_icc_accused.csv,,6,position_desc,"description of the accused (position rank, title, role, etc)",TJET,1970,2020
 tjet_icc_accused.csv,,7,position_desc_fr,description of the accused (French),TJET,1970,2020
 tjet_icc_accused.csv,,8,ICC_arrest_warrant,year in which ICC arrest warrant was issued,TJET,1970,2020
-tjet_icc_accused.csv,,9,ICC_arrestAppear,year of court appearance of accused,TJET,1970,2020
+tjet_icc_accused.csv,,9,ICC_arrest_appear,year of court appearance of accused,TJET,1970,2020
 tjet_icc_accused.csv,,10,ICC_confirm_charges,year in which ICC trial chamber confirmed charges,TJET,1970,2020
 tjet_icc_accused.csv,,11,ICC_proceedings,year in which ICC proceedings began,TJET,1970,2020
-tjet_icc_accused.csv,,12,ICC_withdrawnDismissed,year in which ICC charges were dismissed or withdrawn,TJET,1970,2020
+tjet_icc_accused.csv,,12,ICC_withdrawn_dismissed,year in which ICC charges were dismissed or withdrawn,TJET,1970,2020
 tjet_icc_accused.csv,,13,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
-tjet_icc_interventions.csv,,,country,country name,TJET,1970,2020
-tjet_icc_interventions.csv,,2,ccode_cow,COW numeric country code,TJET,1970,2020
-tjet_icc_interventions.csv,,3,ICC_referral,year in which country situation was referred to the ICC,TJET,1970,2020
-tjet_icc_interventions.csv,,,referral_month,month in which country situation was referred to the ICC,TJET,1970,2020
-tjet_icc_interventions.csv,,5,ICC_prelim_exam,year in which preliminary ICC examination began,TJET,1970,2020
-tjet_icc_interventions.csv,,,prelim_month,month in which preliminary ICC examination began,TJET,1970,2020
-tjet_icc_interventions.csv,,7,ICC_prelimEnd,year in which preliminary ICC examination ended,TJET,1970,2020
-tjet_icc_interventions.csv,,,prelim_end_month,month in which preliminary ICC examination ended,TJET,1970,2020
-tjet_icc_interventions.csv,,9,ICC_investigation,year in which ICC investigation began,TJET,1970,2020
-tjet_icc_interventions.csv,,,investigation_month,month in which ICC investigation began,TJET,1970,2020
-tjet_icc_interventions.csv,,11,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2020
+tjet_icc_interventions.csv,,,situation,country situation,TJET,1970,2024
+tjet_icc_interventions.csv,,2,ccode_cow,COW numeric country code,TJET,1970,2024
+tjet_icc_interventions.csv,,3,ICC_referral,year in which country situation was referred to the ICC,TJET,1970,2024
+tjet_icc_interventions.csv,,,referral_month,month in which country situation was referred to the ICC,TJET,1970,2024
+tjet_icc_interventions.csv,,4,ICC_prelim,year in which preliminary ICC examination began,TJET,1970,2024
+tjet_icc_interventions.csv,,,prelim_month,month in which preliminary ICC examination began,TJET,1970,2024
+tjet_icc_interventions.csv,,5,ICC_prelim_end,year in which preliminary ICC examination ended,TJET,1970,2024
+tjet_icc_interventions.csv,,,prelim_end_month,month in which preliminary ICC examination ended,TJET,1970,2024
+tjet_icc_interventions.csv,,6,ICC_investigation,year in which ICC investigation began,TJET,1970,2024
+tjet_icc_interventions.csv,,,investigation_month,month in which ICC investigation began,TJET,1970,2024
+tjet_icc_interventions.csv,,7,ICC_investigation_closed,year in which ICC investigation was closed,TJET,1970,2024
+tjet_icc_interventions.csv,,8,ICC_proceedings,year in which ICC proceedings began,TJET,1970,2024
+tjet_icc_interventions.csv,,9,ICC_proceedings_end,year in which ICC proceedings ended,TJET,1970,2024
+tjet_icc_interventions.csv,,11,tjet_version,TJET database version: date on which data was extracted from the database,TJET,1970,2024
 tjet_reparations.csv,,1,reparationID,TJET Reparation ID,TJET,1970,2024
 tjet_reparations.csv,,2,country,country name,TJET,1970,2024
 tjet_reparations.csv,,3,ccode_cow,COW numeric country code,TJET,1970,2024

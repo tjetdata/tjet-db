@@ -167,7 +167,7 @@ autoprep[["rankings"]] <- db[["dl_tjet_cy"]] |>
   # filter(!is.na(access_rank) | !is.na(legacy_rank)) |>
   filter(!is.na(legacy_rank)) |>
   arrange(legacy_rank) |>
-  select(country_case, ccode_case, country_fr, legacy_rank) |>
+  select(country_case, ccode_case, country_case_fr, legacy_rank) |>
   mutate(n = max(legacy_rank))
 
 ### data for summary spreadsheet & auto texts
@@ -473,11 +473,11 @@ data[["ICC-interventions"]] <- db[["ICC"]] |>
     country_case,
     ccode_case,
     ICC_referral,
-    ICC_prelim_exam,
-    ICC_prelimEnd,
+    ICC_prelim,
+    ICC_prelim_end,
     ICC_investigation
   ) |>
-  arrange(country_case, ICC_prelim_exam)
+  arrange(country_case, ICC_prelim)
 
 data[["ICC-accused"]] <- db[["ICCaccused"]] |>
   # select(-country) |>
@@ -491,10 +491,10 @@ data[["ICC-accused"]] <- db[["ICCaccused"]] |>
     name,
     position_desc,
     ICC_arrest_warrant,
-    ICC_arrestAppear,
+    ICC_arrest_appear,
     ICC_confirm_charges,
     ICC_proceedings,
-    ICC_withdrawnDismissed,
+    ICC_withdrawn_dismissed,
     trialID,
     accusedID
   ) |>
@@ -817,7 +817,7 @@ autoprep[["rankings"]] |>
       str_trim(),
     legacy_fr = paste(
       "En 2020,",
-      country_fr,
+      country_case_fr,
       "se classe",
       paste(legacy_rank, "e", sep = ""),
       "sur",
@@ -1192,16 +1192,19 @@ autotxt[["Intl"]] <- data[["Intl_cy"]] |>
   ungroup() |>
   select(country_case, ccode_case, text)
 
+
+warning("Need to recode autotexts for ICC-interventions for duplicate entries!")
+
 autotxt[["ICC"]] <- data[["ICC-interventions"]] |>
   rowwise() |>
   mutate(
     text = ifelse(
-      is.na(ICC_prelimEnd),
+      is.na(ICC_prelim_end),
       paste(
         "The ICC's Office of the Prosecutor opened a preliminary examination of the situation in ",
         country_case,
         " in ",
-        ICC_prelim_exam,
+        ICC_prelim,
         ".",
         sep = ""
       ),
@@ -1209,9 +1212,9 @@ autotxt[["ICC"]] <- data[["ICC-interventions"]] |>
         "The ICC's Office of the Prosecutor carried out a preliminary examination of the situation in ",
         country_case,
         " from ",
-        ICC_prelim_exam,
+        ICC_prelim,
         " until ",
-        ICC_prelimEnd,
+        ICC_prelim_end,
         ".",
         sep = ""
       )
@@ -1249,10 +1252,10 @@ autotxt[["ICCaccused"]] <- data[["ICC-accused"]] |>
   group_by(country_case) |>
   mutate(
     count = n(),
-    count_appear = sum(!is.na(ICC_arrestAppear)),
+    count_appear = sum(!is.na(ICC_arrest_appear)),
     count_proceed = sum(!is.na(ICC_proceedings)),
     ICC_arrest_warrant = list(unlist(ICC_arrest_warrant)),
-    ICC_arrestAppear = list(unlist(ICC_arrestAppear)),
+    ICC_arrest_appear = list(unlist(ICC_arrest_appear)),
     ICC_proceedings = list(unlist(ICC_proceedings))
   ) |>
   select(
@@ -1261,7 +1264,7 @@ autotxt[["ICCaccused"]] <- data[["ICC-accused"]] |>
     count,
     ICC_arrest_warrant,
     count_appear,
-    ICC_arrestAppear,
+    ICC_arrest_appear,
     count_proceed,
     ICC_proceedings
   ) |>
@@ -1269,7 +1272,7 @@ autotxt[["ICCaccused"]] <- data[["ICC-accused"]] |>
   distinct() |>
   rowwise() |>
   mutate(
-    ICC_arrestAppear = list(ICC_arrestAppear[!is.na(ICC_arrestAppear)]),
+    ICC_arrest_appear = list(ICC_arrest_appear[!is.na(ICC_arrest_appear)]),
     ICC_proceedings = list(ICC_proceedings[!is.na(ICC_proceedings)]),
     text = paste(
       "Starting in ",
