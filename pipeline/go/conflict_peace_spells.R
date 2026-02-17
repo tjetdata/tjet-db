@@ -1,4 +1,4 @@
-require(tidyverse)
+library(tidyverse)
 
 #####################
 ### conflict episodes
@@ -16,6 +16,8 @@ acd <- read_csv(here::here(
     gwno_loc,
     year,
     side_b,
+    side_a_id,
+    side_b_id,
     incompatibility,
     territory_name,
     intensity_level,
@@ -58,9 +60,37 @@ dyad <- read_csv(here::here(
       incompatibility,
       territory_name
     ),
-    n_dyads = n()
+    n_dyads_active = n()
   ) |>
   mutate(territory_name = str_trim(territory_name))
+
+dyads_cumu <- read_csv(here::here(
+  "conflicts",
+  "original_data",
+  "Dyadic_v25_1.csv"
+)) |>
+  filter(type_of_conflict > 2) |>
+  select(
+    dyad_id,
+    conflict_id,
+    year,
+  ) |>
+  arrange(conflict_id, year, dyad_id) |>
+  reframe(
+    .by = c(conflict_id, year),
+    dyads_yr = list(unique(dyad_id))
+  ) |>
+  mutate(
+    .by = conflict_id,
+    dyads_cumu = accumulate(
+      dyads_yr,
+      \(acc, x) unique(c(acc, x)),
+      .init = numeric(0) # Start with empty numeric vector
+    )[-1] # Remove the .init element
+  ) |>
+  rowwise() |>
+  mutate(dyads_cumu = length(dyads_cumu)) |>
+  select(conflict_id, year, dyads_cumu)
 
 ########################
 ### termination outcomes
@@ -171,9 +201,296 @@ lacina <- readxl::read_xls(here::here(
 #   ) |>
 #   arrange(location, conflict_id, year)
 
+#######
+### OSV
+#######
+
+osv <- here::here(
+  "conflicts",
+  "original_data",
+  "OneSided_v25_1.csv"
+) |>
+  read_csv() |>
+  select(
+    # location,
+    gwno_location,
+    # conflict_id,
+    # dyad_id,
+    actor_id,
+    actor_name_fulltext,
+    year,
+    best_fatality_estimate,
+    # is_government_actor
+  ) |>
+  mutate(gwno_location = str_split(gwno_location, ", ")) |>
+  unnest(gwno_location) |>
+  mutate(gwno_location = as.integer(gwno_location))
+
+#######
+### EPR
+#######
+
+epr <- here::here(
+  "conflicts",
+  "original_data",
+  "ACD2EPR-2021.csv"
+) |>
+  read_csv(show_col_types = FALSE) |>
+  left_join(
+    here::here(
+      "conflicts",
+      "original_data",
+      "Dyadic_v25_1.csv"
+    ) |>
+      read_csv() |>
+      select(dyad_id, conflict_id) |>
+      distinct(),
+    by = c("dyadid" = "dyad_id")
+  ) |>
+  mutate(
+    claim = case_when(
+      claim == 0 ~ "no ethnic claim", # No claim
+      claim == 1 ~ "direct claim", # Direct evidence for claim
+      claim == 2 ~ "indirect claim", # Indirect evidence, e.g., group name, for claim
+      claim == -1 ~ "unknown"
+    ), # No information
+    # claim: Describes whether a rebel group has made an exclusive claim to fight on behalf of an ethnic group
+    recruitment = case_when(
+      recruitment == 0 ~ "no ethnic recruitment", # No recruitment
+      recruitment == 1 ~ "ethnic recruitment by rebels", # Recruitment
+      recruitment == 2 ~ "ethnic recruitment by both", # Ethnic group members are recruited by the rebels and the government
+      recruitment == -1 ~ "unknown"
+    ), # No information
+    # recruitment: Describes whether a rebel group is recruiting from an ethnic group
+    support = case_when(
+      support == 0 ~ "no majority support", # No or little support
+      support == 1 ~ "majority support", # Large support
+      support == 2 ~ "group supports both (non-ethnic conflict)", # One ethnic group supports both the rebel group and the government (only in non-ethnic conflicts)
+      support == -1 ~ "unknown"
+    ), # No information
+    # Support: Describes whether a rebel group is supported by at least 50% of the members of an ethnic group
+    reb_claim = ifelse(claim %in% c("direct claim", "indirect claim"), 1, 0),
+    reb_recruit = ifelse(
+      recruitment %in%
+        c("ethnic recruitment by rebels", "ethnic recruitment by both"),
+      1,
+      0
+    ),
+    gov_recruit = ifelse(recruitment == "ethnic recruitment by both", 1, 0)
+  ) |>
+  arrange(gwid, conflict_id, dyadid) |>
+  reframe(
+    .by = c(gwid, statename, conflict_id, dyadid),
+    groups_epr = str_flatten_comma(unique(group), na.rm = FALSE),
+    grps_in_dyad_epr = n(),
+    reb_claim_epr = sum(reb_claim, na.rm = TRUE),
+    reb_recruit_epr = sum(reb_recruit, na.rm = TRUE),
+    gov_recruit_epr = sum(gov_recruit, na.rm = TRUE)
+  ) |>
+  reframe(
+    .by = c(gwid, conflict_id),
+    groups_epr = str_flatten_comma(unique(groups_epr), na.rm = FALSE),
+    dyads_epr = n(),
+    grps_in_dyads_epr = sum(grps_in_dyad_epr),
+    reb_claim_epr = sum(reb_claim_epr, na.rm = TRUE),
+    reb_recruit_epr = sum(reb_recruit_epr, na.rm = TRUE),
+    gov_recruit_epr = sum(gov_recruit_epr, na.rm = TRUE)
+  )
+
+##########
+### issues
+##########
+
+issues <- here::here(
+  "conflicts",
+  "original_data",
+  "ucdp_issues_dataset_dyadyear_232.csv"
+) |>
+  read_delim(show_col_types = FALSE) |>
+  mutate(
+    ethnic = ifelse(
+      !is.na(ethnicity_1) |
+        !is.na(ethnicity_2) |
+        !is.na(ethnicity_3) |
+        !is.na(ethnicity_4),
+      1,
+      0
+    ),
+    sideb_regional = case_when(
+      geography_1 == 2000 |
+        geography_2 == 2000 |
+        geography_3 == 2000 |
+        geography_4 == 2000 ~ 1,
+      is.na(geography_1) |
+        is.na(geography_2) |
+        is.na(geography_3) |
+        is.na(geography_4) ~ 0
+    ),
+    sideb_national = case_when(
+      geography_1 == 3000 |
+        geography_2 == 3000 |
+        geography_3 == 3000 |
+        geography_4 == 3000 ~ 1,
+      is.na(geography_1) |
+        is.na(geography_2) |
+        is.na(geography_3) |
+        is.na(geography_4) ~ 0
+    ),
+    sideb_subnational = case_when(
+      geography_1 == 4000 |
+        geography_2 == 4000 |
+        geography_3 == 4000 |
+        geography_4 == 4000 ~ 1,
+      is.na(geography_1) |
+        is.na(geography_2) |
+        is.na(geography_3) |
+        is.na(geography_4) ~ 0
+    ),
+    side_b = str_trim(side_b)
+  ) |>
+  select(
+    dyad_id,
+    conflict_id,
+    year,
+    side_b,
+    ethnic,
+    # "7201", "ethnic collective targeting"
+    sideb_regional,
+    sideb_national,
+    sideb_subnational,
+    "10101",
+    "10201",
+    "10202",
+    "10203",
+    "10204"
+  ) |>
+  rename(
+    sideb_trp = "10101", # "Call for truth and reconciliation processes (10101)"
+    sideb_accountabiliy = "10201", # "Accountability/prosecution/investigation (10201)"
+    sideb_amnesty = "10202", # "Amnesties (10202)"
+    sideb_recognition = "10203", # "Recognition of wrongdoing (10203)"
+    sideb_restoration = "10204" # "Compensation/restoration (10204)"
+  ) |>
+  mutate(
+    sideb_accountabiliy = ifelse(
+      sideb_accountabiliy > 1,
+      1,
+      sideb_accountabiliy
+    ),
+    dyad_id = ifelse(dyad_id == 12088, 875, dyad_id),
+    conflict_id = ifelse(conflict_id == 13349, 222, conflict_id)
+  ) |>
+  left_join(
+    here::here(
+      "conflicts",
+      "original_data",
+      "Dyadic_v25_1.csv"
+    ) |>
+      read_csv() |>
+      reframe(
+        .by = c(conflict_id, dyad_id),
+        year_min = min(year)
+      ),
+    by = c("conflict_id", "dyad_id")
+  ) |>
+  mutate(
+    # ccode_ksg = as.integer(gwno_loc),
+    year = as.integer(ifelse(year == 1000, year_min, year))
+  ) |>
+  select(
+    conflict_id,
+    dyad_id,
+    year,
+    ethnic,
+    # sideb_regional,
+    # sideb_national,
+    # sideb_subnational,
+    # sideb_trp,
+    # sideb_accountabiliy,
+    # sideb_amnesty,
+    # sideb_recognition,
+    # sideb_restoration
+  ) |>
+  reframe(
+    .by = c(conflict_id, year),
+    ethnic_avg = mean(ethnic, na.rm = TRUE)
+  )
+
+#########
+### NSAEX
+#########
+
+ids <- here::here("conflicts", "original_data", "translate_conf.csv") |>
+  read_csv() |>
+  rename(
+    conflict_id = new_id
+  ) |>
+  mutate(ucdpid = as.integer(old_id)) |>
+  filter(!is.na(ucdpid)) |>
+  select(conflict_id, ucdpid)
+
+nsaex <- here::here(
+  "conflicts",
+  "original_data",
+  "nsa_v3.4_21November2013.asc"
+) |>
+  read_delim() |>
+  arrange(ucdpid, dyadid) |>
+  left_join(ids, by = "ucdpid") |>
+  mutate(
+    beg = as.integer(str_sub(startdate, 1, 4)),
+    end = as.integer(str_sub(enddate, 1, 4))
+  ) |>
+  rowwise() |>
+  mutate(year = list(beg:end)) |>
+  ungroup() |>
+  unnest(year) |>
+  select(
+    conflict_id,
+    dyadid,
+    year,
+    side_a,
+    side_b,
+    rebestimate,
+    rebstrength
+  ) |>
+  rename(
+    side_a_nsa = side_a,
+    side_b_nsa = side_b,
+    rebestimate_nsa = rebestimate,
+    rebstrength_nsa = rebstrength
+  ) |>
+  arrange(conflict_id, year) |>
+  reframe(
+    .by = c(conflict_id, year),
+    side_a_nsa = str_flatten_comma(unique(side_a_nsa)),
+    side_b_nsa = str_flatten_comma(unique(side_b_nsa)),
+    rebestimate_nsa = sum(rebestimate_nsa, na.rm = TRUE),
+    rebstrength_nsa = str_flatten_comma(unique(rebstrength_nsa)),
+  ) |>
+  mutate(rebestimate_nsa = if_else(rebestimate_nsa == 0, NA, rebestimate_nsa))
+
 #######################
 ### pulling it together
 #######################
+
+ctry_confl_yrs <- acd |>
+  select(
+    gwno_loc,
+    year
+  ) |>
+  mutate(
+    gwno_loc = as.integer(gwno_loc),
+    gwno_loc = ifelse(gwno_loc == 751, 750, gwno_loc),
+    ctry_confl_yrs = 1
+  ) |>
+  distinct() |>
+  arrange(gwno_loc, year) |>
+  group_by(gwno_loc) |>
+  mutate(
+    ctry_confl_yrs = cumsum(ctry_confl_yrs)
+  ) |>
+  ungroup()
 
 confl_ep_years <- acd |>
   mutate(
@@ -192,6 +509,13 @@ confl_ep_years <- acd |>
       "gwno_loc",
       "incompatibility",
       "territory_name",
+      "year"
+    )
+  ) |>
+  full_join(
+    dyads_cumu,
+    by = c(
+      "conflict_id",
       "year"
     )
   ) |>
@@ -329,19 +653,23 @@ confl_ep_years <- acd |>
     # ep_next_beg = ifelse(c_epterm == 1, lead(ep_beg) - ep_end, NA),
     ep_prev_end = ifelse(c_epno > 1 & year == ep_beg, lag(ep_end), NA),
     ep_next_beg = ifelse(c_epterm == 1, lead(ep_beg), NA),
-    pc_yrs = ep_next_beg - ep_end - 1,
+    # pc_yrs = ep_next_beg - ep_end - 1,
+    pc_yrs = case_when(
+      !is.na(ep_next_beg) ~ ep_next_beg - ep_end - 1,
+      is.na(ep_next_beg) ~ 2025 - ep_end - 1
+    ),
     bd_cumu_confl = cumsum(bd_best),
   ) |>
   group_by(conflict_id, ep_beg) |>
   mutate(
-    n_dyads_ep = max(n_dyads),
+    n_dyads_ep = max(n_dyads_active),
     bd_cumu_ep = cumsum(bd_best),
     bd_cumu_ep_end = max(bd_cumu_ep)
   ) |>
   ungroup() |>
   group_by(conflict_id) |>
   mutate(
-    bd_ep_before = ifelse(c_epno > 1 & year == ep_beg, lag(bd_cumu_confl), NA)
+    bd_before_ep = ifelse(c_epno > 1 & year == ep_beg, lag(bd_cumu_confl), NA)
   ) |>
   ungroup() |>
   arrange(conflict_id, ep_beg) |>
@@ -349,7 +677,7 @@ confl_ep_years <- acd |>
   fill(ep_end, .direction = "up") |>
   fill(
     ep_prev_end,
-    bd_ep_before,
+    bd_before_ep,
     .direction = "down"
   ) |>
   mutate(
@@ -360,129 +688,173 @@ confl_ep_years <- acd |>
       bd_cumu_ep_end >= 25 ~ 25
     ),
     confl_before_threshold = case_when(
-      bd_ep_before >= 1000 ~ 1000,
-      bd_ep_before >= 500 ~ 500,
-      bd_ep_before >= 100 ~ 100,
-      bd_ep_before >= 25 ~ 25
+      bd_before_ep >= 1000 ~ 1000,
+      bd_before_ep >= 500 ~ 500,
+      bd_before_ep >= 100 ~ 100,
+      bd_before_ep >= 25 ~ 25
+    ),
+    confl_to_date_threshold = case_when(
+      bd_cumu_confl >= 1000 ~ 1000,
+      bd_cumu_confl >= 500 ~ 500,
+      bd_cumu_confl >= 100 ~ 100,
+      bd_cumu_confl >= 25 ~ 25
     )
   ) |>
-  ungroup()
-
-#######################################
-### collapse to conflict episode spells
-#######################################
-
-# confl_ep_years |>
-#   filter(c_epterm == 1) |>
-#   select(
-#     conflict_id,
-#     location,
-#     ep_beg,
-#     ep_end,
-#     bd_beg,
-#     confl_beg,
-#     confl_last,
-#     n_dyads_ep,
-#     recur_later,
-#     ep_prev_end,
-#     ep_next_beg,
-#     pc_yrs,
-#     c_epno,
-#     c_ep_durcount,
-#     outcome,
-#     bd_ep_before,
-#     bd_cumu_confl,
-#     bd_cumu_ep_end,
-#     confl_before_threshold,
-#     ep_threshold
-#   )
-
-confl_ep_years <- confl_ep_years |>
-  filter(c_epterm == 1) |> ## & confl_last > 1950
-  mutate(ep_next_beg = ifelse(is.na(ep_next_beg), 2025, ep_next_beg)) |>
-  rowwise() |>
-  mutate(year = list((ep_end + 1):(ep_next_beg - 1))) |>
   ungroup() |>
-  select(
-    conflict_id,
-    location,
-    gwno_loc,
-    year,
-    incompatibility,
-    territory_name,
-    cumulative_intensity,
-    n_dyads,
-    n_dyads_ep,
-    start_date,
-    start_date2,
-    ep_end_date,
-    bd_beg,
-    confl_beg,
-    ep_beg,
-    ep_end,
-    confl_last,
-    c_epno,
-    c_epid,
-    outcome,
-    recur_later,
-    ep_next_beg,
-    bd_cumu_confl,
-    bd_cumu_ep,
-    bd_cumu_ep_end,
-    ep_threshold,
-    confl_before_threshold
-  ) |>
-  unnest(year) |>
+  mutate(territorial = if_else(!is.na(territory_name), 1, 0)) |>
   mutate(
-    intensity_level = 0,
-    pc_dur = year - ep_end,
-    sample = "post-conflict"
+    .by = conflict_id,
+    confl_yrs = 1,
+    confl_yrs = cumsum(confl_yrs)
   ) |>
   full_join(
+    ctry_confl_yrs,
+    by = c("gwno_loc", "year"),
+  ) |>
+  left_join(
+    epr,
+    by = c("gwno_loc" = "gwid", "conflict_id")
+  ) |>
+  left_join(
+    nsaex |>
+      select(
+        conflict_id,
+        year,
+        rebestimate_nsa,
+        rebstrength_nsa
+      ),
+    by = c("conflict_id", "year")
+  )
+
+################################################################
+### expand to conflict episode spells incl. post-conflict period
+################################################################
+
+confl_yrs <- here::here("data", "countries.csv") |>
+  read_csv() |>
+  select(name_short, ccode_ksg, beg_ksg, end_ksg) |>
+  arrange(ccode_ksg, beg_ksg, end_ksg) |>
+  filter(!is.na(ccode_ksg)) |>
+  reframe(
+    .by = ccode_ksg,
+    beg_ksg = min(beg_ksg, na.rm = TRUE),
+    end_ksg = max(end_ksg, na.rm = TRUE)
+  ) |>
+  mutate(
+    beg = as.integer(str_sub(beg_ksg, 1, 4)),
+    beg = if_else(beg < 1946, 1946, beg),
+    end = as.integer(str_sub(end_ksg, 1, 4)),
+    end = if_else(end == 2020, 2024, end)
+  ) |>
+  select(ccode_ksg, beg, end) |>
+  right_join(
+    confl_ep_years |>
+      select(gwno_loc, conflict_id, confl_beg) |>
+      distinct(),
+    by = c("ccode_ksg" = "gwno_loc")
+  ) |>
+  mutate(
+    beg = if_else(beg < confl_beg, confl_beg, beg)
+  ) |>
+  mutate(
+    .by = conflict_id,
+    year = list(beg:end)
+  ) |>
+  unnest(year) |>
+  select(conflict_id, year)
+
+fctrs <- c(
+  "location",
+  "side_b",
+  "territory_name",
+  "outcome",
+  "groups_epr",
+  "rebstrength_nsa"
+)
+
+confl_ep_years <- confl_yrs |>
+  left_join(
     confl_ep_years,
-    by = c(
-      "conflict_id",
-      "location",
-      "gwno_loc",
-      "year",
-      "incompatibility",
-      "territory_name",
-      "intensity_level",
-      "cumulative_intensity",
-      "n_dyads",
-      "n_dyads_ep",
-      "start_date",
-      "start_date2",
-      "ep_end_date",
-      "bd_beg",
-      "confl_beg",
-      "ep_beg",
-      "ep_end",
-      "confl_last",
-      "c_epno",
-      "c_epid",
-      "outcome",
-      "recur_later",
-      "ep_next_beg",
-      "bd_cumu_confl",
-      "bd_cumu_ep",
-      "bd_cumu_ep_end",
-      "ep_threshold",
-      "confl_before_threshold"
-    )
+    by = c("conflict_id", "year")
   ) |>
   arrange(conflict_id, year) |>
   mutate(
+    intensity_level = if_else(is.na(intensity_level), 0, intensity_level),
     sample = case_when(
-      sample == "post-conflict" ~ "post-conflict",
-      is.na(sample) & c_epterm == 1 ~ "switch year",
-      is.na(sample) & c_epterm == 0 & intensity_level > 0 ~ "conflict"
-    ),
-    ep_next_beg = ifelse(ep_next_beg == 2025, NA, ep_next_beg),
-    pc_dur = ifelse(is.na(pc_dur) & c_epterm == 1, 0, pc_dur)
+      c_epterm == 1 ~ "switch year",
+      c_epterm == 0 & intensity_level > 0 ~ "conflict",
+      is.na(c_epterm) & intensity_level > 0 ~ "right-censored conflict",
+      intensity_level == 0 ~ "post-conflict"
+    ) |>
+      as.factor()
   ) |>
-  filter(!(location == "South Vietnam" & year > 1975)) |>
-  filter(!(location == "South Yemen" & year > 1990)) |>
+  mutate(
+    across(all_of(fctrs), ~ as.factor(.x)),
+  ) |>
+  fill(
+    .by = conflict_id,
+    .direction = "down",
+    c_epno,
+    # c_epid,
+    bd_beg,
+    confl_beg,
+    confl_last,
+    confl_yrs,
+    ctry_confl_yrs,
+    rebestimate_nsa,
+    rebstrength_nsa,
+  ) |>
+  fill(
+    .by = c(conflict_id, c_epno),
+    .direction = "down",
+    gwno_loc,
+    location,
+    side_b,
+    side_a_id,
+    side_b_id,
+    incompatibility,
+    territory_name,
+    territorial,
+    cumulative_intensity,
+    start_date,
+    start_date2,
+    ep_end_date,
+    ep_beg,
+    ep_end,
+    n_dyads_active,
+    dyads_cumu,
+    n_dyads_ep,
+    ep_prev_end,
+    outcome,
+    bd_cumu_confl,
+    bd_cumu_ep,
+    bd_cumu_ep_end,
+    bd_before_ep,
+    ep_threshold,
+    confl_before_threshold,
+    confl_to_date_threshold,
+    groups_epr,
+    dyads_epr,
+    grps_in_dyads_epr,
+    reb_claim_epr,
+    reb_recruit_epr,
+    gov_recruit_epr,
+  ) |>
+  fill(
+    .by = c(conflict_id, c_epno),
+    .direction = "downup",
+    ep_end_date,
+    # c_ep_startyear,
+    # c_ep_endyear,
+    # c_ependdate,
+    recur_later,
+    ep_next_beg
+  ) |>
+  mutate(
+    rebestimate_nsa = if_else(year > 2011, NA, rebestimate_nsa),
+    rebstrength_nsa = if_else(year > 2011, NA, rebstrength_nsa),
+    pc_dur = if_else(intensity_level == 0, year - ep_end, NA)
+  ) |>
   mutate(
     gwno_loc = ifelse(
       str_detect(location, fixed("Serbia (Yugoslavia)")) & year > 2005,
@@ -494,81 +866,111 @@ confl_ep_years <- confl_ep_years |>
 confl_ep_years |>
   filter(.by = c(conflict_id, year), n() > 1)
 
+confl_ep_years <- confl_ep_years |>
+  left_join(issues, by = c("conflict_id", "year")) |> ### full_join shows missing spell years, need to check this above
+  arrange(gwno_loc, conflict_id, year) |>
+  fill(
+    .by = c(gwno_loc, conflict_id),
+    ethnic_avg,
+    .direction = "down"
+  )
+
+atrocities <- confl_ep_years |>
+  select(
+    gwno_loc,
+    conflict_id,
+    year,
+    side_a_id,
+    side_b_id
+  ) |>
+  filter(year >= 1989) |>
+  mutate(
+    side_b_id = str_split(side_b_id, ", ")
+  ) |>
+  unnest(side_b_id) |>
+  mutate(
+    side_a_id = as.integer(side_a_id),
+    side_b_id = as.integer(side_b_id)
+  ) |>
+  left_join(
+    osv |>
+      select(-actor_name_fulltext),
+    by = c(
+      "gwno_loc" = "gwno_location",
+      "side_b_id" = "actor_id",
+      "year"
+    )
+  ) |>
+  rename(osv_side_b = best_fatality_estimate) |>
+  reframe(
+    .by = c(gwno_loc, conflict_id, year, side_a_id),
+    osv_side_b = sum(osv_side_b)
+  ) |>
+  left_join(
+    osv |>
+      select(-actor_name_fulltext),
+    by = c(
+      "gwno_loc" = "gwno_location",
+      "side_a_id" = "actor_id",
+      "year"
+    )
+  ) |>
+  rename(osv_side_a = best_fatality_estimate) |>
+  # filter(.by = c("conflict_id", "year"), n() > 1)
+  select(-side_a_id) |>
+  mutate(
+    osv_side_a = if_else(
+      is.na(osv_side_a) & year >= 1989,
+      0,
+      osv_side_a
+    ),
+    osv_side_b = if_else(
+      is.na(osv_side_b) & year >= 1989,
+      0,
+      osv_side_b
+    )
+  )
+
+confl_ep_years <- confl_ep_years |>
+  full_join(
+    atrocities,
+    by = c("gwno_loc", "conflict_id", "year")
+  )
+
 ###################
 ### example country
 ###################
 
-# confl_ep_years |>
-#   select(
-#     conflict_id,
-#     sample,
-#     year,
-#     location,
-#     gwno_loc,
-#     ep_beg,
-#     ep_end,
-#     bd_beg,
-#     confl_beg,
-#     confl_last,
-#     c_epno,
-#     c_epterm,
-#     c_ep_durcount,
-#     outcome,
-#     n_dyads,
-#     recur_later,
-#     ep_next_beg,
-#     pc_yrs,
-#     bd_best,
-#     bd_ep_before,
-#     bd_cumu_confl,
-#     bd_cumu_ep,
-#     bd_cumu_ep_end,
-#     confl_before_threshold,
-#     ep_threshold
-#   ) |>
-#   # select(
-#   #   -location,
-#   #   -side_b,
-#   #   -incompatibility,
-#   #   -territory_name,
-#   #   -intensity_level,
-#   #   -cumulative_intensity,
-#   #   -n_dyads,
-#   #   -n_dyads_ep,
-#   #   -start_date,
-#   #   -start_date2,
-#   #   -ep_end_date,
-#   #   -bd_beg,
-#   #   -confl_beg,
-#   #   -ep_prev_end,
-#   #   -ep_beg,
-#   #   -ep_end,
-#   #   -confl_last,
-#   #   -c_epno,
-#   #   -c_epid,
-#   #   -c_epterm,
-#   #   -c_ep_startyear,
-#   #   -c_ep_endyear,
-#   #   -c_ependdate,
-#   #   -c_outcome,
-#   #   -c_ep_durcount,
-#   #   -outcome,
-#   #   -pc_yrs,
-#   #   -pc_dur,
-#   #   -recur_later,
-#   #   -ep_next_beg,
-#   #   -bd_best,
-#   #   -bd_low,
-#   #   -bd_high,
-#   #   -bd_cumu_confl,
-#   #   -bd_ep_before,
-#   #   -bd_cumu_ep,
-#   #   -bd_cumu_ep_end,
-#   #   -ep_threshold,
-#   #   -confl_before_threshold
-#   # ) |>
-#   filter(gwno_loc == 540) |>
-#   print(n = Inf)
+confl_ep_years |>
+  filter(gwno_loc == 540 & year < 2006) |>
+  select(
+    conflict_id,
+    sample,
+    year,
+    location,
+    # gwno_loc,
+    ep_beg,
+    ep_end,
+    # bd_beg,
+    # confl_beg,
+    # confl_last,
+    c_epno,
+    c_epterm,
+    # c_ep_durcount,
+    outcome,
+    # recur_later,
+    # ep_next_beg,
+    # pc_yrs,
+    # bd_best,
+    # bd_before_ep,
+    # bd_cumu_confl,
+    # bd_cumu_ep,
+    # bd_cumu_ep_end,
+    contains("dyad"),
+    # contains("bd_"),
+    contains("_threshold")
+  ) |>
+  print(n = Inf)
 
 #########################################################
 ### merging in existing TJET measures (not by conflictID)
@@ -578,58 +980,113 @@ df <- read_csv(
   here::here("tjet_datasets/tjet_cy_analyses.csv")
 )
 
+df |>
+  select(
+    country_case,
+    year,
+    contains("osv")
+  ) |>
+  filter(!is.na(conflicts_osv))
 # df |>
 #   select(
 #     country_case,
 #     year,
-#     # starts_with("aco_"),
+#     starts_with("aco_"),
 #     starts_with("dco_"),
 #     starts_with("pco_"),
 #     starts_with("confl_"),
-#     starts_with("outcome_")
+#     starts_with("outcome_"),
 #   ) |>
 #   select(!ends_with("_cflag")) |>
 #   filter(str_detect(country_case, "Angola")) |>
 #   print(n = 55)
 
-# to_merge <- df |>
-#   select(
-#     country_case,
-#     ccode_ksg,
-#     year,
-#     tj_laws,
-#     regu_trs_dom_sta,
-#     regu_cce_dom_sta,
-#     tran_trs_dom_dtj_ctj,
-#     tran_trs_dom_ctj,
-#     trs_int_sta,
-#     trs_int_opp,
-#     amnesty_dtj_ctj_sta_opp,
-#     amnesty_pol,
-#     tcs_all_created,
-#     rep_created,
-#   ) |>
-#   arrange(country_case, year) |>
-#   group_by(country_case) |>
-#   mutate(
-#     across(
-#       .cols = !c(ccode_ksg, year),
-#       .fns = ~ cumsum(.x),
-#       .names = "sum_{.col}"
-#     )
-#   ) |>
-#   ungroup() |>
-#   select(ccode_ksg, year, starts_with("sum_")) |>
-#   mutate(
-#     year = year + 1,
-#     ccode_ksg = ifelse(ccode_ksg == 345 & year == 2006, 340, ccode_ksg)
-#   )
+to_merge <- df |>
+  select(
+    country_case,
+    ccode_ksg,
+    year,
+    ICC_referral,
+    ICC_prelim,
+    ICC_prelim_region,
+    ICC_investigation,
+    ICC_investigation_region,
+    ICC_proceedings,
+    ICC_arrest_warrant,
+    ICC_arrest_warrant_region,
+    ICC_proceedings_n,
+    ICC_proceedings_n_region,
+    icc_sp,
+    icc_sp_region,
+    dtr,
+    pop_wdi,
+    gdp_const_wdi,
+    gdppc_const_wdi,
+    latent_pop_wdi_mean,
+    latent_pop_wdi_mean_log,
+    latent_gdp_wdi_mean,
+    latent_gdp_wdi_mean_log,
+    latent_gdppc_wdi_mean,
+    latent_gdppc_wdi_mean_log,
+    income_level_latent_gdppc_wdi,
+    income_level_gdppc_wdi,
+    v2x_liberal,
+    v2x_polyarchy,
+    reg_type_vdem,
+    reg_trans_vdem,
+    transition,
+    dem_reversion,
+    v2juncind,
+    v2juhcind,
+    v2jucomp,
+    v2juhccomp,
+    v2jureform,
+    pko_mission,
+    deaths_state_osv,
+    deaths_nonstate_osv,
+    conflicts_osv,
+    deaths_all_osv,
+    deaths_civilians_osv,
+    milper_nmc,
+    cinc_nmc,
+    forces_pers_total_wdi,
+    forces_pers_perclabor_wdi,
+    military_exp_percgdp_wdi,
+    military_exp_percexp_wdi,
+    hom_rate_wdi,
+    # tj_laws,
+    # regu_trs_dom_sta,
+    # regu_cce_dom_sta,
+    # tran_trs_dom_dtj_ctj,
+    # tran_trs_dom_ctj,
+    # trs_int_sta,
+    # trs_int_opp,
+    # amnesty_dtj_ctj_sta_opp,
+    # amnesty_pol,
+    # tcs_all_created,
+    # rep_created,
+  ) |>
+  arrange(country_case, year) |>
+  #   group_by(country_case) |>
+  #   mutate(
+  #     across(
+  #       .cols = !c(ccode_ksg, year),
+  #       .fns = ~ cumsum(.x),
+  #       .names = "sum_{.col}"
+  #     )
+  #   ) |>
+  #   ungroup() |>
+  #   select(ccode_ksg, year, starts_with("sum_")) |>
+  mutate(
+    # year = year + 1, # for lagging
+    ccode_ksg = ifelse(ccode_ksg == 345 & year == 2006, 340, ccode_ksg)
+  )
 
 confl_ep_years <- confl_ep_years |>
-  # left_join(
-  #   to_merge,
-  #   by = c(gwno_loc = "ccode_ksg", year = "year")
-  # ) |>
+  left_join(
+    to_merge,
+    by = c(gwno_loc = "ccode_ksg", year = "year")
+  ) |>
   left_join(
     df |>
       select(
@@ -639,9 +1096,7 @@ confl_ep_years <- confl_ep_years |>
         yr_cce_sta_hi,
         yr_tcs,
         yr_rep,
-        yr_vet,
-        ICC_prelim_exam,
-        ICC_investigation
+        yr_vet
       ),
     by = c(gwno_loc = "ccode_ksg", year = "year")
   )
@@ -672,12 +1127,15 @@ confl_ep_years <- confl_ep_years |>
 ### conflict-matched measures
 #############################
 
-# load("~/Documents/GitHub/tjet-db/data/tjetdb.RData")
-# source("adapted-from-tjet-db/AmnestyMeasureConfl.R")
-# source("adapted-from-tjet-db/ReparationMeasuresConfl.R")
-# source("adapted-from-tjet-db/TCMeasureConfl.R")
-# source("adapted-from-tjet-db/TrialsMeasureConfl.R")
+# source("pipeline/fx/AmnestyMeasure.R")
+# source("pipeline/fx/ReparationMeasures.R")
+# source("pipeline/fx/TCMeasure.R")
+# source("pipeline/fx/TrialsMeasure.R")
 
+confl_ep_years <- AmnestyMeasure(
+  confl_df = TRUE,
+  cy = confl_ep_years
+)
 confl_ep_years <- AmnestyMeasure(
   confl_df = TRUE,
   cy = confl_ep_years,
