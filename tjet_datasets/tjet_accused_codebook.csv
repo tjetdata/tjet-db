@@ -7,8 +7,7 @@ position_desc_fr,description of the accused (French)
 accusedNotes,notes on the accused
 ethnicityAccused,ethnicity of accused
 stateRelation,Was the accused a state agent or opposed to the government? (current refers to within the last year of the last trials coded)
-membership,state membership: in what capacity did the state agent act?
-oppositionType,opposition type
+membership,state membership: in what capacity did the state agent or opposition member act?
 highRank,Was this a high-ranking individual?
 headOfState,Was this individual the head of state at the time of the crime?
 transnationalTerror,"Was the accused suspected of being a member of, or supporting, a transnational terror group?"

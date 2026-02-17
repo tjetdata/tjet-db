@@ -266,6 +266,14 @@ read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_intl.csv") |>
   ungroup() |>
   write_csv("~/Desktop/new_intl.csv", na = "")
 
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_foreign.csv") |>
+  rowwise() |>
+  mutate(
+    foreign_fr = translate(foreign),
+  ) %>%
+  ungroup() |>
+  write_csv("~/Desktop/new_foreign.csv", na = "")
+
 read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_regime.csv") |>
   rowwise() |>
   mutate(
@@ -282,6 +290,13 @@ read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_summary.csv") |>
   ungroup() |>
   write_csv("~/Desktop/new_summary.csv", na = "")
 
+read_csv("~/Documents/GitHub/tjet-db/auto_text_update/new_amnesties.csv") |>
+  rowwise() |>
+  mutate(
+    amnesties_fr = translate(amnesties),
+  ) %>%
+  ungroup() |>
+  write_csv("~/Desktop/new_amnesties.csv", na = "")
 
 read_csv("~/Desktop/Trials-for-translation.csv") |>
   rowwise() |>
