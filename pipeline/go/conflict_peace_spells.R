@@ -416,6 +416,239 @@ issues <- here::here(
     ethnic_avg = mean(ethnic, na.rm = TRUE)
   )
 
+#########################
+### UCDP peace agreements
+#########################
+
+intgrs <- c(
+  "gwno",
+  "paid",
+  "conflict_id",
+  "year",
+  "cease",
+  "amn",
+  "recon",
+  "no_dyad"
+)
+
+pas <- here::here(
+  "conflicts",
+  "original_data",
+  "ucdp-peace-agreements-221.xlsx"
+) |>
+  readxl::read_excel() |>
+  filter(!str_detect(gwno, ", ")) |>
+  mutate(conflict_id = str_split(conflict_id, ", ")) |>
+  unnest(conflict_id) |>
+  mutate(
+    across(all_of(intgrs), ~ as.integer(.x))
+  ) |>
+  mutate(
+    inclusive = case_when(
+      .default = inclusive,
+      inclusive == -1 ~ "comprehensive",
+      inclusive == 1 ~ "comprehensive",
+      inclusive == 2 ~ "dyadic",
+    ) |>
+      as.factor(),
+    pa_type = case_when(
+      pa_type == 1 ~ "full",
+      pa_type == 2 ~ "partial",
+      pa_type == 3 ~ "process",
+    ) |>
+      as.factor(),
+    ended = if_else(ended == "True", 1, 0),
+    duration = as_date(duration)
+  ) |>
+  rename(
+    gwno_loc = gwno,
+    ucpd_pa_id = paid,
+    pa_dyad_id = dyad_id,
+    pa_ended = ended,
+    pa_duration = duration,
+    pa_cease = cease,
+    pa_amn = amn,
+    pa_recon = recon,
+    pa_inclusive = inclusive,
+    pa_dyads = no_dyad
+  ) |>
+  select(
+    gwno_loc,
+    ucpd_pa_id,
+    conflict_id,
+    pa_dyad_id,
+    year,
+    # pa_name,
+    pa_type,
+    # pa_ended,
+    # pa_duration,
+    # pa_cease,
+    # pa_amn,
+    # pa_recon,
+    pa_inclusive,
+    pa_dyads,
+  ) |>
+  arrange(gwno_loc, conflict_id, year) |>
+  reframe(
+    .by = c(gwno_loc, conflict_id, year),
+    pa_n = n(),
+    ucpd_pa_id = str_flatten_comma(unique(ucpd_pa_id)),
+    pa_dyad_id = str_flatten_comma(unique(pa_dyad_id)),
+    pa_type = str_flatten_comma(pa_type),
+    pa_inclusive = str_flatten_comma(pa_inclusive)
+  ) |>
+  mutate(
+    pa_dyad_id = str_split(pa_dyad_id, ", ")
+  ) |>
+  rowwise() |>
+  mutate(
+    pa_dyad_id = list(sort(unique(pa_dyad_id))),
+    pa_dyads = length(pa_dyad_id),
+    pa_dyad_id = str_flatten_comma(pa_dyad_id)
+  ) |>
+  ungroup() |>
+  select(
+    gwno_loc,
+    conflict_id,
+    year,
+    pa_n,
+    pa_dyads,
+    pa_dyad_id,
+    # pa_type
+  ) |>
+  print()
+
+#######
+### PAM
+#######
+
+# pam <- here::here("conflicts", "original_data", "PAM_ID_2.0.xlsx") |>
+#   readxl::read_xlsx() |>
+#   mutate(
+#     .by = pam_caseid,
+#     beg = min(year),
+#     end = max(year)
+#   ) |>
+#   mutate(
+#     war_start = as_date(war_start),
+#     cease_date = as_date(cease_date)
+#   ) |>
+#   select(
+#     pam_caseid,
+#     country,
+#     cowcode,
+#     year,
+#     year_count,
+#     accordname,
+#     war_start,
+#     cease_date,
+#     beg,
+#     end,
+#     amnest_prov,
+#     humrts_prov,
+#     prisr_prov,
+#     repar_prov,
+#     truth_prov
+#   ) |>
+#   distinct() |>
+#   arrange(country, cease_date)
+
+#######
+### PAX
+#######
+
+tj_vars <- c(
+  "TjGen",
+  "TjAm",
+  "TjAmPro",
+  "TjSan",
+  "TjPower",
+  "TjCou",
+  "TjJaNc",
+  "TjJaIc",
+  "TjMech",
+  "TjPrire",
+  "TjVet",
+  "TjVic",
+  "TjMis",
+  "TjRep",
+  "TjRSym",
+  "TjRMa",
+  "TjNR"
+)
+
+pax <- here::here(
+  "conflicts",
+  "original_data",
+  "pax_data_2144_agreements_v9_10.csv"
+) |>
+  read_csv() |>
+  rename(
+    entity = Con,
+    process_id = PP,
+    process_name = PPName,
+    date_sign = Dat,
+    agreement_id = AgtId,
+    agreement_name = Agt,
+    confl_type = Agtp,
+    gwno_loc = Loc1GWNO,
+    conflict_id = UcdpCon,
+    ucpd_pa_id = UcdpAgr,
+    pam_id = PamAgr
+  ) |>
+  arrange(entity, process_name, date_sign) |>
+  filter(confl_type %in% c("Intra")) |> # type of conflicts
+  filter(Stage %in% c("SubComp", "SubPar")) |> # stage of the process
+  mutate(
+    gwno_loc = as.integer(gwno_loc),
+    conflict_id = as.integer(conflict_id),
+    ucpd_pa_id = if_else(
+      ucpd_pa_id == "N/A" | ucpd_pa_id == "na",
+      NA,
+      ucpd_pa_id
+    ),
+    ucpd_pa_id = as.integer(ucpd_pa_id),
+    pam_id = if_else(pam_id == "N/A", NA, pam_id),
+    pam_id = as.integer(pam_id),
+    stage = case_when(
+      Stage == "SubComp" ~ "comprehensive",
+      Stage == "SubPar" ~ "partial",
+      Stage == "Cea" ~ "ceasefire"
+    ),
+    year = year(date_sign)
+  ) |>
+  select(
+    gwno_loc,
+    conflict_id,
+    year,
+    process_id,
+    stage,
+    ucpd_pa_id,
+    # all_of(tj_vars)
+  ) |>
+  filter(!is.na(conflict_id)) |>
+  reframe(
+    .by = c(gwno_loc, conflict_id, year),
+    pax_n = n(),
+    # stage = str_flatten_comma(stage)
+  ) |>
+  print()
+
+agreements <- full_join(
+  pas,
+  pax,
+  by = c("gwno_loc", "conflict_id", "year")
+) |>
+  arrange(gwno_loc, conflict_id, year) |>
+  mutate(
+    peace_agree = if_else(
+      pa_n > 0 | pax_n > 0,
+      1,
+      0
+    )
+  ) |>
+  print(n = 30)
+
 #########
 ### NSAEX
 #########
@@ -425,6 +658,8 @@ ids <- here::here("conflicts", "original_data", "translate_conf.csv") |>
   rename(
     conflict_id = new_id
   ) |>
+  filter(!str_detect(old_id, "-")) |>
+  filter(!str_detect(old_id, "XXX")) |>
   mutate(ucdpid = as.integer(old_id)) |>
   filter(!is.na(ucdpid)) |>
   select(conflict_id, ucdpid)
@@ -469,6 +704,13 @@ nsaex <- here::here(
     rebstrength_nsa = str_flatten_comma(unique(rebstrength_nsa)),
   ) |>
   mutate(rebestimate_nsa = if_else(rebestimate_nsa == 0, NA, rebestimate_nsa))
+
+########
+### PNCC
+########
+
+# here::here("conflicts", "original_data", "pncc_dy_16042022.csv") |>
+#   read_csv()
 
 #######################
 ### pulling it together
@@ -873,7 +1115,17 @@ confl_ep_years <- confl_ep_years |>
     .by = c(gwno_loc, conflict_id),
     ethnic_avg,
     .direction = "down"
-  )
+  ) |>
+  left_join(
+    agreements,
+    by = c("gwno_loc", "conflict_id", "year")
+  ) |>
+  arrange(gwno_loc, conflict_id, year) |>
+  fill(
+    .by = c(gwno_loc, conflict_id),
+    peace_agree
+  ) |>
+  mutate(peace_agree = if_else(is.na(peace_agree), 0, peace_agree))
 
 atrocities <- confl_ep_years |>
   select(
@@ -941,36 +1193,36 @@ confl_ep_years <- confl_ep_years |>
 ### example country
 ###################
 
-confl_ep_years |>
-  filter(gwno_loc == 540 & year < 2006) |>
-  select(
-    conflict_id,
-    sample,
-    year,
-    location,
-    # gwno_loc,
-    ep_beg,
-    ep_end,
-    # bd_beg,
-    # confl_beg,
-    # confl_last,
-    c_epno,
-    c_epterm,
-    # c_ep_durcount,
-    outcome,
-    # recur_later,
-    # ep_next_beg,
-    # pc_yrs,
-    # bd_best,
-    # bd_before_ep,
-    # bd_cumu_confl,
-    # bd_cumu_ep,
-    # bd_cumu_ep_end,
-    contains("dyad"),
-    # contains("bd_"),
-    contains("_threshold")
-  ) |>
-  print(n = Inf)
+# confl_ep_years |>
+#   filter(gwno_loc == 540 & year < 2006) |>
+#   select(
+#     conflict_id,
+#     sample,
+#     year,
+#     location,
+#     # gwno_loc,
+#     ep_beg,
+#     ep_end,
+#     # bd_beg,
+#     # confl_beg,
+#     # confl_last,
+#     c_epno,
+#     c_epterm,
+#     # c_ep_durcount,
+#     outcome,
+#     # recur_later,
+#     # ep_next_beg,
+#     # pc_yrs,
+#     # bd_best,
+#     # bd_before_ep,
+#     # bd_cumu_confl,
+#     # bd_cumu_ep,
+#     # bd_cumu_ep_end,
+#     contains("dyad"),
+#     # contains("bd_"),
+#     contains("_threshold")
+#   ) |>
+#   print(n = Inf)
 
 #########################################################
 ### merging in existing TJET measures (not by conflictID)
@@ -1002,10 +1254,19 @@ df |>
 #   print(n = 55)
 
 to_merge <- df |>
+  mutate(
+    subintregion = case_when(
+      !is.na(intregion) ~ intregion,
+      is.na(intregion) ~ subregion
+    )
+  ) |>
   select(
     country_case,
     ccode_ksg,
     year,
+    region,
+    subregion,
+    subintregion,
     ICC_referral,
     ICC_prelim,
     ICC_prelim_region,
@@ -1083,6 +1344,7 @@ to_merge <- df |>
   )
 
 confl_ep_years <- confl_ep_years |>
+  filter(year >= 1970) |>
   left_join(
     to_merge,
     by = c(gwno_loc = "ccode_ksg", year = "year")
