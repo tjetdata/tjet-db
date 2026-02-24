@@ -1037,7 +1037,7 @@ confl_ep_years <- confl_yrs |>
     .by = conflict_id,
     .direction = "down",
     c_epno,
-    # c_epid,
+    c_epid,
     bd_beg,
     confl_beg,
     confl_last,
@@ -1051,6 +1051,7 @@ confl_ep_years <- confl_yrs |>
     .direction = "down",
     gwno_loc,
     location,
+    # c_epterm,
     side_b,
     side_a_id,
     side_b_id,
@@ -1115,6 +1116,10 @@ confl_ep_years <- confl_ep_years |>
     .by = c(gwno_loc, conflict_id),
     ethnic_avg,
     .direction = "down"
+  ) |>
+  mutate(
+    ethnic_avg = if_else(year > 2017, NA, ethnic_avg),
+    ethnic_avg = if_else(is.na(ethnic_avg) & year %in% 1989:2017, 0, ethnic_avg)
   ) |>
   left_join(
     agreements,
@@ -1232,28 +1237,22 @@ df <- read_csv(
   here::here("tjet_datasets/tjet_cy_analyses.csv")
 )
 
-df |>
-  select(
-    country_case,
-    year,
-    contains("osv")
-  ) |>
-  filter(!is.na(conflicts_osv))
 # df |>
 #   select(
 #     country_case,
 #     year,
-#     starts_with("aco_"),
-#     starts_with("dco_"),
-#     starts_with("pco_"),
-#     starts_with("confl_"),
-#     starts_with("outcome_"),
+#     # starts_with("aco_"),
+#     # starts_with("dco_"),
+#     # starts_with("pco_"),
+#     # starts_with("confl_"),
+#     starts_with("amnesty_"),
 #   ) |>
-#   select(!ends_with("_cflag")) |>
-#   filter(str_detect(country_case, "Angola")) |>
-#   print(n = 55)
+#   # select(!ends_with("_cflag")) |>
+#   # filter(str_detect(country_case, "Angola")) |>
+#   names()
 
 to_merge <- df |>
+  rename(bd_ctry = bd_best) |>
   mutate(
     subintregion = case_when(
       !is.na(intregion) ~ intregion,
@@ -1295,14 +1294,16 @@ to_merge <- df |>
     v2x_polyarchy,
     reg_type_vdem,
     reg_trans_vdem,
+    v2x_regime_cat,
     transition,
     dem_reversion,
     v2juncind,
     v2juhcind,
     v2jucomp,
     v2juhccomp,
-    v2jureform,
+    legacy_mean,
     pko_mission,
+    bd_ctry,
     deaths_state_osv,
     deaths_nonstate_osv,
     conflicts_osv,
@@ -1326,6 +1327,17 @@ to_merge <- df |>
     # amnesty_pol,
     # tcs_all_created,
     # rep_created,
+    amnesty_hrv,
+    amnesty_sta_hrv,
+    amnesty_opp_hrv,
+    amnesty_dtj_ctj_sta_opp,
+    amnesty_ctj_sta_opp,
+    rep_paidout,
+    tcs_dtj_ctj_binary,
+    tcs_report_public,
+    tran_cce_dom_dtj_ctj_sta_hi,
+    tcs_reconciliation,
+    tcs_ctj_reconciliation
   ) |>
   arrange(country_case, year) |>
   #   group_by(country_case) |>
@@ -1389,10 +1401,10 @@ confl_ep_years <- confl_ep_years |>
 ### conflict-matched measures
 #############################
 
-# source("pipeline/fx/AmnestyMeasure.R")
-# source("pipeline/fx/ReparationMeasures.R")
-# source("pipeline/fx/TCMeasure.R")
-# source("pipeline/fx/TrialsMeasure.R")
+source("pipeline/fx/AmnestyMeasure.R")
+source("pipeline/fx/ReparationMeasures.R")
+source("pipeline/fx/TCMeasure.R")
+source("pipeline/fx/TrialsMeasure.R")
 
 confl_ep_years <- AmnestyMeasure(
   confl_df = TRUE,
@@ -1453,6 +1465,7 @@ confl_ep_years <- AmnestyMeasure(
 )
 
 amnesty_vars <- c(
+  "amnesty_ucdp",
   "amnesty_ucdp_dcj_sta_opp",
   "amnesty_ucdp_pcj_sta_opp",
   "amnesty_ucdp_dcj_sta",
