@@ -14,6 +14,18 @@ AmnestyMeasure <- function(
     confl_df_cond <- TRUE
   }
 
+  filter_if_opts <- function(df, lookup, opts) {
+    if (is.null(opts)) {
+      return(df)
+    } else if (missing(lookup)) {
+      df |>
+        filter(if_any(all_of(opts), ~ . == 1))
+    } else {
+      df |>
+        filter(if_any(all_of(lookup[opts]), ~ . == 1))
+    }
+  }
+
   ## options
   peace <- c("peaceSettlement")
   nexus <- c(
@@ -184,10 +196,14 @@ AmnestyMeasure <- function(
       what_coi
     ) |>
     filter(eval(confl_df_cond)) |>
-    filter(if_any(all_of(nexus[nexus_vars]), ~ . == 1)) |>
-    filter(if_any(all_of(peace_vars), ~ . == 1)) |>
-    filter(if_any(all_of(who[who_opts]), ~ . == 1)) |>
-    filter(if_any(all_of(what[what_opts]), ~ . == 1)) |>
+    # filter(if_any(all_of(nexus[nexus_vars]), ~ . == 1)) |>
+    filter_if_opts(lookup = nexus, opts = nexus_vars) |>
+    # filter(if_any(all_of(who[who_opts]), ~ . == 1)) |>
+    filter_if_opts(lookup = who, opts = who_opts) |>
+    # filter(if_any(all_of(what[what_opts]), ~ . == 1)) |>
+    filter_if_opts(lookup = what, opts = what_opts) |>
+    # filter(if_any(all_of(peace_vars), ~ . == 1)) |>
+    filter_if_opts(opts = peace_vars) |>
     select(
       amnestyID,
       ccode,

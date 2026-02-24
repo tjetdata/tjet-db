@@ -20,6 +20,14 @@ TrialsMeasure <- function(
     confl_df_cond <- TRUE
   }
 
+  filter_if_opts <- function(df, lookup, opts) {
+    if (is.null(opts)) {
+      return(df)
+    } else {
+      df |>
+        filter(if_any(all_of(lookup[opts]), ~ . == 1))
+    }
+  }
   ## options
 
   type_trial <- c(
@@ -393,9 +401,12 @@ TrialsMeasure <- function(
       all = 1,
       lowRank = 1 - highRank
     ) |>
-    filter(if_any(all_of(membership_acc[memb_opts]), ~ . == 1)) |>
-    filter(if_any(all_of(rank_acc[rank_opts]), ~ . == 1)) |>
-    filter(if_any(all_of(charges_acc[charges_opts]), ~ . == 1)) |>
+    # filter(if_any(all_of(membership_acc[memb_opts]), ~ . == 1)) |>
+    filter_if_opts(lookup = membership_acc, opts = memb_opts) |>
+    # filter(if_any(all_of(rank_acc[rank_opts]), ~ . == 1)) |>
+    filter_if_opts(lookup = rank_acc, opts = rank_opts) |>
+    # filter(if_any(all_of(charges_acc[charges_opts]), ~ . == 1)) |>
+    filter_if_opts(lookup = charges_acc, opts = charges_opts) |>
     filter(eval(hos_condition)) |>
     arrange(accusedID) |>
     select(accusedID, trialID) |>
@@ -458,7 +469,8 @@ TrialsMeasure <- function(
     ) |>
     filter(trialType %in% type_trial[type_opts]) |>
     filter(eval(confl_df_cond)) |>
-    filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) |>
+    # filter(if_any(all_of(nexus_trial[nexus_vars]), ~ . == 1)) |>
+    filter_if_opts(lookup = nexus_trial, opts = nexus_vars) |>
     filter(eval(exclusion_condition)) |>
     filter(eval(subtype_condition)) |>
     select(

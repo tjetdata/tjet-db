@@ -47,6 +47,18 @@ TCmeasure <- function(
     confl_df_cond <- TRUE
   }
 
+  filter_if_opts <- function(df, lookup, opts) {
+    if (is.null(opts)) {
+      return(df)
+    } else if (missing(lookup)) {
+      df |>
+        filter(if_any(all_of(opts), ~ . == 1))
+    } else {
+      df |>
+        filter(if_any(all_of(lookup[opts]), ~ . == 1))
+    }
+  }
+
   ## options
   all_year_vars <- c(
     "yearPassed",
@@ -390,8 +402,10 @@ TCmeasure <- function(
     #   focusedPast == 1 & investigatePatternAbuse == 1 & ## met criteria
     #     neverOperated == 0 ) |>
     filter(eval(confl_df_cond)) |>
-    filter(if_any(all_of(filter_nexus_vars), ~ . == 1)) |> ## context binary indicators
-    filter(if_any(all_of(filter_crimes_vars), ~ . == 1)) |> ## crimes included
+    # filter(if_any(all_of(filter_nexus_vars), ~ . == 1)) |> ## context binary indicators
+    filter_if_opts(opts = filter_nexus_vars) |>
+    # filter(if_any(all_of(filter_crimes_vars), ~ . == 1)) |> ## crimes included
+    filter_if_opts(opts = filter_crimes_vars) |>
     mutate(
       goals = ifelse(
         !is.null(aims_opts) & truthcommissionID %in% TCGoals(aims_opts),
@@ -404,21 +418,13 @@ TCmeasure <- function(
         1,
         0
       ),
-      consl = ifelse(
-        !is.null(consult_vars) & if_any(all_of(consult_vars), ~ . == 1),
-        1,
-        0
-      ),
+      consl = ifelse(if_any(all_of(consult_vars), ~ . == 1), 1, 0),
       harms = rowSums(across(all_of(harms_vars))),
       power = rowSums(across(all_of(powers_vars))),
       testi = rowSums(across(all_of(testimony_vars))),
       repor = rowSums(across(all_of(reports_vars))),
       recom = rowSums(across(all_of(recommend_vars))),
-      monit = ifelse(
-        !is.null(monitor_vars) & if_any(all_of(monitor_vars), ~ . == 1),
-        1,
-        0
-      ),
+      monit = ifelse(if_any(all_of(monitor_vars), ~ . == 1), 1, 0),
       index = goals +
         indep +
         consl +
