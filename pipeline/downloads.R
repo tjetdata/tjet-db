@@ -15,6 +15,12 @@ require(rairtable)
 ### this list specifies the Airtable bases and tables to download via API
 to_download <-
   list(
+    "appAmqwnxINo7Dn9G" = c(
+      "Leaders",
+      "LegalCases",
+      "CaseEvents",
+      "Countries"
+    ),
     "appHsoHAemKITZgMF" = c(
       "Amnesties",
       "Reparations",
@@ -82,7 +88,7 @@ tjet <- map(names(to_download), function(base_id) {
   }) %>%
     return()
 })
-names(to_download) <- names(tjet) <- c("MegaBase", "Prosecutions")
+names(to_download) <- names(tjet) <- c("Leaders", "MegaBase", "Prosecutions")
 tjet[["db_timestamp"]] <- Sys.time()
 save(tjet, to_download, file = here::here("data", "tjet.RData"))
 

@@ -22,6 +22,8 @@ message("Loading the raw data tables...")
 load(here::here("data", "tjet.RData"), verbose = FALSE)
 map(tjet, names)
 
+to_download <- to_download[c("MegaBase", "Prosecutions")]
+
 ### note that both bases have Countries, Transitions, Conflicts and Dyads tables
 ### but these should be the same; ideally the two bases should be combined and
 ### using only one version each but Airtable limitations make this difficult
@@ -2933,6 +2935,70 @@ hra <- full_join(hra, hra_lags, by = c("country", "year")) |>
 df <- df |>
   left_join(hra, by = c("country_case" = "country", "year" = "year")) |>
   mutate(legacy_decile = as.numeric(gtools::quantcut(legacy_mean, q = 10)))
+
+message("Merging in leaders prosecutions data... ")
+
+here::here("pipeline", "go", "leaders.R") |>
+  source()
+
+leaders_vars <- c(
+  "lea_trs_dom",
+  "lea_trs_hrs_dom",
+  # "lea_trs_ecn_dom",
+  "lea_trs_oth_dom",
+  "lea_trs_non",
+  "lea_trs_hrs_non",
+  # "lea_trs_ecn_non",
+  "lea_trs_oth_non",
+  "lea_cec_dom",
+  "lea_cec_hrs_dom",
+  # "lea_cec_ecn_dom",
+  "lea_cec_oth_dom",
+  "lea_cec_non",
+  "lea_cec_hrs_non",
+  # "lea_cec_ecn_non",
+  "lea_cec_oth_non"
+)
+
+df <- df |>
+  left_join(
+    lead_cy,
+    by = c(
+      "ccode_cow" = "ccode_leader",
+      "year"
+    )
+  ) |>
+  mutate(
+    across(
+      all_of(leaders_vars),
+      ~ if_else(.x > 0, 1, NA),
+      .names = "{.col}_bin"
+    ),
+    across(
+      all_of(leaders_vars),
+      ~ if_else(is.na(.x), 0, .x)
+    ),
+  ) |>
+  arrange(country_case, year) |>
+  fill(
+    .by = country_case,
+    .direction = "down",
+    all_of(paste(leaders_vars, "bin", sep = "_"))
+  ) |>
+  mutate(
+    across(
+      all_of(paste(leaders_vars, "bin", sep = "_")),
+      ~ if_else(is.na(.x), 0, .x)
+    ),
+  ) |>
+  mutate(
+    .by = country_case,
+    across(
+      all_of(leaders_vars),
+      ~ cumsum(.x),
+      .names = "{.col}_cumu"
+    )
+  )
 
 message("Cleanup and saving dataset locally... ")
 
