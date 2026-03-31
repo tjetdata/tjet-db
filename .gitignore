@@ -15,3 +15,7 @@ conflicts/original_data/
 focus/
 auto_text_update/
 zot_missing/
+
+tjet_datasets/leaders.csv
+tjet_datasets/leaders_cases.csv
+tjet_datasets/leaders_case_events.csv

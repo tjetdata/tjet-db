@@ -545,6 +545,12 @@ tjet_cy,leaders,,lea_trs_hrs_dom_cumu,"domestic leader prosecutions for human ri
 tjet_cy,leaders,,lea_trs_hrs_non,"non-domestic leader prosecutions for human rights crimes, count of trials beginning, by country of the leader & start year",TJET,1970,2024
 tjet_cy,leaders,,lea_trs_hrs_non_bin,"non-domestic leader prosecutions for human rights crimes, binary, carried forward from first year",TJET,1970,2024
 tjet_cy,leaders,,lea_trs_hrs_non_cumu,"non-domestic leader prosecutions for human rights crimes, cumulative count",TJET,1970,2024
+tjet_cy,leaders,,lea_trs_ecn_dom,"domestic leader prosecutions for economic crimes, count of trials beginning, by country of the leader & start year",TJET,1970,2024
+tjet_cy,leaders,,lea_trs_ecn_dom_bin,"domestic leader prosecutions for economic crimes, binary, carried forward from first year",TJET,1970,2024
+tjet_cy,leaders,,lea_trs_ecn_dom_cumu,"domestic leader prosecutions for economic crimes, cumulative count",TJET,1970,2024
+tjet_cy,leaders,,lea_trs_ecn_non,"non-domestic leader prosecutions for economic crimes, count of trials beginning, by country of the leader & start year",TJET,1970,2024
+tjet_cy,leaders,,lea_trs_ecn_non_bin,"non-domestic leader prosecutions for economic crimes, binary, carried forward from first year",TJET,1970,2024
+tjet_cy,leaders,,lea_trs_ecn_non_cumu,"non-domestic leader prosecutions for economic crimes, cumulative count",TJET,1970,2024
 tjet_cy,leaders,,lea_trs_oth_dom,"domestic leader prosecutions for other crimes, count of trials beginning, by country of the leader & start year",TJET,1970,2024
 tjet_cy,leaders,,lea_trs_oth_dom_bin,"domestic leader prosecutions for other crimes, binary, carried forward from first year",TJET,1970,2024
 tjet_cy,leaders,,lea_trs_oth_dom_cumu,"domestic leader prosecutions for other crimes, cumulative count",TJET,1970,2024
@@ -563,6 +569,12 @@ tjet_cy,leaders,,lea_cec_hrs_dom_cumu,"domestic leader prosecutions for human ri
 tjet_cy,leaders,,lea_cec_hrs_non,"non-domestic leader prosecutions for human rights crimes, count of convictions, by country of the leader & year of initial conviction (regardless of subsequent appeals)",TJET,1970,2024
 tjet_cy,leaders,,lea_cec_hrs_non_bin,"non-domestic leader prosecutions for human rights crimes, binary for conviction, carried forward from year of first conviction",TJET,1970,2024
 tjet_cy,leaders,,lea_cec_hrs_non_cumu,"non-domestic leader prosecutions for human rights crimes, cumulative count of convictions",TJET,1970,2024
+tjet_cy,leaders,,lea_cec_ecn_dom,"domestic leader prosecutions for economic crimes, count of convictions, by country of the leader & year of initial conviction (regardless of subsequent appeals)",TJET,1970,2024
+tjet_cy,leaders,,lea_cec_ecn_dom_bin,"domestic leader prosecutions for economic crimes, binary for conviction, carried forward from year of first conviction",TJET,1970,2024
+tjet_cy,leaders,,lea_cec_ecn_dom_cumu,"domestic leader prosecutions for economic crimes, cumulative count of convictions",TJET,1970,2024
+tjet_cy,leaders,,lea_cec_ecn_non,"non-domestic leader prosecutions for economic crimes, count of convictions, by country of the leader & year of initial conviction (regardless of subsequent appeals)",TJET,1970,2024
+tjet_cy,leaders,,lea_cec_ecn_non_bin,"non-domestic leader prosecutions for economic crimes, binary for conviction, carried forward from year of first conviction",TJET,1970,2024
+tjet_cy,leaders,,lea_cec_ecn_non_cumu,"non-domestic leader prosecutions for economic crimes, cumulative count of convictions",TJET,1970,2024
 tjet_cy,leaders,,lea_cec_oth_dom,"domestic leader prosecutions for other crimes, count of convictions, by country of the leader & year of initial conviction (regardless of subsequent appeals)",TJET,1970,2024
 tjet_cy,leaders,,lea_cec_oth_dom_bin,"domestic leader prosecutions for other crimes, binary for conviction, carried forward from year of first conviction",TJET,1970,2024
 tjet_cy,leaders,,lea_cec_oth_dom_cumu,"domestic leader prosecutions for other crimes, cumulative count of convictions",TJET,1970,2024
