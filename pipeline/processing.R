@@ -2944,19 +2944,19 @@ here::here("pipeline", "go", "leaders.R") |>
 leaders_vars <- c(
   "lea_trs_dom",
   "lea_trs_hrs_dom",
-  # "lea_trs_ecn_dom",
+  "lea_trs_ecn_dom",
   "lea_trs_oth_dom",
   "lea_trs_non",
   "lea_trs_hrs_non",
-  # "lea_trs_ecn_non",
+  "lea_trs_ecn_non",
   "lea_trs_oth_non",
   "lea_cec_dom",
   "lea_cec_hrs_dom",
-  # "lea_cec_ecn_dom",
+  "lea_cec_ecn_dom",
   "lea_cec_oth_dom",
   "lea_cec_non",
   "lea_cec_hrs_non",
-  # "lea_cec_ecn_non",
+  "lea_cec_ecn_non",
   "lea_cec_oth_non"
 )
 
@@ -3199,6 +3199,7 @@ message("Creating data files for download from the TJET website... ")
 #   - regime_sample, reg_democ, reg_autoc, reg_trans, conflict, transition
 
 included <- codebook$col_name[codebook$col_name %in% names(df)]
+excluded <- included[str_detect(included, "lea_")]
 
 codebook |>
   filter(col_name %in% included) |>
@@ -3213,6 +3214,7 @@ codebook |>
 
 db[["dl_tjet_codebook"]] <- codebook |>
   filter(col_name %in% included & !is.na(section)) |>
+  filter_out(col_name %in% excluded) |>
   select(section, col_name, definition, source_abr) |>
   rename(source = source_abr) |>
   left_join(

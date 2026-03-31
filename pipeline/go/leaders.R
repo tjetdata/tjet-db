@@ -14,6 +14,7 @@ countries <- lead[["Countries"]] |>
   )
 
 leaders <- lead[["Leaders"]] |>
+  filter(is.na(invalid)) |>
   unnest(country, keep_empty = TRUE) |>
   left_join(
     countries |>
@@ -222,10 +223,10 @@ cases <- leader_cases |>
       1,
       0
     ),
-    # ecn = if_else(str_detect(charges_type, "Economic crimes"), 1, 0),
+    ecn = if_else(str_detect(charges_type, "Economic crimes"), 1, 0),
     oth = if_else(
-      str_detect(charges_type, "Economic crimes") |
-        str_detect(charges_type, "Crimes against the state") |
+      # str_detect(charges_type, "Economic crimes") |
+      str_detect(charges_type, "Crimes against the state") |
         str_detect(charges_type, "Interpersonal or ordinary crime"),
       1,
       0
@@ -249,7 +250,7 @@ cases <- leader_cases |>
     ),
     n_leaders = n(),
     hrs = sum(hrs),
-    # ecn = sum(ecn),
+    ecn = sum(ecn),
     oth = sum(oth),
   ) |>
   rename(year = year_start) |>
@@ -275,7 +276,7 @@ case_convictions <- leader_case_events |>
         ccode_leader,
         trial_type,
         hrs,
-        # ecn,
+        ecn,
         oth
       ),
     by = c("caseID" = "airtable_record_id")
@@ -290,7 +291,7 @@ lead_cy[["lea_trs_dom"]] <- cases |>
     .by = c(ccode_leader, year),
     lea_trs_dom = sum(n_leaders),
     lea_trs_hrs_dom = sum(hrs),
-    # lea_trs_ecn_dom = sum(ecn),
+    lea_trs_ecn_dom = sum(ecn),
     lea_trs_oth_dom = sum(oth)
   )
 
@@ -300,7 +301,7 @@ lead_cy[["lea_trs_non"]] <- cases |>
     .by = c(ccode_leader, year),
     lea_trs_non = sum(n_leaders),
     lea_trs_hrs_non = sum(hrs),
-    # lea_trs_ecn_non = sum(ecn),
+    lea_trs_ecn_non = sum(ecn),
     lea_trs_oth_non = sum(oth)
   )
 
@@ -325,12 +326,12 @@ lead_cy[["lea_cec_hrs_dom"]] <- case_convictions |>
     lea_cec_hrs_dom = sum(convict_first, na.rm = TRUE),
   )
 
-# lead_cy[["lea_cec_ecn_dom"]] <- case_convictions |>
-#   filter(trial_type == "domestic" & ecn > 0) |>
-#   reframe(
-#     .by = c(ccode_leader, year),
-#     lea_cec_ecn_dom = sum(convict_first, na.rm = TRUE),
-#   )
+lead_cy[["lea_cec_ecn_dom"]] <- case_convictions |>
+  filter(trial_type == "domestic" & ecn > 0) |>
+  reframe(
+    .by = c(ccode_leader, year),
+    lea_cec_ecn_dom = sum(convict_first, na.rm = TRUE),
+  )
 
 lead_cy[["lea_cec_oth_dom"]] <- case_convictions |>
   filter(trial_type == "domestic" & oth > 0) |>
@@ -346,12 +347,12 @@ lead_cy[["lea_cec_hrs_non"]] <- case_convictions |>
     lea_cec_hrs_non = sum(convict_first, na.rm = TRUE),
   )
 
-# lead_cy[["lea_cec_ecn_non"]] <- case_convictions |>
-#   filter(trial_type == "non-domestic" & ecn > 0) |>
-#   reframe(
-#     .by = c(ccode_leader, year),
-#     lea_cec_ecn_non = sum(convict_first, na.rm = TRUE),
-#   )
+lead_cy[["lea_cec_ecn_non"]] <- case_convictions |>
+  filter(trial_type == "non-domestic" & ecn > 0) |>
+  reframe(
+    .by = c(ccode_leader, year),
+    lea_cec_ecn_non = sum(convict_first, na.rm = TRUE),
+  )
 
 lead_cy[["lea_cec_oth_non"]] <- case_convictions |>
   filter(trial_type == "non-domestic" & oth > 0) |>
