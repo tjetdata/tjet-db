@@ -1,329 +1,424 @@
-tag,collection,collection_key,parent,parent_key
-big theory,Big Theory,F8UMHAWE,A - TJ Themes,UY3YBRQA
-children,Children,YKZDHRLR,A - TJ Themes,UY3YBRQA
-civil society,Civil Society,37LI9NMF,A - TJ Themes,UY3YBRQA
-colonial legacy,Colonialism,CXRV3JLL,A - TJ Themes,UY3YBRQA
-colonialism,Colonialism,CXRV3JLL,A - TJ Themes,UY3YBRQA
-counter-critique,Counter-critique,756QN8DS,A - TJ Themes,UY3YBRQA
-DDR,DDR,JX57AJ3H,A - TJ Themes,UY3YBRQA
-research methods,"Data, Evidence, Methods",US2T9GUS,A - TJ Themes,UY3YBRQA
-displacement,Displacement,UWDNKJFA,A - TJ Themes,UY3YBRQA
-documentation & truth telling,Documentation & Truth-Telling,LBMMJURQ,A - TJ Themes,UY3YBRQA
-elitism,Elitism,PXE3F4B3,A - TJ Themes,UY3YBRQA
-feminist/gender critique,Feminist/Gender Critique,WXT9Q8ZV,A - TJ Themes,UY3YBRQA
-forgetting,Forgetting,CQLZ43MV,A - TJ Themes,UY3YBRQA
-genocide & mass atrocities,Genocide & Mass Atrocities,69TQA6XA,A - TJ Themes,UY3YBRQA
-history & the canon,History & The Canon,PHWAR5DU,A - TJ Themes,UY3YBRQA
-,ICC,F6DB92P7,A - TJ Themes,UY3YBRQA
-impact,Impact,QGX4X39H,A - TJ Themes,UY3YBRQA
-impact assessment,Impact,QGX4X39H,A - TJ Themes,UY3YBRQA
-impunity,Impunity & Anti-Impunity,S3XUKY28,A - TJ Themes,UY3YBRQA
-impunity & anti-impunity,Impunity & Anti-Impunity,S3XUKY28,A - TJ Themes,UY3YBRQA
-indigenous peoples,Indigenous Peoples,RDBCUM53,A - TJ Themes,UY3YBRQA
-land rights,Land Rights,IMKDFRQH,A - TJ Themes,UY3YBRQA
-legalization/professionalization,Legalization/Professionalization,LZUDBIFU,A - TJ Themes,UY3YBRQA
-liberalism,Liberalism,FKQBRHE6,A - TJ Themes,UY3YBRQA
-localization,Localization,6HK7V9RD,A - TJ Themes,UY3YBRQA
-peace v. justice,Peace v. Justice,Z7R4I8NE,A - TJ Themes,UY3YBRQA
-politics & political narrative,Politics & Political Narrative,9YQZPL39,A - TJ Themes,UY3YBRQA
-reconciliation,Reconciliation,HX4U954A,A - TJ Themes,UY3YBRQA
-religion,Religion/Faith,T5NFDDCG,A - TJ Themes,UY3YBRQA
-reparative justice,Reparative Justice,Y8NCQR3H,A - TJ Themes,UY3YBRQA
-sexual orientation & gender,Sexual Orientation & Gender,CI5N7Z4V,A - TJ Themes,UY3YBRQA
-structural violence & other injustice,Structural Violence & Other Injustice,Q899LW6V,A - TJ Themes,UY3YBRQA
-memory,Symbolism & Memory,I7BHRWSI,A - TJ Themes,UY3YBRQA
-symbolism,Symbolism & Memory,I7BHRWSI,A - TJ Themes,UY3YBRQA
-symbolism & memory,Symbolism & Memory,I7BHRWSI,A - TJ Themes,UY3YBRQA
-economic development,TJ & Economic Development,U3W6D5UK,A - TJ Themes,UY3YBRQA
-TJ introduction,TJ Introduction,UX544NGA,A - TJ Themes,UY3YBRQA
-technicism,Technicism,UDJQXTJL,A - TJ Themes,UY3YBRQA
-timing & sequencing,Timing & Sequencing,GEYRXWPW,A - TJ Themes,UY3YBRQA
-transformative justice,Transformative Justice,RMQIKLG3,A - TJ Themes,UY3YBRQA
-,Trust,BMRSUAS4,A - TJ Themes,UY3YBRQA
-victims & victim-centrism,Victims & Victim-Centrism,PHEV6X8V,A - TJ Themes,UY3YBRQA
-amnesties,Amnesties,RRCJAFRE,B - Mechanisms,I8E7U56B
-customary/local mechanisms,Customary/Local Mechanisms,VV2PJF7M,B - Mechanisms,I8E7U56B
-prosecutions,Prosecutions,EU55F6CD,B - Mechanisms,I8E7U56B
-reparations,Reparations,XEQXLEVS,B - Mechanisms,I8E7U56B
-truth commissions,Truth Commissions,ZAQN73UT,B - Mechanisms,I8E7U56B
-lustration,Vetting,TMMYQDXS,B - Mechanisms,I8E7U56B
-purge,Vetting,TMMYQDXS,B - Mechanisms,I8E7U56B
-vetting,Vetting,TMMYQDXS,B - Mechanisms,I8E7U56B
-,Economic,TQ8T2UL6,Briefs,DBQPVRR8
-,Education,52RRPSSW,Briefs,DBQPVRR8
-,Gender,5NM6PBQK,Briefs,DBQPVRR8
-,HR_Conflict,3MRR35AE,Briefs,DBQPVRR8
-,Heads of State,CZQRBYD7,Briefs,DBQPVRR8
-Afghanistan,Afghanistan,WYS9TE89,C - Countries,7I8DMXBQ
-Albania,Albania,HRB27FV3,C - Countries,7I8DMXBQ
-Algeria,Algeria,S9VISLER,C - Countries,7I8DMXBQ
-Andorra,Andorra,4VG6YA57,C - Countries,7I8DMXBQ
-Angola,Angola,RWCF89FB,C - Countries,7I8DMXBQ
-Antigua & Barbuda,Antigua & Barbuda,BVUFU27S,C - Countries,7I8DMXBQ
-Argentina,Argentina,QSQE4LJ4,C - Countries,7I8DMXBQ
-Armenia,Armenia,RGGT6IXF,C - Countries,7I8DMXBQ
-Australia,Australia,PXW6TG33,C - Countries,7I8DMXBQ
-Australia - NSW,Australia,PXW6TG33,C - Countries,7I8DMXBQ
-Australia - National Territories,Australia,PXW6TG33,C - Countries,7I8DMXBQ
-Australia - South Australia,Australia,PXW6TG33,C - Countries,7I8DMXBQ
-Australia - Tasmania,Australia,PXW6TG33,C - Countries,7I8DMXBQ
-Australia - Victoria,Australia,PXW6TG33,C - Countries,7I8DMXBQ
-Austria,Austria,ZKHVRXCH,C - Countries,7I8DMXBQ
-Azerbaijan,Azerbaijan,BP5ZKUTL,C - Countries,7I8DMXBQ
-Bahamas,Bahamas,D7JGA9RC,C - Countries,7I8DMXBQ
-Bahrain,Bahrain,A3A2UIGM,C - Countries,7I8DMXBQ
-Bangladesh,Bangladesh,SIGSW9AQ,C - Countries,7I8DMXBQ
-Barbados,Barbados,XJV7U5D3,C - Countries,7I8DMXBQ
-Belarus,Belarus,384MMWUU,C - Countries,7I8DMXBQ
-Belgium,Belgium,2KRCHSZD,C - Countries,7I8DMXBQ
-Belize,Belize,TV5BG7RN,C - Countries,7I8DMXBQ
-Benin,Benin,LAEPG6LP,C - Countries,7I8DMXBQ
-Bhutan,Bhutan,RJW44DUD,C - Countries,7I8DMXBQ
-Bolivia,Bolivia,IKG4JB9G,C - Countries,7I8DMXBQ
-Bosnia & Herzegovina,Bosnia & Herzegovina,RSTQBM32,C - Countries,7I8DMXBQ
-Bosnia-Herzegovina,Bosnia & Herzegovina,RSTQBM32,C - Countries,7I8DMXBQ
-Botswana,Botswana,D4NKJGAW,C - Countries,7I8DMXBQ
-Brazil,Brazil,GP7K6IQF,C - Countries,7I8DMXBQ
-Brunei,Brunei,XEB5CSP8,C - Countries,7I8DMXBQ
-Bulgaria,Bulgaria,5ZATRA7D,C - Countries,7I8DMXBQ
-Burkina Faso,Burkina Faso,RUPX9SP9,C - Countries,7I8DMXBQ
-Burundi,Burundi,4Y79P5J2,C - Countries,7I8DMXBQ
-Cambodia,Cambodia,QYTXM8QE,C - Countries,7I8DMXBQ
-Cambodia Focus Country Report,Cambodia,QYTXM8QE,C - Countries,7I8DMXBQ
-Cameroon,Cameroon,UMVYNLRD,C - Countries,7I8DMXBQ
-Canada,Canada,ML2G68DQ,C - Countries,7I8DMXBQ
-Cape Verde,Cape Verde,FXZYWGQP,C - Countries,7I8DMXBQ
-CAR Focus Country Report,Central African Republic,766G6PMZ,C - Countries,7I8DMXBQ
-Central African Republic,Central African Republic,766G6PMZ,C - Countries,7I8DMXBQ
-Chad,Chad,E66ZTN37,C - Countries,7I8DMXBQ
-Chile,Chile,QREXGJTH,C - Countries,7I8DMXBQ
-China,China,R5TSQKUH,C - Countries,7I8DMXBQ
-Colombia,Colombia,A2JPD7WR,C - Countries,7I8DMXBQ
-Colombia Focus Country Report,Colombia,A2JPD7WR,C - Countries,7I8DMXBQ
-Comoros,Comoros,MFHUAN2B,C - Countries,7I8DMXBQ
-Congo,Congo (Republic of),BPICDXV8,C - Countries,7I8DMXBQ
-Costa Rica,Costa Rica,TBDDB8JF,C - Countries,7I8DMXBQ
-Cote d'Ivoire Focus Country Report,Cote d'Ivoire,R9UYIDEV,C - Countries,7I8DMXBQ
-Cote d'lvoire,Cote d'Ivoire,R9UYIDEV,C - Countries,7I8DMXBQ
-Croatia,Croatia,RY45MQWX,C - Countries,7I8DMXBQ
-Cuba,Cuba,7X978V4E,C - Countries,7I8DMXBQ
-Cyprus,Cyprus,GDWJNZLF,C - Countries,7I8DMXBQ
-Czechia,Czechia,VTSBGG6H,C - Countries,7I8DMXBQ
-Czechoslovakia,Czechia,VTSBGG6H,C - Countries,7I8DMXBQ
-Democratic Republic of Congo,Democratic Republic of the Congo,BQ67T8MJ,C - Countries,7I8DMXBQ
-Denmark,Denmark,3F4HBE5N,C - Countries,7I8DMXBQ
-Djibouti,Djibouti,XVPHE9DR,C - Countries,7I8DMXBQ
-Dominica,Dominica,Z9AB2GP3,C - Countries,7I8DMXBQ
-Dominican Republic,Dominican Republic,QEG4BFYS,C - Countries,7I8DMXBQ
-Ecuador,Ecuador,FEZ3DZS4,C - Countries,7I8DMXBQ
-Egypt,Egypt,GIDBGFXB,C - Countries,7I8DMXBQ
-El Salvador,El Salvador,C43XNPNU,C - Countries,7I8DMXBQ
-Equatorial Guinea,Equatorial Guinea,94H5TPXM,C - Countries,7I8DMXBQ
-Eritrea,Eritrea,PKCQ8E5L,C - Countries,7I8DMXBQ
-Estonia,Estonia,EVBB4D4M,C - Countries,7I8DMXBQ
-Eswatini,Eswatini (Swaziland),SHVLNK9K,C - Countries,7I8DMXBQ
-Ethiopia,Ethiopia,LD7LLM2U,C - Countries,7I8DMXBQ
-Ethiopia Focus Country Report,Ethiopia,LD7LLM2U,C - Countries,7I8DMXBQ
-Fiji,Fiji,L5RWNM45,C - Countries,7I8DMXBQ
-Finland,Finland,XR6Q2325,C - Countries,7I8DMXBQ
-France,France,UF9MC93H,C - Countries,7I8DMXBQ
-Gabon,Gabon,Z74G8I2M,C - Countries,7I8DMXBQ
-Gambia,Gambia,FRNXSKVJ,C - Countries,7I8DMXBQ
-Georgia,Georgia,Z5J2SL4M,C - Countries,7I8DMXBQ
-German Democratic Republic,Germany,LXX72CQE,C - Countries,7I8DMXBQ
-Germany,Germany,LXX72CQE,C - Countries,7I8DMXBQ
-Ghana,Ghana,IG4FDDY7,C - Countries,7I8DMXBQ
-Greece,Greece,93E72GID,C - Countries,7I8DMXBQ
-Grenada,Grenada,VV6BJLKS,C - Countries,7I8DMXBQ
-Guatemala,Guatemala,X54ZFNRV,C - Countries,7I8DMXBQ
-Guinea,Guinea,ZESHY9QY,C - Countries,7I8DMXBQ
-Guinea-Bissau,Guinea-Bissau,U3CKRHUX,C - Countries,7I8DMXBQ
-Guyana,Guyana,QTFT39R6,C - Countries,7I8DMXBQ
-Haiti,Haiti,QEZGR74S,C - Countries,7I8DMXBQ
-Honduras,Honduras,BWPFQ4BT,C - Countries,7I8DMXBQ
-Hungary,Hungary,NHD8L8KY,C - Countries,7I8DMXBQ
-,ICTY,L6LBITAM,C - Countries,7I8DMXBQ
-Iceland,Iceland,QWSEWG9I,C - Countries,7I8DMXBQ
-India,India,D5FF5K5P,C - Countries,7I8DMXBQ
-Indonesia,Indonesia,KID6ALPP,C - Countries,7I8DMXBQ
-Iran,Iran,R87KDGMV,C - Countries,7I8DMXBQ
-Iraq,Iraq,K52LJM93,C - Countries,7I8DMXBQ
-Iraq Focus Country Report,Iraq,K52LJM93,C - Countries,7I8DMXBQ
-Ireland,Ireland/Northern Ireland,WDA7U4MJ,C - Countries,7I8DMXBQ
-Ireland/Northern Ireland,Ireland/Northern Ireland,WDA7U4MJ,C - Countries,7I8DMXBQ
-Israel,Israel/Palestine,KX6TPENM,C - Countries,7I8DMXBQ
-Israel/Palestine,Israel/Palestine,KX6TPENM,C - Countries,7I8DMXBQ
-Palestine,Israel/Palestine,KX6TPENM,C - Countries,7I8DMXBQ
-Italy,Italy,ZUQT7LKJ,C - Countries,7I8DMXBQ
-Jamaica,Jamaica,SUI8BERR,C - Countries,7I8DMXBQ
-Japan,Japan,M6IQ5QVF,C - Countries,7I8DMXBQ
-Jordan,Jordan,WTE9TEB2,C - Countries,7I8DMXBQ
-Kazakhstan,Kazakhstan,L7UCHZIA,C - Countries,7I8DMXBQ
-Kenya,Kenya,RA4T7HKN,C - Countries,7I8DMXBQ
-Kosovo,Kosovo,INYPSDW2,C - Countries,7I8DMXBQ
-Kuwait,Kuwait,LPQZQKI8,C - Countries,7I8DMXBQ
-Kyrgyzstan,Kyrgyzstan,N9N8ZDTU,C - Countries,7I8DMXBQ
-Laos,Laos,GRPQQKKM,C - Countries,7I8DMXBQ
-Latvia,Latvia,66F2F27I,C - Countries,7I8DMXBQ
-Lebanon,Lebanon,54E4DAB5,C - Countries,7I8DMXBQ
-Lesotho,Lesotho,Z3MMGGJ6,C - Countries,7I8DMXBQ
-Liberia,Liberia,X4EHBWAS,C - Countries,7I8DMXBQ
-Libya,Libya,VQQHFFJQ,C - Countries,7I8DMXBQ
-Liechtenstein,Liechtenstein,LZZWYPPS,C - Countries,7I8DMXBQ
-Lithuania,Lithuania,46HIT8CM,C - Countries,7I8DMXBQ
-Luxembourg,Luxembourg,ZTV4HWB4,C - Countries,7I8DMXBQ
-Madagascar,Madagascar,6VH7S48K,C - Countries,7I8DMXBQ
-Malawi,Malawi,PQIN497X,C - Countries,7I8DMXBQ
-Malaysia,Malaysia,NUUW36KF,C - Countries,7I8DMXBQ
-Maldives,Maldives,7WRQCEAR,C - Countries,7I8DMXBQ
-Mali,Mali,QK3BNITW,C - Countries,7I8DMXBQ
-Malta,Malta,YT3955TH,C - Countries,7I8DMXBQ
-Marshall Islands,Marshall Islands,6D35HNK4,C - Countries,7I8DMXBQ
-Mauritania,Mauritania,7DCJJPZ7,C - Countries,7I8DMXBQ
-Mauritius,Mauritius,8BL9ZT4B,C - Countries,7I8DMXBQ
-Mexico,Mexico,HKG4AV55,C - Countries,7I8DMXBQ
-Micronesia,Micronesia,GAYI3NLU,C - Countries,7I8DMXBQ
-Moldova,Moldova,5PI37SBQ,C - Countries,7I8DMXBQ
-Monaco,Monaco,36B5B2XQ,C - Countries,7I8DMXBQ
-Mongolia,Mongolia,ZVS8MN23,C - Countries,7I8DMXBQ
-Montenegro,Montenegro,CIWJ3PTZ,C - Countries,7I8DMXBQ
-Morocco,Morocco,Q52LAN5R,C - Countries,7I8DMXBQ
-Mozambique,Mozambique,E9XXBNLT,C - Countries,7I8DMXBQ
-Myanmar,Myanmar,KX48ZU7E,C - Countries,7I8DMXBQ
-Myanmar Focus Country Report,Myanmar,KX48ZU7E,C - Countries,7I8DMXBQ
-Namibia,Namibia,EEAT7VS2,C - Countries,7I8DMXBQ
-Nepal,Nepal,G4BXLE2M,C - Countries,7I8DMXBQ
-Netherlands,Netherlands,VFBCMR3P,C - Countries,7I8DMXBQ
-New Zealand,New Zealand,I855B7E7,C - Countries,7I8DMXBQ
-Nicaragua,Nicaragua,3D5YMBA5,C - Countries,7I8DMXBQ
-Niger,Niger,Y75UJFVV,C - Countries,7I8DMXBQ
-Nigeria,Nigeria,YDXNZTFJ,C - Countries,7I8DMXBQ
-North Korea,North Korea,JQ6JLG53,C - Countries,7I8DMXBQ
-North Macedonia,North Macedonia,T6Y37CZP,C - Countries,7I8DMXBQ
-Norway,Norway,8W5U2LDK,C - Countries,7I8DMXBQ
-Oman,Oman,BD8F4P6V,C - Countries,7I8DMXBQ
-Pakistan,Pakistan,SURJIW9F,C - Countries,7I8DMXBQ
-Palau,Palau,4L43C953,C - Countries,7I8DMXBQ
-Panama,Panama,PWRMHT8X,C - Countries,7I8DMXBQ
-Papua New Guinea,Papua New Guinea,FHAWKHQW,C - Countries,7I8DMXBQ
-Paraguay,Paraguay,LQ34XT4D,C - Countries,7I8DMXBQ
-Peru,Peru,DCAEQUSM,C - Countries,7I8DMXBQ
-Philippines,Philippines,ERP9RFE4,C - Countries,7I8DMXBQ
-Poland,Poland,QUBDLQ4J,C - Countries,7I8DMXBQ
-Portugal,Portugal,6W2YWS59,C - Countries,7I8DMXBQ
-Qatar,Qatar,DFB44HQ3,C - Countries,7I8DMXBQ
-,Republic of Moldova,KMFL9QBQ,C - Countries,7I8DMXBQ
-Romania,Romania,IPRQL8ZD,C - Countries,7I8DMXBQ
-Russia,Russian Federation/Soviet Union,RV2BBR4R,C - Countries,7I8DMXBQ
-Russia/Soviet Union,Russian Federation/Soviet Union,RV2BBR4R,C - Countries,7I8DMXBQ
-Gacaca Courts,Rwanda,6YW2LVA4,C - Countries,7I8DMXBQ
-Rwanda,Rwanda,6YW2LVA4,C - Countries,7I8DMXBQ
-Saint Kitts & Nevis,Saint Kitts & Nevis,ZVVDCVAQ,C - Countries,7I8DMXBQ
-Saint Vincent & the Grenadines,Saint Vincent & the Grenadines,L92MQX2Q,C - Countries,7I8DMXBQ
-San Marino,San Marino,CUJ9YHNN,C - Countries,7I8DMXBQ
-Sao Tome & Principe,Sao Tome & Principe,AWYQEW66,C - Countries,7I8DMXBQ
-Saudi Arabia,Saudi Arabia,S8YN588Q,C - Countries,7I8DMXBQ
-Senegal,Senegal,IKK4PJPS,C - Countries,7I8DMXBQ
-Serbia,Serbia,EU6GTLDE,C - Countries,7I8DMXBQ
-Serbia & Montenegro,Serbia,EU6GTLDE,C - Countries,7I8DMXBQ
-Seychelles,Seychelles,QWZS99DI,C - Countries,7I8DMXBQ
-Sierra Leone,Sierra Leone,BNI7H9WN,C - Countries,7I8DMXBQ
-Singapore,Singapore,4TMUSC5Y,C - Countries,7I8DMXBQ
-Slovakia,Slovakia,G8FV3B9F,C - Countries,7I8DMXBQ
-Slovenia,Slovenia,3T8KZZL8,C - Countries,7I8DMXBQ
-Solomon Islands,Solomon Islands,IIFF8DHX,C - Countries,7I8DMXBQ
-Somalia,Somalia,6KKJHM2W,C - Countries,7I8DMXBQ
-South Africa,South Africa,67T4E6JV,C - Countries,7I8DMXBQ
-South Korea,South Korea,VPZYHL3B,C - Countries,7I8DMXBQ
-South Sudan,South Sudan,EZBB2IMC,C - Countries,7I8DMXBQ
-Spain,Spain,ZVNPT6K6,C - Countries,7I8DMXBQ
-Sri Lanka,Sri Lanka,PUYYFGBJ,C - Countries,7I8DMXBQ
-Sri Lanka Focus Country Report,Sri Lanka,PUYYFGBJ,C - Countries,7I8DMXBQ
-Sudan,Sudan,GV2RMFIP,C - Countries,7I8DMXBQ
-Suriname,Suriname,S53VM3L4,C - Countries,7I8DMXBQ
-Sweden,Sweden,WSEU75PG,C - Countries,7I8DMXBQ
-Switzerland,Switzerland,YZ55WMTU,C - Countries,7I8DMXBQ
-Syria,Syria,6BDWPF3T,C - Countries,7I8DMXBQ
-Taiwan,Taiwan,8Y9VZVAS,C - Countries,7I8DMXBQ
-Tajikistan,Tajikistan,3YARDED4,C - Countries,7I8DMXBQ
-Tanzania,Tanzania,UPGLNPJV,C - Countries,7I8DMXBQ
-Thailand,Thailand,PEMYCPXY,C - Countries,7I8DMXBQ
-Timor Leste (East Timor),Timor-Leste,7QFP9ZPB,C - Countries,7I8DMXBQ
-Timor-Leste,Timor-Leste,7QFP9ZPB,C - Countries,7I8DMXBQ
-Togo,Togo,7IWRQSJE,C - Countries,7I8DMXBQ
-Tonga,Tonga,AXMWX7HA,C - Countries,7I8DMXBQ
-Trinidad & Tobago,Trinidad & Tobago,CGMVTQIK,C - Countries,7I8DMXBQ
-Tunisia,Tunisia,CE68ADSA,C - Countries,7I8DMXBQ
-Turkey,Turkey,ZPC35QSW,C - Countries,7I8DMXBQ
-Turkmenistan,Turkmenistan,9BHQ8UM3,C - Countries,7I8DMXBQ
-Uganda,Uganda,AP8SCTZH,C - Countries,7I8DMXBQ
-Ukraine,Ukraine,QYAU2LNT,C - Countries,7I8DMXBQ
-Ukraine Focus Country Report,Ukraine,QYAU2LNT,C - Countries,7I8DMXBQ
-United Arab Emirates,United Arab Emirates,DWL2KYYC,C - Countries,7I8DMXBQ
-United Kingdom,United Kingdom,FJPQAUZL,C - Countries,7I8DMXBQ
-United States,United States,WJ499NCE,C - Countries,7I8DMXBQ
-Uruguay,Uruguay,JG4Y5CYR,C - Countries,7I8DMXBQ
-Uzbekistan,Uzbekistan,57DIZUUS,C - Countries,7I8DMXBQ
-Vanuatu,Vanuatu,LB73HMUS,C - Countries,7I8DMXBQ
-Venezuela,Venezuela,6CY7ZM26,C - Countries,7I8DMXBQ
-Vietnam,Vietnam,BZ7A7L2K,C - Countries,7I8DMXBQ
-Yemen,Yemen,D6DYP4ER,C - Countries,7I8DMXBQ
-Yemen Arab Republic,Yemen,D6DYP4ER,C - Countries,7I8DMXBQ
-Yemen People's Republic (South),Yemen,D6DYP4ER,C - Countries,7I8DMXBQ
-Zambia,Zambia,FSTPFU93,C - Countries,7I8DMXBQ
-Zimbabwe,Zimbabwe,QM3E35UC,C - Countries,7I8DMXBQ
-NGO,NGO,ZNUIMRQX,D - Source Type,E9PHTBM3
-academic,academic,UBYVT3JW,D - Source Type,E9PHTBM3
-journalistic,journalistic,GALMXIEZ,D - Source Type,E9PHTBM3
-legislative act,legislative act,33I2B3NX,D - Source Type,E9PHTBM3
-policy report,policy report,ZYNUX7P2,D - Source Type,E9PHTBM3
-,"Dancy, Geoff",WZ7IVI2V,E - TJET Members,QIRJ8N3T
-,"Pham, Phuong",3CMI6LXJ,E - TJET Members,QIRJ8N3T
-,"Sikkink, Kathryn",L8UN7G4L,E - TJET Members,QIRJ8N3T
-,"Thoms, Oskar Timo",NXL7CGNQ,E - TJET Members,QIRJ8N3T
-,"Vinck, Patrick",B7WV4WW7,E - TJET Members,QIRJ8N3T
-amnestyID *,Amnesties,RGTANRFB,F - TJET Database,3DHZKFJX
-reparationID *,Reparations,P38LGJMY,F - TJET Database,3DHZKFJX
-truthcommissionID *,Truth Commissions,SKW8WXF6,F - TJET Database,3DHZKFJX
-vettingID *,Vettings,QF98ZVX7,F - TJET Database,3DHZKFJX
-hybrid,Hybrid Tribunals,WGVD2GXE,International Courts,94VD36QL
-ICC,ICC,ZKD252ND,International Courts,94VD36QL
-ICTR,ICTR,QBGJZW6J,International Courts,94VD36QL
-ICTY,ICTY,F9DWM35P,International Courts,94VD36QL
-Nuremberg,Nuremberg,S6RAHDE6,International Courts,94VD36QL
-,Briefs,DBQPVRR8,Projects,4WYLUD5F
-,Conflict,57KHS2K2,Projects,4WYLUD5F
-,Gender,46YT445Q,Projects,4WYLUD5F
-,Infographics,EP4W6FPL,Projects,4WYLUD5F
-,Reversion,WNZ4J8A6,Projects,4WYLUD5F
-,SyriaFA,NSYI9MIT,Projects,4WYLUD5F
-,TCs-Biblio,V9SLRZZ3,Projects,4WYLUD5F
-,USAID_cuts,7GU9GMPS,Projects,4WYLUD5F
-domestic courts,Domestic Courts,CLAB83PU,Prosecutions,EU55F6CD
-foreign courts,Foreign Courts,87YPKI7E,Prosecutions,EU55F6CD
-international court,International Courts,94VD36QL,Prosecutions,EU55F6CD
-,Regional Mechanisms,TRP8LAQ4,Prosecutions,EU55F6CD
-,AU,WG2F6VDX,Regional Mechanisms,TRP8LAQ4
-EU,EU,84Y2SUJ4,Regional Mechanisms,TRP8LAQ4
-inter-american,Inter-American,9VVSZ8B2,Regional Mechanisms,TRP8LAQ4
-,Amnesties,56BFZHPM,TJETdb Sources,PC8XUJAB
-,Argentina,U8NKV63X,TJETdb Sources,PC8XUJAB
-,Foreign,WEXI6LVB,TJETdb Sources,PC8XUJAB
-,Reparations,PXID2YMK,TJETdb Sources,PC8XUJAB
-,Seemal,BLVPGXKK,TJETdb Sources,PC8XUJAB
-,Trials,QMGB89SX,TJETdb Sources,PC8XUJAB
-,Vetting,52EW9E3C,TJETdb Sources,PC8XUJAB
-,Vetting (Post-Soviet & Balkans),DQ2SU34R,TJETdb Sources,PC8XUJAB
-,SD reports,2YKHTDQW,to_clean,AWKRJWPD
-,TrialInternational,74CVPVI2,to_clean,AWKRJWPD
-,WarCrimesVerdictsMap,EUN7NIJK,to_clean,AWKRJWPD
-,A - TJ Themes,UY3YBRQA,,
-,B - Mechanisms,I8E7U56B,,
-,C - Countries,7I8DMXBQ,,
-,D - Source Type,E9PHTBM3,,
-,E - TJET Members,QIRJ8N3T,,
-,F - TJET Database,3DHZKFJX,,
-popular media,Popular Media,5BTJJJAM,,
-,Projects,4WYLUD5F,,
-,TJETdb Sources,PC8XUJAB,,
-,to_clean,AWKRJWPD,,
+parent,parent_key,collection,collection_key,tag,TJETincl
+A - TJ Themes,UY3YBRQA,Big Theory,F8UMHAWE,big theory,1
+A - TJ Themes,UY3YBRQA,Children,YKZDHRLR,children,1
+A - TJ Themes,UY3YBRQA,Civil Society,37LI9NMF,civil society,1
+A - TJ Themes,UY3YBRQA,Colonialism,CXRV3JLL,colonial legacy,1
+A - TJ Themes,UY3YBRQA,Colonialism,CXRV3JLL,colonialism,1
+A - TJ Themes,UY3YBRQA,Counter-critique,756QN8DS,counter-critique,1
+A - TJ Themes,UY3YBRQA,Counter-critique,756QN8DS,critique,1
+A - TJ Themes,UY3YBRQA,DDR,JX57AJ3H,DDR,1
+A - TJ Themes,UY3YBRQA,"Data, Evidence, Methods",US2T9GUS,research methods,1
+A - TJ Themes,UY3YBRQA,Displacement,UWDNKJFA,displacement,1
+A - TJ Themes,UY3YBRQA,Documentation & Truth-Telling,LBMMJURQ,documentation & truth telling,1
+A - TJ Themes,UY3YBRQA,Elitism,PXE3F4B3,elitism,1
+A - TJ Themes,UY3YBRQA,Feminist/Gender Critique,WXT9Q8ZV,feminism,1
+A - TJ Themes,UY3YBRQA,Feminist/Gender Critique,WXT9Q8ZV,feminist/gender critique,1
+A - TJ Themes,UY3YBRQA,Forgetting,CQLZ43MV,forgetting,1
+A - TJ Themes,UY3YBRQA,Genocide & Mass Atrocities,69TQA6XA,genocide & mass atrocities,1
+A - TJ Themes,UY3YBRQA,History & The Canon,PHWAR5DU,history & the canon,1
+A - TJ Themes,UY3YBRQA,ICC,F6DB92P7,,
+A - TJ Themes,UY3YBRQA,Impact,QGX4X39H,impact,1
+A - TJ Themes,UY3YBRQA,Impact,QGX4X39H,impact assessment,1
+A - TJ Themes,UY3YBRQA,Impact,QGX4X39H,impacts,1
+A - TJ Themes,UY3YBRQA,Impunity & Anti-Impunity,S3XUKY28,impunity,1
+A - TJ Themes,UY3YBRQA,Impunity & Anti-Impunity,S3XUKY28,impunity & anti-impunity,1
+A - TJ Themes,UY3YBRQA,Indigenous Peoples,RDBCUM53,indigenous peoples,1
+A - TJ Themes,UY3YBRQA,Land Rights,IMKDFRQH,land rights,1
+A - TJ Themes,UY3YBRQA,Legalization/Professionalization,LZUDBIFU,legalization/professionalization,1
+A - TJ Themes,UY3YBRQA,Liberalism,FKQBRHE6,liberalism,1
+A - TJ Themes,UY3YBRQA,Localization,6HK7V9RD,localization,1
+A - TJ Themes,UY3YBRQA,Peace v. Justice,Z7R4I8NE,peace v. justice,1
+A - TJ Themes,UY3YBRQA,Politics & Political Narrative,9YQZPL39,politics & political narrative,1
+A - TJ Themes,UY3YBRQA,Reconciliation,HX4U954A,reconciliation,1
+A - TJ Themes,UY3YBRQA,Religion/Faith,T5NFDDCG,religion,1
+A - TJ Themes,UY3YBRQA,Reparative Justice,Y8NCQR3H,reparative justice,1
+A - TJ Themes,UY3YBRQA,Sexual Orientation & Gender,CI5N7Z4V,gender,1
+A - TJ Themes,UY3YBRQA,Sexual Orientation & Gender,CI5N7Z4V,sexual orientation & gender,1
+A - TJ Themes,UY3YBRQA,Structural Violence & Other Injustice,Q899LW6V,structural violence & other injustice,1
+A - TJ Themes,UY3YBRQA,Symbolism & Memory,I7BHRWSI,collective memory,1
+A - TJ Themes,UY3YBRQA,Symbolism & Memory,I7BHRWSI,memory,1
+A - TJ Themes,UY3YBRQA,Symbolism & Memory,I7BHRWSI,symbolism,1
+A - TJ Themes,UY3YBRQA,Symbolism & Memory,I7BHRWSI,symbolism & memory,1
+A - TJ Themes,UY3YBRQA,TJ & Economic Development,U3W6D5UK,economic development,1
+A - TJ Themes,UY3YBRQA,TJ Introduction,UX544NGA,TJ introduction,1
+A - TJ Themes,UY3YBRQA,Technicism,UDJQXTJL,technicism,1
+A - TJ Themes,UY3YBRQA,Timing & Sequencing,GEYRXWPW,sequencing,1
+A - TJ Themes,UY3YBRQA,Timing & Sequencing,GEYRXWPW,timing & sequencing,1
+A - TJ Themes,UY3YBRQA,Transformative Justice,RMQIKLG3,transformative justice,1
+A - TJ Themes,UY3YBRQA,Trust,BMRSUAS4,trust,1
+A - TJ Themes,UY3YBRQA,Victims & Victim-Centrism,PHEV6X8V,victims & victim-centrism,1
+B - Mechanisms,I8E7U56B,Amnesties,RRCJAFRE,amnesties,1
+B - Mechanisms,I8E7U56B,Customary/Local Mechanisms,VV2PJF7M,customary/local mechanisms,1
+B - Mechanisms,I8E7U56B,Prosecutions,EU55F6CD,prosecutions,1
+B - Mechanisms,I8E7U56B,Reparations,XEQXLEVS,reparations,1
+B - Mechanisms,I8E7U56B,Truth Commissions,ZAQN73UT,truth commissions,1
+B - Mechanisms,I8E7U56B,Vetting,TMMYQDXS,lustration,1
+B - Mechanisms,I8E7U56B,Vetting,TMMYQDXS,purge,1
+B - Mechanisms,I8E7U56B,Vetting,TMMYQDXS,vetting,1
+Briefs,DBQPVRR8,Economic,TQ8T2UL6,,
+Briefs,DBQPVRR8,Education,52RRPSSW,,
+Briefs,DBQPVRR8,Gender,5NM6PBQK,,
+Briefs,DBQPVRR8,HR_Conflict,3MRR35AE,,
+Briefs,DBQPVRR8,Heads of State,CZQRBYD7,,
+C - Countries,7I8DMXBQ,Afghanistan,WYS9TE89,Afghanistan,0
+C - Countries,7I8DMXBQ,Albania,HRB27FV3,Albania,0
+C - Countries,7I8DMXBQ,Algeria,S9VISLER,Algeria,0
+C - Countries,7I8DMXBQ,Andorra,4VG6YA57,Andorra,0
+C - Countries,7I8DMXBQ,Angola,RWCF89FB,Angola,0
+C - Countries,7I8DMXBQ,Antigua & Barbuda,BVUFU27S,Antigua & Barbuda,0
+C - Countries,7I8DMXBQ,Argentina,QSQE4LJ4,Argentina,0
+C - Countries,7I8DMXBQ,Armenia,RGGT6IXF,Armenia,0
+C - Countries,7I8DMXBQ,Australia,PXW6TG33,Australia,0
+C - Countries,7I8DMXBQ,Australia,PXW6TG33,Australia - NSW,0
+C - Countries,7I8DMXBQ,Australia,PXW6TG33,Australia - National Territories,0
+C - Countries,7I8DMXBQ,Australia,PXW6TG33,Australia - South Australia,0
+C - Countries,7I8DMXBQ,Australia,PXW6TG33,Australia - Tasmania,0
+C - Countries,7I8DMXBQ,Australia,PXW6TG33,Australia - Victoria,0
+C - Countries,7I8DMXBQ,Austria,ZKHVRXCH,Austria,0
+C - Countries,7I8DMXBQ,Azerbaijan,BP5ZKUTL,Azerbaijan,0
+C - Countries,7I8DMXBQ,Bahamas,D7JGA9RC,Bahamas,0
+C - Countries,7I8DMXBQ,Bahrain,A3A2UIGM,Bahrain,0
+C - Countries,7I8DMXBQ,Bangladesh,SIGSW9AQ,Bangladesh,0
+C - Countries,7I8DMXBQ,Barbados,XJV7U5D3,Barbados,0
+C - Countries,7I8DMXBQ,Belarus,384MMWUU,Belarus,0
+C - Countries,7I8DMXBQ,Belgium,2KRCHSZD,Belgium,0
+C - Countries,7I8DMXBQ,Belize,TV5BG7RN,Belize,0
+C - Countries,7I8DMXBQ,Benin,LAEPG6LP,Benin,0
+C - Countries,7I8DMXBQ,Bhutan,RJW44DUD,Bhutan,0
+C - Countries,7I8DMXBQ,Bolivia,IKG4JB9G,Bolivia,0
+C - Countries,7I8DMXBQ,Bosnia & Herzegovina,RSTQBM32,Bosnia & Herzegovina,0
+C - Countries,7I8DMXBQ,Bosnia & Herzegovina,RSTQBM32,Bosnia-Herzegovina,0
+C - Countries,7I8DMXBQ,Botswana,D4NKJGAW,Botswana,0
+C - Countries,7I8DMXBQ,Brazil,GP7K6IQF,Brazil,0
+C - Countries,7I8DMXBQ,Brunei,XEB5CSP8,Brunei,0
+C - Countries,7I8DMXBQ,Bulgaria,5ZATRA7D,Bulgaria,0
+C - Countries,7I8DMXBQ,Burkina Faso,RUPX9SP9,Burkina Faso,0
+C - Countries,7I8DMXBQ,Burundi,4Y79P5J2,Burundi,0
+C - Countries,7I8DMXBQ,Cambodia,QYTXM8QE,Cambodia,0
+C - Countries,7I8DMXBQ,Cambodia,QYTXM8QE,Cambodia Focus Country Report,0
+C - Countries,7I8DMXBQ,Cameroon,UMVYNLRD,Cameroon,0
+C - Countries,7I8DMXBQ,Canada,ML2G68DQ,Canada,0
+C - Countries,7I8DMXBQ,Cape Verde,FXZYWGQP,Cape Verde,0
+C - Countries,7I8DMXBQ,Central African Republic,766G6PMZ,CAR Focus Country Report,0
+C - Countries,7I8DMXBQ,Central African Republic,766G6PMZ,Central African Republic,0
+C - Countries,7I8DMXBQ,Chad,E66ZTN37,Chad,0
+C - Countries,7I8DMXBQ,Chile,QREXGJTH,Chile,0
+C - Countries,7I8DMXBQ,China,R5TSQKUH,China,0
+C - Countries,7I8DMXBQ,Colombia,A2JPD7WR,Colombia,0
+C - Countries,7I8DMXBQ,Colombia,A2JPD7WR,Colombia Focus Country Report,0
+C - Countries,7I8DMXBQ,Comoros,MFHUAN2B,Comoros,0
+C - Countries,7I8DMXBQ,Congo (Republic of),BPICDXV8,Congo,0
+C - Countries,7I8DMXBQ,Costa Rica,TBDDB8JF,Costa Rica,0
+C - Countries,7I8DMXBQ,Cote d'Ivoire,R9UYIDEV,Cote d'Ivoire Focus Country Report,0
+C - Countries,7I8DMXBQ,Cote d'Ivoire,R9UYIDEV,Cote d'lvoire,0
+C - Countries,7I8DMXBQ,Croatia,RY45MQWX,Croatia,0
+C - Countries,7I8DMXBQ,Cuba,7X978V4E,Cuba,0
+C - Countries,7I8DMXBQ,Cyprus,GDWJNZLF,Cyprus,0
+C - Countries,7I8DMXBQ,Czechia,VTSBGG6H,Czechia,0
+C - Countries,7I8DMXBQ,Czechia,VTSBGG6H,Czechoslovakia,0
+C - Countries,7I8DMXBQ,Democratic Republic of the Congo,BQ67T8MJ,Democratic Republic of Congo,0
+C - Countries,7I8DMXBQ,Denmark,3F4HBE5N,Denmark,0
+C - Countries,7I8DMXBQ,Djibouti,XVPHE9DR,Djibouti,0
+C - Countries,7I8DMXBQ,Dominica,Z9AB2GP3,Dominica,0
+C - Countries,7I8DMXBQ,Dominican Republic,QEG4BFYS,Dominican Republic,0
+C - Countries,7I8DMXBQ,Ecuador,FEZ3DZS4,Ecuador,0
+C - Countries,7I8DMXBQ,Egypt,GIDBGFXB,Egypt,0
+C - Countries,7I8DMXBQ,El Salvador,C43XNPNU,El Salvador,0
+C - Countries,7I8DMXBQ,Equatorial Guinea,94H5TPXM,Equatorial Guinea,0
+C - Countries,7I8DMXBQ,Eritrea,PKCQ8E5L,Eritrea,0
+C - Countries,7I8DMXBQ,Estonia,EVBB4D4M,Estonia,0
+C - Countries,7I8DMXBQ,Eswatini (Swaziland),SHVLNK9K,Eswatini,0
+C - Countries,7I8DMXBQ,Ethiopia,LD7LLM2U,Ethiopia,0
+C - Countries,7I8DMXBQ,Ethiopia,LD7LLM2U,Ethiopia Focus Country Report,0
+C - Countries,7I8DMXBQ,Fiji,L5RWNM45,Fiji,0
+C - Countries,7I8DMXBQ,Finland,XR6Q2325,Finland,0
+C - Countries,7I8DMXBQ,France,UF9MC93H,France,0
+C - Countries,7I8DMXBQ,Gabon,Z74G8I2M,Gabon,0
+C - Countries,7I8DMXBQ,Gambia,FRNXSKVJ,Gambia,0
+C - Countries,7I8DMXBQ,Georgia,Z5J2SL4M,Georgia,0
+C - Countries,7I8DMXBQ,Germany,LXX72CQE,German Democratic Republic,0
+C - Countries,7I8DMXBQ,Germany,LXX72CQE,Germany,0
+C - Countries,7I8DMXBQ,Ghana,IG4FDDY7,Ghana,0
+C - Countries,7I8DMXBQ,Greece,93E72GID,Greece,0
+C - Countries,7I8DMXBQ,Grenada,VV6BJLKS,Grenada,0
+C - Countries,7I8DMXBQ,Guatemala,X54ZFNRV,Guatemala,0
+C - Countries,7I8DMXBQ,Guinea,ZESHY9QY,Guinea,0
+C - Countries,7I8DMXBQ,Guinea-Bissau,U3CKRHUX,Guinea-Bissau,0
+C - Countries,7I8DMXBQ,Guyana,QTFT39R6,Guyana,0
+C - Countries,7I8DMXBQ,Haiti,QEZGR74S,Haiti,0
+C - Countries,7I8DMXBQ,Honduras,BWPFQ4BT,Honduras,0
+C - Countries,7I8DMXBQ,Hungary,NHD8L8KY,Hungary,0
+C - Countries,7I8DMXBQ,ICTY,L6LBITAM,,
+C - Countries,7I8DMXBQ,Iceland,QWSEWG9I,Iceland,0
+C - Countries,7I8DMXBQ,India,D5FF5K5P,India,0
+C - Countries,7I8DMXBQ,Indonesia,KID6ALPP,Indonesia,0
+C - Countries,7I8DMXBQ,Iran,R87KDGMV,Iran,0
+C - Countries,7I8DMXBQ,Iraq,K52LJM93,Iraq,0
+C - Countries,7I8DMXBQ,Iraq,K52LJM93,Iraq Focus Country Report,0
+C - Countries,7I8DMXBQ,Ireland/Northern Ireland,WDA7U4MJ,Ireland,0
+C - Countries,7I8DMXBQ,Ireland/Northern Ireland,WDA7U4MJ,Ireland/Northern Ireland,0
+C - Countries,7I8DMXBQ,Israel/Palestine,KX6TPENM,Israel,0
+C - Countries,7I8DMXBQ,Israel/Palestine,KX6TPENM,Israel/Palestine,0
+C - Countries,7I8DMXBQ,Israel/Palestine,KX6TPENM,Palestine,0
+C - Countries,7I8DMXBQ,Italy,ZUQT7LKJ,Italy,0
+C - Countries,7I8DMXBQ,Jamaica,SUI8BERR,Jamaica,0
+C - Countries,7I8DMXBQ,Japan,M6IQ5QVF,Japan,0
+C - Countries,7I8DMXBQ,Jordan,WTE9TEB2,Jordan,0
+C - Countries,7I8DMXBQ,Kazakhstan,L7UCHZIA,Kazakhstan,0
+C - Countries,7I8DMXBQ,Kenya,RA4T7HKN,Kenya,0
+C - Countries,7I8DMXBQ,Kosovo,INYPSDW2,Kosovo,0
+C - Countries,7I8DMXBQ,Kuwait,LPQZQKI8,Kuwait,0
+C - Countries,7I8DMXBQ,Kyrgyzstan,N9N8ZDTU,Kyrgyzstan,0
+C - Countries,7I8DMXBQ,Laos,GRPQQKKM,Laos,0
+C - Countries,7I8DMXBQ,Latvia,66F2F27I,Latvia,0
+C - Countries,7I8DMXBQ,Lebanon,54E4DAB5,Lebanon,0
+C - Countries,7I8DMXBQ,Lesotho,Z3MMGGJ6,Lesotho,0
+C - Countries,7I8DMXBQ,Liberia,X4EHBWAS,Liberia,0
+C - Countries,7I8DMXBQ,Libya,VQQHFFJQ,Libya,0
+C - Countries,7I8DMXBQ,Liechtenstein,LZZWYPPS,Liechtenstein,0
+C - Countries,7I8DMXBQ,Lithuania,46HIT8CM,Lithuania,0
+C - Countries,7I8DMXBQ,Luxembourg,ZTV4HWB4,Luxembourg,0
+C - Countries,7I8DMXBQ,Madagascar,6VH7S48K,Madagascar,0
+C - Countries,7I8DMXBQ,Malawi,PQIN497X,Malawi,0
+C - Countries,7I8DMXBQ,Malaysia,NUUW36KF,Malaysia,0
+C - Countries,7I8DMXBQ,Maldives,7WRQCEAR,Maldives,0
+C - Countries,7I8DMXBQ,Mali,QK3BNITW,Mali,0
+C - Countries,7I8DMXBQ,Malta,YT3955TH,Malta,0
+C - Countries,7I8DMXBQ,Marshall Islands,6D35HNK4,Marshall Islands,0
+C - Countries,7I8DMXBQ,Mauritania,7DCJJPZ7,Mauritania,0
+C - Countries,7I8DMXBQ,Mauritius,8BL9ZT4B,Mauritius,0
+C - Countries,7I8DMXBQ,Mexico,HKG4AV55,Mexico,0
+C - Countries,7I8DMXBQ,Micronesia,GAYI3NLU,Micronesia,0
+C - Countries,7I8DMXBQ,Moldova,5PI37SBQ,Moldova,0
+C - Countries,7I8DMXBQ,Monaco,36B5B2XQ,Monaco,0
+C - Countries,7I8DMXBQ,Mongolia,ZVS8MN23,Mongolia,0
+C - Countries,7I8DMXBQ,Montenegro,CIWJ3PTZ,Montenegro,0
+C - Countries,7I8DMXBQ,Morocco,Q52LAN5R,Morocco,0
+C - Countries,7I8DMXBQ,Mozambique,E9XXBNLT,Mozambique,0
+C - Countries,7I8DMXBQ,Myanmar,KX48ZU7E,Myanmar,0
+C - Countries,7I8DMXBQ,Myanmar,KX48ZU7E,Myanmar Focus Country Report,0
+C - Countries,7I8DMXBQ,Namibia,EEAT7VS2,Namibia,0
+C - Countries,7I8DMXBQ,Nepal,G4BXLE2M,Nepal,0
+C - Countries,7I8DMXBQ,Netherlands,VFBCMR3P,Netherlands,0
+C - Countries,7I8DMXBQ,New Zealand,I855B7E7,New Zealand,0
+C - Countries,7I8DMXBQ,Nicaragua,3D5YMBA5,Nicaragua,0
+C - Countries,7I8DMXBQ,Niger,Y75UJFVV,Niger,0
+C - Countries,7I8DMXBQ,Nigeria,YDXNZTFJ,Nigeria,0
+C - Countries,7I8DMXBQ,North Korea,JQ6JLG53,North Korea,0
+C - Countries,7I8DMXBQ,North Macedonia,T6Y37CZP,North Macedonia,0
+C - Countries,7I8DMXBQ,Norway,8W5U2LDK,Norway,0
+C - Countries,7I8DMXBQ,Oman,BD8F4P6V,Oman,0
+C - Countries,7I8DMXBQ,Pakistan,SURJIW9F,Pakistan,0
+C - Countries,7I8DMXBQ,Palau,4L43C953,Palau,0
+C - Countries,7I8DMXBQ,Panama,PWRMHT8X,Panama,0
+C - Countries,7I8DMXBQ,Papua New Guinea,FHAWKHQW,Papua New Guinea,0
+C - Countries,7I8DMXBQ,Paraguay,LQ34XT4D,Paraguay,0
+C - Countries,7I8DMXBQ,Peru,DCAEQUSM,Peru,0
+C - Countries,7I8DMXBQ,Philippines,ERP9RFE4,Philippines,0
+C - Countries,7I8DMXBQ,Poland,QUBDLQ4J,Poland,0
+C - Countries,7I8DMXBQ,Portugal,6W2YWS59,Portugal,0
+C - Countries,7I8DMXBQ,Qatar,DFB44HQ3,Qatar,0
+C - Countries,7I8DMXBQ,Republic of Moldova,KMFL9QBQ,Moldova,0
+C - Countries,7I8DMXBQ,Romania,IPRQL8ZD,Romania,0
+C - Countries,7I8DMXBQ,Russian Federation/Soviet Union,RV2BBR4R,Russia,0
+C - Countries,7I8DMXBQ,Russian Federation/Soviet Union,RV2BBR4R,Russia/Soviet Union,0
+C - Countries,7I8DMXBQ,Rwanda,6YW2LVA4,Gacaca Courts,0
+C - Countries,7I8DMXBQ,Rwanda,6YW2LVA4,Rwanda,0
+C - Countries,7I8DMXBQ,Saint Kitts & Nevis,ZVVDCVAQ,Saint Kitts & Nevis,0
+C - Countries,7I8DMXBQ,Saint Vincent & the Grenadines,L92MQX2Q,Saint Vincent & the Grenadines,0
+C - Countries,7I8DMXBQ,San Marino,CUJ9YHNN,San Marino,0
+C - Countries,7I8DMXBQ,Sao Tome & Principe,AWYQEW66,Sao Tome & Principe,0
+C - Countries,7I8DMXBQ,Saudi Arabia,S8YN588Q,Saudi Arabia,0
+C - Countries,7I8DMXBQ,Senegal,IKK4PJPS,Senegal,0
+C - Countries,7I8DMXBQ,Serbia,EU6GTLDE,Serbia,0
+C - Countries,7I8DMXBQ,Serbia,EU6GTLDE,Serbia & Montenegro,0
+C - Countries,7I8DMXBQ,Seychelles,QWZS99DI,Seychelles,0
+C - Countries,7I8DMXBQ,Sierra Leone,BNI7H9WN,Sierra Leone,0
+C - Countries,7I8DMXBQ,Singapore,4TMUSC5Y,Singapore,0
+C - Countries,7I8DMXBQ,Slovakia,G8FV3B9F,Slovakia,0
+C - Countries,7I8DMXBQ,Slovenia,3T8KZZL8,Slovenia,0
+C - Countries,7I8DMXBQ,Solomon Islands,IIFF8DHX,Solomon Islands,0
+C - Countries,7I8DMXBQ,Somalia,6KKJHM2W,Somalia,0
+C - Countries,7I8DMXBQ,South Africa,67T4E6JV,South Africa,0
+C - Countries,7I8DMXBQ,South Korea,VPZYHL3B,South Korea,0
+C - Countries,7I8DMXBQ,South Sudan,EZBB2IMC,South Sudan,0
+C - Countries,7I8DMXBQ,Spain,ZVNPT6K6,Spain,0
+C - Countries,7I8DMXBQ,Sri Lanka,PUYYFGBJ,Sri Lanka,0
+C - Countries,7I8DMXBQ,Sri Lanka,PUYYFGBJ,Sri Lanka Focus Country Report,0
+C - Countries,7I8DMXBQ,Sudan,GV2RMFIP,Sudan,0
+C - Countries,7I8DMXBQ,Suriname,S53VM3L4,Suriname,0
+C - Countries,7I8DMXBQ,Sweden,WSEU75PG,Sweden,0
+C - Countries,7I8DMXBQ,Switzerland,YZ55WMTU,Switzerland,0
+C - Countries,7I8DMXBQ,Syria,6BDWPF3T,Syria,0
+C - Countries,7I8DMXBQ,Taiwan,8Y9VZVAS,Taiwan,0
+C - Countries,7I8DMXBQ,Tajikistan,3YARDED4,Tajikistan,0
+C - Countries,7I8DMXBQ,Tanzania,UPGLNPJV,Tanzania,0
+C - Countries,7I8DMXBQ,Thailand,PEMYCPXY,Thailand,0
+C - Countries,7I8DMXBQ,Timor-Leste,7QFP9ZPB,Timor Leste (East Timor),0
+C - Countries,7I8DMXBQ,Timor-Leste,7QFP9ZPB,Timor-Leste,0
+C - Countries,7I8DMXBQ,Togo,7IWRQSJE,Togo,0
+C - Countries,7I8DMXBQ,Tonga,AXMWX7HA,Tonga,0
+C - Countries,7I8DMXBQ,Trinidad & Tobago,CGMVTQIK,Trinidad & Tobago,0
+C - Countries,7I8DMXBQ,Tunisia,CE68ADSA,Tunisia,0
+C - Countries,7I8DMXBQ,Turkey,ZPC35QSW,Turkey,0
+C - Countries,7I8DMXBQ,Turkmenistan,9BHQ8UM3,Turkmenistan,0
+C - Countries,7I8DMXBQ,Uganda,AP8SCTZH,Uganda,0
+C - Countries,7I8DMXBQ,Ukraine,QYAU2LNT,Ukraine,0
+C - Countries,7I8DMXBQ,Ukraine,QYAU2LNT,Ukraine Focus Country Report,0
+C - Countries,7I8DMXBQ,United Arab Emirates,DWL2KYYC,United Arab Emirates,0
+C - Countries,7I8DMXBQ,United Kingdom,FJPQAUZL,United Kingdom,0
+C - Countries,7I8DMXBQ,United States,WJ499NCE,United States,0
+C - Countries,7I8DMXBQ,Uruguay,JG4Y5CYR,Uruguay,0
+C - Countries,7I8DMXBQ,Uzbekistan,57DIZUUS,Uzbekistan,0
+C - Countries,7I8DMXBQ,Vanuatu,LB73HMUS,Vanuatu,0
+C - Countries,7I8DMXBQ,Venezuela,6CY7ZM26,Venezuela,0
+C - Countries,7I8DMXBQ,Vietnam,BZ7A7L2K,Vietnam,0
+C - Countries,7I8DMXBQ,Yemen,D6DYP4ER,Yemen,0
+C - Countries,7I8DMXBQ,Yemen,D6DYP4ER,Yemen Arab Republic,0
+C - Countries,7I8DMXBQ,Yemen,D6DYP4ER,Yemen People's Republic (South),0
+C - Countries,7I8DMXBQ,Zambia,FSTPFU93,Zambia,0
+C - Countries,7I8DMXBQ,Zimbabwe,QM3E35UC,Zimbabwe,0
+D - Source Type,E9PHTBM3,NGO,ZNUIMRQX,NGO,0
+D - Source Type,E9PHTBM3,academic,UBYVT3JW,academic,0
+D - Source Type,E9PHTBM3,journalistic,GALMXIEZ,journalistic,0
+D - Source Type,E9PHTBM3,journalistic,GALMXIEZ,news,0
+D - Source Type,E9PHTBM3,legislative act,33I2B3NX,legislative act,0
+D - Source Type,E9PHTBM3,policy report,ZYNUX7P2,policy report,0
+E - TJET Members,QIRJ8N3T,"Dancy, Geoff",WZ7IVI2V,,
+E - TJET Members,QIRJ8N3T,"Pham, Phuong",3CMI6LXJ,,
+E - TJET Members,QIRJ8N3T,"Sikkink, Kathryn",L8UN7G4L,,
+E - TJET Members,QIRJ8N3T,"Thoms, Oskar Timo",NXL7CGNQ,,
+E - TJET Members,QIRJ8N3T,"Vinck, Patrick",B7WV4WW7,,
+F - TJET Database,3DHZKFJX,Amnesties,RGTANRFB,amnestyID *,0
+F - TJET Database,3DHZKFJX,Prosecutions,AJ249W5Q,,
+F - TJET Database,3DHZKFJX,Reparations,P38LGJMY,reparationID *,0
+F - TJET Database,3DHZKFJX,Truth Commissions,SKW8WXF6,truthcommissionID *,0
+F - TJET Database,3DHZKFJX,Vettings,QF98ZVX7,vettingID *,0
+International Courts,94VD36QL,Hybrid Tribunals,WGVD2GXE,hybrid,1
+International Courts,94VD36QL,ICC,ZKD252ND,ICC,1
+International Courts,94VD36QL,ICTR,QBGJZW6J,ICTR,1
+International Courts,94VD36QL,ICTY,F9DWM35P,ICTY,1
+International Courts,94VD36QL,Nuremberg,S6RAHDE6,Nuremberg,1
+Projects,4WYLUD5F,Briefs,DBQPVRR8,,
+Projects,4WYLUD5F,Conflict,57KHS2K2,,
+Projects,4WYLUD5F,Gender,46YT445Q,gender article,0
+Projects,4WYLUD5F,Infographics,EP4W6FPL,,
+Projects,4WYLUD5F,Leaders,SNL4PN7I,,
+Projects,4WYLUD5F,Reversion,WNZ4J8A6,,
+Projects,4WYLUD5F,SyriaFA,NSYI9MIT,,
+Projects,4WYLUD5F,TCs-Biblio,V9SLRZZ3,,
+Projects,4WYLUD5F,USAID_cuts,7GU9GMPS,,
+Prosecutions,EU55F6CD,Domestic Courts,CLAB83PU,domestic courts,1
+Prosecutions,EU55F6CD,Foreign Courts,87YPKI7E,foreign courts,1
+Prosecutions,EU55F6CD,International Courts,94VD36QL,international court,1
+Prosecutions,EU55F6CD,Regional Mechanisms,TRP8LAQ4,regional mechanisms,1
+Regional Mechanisms,TRP8LAQ4,AU,WG2F6VDX,,
+Regional Mechanisms,TRP8LAQ4,EU,84Y2SUJ4,EU,0
+Regional Mechanisms,TRP8LAQ4,Inter-American,9VVSZ8B2,inter-american,1
+TJETdb Sources,PC8XUJAB,Amnesties,56BFZHPM,,
+TJETdb Sources,PC8XUJAB,Argentina,U8NKV63X,,
+TJETdb Sources,PC8XUJAB,Foreign,WEXI6LVB,,
+TJETdb Sources,PC8XUJAB,Reparations,PXID2YMK,,
+TJETdb Sources,PC8XUJAB,Seemal,BLVPGXKK,,
+TJETdb Sources,PC8XUJAB,Trials,QMGB89SX,,
+TJETdb Sources,PC8XUJAB,Vetting,52EW9E3C,,
+TJETdb Sources,PC8XUJAB,Vetting (Post-Soviet & Balkans),DQ2SU34R,,
+to_clean,AWKRJWPD,SD reports,2YKHTDQW,,
+to_clean,AWKRJWPD,TrialInternational,74CVPVI2,,
+,,A - TJ Themes,UY3YBRQA,,
+,,B - Mechanisms,I8E7U56B,,
+,,C - Countries,7I8DMXBQ,,
+,,D - Source Type,E9PHTBM3,,
+,,E - TJET Members,QIRJ8N3T,TJET member,1
+,,F - TJET Database,3DHZKFJX,,
+,,Popular Media,5BTJJJAM,popular media,0
+,,Projects,4WYLUD5F,,
+,,TJETdb Sources,PC8XUJAB,,
+,,to_clean,AWKRJWPD,,
+,,,,TJ law,1
+,,,,TJ themes,1
+,,,,TJET database source,1
+,,,,country profile,0
+,,,,transitional justice,1
+,,,,#broken,0
+,,,,#duplicate,0
+,,,,#nonfile,0
+,,,,#nosource,0
+,,,,Africa,0
+,,,,Amnesty International,0
+,,,,Balkans,0
+,,,,Central Africa,0
+,,,,East Asia,0
+,,,,Human Rights Watch,0
+,,,,ICJ,0
+,,,,ICTJ,0
+,,,,International Commission of Jurists,0
+,,,,International Justice Monitor,0
+,,,,Islamic State in Iraq and Syria (ISIS),0
+,,,,Jammu & Kashmir,0
+,,,,Keesing's,0
+,,,,Kurds,0
+,,,,Latin America,0
+,,,,Middle East & North Africa,0
+,,,,Muslims & Islam,0
+,,,,Nauru,0
+,,,,Samoa,0
+,,,,TJET behind paywall,0
+,,,,TJET dead link,0
+,,,,TJET no snapshot,0
+,,,,TJET not found online,0
+,,,,TJET not online (Keesing's),0
+,,,,TJET revisit,0
+,,,,UNHCR,0
+,,,,United Nations,0
+,,,,article,0
+,,,,attitudes,0
+,,,,biography,0
+,,,,case studies,0
+,,,,chapters,0
+,,,,complementarity,0
+,,,,conflict violence,0
+,,,,countries,0
+,,,,court document,0
+,,,,court judgment,0
+,,,,courts,0
+,,,,customary international law,0
+,,,,database,0
+,,,,dataset,0
+,,,,datasets sources,0
+,,,,deterrence,0
+,,,,document,0
+,,,,draft law,0
+,,,,encyclopedia,0
+,,,,government,0
+,,,,human rights,0
+,,,,indigenous practices,0
+,,,,inequality,0
+,,,,international criminal justice,0
+,,,,international institutions,0
+,,,,international law,0
+,,,,interview,0
+,,,,land restitution,0
+,,,,leader civil lawsuit,0
+,,,,leader prosecution,0
+,,,,legal,0
+,,,,legal case file,0
+,,,,legitimacy,0
+,,,,mechanisms,0
+,,,,monographs & editorials,0
+,,,,other peer-reviewed scholarship,0
+,,,,peace agreements,0
+,,,,peacebuilding,0
+,,,,photo,0
+,,,,postcommunist,0
+,,,,press release,0
+,,,,psychological effects,0
+,,,,report,0
+,,,,research investigations,0
+,,,,residential schools,0
+,,,,reviews,0
+,,,,ruling,0
+,,,,trauma,0
+,,,,violent conflict,0
+,,,,Journalistic,
+,,,,TJETincl,
