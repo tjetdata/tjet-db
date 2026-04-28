@@ -835,11 +835,13 @@ tjet_cy,,,v2x_cspart,Civil society participation index,VDem,1900,2023
 tjet_cy,,,v2x_cspart_sd,"Civil society participation index, standard deviation",VDem,1900,2023
 tjet_cy,,,v2x_delibdem,Deliberative democracy index,VDem,1900,2023
 tjet_cy,,,v2x_delibdem_sd,"Deliberative democracy index, standard deviation",VDem,1900,2023
+tjet_cy,,,v2x_delibdem_stock,Deliberative democracy stock,VDem,1900,2023
 tjet_cy,,,v2x_diagacc,Diagonal accountability index,VDem,1900,2023
 tjet_cy,,,v2x_egal,Egalitarian component index,VDem,1900,2023
 tjet_cy,,,v2x_egal_sd,"Egalitarian component index, standard deviation",VDem,1900,2023
 tjet_cy,,,v2x_egaldem,Egalitarian democracy index,VDem,1900,2023
 tjet_cy,,,v2x_egaldem_sd,"Egalitarian democracy index, standard deviation",VDem,1900,2023
+tjet_cy,,,v2x_egaldem_stock,Egalitarian democracy stock,VDem,1900,2023
 tjet_cy,,,v2x_elecoff,Elected officials index,VDem,1900,2023
 tjet_cy,,,v2x_execorr,Executive corruption index,VDem,1900,2023
 tjet_cy,,,v2x_execorr_sd,"Executive corruption index, standard deviation",VDem,1900,2023
@@ -856,6 +858,7 @@ tjet_cy,,,v2x_jucon,Judicial constraints on the executive index,VDem,1900,2023
 tjet_cy,,,v2x_jucon_sd,"Judicial constraints on the executive index, standard deviation",VDem,1900,2023
 tjet_cy,,,v2x_libdem,Liberal democracy index,VDem,1900,2023
 tjet_cy,,,v2x_libdem_sd,"Liberal democracy index, standard deviation",VDem,1900,2023
+tjet_cy,,,v2x_libdem_stock,Liberal democracy stock,VDem,1900,2023
 tjet_cy,,,v2x_liberal,Liberal component index,VDem,1900,2023
 tjet_cy,,,v2x_liberal_sd,"Liberal component index, standard deviation",VDem,1900,2023
 tjet_cy,,,v2x_mpi,Multiplicative polyarchy index,VDem,1900,2023
@@ -864,8 +867,10 @@ tjet_cy,,,v2x_partip,Participatory component index,VDem,1900,2023
 tjet_cy,,,v2x_partip_sd,"Participatory component index, standard deviation",VDem,1900,2023
 tjet_cy,,,v2x_partipdem,Participatory democracy index,VDem,1900,2023
 tjet_cy,,,v2x_partipdem_sd,"Participatory democracy index, standard deviation",VDem,1900,2023
+tjet_cy,,,v2x_partipdem_stock,Participatory democracy stock,VDem,1900,2023
 tjet_cy,,,v2x_polyarchy,Electoral democracy index,VDem,1900,2023
 tjet_cy,,,v2x_polyarchy_sd,"Electoral democracy index, standard deviation",VDem,1900,2023
+tjet_cy,,,v2x_polyarchy_stock,Electoral democracy stock,VDem,1900,2023
 tjet_cy,,,v2x_pubcorr,Public sector corruption index,VDem,1900,2023
 tjet_cy,,,v2x_pubcorr_sd,"Public sector corruption index, standard deviation",VDem,1900,2023
 tjet_cy,,,v2x_regime,"Regimes of the World, original numeric measure (0-3)",VDem,1900,2023
@@ -920,6 +925,12 @@ tjet_cy,,,v2xpe_exlsocgr_lag10,"Exclusion by Social Group index, lagged 10 years
 tjet_cy,,,v2xpe_exlsocgr_lag20,"Exclusion by Social Group index, lagged 20 years",VDem,1900,2023
 tjet_cy,,,v2xeg_eqdr,Equal distribution of resources index,VDem,1900,2023
 tjet_cy,,,v2xeg_eqdr_sd,"Equal distribution of resources index, standard deviation",VDem,1900,2023
+tjet_cy,,,v3cllabrig,Labor rights,VDem,1900,2023
+tjet_cy,,,v3cllabrig_sd,"Labor rights, standard deviation",VDem,1900,2023
+tjet_cy,,,v3cllabrig_nr,"Labor rights, number of expert raters",VDem,1900,2023
+tjet_cy,,,v2dlunivl,Means-tested v. universalistic policy,VDem,1900,2023
+tjet_cy,,,v2dlunivl_sd,"Means-tested v. universalistic policy, standard deviation",VDem,1900,2023
+tjet_cy,,,v2dlunivl_nr,"Means-tested v. universalistic policy, number of expert raters",VDem,1900,2023
 tjet_cy,,,el_presidential,"Presidential elections, binary",VDem,1900,2023
 tjet_cy,,,el_legislative,"Legislative elections, binary",VDem,1900,2023
 tjet_cy,,,conf_intra,count of minor internal (incl. internationalized) conflicts (25-999 BRDs) ,UCDP ACD,1946,2023
@@ -1115,11 +1126,54 @@ tjet_cy,,,prev_pgm_svac,"prevalence of sexual violence among pro-governments mil
 tjet_cy,,,conflictyear_svac,conflict-year in SVAC dataset,SVAC,,
 tjet_cy,,,events_pitf,count of atrocity events,PITF,,
 tjet_cy,,,deaths_pitf,counts of deaths due to atrocities,PITF,,
-tjet_cy,,,physint_cir,CIRights Physical Integrity Index,CIRights,1981,2022
-tjet_cy,,,disap_cir,CIRights Disappearances Index,CIRights,1981,2022
-tjet_cy,,,kill_cir,CIRights Extrajudicial Killings Index,CIRights,1981,2022
-tjet_cy,,,polpris_cir,CIRights Political Imprisonment Index,CIRights,1981,2022
-tjet_cy,,,tort_cir ,CIRights Torture Index,CIRights,1981,2022
+tjet_cy,,,physint_sum_cir,Physical Integrity Rights Index,CIRights,1981,2022
+tjet_cy,,,disap_cir,Disappearances,CIRights,1981,2022
+tjet_cy,,,kill_cir,Extrajudicial Killings,CIRights,1981,2022
+tjet_cy,,,polpris_cir,Political Imprisonment,CIRights,1981,2022
+tjet_cy,,,tort_cir ,Torture,CIRights,1981,2022
+tjet_cy,,,bbatrocity_cir,Brutality-based Atrocity,CIRights,1981,2022
+tjet_cy,,,bbatrocity_intensity_cir,Atrocity Intensity,CIRights,1981,2022
+tjet_cy,,,human_rights_score_cir,Overall Human Rights Score,CIRights,1981,2022
+tjet_cy,,,repression_sum_cir,Repression Index,CIRights,1981,2022
+tjet_cy,,,civpol_sum_cir,Civil and Political Rights Index,CIRights,1981,2022
+tjet_cy,,,workerrights_practices_sum_cir,Worker Rights Practice Index,CIRights,1981,2022
+tjet_cy,,,workerrights_laws_sum_cir,Worker Rights Law Index,CIRights,1981,2022
+tjet_cy,,,assn_cir,Freedom of Assembly and Association,CIRights,1981,2022
+tjet_cy,,,barg_l_cir,Collective Bargaining Laws,CIRights,1981,2022
+tjet_cy,,,barg_p_cir,Collective Bargaining,CIRights,1981,2022
+tjet_cy,,,child_l_cir,Child Labor Laws,CIRights,1981,2022
+tjet_cy,,,child_p_cir,Child Labor,CIRights,1981,2022
+tjet_cy,,,dommov_cir,Freedom of Domestic Movement,CIRights,1981,2022
+tjet_cy,,,elecsd_cir,Electoral Self-determination,CIRights,1981,2022
+tjet_cy,,,force_l_cir,Forced Labor Laws,CIRights,1981,2022
+tjet_cy,,,force_p_cir,Forced Labor,CIRights,1981,2022
+tjet_cy,,,formov_cir,Freedom of Foreign Movement,CIRights,1981,2022
+tjet_cy,,,hour_l_cir,Legal Limitations on Work Hours,CIRights,1981,2022
+tjet_cy,,,hour_p_cir,Limitations on Work Hours,CIRights,1981,2022
+tjet_cy,,,hrsngo_cir,Human Rights NGO Freedom,CIRights,1981,2022
+tjet_cy,,,injud_cir,Judicial Independence,CIRights,1981,2022
+tjet_cy,,,rel_free_cir,Religious Freedom,CIRights,1981,2022
+tjet_cy,,,safe_l_cir,Occupational Safety and Health Laws,CIRights,1981,2022
+tjet_cy,,,safe_p_cir,Occupational Safety and Health,CIRights,1981,2022
+tjet_cy,,,speech_cir,Freedom of Speech,CIRights,1981,2022
+tjet_cy,,,traffick_l_cir,Human Trafficking Laws,CIRights,1981,2022
+tjet_cy,,,traffick_p_cir,Human Trafficking,CIRights,1981,2022
+tjet_cy,,,trial_l_cir,Fair Trial Laws,CIRights,1981,2022
+tjet_cy,,,trial_p_cir,Right to a Fair Trial,CIRights,1981,2022
+tjet_cy,,,union_l_cir,Union Laws,CIRights,1981,2022
+tjet_cy,,,union_p_cir,Union Rights,CIRights,1981,2022
+tjet_cy,,,wage_l_cir,Minimum Wage Laws,CIRights,1981,2022
+tjet_cy,,,wage_p_cir,Minimum Wage,CIRights,1981,2022
+tjet_cy,,,wecon_cir,Women's Economic Rights,CIRights,1981,2022
+tjet_cy,,,wopol_cir,Women's Political Rights,CIRights,1981,2022
+tjet_cy,,,wosoc_l_cir,Women's Social Rights Laws,CIRights,1981,2022
+tjet_cy,,,wosoc_p_cir,Women's Social Rights,CIRights,1981,2022
+tjet_cy,,,event_type_ccp,CCP constitutional event type (amendment or new),Comparative Constitutions Project,,
+tjet_cy,,,yr_const_new_aut,year of new authoritarian constitution,,,
+tjet_cy,,,yr_const_new_dtr,year of new constitution after democratic transition,,,
+tjet_cy,,,const_new_aut,"new authoritarian constitution, binary carried forward",,,
+tjet_cy,,,const_new_dtr,"new constitution after transition, binary carried forward",,,
+tjet_cy,,,group_const_tj,constitutional replacement and transitional justice sequence grouping,,,
 tjet_cy,,,theta_mean_fariss,"estimated latent physical integrity (formerly latent mean, the posterior mean of the latent variable)","Fariss, Kenwick, & Reuning",,
 tjet_cy,,,theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",,
 tjet_cy,,,theta_q025,"estimated latent physical integrity, 95% confidence interval lower bound ","Fariss, Kenwick, & Reuning",,
@@ -1257,6 +1311,9 @@ tjet_cy,,,military_exp_percexp_wdi,military expenditure (% of general government
 tjet_cy,,,hom_rate_wdi,homicide rate,WDI,,
 tjet_cy,,,hom_rate_fem_wdi,"homicide rate, females",WDI,,
 tjet_cy,,,hom_rate_male_wdi,"homicide rate, males",WDI,,
+tjet_cy,,,aid_sdg16,"Aid for SDG16 and like, total",AidData.org,1957,2021
+tjet_cy,,,aid_sdg16_bilat,"Aid for SDG16 and like, from states",AidData.org,1957,2021
+tjet_cy,,,aid_sdg16_us,"Aid for SDG16 and like, from United States of America",AidData.org,1957,2021
 tjet_accused.csv,,1,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_accused.csv,,2,trialID,TJET Trial ID,TJET,1970,2020
 tjet_accused.csv,,3,name,name of the accused,TJET,1970,2020

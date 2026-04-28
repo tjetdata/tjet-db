@@ -2916,6 +2916,82 @@ df <- df |>
     )
   )
 
+message("Creating new constitutions variables... ")
+
+filter_cdn <- expr(dtr == 1 & !(country_case == "East Germany" & year == 1990))
+
+df <- df |>
+  mutate(
+    yr_const_new_aut = case_when(
+      .default = NA,
+      dtr == 0 &
+        str_detect(v2x_regime_ert, "autocracy") &
+        event_type_ccp == "new" ~ year
+    ),
+    yr_const_new_dtr = case_when(
+      .default = NA,
+      dtr == 1 &
+        # (dtr == 1 | str_detect(v2x_regime_ert, "democracy")) &
+        event_type_ccp == "new" ~ year
+    ),
+    tj_yr_zero = case_when(
+      .default = NA,
+      tj_yr_zero == 1 ~ year
+    )
+  ) |>
+  fill(
+    .by = country_case,
+    yr_const_new_aut,
+    yr_const_new_dtr,
+    tj_yr_zero,
+    .direction = "downup"
+  ) |>
+  mutate(
+    const_new_aut = case_when(
+      .default = 0,
+      year >= yr_const_new_aut ~ 1
+    ),
+    const_new_dtr = case_when(
+      .default = 0,
+      year >= yr_const_new_dtr ~ 1
+    )
+  ) |>
+  mutate(
+    group_const_tj = case_when(
+      .default = NA,
+      eval(filter_cdn) &
+        is.na(yr_const_new_dtr) &
+        !is.na(tj_yr_zero) &
+        year >= tj_yr_zero ~ "TJ without new constitution",
+      eval(filter_cdn) &
+        !is.na(yr_const_new_dtr) &
+        is.na(tj_yr_zero) &
+        year >= yr_const_new_dtr ~ "new constitution without TJ",
+      eval(filter_cdn) &
+        tj_yr_zero < yr_const_new_dtr &
+        year >= tj_yr_zero ~ "TJ followed by new constitution",
+      eval(filter_cdn) &
+        yr_const_new_dtr < tj_yr_zero &
+        year >= yr_const_new_dtr ~ "new constitution followed by TJ",
+      eval(filter_cdn) &
+        yr_const_new_dtr == tj_yr_zero &
+        year >= yr_const_new_dtr ~ "new constitution and TJ in same year"
+    )
+  ) |>
+  mutate(
+    .by = country_case,
+    missing = sum(is.na(group_const_tj)) / n()
+  ) |>
+  mutate(
+    group_const_tj = case_when(
+      .default = group_const_tj,
+      dtr == 1 & missing == 1 ~ "neither new constitution nor TJ"
+    )
+  ) |>
+  select(-missing)
+
+rm(filter_cdn)
+
 message("Merging in legacy-of-violence index... ")
 
 hra <- read_csv("../tjet-hra/tjet-hra.csv", show_col_types = FALSE) |>
