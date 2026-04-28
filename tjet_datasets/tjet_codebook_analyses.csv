@@ -799,11 +799,13 @@ leaders,lea_cec_oth_non_cumu,"non-domestic leader prosecutions for other crimes,
 ,v2x_cspart_sd,"Civil society participation index, standard deviation",VDem,2026-03-31
 ,v2x_delibdem,Deliberative democracy index,VDem,2026-03-31
 ,v2x_delibdem_sd,"Deliberative democracy index, standard deviation",VDem,2026-03-31
+,v2x_delibdem_stock,Deliberative democracy stock,VDem,2026-03-31
 ,v2x_diagacc,Diagonal accountability index,VDem,2026-03-31
 ,v2x_egal,Egalitarian component index,VDem,2026-03-31
 ,v2x_egal_sd,"Egalitarian component index, standard deviation",VDem,2026-03-31
 ,v2x_egaldem,Egalitarian democracy index,VDem,2026-03-31
 ,v2x_egaldem_sd,"Egalitarian democracy index, standard deviation",VDem,2026-03-31
+,v2x_egaldem_stock,Egalitarian democracy stock,VDem,2026-03-31
 ,v2x_elecoff,Elected officials index,VDem,2026-03-31
 ,v2x_execorr,Executive corruption index,VDem,2026-03-31
 ,v2x_execorr_sd,"Executive corruption index, standard deviation",VDem,2026-03-31
@@ -820,6 +822,7 @@ leaders,lea_cec_oth_non_cumu,"non-domestic leader prosecutions for other crimes,
 ,v2x_jucon_sd,"Judicial constraints on the executive index, standard deviation",VDem,2026-03-31
 ,v2x_libdem,Liberal democracy index,VDem,2026-03-31
 ,v2x_libdem_sd,"Liberal democracy index, standard deviation",VDem,2026-03-31
+,v2x_libdem_stock,Liberal democracy stock,VDem,2026-03-31
 ,v2x_liberal,Liberal component index,VDem,2026-03-31
 ,v2x_liberal_sd,"Liberal component index, standard deviation",VDem,2026-03-31
 ,v2x_mpi,Multiplicative polyarchy index,VDem,2026-03-31
@@ -828,8 +831,10 @@ leaders,lea_cec_oth_non_cumu,"non-domestic leader prosecutions for other crimes,
 ,v2x_partip_sd,"Participatory component index, standard deviation",VDem,2026-03-31
 ,v2x_partipdem,Participatory democracy index,VDem,2026-03-31
 ,v2x_partipdem_sd,"Participatory democracy index, standard deviation",VDem,2026-03-31
+,v2x_partipdem_stock,Participatory democracy stock,VDem,2026-03-31
 ,v2x_polyarchy,Electoral democracy index,VDem,2026-03-31
 ,v2x_polyarchy_sd,"Electoral democracy index, standard deviation",VDem,2026-03-31
+,v2x_polyarchy_stock,Electoral democracy stock,VDem,2026-03-31
 ,v2x_pubcorr,Public sector corruption index,VDem,2026-03-31
 ,v2x_pubcorr_sd,"Public sector corruption index, standard deviation",VDem,2026-03-31
 ,v2x_regime,"Regimes of the World, original numeric measure (0-3)",VDem,2026-03-31
@@ -884,6 +889,12 @@ leaders,lea_cec_oth_non_cumu,"non-domestic leader prosecutions for other crimes,
 ,v2xpe_exlsocgr_lag20,"Exclusion by Social Group index, lagged 20 years",VDem,2026-03-31
 ,v2xeg_eqdr,Equal distribution of resources index,VDem,2026-03-31
 ,v2xeg_eqdr_sd,"Equal distribution of resources index, standard deviation",VDem,2026-03-31
+,v3cllabrig,Labor rights,VDem,2026-03-31
+,v3cllabrig_sd,"Labor rights, standard deviation",VDem,2026-03-31
+,v3cllabrig_nr,"Labor rights, number of expert raters",VDem,2026-03-31
+,v2dlunivl,Means-tested v. universalistic policy,VDem,2026-03-31
+,v2dlunivl_sd,"Means-tested v. universalistic policy, standard deviation",VDem,2026-03-31
+,v2dlunivl_nr,"Means-tested v. universalistic policy, number of expert raters",VDem,2026-03-31
 ,el_presidential,"Presidential elections, binary",VDem,2026-03-31
 ,el_legislative,"Legislative elections, binary",VDem,2026-03-31
 ,conf_intra,count of minor internal (incl. internationalized) conflicts (25-999 BRDs),UCDP ACD,2026-03-31
@@ -1071,11 +1082,54 @@ leaders,lea_cec_oth_non_cumu,"non-domestic leader prosecutions for other crimes,
 ,conflictyear_svac,conflict-year in SVAC dataset,SVAC,2026-03-31
 ,events_pitf,count of atrocity events,PITF,2026-03-31
 ,deaths_pitf,counts of deaths due to atrocities,PITF,2026-03-31
-,physint_cir,CIRights Physical Integrity Index,CIRights,2026-03-31
-,disap_cir,CIRights Disappearances Index,CIRights,2026-03-31
-,kill_cir,CIRights Extrajudicial Killings Index,CIRights,2026-03-31
-,polpris_cir,CIRights Political Imprisonment Index,CIRights,2026-03-31
-,tort_cir,CIRights Torture Index,CIRights,2026-03-31
+,physint_sum_cir,Physical Integrity Rights Index,CIRights,2026-03-31
+,disap_cir,Disappearances,CIRights,2026-03-31
+,kill_cir,Extrajudicial Killings,CIRights,2026-03-31
+,polpris_cir,Political Imprisonment,CIRights,2026-03-31
+,tort_cir,Torture,CIRights,2026-03-31
+,bbatrocity_cir,Brutality-based Atrocity,CIRights,2026-03-31
+,bbatrocity_intensity_cir,Atrocity Intensity,CIRights,2026-03-31
+,human_rights_score_cir,Overall Human Rights Score,CIRights,2026-03-31
+,repression_sum_cir,Repression Index,CIRights,2026-03-31
+,civpol_sum_cir,Civil and Political Rights Index,CIRights,2026-03-31
+,workerrights_practices_sum_cir,Worker Rights Practice Index,CIRights,2026-03-31
+,workerrights_laws_sum_cir,Worker Rights Law Index,CIRights,2026-03-31
+,assn_cir,Freedom of Assembly and Association,CIRights,2026-03-31
+,barg_l_cir,Collective Bargaining Laws,CIRights,2026-03-31
+,barg_p_cir,Collective Bargaining,CIRights,2026-03-31
+,child_l_cir,Child Labor Laws,CIRights,2026-03-31
+,child_p_cir,Child Labor,CIRights,2026-03-31
+,dommov_cir,Freedom of Domestic Movement,CIRights,2026-03-31
+,elecsd_cir,Electoral Self-determination,CIRights,2026-03-31
+,force_l_cir,Forced Labor Laws,CIRights,2026-03-31
+,force_p_cir,Forced Labor,CIRights,2026-03-31
+,formov_cir,Freedom of Foreign Movement,CIRights,2026-03-31
+,hour_l_cir,Legal Limitations on Work Hours,CIRights,2026-03-31
+,hour_p_cir,Limitations on Work Hours,CIRights,2026-03-31
+,hrsngo_cir,Human Rights NGO Freedom,CIRights,2026-03-31
+,injud_cir,Judicial Independence,CIRights,2026-03-31
+,rel_free_cir,Religious Freedom,CIRights,2026-03-31
+,safe_l_cir,Occupational Safety and Health Laws,CIRights,2026-03-31
+,safe_p_cir,Occupational Safety and Health,CIRights,2026-03-31
+,speech_cir,Freedom of Speech,CIRights,2026-03-31
+,traffick_l_cir,Human Trafficking Laws,CIRights,2026-03-31
+,traffick_p_cir,Human Trafficking,CIRights,2026-03-31
+,trial_l_cir,Fair Trial Laws,CIRights,2026-03-31
+,trial_p_cir,Right to a Fair Trial,CIRights,2026-03-31
+,union_l_cir,Union Laws,CIRights,2026-03-31
+,union_p_cir,Union Rights,CIRights,2026-03-31
+,wage_l_cir,Minimum Wage Laws,CIRights,2026-03-31
+,wage_p_cir,Minimum Wage,CIRights,2026-03-31
+,wecon_cir,Women's Economic Rights,CIRights,2026-03-31
+,wopol_cir,Women's Political Rights,CIRights,2026-03-31
+,wosoc_l_cir,Women's Social Rights Laws,CIRights,2026-03-31
+,wosoc_p_cir,Women's Social Rights,CIRights,2026-03-31
+,event_type_ccp,CCP constitutional event type (amendment or new),Comparative Constitutions Project,2026-03-31
+,yr_const_new_aut,year of new authoritarian constitution,,2026-03-31
+,yr_const_new_dtr,year of new constitution after democratic transition,,2026-03-31
+,const_new_aut,"new authoritarian constitution, binary carried forward",,2026-03-31
+,const_new_dtr,"new constitution after transition, binary carried forward",,2026-03-31
+,group_const_tj,constitutional replacement and transitional justice sequence grouping,,2026-03-31
 ,theta_mean_fariss,"estimated latent physical integrity (formerly latent mean, the posterior mean of the latent variable)","Fariss, Kenwick, & Reuning",2026-03-31
 ,theta_sd_fariss,"estimated latent physical integrity, standard deviation (formerly latentsd, the standard deviation of the posterior estimates)","Fariss, Kenwick, & Reuning",2026-03-31
 ,theta_q025,"estimated latent physical integrity, 95% confidence interval lower bound","Fariss, Kenwick, & Reuning",2026-03-31
@@ -1207,3 +1261,6 @@ legacy of violence,legacy_mean_lag20,"legacy_mean, lagged 20 years",TJET,2026-03
 ,hom_rate_wdi,homicide rate,WDI,2026-03-31
 ,hom_rate_fem_wdi,"homicide rate, females",WDI,2026-03-31
 ,hom_rate_male_wdi,"homicide rate, males",WDI,2026-03-31
+,aid_sdg16,"Aid for SDG16 and like, total",AidData.org,2026-03-31
+,aid_sdg16_bilat,"Aid for SDG16 and like, from states",AidData.org,2026-03-31
+,aid_sdg16_us,"Aid for SDG16 and like, from United States of America",AidData.org,2026-03-31
