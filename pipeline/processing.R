@@ -2994,7 +2994,7 @@ rm(filter_cdn)
 
 message("Merging in legacy-of-violence index... ")
 
-hra <- read_csv("../tjet-hra/tjet-hra.csv", show_col_types = FALSE) |>
+hra <- read_csv("../tjet-hra/results/tjet-hra.csv", show_col_types = FALSE) |>
   select(country, year, legacy_mean, legacy_low95, legacy_upp95, legacy_rank)
 hra_lags <- c(1:10, 20) |>
   map(function(yrs) {
