@@ -1312,7 +1312,9 @@ tjet_cy,,,hom_rate_wdi,homicide rate,WDI,,
 tjet_cy,,,hom_rate_fem_wdi,"homicide rate, females",WDI,,
 tjet_cy,,,hom_rate_male_wdi,"homicide rate, males",WDI,,
 tjet_cy,,,aid_sdg16,"Aid for SDG16 and like, total",AidData.org,1957,2021
-tjet_cy,,,aid_sdg16_bilat,"Aid for SDG16 and like, from states",AidData.org,1957,2021
+tjet_cy,,,aid_sdg16_bilat,"Aid for SDG16 and like, bilateral from states",AidData.org,1957,2021
+tjet_cy,,,aid_sdg16_multi,"Aid for SDG16 and like, multilateral",AidData.org,1957,2021
+tjet_cy,,,aid_sdg16_private,"Aid for SDG16 and like, private",AidData.org,1957,2021
 tjet_cy,,,aid_sdg16_us,"Aid for SDG16 and like, from United States of America",AidData.org,1957,2021
 tjet_accused.csv,,1,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_accused.csv,,2,trialID,TJET Trial ID,TJET,1970,2020
