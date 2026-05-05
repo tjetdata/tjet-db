@@ -2815,14 +2815,14 @@ df <- df |>
     yr_rep = if_else(
       (dtr == 1 | aco_25 == 1) &
         ccode_cow != 2 &
-        rep_paidout_created == 1,
+        rep_paidout_created >= 1,
       year,
       NA
     ),
     yr_vet = if_else(
       (dtr == 1 | aco_25 == 1) &
         ccode_cow != 2 &
-        (vet_dismiss_created == 1 | vet_ban_created == 1) &
+        (vet_dismiss_created >= 1 | vet_ban_created >= 1) &
         (region == "Europe" | ccode_cow == 645),
       year,
       NA
@@ -2831,11 +2831,11 @@ df <- df |>
       ((dtr == 1 | aco_25 == 1) & ccode_cow != 2) &
         (tran_cce_dom_dtj_ctj_sta_hi >= 1 |
           (tcs_dtj_ctj_binary >= 1 & tcs_report_public == 1) |
-          rep_paidout_created == 1 |
+          rep_paidout_created >= 1 |
           (region == "Europe" &
-            (vet_dismiss_created == 1 | vet_ban_created == 1)) |
+            (vet_dismiss_created >= 1 | vet_ban_created >= 1)) |
           (ccode_cow == 645 &
-            (vet_dismiss_created == 1 | vet_ban_created == 1))),
+            (vet_dismiss_created >= 1 | vet_ban_created >= 1))),
       year,
       NA
     ),
@@ -2971,11 +2971,11 @@ df <- df |>
         tj_yr_zero < yr_const_new_dtr &
         year >= tj_yr_zero ~ "TJ followed by new constitution",
       eval(filter_cdn) &
-        yr_const_new_dtr < tj_yr_zero &
+        yr_const_new_dtr <= tj_yr_zero &
         year >= yr_const_new_dtr ~ "new constitution followed by TJ",
-      eval(filter_cdn) &
-        yr_const_new_dtr == tj_yr_zero &
-        year >= yr_const_new_dtr ~ "new constitution and TJ in same year"
+      # eval(filter_cdn) &
+      #   yr_const_new_dtr == tj_yr_zero &
+      #   year >= yr_const_new_dtr ~ "new constitution and TJ in same year"
     )
   ) |>
   mutate(
