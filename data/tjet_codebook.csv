@@ -1317,6 +1317,7 @@ tjet_cy,,,aid_sdg16_multi,"Aid for SDG16 and like, multilateral",AidData.org,195
 tjet_cy,,,aid_sdg16_private,"Aid for SDG16 and like, private",AidData.org,1957,2021
 tjet_cy,,,aid_sdg16_us,"Aid for SDG16 and like, from United States of America",AidData.org,1957,2021
 tjet_cy,,,aid_sdg16_can,"Aid for SDG16 and like, from Canada",AidData.org,1957,2021
+tjet_cy,,,aid_sdg16_g7,"Aid for SDG16 and like, from G7 countries",AidData.org,1957,2021
 tjet_accused.csv,,1,accusedID,TJET Accused ID,TJET,1970,2020
 tjet_accused.csv,,2,trialID,TJET Trial ID,TJET,1970,2020
 tjet_accused.csv,,3,name,name of the accused,TJET,1970,2020

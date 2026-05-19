@@ -300,6 +300,7 @@ International Courts,94VD36QL,ICTR,QBGJZW6J,ICTR,1
 International Courts,94VD36QL,ICTY,F9DWM35P,ICTY,1
 International Courts,94VD36QL,Nuremberg,S6RAHDE6,Nuremberg,1
 Projects,4WYLUD5F,Briefs,DBQPVRR8,,
+Projects,4WYLUD5F,Capone_strategy,DIAAUCHM,,
 Projects,4WYLUD5F,Conflict,57KHS2K2,,
 Projects,4WYLUD5F,Constitutions,6YSR7H3Y,,
 Projects,4WYLUD5F,Gender,46YT445Q,gender article,0
@@ -350,6 +351,7 @@ to_clean,AWKRJWPD,TrialInternational,74CVPVI2,,
 ,,,,Balkans,0
 ,,,,Central Africa,0
 ,,,,East Asia,0
+,,,,HRs,0
 ,,,,Human Rights Watch,0
 ,,,,ICJ,0
 ,,,,ICTJ,0
@@ -379,6 +381,7 @@ to_clean,AWKRJWPD,TrialInternational,74CVPVI2,,
 ,,,,chapters,0
 ,,,,complementarity,0
 ,,,,conflict violence,0
+,,,,constitutions,0
 ,,,,countries,0
 ,,,,country profile,0
 ,,,,court document,0
@@ -422,6 +425,5 @@ to_clean,AWKRJWPD,TrialInternational,74CVPVI2,,
 ,,,,ruling,0
 ,,,,trauma,0
 ,,,,violent conflict,0
-,,,,HRs,0
 ,,,,TJETincl,
-,,,,constitutions,0
+,,,,new trial to code; see note,
