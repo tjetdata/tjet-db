@@ -257,7 +257,7 @@ mechID_tags <- cleaned_tags |>
   filter(
     str_detect(
       tag,
-      "^(amnestyID|reparationID|truthcommissionID|vettingID)( [1-9]\\d*)$" # trialID
+      "^(reparationID|truthcommissionID|vettingID)( [1-9]\\d*)$" # trialID|amnestyID|
     )
   )
 
